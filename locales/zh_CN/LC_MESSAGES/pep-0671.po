@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2021-11-12 18:54+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,8 +141,15 @@ msgid ""
 "Multiple late-bound arguments are evaluated from left to right, and can "
 "refer to previously-defined values. Order is defined by the function, "
 "regardless of the order in which keyword arguments may be passed. Using "
-"names of later arguments should not be relied upon, and while this MAY "
-"work in some Python implementations, it should be considered dubious::"
+"names of other arguments is an error. It is implementation-defined "
+"whether this is a syntax error or a run-time error, and implementations "
+"are free to be more permissive, but this should not be relied upon."
+msgstr ""
+
+#: ../../pep-0671.rst:79
+msgid ""
+"def spaminate(sausage=>eggs + 1, eggs=>sausage - 1): # Error def "
+"selfref(spam=>spam): # Error def frob(n=>len(items), items=[]): # Error"
 msgstr ""
 
 #: ../../pep-0671.rst:85
@@ -155,7 +162,7 @@ msgid ""
 "proposals ... ahem. Amongst our potential syntaxes are::"
 msgstr ""
 
-#: ../../pep-0671.rst:103
+#: ../../pep-0671.rst:100
 msgid ""
 "Since default arguments behave largely the same whether they're early or "
 "late bound, the preferred syntax is very similar to the existing early-"
@@ -163,11 +170,11 @@ msgid ""
 "one."
 msgstr ""
 
-#: ../../pep-0671.rst:108
+#: ../../pep-0671.rst:105
 msgid "How to Teach This"
 msgstr ""
 
-#: ../../pep-0671.rst:110
+#: ../../pep-0671.rst:107
 msgid ""
 "Early-bound default arguments should always be taught first, as they are "
 "the simpler and more efficient way to evaluate arguments. Building on "
@@ -175,11 +182,11 @@ msgid ""
 "the function::"
 msgstr ""
 
-#: ../../pep-0671.rst:122
+#: ../../pep-0671.rst:119
 msgid "Interaction with other open PEPs"
 msgstr ""
 
-#: ../../pep-0671.rst:124
+#: ../../pep-0671.rst:121
 msgid ""
 "PEP 661 attempts to solve one of the same problems as this does. It seeks"
 " to improve the documentation of sentinel values in default arguments, "
@@ -193,11 +200,11 @@ msgid ""
 " keys, where PEP 671 does not apply."
 msgstr ""
 
-#: ../../pep-0671.rst:136
+#: ../../pep-0671.rst:133
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-0671.rst:138
+#: ../../pep-0671.rst:135
 msgid ""
 "Annotations go before the default, so in all syntax options, it must be "
 "unambiguous (both to the human and the parser) whether this is an "
@@ -206,17 +213,17 @@ msgid ""
 "default."
 msgstr ""
 
-#: ../../pep-0671.rst:145
+#: ../../pep-0671.rst:142
 msgid "Implementation details"
 msgstr ""
 
-#: ../../pep-0671.rst:147
+#: ../../pep-0671.rst:144
 msgid ""
 "The following relates to the reference implementation, and is not "
 "necessarily part of the specification."
 msgstr ""
 
-#: ../../pep-0671.rst:150
+#: ../../pep-0671.rst:147
 msgid ""
 "Argument defaults (positional or keyword) have both their values, as "
 "already retained, and an extra piece of information. For positional "
@@ -226,7 +233,7 @@ msgid ""
 "argument default."
 msgstr ""
 
-#: ../../pep-0671.rst:156
+#: ../../pep-0671.rst:153
 msgid ""
 "For each parameter with a late-bound default, the special value "
 "``Ellipsis`` is stored as the value placeholder, and the corresponding "
@@ -235,7 +242,7 @@ msgid ""
 "string and the true value is calculated as the function begins."
 msgstr ""
 
-#: ../../pep-0671.rst:162
+#: ../../pep-0671.rst:159
 msgid ""
 "When a parameter with a late-bound default is omitted, the function will "
 "begin with the parameter unbound. The function begins by testing for each"
@@ -243,69 +250,82 @@ msgid ""
 "original expression."
 msgstr ""
 
-#: ../../pep-0671.rst:167
+#: ../../pep-0671.rst:164
 msgid ""
 "Out-of-order variable references are permitted as long as the referent "
 "has a value from an argument or early-bound default."
 msgstr ""
 
-#: ../../pep-0671.rst:172
+#: ../../pep-0671.rst:169
 msgid "Costs"
 msgstr ""
 
-#: ../../pep-0671.rst:174
+#: ../../pep-0671.rst:171
 msgid ""
 "When no late-bound argument defaults are used, the following costs should"
 " be all that are incurred:"
 msgstr ""
 
-#: ../../pep-0671.rst:177
+#: ../../pep-0671.rst:174
 msgid "Function objects require two additional pointers, which will be NULL"
 msgstr ""
 
-#: ../../pep-0671.rst:178
+#: ../../pep-0671.rst:175
 msgid "Compiling code and constructing functions have additional flag checks"
 msgstr ""
 
-#: ../../pep-0671.rst:179
+#: ../../pep-0671.rst:176
 msgid ""
 "Using ``Ellipsis`` as a default value will require run-time verification "
 "to see if late-bound defaults exist."
 msgstr ""
 
-#: ../../pep-0671.rst:182
+#: ../../pep-0671.rst:179
 msgid ""
 "These costs are expected to be minimal (on 64-bit Linux, this increases "
 "all function objects from 152 bytes to 168), with virtually no run-time "
 "cost when late-bound defaults are not used."
 msgstr ""
 
-#: ../../pep-0671.rst:187
+#: ../../pep-0671.rst:184
 msgid "Backward incompatibility"
 msgstr ""
 
-#: ../../pep-0671.rst:189
+#: ../../pep-0671.rst:186
 msgid ""
 "Where late-bound defaults are not used, behaviour should be identical. "
 "Care should be taken if Ellipsis is found, as it may not represent "
 "itself, but beyond that, tools should see existing code unchanged."
 msgstr ""
 
-#: ../../pep-0671.rst:194
+#: ../../pep-0671.rst:191
 msgid "References"
 msgstr ""
 
-#: ../../pep-0671.rst:196
+#: ../../pep-0671.rst:193
 msgid "https://github.com/rosuav/cpython/tree/pep-671"
 msgstr ""
 
-#: ../../pep-0671.rst:199
+#: ../../pep-0671.rst:196
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0671.rst:201
+#: ../../pep-0671.rst:198
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid ""
+#~ "Multiple late-bound arguments are "
+#~ "evaluated from left to right, and "
+#~ "can refer to previously-defined values."
+#~ " Order is defined by the function,"
+#~ " regardless of the order in which "
+#~ "keyword arguments may be passed. Using"
+#~ " names of later arguments should not"
+#~ " be relied upon, and while this "
+#~ "MAY work in some Python implementations,"
+#~ " it should be considered dubious::"
+#~ msgstr ""
 
