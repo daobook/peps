@@ -3,7 +3,7 @@
 from pathlib import Path
 import sys
 
-sys.path.append(str(Path("pep_sphinx_extensions").absolute()))
+sys.path.append(str(Path(".").absolute()))
 
 # -- Project information -----------------------------------------------------
 
@@ -54,3 +54,5 @@ html_style = ""  # must be defined here or in theme.conf, but is unused
 html_permalinks = False  # handled in the PEPContents transform
 
 templates_path = ['pep_sphinx_extensions/pep_theme/templates']  # Theme template relative paths from `confdir`
+
+language = 'zh_CN'
