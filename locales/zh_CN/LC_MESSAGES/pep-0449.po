@@ -1,0 +1,310 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0449.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0449.txt:1
+msgid "449"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0449.txt:2
+msgid "Removal of the PyPI Mirror Auto Discovery and Naming Scheme"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0449.txt:5
+msgid "Donald Stufft <donald@stufft.io>"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0449.txt:6
+msgid "Richard Jones <richard@python.org>"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0449.txt:7
+msgid "distutils-sig@python.org"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0449.txt:8
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0449.txt:9
+msgid "Process"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0449.txt:11 ../../pep-0449.txt:12
+msgid "04-Aug-2013"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Replaces"
+msgstr ""
+
+#: ../../pep-0449.txt:13
+msgid "381"
+msgstr ""
+
+#: ../../pep-0449.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0449.txt:14
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-August/022518.html"
+msgstr ""
+
+#: ../../pep-0449.txt:18
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0449.txt:20
+msgid ""
+"This PEP provides a path to deprecate and ultimately remove the auto "
+"discovery of PyPI mirrors as well as the hard coded naming scheme which "
+"requires delegating a domain name under pypi.python.org to a third party."
+msgstr ""
+
+#: ../../pep-0449.txt:26
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0449.txt:28
+msgid ""
+"The PyPI mirroring infrastructure (defined in `PEP381`_) provides a means"
+" to mirror the content of PyPI used by the automatic installers. It also "
+"provides a method for auto discovery of mirrors and a consistent naming "
+"scheme."
+msgstr ""
+
+#: ../../pep-0449.txt:32
+msgid ""
+"There are a number of problems with the auto discovery protocol and the "
+"naming scheme:"
+msgstr ""
+
+#: ../../pep-0449.txt:35
+msgid ""
+"They give control over a \\*.python.org domain name to a third party, "
+"allowing that third party to set or read cookies on the pypi.python.org "
+"and python.org domain name."
+msgstr ""
+
+#: ../../pep-0449.txt:38
+msgid ""
+"The use of a sub domain of pypi.python.org means that the mirror "
+"operators will never be able to get a SSL certificate of their own, and "
+"giving them one for a python.org domain name is unlikely to happen."
+msgstr ""
+
+#: ../../pep-0449.txt:41
+msgid "The auto discovery uses an unauthenticated protocol (DNS)."
+msgstr ""
+
+#: ../../pep-0449.txt:42
+msgid ""
+"The lack of a TLS certificate on these domains means that clients can not"
+" be sure that they have not been a victim of DNS poisoning or a MITM "
+"attack."
+msgstr ""
+
+#: ../../pep-0449.txt:44
+msgid ""
+"The auto discovery protocol was designed to enable a client to "
+"automatically select a mirror for use. This is no longer a requirement "
+"because the CDN that PyPI is now using a globally distributed network of "
+"servers which will automatically select one close to the client without "
+"any effort on the clients part."
+msgstr ""
+
+#: ../../pep-0449.txt:49
+msgid ""
+"The auto discovery protocol and use of the consistent naming scheme has "
+"only ever been implemented by one installer (pip), and its "
+"implementation, besides being insecure, has serious issues with "
+"performance and is slated for removal with its next release (1.5)."
+msgstr ""
+
+#: ../../pep-0449.txt:53
+msgid ""
+"While there are provisions in `PEP381`_ that would solve *some* of these "
+"issues for a dedicated client it would not solve the issues that affect a"
+" users browser. Additionally these provisions have not been implemented "
+"by any installer to date."
+msgstr ""
+
+#: ../../pep-0449.txt:58
+msgid ""
+"Due to the number of issues, some of them very serious, and the CDN which"
+" provides most of the benefit of the auto discovery and consistent naming"
+" scheme this PEP proposes to first deprecate and then remove the "
+"[a..z].pypi.python.org names for mirrors and the last.pypi.python.org "
+"name for the auto discovery protocol. The ability to mirror and the "
+"method of mirror will not be affected and will continue to exist as "
+"written in `PEP381`_. Operators of existing mirrors are encouraged to "
+"acquire their own domains and certificates to use for their mirrors if "
+"they wish to continue hosting them."
+msgstr ""
+
+#: ../../pep-0449.txt:69
+msgid "Plan for Deprecation & Removal"
+msgstr ""
+
+#: ../../pep-0449.txt:71
+msgid ""
+"Immediately upon acceptance of this PEP documentation on PyPI will be "
+"updated to reflect the deprecated nature of the official public mirrors "
+"and will direct users to external resources like http://www.pypi-"
+"mirrors.org/ to discover unofficial public mirrors if they wish to use "
+"one."
+msgstr ""
+
+#: ../../pep-0449.txt:76
+msgid ""
+"Mirror operators, if they wish to continue operating their mirror, should"
+" acquire a domain name to represent their mirror and, if they are able, a"
+" TLS certificate. Once they have acquired a domain they should redirect "
+"their assigned N.pypi.python.org domain name to their new domain. On Feb "
+"15th, 2014 the DNS entries for [a..z].pypi.python.org and "
+"last.pypi.python.org will be removed. At any time prior to Feb 15th, 2014"
+" a mirror operator may request that their domain name be reclaimed by "
+"PyPI and pointed back at the master."
+msgstr ""
+
+#: ../../pep-0449.txt:86
+msgid "Why Feb 15th, 2014"
+msgstr ""
+
+#: ../../pep-0449.txt:88
+msgid ""
+"The most critical decision of this PEP is the final cut off date. If the "
+"date is too soon then it needlessly punishes people by forcing them to "
+"drop everything to update their deployment scripts. If the date is too "
+"far away then the extended period of time does not help with the "
+"migration effort and merely puts off the migration until a later date."
+msgstr ""
+
+#: ../../pep-0449.txt:94
+msgid ""
+"The date of Feb 15th, 2014 has been chosen because it is roughly 6 months"
+" from the date of the PEP. This should ensure a lengthy period of time to"
+" enable people to update their deployment procedures to point to the new "
+"domains names without merely padding the cut off date."
+msgstr ""
+
+#: ../../pep-0449.txt:101
+msgid "Why the DNS entries must be removed"
+msgstr ""
+
+#: ../../pep-0449.txt:103
+msgid ""
+"While it would be possible to simply reclaim the domain names used in "
+"mirror and direct them back at PyPI in order to prevent users from "
+"needing to update configurations to point away from those domains this "
+"has a number of issues."
+msgstr ""
+
+#: ../../pep-0449.txt:107
+msgid ""
+"Anyone who currently has these names hard coded in their configuration "
+"has them hard coded as HTTP. This means that by allowing these names to "
+"continue resolving we make it simple for a MITM operator to attack users "
+"by rewriting the redirect to HTTPS prior to giving it to the client."
+msgstr ""
+
+#: ../../pep-0449.txt:111
+msgid ""
+"The overhead of maintaining several domains pointing at PyPI has proved "
+"troublesome for the small number of N.pypi.python.org domains that have "
+"already been reclaimed. They oftentimes get mis-configured when things "
+"change on the service which often leaves them broken for months at a time"
+" until somebody notices. By leaving them in we leave users of these "
+"domains open to random breakages which are less likely to get caught or "
+"noticed."
+msgstr ""
+
+#: ../../pep-0449.txt:117
+msgid ""
+"People using these domains have explicitly chosen to use them for one "
+"reason or another. One such reason may be because they do not wish to "
+"deploy from a host located in a particular country. If these domains "
+"continue to resolve but do not point at their existing locations we have "
+"silently removed this choice from the existing users of those domains."
+msgstr ""
+
+#: ../../pep-0449.txt:123
+msgid ""
+"That being said, removing the entries *will* require users who have "
+"modified their configuration to either point back at the master (PyPI) or"
+" select a new mirror name to point at. This is regarded as a regrettable "
+"requirement to protect PyPI itself and the users of the mirrors from the "
+"attacks outlined above or, at the very least, require them to make an "
+"informed decision about the insecurity."
+msgstr ""
+
+#: ../../pep-0449.txt:132
+msgid "Public or Private Mirrors"
+msgstr ""
+
+#: ../../pep-0449.txt:134
+msgid ""
+"The mirroring protocol will continue to exist as defined in `PEP381`_ and"
+" people are encouraged to host public and private mirrors if they so "
+"desire. The recommended mirroring client is `Bandersnatch`_."
+msgstr ""
+
+#: ../../pep-0449.txt:145
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0449.txt:147
+msgid "This document has been placed in the public domain."
+msgstr ""
+

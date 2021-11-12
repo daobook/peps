@@ -1,0 +1,368 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0311.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0311.txt:1
+msgid "311"
+msgstr ""
+
+#: ../../pep-0311.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0311.txt:2
+msgid "Simplified Global Interpreter Lock Acquisition for Extensions"
+msgstr ""
+
+#: ../../pep-0311.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0311.txt:5
+msgid "Mark Hammond <mhammond@skippinet.com.au>"
+msgstr ""
+
+#: ../../pep-0311.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0311.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0311.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0311.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0311.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0311.txt:9
+msgid "05-Feb-2003"
+msgstr ""
+
+#: ../../pep-0311.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0311.txt:10
+msgid "05-Feb-2003 14-Feb-2003 19-Apr-2003"
+msgstr ""
+
+#: ../../pep-0311.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0311.txt:16
+msgid ""
+"This PEP proposes a simplified API for access to the Global Interpreter "
+"Lock (GIL) for Python extension modules. Specifically, it provides a "
+"solution for authors of complex multi-threaded extensions, where the "
+"current state of Python (i.e., the state of the GIL is unknown."
+msgstr ""
+
+#: ../../pep-0311.txt:22
+msgid ""
+"This PEP proposes a new API, for platforms built with threading support, "
+"to manage the Python thread state.  An implementation strategy is "
+"proposed, along with an initial, platform independent implementation."
+msgstr ""
+
+#: ../../pep-0311.txt:29
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0311.txt:31
+msgid ""
+"The current Python interpreter state API is suitable for simple, single-"
+"threaded extensions, but quickly becomes incredibly complex for non-"
+"trivial, multi-threaded extensions."
+msgstr ""
+
+#: ../../pep-0311.txt:35
+msgid "Currently Python provides two mechanisms for dealing with the GIL:"
+msgstr ""
+
+#: ../../pep-0311.txt:37
+msgid ""
+"``Py_BEGIN_ALLOW_THREADS`` and ``Py_END_ALLOW_THREADS`` macros. These "
+"macros are provided primarily to allow a simple Python extension that "
+"already owns the GIL to temporarily release it while making an "
+"\"external\" (ie, non-Python), generally expensive, call.  Any existing "
+"Python threads that are blocked waiting for the GIL are then free to run."
+"  While this is fine for extensions making calls from Python into the "
+"outside world, it is no help for extensions that need to make calls into "
+"Python when the thread state is unknown."
+msgstr ""
+
+#: ../../pep-0311.txt:47
+msgid ""
+"``PyThreadState`` and ``PyInterpreterState`` APIs. These API functions "
+"allow an extension/embedded application to acquire the GIL, but suffer "
+"from a serious boot-strapping problem - they require you to know the "
+"state of the Python interpreter and of the GIL before they can be used.  "
+"One particular problem is for extension authors that need to deal with "
+"threads never before seen by Python, but need to call Python from this "
+"thread.  It is very difficult, delicate and error prone to author an "
+"extension where these \"new\" threads always know the exact state of the "
+"GIL, and therefore can reliably interact with this API."
+msgstr ""
+
+#: ../../pep-0311.txt:59
+msgid ""
+"For these reasons, the question of how such extensions should interact "
+"with Python is quickly becoming a FAQ.  The main impetus for this PEP, a "
+"thread on python-dev [1]_, immediately identified the following projects "
+"with this exact issue:"
+msgstr ""
+
+#: ../../pep-0311.txt:64
+msgid "The win32all extensions"
+msgstr ""
+
+#: ../../pep-0311.txt:65
+msgid "Boost"
+msgstr ""
+
+#: ../../pep-0311.txt:66
+msgid "ctypes"
+msgstr ""
+
+#: ../../pep-0311.txt:67
+msgid "Python-GTK bindings"
+msgstr ""
+
+#: ../../pep-0311.txt:68
+msgid "Uno"
+msgstr ""
+
+#: ../../pep-0311.txt:69
+msgid "PyObjC"
+msgstr ""
+
+#: ../../pep-0311.txt:70
+msgid "Mac toolbox"
+msgstr ""
+
+#: ../../pep-0311.txt:71
+msgid "PyXPCOM"
+msgstr ""
+
+#: ../../pep-0311.txt:73
+msgid ""
+"Currently, there is no reasonable, portable solution to this problem, "
+"forcing each extension author to implement their own hand-rolled version."
+"  Further, the problem is complex, meaning many implementations are "
+"likely to be incorrect, leading to a variety of problems that will often "
+"manifest simply as \"Python has hung\"."
+msgstr ""
+
+#: ../../pep-0311.txt:80
+msgid ""
+"While the biggest problem in the existing thread-state API is the lack of"
+" the ability to query the current state of the lock, it is felt that a "
+"more complete, simplified solution should be offered to extension "
+"authors.  Such a solution should encourage authors to provide error-free,"
+" complex extension modules that take full advantage of Python's threading"
+" mechanisms."
+msgstr ""
+
+#: ../../pep-0311.txt:89
+msgid "Limitations and Exclusions"
+msgstr ""
+
+#: ../../pep-0311.txt:91
+msgid ""
+"This proposal identifies a solution for extension authors with complex "
+"multi-threaded requirements, but that only require a single "
+"\"PyInterpreterState\".  There is no attempt to cater for extensions that"
+" require multiple interpreter states.  At the time of writing, no "
+"extension has been identified that requires multiple PyInterpreterStates,"
+" and indeed it is not clear if that facility works correctly in Python "
+"itself."
+msgstr ""
+
+#: ../../pep-0311.txt:99
+msgid ""
+"This API will not perform automatic initialization of Python, or "
+"initialize Python for multi-threaded operation.  Extension authors must "
+"continue to call ``Py_Initialize()``, and for multi-threaded "
+"applications, ``PyEval_InitThreads()``.  The reason for this is that the "
+"first thread to call ``PyEval_InitThreads()`` is nominated as the \"main "
+"thread\" by Python, and so forcing the extension author to specify the "
+"main thread (by forcing her to make this first call) removes ambiguity.  "
+"As ``Py_Initialize()`` must be called before ``PyEval_InitThreads()``, "
+"and as both of these functions currently support being called multiple "
+"times, the burden this places on extension authors is considered "
+"reasonable."
+msgstr ""
+
+#: ../../pep-0311.txt:111
+msgid ""
+"It is intended that this API be all that is necessary to acquire the "
+"Python GIL.  Apart from the existing, standard ``Py_BEGIN_ALLOW_THREADS``"
+" and ``Py_END_ALLOW_THREADS`` macros, it is assumed that no additional "
+"thread state API functions will be used by the extension.  Extensions "
+"with such complicated requirements are free to continue to use the "
+"existing thread state API."
+msgstr ""
+
+#: ../../pep-0311.txt:120
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0311.txt:122
+msgid ""
+"This proposal recommends a new API be added to Python to simplify the "
+"management of the GIL.  This API will be available on all platforms built"
+" with ``WITH_THREAD`` defined."
+msgstr ""
+
+#: ../../pep-0311.txt:126
+msgid ""
+"The intent is that assuming Python has correctly been initialized, an "
+"extension author be able to use a small, well-defined \"prologue dance\","
+" at any time and on any thread, which will ensure Python is ready to be "
+"used on that thread.  After the extension has finished with Python, it "
+"must also perform an \"epilogue dance\" to release any resources "
+"previously acquired.  Ideally, these dances can be expressed in a single "
+"line."
+msgstr ""
+
+#: ../../pep-0311.txt:134
+msgid "Specifically, the following new APIs are proposed::"
+msgstr ""
+
+#: ../../pep-0311.txt:169
+msgid "Common usage will be::"
+msgstr ""
+
+#: ../../pep-0311.txt:183
+msgid "Design and Implementation"
+msgstr ""
+
+#: ../../pep-0311.txt:185
+msgid "The general operation of ``PyGILState_Ensure()`` will be:"
+msgstr ""
+
+#: ../../pep-0311.txt:187
+msgid "assert Python is initialized."
+msgstr ""
+
+#: ../../pep-0311.txt:189
+msgid ""
+"Get a ``PyThreadState`` for the current thread, creating and saving if "
+"necessary."
+msgstr ""
+
+#: ../../pep-0311.txt:192
+msgid "remember the current state of the lock (owned/not owned)"
+msgstr ""
+
+#: ../../pep-0311.txt:194
+msgid "If the current state does not own the GIL, acquire it."
+msgstr ""
+
+#: ../../pep-0311.txt:196
+msgid ""
+"Increment a counter for how many calls to ``PyGILState_Ensure`` have been"
+" made on the current thread."
+msgstr ""
+
+#: ../../pep-0311.txt:199 ../../pep-0311.txt:215
+msgid "return"
+msgstr ""
+
+#: ../../pep-0311.txt:201
+msgid "The general operation of ``PyGILState_Release()`` will be:"
+msgstr ""
+
+#: ../../pep-0311.txt:203
+msgid "assert our thread currently holds the lock."
+msgstr ""
+
+#: ../../pep-0311.txt:205
+msgid "If old state indicates lock was previously unlocked, release GIL."
+msgstr ""
+
+#: ../../pep-0311.txt:207
+msgid "Decrement the ``PyGILState_Ensure`` counter for the thread."
+msgstr ""
+
+#: ../../pep-0311.txt:209
+msgid "If counter == 0:"
+msgstr ""
+
+#: ../../pep-0311.txt:211
+msgid "release and delete the ``PyThreadState``."
+msgstr ""
+
+#: ../../pep-0311.txt:213
+msgid "forget the ``ThreadState`` as being owned by the thread."
+msgstr ""
+
+#: ../../pep-0311.txt:217
+msgid ""
+"It is assumed that it is an error if two discrete ``PyThreadStates`` are "
+"used for a single thread.  Comments in ``pystate.h`` (\"State unique per "
+"thread\") support this view, although it is never directly stated.  Thus,"
+" this will require some implementation of Thread Local Storage.  "
+"Fortunately, a platform independent implementation of Thread Local "
+"Storage already exists in the Python source tree, in the SGI threading "
+"port.  This code will be integrated into the platform independent Python "
+"core, but in such a way that platforms can provide a more optimal "
+"implementation if desired."
+msgstr ""
+
+#: ../../pep-0311.txt:230
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0311.txt:232
+msgid ""
+"An implementation of this proposal can be found at "
+"https://bugs.python.org/issue684256"
+msgstr ""
+
+#: ../../pep-0311.txt:237
+msgid "References"
+msgstr ""
+
+#: ../../pep-0311.txt:239
+msgid ""
+"David Abrahams, Extension modules, Threading, and the GIL "
+"https://mail.python.org/pipermail/python-dev/2002-December/031424.html"
+msgstr ""
+
+#: ../../pep-0311.txt:244
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0311.txt:246
+msgid "This document has been placed in the public domain."
+msgstr ""
+

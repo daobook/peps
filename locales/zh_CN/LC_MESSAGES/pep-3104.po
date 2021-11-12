@@ -1,0 +1,821 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3104.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3104.txt:1
+msgid "3104"
+msgstr ""
+
+#: ../../pep-3104.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3104.txt:2
+msgid "Access to Names in Outer Scopes"
+msgstr ""
+
+#: ../../pep-3104.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3104.txt:5
+msgid "Ka-Ping Yee <ping@zesty.ca>"
+msgstr ""
+
+#: ../../pep-3104.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3104.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3104.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3104.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3104.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3104.txt:9
+msgid "12-Oct-2006"
+msgstr ""
+
+#: ../../pep-3104.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3104.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3104.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3104.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3104.txt:17
+msgid ""
+"In most languages that support nested scopes, code can refer to or rebind"
+" (assign to) any name in the nearest enclosing scope. Currently, Python "
+"code can refer to a name in any enclosing scope, but it can only rebind "
+"names in two scopes: the local scope (by simple assignment) or the "
+"module-global scope (using a ``global`` declaration)."
+msgstr ""
+
+#: ../../pep-3104.txt:24
+msgid ""
+"This limitation has been raised many times on the Python-Dev mailing list"
+" and elsewhere, and has led to extended discussion and many proposals for"
+" ways to remove this limitation.  This PEP summarizes the various "
+"alternatives that have been suggested, together with advantages and "
+"disadvantages that have been mentioned for each."
+msgstr ""
+
+#: ../../pep-3104.txt:32
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3104.txt:34
+msgid ""
+"Before version 2.1, Python's treatment of scopes resembled that of "
+"standard C: within a file there were only two levels of scope, global and"
+" local.  In C, this is a natural consequence of the fact that function "
+"definitions cannot be nested.  But in Python, though functions are "
+"usually defined at the top level, a function definition can be executed "
+"anywhere.  This gave Python the syntactic appearance of nested scoping "
+"without the semantics, and yielded inconsistencies that were surprising "
+"to some programmers -- for example, a recursive function that worked at "
+"the top level would cease to work when moved inside another function, "
+"because the recursive function's own name would no longer be visible in "
+"its body's scope.  This violates the intuition that a function should "
+"behave consistently when placed in different contexts.  Here's an "
+"example::"
+msgstr ""
+
+#: ../../pep-3104.txt:55
+msgid ""
+"Python 2.1 moved closer to static nested scoping by making visible the "
+"names bound in all enclosing scopes (see PEP 227).  This change makes the"
+" above code example work as expected.  However, because any assignment to"
+" a name implicitly declares that name to be local, it is impossible to "
+"rebind a name in an outer scope (except when a ``global`` declaration "
+"forces the name to be global).  Thus, the following code, intended to "
+"display a number that can be incremented and decremented by clicking "
+"buttons, doesn't work as someone familiar with lexical scoping might "
+"expect::"
+msgstr ""
+
+#: ../../pep-3104.txt:76
+msgid ""
+"Python syntax doesn't provide a way to indicate that the name ``score`` "
+"mentioned in ``increment`` refers to the variable ``score`` bound in "
+"``make_scoreboard``, not a local variable in ``increment``. Users and "
+"developers of Python have expressed an interest in removing this "
+"limitation so that Python can have the full flexibility of the Algol-"
+"style scoping model that is now standard in many programming languages, "
+"including JavaScript, Perl, Ruby, Scheme, Smalltalk, C with GNU "
+"extensions, and C# 2.0."
+msgstr ""
+
+#: ../../pep-3104.txt:85
+msgid ""
+"It has been argued that such a feature isn't necessary, because a "
+"rebindable outer variable can be simulated by wrapping it in a mutable "
+"object::"
+msgstr ""
+
+#: ../../pep-3104.txt:105
+msgid ""
+"However, this workaround only highlights the shortcomings of existing "
+"scopes: the purpose of a function is to encapsulate code in its own "
+"namespace, so it seems unfortunate that the programmer should have to "
+"create additional namespaces to make up for missing functionality in the "
+"existing local scopes, and then have to decide whether each name should "
+"reside in the real scope or the simulated scope."
+msgstr ""
+
+#: ../../pep-3104.txt:112
+msgid ""
+"Another common objection is that the desired functionality can be written"
+" as a class instead, albeit somewhat more verbosely.  One rebuttal to "
+"this objection is that the existence of a different implementation style "
+"is not a reason to leave a supported programming construct (nested "
+"scopes) functionally incomplete.  Python is sometimes called a \"multi-"
+"paradigm language\" because it derives so much strength, practical "
+"flexibility, and pedagogical power from its support and graceful "
+"integration of multiple programming paradigms."
+msgstr ""
+
+#: ../../pep-3104.txt:121
+msgid ""
+"A proposal for scoping syntax appeared on Python-Dev as far back as 1994 "
+"[1]_, long before PEP 227's support for nested scopes was adopted.  At "
+"the time, Guido's response was:"
+msgstr ""
+
+#: ../../pep-3104.txt:125
+msgid ""
+"This is dangerously close to introducing CSNS [classic static nested "
+"scopes]. *If* you were to do so, your proposed semantics of scoped seem "
+"allright. I still think there is not enough need for CSNS to warrant this"
+" kind of construct ..."
+msgstr ""
+
+#: ../../pep-3104.txt:130
+msgid ""
+"After PEP 227, the \"outer name rebinding discussion\" has reappeared on "
+"Python-Dev enough times that it has become a familiar event, having "
+"recurred in its present form since at least 2003 [2]_. Although none of "
+"the language changes proposed in these discussions have yet been adopted,"
+" Guido has acknowledged that a language change is worth considering "
+"[12]_."
+msgstr ""
+
+#: ../../pep-3104.txt:139
+msgid "Other Languages"
+msgstr ""
+
+#: ../../pep-3104.txt:141
+msgid ""
+"To provide some background, this section describes how some other "
+"languages handle nested scopes and rebinding."
+msgstr ""
+
+#: ../../pep-3104.txt:145
+msgid "JavaScript, Perl, Scheme, Smalltalk, GNU C, C# 2.0"
+msgstr ""
+
+#: ../../pep-3104.txt:147
+msgid ""
+"These languages use variable declarations to indicate scope.  In "
+"JavaScript, a lexically scoped variable is declared with the ``var`` "
+"keyword; undeclared variable names are assumed to be global.  In Perl, a "
+"lexically scoped variable is declared with the ``my`` keyword; undeclared"
+" variable names are assumed to be global.  In Scheme, all variables must "
+"be declared (with ``define`` or ``let``, or as formal parameters).  In "
+"Smalltalk, any block can begin by declaring a list of local variable "
+"names between vertical bars. C and C# require type declarations for all "
+"variables.  For all these cases, the variable belongs to the scope "
+"containing the declaration."
+msgstr ""
+
+#: ../../pep-3104.txt:159
+msgid "Ruby (as of 1.8)"
+msgstr ""
+
+#: ../../pep-3104.txt:161
+msgid ""
+"Ruby is an instructive example because it appears to be the only other "
+"currently popular language that, like Python, tries to support statically"
+" nested scopes without requiring variable declarations, and thus has to "
+"come up with an unusual solution.  Functions in Ruby can contain other "
+"function definitions, and they can also contain code blocks enclosed in "
+"curly braces.  Blocks have access to outer variables, but nested "
+"functions do not.  Within a block, an assignment to a name implies a "
+"declaration of a local variable only if it would not shadow a name "
+"already bound in an outer scope; otherwise assignment is interpreted as "
+"rebinding of the outer name. Ruby's scoping syntax and rules have also "
+"been debated at great length, and changes seem likely in Ruby 2.0 [28]_."
+msgstr ""
+
+#: ../../pep-3104.txt:176
+msgid "Overview of Proposals"
+msgstr ""
+
+#: ../../pep-3104.txt:178
+msgid ""
+"There have been many different proposals on Python-Dev for ways to rebind"
+" names in outer scopes.  They all fall into two categories: new syntax in"
+" the scope where the name is bound, or new syntax in the scope where the "
+"name is used."
+msgstr ""
+
+#: ../../pep-3104.txt:184
+msgid "New Syntax in the Binding (Outer) Scope"
+msgstr ""
+
+#: ../../pep-3104.txt:187 ../../pep-3104.txt:273
+msgid "Scope Override Declaration"
+msgstr ""
+
+#: ../../pep-3104.txt:189
+msgid ""
+"The proposals in this category all suggest a new kind of declaration "
+"statement similar to JavaScript's ``var``.  A few possible keywords have "
+"been proposed for this purpose:"
+msgstr ""
+
+#: ../../pep-3104.txt:193
+msgid "``scope x`` [4]_"
+msgstr ""
+
+#: ../../pep-3104.txt:194
+msgid "``var x`` [4]_ [9]_"
+msgstr ""
+
+#: ../../pep-3104.txt:195
+msgid "``my x`` [13]_"
+msgstr ""
+
+#: ../../pep-3104.txt:197
+msgid ""
+"In all these proposals, a declaration such as ``var x`` in a particular "
+"scope S would cause all references to ``x`` in scopes nested within S to "
+"refer to the ``x`` bound in S."
+msgstr ""
+
+#: ../../pep-3104.txt:201
+msgid ""
+"The primary objection to this category of proposals is that the meaning "
+"of a function definition would become context-sensitive. Moving a "
+"function definition inside some other block could cause any of the local "
+"name references in the function to become nonlocal, due to declarations "
+"in the enclosing block.  For blocks in Ruby 1.8, this is actually the "
+"case; in the following example, the two setters have different effects "
+"even though they look identical::"
+msgstr ""
+
+#: ../../pep-3104.txt:217
+msgid ""
+"Note that although this proposal resembles declarations in JavaScript and"
+" Perl, the effect on the language is different because in those languages"
+" undeclared variables are global by default, whereas in Python undeclared"
+" variables are local by default.  Thus, moving a function inside some "
+"other block in JavaScript or Perl can only reduce the scope of a "
+"previously global name reference, whereas in Python with this proposal, "
+"it could expand the scope of a previously local name reference."
+msgstr ""
+
+#: ../../pep-3104.txt:227
+msgid "Required Variable Declaration"
+msgstr ""
+
+#: ../../pep-3104.txt:229
+msgid ""
+"A more radical proposal [21]_ suggests removing Python's scope-guessing "
+"convention altogether and requiring that all names be declared in the "
+"scope where they are to be bound, much like Scheme.  With this proposal, "
+"``var x = 3`` would both declare ``x`` to belong to the local scope and "
+"bind it, where as ``x = 3`` would rebind the existing visible ``x``.  In "
+"a context without an enclosing scope containing a ``var x`` declaration, "
+"the statement ``x = 3`` would be statically determined to be illegal."
+msgstr ""
+
+#: ../../pep-3104.txt:238
+msgid ""
+"This proposal yields a simple and consistent model, but it would be "
+"incompatible with all existing Python code."
+msgstr ""
+
+#: ../../pep-3104.txt:242
+msgid "New Syntax in the Referring (Inner) Scope"
+msgstr ""
+
+#: ../../pep-3104.txt:244
+msgid "There are three kinds of proposals in this category."
+msgstr ""
+
+#: ../../pep-3104.txt:247
+msgid "Outer Reference Expression"
+msgstr ""
+
+#: ../../pep-3104.txt:249
+msgid ""
+"This type of proposal suggests a new way of referring to a variable in an"
+" outer scope when using the variable in an expression.  One syntax that "
+"has been suggested for this is ``.x`` [7]_, which would refer to ``x`` "
+"without creating a local binding for it.  A concern with this proposal is"
+" that in many contexts ``x`` and ``.x`` could be used interchangeably, "
+"which would confuse the reader [31]_. A closely related idea is to use "
+"multiple dots to specify the number of scope levels to ascend [8]_, but "
+"most consider this too error-prone [17]_."
+msgstr ""
+
+#: ../../pep-3104.txt:260
+msgid "Rebinding Operator"
+msgstr ""
+
+#: ../../pep-3104.txt:262
+msgid ""
+"This proposal suggests a new assignment-like operator that rebinds a name"
+" without declaring the name to be local [2]_.  Whereas the statement ``x "
+"= 3`` both declares ``x`` a local variable and binds it to 3, the "
+"statement ``x := 3`` would change the existing binding of ``x`` without "
+"declaring it local."
+msgstr ""
+
+#: ../../pep-3104.txt:268
+msgid ""
+"This is a simple solution, but according to PEP 3099 it has been rejected"
+" (perhaps because it would be too easy to miss or to confuse with ``=``)."
+msgstr ""
+
+#: ../../pep-3104.txt:275
+msgid ""
+"The proposals in this category suggest a new kind of declaration "
+"statement in the inner scope that prevents a name from becoming local.  "
+"This statement would be similar in nature to the ``global`` statement, "
+"but instead of making the name refer to a binding in the top module-level"
+" scope, it would make the name refer to the binding in the nearest "
+"enclosing scope."
+msgstr ""
+
+#: ../../pep-3104.txt:282
+msgid ""
+"This approach is attractive due to its parallel with a familiar Python "
+"construct, and because it retains context-independence for function "
+"definitions."
+msgstr ""
+
+#: ../../pep-3104.txt:286
+msgid ""
+"This approach also has advantages from a security and debugging "
+"perspective.  The resulting Python would not only match the functionality"
+" of other nested-scope languages but would do so with a syntax that is "
+"arguably even better for defensive programming.  In most other languages,"
+" a declaration contracts the scope of an existing name, so inadvertently "
+"omitting the declaration could yield farther-reaching (i.e. more "
+"dangerous) effects than expected.  In Python with this proposal, the "
+"extra effort of adding the declaration is aligned with the increased risk"
+" of non-local effects (i.e. the path of least resistance is the safer "
+"path)."
+msgstr ""
+
+#: ../../pep-3104.txt:297
+msgid "Many spellings have been suggested for such a declaration:"
+msgstr ""
+
+#: ../../pep-3104.txt:299
+msgid "``scoped x`` [1]_"
+msgstr ""
+
+#: ../../pep-3104.txt:300
+msgid "``global x in f`` [3]_ (explicitly specify which scope)"
+msgstr ""
+
+#: ../../pep-3104.txt:301
+msgid "``free x`` [5]_"
+msgstr ""
+
+#: ../../pep-3104.txt:302
+msgid "``outer x`` [6]_"
+msgstr ""
+
+#: ../../pep-3104.txt:303
+msgid "``use x`` [9]_"
+msgstr ""
+
+#: ../../pep-3104.txt:304
+msgid "``global x`` [10]_ (change the meaning of ``global``)"
+msgstr ""
+
+#: ../../pep-3104.txt:305
+msgid "``nonlocal x`` [11]_"
+msgstr ""
+
+#: ../../pep-3104.txt:306
+msgid "``global x outer`` [18]_"
+msgstr ""
+
+#: ../../pep-3104.txt:307
+msgid "``global in x`` [18]_"
+msgstr ""
+
+#: ../../pep-3104.txt:308
+msgid "``not global x`` [18]_"
+msgstr ""
+
+#: ../../pep-3104.txt:309
+msgid "``extern x`` [20]_"
+msgstr ""
+
+#: ../../pep-3104.txt:310
+msgid "``ref x`` [22]_"
+msgstr ""
+
+#: ../../pep-3104.txt:311
+msgid "``refer x`` [22]_"
+msgstr ""
+
+#: ../../pep-3104.txt:312
+msgid "``share x`` [22]_"
+msgstr ""
+
+#: ../../pep-3104.txt:313
+msgid "``sharing x`` [22]_"
+msgstr ""
+
+#: ../../pep-3104.txt:314
+msgid "``common x`` [22]_"
+msgstr ""
+
+#: ../../pep-3104.txt:315
+msgid "``using x`` [22]_"
+msgstr ""
+
+#: ../../pep-3104.txt:316
+msgid "``borrow x`` [22]_"
+msgstr ""
+
+#: ../../pep-3104.txt:317
+msgid "``reuse x`` [23]_"
+msgstr ""
+
+#: ../../pep-3104.txt:318
+msgid "``scope f x`` [25]_ (explicitly specify which scope)"
+msgstr ""
+
+#: ../../pep-3104.txt:320
+msgid ""
+"The most commonly discussed choices appear to be ``outer``, ``global``, "
+"and ``nonlocal``.  ``outer`` is already used as both a variable name and "
+"an attribute name in the standard library.  The word ``global`` has a "
+"conflicting meaning, because \"global variable\" is generally understood "
+"to mean a variable with top-level scope [27]_. In C, the keyword "
+"``extern`` means that a name refers to a variable in a different "
+"compilation unit.  While ``nonlocal`` is a bit long and less pleasant-"
+"sounding than some of the other options, it does have precisely the "
+"correct meaning: it declares a name not local."
+msgstr ""
+
+#: ../../pep-3104.txt:332
+msgid "Proposed Solution"
+msgstr ""
+
+#: ../../pep-3104.txt:334
+msgid ""
+"The solution proposed by this PEP is to add a scope override declaration "
+"in the referring (inner) scope.  Guido has expressed a preference for "
+"this category of solution on Python-Dev [14]_ and has shown approval for "
+"``nonlocal`` as the keyword [19]_."
+msgstr ""
+
+#: ../../pep-3104.txt:339
+msgid "The proposed declaration::"
+msgstr ""
+
+#: ../../pep-3104.txt:343
+msgid ""
+"prevents ``x`` from becoming a local name in the current scope.  All "
+"occurrences of ``x`` in the current scope will refer to the ``x`` bound "
+"in an outer enclosing scope.  As with ``global``, multiple names are "
+"permitted::"
+msgstr ""
+
+#: ../../pep-3104.txt:350
+msgid ""
+"If there is no pre-existing binding in an enclosing scope, the compiler "
+"raises a SyntaxError.  (It may be a bit of a stretch to call this a "
+"syntax error, but so far SyntaxError is used for all compile-time errors,"
+" including, for example, __future__ import with an unknown feature name.)"
+"  Guido has said that this kind of declaration in the absence of an outer"
+" binding should be considered an error [16]_."
+msgstr ""
+
+#: ../../pep-3104.txt:358
+msgid ""
+"If a ``nonlocal`` declaration collides with the name of a formal "
+"parameter in the local scope, the compiler raises a SyntaxError."
+msgstr ""
+
+#: ../../pep-3104.txt:361
+msgid ""
+"A shorthand form is also permitted, in which ``nonlocal`` is prepended to"
+" an assignment or augmented assignment::"
+msgstr ""
+
+#: ../../pep-3104.txt:366
+msgid ""
+"The above has exactly the same meaning as ``nonlocal x; x = 3``. (Guido "
+"supports a similar form of the ``global`` statement [24]_.)"
+msgstr ""
+
+#: ../../pep-3104.txt:369
+msgid ""
+"On the left side of the shorthand form, only identifiers are allowed, not"
+" target expressions like ``x[0]``.  Otherwise, all forms of assignment "
+"are allowed.  The proposed grammar of the ``nonlocal`` statement is::"
+msgstr ""
+
+#: ../../pep-3104.txt:379
+msgid ""
+"The rationale for allowing all these forms of assignment is that it "
+"simplifies understanding of the ``nonlocal`` statement.  Separating the "
+"shorthand form into a declaration and an assignment is sufficient to "
+"understand what it means and whether it is valid."
+msgstr ""
+
+#: ../../pep-3104.txt:386
+msgid ""
+"The shorthand syntax was not added in the original implementation of the "
+"PEP. Later discussions [29]_ [30]_ concluded this syntax should not be "
+"implemented."
+msgstr ""
+
+#: ../../pep-3104.txt:392
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-3104.txt:394
+msgid ""
+"This PEP targets Python 3000, as suggested by Guido [19]_.  However, "
+"others have noted that some options considered in this PEP may be small "
+"enough changes to be feasible in Python 2.x [26]_, in which case this PEP"
+" could possibly be moved to be a 2.x series PEP."
+msgstr ""
+
+#: ../../pep-3104.txt:399
+msgid ""
+"As a (very rough) measure of the impact of introducing a new keyword, "
+"here is the number of times that some of the proposed keywords appear as "
+"identifiers in the standard library, according to a scan of the Python "
+"SVN repository on November 5, 2006::"
+msgstr ""
+
+#: ../../pep-3104.txt:411
+msgid ""
+"``global`` appears 214 times as an existing keyword.  As a measure of the"
+" impact of using ``global`` as the outer-scope keyword, there are 18 "
+"files in the standard library that would break as a result of such a "
+"change (because a function declares a variable ``global`` before that "
+"variable has been introduced in the global scope)::"
+msgstr ""
+
+#: ../../pep-3104.txt:441
+msgid "References"
+msgstr ""
+
+#: ../../pep-3104.txt:443
+msgid ""
+"Scoping (was Re: Lambda binding solved?) (Rafael Bracho) "
+"https://legacy.python.org/search/hypermail/python-1994q1/0301.html"
+msgstr ""
+
+#: ../../pep-3104.txt:446
+msgid ""
+"Extended Function syntax (Just van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2003-February/032764.html"
+msgstr ""
+
+#: ../../pep-3104.txt:449
+msgid ""
+"Closure semantics (Guido van Rossum) https://mail.python.org/pipermail"
+"/python-dev/2003-October/039214.html"
+msgstr ""
+
+#: ../../pep-3104.txt:452
+msgid ""
+"Better Control of Nested Lexical Scopes (Almann T. Goo) "
+"https://mail.python.org/pipermail/python-dev/2006-February/061568.html"
+msgstr ""
+
+#: ../../pep-3104.txt:455
+msgid ""
+"PEP for Better Control of Nested Lexical Scopes (Jeremy Hylton) "
+"https://mail.python.org/pipermail/python-dev/2006-February/061602.html"
+msgstr ""
+
+#: ../../pep-3104.txt:458
+msgid ""
+"PEP for Better Control of Nested Lexical Scopes (Almann T. Goo) "
+"https://mail.python.org/pipermail/python-dev/2006-February/061603.html"
+msgstr ""
+
+#: ../../pep-3104.txt:461
+msgid ""
+"Using and binding relative names (Phillip J. Eby) "
+"https://mail.python.org/pipermail/python-dev/2006-February/061636.html"
+msgstr ""
+
+#: ../../pep-3104.txt:464
+msgid ""
+"Using and binding relative names (Steven Bethard) "
+"https://mail.python.org/pipermail/python-dev/2006-February/061749.html"
+msgstr ""
+
+#: ../../pep-3104.txt:467
+msgid ""
+"Lexical scoping in Python 3k (Ka-Ping Yee) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066862.html"
+msgstr ""
+
+#: ../../pep-3104.txt:470
+msgid ""
+"Lexical scoping in Python 3k (Greg Ewing) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066889.html"
+msgstr ""
+
+#: ../../pep-3104.txt:473
+msgid ""
+"Lexical scoping in Python 3k (Ka-Ping Yee) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066942.html"
+msgstr ""
+
+#: ../../pep-3104.txt:476
+msgid ""
+"Lexical scoping in Python 3k (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066950.html"
+msgstr ""
+
+#: ../../pep-3104.txt:479
+msgid ""
+"Explicit Lexical Scoping (pre-PEP?) (Talin) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066978.html"
+msgstr ""
+
+#: ../../pep-3104.txt:482
+msgid ""
+"Explicit Lexical Scoping (pre-PEP?) (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066991.html"
+msgstr ""
+
+#: ../../pep-3104.txt:485
+msgid ""
+"Explicit Lexical Scoping (pre-PEP?) (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066995.html"
+msgstr ""
+
+#: ../../pep-3104.txt:488
+msgid ""
+"Lexical scoping in Python 3k (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2006-July/066968.html"
+msgstr ""
+
+#: ../../pep-3104.txt:491
+msgid ""
+"Explicit Lexical Scoping (pre-PEP?) (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2006-July/067004.html"
+msgstr ""
+
+#: ../../pep-3104.txt:494
+msgid ""
+"Explicit Lexical Scoping (pre-PEP?) (Andrew Clover) "
+"https://mail.python.org/pipermail/python-dev/2006-July/067007.html"
+msgstr ""
+
+#: ../../pep-3104.txt:497
+msgid ""
+"Explicit Lexical Scoping (pre-PEP?) (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2006-July/067067.html"
+msgstr ""
+
+#: ../../pep-3104.txt:500
+msgid ""
+"Explicit Lexical Scoping (pre-PEP?) (Matthew Barnes) "
+"https://mail.python.org/pipermail/python-dev/2006-July/067221.html"
+msgstr ""
+
+#: ../../pep-3104.txt:503
+msgid ""
+"Sky pie: a \"var\" keyword (a thread started by Neil Toronto) "
+"https://mail.python.org/pipermail/python-3000/2006-October/003968.html"
+msgstr ""
+
+#: ../../pep-3104.txt:506
+msgid ""
+"Alternatives to 'outer' (Talin) "
+"https://mail.python.org/pipermail/python-3000/2006-October/004021.html"
+msgstr ""
+
+#: ../../pep-3104.txt:509
+msgid ""
+"Alternatives to 'outer' (Jim Jewett) "
+"https://mail.python.org/pipermail/python-3000/2006-November/004153.html"
+msgstr ""
+
+#: ../../pep-3104.txt:512
+msgid ""
+"Draft PEP for outer scopes (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-3000/2006-November/004166.html"
+msgstr ""
+
+#: ../../pep-3104.txt:515
+msgid ""
+"Draft PEP for outer scopes (Talin) "
+"https://mail.python.org/pipermail/python-3000/2006-November/004190.html"
+msgstr ""
+
+#: ../../pep-3104.txt:518
+msgid ""
+"Draft PEP for outer scopes (Nick Coghlan) "
+"https://mail.python.org/pipermail/python-3000/2006-November/004237.html"
+msgstr ""
+
+#: ../../pep-3104.txt:521
+msgid ""
+"Global variable (version 2006-11-01T01:23:16) "
+"http://en.wikipedia.org/wiki/Global_variable"
+msgstr ""
+
+#: ../../pep-3104.txt:524
+msgid ""
+"Ruby 2.0 block local variable "
+"http://redhanded.hobix.com/inspect/ruby20BlockLocalVariable.html"
+msgstr ""
+
+#: ../../pep-3104.txt:527
+msgid ""
+"Issue 4199: combining assignment with global & nonlocal (Guido van "
+"Rossum) https://mail.python.org/pipermail/python-"
+"dev/2013-June/127142.html"
+msgstr ""
+
+#: ../../pep-3104.txt:530
+msgid ""
+"Whatever happened to 'nonlocal x = y'? (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2018-January/151627.html"
+msgstr ""
+
+#: ../../pep-3104.txt:533
+msgid ""
+"Using and binding relative names (Almann T. Goo) "
+"https://mail.python.org/pipermail/python-dev/2006-February/061761.html"
+msgstr ""
+
+#: ../../pep-3104.txt:538
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-3104.txt:540
+msgid ""
+"The ideas and proposals mentioned in this PEP are gleaned from countless "
+"Python-Dev postings.  Thanks to Jim Jewett, Mike Orr, Jason Orendorff, "
+"and Christian Tanzer for suggesting specific edits to this PEP."
+msgstr ""
+
+#: ../../pep-3104.txt:547
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3104.txt:549
+msgid "This document has been placed in the public domain."
+msgstr ""
+

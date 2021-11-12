@@ -1,0 +1,643 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0340.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0340.txt:1
+msgid "340"
+msgstr ""
+
+#: ../../pep-0340.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0340.txt:2
+msgid "Anonymous Block Statements"
+msgstr ""
+
+#: ../../pep-0340.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0340.txt:5
+msgid "Guido van Rossum"
+msgstr ""
+
+#: ../../pep-0340.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0340.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0340.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0340.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0340.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0340.txt:9
+msgid "27-Apr-2005"
+msgstr ""
+
+#: ../../pep-0340.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0340.txt:13
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0340.txt:15
+msgid ""
+"This PEP proposes a new type of compound statement which can be used for "
+"resource management purposes.  The new statement type is provisionally "
+"called the block-statement because the keyword to be used has not yet "
+"been chosen."
+msgstr ""
+
+#: ../../pep-0340.txt:20
+msgid ""
+"This PEP competes with several other PEPs: PEP 288 (Generators Attributes"
+" and Exceptions; only the second part), PEP 310 (Reliable "
+"Acquisition/Release Pairs), and PEP 325 (Resource-Release Support for "
+"Generators)."
+msgstr ""
+
+#: ../../pep-0340.txt:25
+msgid ""
+"I should clarify that using a generator to \"drive\" a block statement is"
+" really a separable proposal; with just the definition of the block "
+"statement from the PEP you could implement all the examples using a class"
+" (similar to example 6, which is easily turned into a template).  But the"
+" key idea is using a generator to drive a block statement; the rest is "
+"elaboration, so I'd like to keep these two parts together."
+msgstr ""
+
+#: ../../pep-0340.txt:33
+msgid ""
+"(PEP 342, Enhanced Iterators, was originally a part of this PEP; but the "
+"two proposals are really independent and with Steven Bethard's help I "
+"have moved it to a separate PEP.)"
+msgstr ""
+
+#: ../../pep-0340.txt:38
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0340.txt:40
+msgid ""
+"I am rejecting this PEP in favor of PEP 343.  See the motivational "
+"section in that PEP for the reasoning behind this rejection.  GvR."
+msgstr ""
+
+#: ../../pep-0340.txt:44
+msgid "Motivation and Summary"
+msgstr ""
+
+#: ../../pep-0340.txt:46
+msgid "(Thanks to Shane Hathaway -- Hi Shane!)"
+msgstr ""
+
+#: ../../pep-0340.txt:48
+msgid ""
+"Good programmers move commonly used code into reusable functions. "
+"Sometimes, however, patterns arise in the structure of the functions "
+"rather than the actual sequence of statements.  For example, many "
+"functions acquire a lock, execute some code specific to that function, "
+"and unconditionally release the lock.  Repeating the locking code in "
+"every function that uses it is error prone and makes refactoring "
+"difficult."
+msgstr ""
+
+#: ../../pep-0340.txt:56
+msgid ""
+"Block statements provide a mechanism for encapsulating patterns of "
+"structure.  Code inside the block statement runs under the control of an "
+"object called a block iterator.  Simple block iterators execute code "
+"before and after the code inside the block statement. Block iterators "
+"also have the opportunity to execute the controlled code more than once "
+"(or not at all), catch exceptions, or receive data from the body of the "
+"block statement."
+msgstr ""
+
+#: ../../pep-0340.txt:64
+msgid ""
+"A convenient way to write block iterators is to write a generator (PEP "
+"255).  A generator looks a lot like a Python function, but instead of "
+"returning a value immediately, generators pause their execution at "
+"\"yield\" statements.  When a generator is used as a block iterator, the "
+"yield statement tells the Python interpreter to suspend the block "
+"iterator, execute the block statement body, and resume the block iterator"
+" when the body has executed."
+msgstr ""
+
+#: ../../pep-0340.txt:72
+msgid ""
+"The Python interpreter behaves as follows when it encounters a block "
+"statement based on a generator.  First, the interpreter instantiates the "
+"generator and begins executing it.  The generator does setup work "
+"appropriate to the pattern it encapsulates, such as acquiring a lock, "
+"opening a file, starting a database transaction, or starting a loop.  "
+"Then the generator yields execution to the body of the block statement "
+"using a yield statement.  When the block statement body completes, raises"
+" an uncaught exception, or sends data back to the generator using a "
+"continue statement, the generator resumes.  At this point, the generator "
+"can either clean up and stop or yield again, causing the block statement "
+"body to execute again.  When the generator finishes, the interpreter "
+"leaves the block statement."
+msgstr ""
+
+#: ../../pep-0340.txt:87
+msgid "Use Cases"
+msgstr ""
+
+#: ../../pep-0340.txt:89
+msgid "See the Examples section near the end."
+msgstr ""
+
+#: ../../pep-0340.txt:92
+msgid "Specification: the __exit__() Method"
+msgstr ""
+
+#: ../../pep-0340.txt:94
+msgid ""
+"An optional new method for iterators is proposed, called ``__exit__()``."
+"  It takes up to three arguments which correspond to the three "
+"\"arguments\" to the raise-statement: type, value, and traceback.  If all"
+" three arguments are ``None``, ``sys.exc_info()`` may be consulted to "
+"provide suitable default values."
+msgstr ""
+
+#: ../../pep-0340.txt:101
+msgid "Specification: the Anonymous Block Statement"
+msgstr ""
+
+#: ../../pep-0340.txt:103
+msgid "A new statement is proposed with the syntax::"
+msgstr ""
+
+#: ../../pep-0340.txt:108
+msgid ""
+"Here, 'block' and 'as' are new keywords; ``EXPR1`` is an arbitrary "
+"expression (but not an expression-list) and ``VAR1`` is an arbitrary "
+"assignment target (which may be a comma-separated list)."
+msgstr ""
+
+#: ../../pep-0340.txt:112
+msgid ""
+"The \"as VAR1\" part is optional; if omitted, the assignments to VAR1 in "
+"the translation below are omitted (but the expressions assigned are still"
+" evaluated!)."
+msgstr ""
+
+#: ../../pep-0340.txt:116
+msgid ""
+"The choice of the 'block' keyword is contentious; many alternatives have "
+"been proposed, including not to use a keyword at all (which I actually "
+"like).  PEP 310 uses 'with' for similar semantics, but I would like to "
+"reserve that for a with-statement similar to the one found in Pascal and "
+"VB.  (Though I just found that the C# designers don't like 'with' [2]_, "
+"and I have to agree with their reasoning.)  To sidestep this issue "
+"momentarily I'm using 'block' until we can agree on the right keyword, if"
+" any."
+msgstr ""
+
+#: ../../pep-0340.txt:125
+msgid ""
+"Note that the 'as' keyword is not contentious (it will finally be "
+"elevated to proper keyword status)."
+msgstr ""
+
+#: ../../pep-0340.txt:128
+msgid ""
+"Note that it is up to the iterator to decide whether a block-statement "
+"represents a loop with multiple iterations; in the most common use case "
+"``BLOCK1`` is executed exactly once.  To the parser, however, it is "
+"always a loop; break and continue return transfer to the block's iterator"
+" (see below for details)."
+msgstr ""
+
+#: ../../pep-0340.txt:134
+msgid ""
+"The translation is subtly different from a for-loop: ``iter()`` is not "
+"called, so ``EXPR1`` should already be an iterator (not just an "
+"iterable); and the iterator is guaranteed to be notified when the block-"
+"statement is left, regardless if this is due to a break, return or "
+"exception::"
+msgstr ""
+
+#: ../../pep-0340.txt:165
+msgid ""
+"(However, the variables 'itr' etc. are not user-visible and the built-in "
+"names used cannot be overridden by the user.)"
+msgstr ""
+
+#: ../../pep-0340.txt:168
+msgid "Inside ``BLOCK1``, the following special translations apply:"
+msgstr ""
+
+#: ../../pep-0340.txt:170
+msgid "\"break\" is always legal; it is translated into::"
+msgstr ""
+
+#: ../../pep-0340.txt:175
+msgid ""
+"\"return EXPR3\" is only legal when the block-statement is contained in a"
+" function definition; it is translated into::"
+msgstr ""
+
+#: ../../pep-0340.txt:183
+msgid ""
+"The net effect is that break and return behave much the same as if the "
+"block-statement were a for-loop, except that the iterator gets a chance "
+"at resource cleanup before the block-statement is left, through the "
+"optional ``__exit__()`` method. The iterator also gets a chance if the "
+"block-statement is left through raising an exception.  If the iterator "
+"doesn't have an ``__exit__()`` method, there is no difference with a for-"
+"loop (except that a for-loop calls ``iter()`` on ``EXPR1``)."
+msgstr ""
+
+#: ../../pep-0340.txt:192
+msgid ""
+"Note that a yield-statement in a block-statement is not treated "
+"differently.  It suspends the function containing the block **without** "
+"notifying the block's iterator.  The block's iterator is entirely unaware"
+" of this yield, since the local control flow doesn't actually leave the "
+"block.  In other words, it is **not** like a break or return statement.  "
+"When the loop that was resumed by the yield calls ``next()``, the block "
+"is resumed right after the yield.  (See example 7 below.)  The generator "
+"finalization semantics described below guarantee (within the limitations "
+"of all finalization semantics) that the block will be resumed eventually."
+msgstr ""
+
+#: ../../pep-0340.txt:203
+msgid ""
+"Unlike the for-loop, the block-statement does not have an else-clause.  I"
+" think it would be confusing, and emphasize the \"loopiness\" of the "
+"block-statement, while I want to emphasize its **difference** from a for-"
+"loop.  In addition, there are several possible semantics for an else-"
+"clause, and only a very weak use case."
+msgstr ""
+
+#: ../../pep-0340.txt:211
+msgid "Specification: Generator Exit Handling"
+msgstr ""
+
+#: ../../pep-0340.txt:213
+msgid "Generators will implement the new ``__exit__()`` method API."
+msgstr ""
+
+#: ../../pep-0340.txt:215
+msgid ""
+"Generators will be allowed to have a ``yield`` statement inside a try-"
+"finally statement."
+msgstr ""
+
+#: ../../pep-0340.txt:218
+msgid ""
+"The expression argument to the yield-statement will become optional "
+"(defaulting to None)."
+msgstr ""
+
+#: ../../pep-0340.txt:221
+msgid ""
+"When ``__exit__()`` is called, the generator is resumed but at the point "
+"of the yield-statement the exception represented by the ``__exit__`` "
+"argument(s) is raised.  The generator may re-raise this exception, raise "
+"another exception, or yield another value, except that if the exception "
+"passed in to ``__exit__()`` was StopIteration, it ought to raise "
+"StopIteration (otherwise the effect would be that a break is turned into "
+"continue, which is unexpected at least).  When the **initial** call "
+"resuming the generator is an ``__exit__()`` call instead of a ``next()`` "
+"call, the generator's execution is aborted and the exception is re-raised"
+" without passing control to the generator's body."
+msgstr ""
+
+#: ../../pep-0340.txt:233
+msgid ""
+"When a generator that has not yet terminated is garbage-collected (either"
+" through reference counting or by the cyclical garbage collector), its "
+"``__exit__()`` method is called once with StopIteration as its first "
+"argument.  Together with the requirement that a generator ought to raise "
+"StopIteration when ``__exit__()`` is called with StopIteration, this "
+"guarantees the eventual activation of any finally-clauses that were "
+"active when the generator was last suspended.  Of course, under certain "
+"circumstances the generator may never be garbage-collected.  This is no "
+"different than the guarantees that are made about finalizers "
+"(``__del__()`` methods) of other objects."
+msgstr ""
+
+#: ../../pep-0340.txt:246
+msgid "Alternatives Considered and Rejected"
+msgstr ""
+
+#: ../../pep-0340.txt:248
+msgid ""
+"Many alternatives have been proposed for 'block'.  I haven't seen a "
+"proposal for another keyword that I like better than 'block' yet.  Alas, "
+"'block' is also not a good choice; it is a rather popular name for "
+"variables, arguments and methods. Perhaps 'with' is the best choice after"
+" all?"
+msgstr ""
+
+#: ../../pep-0340.txt:254
+msgid ""
+"Instead of trying to pick the ideal keyword, the block-statement could "
+"simply have the form::"
+msgstr ""
+
+#: ../../pep-0340.txt:260
+msgid ""
+"This is at first attractive because, together with a good choice of "
+"function names (like those in the Examples section below) used in "
+"``EXPR1``, it reads well, and feels like a \"user-defined statement\".  "
+"And yet, it makes me (and many others) uncomfortable; without a keyword "
+"the syntax is very \"bland\", difficult to look up in a manual (remember "
+"that 'as' is optional), and it makes the meaning of break and continue in"
+" the block-statement even more confusing."
+msgstr ""
+
+#: ../../pep-0340.txt:269
+msgid ""
+"Phillip Eby has proposed to have the block-statement use an entirely "
+"different API than the for-loop, to differentiate between the two.  A "
+"generator would have to be wrapped in a decorator to make it support the "
+"block API.  IMO this adds more complexity with very little benefit; and "
+"we can't really deny that the block-statement is conceptually a loop -- "
+"it supports break and continue, after all."
+msgstr ""
+
+#: ../../pep-0340.txt:277
+msgid ""
+"This keeps getting proposed: \"block VAR1 = EXPR1\" instead of \"block "
+"EXPR1 as VAR1\".  That would be very misleading, since VAR1 does **not** "
+"get assigned the value of EXPR1; EXPR1 results in a generator which is "
+"assigned to an internal variable, and VAR1 is the value returned by "
+"successive calls to the ``__next__()`` method of that iterator."
+msgstr ""
+
+#: ../../pep-0340.txt:284
+msgid ""
+"Why not change the translation to apply ``iter(EXPR1)``?  All the "
+"examples would continue to work.  But this makes the block-statement "
+"**more** like a for-loop, while the emphasis ought to be on the "
+"**difference** between the two.  Not calling ``iter()`` catches a bunch "
+"of misunderstandings, like using a sequence as ``EXPR1``."
+msgstr ""
+
+#: ../../pep-0340.txt:292
+msgid "Comparison to Thunks"
+msgstr ""
+
+#: ../../pep-0340.txt:294
+msgid ""
+"Alternative semantics proposed for the block-statement turn the block "
+"into a thunk (an anonymous function that blends into the containing "
+"scope)."
+msgstr ""
+
+#: ../../pep-0340.txt:298
+msgid ""
+"The main advantage of thunks that I can see is that you can save the "
+"thunk for later, like a callback for a button widget (the thunk then "
+"becomes a closure).  You can't use a yield-based block for that (except "
+"in Ruby, which uses yield syntax with a thunk-based implementation).  But"
+" I have to say that I almost see this as an advantage: I think I'd be "
+"slightly uncomfortable seeing a block and not knowing whether it will be "
+"executed in the normal control flow or later.  Defining an explicit "
+"nested function for that purpose doesn't have this problem for me, "
+"because I already know that the 'def' keyword means its body is executed "
+"later."
+msgstr ""
+
+#: ../../pep-0340.txt:309
+msgid ""
+"The other problem with thunks is that once we think of them as the "
+"anonymous functions they are, we're pretty much forced to say that a "
+"return statement in a thunk returns from the thunk rather than from the "
+"containing function.  Doing it any other way would cause major weirdness "
+"when the thunk were to survive its containing function as a closure "
+"(perhaps continuations would help, but I'm not about to go there :-)."
+msgstr ""
+
+#: ../../pep-0340.txt:317
+msgid ""
+"But then an IMO important use case for the resource cleanup template "
+"pattern is lost.  I routinely write code like this::"
+msgstr ""
+
+#: ../../pep-0340.txt:330
+msgid "and I'd be bummed if I couldn't write this as::"
+msgstr ""
+
+#: ../../pep-0340.txt:339
+msgid "This particular example can be rewritten using a break::"
+msgstr ""
+
+#: ../../pep-0340.txt:350
+msgid ""
+"but it looks forced and the transformation isn't always that easy; you'd "
+"be forced to rewrite your code in a single-return style which feels too "
+"restrictive."
+msgstr ""
+
+#: ../../pep-0340.txt:354
+msgid ""
+"Also note the semantic conundrum of a yield in a thunk -- the only "
+"reasonable interpretation is that this turns the thunk into a generator!"
+msgstr ""
+
+#: ../../pep-0340.txt:358
+msgid ""
+"Greg Ewing believes that thunks \"would be a lot simpler, doing just what"
+" is required without any jiggery pokery with exceptions and "
+"break/continue/return statements.  It would be easy to explain what it "
+"does and why it's useful.\""
+msgstr ""
+
+#: ../../pep-0340.txt:363
+msgid ""
+"But in order to obtain the required local variable sharing between the "
+"thunk and the containing function, every local variable used or set in "
+"the thunk would have to become a 'cell' (our mechanism for sharing "
+"variables between nested scopes).  Cells slow down access compared to "
+"regular local variables: access involves an extra C function call "
+"(``PyCell_Get()`` or ``PyCell_Set()``)."
+msgstr ""
+
+#: ../../pep-0340.txt:370
+msgid ""
+"Perhaps not entirely coincidentally, the last example above "
+"(``findSomething()`` rewritten to avoid a return inside the block) shows "
+"that, unlike for regular nested functions, we'll want variables "
+"**assigned to** by the thunk also to be shared with the containing "
+"function, even if they are not assigned to outside the thunk."
+msgstr ""
+
+#: ../../pep-0340.txt:377
+msgid ""
+"Greg Ewing again: \"generators have turned out to be more powerful, "
+"because you can have more than one of them on the go at once. Is there a "
+"use for that capability here?\""
+msgstr ""
+
+#: ../../pep-0340.txt:381
+msgid ""
+"I believe there are definitely uses for this; several people have already"
+" shown how to do asynchronous light-weight threads using generators (e.g."
+" David Mertz quoted in PEP 288, and Fredrik Lundh [3]_)."
+msgstr ""
+
+#: ../../pep-0340.txt:386
+msgid ""
+"And finally, Greg says: \"a thunk implementation has the potential to "
+"easily handle multiple block arguments, if a suitable syntax could ever "
+"be devised. It's hard to see how that could be done in a general way with"
+" the generator implementation.\""
+msgstr ""
+
+#: ../../pep-0340.txt:391
+msgid "However, the use cases for multiple blocks seem elusive."
+msgstr ""
+
+#: ../../pep-0340.txt:393
+msgid ""
+"(Proposals have since been made to change the implementation of thunks to"
+" remove most of these objections, but the resulting semantics are fairly "
+"complex to explain and to implement, so IMO that defeats the purpose of "
+"using thunks in the first place.)"
+msgstr ""
+
+#: ../../pep-0340.txt:399
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0340.txt:401
+msgid ""
+"(Several of these examples contain \"yield None\".  If PEP 342 is "
+"accepted, these can be changed to just \"yield\" of course.)"
+msgstr ""
+
+#: ../../pep-0340.txt:404
+msgid ""
+"A template for ensuring that a lock, acquired at the start of a block, is"
+" released when the block is left::"
+msgstr ""
+
+#: ../../pep-0340.txt:414 ../../pep-0340.txt:431 ../../pep-0340.txt:461
+#: ../../pep-0340.txt:474 ../../pep-0340.txt:523 ../../pep-0340.txt:542
+msgid "Used as follows::"
+msgstr ""
+
+#: ../../pep-0340.txt:421
+msgid ""
+"A template for opening a file that ensures the file is closed when the "
+"block is left::"
+msgstr ""
+
+#: ../../pep-0340.txt:437
+msgid "A template for committing or rolling back a database transaction::"
+msgstr ""
+
+#: ../../pep-0340.txt:449
+msgid "A template that tries something up to n times::"
+msgstr ""
+
+#: ../../pep-0340.txt:467
+msgid "It is possible to nest blocks and combine templates::"
+msgstr ""
+
+#: ../../pep-0340.txt:480
+msgid ""
+"(If this example confuses you, consider that it is equivalent to using a "
+"for-loop with a yield in its body in a regular generator which is "
+"invoking another iterator or generator recursively; see for example the "
+"source code for ``os.walk()``.)"
+msgstr ""
+
+#: ../../pep-0340.txt:485
+msgid ""
+"It is possible to write a regular iterator with the semantics of example "
+"1::"
+msgstr ""
+
+#: ../../pep-0340.txt:509
+msgid ""
+"(This example is easily modified to implement the other examples; it "
+"shows how much simpler generators are for the same purpose.)"
+msgstr ""
+
+#: ../../pep-0340.txt:513
+msgid "Redirect stdout temporarily::"
+msgstr ""
+
+#: ../../pep-0340.txt:529
+msgid "A variant on ``opening()`` that also returns an error condition::"
+msgstr ""
+
+#: ../../pep-0340.txt:551
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0340.txt:553
+msgid ""
+"In no useful order: Alex Martelli, Barry Warsaw, Bob Ippolito, Brett "
+"Cannon, Brian Sabbey, Chris Ryland, Doug Landauer, Duncan Booth, Fredrik "
+"Lundh, Greg Ewing, Holger Krekel, Jason Diamond, Jim Jewett, Josiah "
+"Carlson, Ka-Ping Yee, Michael Chermside, Michael Hudson, Neil "
+"Schemenauer, Nick Coghlan, Paul Moore, Phillip Eby, Raymond Hettinger, "
+"Georg Brandl, Samuele Pedroni, Shannon Behrens, Skip Montanaro, Steven "
+"Bethard, Terry Reedy, Tim Delaney, Aahz, and others.  Thanks all for the "
+"valuable contributions!"
+msgstr ""
+
+#: ../../pep-0340.txt:564
+msgid "References"
+msgstr ""
+
+#: ../../pep-0340.txt:566
+msgid "https://mail.python.org/pipermail/python-dev/2005-April/052821.html"
+msgstr ""
+
+#: ../../pep-0340.txt:568
+msgid "http://msdn.microsoft.com/vcsharp/programming/language/ask/withstatement/"
+msgstr ""
+
+#: ../../pep-0340.txt:570
+msgid "http://effbot.org/zone/asyncore-generators.htm"
+msgstr ""
+
+#: ../../pep-0340.txt:573
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0340.txt:575
+msgid "This document has been placed in the public domain."
+msgstr ""
+

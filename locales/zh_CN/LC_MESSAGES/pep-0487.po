@@ -1,0 +1,622 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0487.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0487.txt:1
+msgid "487"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0487.txt:2
+msgid "Simpler customisation of class creation"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0487.txt:5
+msgid "Martin Teichmann <lkb.teichmann@gmail.com>,"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0487.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0487.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0487.txt:9
+msgid "27-Feb-2015"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0487.txt:10
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0487.txt:11
+msgid "27-Feb-2015, 5-Feb-2016, 24-Jun-2016, 2-Jul-2016, 13-Jul-2016"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Replaces"
+msgstr ""
+
+#: ../../pep-0487.txt:12
+msgid "422"
+msgstr ""
+
+#: ../../pep-0487.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0487.txt:13
+msgid "https://mail.python.org/pipermail/python-dev/2016-July/145629.html"
+msgstr ""
+
+#: ../../pep-0487.txt:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0487.txt:19
+msgid ""
+"Currently, customising class creation requires the use of a custom "
+"metaclass. This custom metaclass then persists for the entire lifecycle "
+"of the class, creating the potential for spurious metaclass conflicts."
+msgstr ""
+
+#: ../../pep-0487.txt:23
+msgid ""
+"This PEP proposes to instead support a wide range of customisation "
+"scenarios through a new ``__init_subclass__`` hook in the class body, and"
+" a hook to initialize attributes."
+msgstr ""
+
+#: ../../pep-0487.txt:27
+msgid ""
+"The new mechanism should be easier to understand and use than "
+"implementing a custom metaclass, and thus should provide a gentler "
+"introduction to the full power of Python's metaclass machinery."
+msgstr ""
+
+#: ../../pep-0487.txt:33
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0487.txt:35
+msgid ""
+"Metaclasses are a powerful tool to customize class creation. They have, "
+"however, the problem that there is no automatic way to combine "
+"metaclasses. If one wants to use two metaclasses for a class, a new "
+"metaclass combining those two needs to be created, typically manually."
+msgstr ""
+
+#: ../../pep-0487.txt:40
+msgid ""
+"This need often occurs as a surprise to a user: inheriting from two base "
+"classes coming from two different libraries suddenly raises the necessity"
+" to manually create a combined metaclass, where typically one is not "
+"interested in those details about the libraries at all. This becomes even"
+" worse if one library starts to make use of a metaclass which it has not "
+"done before. While the library itself continues to work perfectly, "
+"suddenly every code combining those classes with classes from another "
+"library fails."
+msgstr ""
+
+#: ../../pep-0487.txt:50
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0487.txt:52
+msgid ""
+"While there are many possible ways to use a metaclass, the vast majority "
+"of use cases falls into just three categories: some initialization code "
+"running after class creation, the initialization of descriptors and "
+"keeping the order in which class attributes were defined."
+msgstr ""
+
+#: ../../pep-0487.txt:57
+msgid ""
+"The first two categories can easily be achieved by having simple hooks "
+"into the class creation:"
+msgstr ""
+
+#: ../../pep-0487.txt:60
+msgid ""
+"An ``__init_subclass__`` hook that initializes all subclasses of a given "
+"class."
+msgstr ""
+
+#: ../../pep-0487.txt:62
+msgid ""
+"upon class creation, a ``__set_name__`` hook is called on all the "
+"attribute (descriptors) defined in the class, and"
+msgstr ""
+
+#: ../../pep-0487.txt:65
+msgid "The third category is the topic of another PEP, PEP 520."
+msgstr ""
+
+#: ../../pep-0487.txt:67
+msgid "As an example, the first use case looks as follows::"
+msgstr ""
+
+#: ../../pep-0487.txt:81
+msgid ""
+"The base class ``object`` contains an empty ``__init_subclass__`` method "
+"which serves as an endpoint for cooperative multiple inheritance. Note "
+"that this method has no keyword arguments, meaning that all methods which"
+" are more specialized have to process all keyword arguments."
+msgstr ""
+
+#: ../../pep-0487.txt:87
+msgid ""
+"This general proposal is not a new idea (it was first suggested for "
+"inclusion in the language definition `more than 10 years ago`_, and a "
+"similar mechanism has long been supported by `Zope's ExtensionClass`_), "
+"but the situation has changed sufficiently in recent years that the idea "
+"is worth reconsidering for inclusion."
+msgstr ""
+
+#: ../../pep-0487.txt:93
+msgid ""
+"The second part of the proposal adds an ``__set_name__`` initializer for "
+"class attributes, especially if they are descriptors. Descriptors are "
+"defined in the body of a class, but they do not know anything about that "
+"class, they do not even know the name they are accessed with. They do get"
+" to know their owner once ``__get__`` is called, but still they do not "
+"know their name. This is unfortunate, for example they cannot put their "
+"associated value into their object's ``__dict__`` under their name, since"
+" they do not know that name.  This problem has been solved many times, "
+"and is one of the most important reasons to have a metaclass in a "
+"library. While it would be easy to implement such a mechanism using the "
+"first part of the proposal, it makes sense to have one solution for this "
+"problem for everyone."
+msgstr ""
+
+#: ../../pep-0487.txt:107
+msgid ""
+"To give an example of its usage, imagine a descriptor representing weak "
+"referenced values::"
+msgstr ""
+
+#: ../../pep-0487.txt:123
+msgid ""
+"Such a ``WeakAttribute`` may, for example, be used in a tree structure "
+"where one wants to avoid cyclic references via the parent::"
+msgstr ""
+
+#: ../../pep-0487.txt:132
+msgid ""
+"Note that the ``parent`` attribute is used like a normal attribute, yet "
+"the tree contains no cyclic references and can thus be easily garbage "
+"collected when out of use. The ``parent`` attribute magically becomes "
+"``None`` once the parent ceases existing."
+msgstr ""
+
+#: ../../pep-0487.txt:137
+msgid ""
+"While this example looks very trivial, it should be noted that until now "
+"such an attribute cannot be defined without the use of a metaclass. And "
+"given that such a metaclass can make life very hard, this kind of "
+"attribute does not exist yet."
+msgstr ""
+
+#: ../../pep-0487.txt:142
+msgid ""
+"Initializing descriptors could simply be done in the "
+"``__init_subclass__`` hook. But this would mean that descriptors can only"
+" be used in classes that have the proper hook, the generic version like "
+"in the example would not work generally. One could also call "
+"``__set_name__`` from within the base implementation of "
+"``object.__init_subclass__``. But given that it is a common mistake to "
+"forget to call ``super()``, it would happen too often that suddenly "
+"descriptors are not initialized."
+msgstr ""
+
+#: ../../pep-0487.txt:153
+msgid "Key Benefits"
+msgstr ""
+
+#: ../../pep-0487.txt:157
+msgid "Easier inheritance of definition time behaviour"
+msgstr ""
+
+#: ../../pep-0487.txt:159
+msgid ""
+"Understanding Python's metaclasses requires a deep understanding of the "
+"type system and the class construction process. This is legitimately seen"
+" as challenging, due to the need to keep multiple moving parts (the code,"
+" the metaclass hint, the actual metaclass, the class object, instances of"
+" the class object) clearly distinct in your mind. Even when you know the "
+"rules, it's still easy to make a mistake if you're not being extremely "
+"careful."
+msgstr ""
+
+#: ../../pep-0487.txt:166
+msgid ""
+"Understanding the proposed implicit class initialization hook only "
+"requires ordinary method inheritance, which isn't quite as daunting a "
+"task. The new hook provides a more gradual path towards understanding all"
+" of the phases involved in the class definition process."
+msgstr ""
+
+#: ../../pep-0487.txt:173
+msgid "Reduced chance of metaclass conflicts"
+msgstr ""
+
+#: ../../pep-0487.txt:175
+msgid ""
+"One of the big issues that makes library authors reluctant to use "
+"metaclasses (even when they would be appropriate) is the risk of "
+"metaclass conflicts. These occur whenever two unrelated metaclasses are "
+"used by the desired parents of a class definition. This risk also makes "
+"it very difficult to *add* a metaclass to a class that has previously "
+"been published without one."
+msgstr ""
+
+#: ../../pep-0487.txt:181
+msgid ""
+"By contrast, adding an ``__init_subclass__`` method to an existing type "
+"poses a similar level of risk to adding an ``__init__`` method: "
+"technically, there is a risk of breaking poorly implemented subclasses, "
+"but when that occurs, it is recognised as a bug in the subclass rather "
+"than the library author breaching backwards compatibility guarantees."
+msgstr ""
+
+#: ../../pep-0487.txt:189
+msgid "New Ways of Using Classes"
+msgstr ""
+
+#: ../../pep-0487.txt:192
+msgid "Subclass registration"
+msgstr ""
+
+#: ../../pep-0487.txt:194
+msgid ""
+"Especially when writing a plugin system, one likes to register new "
+"subclasses of a plugin baseclass. This can be done as follows::"
+msgstr ""
+
+#: ../../pep-0487.txt:204
+msgid ""
+"In this example, ``PluginBase.subclasses`` will contain a plain list of "
+"all subclasses in the entire inheritance tree.  One should note that this"
+" also works nicely as a mixin class."
+msgstr ""
+
+#: ../../pep-0487.txt:209
+msgid "Trait descriptors"
+msgstr ""
+
+#: ../../pep-0487.txt:211
+msgid ""
+"There are many designs of Python descriptors in the wild which, for "
+"example, check boundaries of values. Often those \"traits\" need some "
+"support of a metaclass to work. This is how this would look like with "
+"this PEP::"
+msgstr ""
+
+#: ../../pep-0487.txt:234
+msgid "Implementation Details"
+msgstr ""
+
+#: ../../pep-0487.txt:236
+msgid ""
+"The hooks are called in the following order: ``type.__new__`` calls the "
+"``__set_name__`` hooks on the descriptor after the new class has been "
+"initialized. Then it calls ``__init_subclass__`` on the base class, on "
+"``super()``, to be precise. This means that subclass initializers already"
+" see the fully initialized descriptors. This way, ``__init_subclass__`` "
+"users can fix all descriptors again if this is needed."
+msgstr ""
+
+#: ../../pep-0487.txt:243
+msgid ""
+"Another option would have been to call ``__set_name__`` in the base "
+"implementation of ``object.__init_subclass__``. This way it would be "
+"possible even to prevent ``__set_name__`` from being called. Most of the "
+"times, however, such a prevention would be accidental, as it often "
+"happens that a call to ``super()`` is forgotten."
+msgstr ""
+
+#: ../../pep-0487.txt:249
+msgid ""
+"As a third option, all the work could have been done in "
+"``type.__init__``. Most metaclasses do their work in ``__new__``, as this"
+" is recommended by the documentation. Many metaclasses modify their "
+"arguments before they pass them over to ``super().__new__``. For "
+"compatibility with those kind of classes, the hooks should be called from"
+" ``__new__``."
+msgstr ""
+
+#: ../../pep-0487.txt:255
+msgid ""
+"Another small change should be done: in the current implementation of "
+"CPython, ``type.__init__`` explicitly forbids the use of keyword "
+"arguments, while ``type.__new__`` allows for its attributes to be shipped"
+" as keyword arguments. This is weirdly incoherent, and thus it should be "
+"forbidden. While it would be possible to retain the current behavior, it "
+"would be better if this was fixed, as it is probably not used at all: the"
+" only use case would be that at metaclass calls its ``super().__new__`` "
+"with *name*, *bases* and *dict* (yes, *dict*, not *namespace* or *ns* as "
+"mostly used with modern metaclasses) as keyword arguments. This should "
+"not be done. This little change simplifies the implementation of this PEP"
+" significantly, while improving the coherence of Python overall."
+msgstr ""
+
+#: ../../pep-0487.txt:267
+msgid ""
+"As a second change, the new ``type.__init__`` just ignores keyword "
+"arguments. Currently, it insists that no keyword arguments are given. "
+"This leads to a (wanted) error if one gives keyword arguments to a class "
+"declaration if the metaclass does not process them. Metaclass authors "
+"that do want to accept keyword arguments must filter them out by "
+"overriding ``__init__``."
+msgstr ""
+
+#: ../../pep-0487.txt:273
+msgid ""
+"In the new code, it is not ``__init__`` that complains about keyword "
+"arguments, but ``__init_subclass__``, whose default implementation takes "
+"no arguments. In a classical inheritance scheme using the method "
+"resolution order, each ``__init_subclass__`` may take out it's keyword "
+"arguments until none are left, which is checked by the default "
+"implementation of ``__init_subclass__``."
+msgstr ""
+
+#: ../../pep-0487.txt:279
+msgid ""
+"For readers who prefer reading Python over English, this PEP proposes to "
+"replace the current ``type`` and ``object`` with the following::"
+msgstr ""
+
+#: ../../pep-0487.txt:308
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0487.txt:310
+msgid ""
+"The reference implementation for this PEP is attached to `issue 27366 "
+"<http://bugs.python.org/issue27366>`__."
+msgstr ""
+
+#: ../../pep-0487.txt:315
+msgid "Backward compatibility issues"
+msgstr ""
+
+#: ../../pep-0487.txt:317
+msgid ""
+"The exact calling sequence in ``type.__new__`` is slightly changed, "
+"raising fears of backwards compatibility. It should be assured by tests "
+"that common use cases behave as desired."
+msgstr ""
+
+#: ../../pep-0487.txt:321
+msgid ""
+"The following class definitions (except the one defining the metaclass) "
+"continue to fail with a ``TypeError`` as superfluous class arguments are "
+"passed::"
+msgstr ""
+
+#: ../../pep-0487.txt:336
+msgid ""
+"A metaclass defining only a ``__new__`` method which is interested in "
+"keyword arguments now does not need to define an ``__init__`` method "
+"anymore, as the default ``type.__init__`` ignores keyword arguments. This"
+" is nicely in line with the recommendation to override ``__new__`` in "
+"metaclasses instead of ``__init__``. The following code does not fail "
+"anymore::"
+msgstr ""
+
+#: ../../pep-0487.txt:349
+msgid ""
+"Only defining an ``__init__`` method in a metaclass continues to fail "
+"with ``TypeError`` if keyword arguments are given::"
+msgstr ""
+
+#: ../../pep-0487.txt:359
+msgid "Defining both ``__init__`` and ``__new__`` continues to work fine."
+msgstr ""
+
+#: ../../pep-0487.txt:361
+msgid ""
+"About the only thing that stops working is passing the arguments of "
+"``type.__new__`` as keyword arguments::"
+msgstr ""
+
+#: ../../pep-0487.txt:372
+msgid ""
+"This will now raise ``TypeError``, but this is weird code, and easy to "
+"fix even if someone used this feature."
+msgstr ""
+
+#: ../../pep-0487.txt:377
+msgid "Rejected Design Options"
+msgstr ""
+
+#: ../../pep-0487.txt:381
+msgid "Calling the hook on the class itself"
+msgstr ""
+
+#: ../../pep-0487.txt:383
+msgid ""
+"Adding an ``__autodecorate__`` hook that would be called on the class "
+"itself was the proposed idea of PEP 422.  Most examples work the same way"
+" or even better if the hook is called only on strict subclasses. In "
+"general, it is much easier to arrange to explicitly call the hook on the "
+"class in which it is defined (to opt-in to such a behavior) than to opt-"
+"out (by remember to check for ``cls is __class`` in the hook body), "
+"meaning that one does not want the hook to be called on the class it is "
+"defined in."
+msgstr ""
+
+#: ../../pep-0487.txt:391
+msgid ""
+"This becomes most evident if the class in question is designed as a "
+"mixin: it is very unlikely that the code of the mixin is to be executed "
+"for the mixin class itself, as it is not supposed to be a complete class "
+"on its own."
+msgstr ""
+
+#: ../../pep-0487.txt:396
+msgid ""
+"The original proposal also made major changes in the class initialization"
+" process, rendering it impossible to back-port the proposal to older "
+"Python versions."
+msgstr ""
+
+#: ../../pep-0487.txt:400
+msgid ""
+"When it's desired to also call the hook on the base class, two mechanisms"
+" are available:"
+msgstr ""
+
+#: ../../pep-0487.txt:402
+msgid ""
+"Introduce an additional mixin class just to hold the "
+"``__init_subclass__`` implementation. The original \"base\" class can "
+"then list the new mixin as its first parent class."
+msgstr ""
+
+#: ../../pep-0487.txt:406
+msgid ""
+"Implement the desired behaviour as an independent class decorator, and "
+"apply that decorator explicitly to the base class, and then implicitly to"
+" subclasses via ``__init_subclass__``."
+msgstr ""
+
+#: ../../pep-0487.txt:410
+msgid ""
+"Calling ``__init_subclass__`` explicitly from a class decorator will "
+"generally be undesirable, as this will also typically call "
+"``__init_subclass__`` a second time on the parent class, which is "
+"unlikely to be desired behaviour."
+msgstr ""
+
+#: ../../pep-0487.txt:415
+msgid "Other variants of calling the hooks"
+msgstr ""
+
+#: ../../pep-0487.txt:417
+msgid ""
+"Other names for the hook were presented, namely ``__decorate__`` or "
+"``__autodecorate__``. This proposal opts for ``__init_subclass__`` as it "
+"is very close to the ``__init__`` method, just for the subclass, while it"
+" is not very close to decorators, as it does not return the class."
+msgstr ""
+
+#: ../../pep-0487.txt:423
+msgid ""
+"For the ``__set_name__`` hook other names have been proposed as well, "
+"``__set_owner__``, ``__set_ownership__`` and ``__init_descriptor__``."
+msgstr ""
+
+#: ../../pep-0487.txt:428
+msgid "Requiring an explicit decorator on ``__init_subclass__``"
+msgstr ""
+
+#: ../../pep-0487.txt:430
+msgid ""
+"One could require the explicit use of ``@classmethod`` on the "
+"``__init_subclass__`` decorator. It was made implicit since there's no "
+"sensible interpretation for leaving it out, and that case would need to "
+"be detected anyway in order to give a useful error message."
+msgstr ""
+
+#: ../../pep-0487.txt:435
+msgid ""
+"This decision was reinforced after noticing that the user experience of "
+"defining ``__prepare__`` and forgetting the ``@classmethod`` method "
+"decorator is singularly incomprehensible (particularly since PEP 3115 "
+"documents it as an ordinary method, and the current documentation doesn't"
+" explicitly say anything one way or the other)."
+msgstr ""
+
+#: ../../pep-0487.txt:442
+msgid "A more ``__new__``-like hook"
+msgstr ""
+
+#: ../../pep-0487.txt:444
+msgid ""
+"In PEP 422 the hook worked more like the ``__new__`` method than the "
+"``__init__`` method, meaning that it returned a class instead of "
+"modifying one. This allows a bit more flexibility, but at the cost of "
+"much harder implementation and undesired side effects."
+msgstr ""
+
+#: ../../pep-0487.txt:450
+msgid "Adding a class attribute with the attribute order"
+msgstr ""
+
+#: ../../pep-0487.txt:452
+msgid "This got its own PEP 520."
+msgstr ""
+
+#: ../../pep-0487.txt:456
+msgid "History"
+msgstr ""
+
+#: ../../pep-0487.txt:458
+msgid ""
+"This used to be a competing proposal to PEP 422 by Nick Coghlan and "
+"Daniel Urban. PEP 422 intended to achieve the same goals as this PEP, but"
+" with a different way of implementation.  In the meantime, PEP 422 has "
+"been withdrawn favouring this approach."
+msgstr ""
+
+#: ../../pep-0487.txt:464
+msgid "References"
+msgstr ""
+
+#: ../../pep-0487.txt:474
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0487.txt:476
+msgid "This document has been placed in the public domain."
+msgstr ""
+

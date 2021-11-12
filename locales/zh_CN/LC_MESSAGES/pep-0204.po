@@ -1,0 +1,427 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0204.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0204.txt:1
+msgid "204"
+msgstr ""
+
+#: ../../pep-0204.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0204.txt:2
+msgid "Range Literals"
+msgstr ""
+
+#: ../../pep-0204.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0204.txt:5
+msgid "thomas@python.org (Thomas Wouters)"
+msgstr ""
+
+#: ../../pep-0204.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0204.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0204.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0204.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0204.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0204.txt:9
+msgid "14-Jul-2000"
+msgstr ""
+
+#: ../../pep-0204.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0204.txt:10
+msgid "2.0"
+msgstr ""
+
+#: ../../pep-0204.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0204.txt:15
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0204.txt:17
+msgid ""
+"This PEP describes the \"range literal\" proposal for Python 2.0. This "
+"PEP tracks the status and ownership of this feature, slated for "
+"introduction in Python 2.0.  It contains a description of the feature and"
+" outlines changes necessary to support the feature. This PEP summarizes "
+"discussions held in mailing list forums, and provides URLs for further "
+"information, where appropriate.  The CVS revision history of this file "
+"contains the definitive historical record."
+msgstr ""
+
+#: ../../pep-0204.txt:28
+msgid "List ranges"
+msgstr ""
+
+#: ../../pep-0204.txt:30
+msgid ""
+"Ranges are sequences of numbers of a fixed stepping, often used in for-"
+"loops.  The Python for-loop is designed to iterate over a sequence "
+"directly::"
+msgstr ""
+
+#: ../../pep-0204.txt:42
+msgid ""
+"However, this solution is not always prudent.  Firstly, problems arise "
+"when altering the sequence in the body of the for-loop, resulting in the "
+"for-loop skipping items.  Secondly, it is not possible to iterate over, "
+"say, every second element of the sequence.  And thirdly, it is sometimes "
+"necessary to process an element based on its index, which is not readily "
+"available in the above construct."
+msgstr ""
+
+#: ../../pep-0204.txt:50
+msgid ""
+"For these instances, and others where a range of numbers is desired, "
+"Python provides the ``range`` builtin function, which creates a list of "
+"numbers.  The ``range`` function takes three arguments, *start*, *end* "
+"and *step*.  *start* and *step* are optional, and default to 0 and 1, "
+"respectively."
+msgstr ""
+
+#: ../../pep-0204.txt:56
+msgid ""
+"The ``range`` function creates a list of numbers, starting at *start*, "
+"with a step of *step*, up to, but not including *end*, so that "
+"``range(10)`` produces a list that has exactly 10 items, the numbers 0 "
+"through 9."
+msgstr ""
+
+#: ../../pep-0204.txt:61
+msgid "Using the ``range`` function, the above example would look like this::"
+msgstr ""
+
+#: ../../pep-0204.txt:71
+msgid ""
+"Or, to start at the second element of ``l`` and processing only every "
+"second element from then on::"
+msgstr ""
+
+#: ../../pep-0204.txt:79
+msgid "There are several disadvantages with this approach:"
+msgstr ""
+
+#: ../../pep-0204.txt:81
+msgid ""
+"Clarity of purpose: Adding another function call, possibly with extra "
+"arithmetic to determine the desired length and step of the list, does not"
+" improve readability of the code.  Also, it is possible to \"shadow\" the"
+" builtin ``range`` function by supplying a local or global variable with "
+"the same name, effectively replacing it.  This may or may not be a "
+"desired effect."
+msgstr ""
+
+#: ../../pep-0204.txt:88
+msgid ""
+"Efficiency: because the ``range`` function can be overridden, the Python "
+"compiler cannot make assumptions about the for-loop, and has to maintain "
+"a separate loop counter."
+msgstr ""
+
+#: ../../pep-0204.txt:92
+msgid ""
+"Consistency: There already is a syntax that is used to denote ranges, as "
+"shown below.  This syntax uses the exact same arguments, though all "
+"optional, in the exact same way.  It seems logical to extend this syntax "
+"to ranges, to form \"range literals\"."
+msgstr ""
+
+#: ../../pep-0204.txt:100
+msgid "Slice Indices"
+msgstr ""
+
+#: ../../pep-0204.txt:102
+msgid ""
+"In Python, a sequence can be indexed in one of two ways: retrieving a "
+"single item, or retrieving a range of items. Retrieving a range of items "
+"results in a new object of the same type as the original sequence, "
+"containing zero or more items from the original sequence.  This is done "
+"using a \"range notation\"::"
+msgstr ""
+
+#: ../../pep-0204.txt:111
+msgid ""
+"This range notation consists of zero, one or two indices separated by a "
+"colon.  The first index is the *start* index, the second the *end*.  When"
+" either is left out, they default to respectively the start and the end "
+"of the sequence."
+msgstr ""
+
+#: ../../pep-0204.txt:116
+msgid ""
+"There is also an extended range notation, which incorporates *step* as "
+"well.  Though this notation is not currently supported by most builtin "
+"types, if it were, it would work as follows::"
+msgstr ""
+
+#: ../../pep-0204.txt:123
+msgid ""
+"The third \"argument\" to the slice syntax is exactly the same as the "
+"*step* argument to ``range()``.  The underlying mechanisms of the "
+"standard, and these extended slices, are sufficiently different and "
+"inconsistent that many classes and extensions outside of mathematical "
+"packages do not implement support for the extended variant.  While this "
+"should be resolved, it is beyond the scope of this PEP."
+msgstr ""
+
+#: ../../pep-0204.txt:131
+msgid ""
+"Extended slices do show, however, that there is already a perfectly valid"
+" and applicable syntax to denote ranges in a way that solve all of the "
+"earlier stated disadvantages of the use of the ``range()`` function:"
+msgstr ""
+
+#: ../../pep-0204.txt:136
+msgid ""
+"It is clearer, more concise syntax, which has already proven to be both "
+"intuitive and easy to learn."
+msgstr ""
+
+#: ../../pep-0204.txt:139
+msgid "It is consistent with the other use of ranges in Python (e.g. slices)."
+msgstr ""
+
+#: ../../pep-0204.txt:142
+msgid ""
+"Because it is built-in syntax, instead of a builtin function, it cannot "
+"be overridden.  This means both that a viewer can be certain about what "
+"the code does, and that an optimizer will not have to worry about "
+"``range()`` being \"shadowed\"."
+msgstr ""
+
+#: ../../pep-0204.txt:149
+msgid "The Proposed Solution"
+msgstr ""
+
+#: ../../pep-0204.txt:151
+msgid ""
+"The proposed implementation of range-literals combines the syntax for "
+"list literals with the syntax for (extended) slices, to form range "
+"literals::"
+msgstr ""
+
+#: ../../pep-0204.txt:162
+msgid ""
+"There is one minor difference between range literals and the slice "
+"syntax: though it is possible to omit all of *start*, *end* and *step* in"
+" slices, it does not make sense to omit *end* in range literals.  In "
+"slices, *end* would default to the end of the list, but this has no "
+"meaning in range literals."
+msgstr ""
+
+#: ../../pep-0204.txt:170
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0204.txt:172
+msgid ""
+"The proposed implementation can be found on SourceForge [1]_.  It adds a "
+"new bytecode, ``BUILD_RANGE``, that takes three arguments from the stack "
+"and builds a list on the bases of those.  The list is pushed back on the "
+"stack."
+msgstr ""
+
+#: ../../pep-0204.txt:177
+msgid ""
+"The use of a new bytecode is necessary to be able to build ranges based "
+"on other calculations, whose outcome is not known at compile time."
+msgstr ""
+
+#: ../../pep-0204.txt:181
+msgid ""
+"The code introduces two new functions to ``listobject.c``, which are "
+"currently hovering between private functions and full-fledged API calls."
+msgstr ""
+
+#: ../../pep-0204.txt:185
+msgid ""
+"``PyList_FromRange()`` builds a list from start, end and step, returning "
+"NULL if an error occurs.  Its prototype is::"
+msgstr ""
+
+#: ../../pep-0204.txt:190
+msgid ""
+"``PyList_GetLenOfRange()`` is a helper function used to determine the "
+"length of a range.  Previously, it was a static function in "
+"``bltinmodule.c``, but is now necessary in both ``listobject.c`` and "
+"``bltinmodule.c`` (for ``xrange``).  It is made non-static solely to "
+"avoid code duplication.  Its prototype is::"
+msgstr ""
+
+#: ../../pep-0204.txt:200
+msgid "Open issues"
+msgstr ""
+
+#: ../../pep-0204.txt:202
+msgid ""
+"One possible solution to the discrepancy of requiring the *end* argument "
+"in range literals is to allow the range syntax to create a \"generator\","
+" rather than a list, such as the ``xrange`` builtin function does.  "
+"However, a generator would not be a list, and it would be impossible, for"
+" instance, to assign to items in the generator, or append to it."
+msgstr ""
+
+#: ../../pep-0204.txt:209
+msgid ""
+"The range syntax could conceivably be extended to include tuples (i.e. "
+"immutable lists), which could then be safely implemented as generators.  "
+"This may be a desirable solution, especially for large number arrays: "
+"generators require very little in the way of storage and initialization, "
+"and there is only a small performance impact in calculating and creating "
+"the appropriate number on request.  (TBD: is there any at all? Cursory "
+"testing suggests equal performance even in the case of ranges of length "
+"1)"
+msgstr ""
+
+#: ../../pep-0204.txt:219
+msgid ""
+"However, even if idea was adopted, would it be wise to \"special case\" "
+"the second argument, making it optional in one instance of the syntax, "
+"and non-optional in other cases ?"
+msgstr ""
+
+#: ../../pep-0204.txt:223
+msgid ""
+"Should it be possible to mix range syntax with normal list literals, "
+"creating a single list?  E.g.::"
+msgstr ""
+
+#: ../../pep-0204.txt:228
+msgid "to create::"
+msgstr ""
+
+#: ../../pep-0204.txt:232
+msgid ""
+"How should range literals interact with another proposed new feature, "
+"\"list comprehensions\" [2]_?  Specifically, should it be possible to "
+"create lists in list comprehensions?  E.g.::"
+msgstr ""
+
+#: ../../pep-0204.txt:238
+msgid "Should this example return a single list with multiple ranges::"
+msgstr ""
+
+#: ../../pep-0204.txt:242
+msgid "Or a list of lists, like so::"
+msgstr ""
+
+#: ../../pep-0204.txt:246
+msgid ""
+"However, as the syntax and semantics of list comprehensions are still "
+"subject of hot debate, these issues are probably best addressed by the "
+"\"list comprehensions\" PEP."
+msgstr ""
+
+#: ../../pep-0204.txt:250
+msgid ""
+"Range literals accept objects other than integers: it performs "
+"``PyInt_AsLong()`` on the objects passed in, so as long as the objects "
+"can be coerced into integers, they will be accepted. The resulting list, "
+"however, is always composed of standard integers."
+msgstr ""
+
+#: ../../pep-0204.txt:256
+msgid ""
+"Should range literals create a list of the passed-in type?  It might be "
+"desirable in the cases of other builtin types, such as longs and "
+"strings::"
+msgstr ""
+
+#: ../../pep-0204.txt:264
+msgid ""
+"However, this might be too much \"magic\" to be obvious.  It might also "
+"present problems with user-defined classes: even if the base class can be"
+" found and a new instance created, the instance may require additional "
+"arguments to ``__init__``, causing the creation to fail."
+msgstr ""
+
+#: ../../pep-0204.txt:270
+msgid ""
+"The ``PyList_FromRange()`` and ``PyList_GetLenOfRange()`` functions need "
+"to be classified: are they part of the API, or should they be made "
+"private functions?"
+msgstr ""
+
+#: ../../pep-0204.txt:276
+msgid "Rejection"
+msgstr ""
+
+#: ../../pep-0204.txt:278
+msgid ""
+"After careful consideration, and a period of meditation, this proposal "
+"has been rejected. The open issues, as well as some confusion between "
+"ranges and slice syntax, raised enough questions for Guido not to accept "
+"it for Python 2.0, and later to reject the proposal altogether. The new "
+"syntax and its intentions were deemed not obvious enough."
+msgstr ""
+
+#: ../../pep-0204.txt:285
+msgid ""
+"[ TBD: Guido, amend/confirm this, please. Preferably both; this is a PEP,"
+" it should contain *all* the reasons for rejection and/or "
+"reconsideration, for future reference. ]"
+msgstr ""
+
+#: ../../pep-0204.txt:291
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0204.txt:293
+msgid "This document has been placed in the Public Domain."
+msgstr ""
+
+#: ../../pep-0204.txt:297
+msgid "References"
+msgstr ""
+
+#: ../../pep-0204.txt:299
+msgid "http://sourceforge.net/patch/?func=detailpatch&patch_id=100902&group_id=5470"
+msgstr ""
+
+#: ../../pep-0204.txt:300
+msgid "PEP 202, List Comprehensions"
+msgstr ""
+

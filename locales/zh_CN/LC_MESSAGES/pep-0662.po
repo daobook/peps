@@ -1,0 +1,641 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0662.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0662.rst:1
+msgid "662"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0662.rst:2
+msgid "Editable installs via virtual wheels"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0662.rst:3
+msgid "Bernát Gábor <gaborjbernat@gmail.com>"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0662.rst:4
+msgid "Brett Cannon <brett@python.org>"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0662.rst:5
+msgid ""
+"https://discuss.python.org/t/discuss-tbd-editable-installs-by-"
+"gaborbernat/9071"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0662.rst:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0662.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0662.rst:9
+msgid "28-May-2021"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0662.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0662.rst:11
+msgid ""
+"https://discuss.python.org/t/pronouncement-on-peps-660-and-662-editable-"
+"installs"
+msgstr ""
+
+#: ../../pep-0662.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0662.rst:16
+msgid ""
+"This document describes extensions to the build backend and frontend "
+"communication (as introduced by :pep:`517`) to allow projects to be "
+"installed in editable mode by introducing virtual wheels."
+msgstr ""
+
+#: ../../pep-0662.rst:21
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0662.rst:23
+msgid ""
+"During development, many Python users prefer to install their libraries "
+"so that changes to the underlying source code and resources are "
+"automatically reflected in subsequent interpreter invocations without an "
+"additional installation step. This mode is usually called \"development "
+"mode\" or \"editable installs\". Currently, there is no standardized way "
+"to accomplish this, as it was explicitly left out of :pep:`517` due to "
+"the complexity of the actual observed behaviors."
+msgstr ""
+
+#: ../../pep-0662.rst:30
+msgid "At the moment, users to get this behaviour perform one of the following:"
+msgstr ""
+
+#: ../../pep-0662.rst:32
+msgid ""
+"For just Python code by adding the relevant source directories to "
+"``sys.path`` (configurable from the command line interface via the "
+"``PYTHONPATH`` environment variable). Note in this case, the users have "
+"to install the project dependencies themselves, and entry points or "
+"project metadata are not generated."
+msgstr ""
+
+#: ../../pep-0662.rst:38
+msgid ""
+"setuptools_ provides the `setup.py develop`_ mechanism: that installs a "
+"``pth`` file that injects the project root onto the ``sys.path`` at "
+"interpreter startup time, generates the project metadata, and also "
+"installs project dependencies. pip_ exposes calling this mechanism via "
+"the `pip install -e <project_directory>`_ command-line interface."
+msgstr ""
+
+#: ../../pep-0662.rst:44
+msgid ""
+"flit_ provides the `flit install --symlink`_ command that symlinks the "
+"project files into the interpreters ``purelib`` folder, generates the "
+"project metadata, and also installs dependencies. Note, this allows "
+"supporting resource files too."
+msgstr ""
+
+#: ../../pep-0662.rst:49
+msgid ""
+"As these examples shows an editable install can be achieved in multiple "
+"ways and at the moment there's no standard way of doing it. Furthermore, "
+"it's not clear whose responsibility it is to achieve and define what an "
+"editable installation is:"
+msgstr ""
+
+#: ../../pep-0662.rst:54
+msgid "allow the build backend to define and materialize it,"
+msgstr ""
+
+#: ../../pep-0662.rst:55
+msgid "allow the build frontend to define and materialize it,"
+msgstr ""
+
+#: ../../pep-0662.rst:56
+msgid "explicitly define and standardize one method from the possible options."
+msgstr ""
+
+#: ../../pep-0662.rst:58
+msgid ""
+"The author of this PEP believes there's no one size fits all solution "
+"here, each method of achieving editable effect has its pros and cons. "
+"Therefore this PEP rejects option three as it's unlikely for the "
+"community to agree on a single solution. Furthermore, question remains as"
+" to whether the frontend or the build backend should own this "
+"responsibility. :pep:`660` proposes the build backend to own this, while "
+"the current PEP proposes primarily the frontend, but still allows the "
+"backend to take take control if it wants to do so."
+msgstr ""
+
+#: ../../pep-0662.rst:67
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0662.rst:69
+msgid ""
+":pep:`517` deferred \"Editable installs\" because this would have delayed"
+" further its adoption, and there wasn't an agreement on how editable "
+"installs should be achieved. Due to the popularity of the setuptools_ and"
+" pip_ projects, the status quo prevailed, and the backend could achieve "
+"editable mode by providing a ``setup.py develop`` implementation, which "
+"the user could trigger via `pip install -e <project_directory>`_. By "
+"defining an editable interface between the build backend and frontend, we"
+" can eliminate the ``setup.py`` file and their current communication "
+"method."
+msgstr ""
+
+#: ../../pep-0662.rst:79
+msgid "Terminology and goals"
+msgstr ""
+
+#: ../../pep-0662.rst:81
+msgid ""
+"This PEP aims to delineate the frontend and the backend roles clearly and"
+" give the developers of each the maximum ability to provide valuable "
+"features to their users. In this proposal, the backend's role is to "
+"prepare the project for an editable installation, and then provide enough"
+" information to the frontend so that the frontend can manifest and "
+"enforce the editable installation."
+msgstr ""
+
+#: ../../pep-0662.rst:87
+msgid ""
+"The information the backend provides to the frontend is a wheel that "
+"follows the existing specification within :pep:`427`. The wheel metadata "
+"about the archive itself (``{distribution}-{version}.dist-info/WHEEL``) "
+"must also contain the key ``Editable`` with value of ``true``."
+msgstr ""
+
+#: ../../pep-0662.rst:92
+msgid ""
+"However, instead of providing the project files within the wheel, it must"
+" provide an ``editable.json`` file (at the root level of the wheel) that "
+"defines the files to be exposed by the frontend. The content of this file"
+" is formulated as a mapping of absolute source tree paths to relative "
+"target interpreter destination paths within a scheme mapping."
+msgstr ""
+
+#: ../../pep-0662.rst:98
+msgid ""
+"A wheel that satisfies the previous two paragraphs is a virtual wheel. "
+"The frontend's role is to take the virtual wheel and install the project "
+"in editable mode. The way it achieves this is entirely up to the frontend"
+" and is considered implementation detail."
+msgstr ""
+
+#: ../../pep-0662.rst:103
+msgid ""
+"The editable installation mode implies that the source code of the "
+"project being installed is available in a local directory. Once the "
+"project is installed in editable mode, some changes to the project code "
+"in the local source tree will become effective without the need for a new"
+" installation step. At a minimum, changes to the text of non-generated "
+"files that existed at the installation time should be reflected upon the "
+"subsequent import of the package."
+msgstr ""
+
+#: ../../pep-0662.rst:111
+msgid ""
+"Some kinds of changes, such as adding or modifying entry points or new "
+"dependencies, require a new installation step to become effective. These "
+"changes are typically made in build backend configuration files (such as "
+"``pyproject.toml``). This requirement is consistent with the general user"
+" expectation that such modifications will only become effective after re-"
+"installation."
+msgstr ""
+
+#: ../../pep-0662.rst:118
+msgid ""
+"While users expect editable installations to behave identically to "
+"standard installations, this may not always be possible and may be in "
+"tension with other user expectations. Depending on how a frontend "
+"implements the editable mode, some differences may be visible, such as "
+"the presence of additional files (compared to a typical installation), "
+"either in the source tree or the interpreter's installation path."
+msgstr ""
+
+#: ../../pep-0662.rst:125
+msgid ""
+"Frontends should seek to minimize differences between the behavior of "
+"editable and standard installations and document known differences."
+msgstr ""
+
+#: ../../pep-0662.rst:128
+msgid "For reference, a non-editable installation works as follows:"
+msgstr ""
+
+#: ../../pep-0662.rst:130
+msgid ""
+"The **developer** is using a tool, we'll call it here the **frontend**, "
+"to drive the project development (e.g., pip_). When the user wants to "
+"trigger a package build and installation of a project, they'll "
+"communicate with the **frontend**."
+msgstr ""
+
+#: ../../pep-0662.rst:135
+msgid ""
+"The frontend uses a **build frontend** to trigger the build of a wheel "
+"(e.g., build_). The build frontend uses :pep:`517` to communicate with "
+"the **build backend** (e.g. setuptools_) - with the build backend "
+"installed into a :pep:`518` environment. Once invoked, the backend "
+"returns a wheel."
+msgstr ""
+
+#: ../../pep-0662.rst:140
+msgid ""
+"The frontend takes the wheel and feeds it to an **installer** "
+"(e.g.,`installer`_) to install the wheel into the target Python "
+"interpreter."
+msgstr ""
+
+#: ../../pep-0662.rst:144
+msgid "The Mechanism"
+msgstr ""
+
+#: ../../pep-0662.rst:146
+msgid ""
+"This PEP adds two optional hooks to the :pep:`517` backend interface. One"
+" of the hooks is used to specify the build dependencies of an editable "
+"install. The other hook returns the necessary information via the build "
+"frontend the frontend needs to create an editable install."
+msgstr ""
+
+#: ../../pep-0662.rst:152
+msgid "``get_requires_for_build_editable``"
+msgstr ""
+
+#: ../../pep-0662.rst:159
+msgid ""
+"This hook MUST return an additional sequence of strings containing "
+":pep:`508` dependency specifications, above and beyond those specified in"
+" the ``pyproject.toml`` file. The frontend must ensure that these "
+"dependencies are available in the build environment in which the "
+"``build_editable`` hook is called."
+msgstr ""
+
+#: ../../pep-0662.rst:165
+msgid ""
+"If not defined, the default implementation is equivalent to returning "
+"``[]``."
+msgstr ""
+
+#: ../../pep-0662.rst:168
+msgid "``prepare_metadata_for_build_editable``"
+msgstr ""
+
+#: ../../pep-0662.rst:175
+msgid ""
+"Must create a ``.dist-info`` directory containing wheel metadata inside "
+"the specified ``metadata_directory`` (i.e., creates a directory like "
+"``{metadata_directory}/{package}-{version}.dist-info/``). This directory "
+"MUST be a valid ``.dist-info`` directory as defined in the wheel "
+"specification, except that it need not contain ``RECORD`` or signatures. "
+"The hook MAY also create other files inside this directory, and a build "
+"frontend MUST preserve, but otherwise ignore, such files; the intention "
+"here is that in cases where the metadata depends on build-time decisions,"
+" the build backend may need to record these decisions in some convenient "
+"format for re-use by the actual wheel-building step."
+msgstr ""
+
+#: ../../pep-0662.rst:186
+msgid ""
+"This must return the basename (not the full path) of the ``.dist-info`` "
+"directory it creates, as a unicode string."
+msgstr ""
+
+#: ../../pep-0662.rst:189
+msgid ""
+"If a build frontend needs this information and the method is not defined,"
+" it should call ``build_editable`` and look at the resulting metadata "
+"directly."
+msgstr ""
+
+#: ../../pep-0662.rst:195
+msgid "``build_editable``"
+msgstr ""
+
+#: ../../pep-0662.rst:203
+msgid ""
+"Must build a .whl file, and place it in the specified "
+"``wheel_directory``. It must return the basename (not the full path) of "
+"the ``.whl`` file it creates, as a unicode string. The wheel file must be"
+" of type virtual wheel as defined under the terminology section."
+msgstr ""
+
+#: ../../pep-0662.rst:208
+msgid ""
+"If the build frontend has previously called "
+"``prepare_metadata_for_build_editable`` and depends on the wheel "
+"resulting from this call to have metadata matching this earlier call, "
+"then it should provide the path to the created ``.dist-info`` directory "
+"as the ``metadata_directory`` argument. If this argument is provided, "
+"then ``build_editable`` MUST produce a wheel with identical metadata. The"
+" directory passed in by the build frontend MUST be identical to the "
+"directory created by ``prepare_metadata_for_build_editable``, including "
+"any unrecognized files it created."
+msgstr ""
+
+#: ../../pep-0662.rst:217
+msgid ""
+"Backends which do not provide the ``prepare_metadata_for_build_editable``"
+" hook may either silently ignore the ``metadata_directory`` parameter to "
+"``build_editable``, or else raise an exception when it is set to anything"
+" other than ``None``."
+msgstr ""
+
+#: ../../pep-0662.rst:221
+msgid ""
+"The source directory may be read-only, in such cases the backend may "
+"raise an error that the frontend can display to the user. The backend may"
+" store intermediate artifacts in cache locations or temporary "
+"directories. The presence or absence of any caches should not make a "
+"material difference to the final result of the build."
+msgstr ""
+
+#: ../../pep-0662.rst:226
+msgid ""
+"The content of the ``editable.json`` MUST pass against the following JSON"
+" schema:"
+msgstr ""
+
+#: ../../pep-0662.rst:231
+msgid "For example:"
+msgstr ""
+
+#: ../../pep-0662.rst:246
+msgid ""
+"The scheme paths map from project source absolute paths to target "
+"directory relative paths. We allow backends to change the project layout "
+"from the project source directory to what the interpreter will see by "
+"using the mapping."
+msgstr ""
+
+#: ../../pep-0662.rst:250
+msgid ""
+"For example if the backend returns ``\"purelib\": {\"/me/project/src\": "
+"\"\"}`` this would mean that expose all files and modules within "
+"``/me/project/src`` at the root of the ``purelib`` path within the target"
+" interpreter."
+msgstr ""
+
+#: ../../pep-0662.rst:255
+msgid "Build frontend requirements"
+msgstr ""
+
+#: ../../pep-0662.rst:257
+msgid ""
+"The build frontend is responsible for setting up the environment for the "
+"build backend to generate the virtual wheel. All recommendations from "
+":pep:`517` for the build wheel hook applies here too."
+msgstr ""
+
+#: ../../pep-0662.rst:262
+msgid "Frontend requirements"
+msgstr ""
+
+#: ../../pep-0662.rst:264
+msgid ""
+"The frontend must install the virtual wheel exactly as defined within "
+":pep:`427`. Furthermore is responsible for also installing the files "
+"defined within the ``editable.json`` file. The manner in which it does is"
+" left up to the frontend, and is encouraged for the frontend to "
+"communicate with the user exactly the method chosen, and what limitations"
+" that solution will have."
+msgstr ""
+
+#: ../../pep-0662.rst:270
+msgid ""
+"The frontend must create a ``direct_url.json`` file in the ``.dist-info``"
+" directory of the installed distribution, in compliance with PEP 610. The"
+" ``url`` value must be a ``file://`` URL pointing to the project "
+"directory (i.e., the directory containing ``pyproject.toml``), and the "
+"``dir_info`` value must be ``{'editable': true}``."
+msgstr ""
+
+#: ../../pep-0662.rst:276
+msgid ""
+"The frontend can rely on the ``prepare_metadata_for_build_editable`` hook"
+" when installing in editable mode."
+msgstr ""
+
+#: ../../pep-0662.rst:279
+msgid ""
+"If the frontend concludes it cannot achieve an editable installation with"
+" the information provided by the build backend it should fail and raise "
+"an error to clarify to the user why not."
+msgstr ""
+
+#: ../../pep-0662.rst:283
+msgid ""
+"The frontend might implement one or more editable installation mechanisms"
+" and can leave it up to the user the choose one that its optimal to the "
+"use case of the user. For example, pip could add an editable mode flag, "
+"and allow the user to choose between ``pth`` files or symlinks ( ``pip "
+"install -e . --editable-mode=pth`` vs ``pip install -e . --editable-"
+"mode=symlink``)."
+msgstr ""
+
+#: ../../pep-0662.rst:291
+msgid "Example editable implementations"
+msgstr ""
+
+#: ../../pep-0662.rst:293
+msgid ""
+"To show how this PEP might be used, we'll now present a few case studies."
+" Note the offered solutions are purely for illustration purpose and are "
+"not normative for the frontend/backend."
+msgstr ""
+
+#: ../../pep-0662.rst:298
+msgid "Add the source tree as is to the interpreter"
+msgstr ""
+
+#: ../../pep-0662.rst:300
+msgid ""
+"This is one of the simplest implementations, it will add the source tree "
+"as is into the interpreters scheme paths, the ``editable.json`` within "
+"the virtual wheel might look like:"
+msgstr ""
+
+#: ../../pep-0662.rst:310
+msgid "The frontend then could either:"
+msgstr ""
+
+#: ../../pep-0662.rst:312
+msgid ""
+"Add the source directory onto the target interpreters ``sys.path`` during"
+" startup of it. This is done by creating a ``pth`` file into the target "
+"interpreters ``purelib`` folder. setuptools_ does this today and is what "
+"`pip install -e <project_directory>`_ translate too. This solution is "
+"fast and cross-platform compatible. However, this puts the entire source "
+"tree onto the system, potentially exposing modules that would not be "
+"available in a standard installation case."
+msgstr ""
+
+#: ../../pep-0662.rst:320
+msgid ""
+"Symlink the folder, or the individual files within it. This method is "
+"what flit does via its `flit install --symlink`_. This solution requires "
+"the current platform to support symlinks. Still, it allows potentially to"
+" symlink individual files, which could solve the problem of including "
+"files that should be excluded from the source tree."
+msgstr ""
+
+#: ../../pep-0662.rst:327
+msgid "Using custom importers"
+msgstr ""
+
+#: ../../pep-0662.rst:329
+msgid ""
+"For a more robust and more dynamic collaboration between the build "
+"backend and the target interpreter, we can take advantage of the import "
+"system allowing the registration of custom importers. See :pep:`302` for "
+"more details and editables_ as an example of this. The backend can "
+"generate a new importer during the editable build (or install it as an "
+"additional dependency) and register it at interpreter startup by adding a"
+" ``pth`` file."
+msgstr ""
+
+#: ../../pep-0662.rst:349
+msgid ""
+"The backend here registered a hook that is called whenever a new module "
+"is imported, allowing dynamic and on-demand functionality. Potential use "
+"cases where this is useful:"
+msgstr ""
+
+#: ../../pep-0662.rst:353
+msgid ""
+"Expose a source folder, but honor module excludes: the backend may "
+"generate an import hook that consults the exclusion table before allowing"
+" a source file loader to discover a file in the source directory or not."
+msgstr ""
+
+#: ../../pep-0662.rst:357
+msgid ""
+"For a project, let there be two modules, ``A.py`` and ``B.py``. These are"
+" two separate files in the source directory; however, while building a "
+"wheel, they are merged into one mega file ``project.py``. In this case, "
+"with this PEP, the backend could generate an import hook that reads the "
+"source files at import time and merges them in memory before "
+"materializing it as a module."
+msgstr ""
+
+#: ../../pep-0662.rst:363
+msgid ""
+"Automatically update out-of-date C-extensions: the backend may generate "
+"an import hook that checks the last modified timestamp for a C-extension "
+"source file. If it is greater than the current C-extension binary, "
+"trigger an update by calling the compiler before import."
+msgstr ""
+
+#: ../../pep-0662.rst:369
+msgid "Rejected ideas"
+msgstr ""
+
+#: ../../pep-0662.rst:371
+msgid ""
+"This PEP competes with :pep:`660` and rejects that proposal because we "
+"think the mechanism of achieving an editable installation should be "
+"within the frontend rather than the build backend. Furthermore, this "
+"approach allows the ecosystem to use alternative means to accomplish the "
+"editable installation effect (e.g., insert path on ``sys.path`` or "
+"symlinks instead of just implying the loose wheel mode from the backend "
+"described by that PEP)."
+msgstr ""
+
+#: ../../pep-0662.rst:378
+msgid ""
+"Prominently, :pep:`660` does not allow using symlinks to expose code and "
+"data files without also extending the wheel file standard with symlink "
+"support. It's not clear how the wheel format could be extended to support"
+" symlinks that refer not to files within the wheel itself, but files only"
+" available on the local disk. It's important to note that the backend "
+"itself (or backend generated code) must not generate these symlinks "
+"(e.g., at interpreter startup time) as that would conflict with the "
+"frontends book keeping of what files need to be uninstalled."
+msgstr ""
+
+#: ../../pep-0662.rst:387
+msgid ""
+"Finally, :pep:`660` adds support only for ``purelib`` and ``platlib`` "
+"files. It purposefully avoids supporting other types of information that "
+"the wheel format supports: ``include``, ``data`` and ``scripts``. With "
+"this path the frontend can support these on a best effort basis via the "
+"symlinks mechanism (though this feature is not universally available - on"
+" Windows require enablement). We believe its beneficial to add best "
+"effort support for these file types, rather than exclude the possibility "
+"of supporting them at all."
+msgstr ""
+
+#: ../../pep-0662.rst:396
+msgid "References"
+msgstr ""
+
+#: ../../pep-0662.rst:417
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0662.rst:419
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

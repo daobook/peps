@@ -1,0 +1,1286 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0532.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0532.txt:1
+msgid "532"
+msgstr ""
+
+#: ../../pep-0532.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0532.txt:2
+msgid "A circuit breaking protocol and binary operators"
+msgstr ""
+
+#: ../../pep-0532.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0532.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>, Mark E. Haase <mehaase@gmail.com>"
+msgstr ""
+
+#: ../../pep-0532.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0532.txt:7
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0532.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0532.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0532.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0532.txt:10
+msgid "30-Oct-2016"
+msgstr ""
+
+#: ../../pep-0532.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0532.txt:11
+msgid "3.8"
+msgstr ""
+
+#: ../../pep-0532.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0532.txt:12
+msgid "5-Nov-2016"
+msgstr ""
+
+#: ../../pep-0532.txt:15
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0532.txt:17
+msgid ""
+"Further consideration of this PEP has been deferred until Python 3.8 at "
+"the earliest."
+msgstr ""
+
+#: ../../pep-0532.txt:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0532.txt:23
+msgid ""
+"Inspired by PEP 335, PEP 505, PEP 531, and the related discussions, this "
+"PEP proposes the definition of a new circuit breaking protocol (using the"
+" method names ``__then__`` and ``__else__``) that provides a common "
+"underlying semantic foundation for:"
+msgstr ""
+
+#: ../../pep-0532.txt:28
+msgid "conditional expressions: ``LHS if COND else RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:29
+msgid "logical conjunction: ``LHS and RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:30
+msgid "logical disjunction: ``LHS or RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:31
+msgid "the None-aware operators proposed in PEP 505"
+msgstr ""
+
+#: ../../pep-0532.txt:32
+msgid "the rich comparison chaining model proposed in PEP 535"
+msgstr ""
+
+#: ../../pep-0532.txt:34
+msgid ""
+"Taking advantage of the new protocol, it further proposes that the "
+"definition of conditional expressions be revised to also permit the use "
+"of ``if`` and ``else`` respectively as right-associative and left-"
+"associative general purpose short-circuiting operators:"
+msgstr ""
+
+#: ../../pep-0532.txt:39
+msgid "Right-associative short-circuiting: ``LHS if RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:40
+msgid "Left-associative short-circuiting: ``LHS else RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:42
+msgid ""
+"In order to make logical inversion (``not EXPR``) consistent with the "
+"above changes, it also proposes the introduction of a new logical "
+"inversion protocol (using the method name ``__not__``)."
+msgstr ""
+
+#: ../../pep-0532.txt:46
+msgid ""
+"To force short-circuiting of a circuit breaker without having to evaluate"
+" the expression creating it twice, a new ``operator.short_circuit(obj)`` "
+"helper function will be added to the operator module."
+msgstr ""
+
+#: ../../pep-0532.txt:50
+msgid ""
+"Finally, a new standard ``types.CircuitBreaker`` type is proposed to "
+"decouple an object's truth value (as used to determine control flow) from"
+" the value it returns from short-circuited circuit breaking expressions, "
+"with the following factory functions added to the operator module to "
+"represent particularly common switching idioms:"
+msgstr ""
+
+#: ../../pep-0532.txt:56
+msgid "switching on ``bool(obj)``: ``operator.true(obj)``"
+msgstr ""
+
+#: ../../pep-0532.txt:57
+msgid "switching on ``not bool(obj)``: ``operator.false(obj)``"
+msgstr ""
+
+#: ../../pep-0532.txt:58
+msgid "switching on ``obj is value``: ``operator.is_sentinel(obj, value)``"
+msgstr ""
+
+#: ../../pep-0532.txt:59
+msgid ""
+"switching on ``obj is not value``: ``operator.is_not_sentinel(obj, "
+"value)``"
+msgstr ""
+
+#: ../../pep-0532.txt:63
+msgid "Relationship with other PEPs"
+msgstr ""
+
+#: ../../pep-0532.txt:65
+msgid ""
+"This PEP builds on an extended history of work in other proposals. Some "
+"of the key proposals are discussed below."
+msgstr ""
+
+#: ../../pep-0532.txt:70
+msgid "PEP 531: Existence checking protocol"
+msgstr ""
+
+#: ../../pep-0532.txt:72
+msgid ""
+"This PEP is a direct successor to PEP 531, replacing the existence "
+"checking protocol and the new ``?then`` and ``?else`` syntactic operators"
+" defined there with the new circuit breaking protocol and adjustments to "
+"conditional expressions and the ``not`` operator."
+msgstr ""
+
+#: ../../pep-0532.txt:79
+msgid "PEP 505: None-aware operators"
+msgstr ""
+
+#: ../../pep-0532.txt:81
+msgid ""
+"This PEP complements the None-aware operator proposals in PEP 505, by "
+"offering an underlying protocol-driven semantic framework that explains "
+"their short-circuiting behaviour as highly optimised syntactic sugar for "
+"particular uses of conditional expressions."
+msgstr ""
+
+#: ../../pep-0532.txt:86
+msgid "Given the changes proposed by this PEP:"
+msgstr ""
+
+#: ../../pep-0532.txt:88
+msgid "``LHS ?? RHS`` would roughly be ``is_not_sentinel(LHS, None) else RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:89
+msgid ""
+"``EXPR?.attr`` would roughly be ``EXPR.attr if is_not_sentinel(EXPR, "
+"None)``"
+msgstr ""
+
+#: ../../pep-0532.txt:90
+msgid ""
+"``EXPR?[key]`` would roughly be ``EXPR[key] if is_not_sentinel(EXPR, "
+"None)``"
+msgstr ""
+
+#: ../../pep-0532.txt:92
+msgid ""
+"In all three cases, the dedicated syntactic form would be optimised to "
+"avoid actually creating the circuit breaker instance and instead "
+"implement the underlying control flow directly. In the latter two cases, "
+"the syntactic form would also avoid evaluating ``EXPR`` twice."
+msgstr ""
+
+#: ../../pep-0532.txt:97
+msgid ""
+"This means that while the None-aware operators would remain highly "
+"specialised and specific to None, other sentinel values would still be "
+"usable through the more general protocol-driven proposal in this PEP."
+msgstr ""
+
+#: ../../pep-0532.txt:103
+msgid "PEP 335: Overloadable Boolean operators"
+msgstr ""
+
+#: ../../pep-0532.txt:105
+msgid ""
+"PEP 335 proposed the ability to overload the short-circuiting ``and`` and"
+" ``or`` operators directly, with the ability to overload the semantics of"
+" comparison chaining being one of the consequences of that change. The "
+"proposal in an earlier version of this PEP to instead handle the element-"
+"wise comparison use case by changing the semantic definition of "
+"comparison chaining is drawn directly from Guido's rejection of PEP 335 "
+"[1_]."
+msgstr ""
+
+#: ../../pep-0532.txt:112
+msgid ""
+"However, initial feedback on this PEP indicated that the number of "
+"different proposals that it covered made it difficult to read, so that "
+"part of the proposal has been separated out as PEP 535."
+msgstr ""
+
+#: ../../pep-0532.txt:118
+msgid "PEP 535: Rich comparison chaining"
+msgstr ""
+
+#: ../../pep-0532.txt:120
+msgid ""
+"As noted above, PEP 535 is a proposal to build on the circuit breaking "
+"protocol defined in this PEP in order to expand the rich comparison "
+"support introduced in PEP 207 to also handle comparison chaining "
+"operations like ``LEFT_BOUND < VALUE < RIGHT_BOUND``."
+msgstr ""
+
+#: ../../pep-0532.txt:127
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0532.txt:130
+msgid "The circuit breaking protocol (``if-else``)"
+msgstr ""
+
+#: ../../pep-0532.txt:132
+msgid ""
+"Conditional expressions (``LHS if COND else RHS``) are currently "
+"interpreted as an expression level equivalent to::"
+msgstr ""
+
+#: ../../pep-0532.txt:140
+msgid ""
+"This PEP proposes changing that expansion to allow the checked condition "
+"to implement a new \"circuit breaking\" protocol that allows it to see, "
+"and potentially alter, the result of either or both branches of the "
+"expression::"
+msgstr ""
+
+#: ../../pep-0532.txt:155
+msgid ""
+"As shown, interpreter implementations would be required to access only "
+"the protocol method needed for the branch of the conditional expression "
+"that is actually executed. Consistent with other protocol methods, the "
+"special methods would be looked up via the circuit breaker's type, rather"
+" than directly on the instance."
+msgstr ""
+
+#: ../../pep-0532.txt:163
+msgid "Circuit breaking operators (binary ``if`` and binary ``else``)"
+msgstr ""
+
+#: ../../pep-0532.txt:165
+msgid ""
+"The proposed name of the protocol doesn't come from the proposed changes "
+"to the semantics of conditional expressions. Rather, it comes from the "
+"proposed addition of ``if`` and ``else`` as general purpose protocol "
+"driven short-circuiting operators to complement the existing ``True`` and"
+" ``False`` based short-circuiting operators (``or`` and ``and``, "
+"respectively) as well as the ``None`` based short-circuiting operator "
+"proposed in PEP 505 (``??``)."
+msgstr ""
+
+#: ../../pep-0532.txt:172
+msgid ""
+"Together, these two operators would be known as the circuit breaking "
+"operators."
+msgstr ""
+
+#: ../../pep-0532.txt:174
+msgid ""
+"In order to support this usage, the definition of conditional expressions"
+" in the language grammar would be updated to make both the ``if`` clause "
+"and the ``else`` clause optional::"
+msgstr ""
+
+#: ../../pep-0532.txt:181
+msgid ""
+"Note that we would need to avoid the apparent simplification to "
+"``else_test ('if' else_test)*`` in order to make it easier for compiler "
+"implementations to correctly preserve the semantics of normal conditional"
+" expressions."
+msgstr ""
+
+#: ../../pep-0532.txt:186
+msgid ""
+"The definition of the ``test_nocond`` node in the grammar (which "
+"deliberately excludes conditional expressions) would remain unchanged, so"
+" the circuit breaking operators would require parentheses when used in "
+"the ``if`` clause of comprehensions and generator expressions just as "
+"conditional expressions themselves do."
+msgstr ""
+
+#: ../../pep-0532.txt:192
+msgid ""
+"This grammar definition means precedence/associativity in the otherwise "
+"ambiguous case of ``expr1 if cond else expr2 else expr3`` resolves as "
+"``(expr1 if cond else expr2) else epxr3``. However, a guideline will also"
+" be added to PEP 8 to say \"don't do that\", as such a construct will be "
+"inherently confusing for readers, regardless of how the interpreter "
+"executes it."
+msgstr ""
+
+#: ../../pep-0532.txt:198
+msgid ""
+"The right-associative circuit breaking operator (``LHS if RHS``) would "
+"then be expanded as follows::"
+msgstr ""
+
+#: ../../pep-0532.txt:204
+msgid ""
+"While the left-associative circuit breaking operator (``LHS else RHS``) "
+"would be expanded as::"
+msgstr ""
+
+#: ../../pep-0532.txt:210
+msgid ""
+"The key point to note in both cases is that when the circuit breaking "
+"expression short-circuits, the condition expression is used as the result"
+" of the expression *unless* the condition is a circuit breaker. In the "
+"latter case, the appropriate circuit breaker protocol method is called as"
+" usual, but the circuit breaker itself is supplied as the method "
+"argument."
+msgstr ""
+
+#: ../../pep-0532.txt:216
+msgid ""
+"This allows circuit breakers to reliably detect short-circuiting by "
+"checking for cases when the argument passed in as the candidate "
+"expression result is ``self``."
+msgstr ""
+
+#: ../../pep-0532.txt:222
+msgid "Overloading logical inversion (``not``)"
+msgstr ""
+
+#: ../../pep-0532.txt:224
+msgid ""
+"Any circuit breaker definition will have a logical inverse that is still "
+"a circuit breaker, but inverts the answer as to when to short circuit the"
+" expression evaluation. For example, the ``operator.true`` and "
+"``operator.false`` circuit breakers proposed in this PEP are each other's"
+" logical inverse."
+msgstr ""
+
+#: ../../pep-0532.txt:230
+msgid ""
+"A new protocol method, ``__not__(self)``, will be introduced to permit "
+"circuit breakers and other types to override ``not`` expressions to "
+"return their logical inverse rather than a coerced boolean result."
+msgstr ""
+
+#: ../../pep-0532.txt:234
+msgid ""
+"To preserve the semantics of existing language optimisations (such as "
+"eliminating double negations directly in a boolean context as redundant),"
+" ``__not__`` implementations will be required to respect the following "
+"invariant::"
+msgstr ""
+
+#: ../../pep-0532.txt:241
+msgid ""
+"However, symmetric circuit breakers (those that implement all of "
+"``__bool__``, ``__not__``, ``__then__`` and ``__else__``) would only be "
+"expected to respect the full semantics of boolean logic when all circuit "
+"breakers involved in the expression are using a consistent definition of "
+"\"truth\". This is covered further in `Respecting De Morgan's Laws`_."
+msgstr ""
+
+#: ../../pep-0532.txt:249
+msgid "Forcing short-circuiting behaviour"
+msgstr ""
+
+#: ../../pep-0532.txt:251
+msgid ""
+"Invocation of a circuit breaker's short-circuiting behaviour can be "
+"forced by using it as all three operands in a conditional expression::"
+msgstr ""
+
+#: ../../pep-0532.txt:256
+msgid "Or, equivalently, as both operands in a circuit breaking expression::"
+msgstr ""
+
+#: ../../pep-0532.txt:261
+msgid ""
+"Rather than requiring the using of any of these patterns, this PEP "
+"proposes to add a dedicated function to the ``operator`` to explicitly "
+"short-circuit a circuit breaker, while passing other objects through "
+"unmodified::"
+msgstr ""
+
+#: ../../pep-0532.txt:274
+msgid "Circuit breaking identity comparisons (``is`` and ``is not``)"
+msgstr ""
+
+#: ../../pep-0532.txt:276
+msgid ""
+"In the absence of any standard circuit breakers, the proposed ``if`` and "
+"``else`` operators would largely just be unusual spellings of the "
+"existing ``and`` and ``or`` logical operators."
+msgstr ""
+
+#: ../../pep-0532.txt:280
+msgid ""
+"However, this PEP further proposes to provide a new general purpose "
+"``types.CircuitBreaker`` type that implements the appropriate short "
+"circuiting logic, as well as factory functions in the operator module "
+"that correspond to the ``is`` and ``is not`` operators."
+msgstr ""
+
+#: ../../pep-0532.txt:285
+msgid ""
+"These would be defined in such a way that the following expressions "
+"produce ``VALUE`` rather than ``False`` when the conditional check "
+"fails::"
+msgstr ""
+
+#: ../../pep-0532.txt:291
+msgid ""
+"And similarly, these would produce ``VALUE`` rather than ``True`` when "
+"the conditional check succeeds::"
+msgstr ""
+
+#: ../../pep-0532.txt:297
+msgid ""
+"In effect, these comparisons would be defined such that the leading "
+"``VALUE if`` and trailing ``else VALUE`` clauses can be omitted as "
+"implied in expressions of the following forms::"
+msgstr ""
+
+#: ../../pep-0532.txt:308
+msgid ""
+"The proposed ``types.CircuitBreaker`` type would represent this behaviour"
+" programmatically as follows::"
+msgstr ""
+
+#: ../../pep-0532.txt:329
+msgid ""
+"The key characteristic of these circuit breakers is that they are "
+"*ephemeral*: when they are told that short circuiting has taken place (by"
+" receiving a reference to themselves as the candidate expression result),"
+" they return the original value, rather than the circuit breaking "
+"wrapper."
+msgstr ""
+
+#: ../../pep-0532.txt:334
+msgid ""
+"The short-circuiting detection is defined such that the wrapper will "
+"always be removed if you explicitly pass the same circuit breaker "
+"instance to both sides of a circuit breaking operator or use one as all "
+"three operands in a conditional expression::"
+msgstr ""
+
+#: ../../pep-0532.txt:350
+msgid ""
+"The factory functions in the ``operator`` module would then make it "
+"straightforward to create circuit breakers that correspond to identity "
+"checks using the ``is`` and ``is not`` operators::"
+msgstr ""
+
+#: ../../pep-0532.txt:364
+msgid "Truth checking comparisons"
+msgstr ""
+
+#: ../../pep-0532.txt:366
+msgid ""
+"Due to their short-circuiting nature, the runtime logic underlying the "
+"``and`` and ``or`` operators has never previously been accessible through"
+" the ``operator`` or ``types`` modules."
+msgstr ""
+
+#: ../../pep-0532.txt:370
+msgid ""
+"The introduction of circuit breaking operators and circuit breakers "
+"allows that logic to be captured in the operator module as follows::"
+msgstr ""
+
+#: ../../pep-0532.txt:381
+msgid "``LHS or RHS`` would be effectively ``true(LHS) else RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:382
+msgid "``LHS and RHS`` would be effectively ``false(LHS) else RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:384
+msgid ""
+"No actual change would take place in these operator definitions, the new "
+"circuit breaking protocol and operators would just provide a way to make "
+"the control flow logic programmable, rather than hardcoding the sense of "
+"the check at development time."
+msgstr ""
+
+#: ../../pep-0532.txt:389
+msgid ""
+"Respecting the rules of boolean logic, these expressions could also be "
+"expanded in their inverted form by using the right-associative circuit "
+"breaking operator instead:"
+msgstr ""
+
+#: ../../pep-0532.txt:393
+msgid "``LHS or RHS`` would be effectively ``RHS if false(LHS)``"
+msgstr ""
+
+#: ../../pep-0532.txt:394
+msgid "``LHS and RHS`` would be effectively ``RHS if true(LHS)``"
+msgstr ""
+
+#: ../../pep-0532.txt:398
+msgid "None-aware operators"
+msgstr ""
+
+#: ../../pep-0532.txt:400
+msgid ""
+"If both this PEP and PEP 505's None-aware operators were accepted, then "
+"the proposed ``is_sentinel`` and ``is_not_sentinel`` circuit breaker "
+"factories would be used to encapsulate the notion of \"None checking\": "
+"seeing if a value is ``None`` and either falling back to an alternative "
+"value (an operation known as \"None-coalescing\") or passing it through "
+"as the result of the overall expression (an operation known as \"None-"
+"severing\" or \"None-propagating\")."
+msgstr ""
+
+#: ../../pep-0532.txt:407
+msgid ""
+"Given these circuit breakers, ``LHS ?? RHS`` would be roughly equivalent "
+"to both of the following:"
+msgstr ""
+
+#: ../../pep-0532.txt:410
+msgid "``is_not_sentinel(LHS, None) else RHS``"
+msgstr ""
+
+#: ../../pep-0532.txt:411
+msgid "``RHS if is_sentinel(LHS, None)``"
+msgstr ""
+
+#: ../../pep-0532.txt:413
+msgid ""
+"Due to the way they inject control flow into attribute lookup and "
+"subscripting operations, None-aware attribute access and None-aware "
+"subscripting can't be expressed directly in terms of the circuit breaking"
+" operators, but they can still be defined in terms of the underlying "
+"circuit breaking protocol."
+msgstr ""
+
+#: ../../pep-0532.txt:418
+msgid ""
+"In those terms, ``EXPR?.ATTR[KEY].SUBATTR()`` would be semantically "
+"equivalent to::"
+msgstr ""
+
+#: ../../pep-0532.txt:425
+msgid ""
+"Similarly, ``EXPR?[KEY].ATTR.SUBATTR()`` would be semantically equivalent"
+" to::"
+msgstr ""
+
+#: ../../pep-0532.txt:432
+msgid ""
+"The actual implementations of the None-aware operators would presumably "
+"be optimised to skip actually creating the circuit breaker instance, but "
+"the above expansions would still provide an accurate description of the "
+"observable behaviour of the operators at runtime."
+msgstr ""
+
+#: ../../pep-0532.txt:439
+msgid "Rich chained comparisons"
+msgstr ""
+
+#: ../../pep-0532.txt:441
+msgid "Refer to PEP 535 for a detailed discussion of this possible use case."
+msgstr ""
+
+#: ../../pep-0532.txt:445
+msgid "Other conditional constructs"
+msgstr ""
+
+#: ../../pep-0532.txt:447
+msgid ""
+"No changes are proposed to if statements, while statements, "
+"comprehensions, or generator expressions, as the boolean clauses they "
+"contain are used entirely for control flow purposes and never return a "
+"result as such."
+msgstr ""
+
+#: ../../pep-0532.txt:451
+msgid ""
+"However, it's worth noting that while such proposals are outside the "
+"scope of this PEP, the circuit breaking protocol defined here would "
+"already be sufficient to support constructs like::"
+msgstr ""
+
+#: ../../pep-0532.txt:461
+msgid "and::"
+msgstr ""
+
+#: ../../pep-0532.txt:466
+msgid ""
+"This could be done by assigning the result of "
+"``operator.short_circuit(CONDITION)`` to the name given in the ``as`` "
+"clause, rather than assigning ``CONDITION`` to the given name directly."
+msgstr ""
+
+#: ../../pep-0532.txt:472
+msgid "Style guide recommendations"
+msgstr ""
+
+#: ../../pep-0532.txt:474
+msgid ""
+"The following additions to PEP 8 are proposed in relation to the new "
+"features introduced by this PEP:"
+msgstr ""
+
+#: ../../pep-0532.txt:477
+msgid ""
+"Avoid combining conditional expressions (``if-else``) and the standalone "
+"circuit breaking operators (``if`` and ``else``) in a single expression -"
+" use one or the other depending on the situation, but not both."
+msgstr ""
+
+#: ../../pep-0532.txt:481
+msgid ""
+"Avoid using conditional expressions (``if-else``) and the standalone "
+"circuit breaking operators (``if`` and ``else``) as part of ``if`` "
+"conditions in ``if`` statements and the filter clauses of comprehensions "
+"and generator expressions."
+msgstr ""
+
+#: ../../pep-0532.txt:488
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0532.txt:491
+msgid "Adding new operators"
+msgstr ""
+
+#: ../../pep-0532.txt:493
+msgid ""
+"Similar to PEP 335, early drafts of this PEP focused on making the "
+"existing ``and`` and ``or`` operators less rigid in their interpretation,"
+" rather than proposing new operators. However, this proved to be "
+"problematic for a few key reasons:"
+msgstr ""
+
+#: ../../pep-0532.txt:498
+msgid ""
+"the ``and`` and ``or`` operators have a long established and stable "
+"meaning, so readers would inevitably be surprised if their meaning now "
+"became dependent on the type of the left operand. Even new users would be"
+" confused by this change due to 25+ years of teaching material that "
+"assumes the current well-known semantics for these operators"
+msgstr ""
+
+#: ../../pep-0532.txt:503
+msgid ""
+"Python interpreter implementations, including CPython, have taken "
+"advantage of the existing semantics of ``and`` and ``or`` when defining "
+"runtime and compile time optimisations, which would all need to be "
+"reviewed and potentially discarded if the semantics of those operations "
+"changed"
+msgstr ""
+
+#: ../../pep-0532.txt:507
+msgid ""
+"it isn't clear what names would be appropriate for the new methods needed"
+" to define the protocol"
+msgstr ""
+
+#: ../../pep-0532.txt:510
+msgid ""
+"Proposing short-circuiting binary variants of the existing ``if-else`` "
+"ternary operator instead resolves all of those issues:"
+msgstr ""
+
+#: ../../pep-0532.txt:513
+msgid "the runtime semantics of ``and`` and ``or`` remain entirely unchanged"
+msgstr ""
+
+#: ../../pep-0532.txt:514
+msgid ""
+"while the semantics of the unary ``not`` operator do change, the "
+"invariant required of ``__not__`` implementations means that existing "
+"expression optimisations in boolean contexts will remain valid."
+msgstr ""
+
+#: ../../pep-0532.txt:517
+msgid ""
+"``__else__`` is the short-circuiting outcome for ``if`` expressions due "
+"to the absence of a trailing ``else`` clause"
+msgstr ""
+
+#: ../../pep-0532.txt:519
+msgid ""
+"``__then__`` is the short-circuiting outcome for ``else`` expressions due"
+" to the absence of a leading ``if`` clause (this connection would be even"
+" clearer if the method name was ``__if__``, but that would be ambiguous "
+"given the other uses of the ``if`` keyword that won't invoke the circuit "
+"breaking protocol)"
+msgstr ""
+
+#: ../../pep-0532.txt:527
+msgid "Naming the operator and protocol"
+msgstr ""
+
+#: ../../pep-0532.txt:529
+msgid ""
+"The names \"circuit breaking operator\", \"circuit breaking protocol\" "
+"and \"circuit breaker\" are all inspired by the phrase \"short circuiting"
+" operator\": the general language design term for operators that only "
+"conditionally evaluate their right operand."
+msgstr ""
+
+#: ../../pep-0532.txt:534
+msgid ""
+"The electrical analogy is that circuit breakers in Python detect and "
+"handle short circuits in expressions before they trigger any exceptions "
+"similar to the way that circuit breakers detect and handle short circuits"
+" in electrical systems before they damage any equipment or harm any "
+"humans."
+msgstr ""
+
+#: ../../pep-0532.txt:539
+msgid ""
+"The Python level analogy is that just as a ``break`` statement lets you "
+"terminate a loop before it reaches its natural conclusion, a circuit "
+"breaking expression lets you terminate evaluation of the expression and "
+"produce a result immediately."
+msgstr ""
+
+#: ../../pep-0532.txt:546
+msgid "Using existing keywords"
+msgstr ""
+
+#: ../../pep-0532.txt:548
+msgid ""
+"Using existing keywords has the benefit of allowing the new operators to "
+"be introduced without a ``__future__`` statement."
+msgstr ""
+
+#: ../../pep-0532.txt:551
+msgid ""
+"``if`` and ``else`` are semantically appropriate for the proposed new "
+"protocol, and the only additional syntactic ambiguity introduced arises "
+"when the new operators are combined with the explicit ``if-else`` "
+"conditional expression syntax."
+msgstr ""
+
+#: ../../pep-0532.txt:556
+msgid ""
+"The PEP handles that ambiguity by explicitly specifying how it should be "
+"handled by interpreter implementers, but proposing to point out in PEP 8 "
+"that even though interpreters will understand it, human readers probably "
+"won't, and hence it won't be a good idea to use both conditional "
+"expressions and the circuit breaking operators in a single expression."
+msgstr ""
+
+#: ../../pep-0532.txt:564
+msgid "Naming the protocol methods"
+msgstr ""
+
+#: ../../pep-0532.txt:566
+msgid ""
+"Naming the ``__else__`` method was straightforward, as reusing the "
+"operator keyword name results in a special method name that is both "
+"obvious and unambiguous."
+msgstr ""
+
+#: ../../pep-0532.txt:570
+msgid ""
+"Naming the ``__then__`` method was less straightforward, as there was "
+"another possible option in using the keyword-based name ``__if__``."
+msgstr ""
+
+#: ../../pep-0532.txt:573
+msgid ""
+"The problem with ``__if__`` is that there would continue to be many cases"
+" where the ``if`` keyword appeared, with an expression to its immediate "
+"right, but the ``__if__`` special method would not be invoked. Instead, "
+"the ``bool()`` builtin and its underlying special methods (``__bool__``, "
+"``__len__``) would be invoked, while ``__if__`` had no effect."
+msgstr ""
+
+#: ../../pep-0532.txt:579
+msgid ""
+"With the boolean protocol already playing a part in conditional "
+"expressions and the new circuit breaking protocol, the less ambiguous "
+"name ``__then__`` was chosen based on the terminology commonly used in "
+"computer science and programming language design to describe the first "
+"clause of an ``if`` statement."
+msgstr ""
+
+#: ../../pep-0532.txt:587
+msgid "Making binary ``if`` right-associative"
+msgstr ""
+
+#: ../../pep-0532.txt:589
+msgid ""
+"The precedent set by conditional expressions means that a binary short-"
+"circuiting ``if`` expression must necessarily have the condition on the "
+"right as a matter of consistency."
+msgstr ""
+
+#: ../../pep-0532.txt:593
+msgid ""
+"With the right operand always being evaluated first, and the left operand"
+" not being evaluated at all if the right operand is true in a boolean "
+"context, the natural outcome is a right-associative operator."
+msgstr ""
+
+#: ../../pep-0532.txt:599
+msgid "Naming the standard circuit breakers"
+msgstr ""
+
+#: ../../pep-0532.txt:601
+msgid ""
+"When used solely with the left-associative circuit breaking operator, "
+"explicit circuit breaker names for unary checks read well if they start "
+"with the preposition ``if_``::"
+msgstr ""
+
+#: ../../pep-0532.txt:608
+msgid ""
+"However, incorporating the ``if_`` doesn't read as well when performing "
+"logical inversion::"
+msgstr ""
+
+#: ../../pep-0532.txt:614
+msgid "Or when using the right-associative circuit breaking operator::"
+msgstr ""
+
+#: ../../pep-0532.txt:619
+msgid "Or when naming a binary comparison operation::"
+msgstr ""
+
+#: ../../pep-0532.txt:624
+msgid ""
+"By contrast, omitting the preposition from the circuit breaker name gives"
+" a result that reads reasonably well in all forms for unary checks::"
+msgstr ""
+
+#: ../../pep-0532.txt:636
+msgid "And also reads well for binary checks::"
+msgstr ""
+
+#: ../../pep-0532.txt:645
+msgid "Risks and concerns"
+msgstr ""
+
+#: ../../pep-0532.txt:647
+msgid ""
+"This PEP has been designed specifically to address the risks and concerns"
+" raised when discussing PEPs 335, 505 and 531."
+msgstr ""
+
+#: ../../pep-0532.txt:650
+msgid ""
+"it defines new operators and adjusts the definition of chained comparison"
+" (in a separate PEP) rather than impacting the existing ``and`` and "
+"``or`` operators"
+msgstr ""
+
+#: ../../pep-0532.txt:653
+msgid ""
+"the proposed new operators are general purpose short-circuiting binary "
+"operators that can even be used to express the existing semantics of "
+"``and`` and ``or`` rather than focusing solely and inflexibly on identity"
+" checking against ``None``"
+msgstr ""
+
+#: ../../pep-0532.txt:657
+msgid ""
+"the changes to the ``not`` unary operator and the ``is`` and ``is not`` "
+"binary comparison operators are defined in such a way that control flow "
+"optimisations based on the existing semantics remain valid"
+msgstr ""
+
+#: ../../pep-0532.txt:661
+msgid ""
+"One consequence of this approach is that this PEP *on its own* doesn't "
+"produce much in the way of direct benefits to end users aside from making"
+" it possible to omit some common ``None if `` prefixes and `` else None``"
+" suffixes from particular forms of conditional expression."
+msgstr ""
+
+#: ../../pep-0532.txt:666
+msgid ""
+"Instead, what it mainly provides is a common foundation that would allow "
+"the None-aware operator proposals in PEP 505 and the rich comparison "
+"chaining proposal in PEP 535 to be pursued atop a common underlying "
+"semantic framework that would also be shared with conditional expressions"
+" and the existing ``and`` and ``or`` operators."
+msgstr ""
+
+#: ../../pep-0532.txt:674
+msgid "Design Discussion"
+msgstr ""
+
+#: ../../pep-0532.txt:677
+msgid "Protocol walk-through"
+msgstr ""
+
+#: ../../pep-0532.txt:679
+msgid ""
+"The following diagram illustrates the core concepts behind the circuit "
+"breaking protocol (although it glosses over the technical detail of "
+"looking up the special methods via the type rather than the instance):"
+msgstr ""
+
+msgid "diagram of circuit breaking protocol applied to ternary expression"
+msgstr ""
+
+#: ../../pep-0532.txt:686
+msgid "We will work through the following expression::"
+msgstr ""
+
+#: ../../pep-0532.txt:692
+msgid ""
+"``is_not_none`` is a helper function that invokes the proposed "
+"``operator.is_not_sentinel`` ``types.CircuitBreaker`` factory with "
+"``None`` as the sentinel value. ``data`` is a container (such as a "
+"builtin ``dict`` instance) that returns ``None`` when the ``get()`` "
+"method is called with an unknown key."
+msgstr ""
+
+#: ../../pep-0532.txt:698
+msgid ""
+"We can rewrite the example to give a name to the circuit breaker "
+"instance::"
+msgstr ""
+
+#: ../../pep-0532.txt:703
+msgid ""
+"Here the ``maybe_value`` circuit breaker instance corresponds to "
+"``breaker`` in the diagram."
+msgstr ""
+
+#: ../../pep-0532.txt:706
+msgid ""
+"The ternary condition is evaluated by calling ``bool(maybe_value)``, "
+"which is the same as Python's existing behavior. The change in behavior "
+"is that instead of directly returning one of the operands ``x`` or ``y``,"
+" the circuit breaking protocol passes the relevant operand to the circuit"
+" breaker used in the condition."
+msgstr ""
+
+#: ../../pep-0532.txt:712
+msgid ""
+"If ``bool(maybe_value)`` evaluates to ``True`` (i.e. the requested key "
+"exists and its value is not ``None``) then the interpreter calls "
+"``type(maybe_value).__then__(maybe_value, x)``. Otherwise, it calls "
+"``type(maybe_value).__else__(maybe_value, y)``."
+msgstr ""
+
+#: ../../pep-0532.txt:717
+msgid ""
+"The protocol also applies to the new ``if`` and ``else`` binary "
+"operators, but in these cases, the interpreter needs a way to indicate "
+"the missing third operand. It does this by re-using the circuit breaker "
+"itself in that role."
+msgstr ""
+
+#: ../../pep-0532.txt:721
+msgid "Consider these two expressions::"
+msgstr ""
+
+#: ../../pep-0532.txt:726
+msgid ""
+"The first form of this expression returns ``x`` if ``data.get(\"key\") is"
+" None``, but otherwise returns ``False``, which almost certainly isn't "
+"what we want."
+msgstr ""
+
+#: ../../pep-0532.txt:729
+msgid ""
+"By contrast, the second form of this expression still returns ``x`` if "
+"``data.get(\"key\") is None``, but otherwise returns "
+"``data.get(\"key\")``, which is significantly more useful behaviour."
+msgstr ""
+
+#: ../../pep-0532.txt:733
+msgid ""
+"We can understand this behavior by rewriting it as a ternary expression "
+"with an explicitly named circuit breaker instance::"
+msgstr ""
+
+#: ../../pep-0532.txt:739
+msgid ""
+"If ``bool(maybe_value)`` is ``True`` (i.e. ``data.get(\"key\")`` is "
+"``None``), then the interpreter calls "
+"``type(maybe_value).__then__(maybe_value, x)``. The implementation of "
+"``types.CircuitBreaker.__then__`` doesn't see anything that indicates "
+"short-circuiting has taken place, and hence returns ``x``."
+msgstr ""
+
+#: ../../pep-0532.txt:744
+msgid ""
+"By contrast, if ``bool(maybe_value)`` is ``False`` (i.e. "
+"``data.get(\"key\")`` is *not* ``None``),  the interpreter calls "
+"``type(maybe_value).__else__(maybe_value, maybe_value)``. The "
+"implementation of ``types.CircuitBreaker.__else__`` detects that the "
+"instance method has received itself as its argument and returns the "
+"wrapped value (i.e. ``data.get(\"key\")``) rather than the circuit "
+"breaker."
+msgstr ""
+
+#: ../../pep-0532.txt:751
+msgid "The same logic applies to ``else``, only reversed::"
+msgstr ""
+
+#: ../../pep-0532.txt:755
+msgid ""
+"This expression returns ``data.get(\"key\")`` if it is not ``None``, "
+"otherwise it evaluates and returns ``y``. To understand the mechanics, we"
+" rewrite the expression as follows::"
+msgstr ""
+
+#: ../../pep-0532.txt:762
+msgid ""
+"If `bool(maybe_value)`` is ``True``, then the expression short-circuits "
+"and the interpreter calls ``type(maybe_value).__else__(maybe_value, "
+"maybe_value)``. The implementation of ``types.CircuitBreaker.__then__`` "
+"detects that the instance method has received itself as its argument and "
+"returns the wrapped value (i.e. ``data.get(\"key\")``) rather than the "
+"circuit breaker."
+msgstr ""
+
+#: ../../pep-0532.txt:768
+msgid ""
+"If `bool(maybe_value)`` is ``True``, the interpreter calls "
+"``type(maybe_value).__else__(maybe_value, y)``. The implementation of "
+"``types.CircuitBreaker.__else__`` doesn't see anything that indicates "
+"short-circuiting has taken place, and hence returns ``y``."
+msgstr ""
+
+#: ../../pep-0532.txt:775
+msgid "Respecting De Morgan's Laws"
+msgstr ""
+
+#: ../../pep-0532.txt:777
+msgid ""
+"Similar to ``and`` and ``or``, the binary short-circuiting operators will"
+" permit multiple ways of writing essentially the same expression. This "
+"seeming redundancy is unfortunately an implied consequence of defining "
+"the protocol as a full boolean algebra, as boolean algebras respect a "
+"pair of properties known as \"De Morgan's Laws\": the ability to express "
+"the results of ``and`` and ``or`` operations in terms of each other and a"
+" suitable combination of ``not`` operations."
+msgstr ""
+
+#: ../../pep-0532.txt:785
+msgid ""
+"For ``and`` and ``or`` in Python, these invariants can be described as "
+"follows::"
+msgstr ""
+
+#: ../../pep-0532.txt:790
+msgid ""
+"That is, if you take one of the operators, invert both operands, switch "
+"to the other operator, and then invert the overall result, you'll get the"
+" same answer (in a boolean sense) as you did from the original operator. "
+"(This may seem redundant, but in many situations it actually lets you "
+"eliminate double negatives and find tautologically true or false "
+"subexpressions, thus reducing the overall expression size)."
+msgstr ""
+
+#: ../../pep-0532.txt:797
+msgid ""
+"For circuit breakers, defining a suitable invariant is complicated by the"
+" fact that they're often going to be designed to eliminate themselves "
+"from the expression result when they're short-circuited, which is an "
+"inherently asymmetric behaviour. Accordingly, that inherent asymmetry "
+"needs to be accounted for when mapping De Morgan's Laws to the expected "
+"behaviour of symmetric circuit breakers."
+msgstr ""
+
+#: ../../pep-0532.txt:804
+msgid ""
+"One way this complication can be addressed is to wrap the operand that "
+"would otherwise short-circuit in ``operator.true``, ensuring that when "
+"``bool`` is applied to the overall result, it uses the same definition of"
+" truth that was used to decide which branch to evaluate, rather than "
+"applying ``bool`` directly to the circuit breaker's input value."
+msgstr ""
+
+#: ../../pep-0532.txt:810
+msgid ""
+"Specifically, for the new short-circuiting operators, the following "
+"properties would be reasonably expected to hold for any well-behaved "
+"symmetric circuit breaker that implements both ``__bool__`` and "
+"``__not__``::"
+msgstr ""
+
+#: ../../pep-0532.txt:817
+msgid ""
+"Note the order of operations on the right hand side (applying ``true`` "
+"*after* inverting the input circuit breaker) - this ensures that an "
+"assertion is actually being made about ``type(A).__not__``, rather than "
+"merely being about the behaviour of ``type(true(A)).__not__``."
+msgstr ""
+
+#: ../../pep-0532.txt:822
+msgid ""
+"At the very least, ``types.CircuitBreaker`` instances would respect this "
+"logic, allowing existing boolean expression optimisations (like double "
+"negative elimination) to continue to be applied."
+msgstr ""
+
+#: ../../pep-0532.txt:828
+msgid "Arbitrary sentinel objects"
+msgstr ""
+
+#: ../../pep-0532.txt:830
+msgid ""
+"Unlike PEPs 505 and 531, the proposal in this PEP readily handles custom "
+"sentinel objects::"
+msgstr ""
+
+#: ../../pep-0532.txt:841
+msgid "Implicitly defined circuit breakers in circuit breaking expressions"
+msgstr ""
+
+#: ../../pep-0532.txt:843
+msgid ""
+"A never-posted draft of this PEP explored the idea of special casing the "
+"``is`` and ``is not`` binary operators such that they were automatically "
+"treated as circuit breakers when used in the context of a circuit "
+"breaking expression. Unfortunately, it turned out that this approach "
+"necessarily resulted in one of two highly undesirable outcomes:"
+msgstr ""
+
+#: ../../pep-0532.txt:849
+msgid ""
+"the return type of these expressions changed universally from ``bool`` to"
+" ``types.CircuitBreaker``, potentially creating a backwards compatibility"
+" problem (especially when working with extension module APIs that "
+"specifically look for a builtin boolean value with ``PyBool_Check`` "
+"rather than passing the supplied value through ``PyObject_IsTrue`` or "
+"using the ``p`` (predicate) format in one of the argument parsing "
+"functions)"
+msgstr ""
+
+#: ../../pep-0532.txt:855
+msgid ""
+"the return type of these expressions became *context dependent*, meaning "
+"that other routine refactorings (like pulling a comparison operation out "
+"into a local variable) could have a significant impact on the runtime "
+"semantics of a piece of code"
+msgstr ""
+
+#: ../../pep-0532.txt:860
+msgid ""
+"Neither of those possible outcomes seems warranted by the proposal in "
+"this PEP, so it reverted to the current design where circuit breaker "
+"instances must be created explicitly via API calls, and are never "
+"produced implicitly."
+msgstr ""
+
+#: ../../pep-0532.txt:866
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0532.txt:868
+msgid ""
+"As with PEP 505, actual implementation has been deferred pending in-"
+"principle interest in the idea of making these changes."
+msgstr ""
+
+#: ../../pep-0532.txt:871
+msgid "...TBD..."
+msgstr ""
+
+#: ../../pep-0532.txt:875
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0532.txt:877
+msgid ""
+"Thanks go to Steven D'Aprano for his detailed critique [2_] of the "
+"initial draft of this PEP that inspired many of the changes in the second"
+" draft, as well as to all of the other participants in that discussion "
+"thread [3_]"
+msgstr ""
+
+#: ../../pep-0532.txt:883
+msgid "References"
+msgstr ""
+
+#: ../../pep-0532.txt:885
+msgid ""
+"PEP 335 rejection notification (https://mail.python.org/pipermail/python-"
+"dev/2012-March/117510.html)"
+msgstr ""
+
+#: ../../pep-0532.txt:888
+msgid ""
+"Steven D'Aprano's critique of the initial draft "
+"(https://mail.python.org/pipermail/python-"
+"ideas/2016-November/043615.html)"
+msgstr ""
+
+#: ../../pep-0532.txt:891
+msgid ""
+"python-ideas thread discussing initial draft "
+"(https://mail.python.org/pipermail/python-"
+"ideas/2016-November/043563.html)"
+msgstr ""
+
+#: ../../pep-0532.txt:895
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0532.txt:897
+msgid ""
+"This document has been placed in the public domain under the terms of the"
+" CC0 1.0 license: https://creativecommons.org/publicdomain/zero/1.0/"
+msgstr ""
+

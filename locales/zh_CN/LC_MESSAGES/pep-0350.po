@@ -1,0 +1,1056 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0350.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0350.txt:1
+msgid "350"
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0350.txt:2
+msgid "Codetags"
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0350.txt:5
+msgid "Micah Elliott <mde at tracos.org>"
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0350.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0350.txt:7
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0350.txt:9
+msgid "27-Jun-2005"
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0350.txt:10
+msgid "10-Aug-2005, 26-Sep-2005"
+msgstr ""
+
+#: ../../pep-0350.txt:14
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0350.txt:16
+msgid ""
+"This PEP has been rejected. While the community may be interested, there "
+"is no desire to make the standard library conform to this standard."
+msgstr ""
+
+#: ../../pep-0350.txt:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0350.txt:23
+msgid ""
+"This informational PEP aims to provide guidelines for consistent use of "
+"*codetags*, which would enable the construction of standard utilities to "
+"take advantage of the codetag information, as well as making Python code "
+"more uniform across projects.  Codetags also represent a very lightweight"
+" programming micro-paradigm and become useful for project management, "
+"documentation, change tracking, and project health monitoring.  This is "
+"submitted as a PEP because its ideas are thought to be Pythonic, although"
+" the concepts are not unique to Python programming.  Herein are the "
+"definition of codetags, the philosophy behind them, a motivation for "
+"standardized conventions, some examples, a specification, a toolset "
+"description, and possible objections to the Codetag project/paradigm."
+msgstr ""
+
+#: ../../pep-0350.txt:36
+msgid "This PEP is also living as a wiki_ for people to add comments."
+msgstr ""
+
+#: ../../pep-0350.txt:40
+msgid "What Are Codetags?"
+msgstr ""
+
+#: ../../pep-0350.txt:42
+msgid ""
+"Programmers widely use ad-hoc code comment markup conventions to serve as"
+" reminders of sections of code that need closer inspection or review.  "
+"Examples of markup include ``FIXME``, ``TODO``, ``XXX``, ``BUG``, but "
+"there many more in wide use in existing software.  Such markup will "
+"henceforth be referred to as *codetags*.  These codetags may show up in "
+"application code, unit tests, scripts, general documentation, or wherever"
+" suitable."
+msgstr ""
+
+#: ../../pep-0350.txt:50
+msgid ""
+"Codetags have been under discussion and in use (hundreds of codetags in "
+"the Python 2.4 sources) in many places (e.g., c2_) for many years. See "
+"References_ for further historic and current information."
+msgstr ""
+
+#: ../../pep-0350.txt:56
+msgid "Philosophy"
+msgstr ""
+
+#: ../../pep-0350.txt:58
+msgid ""
+"If you subscribe to most of these values, then codetags will likely be "
+"useful for you."
+msgstr ""
+
+#: ../../pep-0350.txt:61
+msgid ""
+"As much information as possible should be contained **inside the source "
+"code** (application code or unit tests).  This along with use of codetags"
+" impedes duplication.  Most documentation can be generated from that "
+"source code; e.g., by using help2man, man2html, docutils, epydoc/pydoc, "
+"ctdoc, etc."
+msgstr ""
+
+#: ../../pep-0350.txt:67
+msgid ""
+"Information should be almost **never duplicated** -- it should be "
+"recorded in a single original format and all other locations should be "
+"automatically generated from the original, or simply be referenced.  This"
+" is famously known as the Single Point Of Truth (SPOT) or Don't Repeat "
+"Yourself (DRY) rule."
+msgstr ""
+
+#: ../../pep-0350.txt:73
+msgid ""
+"Documentation that gets into customers' hands should be **auto-"
+"generated** from single sources into all other output formats.  People "
+"want documentation in many forms.  It is thus important to have a "
+"documentation system that can generate all of these."
+msgstr ""
+
+#: ../../pep-0350.txt:79
+msgid ""
+"The **developers are the documentation team**.  They write the code and "
+"should know the code the best.  There should not be a dedicated, disjoint"
+" documentation team for any non-huge project."
+msgstr ""
+
+#: ../../pep-0350.txt:83
+msgid ""
+"**Plain text** (with non-invasive markup) is the best format for writing "
+"anything.  All other formats are to be generated from the plain text."
+msgstr ""
+
+#: ../../pep-0350.txt:87
+msgid "Codetag design was influenced by the following goals:"
+msgstr ""
+
+#: ../../pep-0350.txt:89
+msgid "Comments should be short whenever possible."
+msgstr ""
+
+#: ../../pep-0350.txt:91
+msgid ""
+"Codetag fields should be optional and of minimal length.  Default values "
+"and custom fields can be set by individual code shops."
+msgstr ""
+
+#: ../../pep-0350.txt:94
+msgid ""
+"Codetags should be minimalistic.  The quicker it is to jot something "
+"down, the more likely it is to get jotted."
+msgstr ""
+
+#: ../../pep-0350.txt:97
+msgid ""
+"The most common use of codetags will only have zero to two fields "
+"specified, and these should be the easiest to type and read."
+msgstr ""
+
+#: ../../pep-0350.txt:102
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0350.txt:104
+msgid "**Various productivity tools can be built around codetags.**"
+msgstr ""
+
+#: ../../pep-0350.txt:106
+msgid "See Tools_."
+msgstr ""
+
+#: ../../pep-0350.txt:108
+msgid "**Encourages consistency.**"
+msgstr ""
+
+#: ../../pep-0350.txt:110
+msgid ""
+"Historically, a subset of these codetags has been used informally in the "
+"majority of source code in existence, whether in Python or in other "
+"languages.  Tags have been used in an inconsistent manner with different "
+"spellings, semantics, format, and placement.  For example, some "
+"programmers might include datestamps and/or user identifiers, limit to a "
+"single line or not, spell the codetag differently than others, etc."
+msgstr ""
+
+#: ../../pep-0350.txt:118
+msgid "**Encourages adherence to SPOT/DRY principle.**"
+msgstr ""
+
+#: ../../pep-0350.txt:120
+msgid ""
+"E.g., generating a roadmap dynamically from codetags instead of keeping "
+"TODOs in sync with separate roadmap document."
+msgstr ""
+
+#: ../../pep-0350.txt:123
+msgid "**Easy to remember.**"
+msgstr ""
+
+#: ../../pep-0350.txt:125
+msgid ""
+"All codetags must be concise, intuitive, and semantically non-overlapping"
+" with others.  The format must also be simple."
+msgstr ""
+
+#: ../../pep-0350.txt:128
+msgid "**Use not required/imposed.**"
+msgstr ""
+
+#: ../../pep-0350.txt:130
+msgid ""
+"If you don't use codetags already, there's no obligation to start, and no"
+" risk of affecting code (but see Objections_).  A small subset can be "
+"adopted and the Tools_ will still be useful (a few codetags have probably"
+" already been adopted on an ad-hoc basis anyway).  Also it is very easy "
+"to identify and remove (and possibly record) a codetag that is no longer "
+"deemed useful."
+msgstr ""
+
+#: ../../pep-0350.txt:137
+msgid "**Gives a global view of code.**"
+msgstr ""
+
+#: ../../pep-0350.txt:139
+msgid "Tools can be used to generate documentation and reports."
+msgstr ""
+
+#: ../../pep-0350.txt:141
+msgid "**A logical location for capturing CRCs/Stories/Requirements.**"
+msgstr ""
+
+#: ../../pep-0350.txt:143
+msgid ""
+"The XP community often does not electronically capture Stories, but "
+"codetags seem like a good place to locate them."
+msgstr ""
+
+#: ../../pep-0350.txt:146
+msgid "**Extremely lightweight process.**"
+msgstr ""
+
+#: ../../pep-0350.txt:148
+msgid ""
+"Creating tickets in a tracking system for every thought degrades "
+"development velocity.  Even if a ticketing system is employed, codetags "
+"are useful for simply containing links to those tickets."
+msgstr ""
+
+#: ../../pep-0350.txt:154
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0350.txt:156
+msgid ""
+"This shows a simple codetag as commonly found in sources everywhere (with"
+" the addition of a trailing ``<>``)::"
+msgstr ""
+
+#: ../../pep-0350.txt:162
+msgid ""
+"The following contrived example demonstrates a typical use of codetags.  "
+"It uses some of the available fields to specify the assignees (a pair of "
+"programmers with initials *MDE* and *CLE*), the Date of expected "
+"completion (*Week 14*), and the Priority of the item (*2*)::"
+msgstr ""
+
+#: ../../pep-0350.txt:171
+msgid ""
+"This codetag shows a bug with fields describing author, discovery "
+"(origination) date, due date, and priority::"
+msgstr ""
+
+#: ../../pep-0350.txt:178
+msgid ""
+"Here is a demonstration of how not to use codetags.  This has many "
+"problems: 1) Codetags cannot share a line with code; 2) Missing colon "
+"after mnemonic; 3) A codetag referring to codetags is usually useless, "
+"and worse, it is not completable; 4) No need to have a bunch of fields "
+"for a trivial codetag; 5) Fields with unknown values (``t:XXX``) should "
+"not be used::"
+msgstr ""
+
+#: ../../pep-0350.txt:190
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0350.txt:192
+msgid ""
+"This describes the format: syntax, mnemonic names, fields, and semantics,"
+" and also the separate DONE File."
+msgstr ""
+
+#: ../../pep-0350.txt:197
+msgid "General Syntax"
+msgstr ""
+
+#: ../../pep-0350.txt:199
+msgid ""
+"Each codetag should be inside a comment, and can be any number of lines."
+"  It should not share a line with code.  It should match the indentation "
+"of surrounding code.  The end of the codetag is marked by a pair of angle"
+" brackets ``<>`` containing optional fields, which must not be split onto"
+" multiple lines.  It is preferred to have a codetag in ``#`` comments "
+"instead of string comments.  There can be multiple fields per codetag, "
+"all of which are optional."
+msgstr ""
+
+#: ../../pep-0350.txt:211
+msgid ""
+"In short, a codetag consists of a mnemonic, a colon, commentary text, an "
+"opening angle bracket, an optional list of fields, and a closing angle "
+"bracket.  E.g., ::"
+msgstr ""
+
+#: ../../pep-0350.txt:219
+msgid "Mnemonics"
+msgstr ""
+
+#: ../../pep-0350.txt:221
+msgid "The codetags of interest are listed below, using the following format:"
+msgstr ""
+
+#: ../../pep-0350.txt:223
+msgid "``recommended mnemonic (& synonym list)``"
+msgstr ""
+
+#: ../../pep-0350.txt:224
+msgid "*canonical name*: semantics"
+msgstr ""
+
+#: ../../pep-0350.txt:227
+msgid "``TODO (MILESTONE, MLSTN, DONE, YAGNI, TBD, TOBEDONE)``"
+msgstr ""
+
+#: ../../pep-0350.txt:227
+msgid "*To do*: Informal tasks/features that are pending completion."
+msgstr ""
+
+#: ../../pep-0350.txt:231
+msgid ""
+"``FIXME (XXX, DEBUG, BROKEN, REFACTOR, REFACT, RFCTR, OOPS, SMELL, "
+"NEEDSWORK, INSPECT)``"
+msgstr ""
+
+#: ../../pep-0350.txt:230
+msgid ""
+"*Fix me*: Areas of problematic or ugly code needing refactoring or "
+"cleanup."
+msgstr ""
+
+#: ../../pep-0350.txt:234
+msgid "``BUG (BUGFIX)``"
+msgstr ""
+
+#: ../../pep-0350.txt:234
+msgid "*Bugs*: Reported defects tracked in bug database."
+msgstr ""
+
+#: ../../pep-0350.txt:238
+msgid "``NOBUG (NOFIX, WONTFIX, DONTFIX, NEVERFIX, UNFIXABLE, CANTFIX)``"
+msgstr ""
+
+#: ../../pep-0350.txt:237
+msgid ""
+"*Will Not Be Fixed*: Problems that are well-known but will never be "
+"addressed due to design problems or domain limitations."
+msgstr ""
+
+#: ../../pep-0350.txt:241
+msgid "``REQ (REQUIREMENT, STORY)``"
+msgstr ""
+
+#: ../../pep-0350.txt:241
+msgid "*Requirements*: Satisfactions of specific, formal requirements."
+msgstr ""
+
+#: ../../pep-0350.txt:244
+msgid "``RFE (FEETCH, NYI, FR, FTRQ, FTR)``"
+msgstr ""
+
+#: ../../pep-0350.txt:244
+msgid "*Requests For Enhancement*: Roadmap items not yet implemented."
+msgstr ""
+
+#: ../../pep-0350.txt:247
+msgid "``IDEA``"
+msgstr ""
+
+#: ../../pep-0350.txt:247
+msgid "*Ideas*: Possible RFE candidates, but less formal than RFE."
+msgstr ""
+
+#: ../../pep-0350.txt:250
+msgid "``??? (QUESTION, QUEST, QSTN, WTF)``"
+msgstr ""
+
+#: ../../pep-0350.txt:250
+msgid "*Questions*: Misunderstood details."
+msgstr ""
+
+#: ../../pep-0350.txt:253
+msgid "``!!! (ALERT)``"
+msgstr ""
+
+#: ../../pep-0350.txt:253
+msgid "*Alerts*: In need of immediate attention."
+msgstr ""
+
+#: ../../pep-0350.txt:257
+msgid "``HACK (CLEVER, MAGIC)``"
+msgstr ""
+
+#: ../../pep-0350.txt:256
+msgid ""
+"*Hacks*: Temporary code to force inflexible functionality, or simply a "
+"test change, or workaround a known problem."
+msgstr ""
+
+#: ../../pep-0350.txt:260
+msgid "``PORT (PORTABILITY, WKRD)``"
+msgstr ""
+
+#: ../../pep-0350.txt:260
+msgid "*Portability*: Workarounds specific to OS, Python version, etc."
+msgstr ""
+
+#: ../../pep-0350.txt:264
+msgid "``CAVEAT (CAV, CAVT, WARNING, CAUTION)``"
+msgstr ""
+
+#: ../../pep-0350.txt:263
+msgid "*Caveats*: Implementation details/gotchas that stand out as non-intuitive."
+msgstr ""
+
+#: ../../pep-0350.txt:268
+msgid "``NOTE (HELP)``"
+msgstr ""
+
+#: ../../pep-0350.txt:267
+msgid ""
+"*Notes*: Sections where a code reviewer found something that needs "
+"discussion or further investigation."
+msgstr ""
+
+#: ../../pep-0350.txt:272
+msgid "``FAQ``"
+msgstr ""
+
+#: ../../pep-0350.txt:271
+msgid ""
+"*Frequently Asked Questions*: Interesting areas that require external "
+"explanation."
+msgstr ""
+
+#: ../../pep-0350.txt:275
+msgid "``GLOSS (GLOSSARY)``"
+msgstr ""
+
+#: ../../pep-0350.txt:275
+msgid "*Glossary*: Definitions for project glossary."
+msgstr ""
+
+#: ../../pep-0350.txt:278
+msgid "``SEE (REF, REFERENCE)``"
+msgstr ""
+
+#: ../../pep-0350.txt:278
+msgid "*See*: Pointers to other code, web link, etc."
+msgstr ""
+
+#: ../../pep-0350.txt:282
+msgid "``TODOC (DOCDO, DODOC, NEEDSDOC, EXPLAIN, DOCUMENT)``"
+msgstr ""
+
+#: ../../pep-0350.txt:281
+msgid "*Needs Documentation*: Areas of code that still need to be documented."
+msgstr ""
+
+#: ../../pep-0350.txt:285
+msgid "``CRED (CREDIT, THANKS)``"
+msgstr ""
+
+#: ../../pep-0350.txt:285
+msgid "*Credits*: Accreditations for external provision of enlightenment."
+msgstr ""
+
+#: ../../pep-0350.txt:289
+msgid "``STAT (STATUS)``"
+msgstr ""
+
+#: ../../pep-0350.txt:288
+msgid "*Status*: File-level statistical indicator of maturity of this file."
+msgstr ""
+
+#: ../../pep-0350.txt:292
+msgid "``RVD (REVIEWED, REVIEW)``"
+msgstr ""
+
+#: ../../pep-0350.txt:292
+msgid "*Reviewed*: File-level indicator that review was conducted."
+msgstr ""
+
+#: ../../pep-0350.txt:294
+msgid ""
+"File-level codetags might be better suited as properties in the revision "
+"control system, but might still be appropriately specified in a codetag."
+msgstr ""
+
+#: ../../pep-0350.txt:298
+msgid ""
+"Some of these are temporary (e.g., ``FIXME``) while others are persistent"
+" (e.g., ``REQ``).  A mnemonic was chosen over a synonym using three "
+"criteria: descriptiveness, length (shorter is better), commonly used."
+msgstr ""
+
+#: ../../pep-0350.txt:303
+msgid ""
+"Choosing between ``FIXME`` and ``XXX`` is difficult.  ``XXX`` seems to be"
+" more common, but much less descriptive.  Furthermore, ``XXX`` is a "
+"useful placeholder in a piece of code having a value that is unknown. "
+"Thus ``FIXME`` is the preferred spelling.  `Sun says`__ that ``XXX`` and "
+"``FIXME`` are slightly different, giving ``XXX`` higher severity. "
+"However, with decades of chaos on this topic, and too many millions of "
+"developers who won't be influenced by Sun, it is easy to rightly call "
+"them synonyms."
+msgstr ""
+
+#: ../../pep-0350.txt:314
+msgid ""
+"``DONE`` is always a completed ``TODO`` item, but this should probably be"
+" indicated through the revision control system and/or a completion "
+"recording mechanism (see `DONE File`_)."
+msgstr ""
+
+#: ../../pep-0350.txt:318
+msgid ""
+"It may be a useful metric to count ``NOTE`` tags: a high count may "
+"indicate a design (or other) problem.  But of course the majority of "
+"codetags indicate areas of code needing some attention."
+msgstr ""
+
+#: ../../pep-0350.txt:322
+msgid ""
+"An ``FAQ`` is probably more appropriately documented in a wiki where "
+"users can more easily view and contribute."
+msgstr ""
+
+#: ../../pep-0350.txt:327
+msgid "Fields"
+msgstr ""
+
+#: ../../pep-0350.txt:329
+msgid ""
+"All fields are optional.  The proposed standard fields are described in "
+"this section.  Note that upper case field characters are intended to be "
+"replaced."
+msgstr ""
+
+#: ../../pep-0350.txt:333
+msgid ""
+"The *Originator/Assignee* and *Origination Date/Week* fields are the most"
+" common and don't usually require a prefix."
+msgstr ""
+
+#: ../../pep-0350.txt:346
+msgid ""
+"This lengthy list of fields is liable to scare people (the intended "
+"minimalists) away from adopting codetags, but keep in mind that these "
+"only exist to support programmers who either 1) like to keep ``BUG`` or "
+"``RFE`` codetags in a complete form, or 2) are using codetags as their "
+"complete and only tracking system.  In other words, many of these fields "
+"will be used very rarely.  They are gathered largely from industry-wide "
+"conventions, and example sources include `GCC Bugzilla`__ and `Python's "
+"SourceForge`__ tracking systems."
+msgstr ""
+
+#: ../../pep-0350.txt:365
+msgid "``AAA[,BBB]...``"
+msgstr ""
+
+#: ../../pep-0350.txt:362
+msgid ""
+"List of *Originator* or *Assignee* initials (the context determines which"
+" unless both should exist).  It is also okay to use usernames such as "
+"``MicahE`` instead of initials.  Initials (in upper case) are the "
+"preferred form."
+msgstr ""
+
+#: ../../pep-0350.txt:374
+msgid "``a:AAA[,BBB]...``"
+msgstr ""
+
+#: ../../pep-0350.txt:368
+msgid ""
+"List of *Assignee* initials.  This is necessary only in (rare) cases "
+"where a codetag has both an assignee and an originator, and they are "
+"different.  Otherwise the ``a:`` prefix is omitted, and context "
+"determines the intent.  E.g., ``FIXME`` usually has an *Assignee*, and "
+"``NOTE`` usually has an *Originator*, but if a ``FIXME`` was originated "
+"(and initialed) by a reviewer, then the assignee's initials would need a "
+"``a:`` prefix."
+msgstr ""
+
+#: ../../pep-0350.txt:381
+msgid "``YYYY[-MM[-DD]]`` or ``WW[.D]w``"
+msgstr ""
+
+#: ../../pep-0350.txt:377
+msgid ""
+"The *Origination Date* indicating when the comment was added, in `ISO "
+"8601`_ format (digits and hyphens only).  Or *Origination Week*, an "
+"alternative form for specifying an *Origination Date*. A day of the week "
+"can be optionally specified.  The ``w`` suffix is necessary for "
+"distinguishing from a date."
+msgstr ""
+
+#: ../../pep-0350.txt:385
+msgid "``d:YYYY[-MM[-DD]]`` or ``d:WW[.D]w``"
+msgstr ""
+
+#: ../../pep-0350.txt:384
+msgid ""
+"*Due Date (d)* target completion (estimate).  Or *Due Week (d)*, an "
+"alternative to specifying a *Due Date*."
+msgstr ""
+
+#: ../../pep-0350.txt:395
+msgid "``p:N``"
+msgstr ""
+
+#: ../../pep-0350.txt:388
+msgid ""
+"*Priority (p)* level.  Range (N) is from 0..3 with 3 being the highest.  "
+"0..3 are analogous to low, medium, high, and showstopper/critical.  The "
+"*Severity* field could be factored into this single number, and doing so "
+"is recommended since having both is subject to varying interpretation.  "
+"The range and order should be customizable.  The existence of this field "
+"is important for any tool that itemizes codetags.  Thus a (customizable) "
+"default value should be supported."
+msgstr ""
+
+#: ../../pep-0350.txt:399
+msgid "``t:NNNN``"
+msgstr ""
+
+#: ../../pep-0350.txt:398
+msgid ""
+"*Tracker (t)* number corresponding to associated Ticket ID in separate "
+"tracking system."
+msgstr ""
+
+#: ../../pep-0350.txt:401
+msgid "The following fields are also available but expected to be less common."
+msgstr ""
+
+#: ../../pep-0350.txt:406
+msgid "``c:AAAA``"
+msgstr ""
+
+#: ../../pep-0350.txt:405
+msgid "*Category (c)* indicating some specific area affected by this item."
+msgstr ""
+
+#: ../../pep-0350.txt:412
+msgid "``s:AAAA``"
+msgstr ""
+
+#: ../../pep-0350.txt:409
+msgid ""
+"*Status (s)* indicating state of item.  Examples are \"unexplored\", "
+"\"understood\", \"inprogress\", \"fixed\", \"done\", \"closed\".  Note "
+"that when an item is completed it is probably better to remove the "
+"codetag and record it in a `DONE File`_."
+msgstr ""
+
+#: ../../pep-0350.txt:416
+msgid "``i:N``"
+msgstr ""
+
+#: ../../pep-0350.txt:415
+msgid ""
+"Development cycle *Iteration (i)*.  Useful for grouping codetags into "
+"completion target groups."
+msgstr ""
+
+#: ../../pep-0350.txt:433
+msgid "``r:N``"
+msgstr ""
+
+#: ../../pep-0350.txt:419
+msgid ""
+"Development cycle *Release (r)*.  Useful for grouping codetags into "
+"completion target groups."
+msgstr ""
+
+#: ../../pep-0350.txt:435
+msgid ""
+"To summarize, the non-prefixed fields are initials and origination date, "
+"and the prefixed fields are: assignee (a), due (d), priority (p), tracker"
+" (t), category (c), status (s), iteration (i), and release (r)."
+msgstr ""
+
+#: ../../pep-0350.txt:440
+msgid ""
+"It should be possible for groups to define or add their own fields, and "
+"these should have upper case prefixes to distinguish them from the "
+"standard set.  Examples of custom fields are *Operating System (O)*, "
+"*Severity (S)*, *Affected Version (A)*, *Customer (C)*, etc."
+msgstr ""
+
+#: ../../pep-0350.txt:447
+msgid "DONE File"
+msgstr ""
+
+#: ../../pep-0350.txt:449
+msgid ""
+"Some codetags have an ability to be *completed* (e.g., ``FIXME``, "
+"``TODO``, ``BUG``).  It is often important to retain completed items by "
+"recording them with a completion date stamp.  Such completed items are "
+"best stored in a single location, global to a project (or maybe a "
+"package).  The proposed format is most easily described by an example, "
+"say ``~/src/fooproj/DONE``::"
+msgstr ""
+
+#: ../../pep-0350.txt:464
+msgid ""
+"You can see that the codetag is copied verbatim from the original source "
+"file.  The date stamp is then entered on the following line with an "
+"optional post-mortem commentary.  The entry is terminated by a blank line"
+" (``\\n\\n``)."
+msgstr ""
+
+#: ../../pep-0350.txt:469
+msgid ""
+"It may sound burdensome to have to delete codetag lines every time one "
+"gets completed.  But in practice it is quite easy to setup a Vim or Emacs"
+" mapping to auto-record a codetag deletion in this format (sans the "
+"commentary)."
+msgstr ""
+
+#: ../../pep-0350.txt:476
+msgid "Tools"
+msgstr ""
+
+#: ../../pep-0350.txt:478
+msgid ""
+"Currently, programmers (and sometimes analysts) typically use *grep* to "
+"generate a list of items corresponding to a single codetag. However, "
+"various hypothetical productivity tools could take advantage of a "
+"consistent codetag format.  Some example tools follow."
+msgstr ""
+
+#: ../../pep-0350.txt:487
+msgid "Document Generator"
+msgstr ""
+
+#: ../../pep-0350.txt:487
+msgid "Possible docs: glossary, roadmap, manpages"
+msgstr ""
+
+#: ../../pep-0350.txt:491
+msgid "Codetag History"
+msgstr ""
+
+#: ../../pep-0350.txt:490
+msgid ""
+"Track (with revision control system interface) when a ``BUG`` tag (or any"
+" codetag) originated/resolved in a code section"
+msgstr ""
+
+#: ../../pep-0350.txt:494
+msgid "Code Statistics"
+msgstr ""
+
+#: ../../pep-0350.txt:494
+msgid "A project Health-O-Meter"
+msgstr ""
+
+#: ../../pep-0350.txt:497
+msgid "Codetag Lint"
+msgstr ""
+
+#: ../../pep-0350.txt:497
+msgid "Notify of invalid use of codetags, and aid in porting to codetags"
+msgstr ""
+
+#: ../../pep-0350.txt:503
+msgid "Story Manager/Browser"
+msgstr ""
+
+#: ../../pep-0350.txt:500
+msgid ""
+"An electronic means to replace XP notecards.  In MVC terms, the codetag "
+"is the Model, and the Story Manager could be a graphical "
+"Viewer/Controller to do visual rearrangement, prioritization, and "
+"assignment, milestone management."
+msgstr ""
+
+#: ../../pep-0350.txt:507
+msgid "Any Text Editor"
+msgstr ""
+
+#: ../../pep-0350.txt:506
+msgid "Used for changing, removing, adding, rearranging, recording codetags."
+msgstr ""
+
+#: ../../pep-0350.txt:509
+msgid ""
+"There are some tools already in existence that take advantage of a "
+"smaller set of pseudo-codetags (see References_).  There is also an "
+"example codetags implementation under way, known as the `Codetag "
+"Project`__."
+msgstr ""
+
+#: ../../pep-0350.txt:518
+msgid "Objections"
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Objection"
+msgstr ""
+
+#: ../../pep-0350.txt:520
+msgid ""
+"Extreme Programming argues that such codetags should not ever exist in "
+"code since the code is the documentation."
+msgstr ""
+
+#: ../../pep-0350.txt
+msgid "Defense"
+msgstr ""
+
+#: ../../pep-0350.txt:523
+msgid ""
+"Maybe you should put the codetags in the unit test files instead.  "
+"Besides, it's tough to generate documentation from uncommented source "
+"code."
+msgstr ""
+
+#: ../../pep-0350.txt:529
+msgid "Too much existing code has not followed proposed guidelines."
+msgstr ""
+
+#: ../../pep-0350.txt:532
+msgid "[Simple] utilities (*ctlint*) could convert existing codes."
+msgstr ""
+
+#: ../../pep-0350.txt:536
+msgid "Causes duplication with tracking system."
+msgstr ""
+
+#: ../../pep-0350.txt:538
+msgid ""
+"Not really, unless fields are abused.  If an item exists in the tracker, "
+"a simple ticket number in the codetag tracker field is sufficient.  Maybe"
+" a duplicated title would be acceptable. Furthermore, it's too burdensome"
+" to have a ticket filed for every item that pops into a developer's mind "
+"on-the-go.  Additionally, the tracking system could possibly be obviated "
+"for simple or small projects that can reasonably fit the relevant data "
+"into a codetag."
+msgstr ""
+
+#: ../../pep-0350.txt:548
+msgid "Codetags are ugly and clutter code."
+msgstr ""
+
+#: ../../pep-0350.txt:550
+msgid ""
+"That is a good point.  But I'd still rather have such info in a single "
+"place (the source code) than various other documents, likely getting "
+"duplicated or forgotten about.  The completed codetags can be sent off to"
+" the `DONE File`_, or to the bit bucket."
+msgstr ""
+
+#: ../../pep-0350.txt:558
+msgid "Codetags (and all comments) get out of date."
+msgstr ""
+
+#: ../../pep-0350.txt:560
+msgid ""
+"Not so much if other sources (externally visible documentation) depend on"
+" their being accurate."
+msgstr ""
+
+#: ../../pep-0350.txt:565
+msgid ""
+"Codetags tend to only rarely have estimated completion dates of any sort."
+"  OK, the fields are optional, but you want to suggest fields that "
+"actually will be widely used."
+msgstr ""
+
+#: ../../pep-0350.txt:569
+msgid ""
+"If an item is inestimable don't bother with specifying a date field.  "
+"Using tools to display items with order and/or color by due date and/or "
+"priority, it is easier to make estimates. Having your roadmap be a "
+"dynamic reflection of your codetags makes you much more likely to keep "
+"the codetags accurate."
+msgstr ""
+
+#: ../../pep-0350.txt:577
+msgid ""
+"Named variables for the field parameters in the ``<>`` should be used "
+"instead of cryptic one-character prefixes.  I.e., <MDE p:3> should rather"
+" be <author=MDE, priority=3>."
+msgstr ""
+
+#: ../../pep-0350.txt:581
+msgid ""
+"It is just too much typing/verbosity to spell out fields.  I argue that "
+"``p:3 i:2`` is as readable as ``priority=3, iteration=2`` and is much "
+"more likely to by typed and remembered (see bullet C in Philosophy_).  In"
+" this case practicality beats purity.  There are not many fields to keep "
+"track of so one letter prefixes are suitable."
+msgstr ""
+
+#: ../../pep-0350.txt:590
+msgid ""
+"Synonyms should be deprecated since it is better to have a single way to "
+"spell something."
+msgstr ""
+
+#: ../../pep-0350.txt:593
+msgid ""
+"Many programmers prefer short mnemonic names, especially in comments.  "
+"This is why short mnemonics were chosen as the primary names.  However, "
+"others feel that an explicit spelling is less confusing and less prone to"
+" error.  There will always be two camps on this subject.  Thus synonyms "
+"(and complete, full spellings) should remain supported."
+msgstr ""
+
+#: ../../pep-0350.txt:602
+msgid ""
+"It is cruel to use [for mnemonics] opaque acronyms and abbreviations "
+"which drop vowels; it's hard to figure these things out.  On that basis I"
+" hate: MLSTN RFCTR RFE FEETCH, NYI, FR, FTRQ, FTR WKRD RVDBY"
+msgstr ""
+
+#: ../../pep-0350.txt:607
+msgid ""
+"Mnemonics are preferred since they are pretty easy to remember and take "
+"up less space.  If programmers didn't like dropping vowels we would be "
+"able to fit very little code on a line.  The space is important for those"
+" who write comments that often fit on a single line.  But when using a "
+"canon everywhere it is much less likely to get something to fit on a "
+"line."
+msgstr ""
+
+#: ../../pep-0350.txt:616
+msgid "It takes too long to type the fields."
+msgstr ""
+
+#: ../../pep-0350.txt:618
+msgid ""
+"Then don't use (most or any of) them, especially if you're the only "
+"programmer.  Terminating a codetag with ``<>`` is a small chore, and in "
+"doing so you enable the use of the proposed tools. Editor auto-completion"
+" of codetags is also useful:  You can program your editor to stamp a "
+"template (e.g. ``# FIXME . <MDE {date}>``) with just a keystroke or two."
+msgstr ""
+
+#: ../../pep-0350.txt:627
+msgid "*WorkWeek* is an obscure and uncommon time unit."
+msgstr ""
+
+#: ../../pep-0350.txt:629
+msgid ""
+"That's true but it is a highly suitable unit of granularity for "
+"estimation/targeting purposes, and it is very compact.  The `ISO 8601`_ "
+"is widely understood but allows you to only specify either a specific day"
+" (restrictive) or month (broad)."
+msgstr ""
+
+#: ../../pep-0350.txt:636
+msgid ""
+"I aesthetically dislike for the comment to be terminated with <> in the "
+"empty field case."
+msgstr ""
+
+#: ../../pep-0350.txt:639
+msgid ""
+"It is necessary to have a terminator since codetags may be followed by "
+"non-codetag comments.  Or codetags could be limited to a single line, but"
+" that's prohibitive.  I can't think of any single-character terminator "
+"that is appropriate and significantly better than <>.  Maybe ``@`` could "
+"be a terminator, but then most codetags will have an unnecessary @."
+msgstr ""
+
+#: ../../pep-0350.txt:648
+msgid ""
+"I can't use codetags when writing HTML, or less specifically, XML.  Maybe"
+" ``@fields@`` would be a better than ``<fields>`` as the delimiters."
+msgstr ""
+
+#: ../../pep-0350.txt:652
+msgid ""
+"Maybe you're right, but ``<>`` looks nicer whenever applicable.  XML/SGML"
+" could use ``@`` while more common programming languages stick to ``<>``."
+msgstr ""
+
+#: ../../pep-0350.txt:658
+msgid "References"
+msgstr ""
+
+#: ../../pep-0350.txt:660
+msgid ""
+"Some other tools have approached defining/exploiting codetags. See "
+"http://tracos.org/codetag/wiki/Links."
+msgstr ""
+

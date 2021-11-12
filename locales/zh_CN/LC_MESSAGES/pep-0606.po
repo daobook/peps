@@ -1,0 +1,1027 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0606.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0606.rst:1
+msgid "606"
+msgstr ""
+
+#: ../../pep-0606.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0606.rst:2
+msgid "Python Compatibility Version"
+msgstr ""
+
+#: ../../pep-0606.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0606.rst:3
+msgid "Victor Stinner <vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0606.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0606.rst:4
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0606.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0606.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0606.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0606.rst:7
+msgid "18-Oct-2019"
+msgstr ""
+
+#: ../../pep-0606.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0606.rst:8
+msgid "3.9"
+msgstr ""
+
+#: ../../pep-0606.rst:12
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0606.rst:14
+msgid ""
+"Add ``sys.set_python_compat_version(version)`` to enable partial "
+"compatibility with requested Python version. Add "
+"``sys.get_python_compat_version()``."
+msgstr ""
+
+#: ../../pep-0606.rst:18
+msgid ""
+"Modify a few functions in the standard library to implement partial "
+"compatibility with Python 3.8."
+msgstr ""
+
+#: ../../pep-0606.rst:21
+msgid ""
+"Add ``sys.set_python_min_compat_version(version)`` to deny backward "
+"compatibility with Python versions older than *version*."
+msgstr ""
+
+#: ../../pep-0606.rst:24
+msgid ""
+"Add ``-X compat_version=VERSION`` and ``-X min_compat_version=VERSION`` "
+"command line options. Add ``PYTHONCOMPATVERSION`` and "
+"``PYTHONCOMPATMINVERSION`` environment variables."
+msgstr ""
+
+#: ../../pep-0606.rst:30
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0606.rst:33
+msgid "The need to evolve frequently"
+msgstr ""
+
+#: ../../pep-0606.rst:35
+msgid ""
+"To remain relevant and useful, Python has to evolve frequently; some "
+"enhancements require incompatible changes. Any incompatible change can "
+"break an unknown number of Python projects.  Developers can decide to not"
+" implement a feature because of that."
+msgstr ""
+
+#: ../../pep-0606.rst:40
+msgid ""
+"Users want to get the latest Python version to obtain new features and "
+"better performance. A few incompatible changes can prevent them from "
+"using their applications on the latest Python version."
+msgstr ""
+
+#: ../../pep-0606.rst:44
+msgid ""
+"This PEP proposes to add a partial compatibility with old Python versions"
+" as a tradeoff to fit both use cases."
+msgstr ""
+
+#: ../../pep-0606.rst:47
+msgid ""
+"The main issue with the migration from Python 2 to Python 3 is not that "
+"Python 3 is backward incompatible, but how incompatible changes were "
+"introduced."
+msgstr ""
+
+#: ../../pep-0606.rst:53
+msgid "Partial compatibility to minimize the Python maintenance burden"
+msgstr ""
+
+#: ../../pep-0606.rst:55
+msgid ""
+"While technically it would be possible to provide full compatibility with"
+" old Python versions, this PEP proposes to minimize the number of "
+"functions handling backward compatibility to reduce the maintenance "
+"burden of the Python project (CPython)."
+msgstr ""
+
+#: ../../pep-0606.rst:60
+msgid ""
+"Each change introducing backport compatibility to a function should be "
+"properly discussed to estimate the maintenance cost in the long-term."
+msgstr ""
+
+#: ../../pep-0606.rst:63
+msgid ""
+"Backward compatibility code will be dropped on each Python release, on a "
+"case-by-case basis. Each compatibility function can be supported for a "
+"different number of Python releases depending on its maintenance cost and"
+" the estimated risk (number of broken projects) if it's removed."
+msgstr ""
+
+#: ../../pep-0606.rst:68
+msgid ""
+"The maintenance cost does not only come from the code implementing the "
+"backward compatibility, but also comes from the additional tests."
+msgstr ""
+
+#: ../../pep-0606.rst:73
+msgid "Cases excluded from backward compatibility"
+msgstr ""
+
+#: ../../pep-0606.rst:75
+msgid ""
+"The performance overhead of any compatibility code must be low when "
+"``sys.set_python_compat_version()`` is not called."
+msgstr ""
+
+#: ../../pep-0606.rst:78
+msgid ""
+"The C API is out of the scope of this PEP: ``Py_LIMITED_API`` macro and "
+"the stable ABI are solving this problem differently, see the `PEP 384: "
+"Defining a Stable ABI <https://www.python.org/dev/peps/pep-0384/>`_."
+msgstr ""
+
+#: ../../pep-0606.rst:82
+msgid ""
+"Security fixes which break backward compatibility on purpose will not get"
+" a compatibility layer; security matters more than compatibility. For "
+"example, ``http.client.HTTPSConnection`` was modified in Python 3.4.3 to "
+"performs all the necessary certificate and hostname checks by default. It"
+" was a deliberate change motivated by `PEP 476: Enabling certificate "
+"verification by default for stdlib http clients "
+"<https://www.python.org/dev/peps/pep-0476/>`_ (`bpo-22417 "
+"<https://bugs.python.org/issue22417>`_)."
+msgstr ""
+
+#: ../../pep-0606.rst:91
+msgid "The Python language does not provide backward compatibility."
+msgstr ""
+
+#: ../../pep-0606.rst:93
+msgid ""
+"Changes which are not clearly incompatible are not covered by this PEP. "
+"For example, Python 3.9 changed the default protocol in the ``pickle`` "
+"module to Protocol 4 which was first introduced in Python 3.4. This "
+"change is backward compatible up to Python 3.4. There is no need to use "
+"the Protocol 3 by default when compatibility with Python 3.8 is "
+"requested."
+msgstr ""
+
+#: ../../pep-0606.rst:100
+msgid ""
+"The new ``DeprecationWarning`` and ``PendingDeprecatingWarning`` warnings"
+" in Python 3.9 will not be disabled in Python 3.8 compatibility mode. If "
+"a project runs its test suite using ``-Werror`` (treat any warning as an "
+"error), these warnings must be fixed, or specific deprecation warnings "
+"must be ignored on a case-by-case basis."
+msgstr ""
+
+#: ../../pep-0606.rst:108
+msgid "Upgrading a project to a newer Python"
+msgstr ""
+
+#: ../../pep-0606.rst:110
+msgid ""
+"Without backward compatibility, all incompatible changes must be fixed at"
+" once, which can be a blocker issue. It is even worse when a project is "
+"upgraded to a newer Python which is separated by multiple releases from "
+"the old Python."
+msgstr ""
+
+#: ../../pep-0606.rst:115
+msgid ""
+"Postponing an upgrade only makes things worse: each skipped release adds "
+"more incompatible changes. The technical debt only steadily increases "
+"over time."
+msgstr ""
+
+#: ../../pep-0606.rst:119
+msgid ""
+"With backward compatibility, it becomes possible to upgrade Python "
+"increamentally in a project, without having to fix all of the issues at "
+"once."
+msgstr ""
+
+#: ../../pep-0606.rst:122
+msgid ""
+"The \"all-or-nothing\" is a showstopper to port large Python 2 code bases"
+" to Python 3. The list of incompatible changes between Python 2 and "
+"Python 3 is long, and it's getting longer with each Python 3.x release."
+msgstr ""
+
+#: ../../pep-0606.rst:128
+msgid "Cleaning up Python and DeprecationWarning"
+msgstr ""
+
+#: ../../pep-0606.rst:130
+msgid ""
+"One of the `Zen of Python (PEP 20) "
+"<https://www.python.org/dev/peps/pep-0020/>`_ motto is:"
+msgstr ""
+
+#: ../../pep-0606.rst:133
+msgid "There should be one-- and preferably only one --obvious way to do it."
+msgstr ""
+
+#: ../../pep-0606.rst:136
+msgid ""
+"When Python evolves, new ways inevitably emerge. ``DeprecationWarning``\\"
+" s are emitted to suggest using the new way, but many developers ignore "
+"these warnings, which are silent by default (except in the ``__main__`` "
+"module: see the `PEP 565 <https://www.python.org/dev/peps/pep-0565/>`_). "
+"Some developers simply ignore all warnings when there are too many "
+"warnings, thus only bother with exceptions when the deprecated code is "
+"removed."
+msgstr ""
+
+#: ../../pep-0606.rst:144
+msgid ""
+"Sometimes, supporting both ways has a minor maintenance cost, but "
+"developers prefer to drop the old way to clean up their code. These kinds"
+" of changes are backward incompatible."
+msgstr ""
+
+#: ../../pep-0606.rst:148
+msgid ""
+"Some developers can take the end of the Python 2 support as an "
+"opportunity to push even more incompatible changes than usual."
+msgstr ""
+
+#: ../../pep-0606.rst:151
+msgid ""
+"Adding an opt-in backward compatibility prevents the breaking of "
+"applications and allows developers to continue doing these cleanups."
+msgstr ""
+
+#: ../../pep-0606.rst:156
+msgid "Redistribute the maintenance burden"
+msgstr ""
+
+#: ../../pep-0606.rst:158
+msgid ""
+"The backward compatibility involves authors of incompatible changes more "
+"in the upgrade path."
+msgstr ""
+
+#: ../../pep-0606.rst:163
+msgid "Examples of backward compatibility"
+msgstr ""
+
+#: ../../pep-0606.rst:166
+msgid "collections ABC aliases"
+msgstr ""
+
+#: ../../pep-0606.rst:168
+msgid ""
+"``collections.abc`` aliases to ABC classes have been removed from the "
+"``collections`` module in Python 3.9, after being deprecated since Python"
+" 3.3. For example, ``collections.Mapping`` no longer exists."
+msgstr ""
+
+#: ../../pep-0606.rst:172
+msgid ""
+"In Python 3.6, aliases were created in ``collections/__init__.py`` by "
+"``from _collections_abc import *``."
+msgstr ""
+
+#: ../../pep-0606.rst:175
+msgid ""
+"In Python 3.7, a ``__getattr__()`` has been added to the ``collections`` "
+"module to emit a DeprecationWarning upon first access to an attribute::"
+msgstr ""
+
+#: ../../pep-0606.rst:194
+msgid ""
+"Compatibility with Python 3.8 can be restored in Python 3.9 by adding "
+"back the ``__getattr__()`` function, but only when backward compatibility"
+" is requested::"
+msgstr ""
+
+#: ../../pep-0606.rst:206
+msgid "Deprecated open() \"U\" mode"
+msgstr ""
+
+#: ../../pep-0606.rst:208
+msgid ""
+"The ``\"U\"`` mode of ``open()`` is deprecated since Python 3.4 and emits"
+" a ``DeprecationWarning``. `bpo-37330 "
+"<https://bugs.python.org/issue37330>`_ proposes to drop this mode: "
+"``open(filename, \"rU\")`` would raise an exception."
+msgstr ""
+
+#: ../../pep-0606.rst:213
+msgid ""
+"This change falls into the \"cleanup\" category: it is not required to "
+"implement a feature."
+msgstr ""
+
+#: ../../pep-0606.rst:216
+msgid ""
+"A backward compatibility mode would be trivial to implement and would be "
+"welcomed by users."
+msgstr ""
+
+#: ../../pep-0606.rst:221
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0606.rst:224
+msgid "sys functions"
+msgstr ""
+
+#: ../../pep-0606.rst:226
+msgid "Add 3 functions to the ``sys`` module:"
+msgstr ""
+
+#: ../../pep-0606.rst:228
+msgid ""
+"``sys.set_python_compat_version(version)``: set the Python compatibility "
+"version. If it has been called previously, use the minimum of requested "
+"versions. Raise an exception if "
+"``sys.set_python_min_compat_version(min_version)`` has been called and "
+"``version < min_version``. *version* must be greater than or equal to "
+"``(3, 0)``."
+msgstr ""
+
+#: ../../pep-0606.rst:235
+msgid ""
+"``sys.set_python_min_compat_version(min_version)``: set the **minimum** "
+"compatibility version. Raise an exception if "
+"``sys.set_python_compat_version(old_version)`` has been called previously"
+" and ``old_version < min_version``. *min_version* must be greater than or"
+" equal to ``(3, 0)``."
+msgstr ""
+
+#: ../../pep-0606.rst:241
+msgid ""
+"``sys.get_python_compat_version()``: get the Python compatibility "
+"version. Return a ``tuple`` of 3 integers."
+msgstr ""
+
+#: ../../pep-0606.rst:244
+msgid ""
+"A *version* must a tuple of 2 or 3 integers. ``(major, minor)`` version "
+"is equivalent to ``(major, minor, 0)``."
+msgstr ""
+
+#: ../../pep-0606.rst:247
+msgid ""
+"By default, ``sys.get_python_compat_version()`` returns the current "
+"Python version."
+msgstr ""
+
+#: ../../pep-0606.rst:250
+msgid "For example, to request compatibility with Python 3.8.0::"
+msgstr ""
+
+#: ../../pep-0606.rst:261
+msgid ""
+"Obviously, calling ``sys.set_python_compat_version(version)`` has no "
+"effect on code executed before the call. Use ``-X "
+"compat_version=VERSION`` command line option or "
+"``PYTHONCOMPATVERSIONVERSION=VERSION`` environment variable to set the "
+"compatibility version at Python startup."
+msgstr ""
+
+#: ../../pep-0606.rst:268
+msgid "Command line"
+msgstr ""
+
+#: ../../pep-0606.rst:270
+msgid ""
+"Add ``-X compat_version=VERSION`` and ``-X min_compat_version=VERSION`` "
+"command line options: call respectively "
+"``sys.set_python_compat_version()`` and "
+"``sys.set_python_min_compat_version()``. ``VERSION`` is a version string "
+"with 2 or 3 numbers (``major.minor.micro`` or ``major.minor``). For "
+"example, ``-X compat_version=3.8`` calls "
+"``sys.set_python_compat_version((3, 8))``."
+msgstr ""
+
+#: ../../pep-0606.rst:278
+msgid ""
+"Add ``PYTHONCOMPATVERSIONVERSION=VERSION`` and "
+"``PYTHONCOMPATMINVERSION=VERSION=VERSION`` environment variables: call "
+"respectively ``sys.set_python_compat_version()`` and "
+"``sys.set_python_min_compat_version()``.  ``VERSION`` is a version string"
+" with the same format as the command line options."
+msgstr ""
+
+#: ../../pep-0606.rst:286
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0606.rst:288
+msgid ""
+"Introducing the ``sys.set_python_compat_version()`` function means that "
+"an application will behave differently depending on the compatibility "
+"version. Moreover, since the version can be decreased multiple times, the"
+" application can behave differently depending on the import order."
+msgstr ""
+
+#: ../../pep-0606.rst:293
+msgid ""
+"Python 3.9 with ``sys.set_python_compat_version((3, 8))`` is not fully "
+"compatible with Python 3.8: the compatibility is only partial."
+msgstr ""
+
+#: ../../pep-0606.rst:298
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0606.rst:300
+msgid "``sys.set_python_compat_version()`` must not disable security fixes."
+msgstr ""
+
+#: ../../pep-0606.rst:304
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0606.rst:307
+msgid "Provide a workaround for each incompatible change"
+msgstr ""
+
+#: ../../pep-0606.rst:309
+msgid "An application can work around most incompatible changes which impacts it."
+msgstr ""
+
+#: ../../pep-0606.rst:312
+msgid "For example, ``collections`` aliases can be added back using::"
+msgstr ""
+
+#: ../../pep-0606.rst:319
+msgid "Handle backward compatibility in the parser"
+msgstr ""
+
+#: ../../pep-0606.rst:321
+msgid ""
+"The parser is modified to support multiple versions of the Python "
+"language (grammar)."
+msgstr ""
+
+#: ../../pep-0606.rst:324
+msgid ""
+"The current Python parser cannot be easily modified for that. AST and "
+"grammar are hardcoded to a single Python version."
+msgstr ""
+
+#: ../../pep-0606.rst:327
+msgid ""
+"In Python 3.8, ``compile()`` has an undocumented ``_feature_version`` to "
+"not consider ``async`` and ``await`` as keywords."
+msgstr ""
+
+#: ../../pep-0606.rst:331
+msgid ""
+"The latest major language backward incompatible change was Python 3.7 "
+"which made ``async`` and ``await`` real keywords. It seems like Twisted "
+"was the only affected project, and Twisted had a single affected function"
+" (it used a parameter called ``async``)."
+msgstr ""
+
+#: ../../pep-0606.rst:336
+msgid ""
+"Handling backward compatibility in the parser seems quite complex, not "
+"only to modify the parser, but also for developers who have to check "
+"which version of the Python language is used."
+msgstr ""
+
+#: ../../pep-0606.rst:341
+msgid "from __future__ import python38_syntax"
+msgstr ""
+
+#: ../../pep-0606.rst:343
+msgid ""
+"Add ``pythonXY_syntax`` to the ``__future__`` module. It would enable "
+"backward compatibility with Python X.Y syntax, but only for the current "
+"file."
+msgstr ""
+
+#: ../../pep-0606.rst:347
+msgid ""
+"With this option, there is no need to change "
+"``sys.implementation.cache_tag`` to use a different ``.pyc`` filename, "
+"since the parser will always produce the same output for the same input "
+"(except for the optimization level)."
+msgstr ""
+
+#: ../../pep-0606.rst:352
+msgid "For example::"
+msgstr ""
+
+#: ../../pep-0606.rst:360
+msgid "Update cache_tag"
+msgstr ""
+
+#: ../../pep-0606.rst:362
+msgid ""
+"Modify the parser to use ``sys.get_python_compat_version()`` to choose "
+"the version of the Python language."
+msgstr ""
+
+#: ../../pep-0606.rst:365
+msgid ""
+"``sys.set_python_compat_version()`` updates "
+"``sys.implementation.cache_tag`` to include the compatibility version "
+"without the micro version as a suffix. For example, Python 3.9 uses "
+"``'cpython-39'`` by default, but ``sys.set_python_compat_version((3, 7, "
+"2))`` sets ``cache_tag`` to ``'cpython-39-37'``. Changes to the Python "
+"language are now allowed in micro releases."
+msgstr ""
+
+#: ../../pep-0606.rst:373
+msgid ""
+"One problem is that ``import asyncio`` is likely to fail if "
+"``sys.set_python_compat_version((3, 6))`` has been called previously. The"
+" code of the ``asyncio`` module requires ``async`` and ``await`` to be "
+"real keywords (change done in Python 3.7)."
+msgstr ""
+
+#: ../../pep-0606.rst:378
+msgid ""
+"Another problem is that regular users cannot write ``.pyc`` files into "
+"system directories, and so cannot create them on demand. It means that "
+"``.pyc`` optimization cannot be used in the backward compatibility mode."
+msgstr ""
+
+#: ../../pep-0606.rst:382
+msgid ""
+"One solution for that is to modify the Python installer and Python "
+"package installers to precompile ``.pyc`` files not only for the current "
+"Python version, but also for multiple older Python versions (up to Python"
+" 3.0?)."
+msgstr ""
+
+#: ../../pep-0606.rst:387
+msgid ""
+"Each ``.py`` file would have 3n ``.pyc`` files (3 optimization levels), "
+"where ``n`` is the number of supported Python versions. For example, it "
+"means 6 ``.pyc`` files, instead of 3, to support Python 3.8 and Python "
+"3.9."
+msgstr ""
+
+#: ../../pep-0606.rst:394
+msgid "Temporary moratorium on incompatible changes"
+msgstr ""
+
+#: ../../pep-0606.rst:396
+msgid ""
+"In 2009, PEP 3003 \"Python Language Moratorium\" proposed a temporary "
+"moratorium (suspension) of all changes to the Python language syntax, "
+"semantics, and built-ins for Python 3.1 and Python 3.2."
+msgstr ""
+
+#: ../../pep-0606.rst:400
+msgid ""
+"In May 2018, during the PEP 572 discussions, it was also proposed to slow"
+" down Python changes: see the python-dev thread `Slow down... "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/HHKRXOMRJQH75VNM3JMSQIOOU6MIUB24/#PHA35EAPNONZMTOYBINGFR6XXNMCDPFQ>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:404
+msgid ""
+"`Barry Warsaw's call on this <https://mail.python.org/archives/list"
+"/python-dev@python.org/message/XR7IF2OB3S72KBP3PEQ3IKBOERE4FV2I/>`_:"
+msgstr ""
+
+#: ../../pep-0606.rst:407
+msgid ""
+"I don’t believe that the way for Python to remain relevant and useful for"
+" the next 10 years is to cease all language evolution. Who knows what the"
+" computing landscape will look like in 5 years, let alone 10?  Something "
+"as arbitrary as a 10-year moratorium is (again, IMHO) a death sentence "
+"for the language."
+msgstr ""
+
+#: ../../pep-0606.rst:414
+msgid "PEP 387"
+msgstr ""
+
+#: ../../pep-0606.rst:416
+msgid ""
+"`PEP 387 -- Backwards Compatibility Policy "
+"<https://www.python.org/dev/peps/pep-0387/>`_ proposes a process to make "
+"incompatible changes. The main point is the 4th step of the process:"
+msgstr ""
+
+#: ../../pep-0606.rst:420
+msgid ""
+"See if there's any feedback. Users not involved in the original "
+"discussions may comment now after seeing the warning. Perhaps reconsider."
+msgstr ""
+
+#: ../../pep-0606.rst:425
+msgid "PEP 497"
+msgstr ""
+
+#: ../../pep-0606.rst:427
+msgid ""
+"`PEP 497 -- A standard mechanism for backward compatibility "
+"<https://www.python.org/dev/peps/pep-0497/>`_ proposes different "
+"solutions to provide backward compatibility."
+msgstr ""
+
+#: ../../pep-0606.rst:431
+msgid ""
+"Except for the ``__past__`` mechanism idea, PEP 497 does not propose "
+"concrete solutions:"
+msgstr ""
+
+#: ../../pep-0606.rst:434
+msgid ""
+"When an incompatible change to core language syntax or semantics is being"
+" made, Python-dev's policy is to prefer and expect that, wherever "
+"possible, a mechanism for backward compatibility be considered and "
+"provided for future Python versions after the breaking change is adopted "
+"by default, in addition to any mechanisms proposed for forward "
+"compatibility such as new future_statements."
+msgstr ""
+
+#: ../../pep-0606.rst:443
+msgid "Examples of incompatible changes"
+msgstr ""
+
+#: ../../pep-0606.rst:446
+msgid "Python 3.8"
+msgstr ""
+
+#: ../../pep-0606.rst:448
+msgid "Examples of Python 3.8 incompatible changes:"
+msgstr ""
+
+#: ../../pep-0606.rst:450
+msgid ""
+"(During beta phase) ``PyCode_New()`` required a new parameter: it broke "
+"all Cython extensions (all projects distributing precompiled Cython "
+"code). This change has been reverted during the 3.8 beta phase and a new "
+"``PyCode_NewWithPosOnlyArgs()`` function was added instead."
+msgstr ""
+
+#: ../../pep-0606.rst:455
+msgid ""
+"``types.CodeType`` requires an additional mandatory parameter. The "
+"``CodeType.replace()`` function was added to help projects to no longer "
+"depend on the exact signature of the ``CodeType`` constructor."
+msgstr ""
+
+#: ../../pep-0606.rst:459
+msgid "C extensions are no longer linked to libpython."
+msgstr ""
+
+#: ../../pep-0606.rst:461
+msgid ""
+"``sys.abiflags`` changed from ``'m'`` to an empty string. For example, "
+"``python3.8m`` program is gone."
+msgstr ""
+
+#: ../../pep-0606.rst:464
+msgid "The C structure ``PyInterpreterState`` was made opaque."
+msgstr ""
+
+#: ../../pep-0606.rst:466
+msgid "Blender:"
+msgstr ""
+
+#: ../../pep-0606.rst:468
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1734980#c6"
+msgstr ""
+
+#: ../../pep-0606.rst:469
+msgid "https://developer.blender.org/D6038"
+msgstr ""
+
+#: ../../pep-0606.rst:471
+msgid ""
+"XML attribute order: `bpo-34160 <https://bugs.python.org/issue34160>`_. "
+"Broken projects:"
+msgstr ""
+
+#: ../../pep-0606.rst:474
+msgid "`coverage <https://bugs.python.org/issue34160#msg329612>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:475
+msgid "`docutils <https://sourceforge.net/p/docutils/bugs/359/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:476
+msgid "`pcs <https://bugzilla.redhat.com/show_bug.cgi?id=1705475>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:477
+msgid "`python-glyphsLib <https://bugzilla.redhat.com/show_bug.cgi?id=1705391>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:480
+msgid ""
+"Backward compatibility cannot be added for all these changes. For "
+"example, changes in the C API and in the build system are out of the "
+"scope of this PEP."
+msgstr ""
+
+#: ../../pep-0606.rst:484
+msgid ""
+"See `What’s New In Python 3.8: API and Feature Removals "
+"<https://docs.python.org/dev/whatsnew/3.8.html#api-and-feature-"
+"removals>`_ for all changes."
+msgstr ""
+
+#: ../../pep-0606.rst:488
+msgid ""
+"See also the `Porting to Python 3.8 "
+"<https://docs.python.org/dev/whatsnew/3.8.html#porting-to-python-3-8>`_ "
+"section of What’s New In Python 3.8."
+msgstr ""
+
+#: ../../pep-0606.rst:494
+msgid "Python 3.7"
+msgstr ""
+
+#: ../../pep-0606.rst:496
+msgid "Examples of Python 3.7 incompatible changes:"
+msgstr ""
+
+#: ../../pep-0606.rst:498
+msgid "``async`` and ``await`` are now reserved keywords."
+msgstr ""
+
+#: ../../pep-0606.rst:499
+msgid ""
+"Several undocumented internal imports were removed. One example is that "
+"``os.errno`` is no longer available; use ``import errno`` directly "
+"instead. Note that such undocumented internal imports may be removed any "
+"time without notice, even in micro version releases."
+msgstr ""
+
+#: ../../pep-0606.rst:503
+msgid ""
+"Unknown escapes consisting of ``'\\'`` and an ASCII letter in replacement"
+" templates for ``re.sub()`` were deprecated in Python 3.5, and will now "
+"cause an error."
+msgstr ""
+
+#: ../../pep-0606.rst:506
+msgid ""
+"The ``asyncio.windows_utils.socketpair()`` function has been removed: it "
+"was an alias to ``socket.socketpair()``."
+msgstr ""
+
+#: ../../pep-0606.rst:508
+msgid ""
+"``asyncio`` no longer exports the ``selectors`` and ``_overlapped`` "
+"modules as ``asyncio.selectors`` and ``asyncio._overlapped``. Replace "
+"``from asyncio import selectors`` with ``import selectors``."
+msgstr ""
+
+#: ../../pep-0606.rst:511
+msgid ""
+"PEP 479 is enabled for all code in Python 3.7, meaning that "
+"``StopIteration`` exceptions raised directly or indirectly in coroutines "
+"and generators are transformed into ``RuntimeError`` exceptions."
+msgstr ""
+
+#: ../../pep-0606.rst:515
+msgid ""
+"``socketserver.ThreadingMixIn.server_close()`` now waits until all non-"
+"daemon threads complete.  Set the new ``block_on_close`` class attribute "
+"to ``False`` to get the pre-3.7 behaviour."
+msgstr ""
+
+#: ../../pep-0606.rst:518
+msgid "The ``struct.Struct.format`` type is now ``str`` instead of ``bytes``."
+msgstr ""
+
+#: ../../pep-0606.rst:520
+msgid ""
+"``repr`` for ``datetime.timedelta`` has changed to include the keyword "
+"arguments in the output."
+msgstr ""
+
+#: ../../pep-0606.rst:522
+msgid ""
+"``tracemalloc.Traceback`` frames are now sorted from oldest to most "
+"recent to be more consistent with ``traceback``."
+msgstr ""
+
+#: ../../pep-0606.rst:525
+msgid "Adding backward compatibility for most of these changes would be easy."
+msgstr ""
+
+#: ../../pep-0606.rst:527
+msgid ""
+"See also the `Porting to Python 3.7 "
+"<https://docs.python.org/dev/whatsnew/3.7.html#porting-to-python-3-7>`_ "
+"section of What’s New In Python 3.7."
+msgstr ""
+
+#: ../../pep-0606.rst:533
+msgid "Micro releases"
+msgstr ""
+
+#: ../../pep-0606.rst:535
+msgid ""
+"Sometimes, incompatible changes are introduced in micro releases "
+"(``micro`` in ``major.minor.micro``) to fix bugs or security "
+"vulnerabilities. Examples include:"
+msgstr ""
+
+#: ../../pep-0606.rst:539
+msgid ""
+"Python 3.7.2, ``compileall`` and  ``py_compile`` module: the "
+"*invalidation_mode* parameter's default value is updated to ``None``; the"
+" ``SOURCE_DATE_EPOCH`` environment variable no longer overrides the value"
+" of the *invalidation_mode* argument, and determines its default value "
+"instead."
+msgstr ""
+
+#: ../../pep-0606.rst:545
+msgid ""
+"Python 3.7.1, ``xml`` modules: the SAX parser no longer processes general"
+" external entities by default to increase security by default."
+msgstr ""
+
+#: ../../pep-0606.rst:548
+msgid ""
+"Python 3.5.2, ``os.urandom()``: on Linux, if the ``getrandom()`` syscall "
+"blocks (the urandom entropy pool is not initialized yet), fall back on "
+"reading ``/dev/urandom``."
+msgstr ""
+
+#: ../../pep-0606.rst:552
+msgid ""
+"Python 3.5.1, ``sys.setrecursionlimit()``: a ``RecursionError`` exception"
+" is now raised if the new limit is too low at the current recursion "
+"depth."
+msgstr ""
+
+#: ../../pep-0606.rst:556
+msgid ""
+"Python 3.4.4, ``ssl.create_default_context()``: RC4 was dropped from the "
+"default cipher string."
+msgstr ""
+
+#: ../../pep-0606.rst:559
+msgid ""
+"Python 3.4.3, ``http.client``: ``HTTPSConnection`` now performs all the "
+"necessary certificate and hostname checks by default."
+msgstr ""
+
+#: ../../pep-0606.rst:562
+msgid ""
+"Python 3.4.2, ``email.message``: ``EmailMessage.is_attachment()`` is now "
+"a method instead of a property, for consistency with "
+"``Message.is_multipart()``."
+msgstr ""
+
+#: ../../pep-0606.rst:566
+msgid ""
+"Python 3.4.1, ``os.makedirs(name, mode=0o777, exist_ok=False)``: Before "
+"Python 3.4.1, if *exist_ok* was ``True`` and the directory existed, "
+"``makedirs()`` would still raise an error if *mode* did not match the "
+"mode of the existing directory. Since this behavior was impossible to "
+"implement safely, it was removed in Python 3.4.1 (`bpo-21082 "
+"<https://bugs.python.org/issue21082>`_)."
+msgstr ""
+
+#: ../../pep-0606.rst:573
+msgid ""
+"Examples of changes made in micro releases which are not backward "
+"incompatible:"
+msgstr ""
+
+#: ../../pep-0606.rst:576
+msgid ""
+"``ssl.OP_NO_TLSv1_3`` constant was added to 2.7.15, 3.6.3 and 3.7.0 for "
+"backwards compatibility with OpenSSL 1.0.2."
+msgstr ""
+
+#: ../../pep-0606.rst:578
+msgid "``typing.AsyncContextManager`` was added to Python 3.6.2."
+msgstr ""
+
+#: ../../pep-0606.rst:579
+msgid "The ``zipfile`` module accepts a path-like object since Python 3.6.2."
+msgstr ""
+
+#: ../../pep-0606.rst:580
+msgid ""
+"``loop.create_future()`` was added to Python 3.5.2 in the ``asyncio`` "
+"module."
+msgstr ""
+
+#: ../../pep-0606.rst:583
+msgid "No backward compatibility code is needed for these kinds of changes."
+msgstr ""
+
+#: ../../pep-0606.rst:587
+msgid "References"
+msgstr ""
+
+#: ../../pep-0606.rst:589
+msgid "Accepted PEPs:"
+msgstr ""
+
+#: ../../pep-0606.rst:591
+msgid ""
+"`PEP 5 -- Guidelines for Language Evolution "
+"<https://www.python.org/dev/peps/pep-0005/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:593
+msgid ""
+"`PEP 236 -- Back to the __future__ "
+"<https://www.python.org/dev/peps/pep-0236/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:595
+msgid ""
+"`PEP 411 -- Provisional packages in the Python standard library "
+"<https://www.python.org/dev/peps/pep-0411/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:597
+msgid ""
+"`PEP 3002 -- Procedure for Backwards-Incompatible Changes "
+"<https://www.python.org/dev/peps/pep-3002/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:600
+msgid "Draft PEPs:"
+msgstr ""
+
+#: ../../pep-0606.rst:602
+msgid ""
+"`PEP 602 -- Annual Release Cycle for Python "
+"<https://www.python.org/dev/peps/pep-0602/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:604
+msgid ""
+"`PEP 605 -- A rolling feature release stream for CPython "
+"<https://www.python.org/dev/peps/pep-0605/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:606
+msgid ""
+"See also withdrawn `PEP 598 -- Introducing incremental feature releases "
+"<https://www.python.org/dev/peps/pep-0598/>`_"
+msgstr ""
+
+#: ../../pep-0606.rst:611
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0606.rst:613
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

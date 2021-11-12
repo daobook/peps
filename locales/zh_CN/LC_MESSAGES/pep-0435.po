@@ -1,0 +1,698 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0435.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0435.txt:1
+msgid "435"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0435.txt:2
+msgid "Adding an Enum type to the Python standard library"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0435.txt:5
+msgid ""
+"Barry Warsaw <barry@python.org>, Eli Bendersky <eliben@gmail.com>, Ethan "
+"Furman <ethan@stoneleaf.us>"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0435.txt:8
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0435.txt:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0435.txt:11
+msgid "23-Feb-2013"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0435.txt:12
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0435.txt:13
+msgid "2013-02-23, 2013-05-02"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Replaces"
+msgstr ""
+
+#: ../../pep-0435.txt:14
+msgid "354"
+msgstr ""
+
+#: ../../pep-0435.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0435.txt:15 ../../pep-0435.txt:590
+msgid "https://mail.python.org/pipermail/python-dev/2013-May/126112.html"
+msgstr ""
+
+#: ../../pep-0435.txt:19
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0435.txt:21
+msgid ""
+"This PEP proposes adding an enumeration type to the Python standard "
+"library."
+msgstr ""
+
+#: ../../pep-0435.txt:23
+msgid ""
+"An enumeration is a set of symbolic names bound to unique, constant "
+"values. Within an enumeration, the values can be compared by identity, "
+"and the enumeration itself can be iterated over."
+msgstr ""
+
+#: ../../pep-0435.txt:29
+msgid "Status of discussions"
+msgstr ""
+
+#: ../../pep-0435.txt:31
+msgid ""
+"The idea of adding an enum type to Python is not new - PEP 354 [2]_ is a "
+"previous attempt that was rejected in 2005.  Recently a new set of "
+"discussions was initiated [3]_ on the ``python-ideas`` mailing list.  "
+"Many new ideas were proposed in several threads; after a lengthy "
+"discussion Guido proposed adding ``flufl.enum`` to the standard library "
+"[4]_.  During the PyCon 2013 language summit the issue was discussed "
+"further.  It became clear that many developers want to see an enum that "
+"subclasses ``int``, which can allow us to replace many integer constants "
+"in the standard library by enums with friendly string representations, "
+"without ceding backwards compatibility.  An additional discussion among "
+"several interested core developers led to the proposal of having "
+"``IntEnum`` as a special case of ``Enum``."
+msgstr ""
+
+#: ../../pep-0435.txt:43
+msgid ""
+"The key dividing issue between ``Enum`` and ``IntEnum`` is whether "
+"comparing to integers is semantically meaningful.  For most uses of "
+"enumerations, it's a **feature** to reject comparison to integers; enums "
+"that compare to integers lead, through transitivity, to comparisons "
+"between enums of unrelated types, which isn't desirable in most cases.  "
+"For some uses, however, greater interoperability with integers is "
+"desired. For instance, this is the case for replacing existing standard "
+"library constants (such as ``socket.AF_INET``) with enumerations."
+msgstr ""
+
+#: ../../pep-0435.txt:52
+msgid ""
+"Further discussion in late April 2013 led to the conclusion that "
+"enumeration members should belong to the type of their enum: "
+"``type(Color.red) == Color``. Guido has pronounced a decision on this "
+"issue [5]_, as well as related issues of not allowing to subclass enums "
+"[6]_, unless they define no enumeration members [7]_."
+msgstr ""
+
+#: ../../pep-0435.txt:58
+msgid "The PEP was accepted by Guido on May 10th, 2013 [1]_."
+msgstr ""
+
+#: ../../pep-0435.txt:62
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0435.txt:64
+msgid "*[Based partly on the Motivation stated in PEP 354]*"
+msgstr ""
+
+#: ../../pep-0435.txt:66
+msgid ""
+"The properties of an enumeration are useful for defining an immutable, "
+"related set of constant values that may or may not have a semantic "
+"meaning.  Classic examples are days of the week (Sunday through Saturday)"
+" and school assessment grades ('A' through 'D', and 'F').  Other examples"
+" include error status values and states within a defined process."
+msgstr ""
+
+#: ../../pep-0435.txt:72
+msgid ""
+"It is possible to simply define a sequence of values of some other basic "
+"type, such as ``int`` or ``str``, to represent discrete arbitrary values."
+"  However, an enumeration ensures that such values are distinct from any "
+"others including, importantly, values within other enumerations, and that"
+" operations without meaning (\"Wednesday times two\") are not defined for"
+" these values.  It also provides a convenient printable representation of"
+" enum values without requiring tedious repetition while defining them "
+"(i.e. no ``GREEN = 'green'``)."
+msgstr ""
+
+#: ../../pep-0435.txt:82
+msgid "Module and type name"
+msgstr ""
+
+#: ../../pep-0435.txt:84
+msgid ""
+"We propose to add a module named ``enum`` to the standard library.  The "
+"main type exposed by this module is ``Enum``.  Hence, to import the "
+"``Enum`` type user code will run::"
+msgstr ""
+
+#: ../../pep-0435.txt:92
+msgid "Proposed semantics for the new enumeration type"
+msgstr ""
+
+#: ../../pep-0435.txt:95
+msgid "Creating an Enum"
+msgstr ""
+
+#: ../../pep-0435.txt:97
+msgid ""
+"Enumerations are created using the class syntax, which makes them easy to"
+" read and write.  An alternative creation method is described in "
+"`Functional API`_. To define an enumeration, subclass ``Enum`` as "
+"follows::"
+msgstr ""
+
+#: ../../pep-0435.txt:107
+msgid ""
+"**A note on nomenclature**: we call ``Color`` an *enumeration* (or "
+"*enum*) and ``Color.red``, ``Color.green`` are *enumeration members* (or "
+"*enum members*).  Enumeration members also have *values* (the value of "
+"``Color.red`` is ``1``, etc.)"
+msgstr ""
+
+#: ../../pep-0435.txt:112
+msgid "Enumeration members have human readable string representations::"
+msgstr ""
+
+#: ../../pep-0435.txt:117
+msgid "...while their ``repr`` has more information::"
+msgstr ""
+
+#: ../../pep-0435.txt:122
+msgid "The *type* of an enumeration member is the enumeration it belongs to::"
+msgstr ""
+
+#: ../../pep-0435.txt:130
+msgid "Enums also have a property that contains just their item name::"
+msgstr ""
+
+#: ../../pep-0435.txt:135
+msgid "Enumerations support iteration, in definition order::"
+msgstr ""
+
+#: ../../pep-0435.txt:151
+msgid ""
+"Enumeration members are hashable, so they can be used in dictionaries and"
+" sets::"
+msgstr ""
+
+#: ../../pep-0435.txt:161
+msgid "Programmatic access to enumeration members"
+msgstr ""
+
+#: ../../pep-0435.txt:163
+msgid ""
+"Sometimes it's useful to access members in enumerations programmatically "
+"(i.e. situations where ``Color.red`` won't do because the exact color is "
+"not known at program-writing time).  ``Enum`` allows such access::"
+msgstr ""
+
+#: ../../pep-0435.txt:172
+msgid "If you want to access enum members by *name*, use item access::"
+msgstr ""
+
+#: ../../pep-0435.txt:181
+msgid "Duplicating enum members and values"
+msgstr ""
+
+#: ../../pep-0435.txt:183
+msgid "Having two enum members with the same name is invalid::"
+msgstr ""
+
+#: ../../pep-0435.txt:193
+msgid ""
+"However, two enum members are allowed to have the same value.  Given two "
+"members A and B with the same value (and A defined first), B is an alias "
+"to A.  By-value lookup of the value of A and B will return A.  By-name "
+"lookup of B will also return A::"
+msgstr ""
+
+#: ../../pep-0435.txt:211
+msgid "Iterating over the members of an enum does not provide the aliases::"
+msgstr ""
+
+#: ../../pep-0435.txt:216
+msgid ""
+"The special attribute ``__members__`` is an ordered dictionary mapping "
+"names to members.  It includes all names defined in the enumeration, "
+"including the aliases::"
+msgstr ""
+
+#: ../../pep-0435.txt:228
+msgid ""
+"The ``__members__`` attribute can be used for detailed programmatic "
+"access to the enumeration members.  For example, finding all the "
+"aliases::"
+msgstr ""
+
+#: ../../pep-0435.txt:235
+msgid "Comparisons"
+msgstr ""
+
+#: ../../pep-0435.txt:237
+msgid "Enumeration members are compared by identity::"
+msgstr ""
+
+#: ../../pep-0435.txt:246
+msgid ""
+"Ordered comparisons between enumeration values are *not* supported.  "
+"Enums are not integers (but see `IntEnum`_ below)::"
+msgstr ""
+
+#: ../../pep-0435.txt:254
+msgid "Equality comparisons are defined though::"
+msgstr ""
+
+#: ../../pep-0435.txt:263
+msgid ""
+"Comparisons against non-enumeration values will always compare not equal "
+"(again, ``IntEnum`` was explicitly designed to behave differently, see "
+"below)::"
+msgstr ""
+
+#: ../../pep-0435.txt:272
+msgid "Allowed members and attributes of enumerations"
+msgstr ""
+
+#: ../../pep-0435.txt:274
+msgid ""
+"The examples above use integers for enumeration values.  Using integers "
+"is short and handy (and provided by default by the `Functional API`_), "
+"but not strictly enforced.  In the vast majority of use-cases, one "
+"doesn't care what the actual value of an enumeration is.  But if the "
+"value *is* important, enumerations can have arbitrary values."
+msgstr ""
+
+#: ../../pep-0435.txt:280
+msgid ""
+"Enumerations are Python classes, and can have methods and special methods"
+" as usual.  If we have this enumeration::"
+msgstr ""
+
+#: ../../pep-0435.txt:299
+msgid "Then::"
+msgstr ""
+
+#: ../../pep-0435.txt:308
+msgid ""
+"The rules for what is allowed are as follows: all attributes defined "
+"within an enumeration will become members of this enumeration, with the "
+"exception of *__dunder__* names and descriptors [9]_; methods are "
+"descriptors too."
+msgstr ""
+
+#: ../../pep-0435.txt:314
+msgid "Restricted subclassing of enumerations"
+msgstr ""
+
+#: ../../pep-0435.txt:316
+msgid ""
+"Subclassing an enumeration is allowed only if the enumeration does not "
+"define any members.  So this is forbidden::"
+msgstr ""
+
+#: ../../pep-0435.txt:324
+msgid "But this is allowed::"
+msgstr ""
+
+#: ../../pep-0435.txt:335
+msgid ""
+"The rationale for this decision was given by Guido in [6]_.  Allowing to "
+"subclass enums that define members would lead to a violation of some "
+"important invariants of types and instances.  On the other hand, it makes"
+" sense to allow sharing some common behavior between a group of "
+"enumerations, and subclassing empty enumerations is also used to "
+"implement ``IntEnum``."
+msgstr ""
+
+#: ../../pep-0435.txt:344
+msgid "IntEnum"
+msgstr ""
+
+#: ../../pep-0435.txt:346
+msgid ""
+"A variation of ``Enum`` is proposed which is also a subclass of ``int``. "
+"Members of an ``IntEnum`` can be compared to integers; by extension, "
+"integer enumerations of different types can also be compared to each "
+"other::"
+msgstr ""
+
+#: ../../pep-0435.txt:366
+msgid "However they still can't be compared to ``Enum``::"
+msgstr ""
+
+#: ../../pep-0435.txt:379
+msgid "``IntEnum`` values behave like integers in other ways you'd expect::"
+msgstr ""
+
+#: ../../pep-0435.txt:388
+msgid ""
+"For the vast majority of code, ``Enum`` is strongly recommended, since "
+"``IntEnum`` breaks some semantic promises of an enumeration (by being "
+"comparable to integers, and thus by transitivity to other unrelated "
+"enumerations). It should be used only in special cases where there's no "
+"other choice; for example, when integer constants are replaced with "
+"enumerations and backwards compatibility is required with code that still"
+" expects integers."
+msgstr ""
+
+#: ../../pep-0435.txt:398
+msgid "Other derived enumerations"
+msgstr ""
+
+#: ../../pep-0435.txt:400
+msgid ""
+"``IntEnum`` will be part of the ``enum`` module.  However, it would be "
+"very simple to implement independently::"
+msgstr ""
+
+#: ../../pep-0435.txt:406
+msgid ""
+"This demonstrates how similar derived enumerations can be defined, for "
+"example a ``StrEnum`` that mixes in ``str`` instead of ``int``."
+msgstr ""
+
+#: ../../pep-0435.txt:409
+msgid "Some rules:"
+msgstr ""
+
+#: ../../pep-0435.txt:411
+msgid ""
+"When subclassing Enum, mix-in types must appear before Enum itself in the"
+" sequence of bases, as in the ``IntEnum`` example above."
+msgstr ""
+
+#: ../../pep-0435.txt:413
+msgid ""
+"While Enum can have members of any type, once you mix in an additional "
+"type, all the members must have values of that type, e.g. ``int`` above. "
+"This restriction does not apply to mix-ins which only add methods and "
+"don't specify another data type such as ``int`` or ``str``."
+msgstr ""
+
+#: ../../pep-0435.txt:420
+msgid "Pickling"
+msgstr ""
+
+#: ../../pep-0435.txt:422
+msgid "Enumerations can be pickled and unpickled::"
+msgstr ""
+
+#: ../../pep-0435.txt:429
+msgid ""
+"The usual restrictions for pickling apply: picklable enums must be "
+"defined in the top level of a module, since unpickling requires them to "
+"be importable from that module."
+msgstr ""
+
+#: ../../pep-0435.txt:435
+msgid "Functional API"
+msgstr ""
+
+#: ../../pep-0435.txt:437
+msgid "The ``Enum`` class is callable, providing the following functional API::"
+msgstr ""
+
+#: ../../pep-0435.txt:449
+msgid ""
+"The semantics of this API resemble ``namedtuple``. The first argument of "
+"the call to ``Enum`` is the name of the enumeration.  Pickling enums "
+"created with the functional API will work on CPython and PyPy, but for "
+"IronPython and Jython you may need to specify the module name explicitly "
+"as follows::"
+msgstr ""
+
+#: ../../pep-0435.txt:457
+msgid ""
+"The second argument is the *source* of enumeration member names.  It can "
+"be a whitespace-separated string of names, a sequence of names, a "
+"sequence of 2-tuples with key/value pairs, or a mapping (e.g. dictionary)"
+" of names to values.  The last two options enable assigning arbitrary "
+"values to enumerations; the others auto-assign increasing integers "
+"starting with 1.  A new class derived from ``Enum`` is returned.  In "
+"other words, the above assignment to ``Animal`` is equivalent to::"
+msgstr ""
+
+#: ../../pep-0435.txt:471
+msgid ""
+"The reason for defaulting to ``1`` as the starting number and not ``0`` "
+"is that ``0`` is ``False`` in a boolean sense, but enum members all "
+"evaluate to ``True``."
+msgstr ""
+
+#: ../../pep-0435.txt:477
+msgid "Proposed variations"
+msgstr ""
+
+#: ../../pep-0435.txt:479
+msgid ""
+"Some variations were proposed during the discussions in the mailing list."
+" Here's some of the more popular ones."
+msgstr ""
+
+#: ../../pep-0435.txt:484
+msgid "flufl.enum"
+msgstr ""
+
+#: ../../pep-0435.txt:486
+msgid ""
+"``flufl.enum`` was the reference implementation upon which this PEP was "
+"originally based.  Eventually, it was decided against the inclusion of "
+"``flufl.enum`` because its design separated enumeration members from "
+"enumerations, so the former are not instances of the latter.  Its design "
+"also explicitly permits subclassing enumerations for extending them with "
+"more members (due to the member/enum separation, the type invariants are "
+"not violated in ``flufl.enum`` with such a scheme)."
+msgstr ""
+
+#: ../../pep-0435.txt:496
+msgid "Not having to specify values for enums"
+msgstr ""
+
+#: ../../pep-0435.txt:498
+msgid ""
+"Michael Foord proposed (and Tim Delaney provided a proof-of-concept "
+"implementation) to use metaclass magic that makes this possible::"
+msgstr ""
+
+#: ../../pep-0435.txt:504
+msgid "The values get actually assigned only when first looked up."
+msgstr ""
+
+#: ../../pep-0435.txt:506
+msgid ""
+"Pros: cleaner syntax that requires less typing for a very common task "
+"(just listing enumeration names without caring about the values)."
+msgstr ""
+
+#: ../../pep-0435.txt:509
+msgid ""
+"Cons: involves much magic in the implementation, which makes even the "
+"definition of such enums baffling when first seen.  Besides, explicit is "
+"better than implicit."
+msgstr ""
+
+#: ../../pep-0435.txt:514
+msgid "Using special names or forms to auto-assign enum values"
+msgstr ""
+
+#: ../../pep-0435.txt:516
+msgid ""
+"A different approach to avoid specifying enum values is to use a special "
+"name or form to auto assign them.  For example::"
+msgstr ""
+
+#: ../../pep-0435.txt:524
+msgid "More flexibly::"
+msgstr ""
+
+#: ../../pep-0435.txt:532
+msgid "Some variations on this theme:"
+msgstr ""
+
+#: ../../pep-0435.txt:534
+msgid "A special name ``auto`` imported from the enum package."
+msgstr ""
+
+#: ../../pep-0435.txt:535
+msgid ""
+"Georg Brandl proposed ellipsis (``...``) instead of ``None`` to achieve "
+"the same effect."
+msgstr ""
+
+#: ../../pep-0435.txt:538
+msgid ""
+"Pros: no need to manually enter values. Makes it easier to change the "
+"enum and extend it, especially for large enumerations."
+msgstr ""
+
+#: ../../pep-0435.txt:541
+msgid ""
+"Cons: actually longer to type in many simple cases.  The argument of "
+"explicit vs. implicit applies here as well."
+msgstr ""
+
+#: ../../pep-0435.txt:546
+msgid "Use-cases in the standard library"
+msgstr ""
+
+#: ../../pep-0435.txt:548
+msgid ""
+"The Python standard library has many places where the usage of enums "
+"would be beneficial to replace other idioms currently used to represent "
+"them.  Such usages can be divided to two categories: user-code facing "
+"constants, and internal constants."
+msgstr ""
+
+#: ../../pep-0435.txt:553
+msgid ""
+"User-code facing constants like ``os.SEEK_*``, ``socket`` module "
+"constants, decimal rounding modes and HTML error codes could require "
+"backwards compatibility since user code may expect integers.  ``IntEnum``"
+" as described above provides the required semantics; being a subclass of "
+"``int``, it does not affect user code that expects integers, while on the"
+" other hand allowing printable representations for enumeration values::"
+msgstr ""
+
+#: ../../pep-0435.txt:567
+msgid ""
+"Internal constants are not seen by user code but are employed internally "
+"by stdlib modules.  These can be implemented with ``Enum``.  Some "
+"examples uncovered by a very partial skim through the stdlib: ``binhex``,"
+" ``imaplib``, ``http/client``, ``urllib/robotparser``, ``idlelib``, "
+"``concurrent.futures``, ``turtledemo``."
+msgstr ""
+
+#: ../../pep-0435.txt:573
+msgid ""
+"In addition, looking at the code of the Twisted library, there are many "
+"use cases for replacing internal state constants with enums.  The same "
+"can be said about a lot of networking code (especially implementation of "
+"protocols) and can be seen in test protocols written with the Tulip "
+"library as well."
+msgstr ""
+
+#: ../../pep-0435.txt:580
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0435.txt:582
+msgid ""
+"This PEP was initially proposing including the ``flufl.enum`` package "
+"[8]_ by Barry Warsaw into the stdlib, and is inspired in large parts by "
+"it. Ben Finney is the author of the earlier enumeration PEP 354."
+msgstr ""
+
+#: ../../pep-0435.txt:588
+msgid "References"
+msgstr ""
+
+#: ../../pep-0435.txt:591
+msgid "http://www.python.org/dev/peps/pep-0354/"
+msgstr ""
+
+#: ../../pep-0435.txt:592
+msgid "https://mail.python.org/pipermail/python-ideas/2013-January/019003.html"
+msgstr ""
+
+#: ../../pep-0435.txt:593
+msgid "https://mail.python.org/pipermail/python-ideas/2013-February/019373.html"
+msgstr ""
+
+#: ../../pep-0435.txt:594
+msgid ""
+"To make enums behave similarly to Python classes like bool, and behave in"
+" a more intuitive way.  It would be surprising if the type of "
+"``Color.red`` would not be ``Color``. (Discussion in "
+"https://mail.python.org/pipermail/python-dev/2013-April/125687.html)"
+msgstr ""
+
+#: ../../pep-0435.txt:598
+msgid ""
+"Subclassing enums and adding new members creates an unresolvable "
+"situation; on one hand ``MoreColor.red`` and ``Color.red`` should not be "
+"the same object, and on the other ``isinstance`` checks become confusing "
+"if they are not.  The discussion also links to Stack Overflow discussions"
+" that make additional arguments. (https://mail.python.org/pipermail"
+"/python-dev/2013-April/125716.html)"
+msgstr ""
+
+#: ../../pep-0435.txt:604
+msgid ""
+"It may be useful to have a class defining some behavior (methods, with no"
+" actual enumeration members) mixed into an enum, and this would not "
+"create the problem discussed in [6]_.  (Discussion in "
+"https://mail.python.org/pipermail/python-dev/2013-May/125859.html)"
+msgstr ""
+
+#: ../../pep-0435.txt:608
+msgid "http://pythonhosted.org/flufl.enum/"
+msgstr ""
+
+#: ../../pep-0435.txt:609
+msgid "http://docs.python.org/3/howto/descriptor.html"
+msgstr ""
+
+#: ../../pep-0435.txt:613
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0435.txt:615
+msgid "This document has been placed in the public domain."
+msgstr ""
+

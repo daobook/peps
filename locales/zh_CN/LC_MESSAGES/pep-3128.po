@@ -1,0 +1,790 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3128.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3128.txt:1
+msgid "3128"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3128.txt:2
+msgid "BList: A Faster List-like Type"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3128.txt:5
+msgid "Daniel Stutzbach <daniel@stutzbachenterprises.com>"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-3128.txt:6
+msgid "Python 3000 List <python-3000@python.org>"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3128.txt:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3128.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3128.txt:10 ../../pep-3128.txt:12
+msgid "30-Apr-2007"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3128.txt:11
+msgid "2.6, 3.0"
+msgstr ""
+
+#: ../../pep-3128.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3128.txt:16
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-3128.txt:18
+msgid "Rejected based on Raymond Hettinger's sage advice [4]_:"
+msgstr ""
+
+#: ../../pep-3128.txt:20
+msgid ""
+"After looking at the source, I think this has almost zero chance for "
+"replacing list().  There is too much value in a simple C API, low space "
+"overhead for small lists, good performance is common use cases, and "
+"having performance that is easily understood.  The BList implementation "
+"lacks these virtues and it trades-off a little performance in common "
+"cases in for much better performance in uncommon cases.  As a Py3.0 PEP, "
+"I think it can be rejected."
+msgstr ""
+
+#: ../../pep-3128.txt:28
+msgid ""
+"Depending on its success as a third-party module, it still has a chance "
+"for inclusion in the collections module.  The essential criteria for that"
+" is whether it is a superior choice for some real-world use cases.  I've "
+"scanned my own code and found no instances where BList would have been "
+"preferable to a regular list.  However, that scan has a selection bias "
+"because it doesn't reflect what I would have written had BList been "
+"available.  So, after a few months, I intend to poll comp.lang.python for"
+" BList success stories.  If they exist, then I have no problem with "
+"inclusion in the collections module.  After all, its learning curve is "
+"near zero -- the only cost is the clutter factor stemming from indecision"
+" about the most appropriate data structure for a given task."
+msgstr ""
+
+#: ../../pep-3128.txt:43
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3128.txt:45
+msgid ""
+"The common case for list operations is on small lists.  The current "
+"array-based list implementation excels at small lists due to the strong "
+"locality of reference and infrequency of memory allocation operations.  "
+"However, an array takes O(n) time to insert and delete elements, which "
+"can become problematic as the list gets large."
+msgstr ""
+
+#: ../../pep-3128.txt:51
+msgid ""
+"This PEP introduces a new data type, the BList, that has array-like and "
+"tree-like aspects.  It enjoys the same good performance on small lists as"
+" the existing array-based implementation, but offers superior asymptotic "
+"performance for most operations.  This PEP proposes replacing the makes "
+"two mutually exclusive proposals for including the BList type in Python:"
+msgstr ""
+
+#: ../../pep-3128.txt:58
+msgid "Add it to the collections module, or"
+msgstr ""
+
+#: ../../pep-3128.txt:59
+msgid "Replace the existing list type"
+msgstr ""
+
+#: ../../pep-3128.txt:63
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-3128.txt:65
+msgid ""
+"The BList grew out of the frustration of needing to rewrite intuitive "
+"algorithms that worked fine for small inputs but took O(n**2) time for "
+"large inputs due to the underlying O(n) behavior of array-based lists. "
+"The deque type, introduced in Python 2.4, solved the most common problem "
+"of needing a fast FIFO queue.  However, the deque type doesn't help if we"
+" need to repeatedly insert or delete elements from the middle of a long "
+"list."
+msgstr ""
+
+#: ../../pep-3128.txt:73
+msgid ""
+"A wide variety of data structure provide good asymptotic performance for "
+"insertions and deletions, but they either have O(n) performance for other"
+" operations (e.g., linked lists) or have inferior performance for small "
+"lists (e.g., binary trees and skip lists)."
+msgstr ""
+
+#: ../../pep-3128.txt:78
+msgid ""
+"The BList type proposed in this PEP is based on the principles of "
+"B+Trees, which have array-like and tree-like aspects.  The BList offers "
+"array-like performance on small lists, while offering O(log n) asymptotic"
+" performance for all insert and delete operations. Additionally, the "
+"BList implements copy-on-write under-the-hood, so even operations like "
+"getslice take O(log n) time.  The table below compares the asymptotic "
+"performance of the current array-based list implementation with the "
+"asymptotic performance of the BList."
+msgstr ""
+
+#: ../../pep-3128.txt:88
+msgid "Operation"
+msgstr ""
+
+#: ../../pep-3128.txt:88
+msgid "Array-based list"
+msgstr ""
+
+#: ../../pep-3128.txt:88
+msgid "BList"
+msgstr ""
+
+#: ../../pep-3128.txt:90
+msgid "Copy"
+msgstr ""
+
+#: ../../pep-3128.txt:90 ../../pep-3128.txt:92 ../../pep-3128.txt:95
+#: ../../pep-3128.txt:96 ../../pep-3128.txt:98
+msgid "O(n)"
+msgstr ""
+
+#: ../../pep-3128.txt:90 ../../pep-3128.txt:91 ../../pep-3128.txt:93
+#: ../../pep-3128.txt:94
+msgid "**O(1)**"
+msgstr ""
+
+#: ../../pep-3128.txt:91
+msgid "Append"
+msgstr ""
+
+#: ../../pep-3128.txt:91 ../../pep-3128.txt:93
+msgid "O(log n)"
+msgstr ""
+
+#: ../../pep-3128.txt:92
+msgid "Insert"
+msgstr ""
+
+#: ../../pep-3128.txt:92 ../../pep-3128.txt:94 ../../pep-3128.txt:95
+#: ../../pep-3128.txt:97 ../../pep-3128.txt:98
+msgid "**O(log n)**"
+msgstr ""
+
+#: ../../pep-3128.txt:93
+msgid "Get Item"
+msgstr ""
+
+#: ../../pep-3128.txt:94
+msgid "Set Item"
+msgstr ""
+
+#: ../../pep-3128.txt:95
+msgid "Del Item"
+msgstr ""
+
+#: ../../pep-3128.txt:96
+msgid "Iteration"
+msgstr ""
+
+#: ../../pep-3128.txt:97
+msgid "Get Slice"
+msgstr ""
+
+#: ../../pep-3128.txt:97 ../../pep-3128.txt:100
+msgid "O(k)"
+msgstr ""
+
+#: ../../pep-3128.txt:98
+msgid "Del Slice"
+msgstr ""
+
+#: ../../pep-3128.txt:99
+msgid "Set Slice"
+msgstr ""
+
+#: ../../pep-3128.txt:99
+msgid "O(n+k)"
+msgstr ""
+
+#: ../../pep-3128.txt:99 ../../pep-3128.txt:100
+msgid "**O(log k + log n)**"
+msgstr ""
+
+#: ../../pep-3128.txt:100
+msgid "Extend"
+msgstr ""
+
+#: ../../pep-3128.txt:101
+msgid "Sort"
+msgstr ""
+
+#: ../../pep-3128.txt:101
+msgid "O(n log n)"
+msgstr ""
+
+#: ../../pep-3128.txt:102
+msgid "Multiply"
+msgstr ""
+
+#: ../../pep-3128.txt:102
+msgid "O(nk)"
+msgstr ""
+
+#: ../../pep-3128.txt:102
+msgid "**O(log k)**"
+msgstr ""
+
+#: ../../pep-3128.txt:105
+msgid ""
+"An extensive empirical comparison of Python's array-based list and the "
+"BList are available at [2]_."
+msgstr ""
+
+#: ../../pep-3128.txt:109
+msgid "Use Case Trade-offs"
+msgstr ""
+
+#: ../../pep-3128.txt:111
+msgid ""
+"The BList offers superior performance for many, but not all, operations."
+"  Choosing the correct data type for a particular use case depends on "
+"which operations are used.  Choosing the correct data type as a built-in "
+"depends on balancing the importance of different use cases and the "
+"magnitude of the performance differences."
+msgstr ""
+
+#: ../../pep-3128.txt:117
+msgid ""
+"For the common uses cases of small lists, the array-based list and the "
+"BList have similar performance characteristics."
+msgstr ""
+
+#: ../../pep-3128.txt:120
+msgid ""
+"For the slightly less common case of large lists, there are two common "
+"uses cases where the existing array-based list outperforms the existing "
+"BList reference implementation.  These are:"
+msgstr ""
+
+#: ../../pep-3128.txt:124
+msgid ""
+"A large LIFO stack, where there are many .append() and .pop(-1) "
+"operations.  Each operation is O(1) for an array-based list, but O(log n)"
+" for the BList."
+msgstr ""
+
+#: ../../pep-3128.txt:128
+msgid ""
+"A large list that does not change size.  The getitem and setitem calls "
+"are O(1) for an array-based list, but O(log n) for the BList."
+msgstr ""
+
+#: ../../pep-3128.txt:131
+#, python-format
+msgid ""
+"In performance tests on a 10,000 element list, BLists exhibited a 50% and"
+" 5% increase in execution time for these two uses cases, respectively."
+msgstr ""
+
+#: ../../pep-3128.txt:135
+msgid ""
+"The performance for the LIFO use case could be improved to O(n) time, by "
+"caching a pointer to the right-most leaf within the root node.  For lists"
+" that do not change size, the common case of sequential access could also"
+" be improved to O(n) time via caching in the root node. However, the "
+"performance of these approaches has not been empirically tested."
+msgstr ""
+
+#: ../../pep-3128.txt:142
+#, python-format
+msgid ""
+"Many operations exhibit a tremendous speed-up (O(n) to O(log n)) when "
+"switching from the array-based list to BLists.  In performance tests on a"
+" 10,000 element list, operations such as getslice, setslice, and FIFO-"
+"style insert and deletes on a BList take only 1% of the time needed on "
+"array-based lists."
+msgstr ""
+
+#: ../../pep-3128.txt:148
+msgid ""
+"In light of the large performance speed-ups for many operations, the "
+"small performance costs for some operations will be worthwhile for many "
+"(but not all) applications."
+msgstr ""
+
+#: ../../pep-3128.txt:153
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-3128.txt:155
+msgid ""
+"The BList is based on the B+Tree data structure.  The BList is a wide, "
+"bushy tree where each node contains an array of up to 128 pointers to its"
+" children.  If the node is a leaf, its children are the user-visible "
+"objects that the user has placed in the list.  If node is not a leaf, its"
+" children are other BList nodes that are not user-visible.  If the list "
+"contains only a few elements, they will all be a children of single node "
+"that is both the root and a leaf.  Since a node is little more than array"
+" of pointers, small lists operate in effectively the same way as an "
+"array-based data type and share the same good performance "
+"characteristics."
+msgstr ""
+
+#: ../../pep-3128.txt:166
+msgid ""
+"The BList maintains a few invariants to ensure good (O(log n)) asymptotic"
+" performance regardless of the sequence of insert and delete operations."
+"  The principle invariants are as follows:"
+msgstr ""
+
+#: ../../pep-3128.txt:170
+msgid "Each node has at most 128 children."
+msgstr ""
+
+#: ../../pep-3128.txt:171
+msgid "Each non-root node has at least 64 children."
+msgstr ""
+
+#: ../../pep-3128.txt:172
+msgid ""
+"The root node has at least 2 children, unless the list contains fewer "
+"than 2 elements."
+msgstr ""
+
+#: ../../pep-3128.txt:174
+msgid "The tree is of uniform depth."
+msgstr ""
+
+#: ../../pep-3128.txt:176
+msgid ""
+"If an insert would cause a node to exceed 128 children, the node spawns a"
+" sibling and transfers half of its children to the sibling. The sibling "
+"is inserted into the node's parent.  If the node is the root node (and "
+"thus has no parent), a new parent is created and the depth of the tree "
+"increases by one."
+msgstr ""
+
+#: ../../pep-3128.txt:182
+msgid ""
+"If a deletion would cause a node to have fewer than 64 children, the node"
+" moves elements from one of its siblings if possible.  If both of its "
+"siblings also only have 64 children, then two of the nodes merge and the "
+"empty one is removed from its parent.  If the root node is reduced to "
+"only one child, its single child becomes the new root (i.e., the depth of"
+" the tree is reduced by one)."
+msgstr ""
+
+#: ../../pep-3128.txt:189
+msgid ""
+"In addition to tree-like asymptotic performance and array-like "
+"performance on small-lists, BLists support transparent **copy-on-write**."
+"  If a non-root node needs to be copied (as part of a getslice, copy, "
+"setslice, etc.), the node is shared between multiple parents instead of "
+"being copied.  If it needs to be modified later, it will be copied at "
+"that time.  This is completely behind-the-scenes; from the user's point "
+"of view, the BList works just like a regular Python list."
+msgstr ""
+
+#: ../../pep-3128.txt:199
+msgid "Memory Usage"
+msgstr ""
+
+#: ../../pep-3128.txt:201
+msgid ""
+"In the worst case, the leaf nodes of a BList have only 64 children each, "
+"rather than a full 128, meaning that memory usage is around twice that of"
+" a best-case array implementation.  Non-leaf nodes use up a negligible "
+"amount of additional memory, since there are at least 63 times as many "
+"leaf nodes as non-leaf nodes."
+msgstr ""
+
+#: ../../pep-3128.txt:207
+msgid ""
+"The existing array-based list implementation must grow and shrink as "
+"items are added and removed.  To be efficient, it grows and shrinks only "
+"when the list has grow or shrunk exponentially.  In the worst case, it, "
+"too, uses twice as much memory as the best case."
+msgstr ""
+
+#: ../../pep-3128.txt:212
+msgid ""
+"In summary, the BList's memory footprint is not significantly different "
+"from the existing array-based implementation."
+msgstr ""
+
+#: ../../pep-3128.txt:216
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-3128.txt:218
+msgid ""
+"If the BList is added to the collections module, backwards compatibility "
+"is not an issue.  This section focuses on the option of replacing the "
+"existing array-based list with the BList.  For users of the Python "
+"interpreter, a BList has an identical interface to the current list-"
+"implementation.  For virtually all operations, the behavior is identical,"
+" aside from execution speed."
+msgstr ""
+
+#: ../../pep-3128.txt:225
+msgid ""
+"For the C API, BList has a different interface than the existing list-"
+"implementation.  Due to its more complex structure, the BList does not "
+"lend itself well to poking and prodding by external sources. Thankfully, "
+"the existing list-implementation defines an API of functions and macros "
+"for accessing data from list objects.  Google Code Search suggests that "
+"the majority of third-party modules uses the well-defined API rather than"
+" relying on the list's structure directly.  The table below summarizes "
+"the search queries and results:"
+msgstr ""
+
+#: ../../pep-3128.txt:235
+msgid "Search String"
+msgstr ""
+
+#: ../../pep-3128.txt:235
+msgid "Number of Results"
+msgstr ""
+
+#: ../../pep-3128.txt:237
+msgid "PyList_GetItem"
+msgstr ""
+
+#: ../../pep-3128.txt:237
+msgid "2,000"
+msgstr ""
+
+#: ../../pep-3128.txt:238
+msgid "PySequence_GetItem"
+msgstr ""
+
+#: ../../pep-3128.txt:238
+msgid "800"
+msgstr ""
+
+#: ../../pep-3128.txt:239
+msgid "PySequence_Fast_GET_ITEM"
+msgstr ""
+
+#: ../../pep-3128.txt:239 ../../pep-3128.txt:241
+msgid "100"
+msgstr ""
+
+#: ../../pep-3128.txt:240
+msgid "PyList_GET_ITEM"
+msgstr ""
+
+#: ../../pep-3128.txt:240
+msgid "400"
+msgstr ""
+
+#: ../../pep-3128.txt:241
+msgid "\\[^a\\-zA\\-Z\\_\\]ob_item"
+msgstr ""
+
+#: ../../pep-3128.txt:245
+msgid "This can be achieved in one of two ways:"
+msgstr ""
+
+#: ../../pep-3128.txt:247
+msgid ""
+"Redefine the various accessor functions and macros in listobject.h to "
+"access a BList instead.  The interface would be unchanged.  The functions"
+" can easily be redefined.  The macros need a bit more care and would have"
+" to resort to function calls for large lists."
+msgstr ""
+
+#: ../../pep-3128.txt:252
+msgid ""
+"The macros would need to evaluate their arguments more than once, which "
+"could be a problem if the arguments have side effects.  A Google Code "
+"Search for \"PyList_GET_ITEM\\(\\[^)\\]+\\(\" found only a handful of "
+"cases where this occurs, so the impact appears to be low."
+msgstr ""
+
+#: ../../pep-3128.txt:258
+msgid ""
+"The few extension modules that use list's undocumented structure "
+"directly, instead of using the API, would break.  The core code itself "
+"uses the accessor macros fairly consistently and should be easy to port."
+msgstr ""
+
+#: ../../pep-3128.txt:263
+#, python-format
+msgid ""
+"Deprecate the existing list type, but continue to include it. Extension "
+"modules wishing to use the new BList type must do so explicitly.  The "
+"BList C interface can be changed to match the existing PyList interface "
+"so that a simple search-replace will be sufficient for 99% of module "
+"writers."
+msgstr ""
+
+#: ../../pep-3128.txt:269
+msgid ""
+"Existing modules would continue to compile and work without change, but "
+"they would need to make a deliberate (but small) effort to migrate to the"
+" BList."
+msgstr ""
+
+#: ../../pep-3128.txt:273
+msgid ""
+"The downside of this approach is that mixing modules that use BLists and "
+"array-based lists might lead to slow down if conversions are frequently "
+"necessary."
+msgstr ""
+
+#: ../../pep-3128.txt:278
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-3128.txt:280
+msgid "A reference implementations of the BList is available for CPython at [1]_."
+msgstr ""
+
+#: ../../pep-3128.txt:282
+msgid ""
+"The source package also includes a pure Python implementation, originally"
+" developed as a prototype for the CPython version. Naturally, the pure "
+"Python version is rather slow and the asymptotic improvements don't win "
+"out until the list is quite large."
+msgstr ""
+
+#: ../../pep-3128.txt:287
+msgid ""
+"When compiled with Py_DEBUG, the C implementation checks the BList "
+"invariants when entering and exiting most functions."
+msgstr ""
+
+#: ../../pep-3128.txt:290
+msgid ""
+"An extensive set of test cases is also included in the source package. "
+"The test cases include the existing Python sequence and list test cases "
+"as a subset.  When the interpreter is built with Py_DEBUG, the test cases"
+" also check for reference leaks."
+msgstr ""
+
+#: ../../pep-3128.txt:296
+msgid "Porting to Other Python Variants"
+msgstr ""
+
+#: ../../pep-3128.txt:298
+msgid ""
+"If the BList is added to the collections module, other Python variants "
+"can support it in one of three ways:"
+msgstr ""
+
+#: ../../pep-3128.txt:301
+msgid ""
+"Make blist an alias for list.  The asymptotic performance won't be as "
+"good, but it'll work."
+msgstr ""
+
+#: ../../pep-3128.txt:303
+msgid ""
+"Use the pure Python reference implementation.  The performance for small "
+"lists won't be as good, but it'll work."
+msgstr ""
+
+#: ../../pep-3128.txt:305
+msgid "Port the reference implementation."
+msgstr ""
+
+#: ../../pep-3128.txt:308
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-3128.txt:310
+msgid ""
+"This proposal has been discussed briefly on the Python-3000 mailing list "
+"[3]_.  Although a number of people favored the proposal, there were also "
+"some objections.  Below summarizes the pros and cons as observed by "
+"posters to the thread."
+msgstr ""
+
+#: ../../pep-3128.txt:315
+msgid "General comments:"
+msgstr ""
+
+#: ../../pep-3128.txt:317
+msgid "Pro: Will outperform the array-based list in most cases"
+msgstr ""
+
+#: ../../pep-3128.txt:318
+msgid "Pro: \"I've implemented variants of this ... a few different times\""
+msgstr ""
+
+#: ../../pep-3128.txt:319
+msgid "Con: Desirability and performance in actual applications is unproven"
+msgstr ""
+
+#: ../../pep-3128.txt:321
+msgid "Comments on adding BList to the collections module:"
+msgstr ""
+
+#: ../../pep-3128.txt:323
+msgid "Pro: Matching the list-API reduces the learning curve to near-zero"
+msgstr ""
+
+#: ../../pep-3128.txt:324
+msgid ""
+"Pro: Useful for intermediate-level users; won't get in the way of "
+"beginners"
+msgstr ""
+
+#: ../../pep-3128.txt:325
+msgid "Con: Proliferation of data types makes the choices for developers harder."
+msgstr ""
+
+#: ../../pep-3128.txt:327
+msgid "Comments on replacing the array-based list with the BList:"
+msgstr ""
+
+#: ../../pep-3128.txt:329
+msgid "Con: Impact on extension modules (addressed in `Backwards Compatibility`_)"
+msgstr ""
+
+#: ../../pep-3128.txt:331
+msgid ""
+"Con: The use cases where BLists are slower are important (see `Use Case "
+"Trade-Offs`_ for how these might be addressed)."
+msgstr ""
+
+#: ../../pep-3128.txt:333
+msgid "Con: The array-based list code is simple and easy to maintain"
+msgstr ""
+
+#: ../../pep-3128.txt:335
+msgid ""
+"To assess the desirability and performance in actual applications, "
+"Raymond Hettinger suggested releasing the BList as an extension module "
+"(now available at [1]_).  If it proves useful, he felt it would be a "
+"strong candidate for inclusion in 2.6 as part of the collections module."
+"  If widely popular, then it could be considered for replacing the array-"
+"based list, but not otherwise."
+msgstr ""
+
+#: ../../pep-3128.txt:342
+msgid ""
+"Guido van Rossum commented that he opposed the proliferation of data "
+"types, but favored replacing the array-based list if backwards "
+"compatibility could be addressed and the BList's performance was "
+"uniformly better."
+msgstr ""
+
+#: ../../pep-3128.txt:348
+msgid "On-going Tasks"
+msgstr ""
+
+#: ../../pep-3128.txt:350
+msgid "Reduce the memory footprint of small lists"
+msgstr ""
+
+#: ../../pep-3128.txt:351
+msgid ""
+"Implement TimSort for BLists, so that best-case sorting is O(n) instead "
+"of O(log n)."
+msgstr ""
+
+#: ../../pep-3128.txt:353
+msgid "Implement __reversed__"
+msgstr ""
+
+#: ../../pep-3128.txt:354
+msgid ""
+"Cache a pointer in the root to the rightmost leaf, to make LIFO operation"
+" O(n) time."
+msgstr ""
+
+#: ../../pep-3128.txt:358
+msgid "References"
+msgstr ""
+
+#: ../../pep-3128.txt:360
+msgid ""
+"Reference Implementations for C and Python: "
+"http://www.python.org/pypi/blist/"
+msgstr ""
+
+#: ../../pep-3128.txt:363
+msgid ""
+"Empirical performance comparison between Python's array-based list and "
+"the blist: http://stutzbachenterprises.com/blist/"
+msgstr ""
+
+#: ../../pep-3128.txt:366
+msgid ""
+"Discussion on python-3000 starting at post: "
+"https://mail.python.org/pipermail/python-3000/2007-April/006757.html"
+msgstr ""
+
+#: ../../pep-3128.txt:369
+msgid ""
+"Raymond Hettinger's feedback on python-3000: "
+"https://mail.python.org/pipermail/python-3000/2007-May/007491.html"
+msgstr ""
+
+#: ../../pep-3128.txt:373
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3128.txt:375
+msgid "This document has been placed in the public domain."
+msgstr ""
+

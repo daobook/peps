@@ -1,0 +1,502 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0293.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0293.txt:1
+msgid "293"
+msgstr ""
+
+#: ../../pep-0293.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0293.txt:2
+msgid "Codec Error Handling Callbacks"
+msgstr ""
+
+#: ../../pep-0293.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0293.txt:5
+msgid "Walter Dörwald <walter@livinglogic.de>"
+msgstr ""
+
+#: ../../pep-0293.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0293.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0293.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0293.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0293.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0293.txt:9
+msgid "18-Jun-2002"
+msgstr ""
+
+#: ../../pep-0293.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0293.txt:10
+msgid "2.3"
+msgstr ""
+
+#: ../../pep-0293.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0293.txt:11
+msgid "19-Jun-2002"
+msgstr ""
+
+#: ../../pep-0293.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0293.txt:17
+msgid ""
+"This PEP aims at extending Python's fixed codec error handling schemes "
+"with a more flexible callback based approach."
+msgstr ""
+
+#: ../../pep-0293.txt:20
+msgid ""
+"Python currently uses a fixed error handling for codec error handlers.  "
+"This PEP describes a mechanism which allows Python to use function "
+"callbacks as error handlers.  With these more flexible error handlers it "
+"is possible to add new functionality to existing codecs by e.g. providing"
+" fallback solutions or different encodings for cases where the standard "
+"codec mapping does not apply."
+msgstr ""
+
+#: ../../pep-0293.txt:30
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0293.txt:32
+msgid ""
+"Currently the set of codec error handling algorithms is fixed to either "
+"\"strict\", \"replace\" or \"ignore\" and the semantics of these "
+"algorithms is implemented separately for each codec."
+msgstr ""
+
+#: ../../pep-0293.txt:36
+msgid ""
+"The proposed patch will make the set of error handling algorithms "
+"extensible through a codec error handler registry which maps handler "
+"names to handler functions.  This registry consists of the following two "
+"C functions::"
+msgstr ""
+
+#: ../../pep-0293.txt:45
+msgid "and their Python counterparts::"
+msgstr ""
+
+#: ../../pep-0293.txt:51
+msgid ""
+"``PyCodec_LookupError`` raises a ``LookupError`` if no callback function "
+"has been registered under this name."
+msgstr ""
+
+#: ../../pep-0293.txt:54
+msgid ""
+"Similar to the encoding name registry there is no way of unregistering "
+"callback functions or iterating through the available functions."
+msgstr ""
+
+#: ../../pep-0293.txt:58
+msgid ""
+"The callback functions will be used in the following way by the codecs: "
+"when the codec encounters an encoding/decoding error, the callback "
+"function is looked up by name, the information about the error is stored "
+"in an exception object and the callback is called with this object.  The "
+"callback returns information about how to proceed (or raises an "
+"exception)."
+msgstr ""
+
+#: ../../pep-0293.txt:65
+msgid "For encoding, the exception object will look like this::"
+msgstr ""
+
+#: ../../pep-0293.txt:79
+msgid ""
+"This type will be implemented in C with the appropriate setter and getter"
+" methods for the attributes, which have the following meaning:"
+msgstr ""
+
+#: ../../pep-0293.txt:83
+msgid "``encoding``: The name of the encoding;"
+msgstr ""
+
+#: ../../pep-0293.txt:84
+msgid ""
+"``object``: The original unicode object for which ``encode()`` has been "
+"called;"
+msgstr ""
+
+#: ../../pep-0293.txt:86
+msgid "``start``: The position of the first unencodable character;"
+msgstr ""
+
+#: ../../pep-0293.txt:87
+msgid ""
+"``end``: (The position of the last unencodable character)+1 (or the "
+"length of object, if all characters from start to the end of object are "
+"unencodable);"
+msgstr ""
+
+#: ../../pep-0293.txt:90
+msgid "``reason``: The reason why ``object[start:end]`` couldn't be encoded."
+msgstr ""
+
+#: ../../pep-0293.txt:92
+msgid ""
+"If object has consecutive unencodable characters, the encoder should "
+"collect those characters for one call to the callback if those characters"
+" can't be encoded for the same reason.  The encoder is not required to "
+"implement this behaviour but may call the callback for every single "
+"character, but it is strongly suggested that the collecting method is "
+"implemented."
+msgstr ""
+
+#: ../../pep-0293.txt:99
+msgid ""
+"The callback must not modify the exception object.  If the callback does "
+"not raise an exception (either the one passed in, or a different one), it"
+" must return a tuple::"
+msgstr ""
+
+#: ../../pep-0293.txt:105
+msgid ""
+"replacement is a unicode object that the encoder will encode and emit "
+"instead of the unencodable ``object[start:end]`` part, newpos specifies a"
+" new position within object, where (after encoding the replacement) the "
+"encoder will continue encoding."
+msgstr ""
+
+#: ../../pep-0293.txt:110
+msgid ""
+"Negative values for newpos are treated as being relative to end of "
+"object. If newpos is out of bounds the encoder will raise an "
+"``IndexError``."
+msgstr ""
+
+#: ../../pep-0293.txt:114
+msgid ""
+"If the replacement string itself contains an unencodable character the "
+"encoder raises the exception object (but may set a different reason "
+"string before raising)."
+msgstr ""
+
+#: ../../pep-0293.txt:118
+msgid ""
+"Should further encoding errors occur, the encoder is allowed to reuse the"
+" exception object for the next call to the callback. Furthermore, the "
+"encoder is allowed to cache the result of ``codecs.lookup_error``."
+msgstr ""
+
+#: ../../pep-0293.txt:123
+msgid ""
+"If the callback does not know how to handle the exception, it must raise "
+"a ``TypeError``."
+msgstr ""
+
+#: ../../pep-0293.txt:126
+msgid "Decoding works similar to encoding with the following differences:"
+msgstr ""
+
+#: ../../pep-0293.txt:128
+msgid ""
+"The exception class is named ``UnicodeDecodeError`` and the attribute "
+"object is the original 8bit string that the decoder is currently "
+"decoding."
+msgstr ""
+
+#: ../../pep-0293.txt:132
+msgid ""
+"The decoder will call the callback with those bytes that constitute one "
+"undecodable sequence, even if there is more than one undecodable sequence"
+" that is undecodable for the same reason directly after the first one.  "
+"E.g. for the \"unicode-escape\" encoding, when decoding the illegal "
+"string ``\\\\u00\\\\u01x``, the callback will be called twice (once for "
+"``\\\\u00`` and once for ``\\\\u01``).  This is done to be able to "
+"generate the correct number of replacement characters."
+msgstr ""
+
+#: ../../pep-0293.txt:141
+msgid ""
+"The replacement returned from the callback is a unicode object that will "
+"be emitted by the decoder as-is without further processing instead of the"
+" undecodable ``object[start:end]`` part."
+msgstr ""
+
+#: ../../pep-0293.txt:145
+msgid ""
+"There is a third API that uses the old strict/ignore/replace error "
+"handling scheme::"
+msgstr ""
+
+#: ../../pep-0293.txt:150
+msgid ""
+"The proposed patch will enhance ``PyUnicode_TranslateCharmap``, so that "
+"it also supports the callback registry.  This has the additional side "
+"effect that ``PyUnicode_TranslateCharmap`` will support multi-character "
+"replacement strings (see SF feature request #403100 [1]_)."
+msgstr ""
+
+#: ../../pep-0293.txt:156
+msgid ""
+"For ``PyUnicode_TranslateCharmap`` the exception class will be named "
+"``UnicodeTranslateError``.  ``PyUnicode_TranslateCharmap`` will collect "
+"all consecutive untranslatable characters (i.e. those that map to "
+"``None``) and call the callback with them.  The replacement returned from"
+" the callback is a unicode object that will be put in the translated "
+"result as-is, without further processing."
+msgstr ""
+
+#: ../../pep-0293.txt:163
+msgid ""
+"All encoders and decoders are allowed to implement the callback "
+"functionality themselves, if they recognize the callback name (i.e. if it"
+" is a system callback like \"strict\", \"replace\" and \"ignore\").  The "
+"proposed patch will add two additional system callback names: "
+"\"backslashreplace\" and \"xmlcharrefreplace\", which can be used for "
+"encoding and translating and which will also be implemented in-place for "
+"all encoders and ``PyUnicode_TranslateCharmap``."
+msgstr ""
+
+#: ../../pep-0293.txt:172
+msgid "The Python equivalent of these five callbacks will look like this::"
+msgstr ""
+
+#: ../../pep-0293.txt:218
+msgid ""
+"These five callback handlers will also be accessible to Python as "
+"``codecs.strict_error``, ``codecs.ignore_error``, "
+"``codecs.replace_error``, ``codecs.backslashreplace_error`` and "
+"``codecs.xmlcharrefreplace_error``."
+msgstr ""
+
+#: ../../pep-0293.txt:224
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0293.txt:226
+msgid ""
+"Most legacy encoding do not support the full range of Unicode characters."
+"  For these cases many high level protocols support a way of escaping a "
+"Unicode character (e.g. Python itself supports the ``\\x``, ``\\u`` and "
+"``\\U`` convention, XML supports character references via &#xxx; etc.)."
+msgstr ""
+
+#: ../../pep-0293.txt:232
+msgid ""
+"When implementing such an encoding algorithm, a problem with the current "
+"implementation of the encode method of Unicode objects becomes apparent: "
+"For determining which characters are unencodable by a certain encoding, "
+"every single character has to be tried, because encode does not provide "
+"any information about the location of the error(s), so"
+msgstr ""
+
+#: ../../pep-0293.txt:245
+msgid "has to be replaced by"
+msgstr ""
+
+#: ../../pep-0293.txt:259
+msgid ""
+"This slows down encoding dramatically as now the loop through the string "
+"is done in Python code and no longer in C code."
+msgstr ""
+
+#: ../../pep-0293.txt:262
+msgid ""
+"Furthermore, this solution poses problems with stateful encodings. For "
+"example, UTF-16 uses a Byte Order Mark at the start of the encoded byte "
+"string to specify the byte order.  Using (2) with UTF-16, results in an 8"
+" bit string with a BOM between every character."
+msgstr ""
+
+#: ../../pep-0293.txt:268
+msgid ""
+"To work around this problem, a stream writer - which keeps state between "
+"calls to the encoding function - has to be used::"
+msgstr ""
+
+#: ../../pep-0293.txt:285
+msgid ""
+"To compare the speed of (1) and (3) the following test script has been "
+"used::"
+msgstr ""
+
+#: ../../pep-0293.txt:318
+msgid "On Linux this gives the following output (with Python 2.3a0)::"
+msgstr ""
+
+#: ../../pep-0293.txt:324
+msgid "i.e. (3) is 180 times slower than (1)."
+msgstr ""
+
+#: ../../pep-0293.txt:326
+msgid ""
+"Callbacks must be stateless, because as soon as a callback is registered "
+"it is available globally and can be called by multiple ``encode()`` "
+"calls.  To be able to use stateful callbacks, the errors parameter for "
+"encode/decode/translate would have to be changed from ``char *`` to "
+"``PyObject *``, so that the callback could be used directly, without the "
+"need to register the callback globally.  As this requires changes to lots"
+" of C prototypes, this approach was rejected."
+msgstr ""
+
+#: ../../pep-0293.txt:335
+msgid "Currently all encoding/decoding functions have arguments"
+msgstr ""
+
+#: ../../pep-0293.txt:341
+msgid "or"
+msgstr ""
+
+#: ../../pep-0293.txt:347
+msgid ""
+"to specify the unicode characters/8bit characters to be encoded/decoded."
+"  So in case of an error the codec has to create a new unicode or str "
+"object from these parameters and store it in the exception object.  The "
+"callers of these encoding/decoding functions extract these parameters "
+"from str/unicode objects themselves most of the time, so it could speed "
+"up error handling if these object were passed directly.  As this again "
+"requires changes to many C functions, this approach has been rejected."
+msgstr ""
+
+#: ../../pep-0293.txt:356
+msgid ""
+"For stream readers/writers the errors attribute must be changeable to be "
+"able to switch between different error handling methods during the "
+"lifetime of the stream reader/writer. This is currently the case for "
+"``codecs.StreamReader`` and ``codecs.StreamWriter`` and all their "
+"subclasses. All core codecs and probably most of the third party codecs "
+"(e.g. ``JapaneseCodecs``) derive their stream readers/writers from these "
+"classes so this already works, but the attribute errors should be "
+"documented as a requirement."
+msgstr ""
+
+#: ../../pep-0293.txt:367
+msgid "Implementation Notes"
+msgstr ""
+
+#: ../../pep-0293.txt:369
+msgid ""
+"A sample implementation is available as SourceForge patch #432401 [2]_ "
+"including a script for testing the speed of various string/encoding/error"
+" combinations and a test script."
+msgstr ""
+
+#: ../../pep-0293.txt:373
+msgid ""
+"Currently the new exception classes are old style Python classes. This "
+"means that accessing attributes results in a dict lookup. The C API is "
+"implemented in a way that makes it possible to switch to new style "
+"classes behind the scene, if ``Exception`` (and ``UnicodeError``) will be"
+" changed to new style classes implemented in C for improved performance."
+msgstr ""
+
+#: ../../pep-0293.txt:381
+msgid ""
+"The class ``codecs.StreamReaderWriter`` uses the errors parameter for "
+"both reading and writing.  To be more flexible this should probably be "
+"changed to two separate parameters for reading and writing."
+msgstr ""
+
+#: ../../pep-0293.txt:386
+msgid ""
+"The errors parameter of ``PyUnicode_TranslateCharmap`` is not availably "
+"to Python, which makes testing of the new functionality of "
+"``PyUnicode_TranslateCharmap`` impossible with Python scripts.  The patch"
+" should add an optional argument errors to unicode.translate to expose "
+"the functionality and make testing possible."
+msgstr ""
+
+#: ../../pep-0293.txt:392
+msgid ""
+"Codecs that do something different than encoding/decoding from/to unicode"
+" and want to use the new machinery can define their own exception classes"
+" and the strict handlers will automatically work with it. The other "
+"predefined error handlers are unicode specific and expect to get a "
+"``Unicode(Encode|Decode|Translate)Error`` exception object so they won't "
+"work."
+msgstr ""
+
+#: ../../pep-0293.txt:401
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0293.txt:403
+msgid ""
+"The semantics of unicode.encode with errors=\"replace\" has changed: The "
+"old version always stored a ? character in the output string even if no "
+"character was mapped to ? in the mapping.  With the proposed patch, the "
+"replacement string from the callback will again be looked up in the "
+"mapping dictionary.  But as all supported encodings are ASCII based, and "
+"thus map ? to ?, this should not be a problem in practice."
+msgstr ""
+
+#: ../../pep-0293.txt:411
+msgid ""
+"Illegal values for the errors argument raised ``ValueError`` before, now "
+"they will raise ``LookupError``."
+msgstr ""
+
+#: ../../pep-0293.txt:416
+msgid "References"
+msgstr ""
+
+#: ../../pep-0293.txt:418
+msgid ""
+"SF feature request #403100 \"Multicharacter replacements in "
+"PyUnicode_TranslateCharmap\" https://bugs.python.org/issue403100"
+msgstr ""
+
+#: ../../pep-0293.txt:422
+msgid ""
+"SF patch #432401 \"unicode encoding error callbacks\" "
+"https://bugs.python.org/issue432401"
+msgstr ""
+
+#: ../../pep-0293.txt:427
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0293.txt:429
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,381 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0592.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0592.rst:1
+msgid "592"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0592.rst:2
+msgid "Adding \"Yank\" Support to the Simple API"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0592.rst:3
+msgid "Donald Stufft <donald@stufft.io>"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0592.rst:4
+msgid "Paul Moore <p.f.moore@gmail.com>"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0592.rst:5
+msgid "https://discuss.python.org/c/packaging"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0592.rst:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0592.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0592.rst:9
+msgid "07-May-2019"
+msgstr ""
+
+#: ../../pep-0592.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0592.rst:10
+msgid ""
+"https://discuss.python.org/t/pep-592-support-for-yanked-files-in-the-"
+"simple-repository-api/1629/30"
+msgstr ""
+
+#: ../../pep-0592.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0592.rst:16
+msgid ""
+"This PEP proposes adding the ability to mark a particular file download "
+"on a simple repository as \"yanked\". Yanking a file allows authors to "
+"effectively delete a file, without breaking things for people who have "
+"pinned to exactly a specific version."
+msgstr ""
+
+#: ../../pep-0592.rst:21
+msgid ""
+"It also changes to the canonical source for the simple repository API to "
+"the `Simple Repository API`_ reference document."
+msgstr ""
+
+#: ../../pep-0592.rst:26
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0592.rst:28
+msgid ""
+"Whenever a project detects that a particular release on PyPI might be "
+"broken, they oftentimes will want to prevent further users from "
+"inadvertently using that version. However, the obvious solution of "
+"deleting the existing file from a repository will break users who have "
+"followed best practices and pinned to a specific version of the project."
+msgstr ""
+
+#: ../../pep-0592.rst:34
+msgid ""
+"This leaves projects in a catch-22 situation where new projects may be "
+"pulling down this known broken version, but if they do anything to "
+"prevent that they'll break projects that are already using it."
+msgstr ""
+
+#: ../../pep-0592.rst:38
+msgid ""
+"By allowing the ability to \"yank\" a file, but still make it available "
+"for users who are explicitly asking for it, this allows projects to "
+"mitigate the worst of the breakage while still keeping things working for"
+" projects who have otherwise worked around or didn't hit the underlying "
+"issues."
+msgstr ""
+
+#: ../../pep-0592.rst:44
+msgid ""
+"One of the main scenarios where this may happen, is when dropping support"
+" for a particular version of Python. The ``python-requires`` metadata "
+"allows for dropping support for a version of Python in a way that is not "
+"disruptive to users who are still using that Python. However, a common "
+"mistake is to either omit or forget to update that bit of metadata. When "
+"that mistake has been made, a project really only has three options:"
+msgstr ""
+
+#: ../../pep-0592.rst:52
+msgid ""
+"Prevent that version from being installed through some mechanism "
+"(currently, the only mechanism is by deleting the release entirely)."
+msgstr ""
+
+#: ../../pep-0592.rst:54
+msgid ""
+"Re-release the version that worked as a higher version number, and then "
+"re-release the version that dropped support as an even higher version "
+"number with the correct metadata."
+msgstr ""
+
+#: ../../pep-0592.rst:57
+msgid ""
+"Do nothing, and document that people using that older Python have to "
+"manually exclude that release."
+msgstr ""
+
+#: ../../pep-0592.rst:60
+msgid ""
+"With this PEP, projects can choose the first option, but with a mechanism"
+" that is less likely to break the world for people who are *currently* "
+"successfully using said project."
+msgstr ""
+
+#: ../../pep-0592.rst:66
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0592.rst:68
+msgid ""
+"Links in the simple repository **MAY** have a ``data-yanked`` attribute "
+"which may have no value, or may have an arbitrary string as a value. The "
+"presence of a ``data-yanked`` attribute **SHOULD** be interpreted as "
+"indicating that the file pointed to by this particular link has been "
+"\"Yanked\", and should not generally be selected by an installer, except "
+"under specific scenarios."
+msgstr ""
+
+#: ../../pep-0592.rst:75
+msgid ""
+"The value of the ``data-yanked`` attribute, if present, is an arbitrary "
+"string that represents the reason for why the file has been yanked. Tools"
+" that process the simple repository API **MAY** surface this string to "
+"end users."
+msgstr ""
+
+#: ../../pep-0592.rst:80
+msgid ""
+"The yanked attribute is not immutable once set, and may be rescinded in "
+"the future (and once rescinded, may be reset as well). Thus API users "
+"**MUST** be able to cope with a yanked file being \"unyanked\" (and even "
+"yanked again)."
+msgstr ""
+
+#: ../../pep-0592.rst:87
+msgid "Installers"
+msgstr ""
+
+#: ../../pep-0592.rst:89
+msgid ""
+"The desirable experience for users is that once a file is yanked, when a "
+"human being is currently trying to directly install a yanked file, that "
+"it fails as if that file had been deleted. However, when a human did that"
+" awhile ago, and now a computer is just continuing to mechanically follow"
+" the original order to install the now yanked file, then it acts as if it"
+" had not been yanked."
+msgstr ""
+
+#: ../../pep-0592.rst:96
+msgid ""
+"An installer **MUST** ignore yanked releases, if the selection "
+"constraints can be satisfied with a non-yanked version, and **MAY** "
+"refuse to use a yanked release even if it means that the request cannot "
+"be satisfied at all. An implementation **SHOULD** choose a policy that "
+"follows the spirit of the intention above, and that prevents \"new\" "
+"dependencies on yanked releases/files."
+msgstr ""
+
+#: ../../pep-0592.rst:103
+msgid ""
+"What this means is left up to the specific installer, to decide how to "
+"best fit into the overall usage of their installer. However, there are "
+"two suggested approaches to take:"
+msgstr ""
+
+#: ../../pep-0592.rst:107
+msgid ""
+"Yanked files are always ignored, unless they are the only file that "
+"matches a version specifier that \"pins\" to an exact version using "
+"either ``==`` (without any modifiers that make it a range, such as "
+"``.*``) or ``===``. Matching this version specifier should otherwise be "
+"done as per PEP 440 for things like local versions, zero padding, etc."
+msgstr ""
+
+#: ../../pep-0592.rst:113
+msgid ""
+"Yanked files are always ignored, unless they are the only file that "
+"matches what a lock file (such as ``Pipfile.lock`` or ``poetry.lock``) "
+"specifies to be installed. In this case, a yanked file **SHOULD** not be "
+"used when creating or updating a lock file from some input file or "
+"command."
+msgstr ""
+
+#: ../../pep-0592.rst:119
+msgid ""
+"Regardless of the specific strategy that an installer chooses for "
+"deciding when to install yanked files, an installer **SHOULD** emit a "
+"warning when it does decide to install a yanked file. That warning "
+"**MAY** utilize the value of the ``data-yanked`` attribute (if it has a "
+"value) to provide more specific feedback to the user about why that file "
+"had been yanked."
+msgstr ""
+
+#: ../../pep-0592.rst:127
+msgid "Mirrors"
+msgstr ""
+
+#: ../../pep-0592.rst:129
+msgid "Mirrors can generally treat yanked files one of two ways:"
+msgstr ""
+
+#: ../../pep-0592.rst:131
+msgid ""
+"They may choose to omit them from their simple repository API completely,"
+" providing a view over the repository that shows only \"active\", "
+"unyanked files."
+msgstr ""
+
+#: ../../pep-0592.rst:134
+msgid ""
+"They may choose to include yanked files, and additionally mirror the "
+"``data-yanked`` attribute as well."
+msgstr ""
+
+#: ../../pep-0592.rst:137
+msgid ""
+"Mirrors **MUST NOT** mirror a yanked file without also mirroring the "
+"``data-yanked`` attribute for it."
+msgstr ""
+
+#: ../../pep-0592.rst:142
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0592.rst:144
+msgid ""
+"A previous, undocumented, version of the simple repository API had "
+"version specific pages, like ``/simple/<project>/<version>/``. If we were"
+" to add those back, the yanked files could only appear on those pages and"
+" not on the version-less page at all. However this would drastically "
+"reduce the cache-ability of the simple API and would directly impact our "
+"ability to scale it out to handle all of the incoming traffic."
+msgstr ""
+
+#: ../../pep-0592.rst:152
+msgid ""
+"A previous iteration of this PEP had the ``data-yanked`` attribute act as"
+" a boolean value. However it was decided that allowing a string both "
+"simplified the implementation, and provided additional generalized "
+"functionality to allow projects to provide a mechanism to indicate *why* "
+"they were yanking a release."
+msgstr ""
+
+#: ../../pep-0592.rst:158
+msgid ""
+"Another suggestion was to reserve some syntax in the arbitrary string to "
+"allow us to evolve the standard in the future if we ever need to. "
+"However, given we can add additional attributes in the future, this idea "
+"has been rejected, favoring instead to use additional attributes if the "
+"need ever arose."
+msgstr ""
+
+#: ../../pep-0592.rst:166
+msgid "Warehouse/PyPI Implementation Notes"
+msgstr ""
+
+#: ../../pep-0592.rst:168
+msgid ""
+"While this PEP implements yanking at the file level, that is largely due "
+"to the shape the simple repository API takes, not a specific decision "
+"made by this PEP."
+msgstr ""
+
+#: ../../pep-0592.rst:172
+msgid ""
+"In Warehouse, the user experience will be implemented in terms of yanking"
+" or unyanking an entire release, rather than as an operation on "
+"individual files, which will then be exposed via the API as individual "
+"files being yanked."
+msgstr ""
+
+#: ../../pep-0592.rst:177
+msgid ""
+"Other repository implementations may choose to expose this capability in "
+"a different way, or not expose it at all."
+msgstr ""
+
+#: ../../pep-0592.rst:182
+msgid "Journal Handling"
+msgstr ""
+
+#: ../../pep-0592.rst:184
+msgid ""
+"Whenever a release has been yanked, an entry will be recorded in the "
+"journal using one of the following string patterns:"
+msgstr ""
+
+#: ../../pep-0592.rst:187
+msgid "``yank release``"
+msgstr ""
+
+#: ../../pep-0592.rst:188
+msgid "``unyank release``"
+msgstr ""
+
+#: ../../pep-0592.rst:191
+msgid ""
+"In both cases, the standard journal structure will indicate which release"
+" of which project has been yanked or unyanked."
+msgstr ""
+
+#: ../../pep-0592.rst:200
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0592.rst:202
+msgid "This document has been placed in the public domain."
+msgstr ""
+

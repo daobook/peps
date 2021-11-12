@@ -1,0 +1,415 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0499.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0499.txt:1
+msgid "499"
+msgstr ""
+
+#: ../../pep-0499.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0499.txt:2
+msgid ""
+"``python -m foo`` should bind ``sys.modules['foo']`` in addition to "
+"``sys.modules['__main__']``"
+msgstr ""
+
+#: ../../pep-0499.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0499.txt:5
+msgid ""
+"Cameron Simpson <cs@cskk.id.au>, Chris Angelico <rosuav@gmail.com>, "
+"Joseph Jevnik <joejev@gmail.com>"
+msgstr ""
+
+#: ../../pep-0499.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0499.txt:6
+msgid "Nick Coghlan"
+msgstr ""
+
+#: ../../pep-0499.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0499.txt:7
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0499.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0499.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0499.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0499.txt:10
+msgid "07-Aug-2015"
+msgstr ""
+
+#: ../../pep-0499.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0499.txt:11
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0499.txt:15
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0499.txt:17
+msgid ""
+"The implementation of this PEP isn't currently expected to be ready for "
+"the Python 3.9 feature freeze in April 2020, so it has been deferred 12 "
+"months to Python 3.10."
+msgstr ""
+
+#: ../../pep-0499.txt:23
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0499.txt:25
+msgid ""
+"When a module is used as a main program on the Python command line, such "
+"as by:"
+msgstr ""
+
+#: ../../pep-0499.txt:28
+msgid "python -m module.name ..."
+msgstr ""
+
+#: ../../pep-0499.txt:30
+msgid ""
+"it is easy to accidentally end up with two independent instances of the "
+"module if that module is again imported within the program. This PEP "
+"proposes a way to fix this problem."
+msgstr ""
+
+#: ../../pep-0499.txt:34
+msgid ""
+"When a module is invoked via Python's -m option the module is bound to "
+"``sys.modules['__main__']`` and its ``.__name__`` attribute is set to "
+"``'__main__'``. This enables the standard \"main program\" boilerplate "
+"code at the bottom of many modules, such as::"
+msgstr ""
+
+#: ../../pep-0499.txt:43
+msgid ""
+"However, when the above command line invocation is used it is a natural "
+"inference to presume that the module is actually imported under its "
+"official name ``module.name``, and therefore that if the program again "
+"imports that name then it will obtain the same module instance."
+msgstr ""
+
+#: ../../pep-0499.txt:49
+msgid ""
+"That actuality is that the module was imported only as ``'__main__'``. "
+"Another import will obtain a distinct module instance, which can lead to "
+"confusing bugs, all stemming from having two instances of module global "
+"objects: one in each module."
+msgstr ""
+
+#: ../../pep-0499.txt:55
+msgid "Examples include:"
+msgstr ""
+
+#: ../../pep-0499.txt:68
+msgid "module level data structures"
+msgstr ""
+
+#: ../../pep-0499.txt:58
+msgid ""
+"Some modules provide features such as caches or registries as module "
+"level global variables, typically private. A second instance of a module "
+"creates a second data structure. If that structure is a cache such as in "
+"the ``re`` module then two caches exist leading to wasteful memory use. "
+"If that structure is a shared registry such as a mapping of values to "
+"handlers then it is possible to register a handler to one registry and to"
+" try to use it via the other registry, where it is unknown."
+msgstr ""
+
+#: ../../pep-0499.txt:79
+msgid "sentinels"
+msgstr ""
+
+#: ../../pep-0499.txt:71
+msgid ""
+"The standard test for a sentinel value provided by a module is the "
+"identity comparison using ``is``, as this avoids unreliable \"looks "
+"like\" comparisons such as equality which can both mismatch two values as"
+" \"equal\" (for example being zeroish) or raise a ``TypeError`` when the "
+"objects are incompatible. When there are two instances of a module there "
+"are two sentinel instances and only one will be recognised via ``is``."
+msgstr ""
+
+#: ../../pep-0499.txt:90
+msgid "classes"
+msgstr ""
+
+#: ../../pep-0499.txt:82
+msgid ""
+"With two modules there are duplicate class definitions of any classes "
+"provided. All operations which depend on recognising these classes and "
+"subclasses of these are prone to failure depending where the reference "
+"class (from one of the modules) is obtained and where the comparison "
+"class or instance is obtained. This impacts ``isinstance``, "
+"``issubclass`` and also ``try``/``except`` constructs."
+msgstr ""
+
+#: ../../pep-0499.txt:93
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0499.txt:95
+msgid ""
+"It is suggested that to fix this situation all that is needed is a simple"
+" change to the way the ``-m`` option is implemented: in addition to "
+"binding the module object to ``sys.modules['__main__']``, it is also "
+"bound to ``sys.modules['module.name']``."
+msgstr ""
+
+#: ../../pep-0499.txt:100
+msgid ""
+"Nick Coghlan has suggested that this is as simple as modifying the "
+"``runpy`` module's ``_run_module_as_main`` function as follows::"
+msgstr ""
+
+#: ../../pep-0499.txt:105
+msgid "to instead be::"
+msgstr ""
+
+#: ../../pep-0499.txt:111
+msgid ""
+"Joseph Jevnik has pointed out that modules which are packages already do "
+"something very similar to this proposal: the __init__.py file is bound to"
+" the module's canonical name and the __main__.py file is bound to "
+"\"__main__\". As such, the double import issue does not occur. Therefore,"
+" this PEP proposes to affect only simple non-package modules."
+msgstr ""
+
+#: ../../pep-0499.txt:120
+msgid "Considerations and Prerequisites"
+msgstr ""
+
+#: ../../pep-0499.txt:123
+msgid "Pickling Modules"
+msgstr ""
+
+#: ../../pep-0499.txt:125
+msgid "Nick has mentioned `issue 19702`_ which proposes (quoted from the issue):"
+msgstr ""
+
+#: ../../pep-0499.txt:127
+msgid ""
+"runpy will ensure that when __main__ is executed via the import system, "
+"it will also be aliased in sys.modules as __spec__.name"
+msgstr ""
+
+#: ../../pep-0499.txt:129
+msgid ""
+"if __main__.__spec__ is set, pickle will use __spec__.name rather than "
+"__name__ to pickle classes, functions and methods defined in __main__"
+msgstr ""
+
+#: ../../pep-0499.txt:132
+msgid ""
+"multiprocessing is updated appropriately to skip creating __mp_main__ in "
+"child processes when __main__.__spec__ is set in the parent process"
+msgstr ""
+
+#: ../../pep-0499.txt:136
+msgid "The first point above covers this PEP's specific proposal."
+msgstr ""
+
+#: ../../pep-0499.txt:140
+msgid "A Normal Module's ``__name__`` Is No Longer Canonical"
+msgstr ""
+
+#: ../../pep-0499.txt:142
+msgid ""
+"Chris Angelico points out that it becomes possible to import a module "
+"whose ``__name__`` is not what you gave to \"import\", since \"__main__\""
+" is now present at \"module.name\", so a subsequent ``import "
+"module.name`` finds it already present. Therefore, ``__name__`` is no "
+"longer the canonical name for some normal imports."
+msgstr ""
+
+#: ../../pep-0499.txt:148
+msgid "Some counter arguments follow:"
+msgstr ""
+
+#: ../../pep-0499.txt:150
+msgid "As of PEP 451 a module's canonical name is stored at ``__spec__.name``."
+msgstr ""
+
+#: ../../pep-0499.txt:151
+msgid ""
+"Very little code should actually care about ``__name__`` being the "
+"canonical name and any that does should arguably be updated to consult "
+"``__spec__.name`` with fallback to ``__name__`` for older Pythons, should"
+" that be relevant. This is true even if this PEP is not approved."
+msgstr ""
+
+#: ../../pep-0499.txt:155
+msgid ""
+"Should this PEP be approved, it becomes possible to introspect a module "
+"by its canonical name and ask \"was this the main program?\" by inferring"
+" from ``__name__``. This was not previously possible."
+msgstr ""
+
+#: ../../pep-0499.txt:160
+msgid ""
+"The glaring counter example is the standard \"am I the main program?\" "
+"boilerplate, where ``__name__`` is expected to be \"__main__\". This PEP "
+"explicitly preserves that semantic."
+msgstr ""
+
+#: ../../pep-0499.txt:166
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0499.txt:168
+msgid ""
+"`BPO 36375 <https://bugs.python.org/issue36375>`_ is the issue tracker "
+"entry for the PEP's reference implementation, with the current draft PR "
+"being available `on GitHub "
+"<https://github.com/python/cpython/pull/12490>`_."
+msgstr ""
+
+#: ../../pep-0499.txt:174
+msgid "Open Questions"
+msgstr ""
+
+#: ../../pep-0499.txt:176
+msgid ""
+"This proposal does raise some backwards compatibility concerns, and these"
+" will need to be well understood, and either a deprecation process "
+"designed, or clear porting guidelines provided."
+msgstr ""
+
+#: ../../pep-0499.txt:181
+msgid "Pickle compatibility"
+msgstr ""
+
+#: ../../pep-0499.txt:183
+msgid ""
+"If no changes are made to the pickle module, then pickles that were "
+"previously being written with the correct module name (due to a dual "
+"import) may start being written with `__main__` as their module name "
+"instead, and hence fail to be loaded correctly by other projects."
+msgstr ""
+
+#: ../../pep-0499.txt:188
+msgid "Scenarios to be checked:"
+msgstr ""
+
+#: ../../pep-0499.txt:190
+msgid "`python script.py` writing, `python -m script` reading"
+msgstr ""
+
+#: ../../pep-0499.txt:191
+msgid "`python -m script` writing, `python script.py` reading"
+msgstr ""
+
+#: ../../pep-0499.txt:192
+msgid "`python -m script` writing, `python some_other_app.py` reading"
+msgstr ""
+
+#: ../../pep-0499.txt:193
+msgid "`old_python -m script` writing, `new_python -m script` reading"
+msgstr ""
+
+#: ../../pep-0499.txt:194
+msgid "`new_python -m script` writing, `old_python -m script` reading"
+msgstr ""
+
+#: ../../pep-0499.txt:198
+msgid "Projects that special-case `__main__`"
+msgstr ""
+
+#: ../../pep-0499.txt:200
+msgid ""
+"In order to get the regression test suite to pass, the current reference "
+"implementation had to patch `pdb` to avoid destroying its own global "
+"namespace."
+msgstr ""
+
+#: ../../pep-0499.txt:203
+msgid ""
+"This suggests there may be a broader compatibility issue where some "
+"scripts are relying on direct execution and import giving different "
+"namespaces (just as package execution keeps the two separate by executing"
+" the `__main__` submodule in the `__main__` namespace, while the package "
+"name references the `__init__` file as usual."
+msgstr ""
+
+#: ../../pep-0499.txt:211
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0499.txt:213
+msgid ""
+"`I tripped over this issue`_ while debugging a main program via a module "
+"which tried to monkey patch a named module, that being the main program "
+"module.  Naturally, the monkey patching was ineffective as it imported "
+"the main module by name and thus patched the second module instance, not "
+"the running module instance."
+msgstr ""
+
+#: ../../pep-0499.txt:219
+msgid ""
+"However, the problem has been around as long as the ``-m`` command line "
+"option and is encountered regularly, if infrequently, by others."
+msgstr ""
+
+#: ../../pep-0499.txt:222
+msgid ""
+"In addition to `issue 19702`_, the discrepancy around `__main__` is "
+"alluded to in PEP 451 and a similar proposal (predating PEP 451) is "
+"described in PEP 395 under `Fixing dual imports of the main module`_."
+msgstr ""
+
+#: ../../pep-0499.txt:228
+msgid "References"
+msgstr ""
+
+#: ../../pep-0499.txt:238
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0499.txt:240
+msgid "This document has been placed in the public domain."
+msgstr ""
+

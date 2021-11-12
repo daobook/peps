@@ -1,0 +1,557 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0371.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0371.txt:1
+msgid "371"
+msgstr ""
+
+#: ../../pep-0371.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0371.txt:2
+msgid "Addition of the multiprocessing package to the standard library"
+msgstr ""
+
+#: ../../pep-0371.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0371.txt:5
+msgid ""
+"Jesse Noller <jnoller@gmail.com>, Richard Oudkerk "
+"<r.m.oudkerk@googlemail.com>"
+msgstr ""
+
+#: ../../pep-0371.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0371.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0371.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0371.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0371.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0371.txt:10
+msgid "06-May-2008"
+msgstr ""
+
+#: ../../pep-0371.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0371.txt:11
+msgid "2.6, 3.0"
+msgstr ""
+
+#: ../../pep-0371.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0371.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0371.txt:18
+msgid ""
+"This PEP proposes the inclusion of the ``pyProcessing`` [1]_ package into"
+" the Python standard library, renamed to \"multiprocessing\"."
+msgstr ""
+
+#: ../../pep-0371.txt:21
+msgid ""
+"The ``processing`` package mimics the standard library ``threading`` "
+"module functionality to provide a process-based approach to threaded "
+"programming allowing end-users to dispatch multiple tasks that "
+"effectively side-step the global interpreter lock."
+msgstr ""
+
+#: ../../pep-0371.txt:26
+msgid ""
+"The package also provides server and client functionality "
+"(``processing.Manager``) to provide remote sharing and management of "
+"objects and tasks so that applications may not only leverage multiple "
+"cores on the local machine, but also distribute objects and tasks across "
+"a cluster of networked machines."
+msgstr ""
+
+#: ../../pep-0371.txt:32
+msgid ""
+"While the distributed capabilities of the package are beneficial, the "
+"primary focus of this PEP is the core threading-like API and capabilities"
+" of the package."
+msgstr ""
+
+#: ../../pep-0371.txt:37
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0371.txt:39
+msgid ""
+"The current CPython interpreter implements the Global Interpreter Lock "
+"(GIL) and barring work in Python 3000 or other versions currently planned"
+" [2]_, the GIL will remain as-is within the CPython interpreter for the "
+"foreseeable future.  While the GIL itself enables clean and easy to "
+"maintain C code for the interpreter and extensions base, it is frequently"
+" an issue for those Python programmers who are leveraging multi-core "
+"machines."
+msgstr ""
+
+#: ../../pep-0371.txt:47
+msgid ""
+"The GIL itself prevents more than a single thread from running within the"
+" interpreter at any given point in time, effectively removing Python's "
+"ability to take advantage of multi-processor systems."
+msgstr ""
+
+#: ../../pep-0371.txt:52
+msgid ""
+"The pyprocessing package offers a method to side-step the GIL allowing "
+"applications within CPython to take advantage of multi-core architectures"
+" without asking users to completely change their programming paradigm "
+"(i.e.: dropping threaded programming for another \"concurrent\" approach "
+"- Twisted, Actors, etc)."
+msgstr ""
+
+#: ../../pep-0371.txt:58
+msgid ""
+"The Processing package offers CPython a \"known API\" which mirrors "
+"albeit in a PEP 8 compliant manner, that of the threading API, with known"
+" semantics and easy scalability."
+msgstr ""
+
+#: ../../pep-0371.txt:62
+msgid ""
+"In the future, the package might not be as relevant should the CPython "
+"interpreter enable \"true\" threading, however for some applications, "
+"forking an OS process may sometimes be more desirable than using "
+"lightweight threads, especially on those platforms where process creation"
+" is fast and optimized."
+msgstr ""
+
+#: ../../pep-0371.txt:68
+msgid "For example, a simple threaded application::"
+msgstr ""
+
+#: ../../pep-0371.txt:79
+msgid ""
+"The pyprocessing package mirrored the API so well, that with a simple "
+"change of the import to::"
+msgstr ""
+
+#: ../../pep-0371.txt:84
+msgid ""
+"The code would now execute through the processing.process class. "
+"Obviously, with the renaming of the API to PEP 8 compliance there would "
+"be additional renaming which would need to occur within user "
+"applications, however minor."
+msgstr ""
+
+#: ../../pep-0371.txt:89
+msgid ""
+"This type of compatibility means that, with a minor (in most cases) "
+"change in code, users' applications will be able to leverage all cores "
+"and processors on a given machine for parallel execution. In many cases "
+"the pyprocessing package is even faster than the normal threading "
+"approach for I/O bound programs.  This of course, takes into account that"
+" the pyprocessing package is in optimized C code, while the threading "
+"module is not."
+msgstr ""
+
+#: ../../pep-0371.txt:98
+msgid "The \"Distributed\" Problem"
+msgstr ""
+
+#: ../../pep-0371.txt:100
+msgid ""
+"In the discussion on Python-Dev about the inclusion of this package [3]_ "
+"there was confusion about the intentions this PEP with an attempt to "
+"solve the \"Distributed\" problem - frequently comparing the "
+"functionality of this package with other solutions like MPI-based "
+"communication [4]_, CORBA, or other distributed object approaches [5]_."
+msgstr ""
+
+#: ../../pep-0371.txt:107
+msgid ""
+"The \"distributed\" problem is large and varied.  Each programmer working"
+" within this domain has either very strong opinions about their favorite "
+"module/method or a highly customized problem for which no existing "
+"solution works."
+msgstr ""
+
+#: ../../pep-0371.txt:112
+msgid ""
+"The acceptance of this package does not preclude or recommend that "
+"programmers working on the \"distributed\" problem not examine other "
+"solutions for their problem domain.  The intent of including this package"
+" is to provide entry-level capabilities for local concurrency and the "
+"basic support to spread that concurrency across a network of machines - "
+"although the two are not tightly coupled, the pyprocessing package could "
+"in fact, be used in conjunction with any of the other solutions including"
+" MPI/etc."
+msgstr ""
+
+#: ../../pep-0371.txt:121
+msgid ""
+"If necessary - it is possible to completely decouple the local "
+"concurrency abilities of the package from the network-capable/shared "
+"aspects of the package.  Without serious concerns or cause however, the "
+"author of this PEP does not recommend that approach."
+msgstr ""
+
+#: ../../pep-0371.txt:128
+msgid "Performance Comparison"
+msgstr ""
+
+#: ../../pep-0371.txt:130
+msgid ""
+"As we all know - there are \"lies, damned lies, and benchmarks\". These "
+"speed comparisons, while aimed at showcasing the performance of the "
+"pyprocessing package, are by no means comprehensive or applicable to all "
+"possible use cases or environments.  Especially for those platforms with "
+"sluggish process forking timing."
+msgstr ""
+
+#: ../../pep-0371.txt:136
+msgid "All benchmarks were run using the following:"
+msgstr ""
+
+#: ../../pep-0371.txt:138
+msgid "4 Core Intel Xeon CPU @ 3.00GHz"
+msgstr ""
+
+#: ../../pep-0371.txt:139
+msgid "16 GB of RAM"
+msgstr ""
+
+#: ../../pep-0371.txt:140
+msgid "Python 2.5.2 compiled on Gentoo Linux (kernel 2.6.18.6)"
+msgstr ""
+
+#: ../../pep-0371.txt:141
+msgid "pyProcessing 0.52"
+msgstr ""
+
+#: ../../pep-0371.txt:143
+msgid ""
+"All of the code for this can be downloaded from "
+"http://jessenoller.com/code/bench-src.tgz"
+msgstr ""
+
+#: ../../pep-0371.txt:146
+msgid ""
+"The basic method of execution for these benchmarks is in the "
+"run_benchmarks.py script, which is simply a wrapper to execute a target "
+"function through a single threaded (linear), multi-threaded (via "
+"threading), and multi-process (via pyprocessing) function for a static "
+"number of iterations with increasing numbers of execution loops and/or "
+"threads."
+msgstr ""
+
+#: ../../pep-0371.txt:153
+msgid ""
+"The run_benchmarks.py script executes each function 100 times, picking "
+"the best run of that 100 iterations via the timeit module."
+msgstr ""
+
+#: ../../pep-0371.txt:156
+msgid ""
+"First, to identify the overhead of the spawning of the workers, we "
+"execute a function which is simply a pass statement (empty)::"
+msgstr ""
+
+#: ../../pep-0371.txt:178
+msgid ""
+"As you can see, process forking via the pyprocessing package is faster "
+"than the speed of building and then executing the threaded version of the"
+" code."
+msgstr ""
+
+#: ../../pep-0371.txt:182
+msgid ""
+"The second test calculates 50000 Fibonacci numbers inside of each thread "
+"(isolated and shared nothing)::"
+msgstr ""
+
+#: ../../pep-0371.txt:204
+msgid ""
+"The third test calculates the sum of all primes below 100000, again "
+"sharing nothing::"
+msgstr ""
+
+#: ../../pep-0371.txt:226
+msgid ""
+"The reason why tests two and three focused on pure numeric crunching is "
+"to showcase how the current threading implementation does hinder non-I/O "
+"applications.  Obviously, these tests could be improved to use a queue "
+"for coordination of results and chunks of work but that is not required "
+"to show the performance of the package and core processing.process "
+"module."
+msgstr ""
+
+#: ../../pep-0371.txt:233
+msgid ""
+"The next test is an I/O bound test.  This is normally where we see a "
+"steep improvement in the threading module approach versus a single-"
+"threaded approach.  In this case, each worker is opening a descriptor to "
+"lorem.txt, randomly seeking within it and writing lines to /dev/null::"
+msgstr ""
+
+#: ../../pep-0371.txt:258
+msgid ""
+"As you can see, pyprocessing is still faster on this I/O operation than "
+"using multiple threads.  And using multiple threads is slower than the "
+"single threaded execution itself."
+msgstr ""
+
+#: ../../pep-0371.txt:262
+msgid ""
+"Finally, we will run a socket-based test to show network I/O performance."
+"  This function grabs a URL from a server on the LAN that is a simple "
+"error page from tomcat.  It gets the page 100 times.  The network is "
+"silent, and a 10G connection::"
+msgstr ""
+
+#: ../../pep-0371.txt:286
+msgid ""
+"We finally see threaded performance surpass that of single-threaded "
+"execution, but the pyprocessing package is still faster when increasing "
+"the number of workers.  If you stay with one or two threads/workers, then"
+" the timing between threads and pyprocessing is fairly close."
+msgstr ""
+
+#: ../../pep-0371.txt:292
+msgid ""
+"One item of note however, is that there is an implicit overhead within "
+"the pyprocessing package's ``Queue`` implementation due to the object "
+"serialization."
+msgstr ""
+
+#: ../../pep-0371.txt:296
+msgid ""
+"Alec Thomas provided a short example based on the run_benchmarks.py "
+"script to demonstrate this overhead versus the default ``Queue`` "
+"implementation::"
+msgstr ""
+
+#: ../../pep-0371.txt:317
+msgid ""
+"Additional benchmarks can be found in the pyprocessing package's source "
+"distribution's examples/ directory.  The examples will be included in the"
+" package's documentation."
+msgstr ""
+
+#: ../../pep-0371.txt:322
+msgid "Maintenance"
+msgstr ""
+
+#: ../../pep-0371.txt:324
+msgid ""
+"Richard M. Oudkerk - the author of the pyprocessing package has agreed to"
+" maintain the package within Python SVN.  Jesse Noller has volunteered to"
+" also help maintain/document and test the package."
+msgstr ""
+
+#: ../../pep-0371.txt:330
+msgid "API Naming"
+msgstr ""
+
+#: ../../pep-0371.txt:332
+msgid ""
+"While the aim of the package's API is designed to closely mimic that of "
+"the threading and ``Queue`` modules as of python 2.x, those modules are "
+"not PEP 8 compliant. It has been decided that instead of adding the "
+"package \"as is\" and therefore perpetuating the non-PEP 8 compliant "
+"naming, we will rename all APIs, classes, etc to be fully PEP 8 "
+"compliant."
+msgstr ""
+
+#: ../../pep-0371.txt:338
+msgid ""
+"This change does affect the ease-of-drop in replacement for those using "
+"the threading module, but that is an acceptable side-effect in the view "
+"of the authors, especially given that the threading module's own API will"
+" change."
+msgstr ""
+
+#: ../../pep-0371.txt:343
+msgid ""
+"Issue 3042 in the tracker proposes that for Python 2.6 there will be two "
+"APIs for the threading module - the current one, and the PEP 8 compliant "
+"one. Warnings about the upcoming removal of the original java-style API "
+"will be issued when -3 is invoked."
+msgstr ""
+
+#: ../../pep-0371.txt:348
+msgid ""
+"In Python 3000, the threading API will become PEP 8 compliant, which "
+"means that the multiprocessing module and the threading module will again"
+" have matching APIs."
+msgstr ""
+
+#: ../../pep-0371.txt:353
+msgid "Timing/Schedule"
+msgstr ""
+
+#: ../../pep-0371.txt:355
+msgid ""
+"Some concerns have been raised about the timing/lateness of this PEP for "
+"the 2.6 and 3.0 releases this year, however it is felt by both the "
+"authors and others that the functionality this package offers surpasses "
+"the risk of inclusion."
+msgstr ""
+
+#: ../../pep-0371.txt:360
+msgid ""
+"However, taking into account the desire not to destabilize Python-core, "
+"some refactoring of pyprocessing's code \"into\" Python-core can be "
+"withheld until the next 2.x/3.x releases.  This means that the actual "
+"risk to Python-core is minimal, and largely constrained to the actual "
+"package itself."
+msgstr ""
+
+#: ../../pep-0371.txt:367
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0371.txt:369
+msgid ""
+"Confirm no \"default\" remote connection capabilities, if needed enable "
+"the remote security mechanisms by default for those classes which offer "
+"remote capabilities."
+msgstr ""
+
+#: ../../pep-0371.txt:373
+msgid ""
+"Some of the API (``Queue`` methods ``qsize()``, ``task_done()`` and "
+"``join()``) either need to be added, or the reason for their exclusion "
+"needs to be identified and documented clearly."
+msgstr ""
+
+#: ../../pep-0371.txt:378
+msgid "Closed Issues"
+msgstr ""
+
+#: ../../pep-0371.txt:380
+msgid ""
+"The ``PyGILState`` bug patch submitted in issue 1683 by roudkerk must be "
+"applied for the package unit tests to work."
+msgstr ""
+
+#: ../../pep-0371.txt:383
+msgid "Existing documentation has to be moved to ReST formatting."
+msgstr ""
+
+#: ../../pep-0371.txt:385
+msgid ""
+"Reliance on ctypes: The ``pyprocessing`` package's reliance on ctypes "
+"prevents the package from functioning on platforms where ctypes is not "
+"supported.  This is not a restriction of this package, but rather of "
+"ctypes."
+msgstr ""
+
+#: ../../pep-0371.txt:390
+msgid ""
+"DONE: Rename top-level package from \"pyprocessing\" to "
+"\"multiprocessing\"."
+msgstr ""
+
+#: ../../pep-0371.txt:393
+msgid ""
+"DONE: Also note that the default behavior of process spawning does not "
+"make it compatible with use within IDLE as-is, this will be examined as a"
+" bug-fix or \"setExecutable\" enhancement."
+msgstr ""
+
+#: ../../pep-0371.txt:397
+msgid ""
+"DONE: Add in \"multiprocessing.setExecutable()\" method to override the "
+"default behavior of the package to spawn processes using the current "
+"executable name rather than the Python interpreter.  Note that Mark "
+"Hammond has suggested a factory-style interface for this [7]_."
+msgstr ""
+
+#: ../../pep-0371.txt:404
+msgid "References"
+msgstr ""
+
+#: ../../pep-0371.txt:406
+msgid "PyProcessing home page http://pyprocessing.berlios.de/"
+msgstr ""
+
+#: ../../pep-0371.txt:409
+msgid ""
+"See Adam Olsen's \"safe threading\" project http://code.google.com/p"
+"/python-safethread/"
+msgstr ""
+
+#: ../../pep-0371.txt:412
+msgid ""
+"See: Addition of \"pyprocessing\" module to standard lib. "
+"https://mail.python.org/pipermail/python-dev/2008-May/079417.html"
+msgstr ""
+
+#: ../../pep-0371.txt:415
+msgid "http://mpi4py.scipy.org/"
+msgstr ""
+
+#: ../../pep-0371.txt:417
+msgid "See \"Cluster Computing\" http://wiki.python.org/moin/ParallelProcessing"
+msgstr ""
+
+#: ../../pep-0371.txt:420
+msgid ""
+"The original run_benchmark.py code was published in Python Magazine in "
+"December 2007: \"Python Threads and the Global Interpreter Lock\" by "
+"Jesse Noller.  It has been modified for this PEP."
+msgstr ""
+
+#: ../../pep-0371.txt:425
+msgid "http://groups.google.com/group/python-dev2/msg/54cf06d15cbcbc34"
+msgstr ""
+
+#: ../../pep-0371.txt:427
+msgid ""
+"Addition Python-Dev discussion https://mail.python.org/pipermail/python-"
+"dev/2008-June/080011.html"
+msgstr ""
+
+#: ../../pep-0371.txt:431
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0371.txt:433
+msgid "This document has been placed in the public domain."
+msgstr ""
+

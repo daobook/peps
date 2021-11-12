@@ -1,0 +1,774 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0525.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0525.txt:1
+msgid "525"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0525.txt:2 ../../pep-0525.txt:87
+msgid "Asynchronous Generators"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0525.txt:5
+msgid "Yury Selivanov <yury@edgedb.com>"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0525.txt:6
+msgid "<python-dev@python.org>"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0525.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0525.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0525.txt:10
+msgid "28-Jul-2016"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0525.txt:11
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0525.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0525.txt:12
+msgid "02-Aug-2016, 23-Aug-2016, 01-Sep-2016, 06-Sep-2016"
+msgstr ""
+
+#: ../../pep-0525.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0525.txt:18
+msgid ""
+"PEP 492 introduced support for native coroutines and ``async``/``await`` "
+"syntax to Python 3.5.  It is proposed here to extend Python's "
+"asynchronous capabilities by adding support for *asynchronous "
+"generators*."
+msgstr ""
+
+#: ../../pep-0525.txt:25
+msgid "Rationale and Goals"
+msgstr ""
+
+#: ../../pep-0525.txt:27
+msgid ""
+"Regular generators (introduced in PEP 255) enabled an elegant way of "
+"writing complex *data producers* and have them behave like an iterator."
+msgstr ""
+
+#: ../../pep-0525.txt:30
+msgid ""
+"However, currently there is no equivalent concept for the *asynchronous "
+"iteration protocol* (``async for``).  This makes writing asynchronous "
+"data producers unnecessarily complex, as one must define a class that "
+"implements ``__aiter__`` and ``__anext__`` to be able to use it in an "
+"``async for`` statement."
+msgstr ""
+
+#: ../../pep-0525.txt:36
+msgid ""
+"Essentially, the goals and rationale for PEP 255, applied to the "
+"asynchronous execution case, hold true for this proposal as well."
+msgstr ""
+
+#: ../../pep-0525.txt:39
+msgid ""
+"Performance is an additional point for this proposal: in our testing of "
+"the reference implementation, asynchronous generators are **2x** faster "
+"than an equivalent implemented as an asynchronous iterator."
+msgstr ""
+
+#: ../../pep-0525.txt:43
+msgid ""
+"As an illustration of the code quality improvement, consider the "
+"following class that prints numbers with a given delay once iterated::"
+msgstr ""
+
+#: ../../pep-0525.txt:67
+msgid "The same can be implemented as a much simpler asynchronous generator::"
+msgstr ""
+
+#: ../../pep-0525.txt:77
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0525.txt:79
+msgid ""
+"This proposal introduces the concept of *asynchronous generators* to "
+"Python."
+msgstr ""
+
+#: ../../pep-0525.txt:82
+msgid ""
+"This specification presumes knowledge of the implementation of generators"
+" and coroutines in Python (PEP 342, PEP 380 and PEP 492)."
+msgstr ""
+
+#: ../../pep-0525.txt:89
+msgid ""
+"A Python *generator* is any function containing one or more ``yield`` "
+"expressions::"
+msgstr ""
+
+#: ../../pep-0525.txt:98
+msgid "We propose to use the same approach to define *asynchronous generators*::"
+msgstr ""
+
+#: ../../pep-0525.txt:108
+msgid ""
+"The result of calling an *asynchronous generator function* is an "
+"*asynchronous generator object*, which implements the asynchronous "
+"iteration protocol defined in PEP 492."
+msgstr ""
+
+#: ../../pep-0525.txt:112
+msgid ""
+"It is a ``SyntaxError`` to have a non-empty ``return`` statement in an "
+"asynchronous generator."
+msgstr ""
+
+#: ../../pep-0525.txt:117
+msgid "Support for Asynchronous Iteration Protocol"
+msgstr ""
+
+#: ../../pep-0525.txt:119
+msgid "The protocol requires two special methods to be implemented:"
+msgstr ""
+
+#: ../../pep-0525.txt:121
+msgid "An ``__aiter__`` method returning an *asynchronous iterator*."
+msgstr ""
+
+#: ../../pep-0525.txt:122
+msgid ""
+"An ``__anext__`` method returning an *awaitable* object, which uses "
+"``StopIteration`` exception to \"yield\" values, and "
+"``StopAsyncIteration`` exception to signal the end of the iteration."
+msgstr ""
+
+#: ../../pep-0525.txt:126
+msgid ""
+"Asynchronous generators define both of these methods.  Let's manually "
+"iterate over a simple asynchronous generator::"
+msgstr ""
+
+#: ../../pep-0525.txt:144
+msgid "Finalization"
+msgstr ""
+
+#: ../../pep-0525.txt:146
+msgid ""
+"PEP 492 requires an event loop or a scheduler to run coroutines. Because "
+"asynchronous generators are meant to be used from coroutines, they also "
+"require an event loop to run and finalize them."
+msgstr ""
+
+#: ../../pep-0525.txt:150
+msgid ""
+"Asynchronous generators can have ``try..finally`` blocks, as well as "
+"``async with``.  It is important to provide a guarantee that, even when "
+"partially iterated, and then garbage collected, generators can be safely "
+"finalized.  For example::"
+msgstr ""
+
+#: ../../pep-0525.txt:166
+msgid ""
+"The above code defines an asynchronous generator that uses ``async with``"
+" to iterate over a database cursor in a transaction. The generator is "
+"then iterated over with ``async for``, which interrupts the iteration at "
+"some point."
+msgstr ""
+
+#: ../../pep-0525.txt:171
+msgid ""
+"The ``square_series()`` generator will then be garbage collected, and "
+"without a mechanism to asynchronously close the generator, Python "
+"interpreter would not be able to do anything."
+msgstr ""
+
+#: ../../pep-0525.txt:175
+msgid "To solve this problem we propose to do the following:"
+msgstr ""
+
+#: ../../pep-0525.txt:177
+msgid ""
+"Implement an ``aclose`` method on asynchronous generators returning a "
+"special *awaitable*.  When awaited it throws a ``GeneratorExit`` into the"
+" suspended generator and iterates over it until either a "
+"``GeneratorExit`` or a ``StopAsyncIteration`` occur."
+msgstr ""
+
+#: ../../pep-0525.txt:183
+msgid ""
+"This is very similar to what the ``close()`` method does to regular "
+"Python generators, except that an event loop is required to execute "
+"``aclose()``."
+msgstr ""
+
+#: ../../pep-0525.txt:187
+msgid ""
+"Raise a ``RuntimeError``, when an asynchronous generator executes a "
+"``yield`` expression in its ``finally`` block (using ``await`` is fine, "
+"though)::"
+msgstr ""
+
+#: ../../pep-0525.txt:201
+msgid ""
+"Add two new methods to the ``sys`` module: ``set_asyncgen_hooks()`` and "
+"``get_asyncgen_hooks()``."
+msgstr ""
+
+#: ../../pep-0525.txt:204
+msgid ""
+"The idea behind ``sys.set_asyncgen_hooks()`` is to allow event loops to "
+"intercept asynchronous generators iteration and finalization, so that the"
+" end user does not need to care about the finalization problem, and "
+"everything just works."
+msgstr ""
+
+#: ../../pep-0525.txt:209
+msgid "``sys.set_asyncgen_hooks()`` accepts two arguments:"
+msgstr ""
+
+#: ../../pep-0525.txt:211
+msgid ""
+"``firstiter``: a callable which will be called when an asynchronous "
+"generator is iterated for the first time."
+msgstr ""
+
+#: ../../pep-0525.txt:214
+msgid ""
+"``finalizer``: a callable which will be called when an asynchronous "
+"generator is about to be GCed."
+msgstr ""
+
+#: ../../pep-0525.txt:217
+msgid ""
+"When an asynchronous generator is iterated for the first time, it stores "
+"a reference to the current *finalizer*."
+msgstr ""
+
+#: ../../pep-0525.txt:220
+msgid ""
+"When an asynchronous generator is about to be garbage collected, it calls"
+" its cached *finalizer*.  The assumption is that the finalizer will "
+"schedule an ``aclose()`` call with the loop that was active when the "
+"iteration started."
+msgstr ""
+
+#: ../../pep-0525.txt:225
+msgid ""
+"For instance, here is how asyncio is modified to allow safe finalization "
+"of asynchronous generators::"
+msgstr ""
+
+#: ../../pep-0525.txt:245
+msgid ""
+"The second argument, ``firstiter``, allows event loops to maintain a weak"
+" set of asynchronous generators instantiated under their control. This "
+"makes it possible to implement \"shutdown\" mechanisms to safely finalize"
+" all open generators and close the event loop."
+msgstr ""
+
+#: ../../pep-0525.txt:250
+msgid ""
+"``sys.set_asyncgen_hooks()`` is thread-specific, so several event loops "
+"running in parallel threads can use it safely."
+msgstr ""
+
+#: ../../pep-0525.txt:253
+msgid ""
+"``sys.get_asyncgen_hooks()`` returns a namedtuple-like structure with "
+"``firstiter`` and ``finalizer`` fields."
+msgstr ""
+
+#: ../../pep-0525.txt:258
+msgid "asyncio"
+msgstr ""
+
+#: ../../pep-0525.txt:260
+msgid ""
+"The asyncio event loop will use ``sys.set_asyncgen_hooks()`` API to "
+"maintain a weak set of all scheduled asynchronous generators, and to "
+"schedule their ``aclose()`` coroutine methods when it is time for "
+"generators to be GCed."
+msgstr ""
+
+#: ../../pep-0525.txt:265
+msgid ""
+"To make sure that asyncio programs can finalize all scheduled "
+"asynchronous generators reliably, we propose to add a new event loop "
+"coroutine method ``loop.shutdown_asyncgens()``.  The method will schedule"
+" all currently open asynchronous generators to close with an ``aclose()``"
+" call."
+msgstr ""
+
+#: ../../pep-0525.txt:271
+msgid ""
+"After calling the ``loop.shutdown_asyncgens()`` method, the event loop "
+"will issue a warning whenever a new asynchronous generator is iterated "
+"for the first time.  The idea is that after requesting all asynchronous "
+"generators to be shutdown, the program should not execute code that "
+"iterates over new asynchronous generators."
+msgstr ""
+
+#: ../../pep-0525.txt:277
+msgid "An example of how ``shutdown_asyncgens`` coroutine should be used::"
+msgstr ""
+
+#: ../../pep-0525.txt:287
+msgid "Asynchronous Generator Object"
+msgstr ""
+
+#: ../../pep-0525.txt:289
+msgid ""
+"The object is modeled after the standard Python generator object. "
+"Essentially, the behaviour of asynchronous generators is designed to "
+"replicate the behaviour of synchronous generators, with the only "
+"difference in that the API is asynchronous."
+msgstr ""
+
+#: ../../pep-0525.txt:294
+msgid "The following methods and properties are defined:"
+msgstr ""
+
+#: ../../pep-0525.txt:296
+msgid "``agen.__aiter__()``: Returns ``agen``."
+msgstr ""
+
+#: ../../pep-0525.txt:298
+msgid ""
+"``agen.__anext__()``: Returns an *awaitable*, that performs one "
+"asynchronous generator iteration when awaited."
+msgstr ""
+
+#: ../../pep-0525.txt:301
+msgid ""
+"``agen.asend(val)``: Returns an *awaitable*, that pushes the ``val`` "
+"object in the ``agen`` generator.  When the ``agen`` has not yet been "
+"iterated, ``val`` must be ``None``."
+msgstr ""
+
+#: ../../pep-0525.txt:305 ../../pep-0525.txt:325
+msgid "Example::"
+msgstr ""
+
+#: ../../pep-0525.txt:322
+msgid ""
+"``agen.athrow(typ, [val, [tb]])``: Returns an *awaitable*, that throws an"
+" exception into the ``agen`` generator."
+msgstr ""
+
+#: ../../pep-0525.txt:344
+msgid ""
+"``agen.aclose()``: Returns an *awaitable*, that throws a "
+"``GeneratorExit`` exception into the generator.  The *awaitable* can "
+"either return a yielded value, if ``agen`` handled the exception, or "
+"``agen`` will be closed and the exception will propagate back to the "
+"caller."
+msgstr ""
+
+#: ../../pep-0525.txt:350
+msgid ""
+"``agen.__name__`` and ``agen.__qualname__``: readable and writable name "
+"and qualified name attributes."
+msgstr ""
+
+#: ../../pep-0525.txt:353
+msgid ""
+"``agen.ag_await``: The object that ``agen`` is currently *awaiting* on, "
+"or ``None``.  This is similar to the currently available ``gi_yieldfrom``"
+" for generators and ``cr_await`` for coroutines."
+msgstr ""
+
+#: ../../pep-0525.txt:357
+msgid ""
+"``agen.ag_frame``, ``agen.ag_running``, and ``agen.ag_code``: defined in "
+"the same way as similar attributes of standard generators."
+msgstr ""
+
+#: ../../pep-0525.txt:360
+msgid ""
+"``StopIteration`` and ``StopAsyncIteration`` are not propagated out of "
+"asynchronous generators, and are replaced with a ``RuntimeError``."
+msgstr ""
+
+#: ../../pep-0525.txt:365
+msgid "Implementation Details"
+msgstr ""
+
+#: ../../pep-0525.txt:367
+msgid ""
+"Asynchronous generator object (``PyAsyncGenObject``) shares the struct "
+"layout with ``PyGenObject``.  In addition to that, the reference "
+"implementation introduces three new objects:"
+msgstr ""
+
+#: ../../pep-0525.txt:371
+msgid ""
+"``PyAsyncGenASend``: the awaitable object that implements ``__anext__`` "
+"and ``asend()`` methods."
+msgstr ""
+
+#: ../../pep-0525.txt:374
+msgid ""
+"``PyAsyncGenAThrow``: the awaitable object that implements ``athrow()`` "
+"and ``aclose()`` methods."
+msgstr ""
+
+#: ../../pep-0525.txt:377
+msgid ""
+"``_PyAsyncGenWrappedValue``: every directly yielded object from an "
+"asynchronous generator is implicitly boxed into this structure.  This is "
+"how the generator implementation can separate objects that are yielded "
+"using regular iteration protocol from objects that are yielded using "
+"asynchronous iteration protocol."
+msgstr ""
+
+#: ../../pep-0525.txt:383
+msgid ""
+"``PyAsyncGenASend`` and ``PyAsyncGenAThrow`` are awaitables (they have "
+"``__await__`` methods returning ``self``) and are coroutine-like objects "
+"(implementing ``__iter__``, ``__next__``, ``send()`` and ``throw()`` "
+"methods).  Essentially, they control how asynchronous generators are "
+"iterated:"
+msgstr ""
+
+#: ../../pep-0525.txt:395
+msgid "PyAsyncGenASend and PyAsyncGenAThrow"
+msgstr ""
+
+#: ../../pep-0525.txt:397
+msgid ""
+"``PyAsyncGenASend`` is a coroutine-like object that drives ``__anext__`` "
+"and ``asend()`` methods and implements the asynchronous iteration "
+"protocol."
+msgstr ""
+
+#: ../../pep-0525.txt:401
+msgid ""
+"``agen.asend(val)`` and ``agen.__anext__()`` return instances of "
+"``PyAsyncGenASend`` (which hold references back to the parent ``agen`` "
+"object.)"
+msgstr ""
+
+#: ../../pep-0525.txt:405
+msgid "The data flow is defined as follows:"
+msgstr ""
+
+#: ../../pep-0525.txt:407
+msgid ""
+"When ``PyAsyncGenASend.send(val)`` is called for the first time, ``val`` "
+"is pushed to the parent ``agen`` object (using existing facilities of "
+"``PyGenObject``.)"
+msgstr ""
+
+#: ../../pep-0525.txt:411 ../../pep-0525.txt:421
+msgid ""
+"Subsequent iterations over the ``PyAsyncGenASend`` objects, push ``None``"
+" to ``agen``."
+msgstr ""
+
+#: ../../pep-0525.txt:414 ../../pep-0525.txt:424
+msgid ""
+"When a ``_PyAsyncGenWrappedValue`` object is yielded, it is unboxed, and "
+"a ``StopIteration`` exception is raised with the unwrapped value as an "
+"argument."
+msgstr ""
+
+#: ../../pep-0525.txt:418
+msgid ""
+"When ``PyAsyncGenASend.throw(*exc)`` is called for the first time, "
+"``*exc`` is thrown into the parent ``agen`` object."
+msgstr ""
+
+#: ../../pep-0525.txt:428
+msgid ""
+"``return`` statements in asynchronous generators raise "
+"``StopAsyncIteration`` exception, which is propagated through "
+"``PyAsyncGenASend.send()`` and ``PyAsyncGenASend.throw()`` methods."
+msgstr ""
+
+#: ../../pep-0525.txt:432
+msgid ""
+"``PyAsyncGenAThrow`` is very similar to ``PyAsyncGenASend``.  The only "
+"difference is that ``PyAsyncGenAThrow.send()``, when called first time, "
+"throws an exception into the parent ``agen`` object (instead of pushing a"
+" value into it.)"
+msgstr ""
+
+#: ../../pep-0525.txt:439
+msgid "New Standard Library Functions and Types"
+msgstr ""
+
+#: ../../pep-0525.txt:441
+msgid "``types.AsyncGeneratorType`` -- type of asynchronous generator object."
+msgstr ""
+
+#: ../../pep-0525.txt:444
+msgid ""
+"``sys.set_asyncgen_hooks()`` and ``sys.get_asyncgen_hooks()`` methods to "
+"set up asynchronous generators finalizers and iteration interceptors in "
+"event loops."
+msgstr ""
+
+#: ../../pep-0525.txt:448
+msgid ""
+"``inspect.isasyncgen()`` and ``inspect.isasyncgenfunction()`` "
+"introspection functions."
+msgstr ""
+
+#: ../../pep-0525.txt:451
+msgid "New method for asyncio event loop: ``loop.shutdown_asyncgens()``."
+msgstr ""
+
+#: ../../pep-0525.txt:453
+msgid "New ``collections.abc.AsyncGenerator`` abstract base class."
+msgstr ""
+
+#: ../../pep-0525.txt:457
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0525.txt:459
+msgid "The proposal is fully backwards compatible."
+msgstr ""
+
+#: ../../pep-0525.txt:461
+msgid ""
+"In Python 3.5 it is a ``SyntaxError`` to define an ``async def`` function"
+" with a ``yield`` expression inside, therefore it's safe to introduce "
+"asynchronous generators in 3.6."
+msgstr ""
+
+#: ../../pep-0525.txt:467
+msgid "Performance"
+msgstr ""
+
+#: ../../pep-0525.txt:470
+msgid "Regular Generators"
+msgstr ""
+
+#: ../../pep-0525.txt:472
+msgid ""
+"There is no performance degradation for regular generators. The following"
+" micro benchmark runs at the same speed on CPython with and without "
+"asynchronous generators::"
+msgstr ""
+
+#: ../../pep-0525.txt:486
+msgid "Improvements over asynchronous iterators"
+msgstr ""
+
+#: ../../pep-0525.txt:488
+msgid ""
+"The following micro-benchmark shows that asynchronous generators are "
+"about **2.3x faster** than asynchronous iterators implemented in pure "
+"Python::"
+msgstr ""
+
+#: ../../pep-0525.txt:514
+msgid "Design Considerations"
+msgstr ""
+
+#: ../../pep-0525.txt:518
+msgid "``aiter()`` and ``anext()`` builtins"
+msgstr ""
+
+#: ../../pep-0525.txt:520
+msgid ""
+"Originally, PEP 492 defined ``__aiter__`` as a method that should return "
+"an *awaitable* object, resulting in an asynchronous iterator."
+msgstr ""
+
+#: ../../pep-0525.txt:523
+msgid ""
+"However, in CPython 3.5.2, ``__aiter__`` was redefined to return "
+"asynchronous iterators directly.  To avoid breaking backwards "
+"compatibility, it was decided that Python 3.6 will support both ways: "
+"``__aiter__`` can still return an *awaitable* with a "
+"``DeprecationWarning`` being issued."
+msgstr ""
+
+#: ../../pep-0525.txt:529
+msgid ""
+"Because of this dual nature of ``__aiter__`` in Python 3.6, we cannot add"
+" a synchronous implementation of ``aiter()`` built-in.  Therefore, it is "
+"proposed to wait until Python 3.7."
+msgstr ""
+
+#: ../../pep-0525.txt:535
+msgid "Asynchronous list/dict/set comprehensions"
+msgstr ""
+
+#: ../../pep-0525.txt:537
+msgid ""
+"Syntax for asynchronous comprehensions is unrelated to the asynchronous "
+"generators machinery, and should be considered in a separate PEP."
+msgstr ""
+
+#: ../../pep-0525.txt:542
+msgid "Asynchronous ``yield from``"
+msgstr ""
+
+#: ../../pep-0525.txt:544
+msgid ""
+"While it is theoretically possible to implement ``yield from`` support "
+"for asynchronous generators, it would require a serious redesign of the "
+"generators implementation."
+msgstr ""
+
+#: ../../pep-0525.txt:548
+msgid ""
+"``yield from`` is also less critical for asynchronous generators, since "
+"there is no need provide a mechanism of implementing another coroutines "
+"protocol on top of coroutines.  And to compose asynchronous generators a "
+"simple ``async for`` loop can be used::"
+msgstr ""
+
+#: ../../pep-0525.txt:563
+msgid "Why the ``asend()`` and ``athrow()`` methods are necessary"
+msgstr ""
+
+#: ../../pep-0525.txt:565
+msgid ""
+"They make it possible to implement concepts similar to "
+"``contextlib.contextmanager`` using asynchronous generators. For "
+"instance, with the proposed design, it is possible to implement the "
+"following pattern::"
+msgstr ""
+
+#: ../../pep-0525.txt:581
+msgid ""
+"Another reason is that it is possible to push data and throw exceptions "
+"into asynchronous generators using the object returned from ``__anext__``"
+" object, but it is hard to do that correctly.  Adding explicit "
+"``asend()`` and ``athrow()`` will pave a safe way to accomplish that."
+msgstr ""
+
+#: ../../pep-0525.txt:587
+msgid ""
+"In terms of implementation, ``asend()`` is a slightly more generic "
+"version of ``__anext__``, and ``athrow()`` is very similar to "
+"``aclose()``.  Therefore, having these methods defined for asynchronous "
+"generators does not add any extra complexity."
+msgstr ""
+
+#: ../../pep-0525.txt:594
+msgid "Example"
+msgstr ""
+
+#: ../../pep-0525.txt:596
+msgid ""
+"A working example with the current reference implementation (will print "
+"numbers from 0 to 9 with one second delay)::"
+msgstr ""
+
+#: ../../pep-0525.txt:619
+msgid "Acceptance"
+msgstr ""
+
+#: ../../pep-0525.txt:621
+msgid "PEP 525 was accepted by Guido, September 6, 2016 [2]_."
+msgstr ""
+
+#: ../../pep-0525.txt:625
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0525.txt:627
+msgid ""
+"The implementation is tracked in issue 28003 [3]_.  The reference "
+"implementation git repository is available at [1]_."
+msgstr ""
+
+#: ../../pep-0525.txt:632
+msgid "References"
+msgstr ""
+
+#: ../../pep-0525.txt:634
+msgid "https://github.com/1st1/cpython/tree/async_gen"
+msgstr ""
+
+#: ../../pep-0525.txt:636
+msgid "https://mail.python.org/pipermail/python-dev/2016-September/146267.html"
+msgstr ""
+
+#: ../../pep-0525.txt:638
+msgid "http://bugs.python.org/issue28003"
+msgstr ""
+
+#: ../../pep-0525.txt:642
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0525.txt:644
+msgid ""
+"I thank Guido van Rossum, Victor Stinner, Elvis Pranskevichus, Nathaniel "
+"Smith, Łukasz Langa, Andrew Svetlov and many others for their feedback, "
+"code reviews, and discussions around this PEP."
+msgstr ""
+
+#: ../../pep-0525.txt:651
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0525.txt:653
+msgid "This document has been placed in the public domain."
+msgstr ""
+

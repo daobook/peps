@@ -1,0 +1,647 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0561.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0561.rst:1
+msgid "561"
+msgstr ""
+
+#: ../../pep-0561.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0561.rst:2
+msgid "Distributing and Packaging Type Information"
+msgstr ""
+
+#: ../../pep-0561.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0561.rst:3
+msgid "Ethan Smith <ethan@ethanhs.me>"
+msgstr ""
+
+#: ../../pep-0561.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0561.rst:4
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0561.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0561.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0561.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0561.rst:7
+msgid "09-Sep-2017"
+msgstr ""
+
+#: ../../pep-0561.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0561.rst:8
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0561.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0561.rst:9
+msgid "10-Sep-2017, 12-Sep-2017, 06-Oct-2017, 26-Oct-2017, 12-Apr-2018"
+msgstr ""
+
+#: ../../pep-0561.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0561.rst:15
+msgid ""
+"PEP 484 introduced type hinting to Python, with goals of making typing "
+"gradual and easy to adopt. Currently, typing information must be "
+"distributed manually. This PEP provides a standardized means to leverage "
+"existing tooling to package and distribute type information with minimal "
+"work and an ordering for type checkers to resolve modules and collect "
+"this information for type checking."
+msgstr ""
+
+#: ../../pep-0561.rst:24
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0561.rst:26
+msgid ""
+"Currently, package authors wish to distribute code that has inline type "
+"information. Additionally, maintainers would like to distribute stub "
+"files to keep Python 2 compatibility while using newer annotation syntax."
+" However, there is no standard method to distribute packages with type "
+"information. Also, if one wished to ship stub files privately the only "
+"method available would be via setting ``MYPYPATH`` or the equivalent to "
+"manually point to stubs. If the package can be released publicly, it can "
+"be added to typeshed [1]_. However, this does not scale and becomes a "
+"burden on the maintainers of typeshed. In addition, it ties bug fixes in "
+"stubs to releases of the tool using typeshed."
+msgstr ""
+
+#: ../../pep-0561.rst:37
+msgid ""
+"PEP 484 has a brief section on distributing typing information. In this "
+"section [2]_ the PEP recommends using ``shared/typehints/pythonX.Y/`` for"
+" shipping stub files. However, manually adding a path to stub files for "
+"each third party library does not scale. The simplest approach people "
+"have taken is to add ``site-packages`` to their ``MYPYPATH``, but this "
+"causes type checkers to fail on packages that are highly dynamic (e.g. "
+"sqlalchemy and Django)."
+msgstr ""
+
+#: ../../pep-0561.rst:47
+msgid "Definition of Terms"
+msgstr ""
+
+#: ../../pep-0561.rst:49
+msgid ""
+"The definition of \"MAY\", \"MUST\", and \"SHOULD\", and \"SHOULD NOT\" "
+"are to be interpreted as described in RFC 2119."
+msgstr ""
+
+#: ../../pep-0561.rst:52
+msgid ""
+"\"inline\" - the types are part of the runtime code using PEP 526 and PEP"
+" 3107 syntax (the filename ends in ``.py``)."
+msgstr ""
+
+#: ../../pep-0561.rst:55
+msgid ""
+"\"stubs\" - files containing only type information, empty of runtime code"
+" (the filename ends in ``.pyi``)."
+msgstr ""
+
+#: ../../pep-0561.rst:58
+msgid ""
+"\"Distributions\" are the packaged files which are used to publish and "
+"distribute a release. [3]_"
+msgstr ""
+
+#: ../../pep-0561.rst:61
+msgid ""
+"\"Module\" a file containing Python runtime code or stubbed type "
+"information."
+msgstr ""
+
+#: ../../pep-0561.rst:63
+msgid ""
+"\"Package\" a directory or directories that namespace Python modules. "
+"(Note the distinction between packages and distributions.  While most "
+"distributions are named after the one package they install, some "
+"distributions install multiple packages.)"
+msgstr ""
+
+#: ../../pep-0561.rst:70
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0561.rst:72
+msgid ""
+"There are several motivations and methods of supporting typing in a "
+"package. This PEP recognizes three types of packages that users of typing"
+" wish to create:"
+msgstr ""
+
+#: ../../pep-0561.rst:76
+msgid "The package maintainer would like to add type information inline."
+msgstr ""
+
+#: ../../pep-0561.rst:78
+msgid "The package maintainer would like to add type information via stubs."
+msgstr ""
+
+#: ../../pep-0561.rst:80
+msgid ""
+"A third party or package maintainer would like to share stub files for a "
+"package, but the maintainer does not want to include them in the source "
+"of the package."
+msgstr ""
+
+#: ../../pep-0561.rst:84
+msgid ""
+"This PEP aims to support all three scenarios and make them simple to add "
+"to packaging and deployment."
+msgstr ""
+
+#: ../../pep-0561.rst:87
+msgid ""
+"The two major parts of this specification are the packaging "
+"specifications and the resolution order for resolving module type "
+"information. The type checking spec is meant to replace the "
+"``shared/typehints/pythonX.Y/`` spec of PEP 484 [2]_."
+msgstr ""
+
+#: ../../pep-0561.rst:92
+msgid ""
+"New third party stub libraries SHOULD distribute stubs via the third "
+"party packaging methods proposed in this PEP in place of being added to "
+"typeshed. Typeshed will remain in use, but if maintainers are found, "
+"third party stubs in typeshed MAY be split into their own package."
+msgstr ""
+
+#: ../../pep-0561.rst:99
+msgid "Packaging Type Information"
+msgstr ""
+
+#: ../../pep-0561.rst:101
+msgid ""
+"In order to make packaging and distributing type information as simple "
+"and easy as possible, packaging and distribution is done through existing"
+" frameworks."
+msgstr ""
+
+#: ../../pep-0561.rst:105
+msgid ""
+"Package maintainers who wish to support type checking of their code MUST "
+"add a marker file named ``py.typed`` to their package supporting typing. "
+"This marker applies recursively: if a top-level package includes it, all "
+"its sub-packages MUST support type checking as well. To have this file "
+"installed with the package, maintainers can use existing packaging "
+"options such as ``package_data`` in distutils, shown below."
+msgstr ""
+
+#: ../../pep-0561.rst:112
+msgid "Distutils option example::"
+msgstr ""
+
+#: ../../pep-0561.rst:122
+msgid ""
+"For namespace packages (see PEP 420), the ``py.typed`` file should be in "
+"the submodules of the namespace, to avoid conflicts and for clarity."
+msgstr ""
+
+#: ../../pep-0561.rst:125
+msgid ""
+"This PEP does not support distributing typing information as part of "
+"module-only distributions or single-file modules within namespace "
+"packages."
+msgstr ""
+
+#: ../../pep-0561.rst:128
+msgid ""
+"The single-file module should be refactored into a package and indicate "
+"that the package supports typing as described above."
+msgstr ""
+
+#: ../../pep-0561.rst:133
+msgid "Stub-only Packages"
+msgstr ""
+
+#: ../../pep-0561.rst:135
+msgid ""
+"For package maintainers wishing to ship stub files containing all of "
+"their type information, it is preferred that the ``*.pyi`` stubs are "
+"alongside the corresponding ``*.py`` files. However, the stubs can also "
+"be put in a separate package and distributed separately. Third parties "
+"can also find this method useful if they wish to distribute stub files. "
+"The name of the stub package MUST follow the scheme ``foopkg-stubs`` for "
+"type stubs for the package named ``foopkg``. Note that for stub-only "
+"packages adding a ``py.typed`` marker is not needed since the name "
+"``*-stubs`` is enough to indicate it is a source of typing information."
+msgstr ""
+
+#: ../../pep-0561.rst:145
+msgid ""
+"Third parties seeking to distribute stub files are encouraged to contact "
+"the maintainer of the package about distribution alongside the package. "
+"If the maintainer does not wish to maintain or package stub files or type"
+" information inline, then a third party stub-only package can be created."
+msgstr ""
+
+#: ../../pep-0561.rst:150
+msgid ""
+"In addition, stub-only distributions SHOULD indicate which version(s) of "
+"the runtime package are supported by indicating the runtime "
+"distribution's version(s) through normal dependency data. For example, "
+"the stub package ``flyingcircus-stubs`` can indicate the versions of the "
+"runtime ``flyingcircus`` distribution it supports through "
+"``install_requires`` in distutils-based tools, or the equivalent in other"
+" packaging tools. Note that in pip 9.0, if you update ``flyingcircus-"
+"stubs``, it will update ``flyingcircus``. In pip 9.0, you can use the "
+"``--upgrade-strategy=only-if-needed`` flag. In pip 10.0 this is the "
+"default behavior."
+msgstr ""
+
+#: ../../pep-0561.rst:161
+msgid ""
+"For namespace packages (see PEP 420), stub-only packages should use the "
+"``-stubs`` suffix on only the root namespace package. All stub-only "
+"namespace packages should omit ``__init__.pyi`` files. ``py.typed`` "
+"marker files are not necessary for stub-only packages, but similarly to "
+"packages with inline types, if used, they should be in submodules of the "
+"namespace to avoid conflicts and for clarity."
+msgstr ""
+
+#: ../../pep-0561.rst:168
+msgid ""
+"For example, if the ``pentagon`` and ``hexagon`` are separate "
+"distributions installing within the namespace package ``shapes.polygons``"
+" The corresponding types-only distributions should produce packages laid "
+"out as follows::"
+msgstr ""
+
+#: ../../pep-0561.rst:185
+msgid "Type Checker Module Resolution Order"
+msgstr ""
+
+#: ../../pep-0561.rst:187
+msgid ""
+"The following is the order in which type checkers supporting this PEP "
+"SHOULD resolve modules containing type information:"
+msgstr ""
+
+#: ../../pep-0561.rst:191
+msgid ""
+"Stubs or Python source manually put in the beginning of the path. Type "
+"checkers SHOULD provide this to allow the user complete control of which "
+"stubs to use, and to patch broken stubs/inline types from packages. In "
+"mypy the ``$MYPYPATH`` environment variable can be used for this."
+msgstr ""
+
+#: ../../pep-0561.rst:196
+msgid "User code - the files the type checker is running on."
+msgstr ""
+
+#: ../../pep-0561.rst:198
+msgid ""
+"Stub packages - these packages SHOULD supersede any installed inline "
+"package. They can be found at ``foopkg-stubs`` for package ``foopkg``."
+msgstr ""
+
+#: ../../pep-0561.rst:201
+msgid ""
+"Inline packages - if there is nothing overriding the installed package, "
+"*and* it opts into type checking, inline types SHOULD be used."
+msgstr ""
+
+#: ../../pep-0561.rst:204
+msgid ""
+"Typeshed (if used) - Provides the stdlib types and several third party "
+"libraries."
+msgstr ""
+
+#: ../../pep-0561.rst:207
+msgid ""
+"If typecheckers identify a stub-only namespace package without the "
+"desired module in step 3, they should continue to step 4/5. Typecheckers "
+"should identify namespace packages by the absence of ``__init__.pyi``.  "
+"This allows different subpackages to independently opt for inline vs "
+"stub-only."
+msgstr ""
+
+#: ../../pep-0561.rst:212
+msgid ""
+"Type checkers that check a different Python version than the version they"
+" run on MUST find the type information in the ``site-packages``/``dist-"
+"packages`` of that Python version. This can be queried e.g. ``pythonX.Y "
+"-c 'import site; print(site.getsitepackages())'``. It is also recommended"
+" that the type checker allow for the user to point to a particular Python"
+" binary, in case it is not in the path."
+msgstr ""
+
+#: ../../pep-0561.rst:221
+msgid "Partial Stub Packages"
+msgstr ""
+
+#: ../../pep-0561.rst:223
+msgid ""
+"Many stub packages will only have part of the type interface for "
+"libraries completed, especially initially. For the benefit of type "
+"checking and code editors, packages can be \"partial\". This means "
+"modules not found in the stub package SHOULD be searched for in parts "
+"four and five of the module resolution order above, namely inline "
+"packages and typeshed."
+msgstr ""
+
+#: ../../pep-0561.rst:229
+msgid ""
+"Type checkers should merge the stub package and runtime package or "
+"typeshed directories. This can be thought of as the functional equivalent"
+" of copying the stub package into the same directory as the corresponding"
+" runtime package or typeshed folder and type checking the combined "
+"directory structure. Thus type checkers MUST maintain the normal "
+"resolution order of checking ``*.pyi`` before ``*.py`` files."
+msgstr ""
+
+#: ../../pep-0561.rst:236
+msgid ""
+"If a stub package distribution is partial it MUST include ``partial\\n`` "
+"in a ``py.typed`` file.  For stub-packages distributing within a "
+"namespace package (see PEP 420), the ``py.typed`` file should be in the "
+"submodules of the namespace."
+msgstr ""
+
+#: ../../pep-0561.rst:241
+msgid ""
+"Type checkers should treat namespace packages within stub-packages as "
+"incomplete since multiple distributions may populate them. Regular "
+"packages within namespace packages in stub-package distributions are "
+"considered complete unless a ``py.typed`` with ``partial\\n`` is "
+"included."
+msgstr ""
+
+#: ../../pep-0561.rst:248
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0561.rst:250
+msgid ""
+"The proposed scheme of indicating support for typing is completely "
+"backwards compatible, and requires no modification to package tooling. A "
+"sample package with inline types is available [typed_package]_, as well "
+"as a [stub_package]_. A sample package checker [pkg_checker]_ which reads"
+" the metadata of installed packages and reports on their status as either"
+" not typed, inline typed, or a stub package."
+msgstr ""
+
+#: ../../pep-0561.rst:257
+msgid ""
+"The mypy type checker has an implementation of PEP 561 searching which "
+"can be read about in the mypy docs [4]_."
+msgstr ""
+
+#: ../../pep-0561.rst:260
+msgid ""
+"[numpy-stubs]_ is an example of a real stub-only package for the numpy "
+"distribution."
+msgstr ""
+
+#: ../../pep-0561.rst:265
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0561.rst:267
+msgid ""
+"This PEP would not have been possible without the ideas, feedback, and "
+"support of Ivan Levkivskyi, Jelle Zijlstra, Nick Coghlan, Daniel F "
+"Moisset, Andrey Vlasovskikh, Nathaniel Smith, and Guido van Rossum."
+msgstr ""
+
+#: ../../pep-0561.rst:273
+msgid "Version History"
+msgstr ""
+
+#: ../../pep-0561.rst:275
+msgid "2021-09-20"
+msgstr ""
+
+#: ../../pep-0561.rst:277
+msgid ""
+"Clarify expectations and typechecker behavior for stub-only namespace "
+"packages"
+msgstr ""
+
+#: ../../pep-0561.rst:278
+msgid "Clarify handling of single-file modules within namespace packages."
+msgstr ""
+
+#: ../../pep-0561.rst:280
+msgid "2018-07-09"
+msgstr ""
+
+#: ../../pep-0561.rst:282
+msgid "Add links to sample stub-only packages"
+msgstr ""
+
+#: ../../pep-0561.rst:284
+msgid "2018-06-19"
+msgstr ""
+
+#: ../../pep-0561.rst:286
+msgid "Partial stub packages can look at typeshed as well as runtime packages"
+msgstr ""
+
+#: ../../pep-0561.rst:288
+msgid "2018-05-15"
+msgstr ""
+
+#: ../../pep-0561.rst:290
+msgid "Add partial stub package spec."
+msgstr ""
+
+#: ../../pep-0561.rst:292
+msgid "2018-04-09"
+msgstr ""
+
+#: ../../pep-0561.rst:294
+msgid "Add reference to mypy implementation"
+msgstr ""
+
+#: ../../pep-0561.rst:295
+msgid "Clarify stub package priority."
+msgstr ""
+
+#: ../../pep-0561.rst:297
+msgid "2018-02-02"
+msgstr ""
+
+#: ../../pep-0561.rst:299
+msgid "Change stub-only package suffix to be -stubs not _stubs."
+msgstr ""
+
+#: ../../pep-0561.rst:300
+msgid "Note that py.typed is not needed for stub-only packages."
+msgstr ""
+
+#: ../../pep-0561.rst:301
+msgid "Add note about pip and upgrading stub packages."
+msgstr ""
+
+#: ../../pep-0561.rst:303
+msgid "2017-11-12"
+msgstr ""
+
+#: ../../pep-0561.rst:305
+msgid "Rewritten to use existing tooling only"
+msgstr ""
+
+#: ../../pep-0561.rst:306
+msgid "No need to indicate kind of type information in metadata"
+msgstr ""
+
+#: ../../pep-0561.rst:307
+msgid "Name of marker file changed from ``.typeinfo`` to ``py.typed``"
+msgstr ""
+
+#: ../../pep-0561.rst:309
+msgid "2017-11-10"
+msgstr ""
+
+#: ../../pep-0561.rst:311
+msgid ""
+"Specification re-written to use package metadata instead of distribution "
+"metadata."
+msgstr ""
+
+#: ../../pep-0561.rst:313
+msgid "Removed stub-only packages and merged into third party packages spec."
+msgstr ""
+
+#: ../../pep-0561.rst:314
+msgid "Removed suggestion for typecheckers to consider checking runtime versions"
+msgstr ""
+
+#: ../../pep-0561.rst:315
+msgid "Implementations updated to reflect PEP changes."
+msgstr ""
+
+#: ../../pep-0561.rst:317
+msgid "2017-10-26"
+msgstr ""
+
+#: ../../pep-0561.rst:319
+msgid "Added implementation references."
+msgstr ""
+
+#: ../../pep-0561.rst:320
+msgid "Added acknowledgements and version history."
+msgstr ""
+
+#: ../../pep-0561.rst:322
+msgid "2017-10-06"
+msgstr ""
+
+#: ../../pep-0561.rst:324
+msgid "Rewritten to use .distinfo/METADATA over a distutils specific command."
+msgstr ""
+
+#: ../../pep-0561.rst:325
+msgid "Clarify versioning of third party stub packages."
+msgstr ""
+
+#: ../../pep-0561.rst:327
+msgid "2017-09-11"
+msgstr ""
+
+#: ../../pep-0561.rst:329
+msgid "Added information about current solutions and typeshed."
+msgstr ""
+
+#: ../../pep-0561.rst:330
+msgid "Clarify rationale."
+msgstr ""
+
+#: ../../pep-0561.rst:334
+msgid "References"
+msgstr ""
+
+#: ../../pep-0561.rst:335
+msgid "Typeshed (https://github.com/python/typeshed)"
+msgstr ""
+
+#: ../../pep-0561.rst:337
+msgid ""
+"PEP 484, Storing and Distributing Stub Files "
+"(https://www.python.org/dev/peps/pep-0484/#storing-and-distributing-stub-"
+"files)"
+msgstr ""
+
+#: ../../pep-0561.rst:340
+msgid "PEP 426 definitions (https://www.python.org/dev/peps/pep-0426/)"
+msgstr ""
+
+#: ../../pep-0561.rst:343
+msgid ""
+"Example implementation in a type checker "
+"(https://mypy.readthedocs.io/en/latest/installed_packages.html)"
+msgstr ""
+
+#: ../../pep-0561.rst:346
+msgid "A stub-only package (https://github.com/ethanhs/stub-package)"
+msgstr ""
+
+#: ../../pep-0561.rst:349
+msgid "Sample typed package (https://github.com/ethanhs/sample-typed-package)"
+msgstr ""
+
+#: ../../pep-0561.rst:352
+msgid "Stubs for numpy (https://github.com/numpy/numpy-stubs)"
+msgstr ""
+
+#: ../../pep-0561.rst:355
+msgid "Sample package checker (https://github.com/ethanhs/check_typedpkg)"
+msgstr ""
+
+#: ../../pep-0561.rst:359
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0561.rst:361
+msgid "This document has been placed in the public domain."
+msgstr ""
+

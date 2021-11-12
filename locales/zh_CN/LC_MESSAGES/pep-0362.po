@@ -1,0 +1,675 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0362.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0362.txt:1
+msgid "362"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0362.txt:2
+msgid "Function Signature Object"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0362.txt:5
+msgid ""
+"Brett Cannon <brett@python.org>, Jiwon Seo <seojiwon@gmail.com>, Yury "
+"Selivanov <yury@edgedb.com>, Larry Hastings <larry@hastings.org>"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0362.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0362.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0362.txt:10
+msgid "21-Aug-2006"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0362.txt:11
+msgid "3.3"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0362.txt:12
+msgid "04-Jun-2012"
+msgstr ""
+
+#: ../../pep-0362.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0362.txt:13
+msgid "https://mail.python.org/pipermail/python-dev/2012-June/120682.html"
+msgstr ""
+
+#: ../../pep-0362.txt:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0362.txt:19
+msgid ""
+"Python has always supported powerful introspection capabilities, "
+"including introspecting functions and methods (for the rest of this PEP, "
+"\"function\" refers to both functions and methods).  By examining a "
+"function object you can fully reconstruct the function's signature.  "
+"Unfortunately this information is stored in an inconvenient manner, and "
+"is spread across a half-dozen deeply nested attributes."
+msgstr ""
+
+#: ../../pep-0362.txt:26
+msgid ""
+"This PEP proposes a new representation for function signatures. The new "
+"representation contains all necessary information about a function and "
+"its parameters, and makes introspection easy and straightforward."
+msgstr ""
+
+#: ../../pep-0362.txt:30
+msgid ""
+"However, this object does not replace the existing function metadata, "
+"which is used by Python itself to execute those functions.  The new "
+"metadata object is intended solely to make function introspection easier "
+"for Python programmers."
+msgstr ""
+
+#: ../../pep-0362.txt:37
+msgid "Signature Object"
+msgstr ""
+
+#: ../../pep-0362.txt:39
+msgid ""
+"A Signature object represents the call signature of a function and its "
+"return annotation.  For each parameter accepted by the function it stores"
+" a `Parameter object`_ in its ``parameters`` collection."
+msgstr ""
+
+#: ../../pep-0362.txt:43
+msgid "A Signature object has the following public attributes and methods:"
+msgstr ""
+
+#: ../../pep-0362.txt:48
+msgid "return_annotation"
+msgstr ""
+
+msgid "object"
+msgstr ""
+
+#: ../../pep-0362.txt:46
+msgid ""
+"The \"return\" annotation for the function. If the function has no "
+"\"return\" annotation, this attribute is set to ``Signature.empty``."
+msgstr ""
+
+#: ../../pep-0362.txt:52
+msgid "parameters"
+msgstr ""
+
+msgid "OrderedDict"
+msgstr ""
+
+#: ../../pep-0362.txt:51
+msgid ""
+"An ordered mapping of parameters' names to the corresponding Parameter "
+"objects."
+msgstr ""
+
+#: ../../pep-0362.txt:57
+msgid "bind(\\*args, \\*\\*kwargs) -> BoundArguments"
+msgstr ""
+
+#: ../../pep-0362.txt:55
+msgid ""
+"Creates a mapping from positional and keyword arguments to parameters.  "
+"Raises a ``TypeError`` if the passed arguments do not match the "
+"signature."
+msgstr ""
+
+#: ../../pep-0362.txt:63
+msgid "bind_partial(\\*args, \\*\\*kwargs) -> BoundArguments"
+msgstr ""
+
+#: ../../pep-0362.txt:60
+msgid ""
+"Works the same way as ``bind()``, but allows the omission of some "
+"required arguments (mimics ``functools.partial`` behavior.)  Raises a "
+"``TypeError`` if the passed arguments do not match the signature."
+msgstr ""
+
+#: ../../pep-0362.txt:74
+msgid ""
+"replace(parameters=<optional>, \\*, return_annotation=<optional>) -> "
+"Signature"
+msgstr ""
+
+#: ../../pep-0362.txt:66
+msgid ""
+"Creates a new Signature instance based on the instance ``replace`` was "
+"invoked on.  It is possible to pass different ``parameters`` and/or "
+"``return_annotation`` to override the corresponding properties of the "
+"base signature.  To remove ``return_annotation`` from the copied "
+"``Signature``, pass in ``Signature.empty``."
+msgstr ""
+
+#: ../../pep-0362.txt:73
+msgid ""
+"Note that the '=<optional>' notation, means that the argument is "
+"optional.  This notation applies to the rest of this PEP."
+msgstr ""
+
+#: ../../pep-0362.txt:76
+msgid ""
+"Signature objects are immutable.  Use ``Signature.replace()`` to make a "
+"modified copy: ::"
+msgstr ""
+
+#: ../../pep-0362.txt:96
+msgid "There are two ways to instantiate a Signature class:"
+msgstr ""
+
+#: ../../pep-0362.txt:103
+msgid "Signature(parameters=<optional>, \\*, return_annotation=Signature.empty)"
+msgstr ""
+
+#: ../../pep-0362.txt:99
+msgid ""
+"Default Signature constructor.  Accepts an optional sequence of "
+"``Parameter`` objects, and an optional ``return_annotation``. Parameters "
+"sequence is validated to check that there are no parameters with "
+"duplicate names, and that the parameters are in the right order, i.e. "
+"positional-only first, then positional-or-keyword, etc."
+msgstr ""
+
+#: ../../pep-0362.txt:107
+msgid "Signature.from_function(function)"
+msgstr ""
+
+#: ../../pep-0362.txt:106
+msgid ""
+"Returns a Signature object reflecting the signature of the function "
+"passed in."
+msgstr ""
+
+#: ../../pep-0362.txt:109
+msgid ""
+"It's possible to test Signatures for equality.  Two signatures are equal "
+"when their parameters are equal, their positional and positional-only "
+"parameters appear in the same order, and they have equal return "
+"annotations."
+msgstr ""
+
+#: ../../pep-0362.txt:114
+msgid ""
+"Changes to the Signature object, or to any of its data members, do not "
+"affect the function itself."
+msgstr ""
+
+#: ../../pep-0362.txt:117
+msgid "Signature also implements ``__str__``: ::"
+msgstr ""
+
+#: ../../pep-0362.txt:128
+msgid "Parameter Object"
+msgstr ""
+
+#: ../../pep-0362.txt:130
+msgid ""
+"Python's expressive syntax means functions can accept many different "
+"kinds of parameters with many subtle semantic differences.  We propose a "
+"rich Parameter object designed to represent any possible function "
+"parameter."
+msgstr ""
+
+#: ../../pep-0362.txt:135
+msgid "A Parameter object has the following public attributes and methods:"
+msgstr ""
+
+#: ../../pep-0362.txt:140
+msgid "name"
+msgstr ""
+
+msgid "str"
+msgstr ""
+
+#: ../../pep-0362.txt:138
+msgid ""
+"The name of the parameter as a string.  Must be a valid python identifier"
+" name (with the exception of ``POSITIONAL_ONLY`` parameters, which can "
+"have it set to ``None``.)"
+msgstr ""
+
+#: ../../pep-0362.txt:144
+msgid "default"
+msgstr ""
+
+#: ../../pep-0362.txt:143
+msgid ""
+"The default value for the parameter.  If the parameter has no default "
+"value, this attribute is set to ``Parameter.empty``."
+msgstr ""
+
+#: ../../pep-0362.txt:148
+msgid "annotation"
+msgstr ""
+
+#: ../../pep-0362.txt:147
+msgid ""
+"The annotation for the parameter.  If the parameter has no annotation, "
+"this attribute is set to ``Parameter.empty``."
+msgstr ""
+
+#: ../../pep-0362.txt:182
+msgid "kind"
+msgstr ""
+
+#: ../../pep-0362.txt:151
+msgid "Describes how argument values are bound to the parameter. Possible values:"
+msgstr ""
+
+#: ../../pep-0362.txt:154
+msgid ""
+"``Parameter.POSITIONAL_ONLY`` - value must be supplied as a positional "
+"argument."
+msgstr ""
+
+#: ../../pep-0362.txt:157
+msgid ""
+"Python has no explicit syntax for defining positional-only parameters, "
+"but many built-in and extension module functions (especially those that "
+"accept only one or two parameters) accept them."
+msgstr ""
+
+#: ../../pep-0362.txt:162
+msgid ""
+"``Parameter.POSITIONAL_OR_KEYWORD`` - value may be supplied as either a "
+"keyword or positional argument (this is the standard binding behaviour "
+"for functions implemented in Python.)"
+msgstr ""
+
+#: ../../pep-0362.txt:167
+msgid ""
+"``Parameter.KEYWORD_ONLY`` - value must be supplied as a keyword "
+"argument.  Keyword only parameters are those which appear after a \"*\" "
+"or \"\\*args\" entry in a Python function definition."
+msgstr ""
+
+#: ../../pep-0362.txt:172
+msgid ""
+"``Parameter.VAR_POSITIONAL`` - a tuple of positional arguments that "
+"aren't bound to any other parameter. This corresponds to a \"\\*args\" "
+"parameter in a Python function definition."
+msgstr ""
+
+#: ../../pep-0362.txt:177
+msgid ""
+"``Parameter.VAR_KEYWORD`` - a dict of keyword arguments that aren't bound"
+" to any other parameter. This corresponds to a \"\\*\\*kwargs\" parameter"
+" in a Python function definition."
+msgstr ""
+
+#: ../../pep-0362.txt:181
+msgid ""
+"Always use ``Parameter.*`` constants for setting and checking value of "
+"the ``kind`` attribute."
+msgstr ""
+
+#: ../../pep-0362.txt:189
+msgid ""
+"replace(\\*, name=<optional>, kind=<optional>, default=<optional>, "
+"annotation=<optional>) -> Parameter"
+msgstr ""
+
+#: ../../pep-0362.txt:185
+msgid ""
+"Creates a new Parameter instance based on the instance ``replaced`` was "
+"invoked on.  To override a Parameter attribute, pass the corresponding "
+"argument.  To remove an attribute from a ``Parameter``, pass "
+"``Parameter.empty``."
+msgstr ""
+
+#: ../../pep-0362.txt:191
+msgid "Parameter constructor:"
+msgstr ""
+
+#: ../../pep-0362.txt:195
+msgid ""
+"Parameter(name, kind, \\*, annotation=Parameter.empty, "
+"default=Parameter.empty)"
+msgstr ""
+
+#: ../../pep-0362.txt:194
+msgid ""
+"Instantiates a Parameter object. ``name`` and ``kind`` are required, "
+"while ``annotation`` and ``default`` are optional."
+msgstr ""
+
+#: ../../pep-0362.txt:197
+msgid ""
+"Two parameters are equal when they have equal names, kinds, defaults, and"
+" annotations."
+msgstr ""
+
+#: ../../pep-0362.txt:200
+msgid ""
+"Parameter objects are immutable.  Instead of modifying a Parameter "
+"object, you can use ``Parameter.replace()`` to create a modified copy "
+"like so: ::"
+msgstr ""
+
+#: ../../pep-0362.txt:216
+msgid "BoundArguments Object"
+msgstr ""
+
+#: ../../pep-0362.txt:218
+msgid ""
+"Result of a ``Signature.bind`` call.  Holds the mapping of arguments to "
+"the function's parameters."
+msgstr ""
+
+#: ../../pep-0362.txt:221
+msgid "Has the following public attributes:"
+msgstr ""
+
+#: ../../pep-0362.txt:225
+msgid "arguments"
+msgstr ""
+
+#: ../../pep-0362.txt:224
+msgid ""
+"An ordered, mutable mapping of parameters' names to arguments' values. "
+"Contains only explicitly bound arguments.  Arguments for which ``bind()``"
+" relied on a default value are skipped."
+msgstr ""
+
+#: ../../pep-0362.txt:228
+msgid "args"
+msgstr ""
+
+msgid "tuple"
+msgstr ""
+
+#: ../../pep-0362.txt:228
+msgid ""
+"Tuple of positional arguments values.  Dynamically computed from the "
+"'arguments' attribute."
+msgstr ""
+
+#: ../../pep-0362.txt:232
+msgid "kwargs"
+msgstr ""
+
+msgid "dict"
+msgstr ""
+
+#: ../../pep-0362.txt:231
+msgid ""
+"Dict of keyword arguments values. Dynamically computed from the "
+"'arguments' attribute."
+msgstr ""
+
+#: ../../pep-0362.txt:234
+msgid ""
+"The ``arguments`` attribute should be used in conjunction with "
+"``Signature.parameters`` for any arguments processing purposes."
+msgstr ""
+
+#: ../../pep-0362.txt:237
+msgid "``args`` and ``kwargs`` properties can be used to invoke functions: ::"
+msgstr ""
+
+#: ../../pep-0362.txt:247
+msgid ""
+"Arguments which could be passed as part of either ``*args`` or "
+"``**kwargs`` will be included only in the ``BoundArguments.args`` "
+"attribute.  Consider the following example: ::"
+msgstr ""
+
+#: ../../pep-0362.txt:266
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0362.txt:268
+msgid ""
+"The implementation adds a new function ``signature()`` to the ``inspect``"
+" module.  The function is the preferred way of getting a ``Signature`` "
+"for a callable object."
+msgstr ""
+
+#: ../../pep-0362.txt:272
+msgid "The function implements the following algorithm:"
+msgstr ""
+
+#: ../../pep-0362.txt:274
+msgid "If the object is not callable - raise a TypeError"
+msgstr ""
+
+#: ../../pep-0362.txt:276
+msgid ""
+"If the object has a ``__signature__`` attribute and if it is not ``None``"
+" - return it"
+msgstr ""
+
+#: ../../pep-0362.txt:279
+msgid ""
+"If it has a ``__wrapped__`` attribute, return "
+"``signature(object.__wrapped__)``"
+msgstr ""
+
+#: ../../pep-0362.txt:282
+msgid ""
+"If the object is an instance of ``FunctionType``, construct and return a "
+"new ``Signature`` for it"
+msgstr ""
+
+#: ../../pep-0362.txt:285
+msgid ""
+"If the object is a bound method, construct and return a new ``Signature``"
+" object, with its first parameter (usually ``self`` or ``cls``) removed."
+"  (``classmethod`` and ``staticmethod`` are supported too.  Since both "
+"are descriptors, the former returns a bound method, and the latter "
+"returns its wrapped function.)"
+msgstr ""
+
+#: ../../pep-0362.txt:291
+msgid ""
+"If the object is an instance of ``functools.partial``, construct a new "
+"``Signature`` from its ``partial.func`` attribute, and account for "
+"already bound ``partial.args`` and ``partial.kwargs``"
+msgstr ""
+
+#: ../../pep-0362.txt:295
+msgid "If the object is a class or metaclass:"
+msgstr ""
+
+#: ../../pep-0362.txt:297
+msgid ""
+"If the object's type has a ``__call__`` method defined in its MRO, return"
+" a Signature for it"
+msgstr ""
+
+#: ../../pep-0362.txt:300
+msgid ""
+"If the object has a ``__new__`` method defined in its MRO, return a "
+"Signature object for it"
+msgstr ""
+
+#: ../../pep-0362.txt:303
+msgid ""
+"If the object has a ``__init__`` method defined in its MRO, return a "
+"Signature object for it"
+msgstr ""
+
+#: ../../pep-0362.txt:306
+msgid "Return ``signature(object.__call__)``"
+msgstr ""
+
+#: ../../pep-0362.txt:308
+msgid ""
+"Note that the ``Signature`` object is created in a lazy manner, and is "
+"not automatically cached.  However, the user can manually cache a "
+"Signature by storing it in the ``__signature__`` attribute."
+msgstr ""
+
+#: ../../pep-0362.txt:312
+msgid ""
+"An implementation for Python 3.3 can be found at [#impl]_. The python "
+"issue tracking the patch is [#issue]_."
+msgstr ""
+
+#: ../../pep-0362.txt:317
+msgid "Design Considerations"
+msgstr ""
+
+#: ../../pep-0362.txt:320
+msgid "No implicit caching of Signature objects"
+msgstr ""
+
+#: ../../pep-0362.txt:322
+msgid ""
+"The first PEP design had a provision for implicit caching of "
+"``Signature`` objects in the ``inspect.signature()`` function.  However, "
+"this has the following downsides:"
+msgstr ""
+
+#: ../../pep-0362.txt:326
+msgid ""
+"If the ``Signature`` object is cached then any changes to the function it"
+" describes will not be reflected in it.  However, If the caching is "
+"needed, it can be always done manually and explicitly"
+msgstr ""
+
+#: ../../pep-0362.txt:330
+msgid ""
+"It is better to reserve the ``__signature__`` attribute for the cases "
+"when there is a need to explicitly set to a ``Signature`` object that is "
+"different from the actual one"
+msgstr ""
+
+#: ../../pep-0362.txt:336
+msgid "Some functions may not be introspectable"
+msgstr ""
+
+#: ../../pep-0362.txt:338
+msgid ""
+"Some functions may not be introspectable in certain implementations of "
+"Python.  For example, in CPython, built-in functions defined in C provide"
+" no metadata about their arguments.  Adding support for them is out of "
+"scope for this PEP."
+msgstr ""
+
+#: ../../pep-0362.txt:345
+msgid "Signature and Parameter equivalence"
+msgstr ""
+
+#: ../../pep-0362.txt:347
+msgid ""
+"We assume that parameter names have semantic significance--two signatures"
+" are equal only when their corresponding parameters are equal and have "
+"the exact same names.  Users who want looser equivalence tests, perhaps "
+"ignoring names of VAR_KEYWORD or VAR_POSITIONAL parameters, will need to "
+"implement those themselves."
+msgstr ""
+
+#: ../../pep-0362.txt:355
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0362.txt:358
+msgid "Visualizing Callable Objects' Signature"
+msgstr ""
+
+#: ../../pep-0362.txt:360
+msgid "Let's define some classes and functions:"
+msgstr ""
+
+#: ../../pep-0362.txt:416
+msgid "Now, in the python REPL:"
+msgstr ""
+
+#: ../../pep-0362.txt:452
+msgid "Annotation Checker"
+msgstr ""
+
+#: ../../pep-0362.txt:546
+msgid "Acceptance"
+msgstr ""
+
+#: ../../pep-0362.txt:548
+msgid ""
+"PEP 362 was accepted by Guido, Friday, June 22, 2012 [#accepted]_ . The "
+"reference implementation was committed to trunk later that day."
+msgstr ""
+
+#: ../../pep-0362.txt:553
+msgid "References"
+msgstr ""
+
+#: ../../pep-0362.txt:555
+msgid "pep362 branch (https://bitbucket.org/1st1/cpython/overview)"
+msgstr ""
+
+#: ../../pep-0362.txt:556
+msgid "issue 15008 (http://bugs.python.org/issue15008)"
+msgstr ""
+
+#: ../../pep-0362.txt:557
+msgid ""
+"\"A Desperate Plea For Introspection (aka: BDFAP Needed)\" "
+"(https://mail.python.org/pipermail/python-dev/2012-June/120682.html)"
+msgstr ""
+
+#: ../../pep-0362.txt:561
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0362.txt:563
+msgid "This document has been placed in the public domain."
+msgstr ""
+

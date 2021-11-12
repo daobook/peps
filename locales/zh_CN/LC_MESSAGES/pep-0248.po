@@ -1,0 +1,543 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0248.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0248.txt:1
+msgid "248"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0248.txt:2
+msgid "Python Database API Specification v1.0"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0248.txt:5
+msgid "mal@lemburg.com (Marc-André Lemburg)"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0248.txt:6
+msgid "db-sig@python.org"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0248.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0248.txt:8
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0248.txt:10
+msgid "29-Mar-2001"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0248.txt
+msgid "Superseded-By"
+msgstr ""
+
+#: ../../pep-0248.txt:12
+msgid "249"
+msgstr ""
+
+#: ../../pep-0248.txt:16
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0248.txt:18
+msgid ""
+"This API has been defined to encourage similarity between the Python "
+"modules that are used to access databases.  By doing this, we hope to "
+"achieve a consistency leading to more easily understood modules, code "
+"that is generally more portable across databases, and a broader reach of "
+"database connectivity from Python."
+msgstr ""
+
+#: ../../pep-0248.txt:24
+msgid "This interface specification consists of several items:"
+msgstr ""
+
+#: ../../pep-0248.txt:26 ../../pep-0248.txt:40
+msgid "Module Interface"
+msgstr ""
+
+#: ../../pep-0248.txt:27 ../../pep-0248.txt:56
+msgid "Connection Objects"
+msgstr ""
+
+#: ../../pep-0248.txt:28 ../../pep-0248.txt:92
+msgid "Cursor Objects"
+msgstr ""
+
+#: ../../pep-0248.txt:29 ../../pep-0248.txt:235
+msgid "DBI Helper Objects"
+msgstr ""
+
+#: ../../pep-0248.txt:31
+msgid ""
+"Comments and questions about this specification may be directed to the "
+"SIG on Tabular Databases in Python (http://www.python.org/sigs/db-sig)."
+msgstr ""
+
+#: ../../pep-0248.txt:35
+msgid ""
+"This specification document was last updated on: April 9, 1996. It will "
+"be known as Version 1.0 of this specification."
+msgstr ""
+
+#: ../../pep-0248.txt:42
+msgid ""
+"The database interface modules should typically be named with something "
+"terminated by ``db``.  Existing examples are: ``oracledb``, "
+"``informixdb``, and ``pg95db``.  These modules should export several "
+"names:"
+msgstr ""
+
+#: ../../pep-0248.txt:49
+msgid "``modulename(connection_string)``"
+msgstr ""
+
+#: ../../pep-0248.txt:48
+msgid ""
+"Constructor for creating a connection to the database. Returns a "
+"Connection Object."
+msgstr ""
+
+#: ../../pep-0248.txt:53
+msgid "``error``"
+msgstr ""
+
+#: ../../pep-0248.txt:52
+msgid "Exception raised for errors from the database module."
+msgstr ""
+
+#: ../../pep-0248.txt:58
+msgid "Connection Objects should respond to the following methods:"
+msgstr ""
+
+#: ../../pep-0248.txt:64 ../../pep-0248.txt:133
+msgid "``close()``"
+msgstr ""
+
+#: ../../pep-0248.txt:61
+msgid ""
+"Close the connection now (rather than whenever ``__del__`` is called).  "
+"The connection will be unusable from this point forward; an exception "
+"will be raised if any operation is attempted with the connection."
+msgstr ""
+
+#: ../../pep-0248.txt:67
+msgid "``commit()``"
+msgstr ""
+
+#: ../../pep-0248.txt:67
+msgid "Commit any pending transaction to the database."
+msgstr ""
+
+#: ../../pep-0248.txt:71
+msgid "``rollback()``"
+msgstr ""
+
+#: ../../pep-0248.txt:70
+msgid "Roll the database back to the start of any pending transaction."
+msgstr ""
+
+#: ../../pep-0248.txt:75
+msgid "``cursor()``"
+msgstr ""
+
+#: ../../pep-0248.txt:74
+msgid ""
+"Return a new Cursor Object.  An exception may be thrown if the database "
+"does not support a cursor concept."
+msgstr ""
+
+#: ../../pep-0248.txt:80
+msgid "``callproc([params])``"
+msgstr ""
+
+#: ../../pep-0248.txt:78
+msgid ""
+"(Note: this method is not well-defined yet.)  Call a stored database "
+"procedure with the given (optional) parameters.  Returns the result of "
+"the stored procedure."
+msgstr ""
+
+#: ../../pep-0248.txt:89
+msgid "(all Cursor Object attributes and methods)"
+msgstr ""
+
+#: ../../pep-0248.txt:83
+msgid ""
+"For databases that do not have cursors and for simple applications that "
+"do not require the complexity of a cursor, a Connection Object should "
+"respond to each of the attributes and methods of the Cursor Object.  "
+"Databases that have cursor can implement this by using an implicit, "
+"internal cursor."
+msgstr ""
+
+#: ../../pep-0248.txt:94
+msgid ""
+"These objects represent a database cursor, which is used to manage the "
+"context of a fetch operation."
+msgstr ""
+
+#: ../../pep-0248.txt:97
+msgid "Cursor Objects should respond to the following methods and attributes:"
+msgstr ""
+
+#: ../../pep-0248.txt:111
+msgid "``arraysize``"
+msgstr ""
+
+#: ../../pep-0248.txt:101
+msgid ""
+"This read/write attribute specifies the number of rows to fetch at a time"
+" with ``fetchmany()``.  This value is also used when inserting multiple "
+"rows at a time (passing a tuple/list of tuples/lists as the params value "
+"to ``execute()``).  This attribute will default to a single row."
+msgstr ""
+
+#: ../../pep-0248.txt:107
+msgid ""
+"Note that the arraysize is optional and is merely provided for higher "
+"performance database interactions. Implementations should observe it with"
+" respect to the ``fetchmany()`` method, but are free to interact with the"
+" database a single row at a time."
+msgstr ""
+
+#: ../../pep-0248.txt:127
+msgid "``description``"
+msgstr ""
+
+#: ../../pep-0248.txt:114
+msgid ""
+"This read-only attribute is a tuple of 7-tuples.  Each 7-tuple contains "
+"information describing each result column: (name, type_code, "
+"display_size, internal_size, precision, scale, null_ok). This attribute "
+"will be ``None`` for operations that do not return rows or if the cursor "
+"has not had an operation invoked via the ``execute()`` method yet."
+msgstr ""
+
+#: ../../pep-0248.txt:122
+msgid "The 'type_code' is one of the 'dbi' values specified in the section below."
+msgstr ""
+
+#: ../../pep-0248.txt:125
+msgid ""
+"Note: this is a bit in flux. Generally, the first two items of the "
+"7-tuple will always be present; the others may be database specific."
+msgstr ""
+
+#: ../../pep-0248.txt:130
+msgid ""
+"Close the cursor now (rather than whenever ``__del__`` is called).  The "
+"cursor will be unusable from this point forward; an exception will be "
+"raised if any operation is attempted with the cursor."
+msgstr ""
+
+#: ../../pep-0248.txt:172
+msgid "``execute(operation [,params])``"
+msgstr ""
+
+#: ../../pep-0248.txt:136
+msgid ""
+"Execute (prepare) a database operation (query or command). Parameters may"
+" be provided (as a sequence (e.g. tuple/list)) and will be bound to "
+"variables in the operation.  Variables are specified in a database-"
+"specific notation that is based on the index in the parameter tuple "
+"(position-based rather than name-based)."
+msgstr ""
+
+#: ../../pep-0248.txt:143
+msgid ""
+"The parameters may also be specified as a sequence of sequences (e.g. a "
+"list of tuples) to insert multiple rows in a single operation."
+msgstr ""
+
+#: ../../pep-0248.txt:147
+msgid ""
+"A reference to the operation will be retained by the cursor.  If the same"
+" operation object is passed in again, then the cursor can optimize its "
+"behavior.  This is most effective for algorithms where the same operation"
+" is used, but different parameters are bound to it (many times)."
+msgstr ""
+
+#: ../../pep-0248.txt:153
+msgid ""
+"For maximum efficiency when reusing an operation, it is best to use the "
+"``setinputsizes()`` method to specify the parameter types and sizes ahead"
+" of time.  It is legal for a parameter to not match the predefined "
+"information; the implementation should compensate, possibly with a loss "
+"of efficiency."
+msgstr ""
+
+#: ../../pep-0248.txt:160
+msgid ""
+"Using SQL terminology, these are the possible result values from the "
+"``execute()`` method:"
+msgstr ""
+
+#: ../../pep-0248.txt:163
+msgid "If the statement is DDL (e.g. ``CREATE TABLE``), then 1 is returned."
+msgstr ""
+
+#: ../../pep-0248.txt:166
+msgid ""
+"If the statement is DML (e.g. ``UPDATE`` or ``INSERT``), then the number "
+"of rows affected is returned (0 or a positive integer)."
+msgstr ""
+
+#: ../../pep-0248.txt:170
+msgid ""
+"If the statement is DQL (e.g. ``SELECT``), ``None`` is returned, "
+"indicating that the statement is not really complete until you use one of"
+" the  'fetch' methods."
+msgstr ""
+
+#: ../../pep-0248.txt:176
+msgid "``fetchone()``"
+msgstr ""
+
+#: ../../pep-0248.txt:175
+msgid "Fetch the next row of a query result, returning a single tuple."
+msgstr ""
+
+#: ../../pep-0248.txt:190
+msgid "``fetchmany([size])``"
+msgstr ""
+
+#: ../../pep-0248.txt:179
+msgid ""
+"Fetch the next set of rows of a query result, returning as a list of "
+"tuples. An empty list is returned when no more rows are available. The "
+"number of rows to fetch is specified by the parameter.  If it is "
+"``None``, then the cursor's arraysize determines the number of rows to be"
+" fetched."
+msgstr ""
+
+#: ../../pep-0248.txt:186
+msgid ""
+"Note there are performance considerations involved with the size "
+"parameter.  For optimal performance, it is usually best to use the "
+"arraysize attribute.  If the size parameter is used, then it is best for "
+"it to retain the same value from one ``fetchmany()`` call to the next."
+msgstr ""
+
+#: ../../pep-0248.txt:195
+msgid "``fetchall()``"
+msgstr ""
+
+#: ../../pep-0248.txt:193
+msgid ""
+"Fetch all rows of a query result, returning as a list of tuples.  Note "
+"that the cursor's arraysize attribute can affect the performance of this "
+"operation."
+msgstr ""
+
+#: ../../pep-0248.txt:215
+msgid "``setinputsizes(sizes)``"
+msgstr ""
+
+#: ../../pep-0248.txt:198
+msgid ""
+"(Note: this method is not well-defined yet.)  This can be used before a "
+"call to ``execute()`` to predefine memory areas for the operation's "
+"parameters.  sizes is specified as a tuple -- one item for each input "
+"parameter.  The item should be a Type object that corresponds to the "
+"input that will be used, or it should be an integer specifying the "
+"maximum length of a string parameter.  If the item is ``None``, then no "
+"predefined memory area will be reserved for that column (this is useful "
+"to avoid predefined areas for large inputs)."
+msgstr ""
+
+#: ../../pep-0248.txt:209 ../../pep-0248.txt:225
+msgid "This method would be used before the ``execute()`` method is invoked."
+msgstr ""
+
+#: ../../pep-0248.txt:212 ../../pep-0248.txt:228
+msgid ""
+"Note that this method is optional and is merely provided for higher "
+"performance database interaction. Implementations are free to do nothing "
+"and users are free to not use it."
+msgstr ""
+
+#: ../../pep-0248.txt:232
+msgid "``setoutputsize(size [,col])``"
+msgstr ""
+
+#: ../../pep-0248.txt:218
+msgid "(Note: this method is not well-defined yet.)"
+msgstr ""
+
+#: ../../pep-0248.txt:220
+msgid ""
+"Set a column buffer size for fetches of large columns (e.g. LONG).  The "
+"column is specified as an index into the result tuple.  Using a column of"
+" ``None`` will set the default size for all large columns in the cursor."
+msgstr ""
+
+#: ../../pep-0248.txt:237
+msgid ""
+"Many databases need to have the input in a particular format for binding "
+"to an operation's input parameters.  For example, if an input is destined"
+" for a ``DATE`` column, then it must be bound to the database in a "
+"particular string format.  Similar problems exist for \"Row ID\" columns "
+"or large binary items (e.g. blobs or ``RAW`` columns).  This presents "
+"problems for Python since the parameters to the ``execute()`` method are "
+"untyped.  When the database module sees a Python string object, it "
+"doesn't know if it should be bound as a simple CHAR column, as a raw "
+"binary item, or as a ``DATE``."
+msgstr ""
+
+#: ../../pep-0248.txt:247
+msgid ""
+"To overcome this problem, the 'dbi' module was created.  This module "
+"specifies some basic database interface types for working with databases."
+"  There are two classes: 'dbiDate' and 'dbiRaw'. These are simple "
+"container classes that wrap up a value.  When passed to the database "
+"modules, the module can then detect that the input parameter is intended "
+"as a ``DATE`` or a ``RAW``.  For symmetry, the database modules will "
+"return ``DATE`` and ``RAW`` columns as instances of these classes."
+msgstr ""
+
+#: ../../pep-0248.txt:256
+msgid ""
+"A Cursor Object's 'description' attribute returns information about each "
+"of the result columns of a query.  The 'type_code' is defined to be one "
+"of five types exported by this module: ``STRING``, ``RAW``, ``NUMBER``, "
+"``DATE``, or ``ROWID``."
+msgstr ""
+
+#: ../../pep-0248.txt:261
+msgid "The module exports the following names:"
+msgstr ""
+
+#: ../../pep-0248.txt:266
+msgid "``dbiDate(value)``"
+msgstr ""
+
+#: ../../pep-0248.txt:264
+msgid ""
+"This function constructs a 'dbiDate' instance that holds a date value.  "
+"The value should be specified as an integer number of seconds since the "
+"\"epoch\" (e.g. ``time.time()``)."
+msgstr ""
+
+#: ../../pep-0248.txt:271
+msgid "``dbiRaw(value)``"
+msgstr ""
+
+#: ../../pep-0248.txt:269
+msgid ""
+"This function constructs a 'dbiRaw' instance that holds a raw (binary) "
+"value.  The value should be specified as a Python string."
+msgstr ""
+
+#: ../../pep-0248.txt:275
+msgid "``STRING``"
+msgstr ""
+
+#: ../../pep-0248.txt:274
+msgid ""
+"This object is used to describe columns in a database that are string-"
+"based (e.g. CHAR)."
+msgstr ""
+
+#: ../../pep-0248.txt:279
+msgid "``RAW``"
+msgstr ""
+
+#: ../../pep-0248.txt:278
+msgid ""
+"This object is used to describe (large) binary columns in a database "
+"(e.g. LONG RAW, blobs)."
+msgstr ""
+
+#: ../../pep-0248.txt:283
+msgid "``NUMBER``"
+msgstr ""
+
+#: ../../pep-0248.txt:282
+msgid "This object is used to describe numeric columns in a database."
+msgstr ""
+
+#: ../../pep-0248.txt:287
+msgid "``DATE``"
+msgstr ""
+
+#: ../../pep-0248.txt:286
+msgid "This object is used to describe date columns in a database."
+msgstr ""
+
+#: ../../pep-0248.txt:292
+msgid "``ROWID``"
+msgstr ""
+
+#: ../../pep-0248.txt:290
+msgid "This object is used to describe the \"Row ID\" column in a database."
+msgstr ""
+
+#: ../../pep-0248.txt:295
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0248.txt:297
+msgid ""
+"Many thanks go to Andrew Kuchling who converted the Python Database API "
+"Specification 1.0 from the original HTML format into the PEP format."
+msgstr ""
+
+#: ../../pep-0248.txt:303
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0248.txt:305
+msgid "This document has been placed in the Public Domain."
+msgstr ""
+

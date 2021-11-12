@@ -1,0 +1,852 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0493.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0493.txt:1
+msgid "493"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0493.txt:2
+msgid "HTTPS verification migration tools for Python 2.7"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0493.txt:5
+msgid ""
+"Nick Coghlan <ncoghlan@gmail.com>, Robert Kuska <rkuska@redhat.com>, "
+"Marc-André Lemburg <mal@lemburg.com>"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0493.txt:8
+msgid "Barry Warsaw"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0493.txt:9
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0493.txt:10
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0493.txt:12
+msgid "10-May-2015"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0493.txt:13
+msgid "2.7.12"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0493.txt:14
+msgid "06-Jul-2015, 11-Nov-2015, 24-Nov-2015, 24-Feb-2016"
+msgstr ""
+
+#: ../../pep-0493.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0493.txt:15
+msgid "https://mail.python.org/pipermail/python-dev/2016-March/143450.html"
+msgstr ""
+
+#: ../../pep-0493.txt:19
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0493.txt:21
+msgid ""
+"PEP 476 updated Python's default handling of HTTPS certificates in client"
+" modules to align with certificate handling in web browsers, by "
+"validating that the certificates received belonged to the server the "
+"client was attempting to contact. The Python 2.7 long term maintenance "
+"series was judged to be in scope for this change, with the new behaviour "
+"introduced in the Python 2.7.9 maintenance release."
+msgstr ""
+
+#: ../../pep-0493.txt:28
+msgid ""
+"This has created a non-trivial barrier to adoption for affected Python "
+"2.7 maintenance releases, so this PEP proposes additional Python 2.7 "
+"specific features that allow system administrators and other users to "
+"more easily decouple the decision to verify server certificates in HTTPS "
+"client modules from the decision to update to newer Python 2.7 "
+"maintenance releases."
+msgstr ""
+
+#: ../../pep-0493.txt:36
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0493.txt:38
+msgid ""
+"PEP 476 changed Python's default behaviour to align with expectations "
+"established by web browsers in regards to the semantics of HTTPS URLs: "
+"starting with Python 2.7.9 and 3.4.3, HTTPS clients in the standard "
+"library validate server certificates by default."
+msgstr ""
+
+#: ../../pep-0493.txt:43
+msgid ""
+"However, it is also the case that this change *does* cause problems for "
+"infrastructure administrators operating private intranets that rely on "
+"self-signed certificates, or otherwise encounter problems with the new "
+"default certificate verification settings."
+msgstr ""
+
+#: ../../pep-0493.txt:48
+msgid ""
+"To manage these kinds of situations, web browsers provide users with "
+"\"click through\" warnings that allow the user to add the server's "
+"certificate to the browser's certificate store. Network client tools like"
+" ``curl`` and ``wget`` offer options to switch off certificate checking "
+"entirely (by way of ``curl --insecure`` and ``wget --no-check-"
+"certificate``, respectively)."
+msgstr ""
+
+#: ../../pep-0493.txt:54
+msgid ""
+"At a different layer of the technology stack, Linux security modules like"
+" `SELinux` and `AppArmor`, while enabled by default by distribution "
+"vendors, offer relatively straightforward mechanisms for turning them "
+"off."
+msgstr ""
+
+#: ../../pep-0493.txt:58
+msgid ""
+"At the moment, no such convenient mechanisms exist to disable Python's "
+"default certificate checking for a whole process."
+msgstr ""
+
+#: ../../pep-0493.txt:61
+msgid ""
+"PEP 476 did attempt to address this question, by covering how to revert "
+"to the old settings process wide by monkeypatching the ``ssl`` module to "
+"restore the old behaviour. Unfortunately, the ``sitecustomize.py`` based "
+"technique proposed to allow system administrators to disable the feature "
+"by default in their Standard Operating Environment definition has been "
+"determined to be insufficient in at least some cases. The specific case "
+"that led to the initial creation of this PEP is the one where a Linux "
+"distributor aims to provide their users with a `smoother migration path "
+"<https://bugzilla.redhat.com/show_bug.cgi?id=1173041>`__ than the "
+"standard one provided by consuming upstream CPython 2.7 releases "
+"directly, but other potential challenges have also been pointed out with "
+"updating embedded Python runtimes and other user level installations of "
+"Python."
+msgstr ""
+
+#: ../../pep-0493.txt:74
+msgid ""
+"Rather than allowing a plethora of mutually incompatible migration "
+"techniques to bloom, this PEP proposes an additional feature to be added "
+"to Python 2.7.12 to make it easier to revert a process to the past "
+"behaviour of skipping certificate validation in HTTPS client modules. It "
+"also provides additional recommendations to redistributors backporting "
+"these features to versions of Python prior to Python 2.7.9."
+msgstr ""
+
+#: ../../pep-0493.txt:82
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0493.txt:84
+msgid ""
+"In the absence of clear upstream guidance and recommendations, commercial"
+" redistributors will still make their own design decisions in the "
+"interests of their customers. The main approaches available are:"
+msgstr ""
+
+#: ../../pep-0493.txt:88
+msgid ""
+"Continuing to rebase on new Python 2.7.x releases, while providing no "
+"additional assistance beyond the mechanisms defined in PEP 476 in "
+"migrating from unchecked to checked hostnames in standard library HTTPS "
+"clients"
+msgstr ""
+
+#: ../../pep-0493.txt:91
+msgid ""
+"Gating availability of the changes in default handling of HTTPS "
+"connections on upgrading from Python 2 to Python 3"
+msgstr ""
+
+#: ../../pep-0493.txt:93
+msgid ""
+"For Linux distribution vendors, gating availability of the changes in "
+"default handling of HTTPS connections on upgrading to a new operating "
+"system version"
+msgstr ""
+
+#: ../../pep-0493.txt:95
+msgid ""
+"Implementing one or both of the backport suggestions described in this "
+"PEP, regardless of the formal status of the PEP"
+msgstr ""
+
+#: ../../pep-0493.txt:100
+msgid "Scope Limitations"
+msgstr ""
+
+#: ../../pep-0493.txt:102
+msgid ""
+"These changes are being proposed purely as tools for helping to manage "
+"the transition to the new default certificate handling behaviour in the "
+"context of Python 2.7. They are not being proposed as new features for "
+"Python 3, as it is expected that the vast majority of client applications"
+" affected by this problem without the ability to update the application "
+"itself will be Python 2 applications."
+msgstr ""
+
+#: ../../pep-0493.txt:109
+msgid ""
+"It would likely be desirable for a future version of Python 3 to allow "
+"the default certificate handling for secure protocols to be configurable "
+"on a per-protocol basis, but that question is beyond the scope of this "
+"PEP."
+msgstr ""
+
+#: ../../pep-0493.txt:115
+msgid "Requirements for capability detection"
+msgstr ""
+
+#: ../../pep-0493.txt:117
+msgid ""
+"As the proposals in this PEP aim to facilitate backports to earlier "
+"Python versions, the Python version number cannot be used as a reliable "
+"means for detecting them. Instead, they are designed to allow the "
+"presence or absence of the feature to be determined using the following "
+"technique::"
+msgstr ""
+
+#: ../../pep-0493.txt:124
+msgid ""
+"This will fail with `AttributeError` (and hence a non-zero return code) "
+"if the relevant capability is not available."
+msgstr ""
+
+#: ../../pep-0493.txt:127
+msgid "The feature detection attributes defined by this PEP are:"
+msgstr ""
+
+#: ../../pep-0493.txt:129
+msgid "``ssl._https_verify_certificates``: runtime configuration API"
+msgstr ""
+
+#: ../../pep-0493.txt:130
+msgid "``ssl._https_verify_envvar``: environment based configuration"
+msgstr ""
+
+#: ../../pep-0493.txt:131
+msgid ""
+"``ssl._cert_verification_config``: file based configuration (PEP 476 opt-"
+"in)"
+msgstr ""
+
+#: ../../pep-0493.txt:133
+msgid ""
+"The marker attributes are prefixed with an underscore to indicate the "
+"implementation dependent and security sensitive nature of these "
+"capabilities."
+msgstr ""
+
+#: ../../pep-0493.txt:138
+msgid "Feature: Configuration API"
+msgstr ""
+
+#: ../../pep-0493.txt:140
+msgid ""
+"This change is proposed for inclusion in CPython 2.7.12 and later CPython"
+" 2.7.x releases. It consists of a new "
+"``ssl._https_verify_certificates()`` to specify the default handling of "
+"HTTPS certificates in standard library client libraries."
+msgstr ""
+
+#: ../../pep-0493.txt:144 ../../pep-0493.txt:197
+msgid ""
+"It is not proposed to forward port this change to Python 3, so Python 3 "
+"applications that need to support skipping certificate verification will "
+"still need to define their own suitable security context."
+msgstr ""
+
+#: ../../pep-0493.txt:149 ../../pep-0493.txt:202 ../../pep-0493.txt:296
+#: ../../pep-0493.txt:397
+msgid "Feature detection"
+msgstr ""
+
+#: ../../pep-0493.txt:151
+msgid ""
+"The marker attribute on the ``ssl`` module related to this feature is the"
+" ``ssl._https_verify_certificates`` function itself."
+msgstr ""
+
+#: ../../pep-0493.txt:155 ../../pep-0493.txt:214 ../../pep-0493.txt:304
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0493.txt:157
+msgid "The ``ssl._https_verify_certificates`` function will work as follows::"
+msgstr ""
+
+#: ../../pep-0493.txt:167
+msgid ""
+"If called without arguments, or with ``enable`` set to a true value, then"
+" standard library client modules will subsequently verify HTTPS "
+"certificates by default, otherwise they will skip verification."
+msgstr ""
+
+#: ../../pep-0493.txt:170
+msgid ""
+"If called with ``enable`` set to a false value, then standard library "
+"client modules will subsequently skip verifying HTTPS certificates by "
+"default."
+msgstr ""
+
+#: ../../pep-0493.txt:174 ../../pep-0493.txt:244 ../../pep-0493.txt:340
+#: ../../pep-0493.txt:493
+msgid "Security Considerations"
+msgstr ""
+
+#: ../../pep-0493.txt:176
+msgid ""
+"The inclusion of this feature will allow security sensitive applications "
+"to include the following forward-compatible snippet in their code::"
+msgstr ""
+
+#: ../../pep-0493.txt:182
+msgid ""
+"Some developers may also choose to opt out of certificate checking using "
+"``ssl._https_verify_certificates(enable=False)``. This doesn't introduce "
+"any major new security concerns, as monkeypatching the affected internal "
+"APIs was already possible."
+msgstr ""
+
+#: ../../pep-0493.txt:189
+msgid "Feature: environment based configuration"
+msgstr ""
+
+#: ../../pep-0493.txt:191
+msgid ""
+"This change is proposed for inclusion in CPython 2.7.12 and later CPython"
+" 2.7.x releases. It consists of a new ``PYTHONHTTPSVERIFY`` environment "
+"variable that can be set to ``'0'`` to disable the default verification "
+"without modifying the application source code (which may not even be "
+"available in cases of bytecode-only application distribution)"
+msgstr ""
+
+#: ../../pep-0493.txt:204
+msgid "The marker attribute on the ``ssl`` module related to this feature is:"
+msgstr ""
+
+#: ../../pep-0493.txt:206
+msgid ""
+"the ``ssl._https_verify_envvar`` attribute, giving the name of "
+"environment variable affecting the default behaviour"
+msgstr ""
+
+#: ../../pep-0493.txt:209
+msgid ""
+"This not only makes it straightforward to detect the presence (or "
+"absence) of the capability, it also makes it possible to programmatically"
+" determine the relevant environment variable name."
+msgstr ""
+
+#: ../../pep-0493.txt:216
+msgid ""
+"Rather than always defaulting to the use of "
+"``ssl.create_default_context``, the ``ssl`` module will be modified to:"
+msgstr ""
+
+#: ../../pep-0493.txt:219 ../../pep-0493.txt:310
+msgid ""
+"read the ``PYTHONHTTPSVERIFY`` environment variable when the module is "
+"first imported into a Python process"
+msgstr ""
+
+#: ../../pep-0493.txt:221
+msgid ""
+"set the ``ssl._create_default_https_context`` function to be an alias for"
+" ``ssl._create_unverified_context`` if this environment variable is "
+"present and set to ``'0'``"
+msgstr ""
+
+#: ../../pep-0493.txt:224
+msgid ""
+"otherwise, set the ``ssl._create_default_https_context`` function to be "
+"an alias for ``ssl.create_default_context`` as usual"
+msgstr ""
+
+#: ../../pep-0493.txt:228 ../../pep-0493.txt:319 ../../pep-0493.txt:466
+#: ../../pep-0493.txt:553
+msgid "Example implementation"
+msgstr ""
+
+#: ../../pep-0493.txt:246
+msgid ""
+"Relative to the behaviour in Python 3.4.3+ and Python 2.7.9->2.7.11, this"
+" approach does introduce a new downgrade attack against the default "
+"security settings that potentially allows a sufficiently determined "
+"attacker to revert Python to the default behaviour used in CPython 2.7.8 "
+"and earlier releases."
+msgstr ""
+
+#: ../../pep-0493.txt:251
+msgid "This slight increase in the available attack surface is a key reason why:"
+msgstr ""
+
+#: ../../pep-0493.txt:253
+msgid "security sensitive applications should still define their own SSL context"
+msgstr ""
+
+#: ../../pep-0493.txt:254
+msgid ""
+"the migration features described in this PEP are not being added to "
+"Python 3"
+msgstr ""
+
+#: ../../pep-0493.txt:256
+msgid ""
+"However, it's also worth keeping in mind that carrying out such an attack"
+" requires the ability to modify the execution environment of a Python "
+"process prior to the import of the ``ssl`` module. In combination with "
+"the ability to write to any part of the filesystem (such as ``/tmp``), "
+"any attacker with such access would already be able to modify the "
+"behaviour of the underlying OpenSSL implementation, the dynamic library "
+"loader, and other potentially security sensitive components."
+msgstr ""
+
+#: ../../pep-0493.txt:265 ../../pep-0493.txt:349 ../../pep-0493.txt:525
+msgid "Interaction with Python virtual environments"
+msgstr ""
+
+#: ../../pep-0493.txt:267 ../../pep-0493.txt:351
+msgid ""
+"The default setting is read directly from the process environment, and "
+"hence works the same way regardless of whether or not the interpreter is "
+"being run inside an activated Python virtual environment."
+msgstr ""
+
+#: ../../pep-0493.txt:273
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0493.txt:275
+msgid ""
+"A patch for Python 2.7 implementing the above two features is attached to"
+" the `relevant tracker issue <http://bugs.python.org/issue23857>`__."
+msgstr ""
+
+#: ../../pep-0493.txt:280
+msgid "Backporting this PEP to earlier Python versions"
+msgstr ""
+
+#: ../../pep-0493.txt:282
+msgid ""
+"If this PEP is accepted, then commercial Python redistributors may choose"
+" to backport the per-process configuration mechanisms defined in this PEP"
+" to base versions older than Python 2.7.9, *without* also backporting PEP"
+" 476's change to the default behaviour of the overall Python "
+"installation."
+msgstr ""
+
+#: ../../pep-0493.txt:287
+msgid ""
+"Such a backport would differ from the mechanism proposed in this PEP "
+"solely in the default behaviour when ``PYTHONHTTPSVERIFY`` was not set at"
+" all: it would continue to default to skipping certificate validation."
+msgstr ""
+
+#: ../../pep-0493.txt:291
+msgid ""
+"In this case, if the ``PYTHONHTTPSVERIFY`` environment variable is "
+"defined, and set to anything *other* than ``'0'``, then HTTPS certificate"
+" verification should be enabled."
+msgstr ""
+
+#: ../../pep-0493.txt:298
+msgid ""
+"There's no specific attribute indicating that this situation applies. "
+"Rather, it is indicated by the ``ssl._https_verify_certificates`` and "
+"``ssl._https_verify_envvar`` attributes being present in a Python version"
+" that is nominally older than Python 2.7.12."
+msgstr ""
+
+#: ../../pep-0493.txt:306
+msgid ""
+"Implementing this backport involves backporting the changes in PEP 466, "
+"476 and this PEP, with the following change to the handling of the "
+"``PYTHONHTTPSVERIFY`` environment variable in the ``ssl`` module:"
+msgstr ""
+
+#: ../../pep-0493.txt:312
+msgid ""
+"set the ``ssl._create_default_https_context`` function to be an alias for"
+" ``ssl.create_default_context`` if this environment variable is present "
+"and set to any value other than ``'0'``"
+msgstr ""
+
+#: ../../pep-0493.txt:315
+msgid ""
+"otherwise, set the ``ssl._create_default_https_context`` function to be "
+"an alias for ``ssl._create_unverified_context``"
+msgstr ""
+
+#: ../../pep-0493.txt:342
+msgid ""
+"This change would be a strict security upgrade for any Python version "
+"that currently defaults to skipping certificate validation in standard "
+"library HTTPS clients. The technical trade-offs to be taken into account "
+"relate largely to the magnitude of the PEP 466 backport also required "
+"rather than to anything security related."
+msgstr ""
+
+#: ../../pep-0493.txt:357
+msgid "Backporting PEP 476 to earlier Python versions"
+msgstr ""
+
+#: ../../pep-0493.txt:359
+msgid ""
+"The backporting approach described above leaves the default HTTPS "
+"certificate verification behaviour of a Python 2.7 installation "
+"unmodified: verifying certificates still needs to be opted into on a per-"
+"connection or per-process basis."
+msgstr ""
+
+#: ../../pep-0493.txt:364
+msgid ""
+"To allow the default behaviour of the entire installation to be modified "
+"without breaking backwards compatibility, Red Hat designed a "
+"configuration mechanism for the system Python 2.7 installation in Red Hat"
+" Enterprise Linux 7.2+ that provides:"
+msgstr ""
+
+#: ../../pep-0493.txt:369
+msgid ""
+"an opt-in model that allows the decision to enable HTTPS certificate "
+"verification to be made independently of the decision to upgrade to the "
+"operating system version where the feature was first backported"
+msgstr ""
+
+#: ../../pep-0493.txt:372
+msgid ""
+"the ability for system administrators to set the default behaviour of "
+"Python applications and scripts run directly in the system Python "
+"installation"
+msgstr ""
+
+#: ../../pep-0493.txt:374
+msgid ""
+"the ability for the redistributor to consider changing the default "
+"behaviour of *new* installations at some point in the future without "
+"impacting existing installations that have been explicitly configured to "
+"skip verifying HTTPS certificates by default"
+msgstr ""
+
+#: ../../pep-0493.txt:379
+msgid ""
+"As it only affects backports to earlier releases of Python 2.7, this "
+"change is not proposed for inclusion in upstream CPython, but rather is "
+"offered as a recommendation to other redistributors that choose to offer "
+"a similar feature to their users."
+msgstr ""
+
+#: ../../pep-0493.txt:384
+msgid ""
+"This PEP doesn't take a position on whether or not this particular change"
+" is a good idea - rather, it suggests that *if* a redistributor chooses "
+"to go down the path of making the default behaviour configurable in a "
+"version of Python older than Python 2.7.9, then maintaining a consistent "
+"approach across redistributors would be beneficial for users."
+msgstr ""
+
+#: ../../pep-0493.txt:390
+msgid ""
+"However, this approach SHOULD NOT be used for any Python installation "
+"that advertises itself as providing Python 2.7.9 or later, as most Python"
+" users will have the reasonable expectation that all such environments "
+"will verify HTTPS certificates by default."
+msgstr ""
+
+#: ../../pep-0493.txt:399
+msgid "The marker attribute on the ``ssl`` module related to this feature is::"
+msgstr ""
+
+#: ../../pep-0493.txt:403
+msgid ""
+"This not only makes it straightforward to detect the presence (or "
+"absence) of the capability, it also makes it possible to programmatically"
+" determine the relevant configuration file name."
+msgstr ""
+
+#: ../../pep-0493.txt:409
+msgid "Recommended modifications to the Python standard library"
+msgstr ""
+
+#: ../../pep-0493.txt:411
+msgid ""
+"The recommended approach to backporting the PEP 476 modifications to an "
+"earlier point release is to implement the following changes relative to "
+"the default PEP 476 behaviour implemented in Python 2.7.9+:"
+msgstr ""
+
+#: ../../pep-0493.txt:415
+msgid ""
+"modify the ``ssl`` module to read a system wide configuration file when "
+"the module is first imported into a Python process"
+msgstr ""
+
+#: ../../pep-0493.txt:417
+msgid ""
+"define a platform default behaviour (either verifying or not verifying "
+"HTTPS certificates) to be used if this configuration file is not present"
+msgstr ""
+
+#: ../../pep-0493.txt:419
+msgid "support selection between the following three modes of operation:"
+msgstr ""
+
+#: ../../pep-0493.txt:421
+msgid "ensure HTTPS certificate verification is enabled"
+msgstr ""
+
+#: ../../pep-0493.txt:422
+msgid "ensure HTTPS certificate verification is disabled"
+msgstr ""
+
+#: ../../pep-0493.txt:423
+msgid "delegate the decision to the redistributor providing this Python version"
+msgstr ""
+
+#: ../../pep-0493.txt:425
+msgid ""
+"set the ``ssl._create_default_https_context`` function to be an alias for"
+" either ``ssl.create_default_context`` or "
+"``ssl._create_unverified_context`` based on the given configuration "
+"setting."
+msgstr ""
+
+#: ../../pep-0493.txt:431
+msgid "Recommended file location"
+msgstr ""
+
+#: ../../pep-0493.txt:433
+msgid ""
+"As the PEP authors are not aware of any vendors providing long-term "
+"support releases targeting Windows, Mac OS X or \\*BSD systems, this "
+"approach is currently only specifically defined for Linux system Python "
+"installations."
+msgstr ""
+
+#: ../../pep-0493.txt:437
+msgid ""
+"The recommended configuration file name on Linux systems is ``/etc/python"
+"/cert-verification.cfg``."
+msgstr ""
+
+#: ../../pep-0493.txt:440
+msgid ""
+"The ``.cfg`` filename extension is recommended for consistency with the "
+"``pyvenv.cfg`` used by the ``venv`` module in Python 3's standard "
+"library."
+msgstr ""
+
+#: ../../pep-0493.txt:445
+msgid "Recommended file format"
+msgstr ""
+
+#: ../../pep-0493.txt:447
+msgid ""
+"The configuration file should use a ConfigParser ini-style format with a "
+"single section named ``[https]`` containing one required setting "
+"``verify``."
+msgstr ""
+
+#: ../../pep-0493.txt:450
+msgid ""
+"The suggested section name is taken from the \"https\" URL schema passed "
+"to affected client APIs."
+msgstr ""
+
+#: ../../pep-0493.txt:453
+msgid "Permitted values for ``verify`` are:"
+msgstr ""
+
+#: ../../pep-0493.txt:455
+msgid "``enable``: ensure HTTPS certificate verification is enabled by default"
+msgstr ""
+
+#: ../../pep-0493.txt:456
+msgid "``disable``: ensure HTTPS certificate verification is disabled by default"
+msgstr ""
+
+#: ../../pep-0493.txt:457
+msgid ""
+"``platform_default``: delegate the decision to the redistributor "
+"providing this particular Python version"
+msgstr ""
+
+#: ../../pep-0493.txt:460
+msgid ""
+"If the ``[https]`` section or the ``verify`` setting are missing, or if "
+"the ``verify`` setting is set to an unknown value, it should be treated "
+"as if the configuration file is not present."
+msgstr ""
+
+#: ../../pep-0493.txt:495
+msgid ""
+"The specific recommendations for this backporting case are designed to "
+"work for privileged, security sensitive processes, even those being run "
+"in the following locked down configuration:"
+msgstr ""
+
+#: ../../pep-0493.txt:499
+msgid ""
+"run from a locked down administrator controlled directory rather than a "
+"normal user directory (preventing ``sys.path[0]`` based privilege "
+"escalation attacks)"
+msgstr ""
+
+#: ../../pep-0493.txt:501
+msgid ""
+"run using the ``-E`` switch (preventing ``PYTHON*`` environment variable "
+"based privilege escalation attacks)"
+msgstr ""
+
+#: ../../pep-0493.txt:503
+msgid ""
+"run using the ``-s`` switch (preventing user site directory based "
+"privilege escalation attacks)"
+msgstr ""
+
+#: ../../pep-0493.txt:505
+msgid ""
+"run using the ``-S`` switch (preventing ``sitecustomize`` based privilege"
+" escalation attacks)"
+msgstr ""
+
+#: ../../pep-0493.txt:508
+msgid ""
+"The intent is that the *only* reason HTTPS verification should be getting"
+" turned off installation wide when using this approach is because:"
+msgstr ""
+
+#: ../../pep-0493.txt:511
+msgid ""
+"an end user is running a redistributor provided version of CPython rather"
+" than running upstream CPython directly"
+msgstr ""
+
+#: ../../pep-0493.txt:513
+msgid ""
+"that redistributor has decided to provide a smoother migration path to "
+"verifying HTTPS certificates by default than that being provided by the "
+"upstream project"
+msgstr ""
+
+#: ../../pep-0493.txt:516
+msgid ""
+"either the redistributor or the local infrastructure administrator has "
+"determined that it is appropriate to retain the default pre-2.7.9 "
+"behaviour (at least for the time being)"
+msgstr ""
+
+#: ../../pep-0493.txt:520
+msgid ""
+"Using an administrator controlled configuration file rather than an "
+"environment variable has the essential feature of providing a smoother "
+"migration path, even for applications being run with the ``-E`` switch."
+msgstr ""
+
+#: ../../pep-0493.txt:527
+msgid ""
+"This setting is scoped by the interpreter installation and affects all "
+"Python processes using that interpreter, regardless of whether or not the"
+" interpreter is being run inside an activated Python virtual environment."
+msgstr ""
+
+#: ../../pep-0493.txt:532
+msgid "Origins of this recommendation"
+msgstr ""
+
+#: ../../pep-0493.txt:534
+msgid ""
+"This recommendation is based on the backporting approach adopted for Red "
+"Hat Enterprise Linux 7.2, as published in the original July 2015 draft of"
+" this PEP and described in detail in `this KnowledgeBase article "
+"<https://access.redhat.com/articles/2039753>`__. Red Hat's patches "
+"implementing this backport for Python 2.7.5 can be found in the `CentOS "
+"git repository "
+"<https://git.centos.org/commit/rpms!python.git/refs!heads!c7>`__."
+msgstr ""
+
+#: ../../pep-0493.txt:543
+msgid "Recommendation for combined feature backports"
+msgstr ""
+
+#: ../../pep-0493.txt:545
+msgid ""
+"If a redistributor chooses to backport the environment variable based "
+"configuration setting from this PEP to a modified Python version that "
+"also implements the configuration file based PEP 476 backport, then the "
+"environment variable should take precedence over the system-wide "
+"configuration setting. This allows the setting to be changed for a given "
+"user or application, regardless of the installation-wide default "
+"behaviour."
+msgstr ""
+
+#: ../../pep-0493.txt:589
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0493.txt:591
+msgid "This document has been placed into the public domain."
+msgstr ""
+

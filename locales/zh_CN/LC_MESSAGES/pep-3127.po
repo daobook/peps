@@ -1,0 +1,804 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3127.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3127.txt:1
+msgid "3127"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3127.txt:2
+msgid "Integer Literal Support and Syntax"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3127.txt:5
+msgid "Patrick Maupin <pmaupin@gmail.com>"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-3127.txt:6
+msgid "Python-3000@python.org"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3127.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3127.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3127.txt:10
+msgid "14-Mar-2007"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3127.txt:11
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3127.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3127.txt:12
+msgid "18-Mar-2007"
+msgstr ""
+
+#: ../../pep-3127.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3127.txt:18
+msgid ""
+"This PEP proposes changes to the Python core to rationalize the treatment"
+" of string literal representations of integers in different radices "
+"(bases).  These changes are targeted at Python 3.0, but the backward-"
+"compatible parts of the changes should be added to Python 2.6, so that "
+"all valid 3.0 integer literals will also be valid in 2.6."
+msgstr ""
+
+#: ../../pep-3127.txt:25
+msgid "The proposal is that:"
+msgstr ""
+
+#: ../../pep-3127.txt:27
+msgid ""
+"octal literals must now be specified with a leading \"0o\" or \"0O\" "
+"instead of \"0\";"
+msgstr ""
+
+#: ../../pep-3127.txt:30
+msgid "binary literals are now supported via a leading \"0b\" or \"0B\"; and"
+msgstr ""
+
+#: ../../pep-3127.txt:33
+msgid "provision will be made for binary numbers in string formatting."
+msgstr ""
+
+#: ../../pep-3127.txt:38
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-3127.txt:40
+msgid "This PEP was motivated by two different issues:"
+msgstr ""
+
+#: ../../pep-3127.txt:42
+msgid ""
+"The default octal representation of integers is silently confusing to "
+"people unfamiliar with C-like languages.  It is extremely easy to "
+"inadvertently create an integer object with the wrong value, because "
+"'013' means 'decimal 11', not 'decimal 13', to the Python language "
+"itself, which is not the meaning that most humans would assign to this "
+"literal."
+msgstr ""
+
+#: ../../pep-3127.txt:49
+msgid "Some Python users have a strong desire for binary support in the language."
+msgstr ""
+
+#: ../../pep-3127.txt:54
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3127.txt:57
+msgid "Grammar specification"
+msgstr ""
+
+#: ../../pep-3127.txt:59
+msgid ""
+"The grammar will be changed.  For Python 2.6, the changed and new token "
+"definitions will be::"
+msgstr ""
+
+#: ../../pep-3127.txt:73
+msgid ""
+"For Python 3.0, \"oldoctinteger\" will not be supported, and an exception"
+" will be raised if a literal has a leading \"0\" and a second character "
+"which is a digit."
+msgstr ""
+
+#: ../../pep-3127.txt:77
+msgid ""
+"For both versions, this will require changes to PyLong_FromString as well"
+" as the grammar."
+msgstr ""
+
+#: ../../pep-3127.txt:80
+msgid ""
+"The documentation will have to be changed as well:  grammar.txt, as well "
+"as the integer literal section of the reference manual."
+msgstr ""
+
+#: ../../pep-3127.txt:83
+msgid ""
+"PEP 306 should be checked for other issues, and that PEP should be "
+"updated if the procedure described therein is insufficient."
+msgstr ""
+
+#: ../../pep-3127.txt:87
+msgid "int() specification"
+msgstr ""
+
+#: ../../pep-3127.txt:89
+msgid "int(s, 0) will also match the new grammar definition."
+msgstr ""
+
+#: ../../pep-3127.txt:91
+msgid ""
+"This should happen automatically with the changes to PyLong_FromString "
+"required for the grammar change."
+msgstr ""
+
+#: ../../pep-3127.txt:94
+msgid ""
+"Also the documentation for int() should be changed to explain that int(s)"
+" operates identically to int(s, 10), and the word \"guess\" should be "
+"removed from the description of int(s, 0)."
+msgstr ""
+
+#: ../../pep-3127.txt:99
+msgid "long() specification"
+msgstr ""
+
+#: ../../pep-3127.txt:101
+msgid ""
+"For Python 2.6, the long() implementation and documentation should be "
+"changed to reflect the new grammar."
+msgstr ""
+
+#: ../../pep-3127.txt:105
+msgid "Tokenizer exception handling"
+msgstr ""
+
+#: ../../pep-3127.txt:107
+msgid ""
+"If an invalid token contains a leading \"0\", the exception error message"
+" should be more informative than the current \"SyntaxError: invalid "
+"token\".  It should explain that decimal numbers may not have a leading "
+"zero, and that octal numbers require an \"o\" after the leading zero."
+msgstr ""
+
+#: ../../pep-3127.txt:114
+msgid "int() exception handling"
+msgstr ""
+
+#: ../../pep-3127.txt:116
+msgid ""
+"The ValueError raised for any call to int() with a string should at least"
+" explicitly contain the base in the error message, e.g.::"
+msgstr ""
+
+#: ../../pep-3127.txt:123
+msgid "oct() function"
+msgstr ""
+
+#: ../../pep-3127.txt:125
+msgid ""
+"oct() should be updated to output '0o' in front of the octal digits (for "
+"3.0, and 2.6 compatibility mode)."
+msgstr ""
+
+#: ../../pep-3127.txt:129
+msgid "Output formatting"
+msgstr ""
+
+#: ../../pep-3127.txt:131
+#, python-format
+msgid ""
+"In 3.0, the string % operator alternate syntax for the 'o' option will "
+"need to be updated to add '0o' in front, instead of '0'.  In 2.6, "
+"alternate octal formatting will continue to add only '0'.  In neither 2.6"
+" nor 3.0 will the % operator support binary output.  This is because "
+"binary output is already supported by PEP 3101 (str.format), which is the"
+" preferred string formatting method."
+msgstr ""
+
+#: ../../pep-3127.txt:142
+msgid "Transition from 2.6 to 3.0"
+msgstr ""
+
+#: ../../pep-3127.txt:144
+msgid "The 2to3 translator will have to insert 'o' into any octal string literal."
+msgstr ""
+
+#: ../../pep-3127.txt:147
+msgid ""
+"The Py3K compatible option to Python 2.6 should cause attempts to use "
+"oldoctinteger literals to raise an exception."
+msgstr ""
+
+#: ../../pep-3127.txt:153
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3127.txt:155
+msgid ""
+"Most of the discussion on these issues occurred on the Python-3000 "
+"mailing list starting 14-Mar-2007, prompted by an observation that the "
+"average human being would be completely mystified upon finding that "
+"prepending a \"0\" to a string of digits changes the meaning of that "
+"digit string entirely."
+msgstr ""
+
+#: ../../pep-3127.txt:161
+msgid ""
+"It was pointed out during this discussion that a similar, but shorter, "
+"discussion on the subject occurred in January 2006, prompted by a "
+"discovery of the same issue."
+msgstr ""
+
+#: ../../pep-3127.txt:166
+msgid "Background"
+msgstr ""
+
+#: ../../pep-3127.txt:168
+msgid ""
+"For historical reasons, Python's string representation of integers in "
+"different bases (radices), for string formatting and token literals, "
+"borrows heavily from C.  [1]_ [2]_ Usage has shown that the historical "
+"method of specifying an octal number is confusing, and also that it would"
+" be nice to have additional support for binary literals."
+msgstr ""
+
+#: ../../pep-3127.txt:175
+msgid ""
+"Throughout this document, unless otherwise noted, discussions about the "
+"string representation of integers relate to these features:"
+msgstr ""
+
+#: ../../pep-3127.txt:178
+msgid ""
+"Literal integer tokens, as used by normal module compilation, by eval(), "
+"and by int(token, 0).  (int(token) and int(token, 2-36) are not modified "
+"by this proposal.)"
+msgstr ""
+
+#: ../../pep-3127.txt:182
+msgid "Under 2.6, long() is treated the same as int()"
+msgstr ""
+
+#: ../../pep-3127.txt:184
+#, python-format
+msgid ""
+"Formatting of integers into strings, either via the % string operator or "
+"the new PEP 3101 advanced string formatting method."
+msgstr ""
+
+#: ../../pep-3127.txt:187
+msgid "It is presumed that:"
+msgstr ""
+
+#: ../../pep-3127.txt:189
+msgid ""
+"All of these features should have an identical set of supported radices, "
+"for consistency."
+msgstr ""
+
+#: ../../pep-3127.txt:192
+msgid ""
+"Python source code syntax and int(mystring, 0) should continue to share "
+"identical behavior."
+msgstr ""
+
+#: ../../pep-3127.txt:197
+msgid "Removal of old octal syntax"
+msgstr ""
+
+#: ../../pep-3127.txt:199
+msgid ""
+"This PEP proposes that the ability to specify an octal number by using a "
+"leading zero will be removed from the language in Python 3.0 (and the "
+"Python 3.0 preview mode of 2.6), and that a SyntaxError will be raised "
+"whenever a leading \"0\" is immediately followed by another digit."
+msgstr ""
+
+#: ../../pep-3127.txt:205
+msgid "During the present discussion, it was almost universally agreed that::"
+msgstr ""
+
+#: ../../pep-3127.txt:209
+msgid ""
+"should no longer be true, because that is confusing to new users. It was "
+"also proposed that::"
+msgstr ""
+
+#: ../../pep-3127.txt:214
+msgid ""
+"should become true, but that is much more contentious, because it is so "
+"inconsistent with usage in other computer languages that mistakes are "
+"likely to be made."
+msgstr ""
+
+#: ../../pep-3127.txt:218
+msgid ""
+"Almost all currently popular computer languages, including C/C++, Java, "
+"Perl, and JavaScript, treat a sequence of digits with a leading zero as "
+"an octal number.  Proponents of treating these numbers as decimal instead"
+" have a very valid point -- as discussed in `Supported radices`_, below, "
+"the entire non-computer world uses decimal numbers almost exclusively.  "
+"There is ample anecdotal evidence that many people are dismayed and "
+"confused if they are confronted with non-decimal radices."
+msgstr ""
+
+#: ../../pep-3127.txt:227
+msgid ""
+"However, in most situations, most people do not write gratuitous zeros in"
+" front of their decimal numbers.  The primary exception is when an "
+"attempt is being made to line up columns of numbers.  But since PEP 8 "
+"specifically discourages the use of spaces to try to align Python code, "
+"one would suspect the same argument should apply to the use of leading "
+"zeros for the same purpose."
+msgstr ""
+
+#: ../../pep-3127.txt:234
+msgid ""
+"Finally, although the email discussion often focused on whether anybody "
+"actually *uses* octal any more, and whether we should cater to those old-"
+"timers in any case, that is almost entirely besides the point."
+msgstr ""
+
+#: ../../pep-3127.txt:238
+msgid ""
+"Assume the rare complete newcomer to computing who *does*, either "
+"occasionally or as a matter of habit, use leading zeros for decimal "
+"numbers.  Python could either:"
+msgstr ""
+
+#: ../../pep-3127.txt:242
+msgid "silently do the wrong thing with his numbers, as it does now;"
+msgstr ""
+
+#: ../../pep-3127.txt:244
+msgid ""
+"immediately disabuse him of the notion that this is viable syntax (and "
+"yes, the SyntaxWarning should be more gentle than it currently is, but "
+"that is a subject for a different PEP); or"
+msgstr ""
+
+#: ../../pep-3127.txt:248
+msgid ""
+"let him continue to think that computers are happy with multi-digit "
+"decimal integers which start with \"0\"."
+msgstr ""
+
+#: ../../pep-3127.txt:251
+msgid ""
+"Some people passionately believe that (c) is the correct answer, and they"
+" would be absolutely right if we could be sure that new users will never "
+"blossom and grow and start writing AJAX applications."
+msgstr ""
+
+#: ../../pep-3127.txt:255
+msgid ""
+"So while a new Python user may (currently) be mystified at the delayed "
+"discovery that his numbers don't work properly, we can fix it by "
+"explaining to him immediately that Python doesn't like leading zeros "
+"(hopefully with a reasonable message!), or we can delegate this teaching "
+"experience to the JavaScript interpreter in the Internet Explorer "
+"browser, and let him try to debug his issue there."
+msgstr ""
+
+#: ../../pep-3127.txt:264
+msgid "Supported radices"
+msgstr ""
+
+#: ../../pep-3127.txt:266
+msgid ""
+"This PEP proposes that the supported radices for the Python language will"
+" be 2, 8, 10, and 16."
+msgstr ""
+
+#: ../../pep-3127.txt:269
+msgid ""
+"Once it is agreed that the old syntax for octal (radix 8) representation "
+"of integers must be removed from the language, the next obvious question "
+"is \"Do we actually need a way to specify (and display) numbers in "
+"octal?\""
+msgstr ""
+
+#: ../../pep-3127.txt:274
+msgid ""
+"This question is quickly followed by \"What radices does the language "
+"need to support?\"  Because computers are so adept at doing what you tell"
+" them to, a tempting answer in the discussion was \"all of them.\" This "
+"answer has obviously been given before -- the int() constructor will "
+"accept an explicit radix with a value between 2 and 36, inclusive, with "
+"the latter number bearing a suspicious arithmetic similarity to the sum "
+"of the number of numeric digits and the number of same-case letters in "
+"the ASCII alphabet."
+msgstr ""
+
+#: ../../pep-3127.txt:283
+msgid ""
+"But the best argument for inclusion will have a use-case to back it up, "
+"so the idea of supporting all radices was quickly rejected, and the only "
+"radices left with any real support were decimal, hexadecimal, octal, and "
+"binary."
+msgstr ""
+
+#: ../../pep-3127.txt:288
+msgid ""
+"Just because a particular radix has a vocal supporter on the mailing list"
+" does not mean that it really should be in the language, so the rest of "
+"this section is a treatise on the utility of these particular radices, "
+"vs. other possible choices."
+msgstr ""
+
+#: ../../pep-3127.txt:293
+msgid ""
+"Humans use other numeric bases constantly.  If I tell you that it is "
+"12:30 PM, I have communicated quantitative information arguably composed "
+"of *three* separate bases (12, 60, and 2), only one of which is in the "
+"\"agreed\" list above.  But the *communication* of that information used "
+"two decimal digits each for the base 12 and base 60 information, and, "
+"perversely, two letters for information which could have fit in a single "
+"decimal digit."
+msgstr ""
+
+#: ../../pep-3127.txt:302
+msgid ""
+"So, in general, humans communicate \"normal\" (non-computer) numerical "
+"information either via names (AM, PM, January, ...) or via use of decimal"
+" notation.  Obviously, names are seldom used for large sets of items, so "
+"decimal is used for everything else.  There are studies which attempt to "
+"explain why this is so, typically reaching the expected conclusion that "
+"the Arabic numeral system is well-suited to human cognition. [3]_"
+msgstr ""
+
+#: ../../pep-3127.txt:311
+msgid ""
+"There is even support in the history of the design of computers to "
+"indicate that decimal notation is the correct way for computers to "
+"communicate with humans.  One of the first modern computers, ENIAC [4]_ "
+"computed in decimal, even though there were already existing computers "
+"which operated in binary."
+msgstr ""
+
+#: ../../pep-3127.txt:318
+msgid ""
+"Decimal computer operation was important enough that many computers, "
+"including the ubiquitous PC, have instructions designed to operate on "
+"\"binary coded decimal\" (BCD) [5]_, a representation which devotes 4 "
+"bits to each decimal digit.  These instructions date from a time when the"
+" most strenuous calculations ever performed on many numbers were the "
+"calculations actually required to perform textual I/O with them.  It is "
+"possible to display BCD without having to perform a divide/remainder "
+"operation on every displayed digit, and this was a huge computational win"
+" when most hardware didn't have fast divide capability.  Another factor "
+"contributing to the use of BCD is that, with BCD calculations, rounding "
+"will happen exactly the same way that a human would do it, so BCD is "
+"still sometimes used in fields like finance, despite the computational "
+"and storage superiority of binary."
+msgstr ""
+
+#: ../../pep-3127.txt:334
+msgid ""
+"So, if it weren't for the fact that computers themselves normally use "
+"binary for efficient computation and data storage, string representations"
+" of integers would probably always be in decimal."
+msgstr ""
+
+#: ../../pep-3127.txt:339
+msgid ""
+"Unfortunately, computer hardware doesn't think like humans, so "
+"programmers and hardware engineers must often resort to thinking like the"
+" computer, which means that it is important for Python to have the "
+"ability to communicate binary data in a form that is understandable to "
+"humans."
+msgstr ""
+
+#: ../../pep-3127.txt:345
+msgid ""
+"The requirement that the binary data notation must be cognitively easy "
+"for humans to process means that it should contain an integral number of "
+"binary digits (bits) per symbol, while otherwise conforming quite closely"
+" to the standard tried-and-true decimal notation (position indicates "
+"power, larger magnitude on the left, not too many symbols in the "
+"alphabet, etc.)."
+msgstr ""
+
+#: ../../pep-3127.txt:352
+msgid ""
+"The obvious \"sweet spot\" for this binary data notation is thus octal, "
+"which packs the largest integral number of bits possible into a single "
+"symbol chosen from the Arabic numeral alphabet."
+msgstr ""
+
+#: ../../pep-3127.txt:357
+msgid ""
+"In fact, some computer architectures, such as the PDP8 and the 8080/Z80, "
+"were defined in terms of octal, in the sense of arranging the bitfields "
+"of instructions in groups of three, and using octal representations to "
+"describe the instruction set."
+msgstr ""
+
+#: ../../pep-3127.txt:362
+msgid ""
+"Even today, octal is important because of bit-packed structures which "
+"consist of 3 bits per field, such as Unix file permission masks."
+msgstr ""
+
+#: ../../pep-3127.txt:366
+msgid ""
+"But octal has a drawback when used for larger numbers.  The number of "
+"bits per symbol, while integral, is not itself a power of two.  This "
+"limitation (given that the word size of most computers these days is a "
+"power of two) has resulted in hexadecimal, which is more popular than "
+"octal despite the fact that it requires a 60% larger alphabet than "
+"decimal, because each symbol contains 4 bits."
+msgstr ""
+
+#: ../../pep-3127.txt:374
+msgid ""
+"Some numbers, such as Unix file permission masks, are easily decoded by "
+"humans when represented in octal, but difficult to decode in hexadecimal,"
+" while other numbers are much easier for humans to handle in hexadecimal."
+msgstr ""
+
+#: ../../pep-3127.txt:379
+msgid ""
+"Unfortunately, there are also binary numbers used in computers which are "
+"not very well communicated in either hexadecimal or octal. Thankfully, "
+"fewer people have to deal with these on a regular basis, but on the other"
+" hand, this means that several people on the discussion list questioned "
+"the wisdom of adding a straight binary representation to Python."
+msgstr ""
+
+#: ../../pep-3127.txt:386
+msgid ""
+"One example of where these numbers is very useful is in reading and "
+"writing hardware registers.  Sometimes hardware designers will eschew "
+"human readability and opt for address space efficiency, by packing "
+"multiple bit fields into a single hardware register at unaligned bit "
+"locations, and it is tedious and error-prone for a human to reconstruct a"
+" 5 bit field which consists of the upper 3 bits of one hex digit, and the"
+" lower 2 bits of the next hex digit."
+msgstr ""
+
+#: ../../pep-3127.txt:395
+msgid ""
+"Even if the ability of Python to communicate binary information to humans"
+" is only useful for a small technical subset of the population, it is "
+"exactly that population subset which contains most, if not all, members "
+"of the Python core team, so even straight binary, the least useful of "
+"these notations, has several enthusiastic supporters and few, if any, "
+"staunch opponents, among the Python community."
+msgstr ""
+
+#: ../../pep-3127.txt:403
+msgid "Syntax for supported radices"
+msgstr ""
+
+#: ../../pep-3127.txt:405
+msgid ""
+"This proposal is to use a \"0o\" prefix with either uppercase or "
+"lowercase \"o\" for octal, and a \"0b\" prefix with either uppercase or "
+"lowercase \"b\" for binary."
+msgstr ""
+
+#: ../../pep-3127.txt:409
+msgid ""
+"There was strong support for not supporting uppercase, but this is a "
+"separate subject for a different PEP, as 'j' for complex numbers, 'e' for"
+" exponent, and 'r' for raw string (to name a few) already support "
+"uppercase."
+msgstr ""
+
+#: ../../pep-3127.txt:414
+msgid ""
+"The syntax for delimiting the different radices received a lot of "
+"attention in the discussion on Python-3000.  There are several (sometimes"
+" conflicting) requirements and \"nice-to-haves\" for this syntax:"
+msgstr ""
+
+#: ../../pep-3127.txt:419
+#, python-format
+msgid ""
+"It should be as compatible with other languages and previous versions of "
+"Python as is reasonable, both for the input syntax and for the output "
+"(e.g. string % operator) syntax."
+msgstr ""
+
+#: ../../pep-3127.txt:424
+msgid "It should be as obvious to the casual observer as possible."
+msgstr ""
+
+#: ../../pep-3127.txt:427
+msgid ""
+"It should be easy to visually distinguish integers formatted in the "
+"different bases."
+msgstr ""
+
+#: ../../pep-3127.txt:431
+msgid ""
+"Proposed syntaxes included things like arbitrary radix prefixes, such as "
+"16r100 (256 in hexadecimal), and radix suffixes, similar to the 100h "
+"assembler-style suffix.  The debate on whether the letter \"O\" could be "
+"used for octal was intense -- an uppercase \"O\" looks suspiciously "
+"similar to a zero in some fonts.  Suggestions were made to use a \"c\" "
+"(the second letter of \"oCtal\"), or even to use a \"t\" for \"ocTal\" "
+"and an \"n\" for \"biNary\" to go along with the \"x\" for "
+"\"heXadecimal\"."
+msgstr ""
+
+#: ../../pep-3127.txt:440
+#, python-format
+msgid ""
+"For the string % operator, \"o\" was already being used to denote octal."
+"  Binary formatting is not being added to the % operator because PEP 3101"
+" (Advanced String Formatting) already supports binary, % formatting will "
+"be deprecated in the future."
+msgstr ""
+
+#: ../../pep-3127.txt:445
+msgid ""
+"At the end of the day, since uppercase \"O\" can look like a zero and "
+"uppercase \"B\" can look like an 8, it was decided that these prefixes "
+"should be lowercase only, but, like 'r' for raw string, that can be a "
+"preference or style-guide issue."
+msgstr ""
+
+#: ../../pep-3127.txt:451
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-3127.txt:453
+msgid ""
+"It was suggested in the discussion that lowercase should be used for all "
+"numeric and string special modifiers, such as 'x' for hexadecimal, 'r' "
+"for raw strings, 'e' for exponentiation, and 'j' for complex numbers.  "
+"This is an issue for a separate PEP."
+msgstr ""
+
+#: ../../pep-3127.txt:458
+msgid ""
+"This PEP takes no position on uppercase or lowercase for input, just "
+"noting that, for consistency, if uppercase is not to be removed from "
+"input parsing for other letters, it should be added for octal and binary,"
+" and documenting the changes under this assumption, as there is not yet a"
+" PEP about the case issue."
+msgstr ""
+
+#: ../../pep-3127.txt:464
+#, python-format
+msgid ""
+"Output formatting may be a different story -- there is already ample "
+"precedence for case sensitivity in the output format string, and there "
+"would need to be a consensus that there is a valid use-case for the "
+"\"alternate form\" of the string % operator to support uppercase 'B' or "
+"'O' characters for binary or octal output.  Currently, PEP 3101 does not "
+"even support this alternate capability, and the hex() function does not "
+"allow the programmer to specify the case of the 'x' character."
+msgstr ""
+
+#: ../../pep-3127.txt:473
+msgid ""
+"There are still some strong feelings that '0123' should be allowed as a "
+"literal decimal in Python 3.0.  If this is the right thing to do, this "
+"can easily be covered in an additional PEP.  This proposal only takes the"
+" first step of making '0123' not be a valid octal number, for reasons "
+"covered in the rationale."
+msgstr ""
+
+#: ../../pep-3127.txt:479
+msgid ""
+"Is there (or should there be) an option for the 2to3 translator which "
+"only makes the 2.6 compatible changes?  Should this be run on 2.6 library"
+" code before the 2.6 release?"
+msgstr ""
+
+#: ../../pep-3127.txt:483
+msgid "Should a bin() function which matches hex() and oct() be added?"
+msgstr ""
+
+#: ../../pep-3127.txt:485
+msgid "Is hex() really that useful once we have advanced string formatting?"
+msgstr ""
+
+#: ../../pep-3127.txt:489
+msgid "References"
+msgstr ""
+
+#: ../../pep-3127.txt:491
+msgid ""
+"GNU libc manual printf integer format conversions "
+"(http://www.gnu.org/software/libc/manual/html_node/Integer-"
+"Conversions.html)"
+msgstr ""
+
+#: ../../pep-3127.txt:494
+msgid ""
+"Python string formatting operations "
+"(http://docs.python.org/library/stdtypes.html#string-formatting-"
+"operations)"
+msgstr ""
+
+#: ../../pep-3127.txt:497
+msgid ""
+"The Representation of Numbers, Jiajie Zhang and Donald A. Norman "
+"(http://acad88.sahs.uth.tmc.edu/research/publications/Number-"
+"Representation.pdf)"
+msgstr ""
+
+#: ../../pep-3127.txt:500
+msgid "ENIAC page at Wikipedia (http://en.wikipedia.org/wiki/ENIAC)"
+msgstr ""
+
+#: ../../pep-3127.txt:503
+msgid "BCD page at Wikipedia (http://en.wikipedia.org/wiki/Binary-coded_decimal)"
+msgstr ""
+
+#: ../../pep-3127.txt:507
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3127.txt:509
+msgid "This document has been placed in the public domain."
+msgstr ""
+

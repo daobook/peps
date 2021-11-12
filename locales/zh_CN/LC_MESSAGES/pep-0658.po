@@ -1,0 +1,314 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0658.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0658.rst:1
+msgid "658"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0658.rst:2
+msgid "Serve Distribution Metadata in the Simple Repository API"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0658.rst:3
+msgid "Tzu-ping Chung <uranusjr@gmail.com>"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0658.rst:4
+msgid "Brett Cannon <brett@python.org>"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "PEP-Delegate"
+msgstr ""
+
+#: ../../pep-0658.rst:5
+msgid "Donald Stufft <donald@stufft.io>"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0658.rst:6
+msgid "https://discuss.python.org/t/8651"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0658.rst:7
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0658.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0658.rst:10 ../../pep-0658.rst:11
+msgid "10-May-2021"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0658.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0658.rst:12
+msgid "https://discuss.python.org/t/8651/48"
+msgstr ""
+
+#: ../../pep-0658.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0658.rst:18
+msgid ""
+"This PEP proposes adding an anchor tag to expose the ``METADATA`` file "
+"from distributions in the :pep:`503` \"simple\" repository API. A ``data-"
+"dist-info-metadata`` attribute is introduced to indicate that the file "
+"from a given distribution can be independently fetched."
+msgstr ""
+
+#: ../../pep-0658.rst:25
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0658.rst:27
+msgid ""
+"Package management workflows made popular by recent tooling increase the "
+"need to inspect distribution metadata without intending to install the "
+"distribution, and download multiple distributions of a project to choose "
+"from based on their metadata. This means they end up discarding much "
+"downloaded data, which is inefficient and results in a bad user "
+"experience."
+msgstr ""
+
+#: ../../pep-0658.rst:36
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0658.rst:38
+msgid ""
+"Tools have been exploring methods to reduce the download size by "
+"partially downloading wheels with HTTP range requests. This, however, "
+"adds additional run-time requirements to the repository server. It also "
+"still adds additional overhead, since a separate request is needed to "
+"fetch the wheel's file listing to find the correct offset to fetch the "
+"metadata file. It is therefore desired to make the server extract the "
+"metadata file in advance, and serve it as an independent file to avoid "
+"the need to perform additional requests and ZIP inspection."
+msgstr ""
+
+#: ../../pep-0658.rst:48
+msgid ""
+"The metadata file defined by the Core Metadata Specification [core-"
+"metadata]_ will be served directly by repositories since it contains the "
+"necessary information for common use cases. The metadata must only be "
+"served for standards-compliant distributions such as wheels [wheel]_ and "
+"sdists [sdist]_, and must be identical to the distribution's canonical "
+"metadata file, such as a wheel's ``METADATA`` file in the ``.dist-info`` "
+"directory [dist-info]_."
+msgstr ""
+
+#: ../../pep-0658.rst:56
+msgid ""
+"An HTML attribute on the distribution file's anchor link is needed to "
+"indicate whether a client is able to choose the separately served "
+"metadata file. The attribute is also used to provide the metadata "
+"content's hash for client-side verification. The attribute's absence "
+"indicates that a separate metadata entry is not available for the "
+"distribution, either because of the distribution's content, or lack of "
+"repository support."
+msgstr ""
+
+#: ../../pep-0658.rst:66
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0658.rst:68
+msgid ""
+"In a simple repository's project page, each anchor tag pointing to a "
+"distribution **MAY** have a ``data-dist-info-metadata`` attribute. The "
+"presence of the attribute indicates the distribution represented by the "
+"anchor tag **MUST** contain a Core Metadata file that will not be "
+"modified when the distribution is processed and/or installed."
+msgstr ""
+
+#: ../../pep-0658.rst:74
+msgid ""
+"If a ``data-dist-info-metadata`` attribute is present, the repository "
+"**MUST** serve the distribution's Core Metadata file alongside the "
+"distribution with a ``.metadata`` appended to the distribution's file "
+"name. For example, the Core Metadata of a distribution served at "
+"``/files/distribution-1.0-py3.none.any.whl`` would be located at "
+"``/files/distribution-1.0-py3.none.any.whl.metadata``. This is similar to"
+" how :pep:`503` specifies the GPG signature file's location."
+msgstr ""
+
+#: ../../pep-0658.rst:82
+msgid ""
+"The repository **SHOULD** provide the hash of the Core Metadata file as "
+"the ``data-dist-info-metadata`` attribute's value using the syntax "
+"``<hashname>=<hashvalue>``, where ``<hashname>`` is the lower cased name "
+"of the hash function used, and ``<hashvalue>`` is the hex encoded digest."
+" The repository **MAY** use ``true`` as the attribute's value if a hash "
+"is unavailable."
+msgstr ""
+
+#: ../../pep-0658.rst:91
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0658.rst:93
+msgid ""
+"If an anchor tag lacks the ``data-dist-info-metadata`` attribute, tools "
+"are expected to revert to their current behaviour of downloading the "
+"distribution to inspect the metadata."
+msgstr ""
+
+#: ../../pep-0658.rst:97
+msgid ""
+"Older tools not supporting the new ``data-dist-info-metadata`` attribute "
+"are expected to ignore the attribute and maintain their current behaviour"
+" of downloading the distribution to inspect the metadata. This is similar"
+" to how prior ``data-`` attribute additions expect existing tools to "
+"operate."
+msgstr ""
+
+#: ../../pep-0658.rst:105
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0658.rst:108
+msgid "Put metadata content on the project page"
+msgstr ""
+
+#: ../../pep-0658.rst:110
+msgid ""
+"Since tools generally only need dependency information from a "
+"distribution in addition to what's already available on the project page,"
+" it was proposed that repositories may directly include the information "
+"on the project page, like the ``data-requires-python`` attribute "
+"specified in :pep:`503`."
+msgstr ""
+
+#: ../../pep-0658.rst:116
+msgid ""
+"This approach was abandoned since a distribution may contain arbitrarily "
+"long lists of dependencies (including required and optional), and it is "
+"unclear whether including the information for every distribution in a "
+"project would result in net savings since the information for most "
+"distributions generally ends up unneeded. By serving the metadata "
+"separately, performance can be better estimated since data usage will be "
+"more proportional to the number of distributions inspected."
+msgstr ""
+
+#: ../../pep-0658.rst:127
+msgid "Expose more files in the distribution"
+msgstr ""
+
+#: ../../pep-0658.rst:129
+msgid ""
+"It was proposed to provide the entire ``.dist-info`` directory as a "
+"separate part, instead of only the metadata file. However, searving "
+"multiple files in one entity through HTTP requires re-archiving them "
+"separately after they are extracted from the original distribution by the"
+" repository server, and there are no current use cases for files other "
+"than ``METADATA`` when the distribution itself is not going to be "
+"installed."
+msgstr ""
+
+#: ../../pep-0658.rst:137
+msgid ""
+"It should also be noted that the approach taken here does not preclude "
+"other files from being introduced in the future, whether we want to serve"
+" them together or individually."
+msgstr ""
+
+#: ../../pep-0658.rst:143
+msgid "Explicitly specify the metadata file's URL on the project page"
+msgstr ""
+
+#: ../../pep-0658.rst:145
+msgid ""
+"An early version of this draft proposed putting the metadata file's URL "
+"in the ``data-dist-info-metadata`` attribute. But people feel it is "
+"better for discoverability to require the repository to serve the "
+"metadata file at a determined location instead. The current approach also"
+" has an additional benefit of making the project page smaller."
+msgstr ""
+
+#: ../../pep-0658.rst:153
+msgid "References"
+msgstr ""
+
+#: ../../pep-0658.rst:155
+msgid "https://packaging.python.org/specifications/core-metadata/"
+msgstr ""
+
+#: ../../pep-0658.rst:157
+msgid "https://packaging.python.org/specifications/recording-installed-packages/"
+msgstr ""
+
+#: ../../pep-0658.rst:159
+msgid "https://packaging.python.org/specifications/binary-distribution-format/"
+msgstr ""
+
+#: ../../pep-0658.rst:161
+msgid "https://packaging.python.org/specifications/source-distribution-format/"
+msgstr ""
+
+#: ../../pep-0658.rst:165
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0658.rst:167
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

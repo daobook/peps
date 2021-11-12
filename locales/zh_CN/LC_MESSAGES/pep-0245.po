@@ -1,0 +1,633 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0245.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0245.txt:1
+msgid "245"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0245.txt:2
+msgid "Python Interface Syntax"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0245.txt:5
+msgid "Michel Pelletier <michel@users.sourceforge.net>"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0245.txt:6
+msgid "http://www.zope.org/Wikis/Interfaces"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0245.txt:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0245.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0245.txt:10
+msgid "11-Jan-2001"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0245.txt:11
+msgid "2.2"
+msgstr ""
+
+#: ../../pep-0245.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0245.txt:12
+msgid "21-Mar-2001"
+msgstr ""
+
+#: ../../pep-0245.txt:16
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0245.txt:18
+msgid ""
+"I'm rejecting this PEP.  It's been five years now.  While at some point I"
+" expect that Python will have interfaces, it would be naive to expect it "
+"to resemble the syntax in this PEP.  Also, PEP 246 is being rejected in "
+"favor of something completely different; interfaces won't play a role in "
+"adaptation or whatever will replace it.  GvR."
+msgstr ""
+
+#: ../../pep-0245.txt:26
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0245.txt:28
+msgid ""
+"This PEP describes a proposed syntax for creating interface objects in "
+"Python."
+msgstr ""
+
+#: ../../pep-0245.txt:33
+msgid "Overview"
+msgstr ""
+
+#: ../../pep-0245.txt:35
+msgid ""
+"In addition to thinking about adding a static type system to Python, the "
+"Types-SIG was also charged to devise an interface system for Python.  In "
+"December of 1998, Jim Fulton released a prototype interfaces system based"
+" on discussions from the SIG. Many of the issues and background "
+"information on this discussion and prototype can be found in the SIG "
+"archives [1]_."
+msgstr ""
+
+#: ../../pep-0245.txt:42
+msgid ""
+"Around the end of 2000, Digital Creations began thinking about better "
+"component model designs for Zope [2]_.  Zope's future component model "
+"relies heavily on interface objects.  This led to further development of "
+"Jim's \"Scarecrow\" interfaces prototype. Starting with version 2.3, Zope"
+" comes with an Interface package as standard software.  Zope's Interface "
+"package is used as the reference implementation for this PEP."
+msgstr ""
+
+#: ../../pep-0245.txt:50
+msgid ""
+"The syntax proposed by this PEP relies on syntax enhancements describe in"
+" PEP 232 [3]_ and describes an underlying framework which PEP 233 [4]_ "
+"could be based upon.  There is some work being done with regard to "
+"interface objects and Proxy objects, so for those optional parts of this "
+"PEP you may want to see [5]_."
+msgstr ""
+
+#: ../../pep-0245.txt:58
+msgid "The Problem"
+msgstr ""
+
+#: ../../pep-0245.txt:60
+msgid ""
+"Interfaces are important because they solve a number of problems that "
+"arise while developing software:"
+msgstr ""
+
+#: ../../pep-0245.txt:63
+msgid ""
+"There are many implied interfaces in Python, commonly referred to as "
+"\"protocols\".  Currently determining those protocols is based on "
+"implementation introspection, but often that also fails.  For example, "
+"defining ``__getitem__`` implies both a sequence and a mapping (the "
+"former with sequential, integer keys).  There is no way for the developer"
+" to be explicit about which protocols the object intends to implement."
+msgstr ""
+
+#: ../../pep-0245.txt:71
+msgid ""
+"Python is limited, from the developer's point of view, by the split "
+"between types and classes.  When types are expected, the consumer uses "
+"code like 'type(foo) == type(\"\")' to determine if 'foo' is a string.  "
+"When instances of classes are expected, the consumer uses "
+"'isinstance(foo, MyString)' to determine if 'foo' is an instance of the "
+"'MyString' class.  There is no unified model for determining if an object"
+" can be used in a certain, valid way."
+msgstr ""
+
+#: ../../pep-0245.txt:80
+msgid ""
+"Python's dynamic typing is very flexible and powerful, but it does not "
+"have the advantage of static typed languages that provide type checking."
+"  Static typed languages provide you with much more type safety, but are "
+"often overly verbose because objects can only be generalized by common "
+"subclassing and used specifically with casting (for example, in Java)."
+msgstr ""
+
+#: ../../pep-0245.txt:87
+msgid ""
+"There are also a number of documentation problems that interfaces try to "
+"solve."
+msgstr ""
+
+#: ../../pep-0245.txt:90
+msgid ""
+"Developers waste a lot of time looking at the source code of your system "
+"to figure out how objects work."
+msgstr ""
+
+#: ../../pep-0245.txt:93
+msgid ""
+"Developers who are new to your system may misunderstand how your objects "
+"work, causing, and possibly propagating, usage errors."
+msgstr ""
+
+#: ../../pep-0245.txt:96
+msgid ""
+"Because a lack of interfaces means usage is inferred from the source, "
+"developers may end up using methods and attributes that are meant for "
+"\"internal use only\"."
+msgstr ""
+
+#: ../../pep-0245.txt:100
+msgid ""
+"Code inspection can be hard, and very discouraging to novice programmers "
+"trying to properly understand code written by gurus."
+msgstr ""
+
+#: ../../pep-0245.txt:103
+msgid ""
+"A lot of time is wasted when many people try very hard to understand "
+"obscurity (like undocumented software).  Effort spend up front "
+"documenting interfaces will save much of this time in the end."
+msgstr ""
+
+#: ../../pep-0245.txt:108
+msgid ""
+"Interfaces try to solve these problems by providing a way for you to "
+"specify a contractual obligation for your object, documentation on how to"
+" use an object, and a built-in mechanism for discovering the contract and"
+" the documentation."
+msgstr ""
+
+#: ../../pep-0245.txt:113
+msgid ""
+"Python has very useful introspection features.  It is well known that "
+"this makes exploring concepts in the interactive interpreter easier, "
+"because Python gives you the ability to look at all kinds of information "
+"about the objects: the type, doc strings, instance dictionaries, base "
+"classes, unbound methods and more."
+msgstr ""
+
+#: ../../pep-0245.txt:119
+msgid ""
+"Many of these features are oriented toward introspecting, using and "
+"changing the implementation of software, and one of them (\"doc "
+"strings\") is oriented toward providing documentation.  This proposal "
+"describes an extension to this natural introspection framework that "
+"describes an object's interface."
+msgstr ""
+
+#: ../../pep-0245.txt:127
+msgid "Overview of the Interface Syntax"
+msgstr ""
+
+#: ../../pep-0245.txt:129
+msgid ""
+"For the most part, the syntax of interfaces is very much like the syntax "
+"of classes, but future needs, or needs brought up in discussion, may "
+"define new possibilities for interface syntax."
+msgstr ""
+
+#: ../../pep-0245.txt:133
+msgid ""
+"A formal BNF description of the syntax is givena later in the PEP, for "
+"the purposes of illustration, here is an example of two different "
+"interfaces created with the proposed syntax::"
+msgstr ""
+
+#: ../../pep-0245.txt:161
+msgid ""
+"This code, when evaluated, will create two interfaces called "
+"``CountFishInterface`` and ``ColorFishInterface``. These interfaces are "
+"defined by the ``interface`` statement."
+msgstr ""
+
+#: ../../pep-0245.txt:165
+msgid ""
+"The prose documentation for the interfaces and their methods come from "
+"doc strings.  The method signature information comes from the signatures "
+"of the ``def`` statements.  Notice how there is no body for the def "
+"statements.  The interface does not implement a service to anything; it "
+"merely describes one.  Documentation strings on interfaces and interface "
+"methods are mandatory, a 'pass' statement cannot be provided.  The "
+"interface equivalent of a pass statement is an empty doc string."
+msgstr ""
+
+#: ../../pep-0245.txt:174
+msgid ""
+"You can also create interfaces that \"extend\" other interfaces. Here, "
+"you can see a new type of Interface that extends the CountFishInterface "
+"and ColorFishInterface::"
+msgstr ""
+
+#: ../../pep-0245.txt:190
+msgid ""
+"The FishMarketInterface extends upon the CountFishInterface and "
+"ColorfishInterface."
+msgstr ""
+
+#: ../../pep-0245.txt:195
+msgid "Interface Assertion"
+msgstr ""
+
+#: ../../pep-0245.txt:197
+msgid ""
+"The next step is to put classes and interfaces together by creating a "
+"concrete Python class that asserts that it implements an interface.  Here"
+" is an example FishMarket component that might do this::"
+msgstr ""
+
+#: ../../pep-0245.txt:244
+msgid ""
+"This new class, FishMarket defines a concrete class which implements the "
+"FishMarketInterface.  The object following the ``implements`` statement "
+"is called an \"interface assertion\".  An interface assertion can be "
+"either an interface object, or tuple of interface assertions."
+msgstr ""
+
+#: ../../pep-0245.txt:250
+msgid ""
+"The interface assertion provided in a ``class`` statement like this is "
+"stored in the class's ``__implements__`` class attribute.  After "
+"interpreting the above example, you would have a class statement that can"
+" be examined like this with an 'implements' built-in function::"
+msgstr ""
+
+#: ../../pep-0245.txt:265
+msgid ""
+"A class can realize more than one interface.  For example, say you had an"
+" interface called ``ItemInterface`` that described how an object worked "
+"as an item in a container object.  If you wanted to assert that "
+"FishMarket instances realized the ItemInterface interface as well as the "
+"FishMarketInterface, you can provide an interface assertion that "
+"contained a tuple of interface objects to the FishMarket class::"
+msgstr ""
+
+#: ../../pep-0245.txt:276
+msgid ""
+"Interface assertions can also be used if you want to assert that one "
+"class implements an interface, and all of the interfaces that another "
+"class implements::"
+msgstr ""
+
+#: ../../pep-0245.txt:286
+msgid ""
+"This new class YourFishMarket, asserts that it implements the "
+"FooInterface, as well as the interfaces implemented by the MyFishMarket "
+"class."
+msgstr ""
+
+#: ../../pep-0245.txt:290
+msgid ""
+"It's worth going into a little bit more detail about interface "
+"assertions.  An interface assertion is either an interface object, or a "
+"tuple of interface assertions.  For example::"
+msgstr ""
+
+#: ../../pep-0245.txt:300
+msgid ""
+"Are all valid interface assertions.  When two interfaces define the same "
+"attributes, the order in which information is preferred in the assertion "
+"is from top-to-bottom, left-to-right."
+msgstr ""
+
+#: ../../pep-0245.txt:304
+msgid ""
+"There are other interface proposals that, in the need for simplicity, "
+"have combined the notion of class and interface to provide simple "
+"interface enforcement.  Interface objects have a ``deferred`` method that"
+" returns a deferred class that implements this behavior::"
+msgstr ""
+
+#: ../../pep-0245.txt:323
+msgid ""
+"This provides for a bit of passive interface enforcement by telling you "
+"what you forgot to do to implement that interface."
+msgstr ""
+
+#: ../../pep-0245.txt:328
+msgid "Formal Interface Syntax"
+msgstr ""
+
+#: ../../pep-0245.txt:330
+msgid ""
+"Python syntax is defined in a modified BNF grammar notation described in "
+"the Python Reference Manual [8]_.  This section describes the proposed "
+"interface syntax using this grammar::"
+msgstr ""
+
+#: ../../pep-0245.txt:338
+msgid ""
+"An interface definition is an executable statement.  It first evaluates "
+"the extends list, if present.  Each item in the extends list should "
+"evaluate to an interface object."
+msgstr ""
+
+#: ../../pep-0245.txt:342
+msgid ""
+"The interface's suite is then executed in a new execution frame (see the "
+"Python Reference Manual, section 4.1), using a newly created local "
+"namespace and the original global namespace.  When the interface's suite "
+"finishes execution, its execution frame is discarded but its local "
+"namespace is saved as interface elements. An interface object is then "
+"created using the extends list for the base interfaces and the saved "
+"interface elements.  The interface name is bound to this interface object"
+" in the original local namespace."
+msgstr ""
+
+#: ../../pep-0245.txt:352
+msgid "This PEP also proposes an extension to Python's 'class' statement::"
+msgstr ""
+
+#: ../../pep-0245.txt:363
+msgid ""
+"Before a class' suite is executed, the 'inheritance' and 'implements' "
+"statements are evaluated, if present.  The 'inheritance' behavior is "
+"unchanged as defined in Section 7.6 of the Language Reference."
+msgstr ""
+
+#: ../../pep-0245.txt:368
+msgid ""
+"The 'implements', if present, is evaluated after inheritance. This must "
+"evaluate to an interface specification, which is either an interface, or "
+"a tuple of interface specifications.  If a valid interface specification "
+"is present, the assertion is assigned to the class object's "
+"'__implements__' attribute, as a tuple."
+msgstr ""
+
+#: ../../pep-0245.txt:374
+msgid ""
+"This PEP does not propose any changes to the syntax of function "
+"definitions or assignments."
+msgstr ""
+
+#: ../../pep-0245.txt:379
+msgid "Classes and Interfaces"
+msgstr ""
+
+#: ../../pep-0245.txt:381
+msgid ""
+"The example interfaces above do not describe any kind of behavior for "
+"their methods, they just describe an interface that a typical FishMarket "
+"object would realize."
+msgstr ""
+
+#: ../../pep-0245.txt:385
+msgid ""
+"You may notice a similarity between interfaces extending from other "
+"interfaces and classes sub-classing from other classes. This is a similar"
+" concept.  However it is important to note that interfaces extend "
+"interfaces and classes subclass classes.  You cannot extend a class or "
+"subclass an interface.  Classes and interfaces are separate."
+msgstr ""
+
+#: ../../pep-0245.txt:392
+msgid ""
+"The purpose of a class is to share the implementation of how an object "
+"works.  The purpose of an interface is to document how to work with an "
+"object, not how the object is implemented.  It is possible to have "
+"several different classes with very different implementations realize the"
+" same interface."
+msgstr ""
+
+#: ../../pep-0245.txt:398
+msgid ""
+"It's also possible to implement one interface with many classes that mix "
+"in pieces the functionality of the interface or, conversely, it's "
+"possible to have one class implement many interfaces.  Because of this, "
+"interfaces and classes should not be confused or intermingled."
+msgstr ""
+
+#: ../../pep-0245.txt:406
+msgid "Interface-aware built-ins"
+msgstr ""
+
+#: ../../pep-0245.txt:408
+msgid ""
+"A useful extension to Python's list of built-in functions in the light of"
+" interface objects would be ``implements()``.  This builtin would expect "
+"two arguments, an object and an interface, and return a true value if the"
+" object implements the interface, false otherwise.  For example::"
+msgstr ""
+
+#: ../../pep-0245.txt:420
+msgid ""
+"Currently, this functionality exists in the reference implementation as "
+"functions in the ``Interface`` package, requiring an \"import Interface\""
+" to use it.  Its existence as a built-in would be purely for a "
+"convenience, and not necessary for using interfaces, and analogous to "
+"``isinstance()`` for classes."
+msgstr ""
+
+#: ../../pep-0245.txt:428
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-0245.txt:430
+msgid ""
+"The proposed interface model does not introduce any backward "
+"compatibility issues in Python.  The proposed syntax, however, does."
+msgstr ""
+
+#: ../../pep-0245.txt:434
+msgid ""
+"Any existing code that uses ``interface`` as an identifier will break.  "
+"There may be other kinds of backwards incompatibility that defining "
+"``interface`` as a new keyword will introduce.  This extension to "
+"Python's syntax does not change any existing syntax in any backward "
+"incompatible way."
+msgstr ""
+
+#: ../../pep-0245.txt:440
+msgid ""
+"The new ``from __future__`` Python syntax [6]_, and the new warning "
+"framework [7]_ is ideal for resolving this backward incompatibility.  To "
+"use interface syntax now, a developer could use the statement::"
+msgstr ""
+
+#: ../../pep-0245.txt:447
+msgid ""
+"In addition, any code that uses the keyword ``interface`` as an "
+"identifier will be issued a warning from Python.  After the appropriate "
+"period of time, the interface syntax would become standard, the above "
+"import statement would do nothing, and any identifiers named "
+"``interface`` would raise an exception.  This period of time is proposed "
+"to be 24 months."
+msgstr ""
+
+#: ../../pep-0245.txt:456
+msgid "Summary of Proposed Changes to Python"
+msgstr ""
+
+#: ../../pep-0245.txt:458
+msgid ""
+"Adding new ``interface`` keyword and extending class syntax with "
+"``implements``."
+msgstr ""
+
+#: ../../pep-0245.txt:461
+msgid "Extending class interface to include ``__implements__``."
+msgstr ""
+
+#: ../../pep-0245.txt:463
+msgid "Add 'implements(obj, interface)' built-in."
+msgstr ""
+
+#: ../../pep-0245.txt:467
+msgid "Risks"
+msgstr ""
+
+#: ../../pep-0245.txt:469
+msgid ""
+"This PEP proposes adding one new keyword to the Python language, "
+"``interface``.  This will break code."
+msgstr ""
+
+#: ../../pep-0245.txt:474
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0245.txt:477
+msgid "Goals"
+msgstr ""
+
+#: ../../pep-0245.txt:480
+msgid "Syntax"
+msgstr ""
+
+#: ../../pep-0245.txt:483
+msgid "Architecture"
+msgstr ""
+
+#: ../../pep-0245.txt:487
+msgid "Dissenting Opinion"
+msgstr ""
+
+#: ../../pep-0245.txt:489
+msgid "This PEP has not yet been discussed on python-dev."
+msgstr ""
+
+#: ../../pep-0245.txt:493
+msgid "References"
+msgstr ""
+
+#: ../../pep-0245.txt:495
+msgid "https://mail.python.org/pipermail/types-sig/1998-December/date.html"
+msgstr ""
+
+#: ../../pep-0245.txt:497
+msgid "http://www.zope.org"
+msgstr ""
+
+#: ../../pep-0245.txt:499
+msgid ""
+"PEP 232, Function Attributes, Warsaw "
+"http://www.python.org/dev/peps/pep-0232/"
+msgstr ""
+
+#: ../../pep-0245.txt:502
+msgid ""
+"PEP 233, Python Online Help, Prescod "
+"http://www.python.org/dev/peps/pep-0233/"
+msgstr ""
+
+#: ../../pep-0245.txt:505
+msgid "http://www.lemburg.com/files/python/mxProxy.html"
+msgstr ""
+
+#: ../../pep-0245.txt:507
+msgid ""
+"PEP 236, Back to the __future__, Peters "
+"http://www.python.org/dev/peps/pep-0236/"
+msgstr ""
+
+#: ../../pep-0245.txt:510
+msgid ""
+"PEP 230, Warning Framework, van Rossum "
+"http://www.python.org/dev/peps/pep-0236/"
+msgstr ""
+
+#: ../../pep-0245.txt:513
+msgid "Python Reference Manual http://docs.python.org/reference/"
+msgstr ""
+
+#: ../../pep-0245.txt:518
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0245.txt:520
+msgid "This document has been placed in the public domain."
+msgstr ""
+

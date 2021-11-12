@@ -1,0 +1,807 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0526.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0526.txt:1
+msgid "526"
+msgstr ""
+
+#: ../../pep-0526.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0526.txt:2
+msgid "Syntax for Variable Annotations"
+msgstr ""
+
+#: ../../pep-0526.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0526.txt:5
+msgid ""
+"Ryan Gonzalez <rymg19@gmail.com>, Philip House <phouse512@gmail.com>, "
+"Ivan Levkivskyi <levkivskyi@gmail.com>, Lisa Roach "
+"<lisaroach14@gmail.com>, Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0526.txt ../../pep-0526.txt:16
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0526.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0526.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0526.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0526.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0526.txt:9
+msgid "09-Aug-2016"
+msgstr ""
+
+#: ../../pep-0526.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0526.txt:10
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0526.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0526.txt:11
+msgid "30-Aug-2016, 02-Sep-2016"
+msgstr ""
+
+#: ../../pep-0526.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0526.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2016-September/146282.html"
+msgstr ""
+
+#: ../../pep-0526.txt:18
+msgid ""
+"This PEP has been provisionally accepted by the BDFL. See the acceptance "
+"message for more color: https://mail.python.org/pipermail/python-"
+"dev/2016-September/146282.html"
+msgstr ""
+
+#: ../../pep-0526.txt:24
+msgid "Notice for Reviewers"
+msgstr ""
+
+#: ../../pep-0526.txt:26
+msgid ""
+"This PEP was drafted in a separate repo: "
+"https://github.com/phouse512/peps/tree/pep-0526."
+msgstr ""
+
+#: ../../pep-0526.txt:29
+msgid ""
+"There was preliminary discussion on python-ideas and at "
+"https://github.com/python/typing/issues/258."
+msgstr ""
+
+#: ../../pep-0526.txt:32
+msgid ""
+"Before you bring up an objection in a public forum please at least read "
+"the summary of `rejected`_ ideas listed at the end of this PEP."
+msgstr ""
+
+#: ../../pep-0526.txt:37
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0526.txt:39
+msgid ""
+"PEP 484 introduced type hints, a.k.a. type annotations.  While its main "
+"focus was function annotations, it also introduced the notion of type "
+"comments to annotate variables::"
+msgstr ""
+
+#: ../../pep-0526.txt:53
+msgid ""
+"This PEP aims at adding syntax to Python for annotating the types of "
+"variables (including class variables and instance variables), instead of "
+"expressing them through comments::"
+msgstr ""
+
+#: ../../pep-0526.txt:64
+msgid ""
+"PEP 484 explicitly states that type comments are intended to help with "
+"type inference in complex cases, and this PEP does not change this "
+"intention.  However, since in practice type comments have also been "
+"adopted for class variables and instance variables, this PEP also "
+"discusses the use of type annotations for those variables."
+msgstr ""
+
+#: ../../pep-0526.txt:72
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0526.txt:74
+msgid ""
+"Although type comments work well enough, the fact that they're expressed "
+"through comments has some downsides:"
+msgstr ""
+
+#: ../../pep-0526.txt:77
+msgid "Text editors often highlight comments differently from type annotations."
+msgstr ""
+
+#: ../../pep-0526.txt:79
+msgid ""
+"There's no way to annotate the type of an undefined variable; one needs "
+"to initialize it to ``None`` (e.g. ``a = None # type: int``)."
+msgstr ""
+
+#: ../../pep-0526.txt:82
+msgid "Variables annotated in a conditional branch are difficult to read::"
+msgstr ""
+
+#: ../../pep-0526.txt:89
+msgid ""
+"Since type comments aren't actually part of the language, if a Python "
+"script wants to parse them, it requires a custom parser instead of just "
+"using ``ast``."
+msgstr ""
+
+#: ../../pep-0526.txt:93
+msgid ""
+"Type comments are used a lot in typeshed. Migrating typeshed to use the "
+"variable annotation syntax instead of type comments would improve "
+"readability of stubs."
+msgstr ""
+
+#: ../../pep-0526.txt:97
+msgid ""
+"In situations where normal comments and type comments are used together, "
+"it is difficult to distinguish them::"
+msgstr ""
+
+#: ../../pep-0526.txt:102
+msgid ""
+"It's impossible to retrieve the annotations at runtime outside of "
+"attempting to find the module's source code and parse it at runtime, "
+"which is inelegant, to say the least."
+msgstr ""
+
+#: ../../pep-0526.txt:106
+msgid ""
+"The majority of these issues can be alleviated by making the syntax a "
+"core part of the language. Moreover, having a dedicated annotation syntax"
+" for class and instance variables (in addition to method annotations) "
+"will pave the way to static duck-typing as a complement to nominal typing"
+" defined by PEP 484."
+msgstr ""
+
+#: ../../pep-0526.txt:113
+msgid "Non-goals"
+msgstr ""
+
+#: ../../pep-0526.txt:115
+msgid ""
+"While the proposal is accompanied by an extension of the "
+"``typing.get_type_hints`` standard library function for runtime retrieval"
+" of annotations, variable annotations are not designed for runtime type "
+"checking. Third party packages will have to be developed to implement "
+"such functionality."
+msgstr ""
+
+#: ../../pep-0526.txt:120
+msgid ""
+"It should also be emphasized that **Python will remain a dynamically "
+"typed language, and the authors have no desire to ever make type hints "
+"mandatory, even by convention.** Type annotations should not be confused "
+"with variable declarations in statically typed languages. The goal of "
+"annotation syntax is to provide an easy way to specify structured type "
+"metadata for third party tools."
+msgstr ""
+
+#: ../../pep-0526.txt:127
+msgid ""
+"This PEP does not require type checkers to change their type checking "
+"rules. It merely provides a more readable syntax to replace type "
+"comments."
+msgstr ""
+
+#: ../../pep-0526.txt:133
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0526.txt:135
+msgid ""
+"Type annotation can be added to an assignment statement or to a single "
+"expression indicating the desired type of the annotation target to a "
+"third party type checker::"
+msgstr ""
+
+#: ../../pep-0526.txt:144
+msgid ""
+"This syntax does not introduce any new semantics beyond PEP 484, so that "
+"the following three statements are equivalent::"
+msgstr ""
+
+#: ../../pep-0526.txt:151
+msgid ""
+"Below we specify the syntax of type annotations in different contexts and"
+" their runtime effects."
+msgstr ""
+
+#: ../../pep-0526.txt:154
+msgid ""
+"We also suggest how type checkers might interpret annotations, but "
+"compliance to these suggestions is not mandatory.  (This is in line with "
+"the attitude towards compliance in PEP 484.)"
+msgstr ""
+
+#: ../../pep-0526.txt:159
+msgid "Global and local variable annotations"
+msgstr ""
+
+#: ../../pep-0526.txt:161
+msgid "The types of locals and globals can be annotated as follows::"
+msgstr ""
+
+#: ../../pep-0526.txt:166
+msgid ""
+"Being able to omit the initial value allows for easier typing of "
+"variables assigned in conditional branches::"
+msgstr ""
+
+#: ../../pep-0526.txt:175
+msgid ""
+"Note that, although the syntax does allow tuple packing, it does *not* "
+"allow one to annotate the types of variables when tuple unpacking is "
+"used::"
+msgstr ""
+
+#: ../../pep-0526.txt:189
+msgid "Omitting the initial value leaves the variable uninitialized::"
+msgstr ""
+
+#: ../../pep-0526.txt:194
+msgid ""
+"However, annotating a local variable will cause the interpreter to always"
+" make it a local::"
+msgstr ""
+
+#: ../../pep-0526.txt:202
+msgid "as if the code were::"
+msgstr ""
+
+#: ../../pep-0526.txt:208
+msgid ""
+"Duplicate type annotations will be ignored. However, static type checkers"
+" may issue a warning for annotations of the same variable by a different "
+"type::"
+msgstr ""
+
+#: ../../pep-0526.txt:218
+msgid "Class and instance variable annotations"
+msgstr ""
+
+#: ../../pep-0526.txt:220
+msgid ""
+"Type annotations can also be used to annotate class and instance "
+"variables in class bodies and methods. In particular, the value-less "
+"notation ``a: int`` allows one to annotate instance variables that should"
+" be initialized in ``__init__`` or ``__new__``. The proposed syntax is as"
+" follows::"
+msgstr ""
+
+#: ../../pep-0526.txt:230
+msgid ""
+"Here ``ClassVar`` is a special class defined by the typing module that "
+"indicates to the static type checker that this variable should not be set"
+" on instances."
+msgstr ""
+
+#: ../../pep-0526.txt:234
+msgid ""
+"Note that a ``ClassVar`` parameter cannot include any type variables, "
+"regardless of the level of nesting: ``ClassVar[T]`` and "
+"``ClassVar[List[Set[T]]]`` are both invalid if ``T`` is a type variable."
+msgstr ""
+
+#: ../../pep-0526.txt:238
+msgid "This could be illustrated with a more detailed example. In this class::"
+msgstr ""
+
+#: ../../pep-0526.txt:252
+msgid ""
+"``stats`` is intended to be a class variable (keeping track of many "
+"different per-game statistics), while ``captain`` is an instance variable"
+" with a default value set in the class. This difference might not be seen"
+" by a type checker: both get initialized in the class, but ``captain`` "
+"serves only as a convenient default value for the instance variable, "
+"while ``stats`` is truly a class variable -- it is intended to be shared "
+"by all instances."
+msgstr ""
+
+#: ../../pep-0526.txt:259
+msgid ""
+"Since both variables happen to be initialized at the class level, it is "
+"useful to distinguish them by marking class variables as annotated with "
+"types wrapped in ``ClassVar[...]``. In this way a type checker may flag "
+"accidental assignments to attributes with the same name on instances."
+msgstr ""
+
+#: ../../pep-0526.txt:264
+msgid "For example, annotating the discussed class::"
+msgstr ""
+
+#: ../../pep-0526.txt:283
+msgid ""
+"As a matter of convenience (and convention), instance variables can be "
+"annotated in ``__init__`` or other methods, rather than in the class::"
+msgstr ""
+
+#: ../../pep-0526.txt:294
+msgid "Annotating expressions"
+msgstr ""
+
+#: ../../pep-0526.txt:296
+msgid ""
+"The target of the annotation can be any valid single assignment target, "
+"at least syntactically (it is up to the type checker what to do with "
+"this)::"
+msgstr ""
+
+#: ../../pep-0526.txt:311
+msgid ""
+"Note that even a parenthesized name is considered an expression, not a "
+"simple name::"
+msgstr ""
+
+#: ../../pep-0526.txt:318
+msgid "Where annotations aren't allowed"
+msgstr ""
+
+#: ../../pep-0526.txt:320
+msgid ""
+"It is illegal to attempt to annotate variables subject to ``global`` or "
+"``nonlocal`` in the same function scope::"
+msgstr ""
+
+#: ../../pep-0526.txt:330
+msgid ""
+"The reason is that ``global`` and ``nonlocal`` don't own variables; "
+"therefore, the type annotations belong in the scope owning the variable."
+msgstr ""
+
+#: ../../pep-0526.txt:333
+msgid ""
+"Only single assignment targets and single right hand side values are "
+"allowed. In addition, one cannot annotate variables used in a ``for`` or "
+"``with`` statement; they can be annotated ahead of time, in a similar "
+"manner to tuple unpacking::"
+msgstr ""
+
+#: ../../pep-0526.txt:347
+msgid "Variable annotations in stub files"
+msgstr ""
+
+#: ../../pep-0526.txt:349
+msgid ""
+"As variable annotations are more readable than type comments, they are "
+"preferred in stub files for all versions of Python, including Python 2.7."
+" Note that stub files are not executed by Python interpreters, and "
+"therefore using variable annotations will not lead to errors. Type "
+"checkers should support variable annotations in stubs for all versions of"
+" Python. For example::"
+msgstr ""
+
+#: ../../pep-0526.txt:363
+msgid "Preferred coding style for variable annotations"
+msgstr ""
+
+#: ../../pep-0526.txt:365
+msgid ""
+"Annotations for module level variables, class and instance variables, and"
+" local variables should have a single space after corresponding colon. "
+"There should be no space before the colon. If an assignment has right "
+"hand side, then the equality sign should have exactly one space on both "
+"sides. Examples:"
+msgstr ""
+
+#: ../../pep-0526.txt:371
+msgid "Yes::"
+msgstr ""
+
+#: ../../pep-0526.txt:379
+msgid "No::"
+msgstr ""
+
+#: ../../pep-0526.txt:389
+msgid "Changes to Standard Library and Documentation"
+msgstr ""
+
+#: ../../pep-0526.txt:391
+msgid ""
+"A new covariant type ``ClassVar[T_co]`` is added to the ``typing`` "
+"module. It accepts only a single argument that should be a valid type, "
+"and is used to annotate class variables that should not be set on class "
+"instances. This restriction is ensured by static checkers, but not at "
+"runtime. See the `classvar`_ section for examples and explanations for "
+"the usage of ``ClassVar``, and see the `rejected`_ section for more "
+"information on the reasoning behind ``ClassVar``."
+msgstr ""
+
+#: ../../pep-0526.txt:400
+msgid ""
+"Function ``get_type_hints`` in the ``typing`` module will be extended, so"
+" that one can retrieve type annotations at runtime from modules and "
+"classes as well as functions. Annotations are returned as a dictionary "
+"mapping from variable or arguments to their type hints with forward "
+"references evaluated. For classes it returns a mapping (perhaps "
+"``collections.ChainMap``) constructed from annotations in method "
+"resolution order."
+msgstr ""
+
+#: ../../pep-0526.txt:408
+msgid ""
+"Recommended guidelines for using annotations will be added to the "
+"documentation, containing a pedagogical recapitulation of specifications "
+"described in this PEP and in PEP 484. In addition, a helper script for "
+"translating type comments into type annotations will be published "
+"separately from the standard library."
+msgstr ""
+
+#: ../../pep-0526.txt:416
+msgid "Runtime Effects of Type Annotations"
+msgstr ""
+
+#: ../../pep-0526.txt:418
+msgid ""
+"Annotating a local variable will cause the interpreter to treat it as a "
+"local, even if it was never assigned to. Annotations for local variables "
+"will not be evaluated::"
+msgstr ""
+
+#: ../../pep-0526.txt:425
+msgid ""
+"However, if it is at a module or class level, then the type *will* be "
+"evaluated::"
+msgstr ""
+
+#: ../../pep-0526.txt:432
+msgid ""
+"In addition, at the module or class level, if the item being annotated is"
+" a *simple name*, then it and the annotation will be stored in the "
+"``__annotations__`` attribute of that module or class (mangled if "
+"private) as an ordered mapping from names to evaluated annotations. Here "
+"is an example::"
+msgstr ""
+
+#: ../../pep-0526.txt:448
+msgid "``__annotations__`` is writable, so this is permitted::"
+msgstr ""
+
+#: ../../pep-0526.txt:452
+msgid ""
+"But attempting to update ``__annotations__`` to something other than an "
+"ordered mapping may result in a TypeError::"
+msgstr ""
+
+#: ../../pep-0526.txt:459
+msgid ""
+"(Note that the assignment to ``__annotations__``, which is the culprit, "
+"is accepted by the Python interpreter without questioning it -- but the "
+"subsequent type annotation expects it to be a ``MutableMapping`` and will"
+" fail.)"
+msgstr ""
+
+#: ../../pep-0526.txt:464
+msgid ""
+"The recommended way of getting annotations at runtime is by using "
+"``typing.get_type_hints`` function; as with all dunder attributes, any "
+"undocummented use of ``__annotations__`` is subject to breakage without "
+"warning::"
+msgstr ""
+
+#: ../../pep-0526.txt:486
+msgid ""
+"Note that if annotations are not found statically, then the "
+"``__annotations__`` dictionary is not created at all. Also the value of "
+"having annotations available locally does not offset the cost of having "
+"to create and populate the annotations dictionary on every function call."
+" Therefore, annotations at function level are not evaluated and not "
+"stored."
+msgstr ""
+
+#: ../../pep-0526.txt:494
+msgid "Other uses of annotations"
+msgstr ""
+
+#: ../../pep-0526.txt:496
+msgid "While Python with this PEP will not object to::"
+msgstr ""
+
+#: ../../pep-0526.txt:501
+msgid ""
+"since it will not care about the type annotation beyond \"it evaluates "
+"without raising\", a type checker that encounters it will flag it, unless"
+" disabled with ``# type: ignore`` or ``@no_type_check``."
+msgstr ""
+
+#: ../../pep-0526.txt:505
+msgid ""
+"However, since Python won't care what the \"type\" is, if the above "
+"snippet is at the global level or in a class, ``__annotations__`` will "
+"include ``{'alice': 'well done', 'bob': 'what a shame'}``."
+msgstr ""
+
+#: ../../pep-0526.txt:509
+msgid ""
+"These stored annotations might be used for other purposes, but with this "
+"PEP we explicitly recommend type hinting as the preferred use of "
+"annotations."
+msgstr ""
+
+#: ../../pep-0526.txt:516
+msgid "Rejected/Postponed Proposals"
+msgstr ""
+
+#: ../../pep-0526.txt:518
+msgid ""
+"**Should we introduce variable annotations at all?** Variable annotations"
+" have *already* been around for almost two years in the form of type "
+"comments, sanctioned by PEP 484.  They are extensively used by third "
+"party type checkers (mypy, pytype, PyCharm, etc.) and by projects using "
+"the type checkers. However, the comment syntax has many downsides listed "
+"in Rationale. This PEP is not about the need for type annotations, it is "
+"about what should be the syntax for such annotations."
+msgstr ""
+
+#: ../../pep-0526.txt:527
+msgid ""
+"**Introduce a new keyword:** The choice of a good keyword is hard, e.g. "
+"it can't be ``var`` because that is way too common a variable name, and "
+"it can't be ``local`` if we want to use it for class variables or "
+"globals. Second, no matter what we choose, we'd still need a "
+"``__future__`` import."
+msgstr ""
+
+#: ../../pep-0526.txt:534
+msgid "**Use** ``def`` **as a keyword:** The proposal would be::"
+msgstr ""
+
+#: ../../pep-0526.txt:540
+msgid ""
+"The problem with this is that ``def`` means \"define a function\" to "
+"generations of Python programmers (and tools!), and using it also to "
+"define variables does not increase clarity.  (Though this is of course "
+"subjective.)"
+msgstr ""
+
+#: ../../pep-0526.txt:545
+msgid ""
+"**Use function based syntax**: It was proposed to annotate types of "
+"variables using ``var = cast(annotation[, value])``. Although this syntax"
+" alleviates some problems with type comments like absence of the "
+"annotation in AST, it does not solve other problems such as readability "
+"and it introduces possible runtime overhead."
+msgstr ""
+
+#: ../../pep-0526.txt:552
+msgid ""
+"**Allow type annotations for tuple unpacking:** This causes ambiguity: "
+"it's not clear what this statement means::"
+msgstr ""
+
+#: ../../pep-0526.txt:557
+msgid ""
+"Are ``x`` and ``y`` both of type ``T``, or do we expect ``T`` to be a "
+"tuple type of two items that are distributed over ``x`` and ``y``, or "
+"perhaps ``x`` has type ``Any`` and ``y`` has type ``T``? (The latter is "
+"what this would mean if this occurred in a function signature.)  Rather "
+"than leave the (human) reader guessing, we forbid this, at least for now."
+msgstr ""
+
+#: ../../pep-0526.txt:564
+msgid ""
+"**Parenthesized form** ``(var: type)`` **for annotations:** It was "
+"brought up on python-ideas as a remedy for the above-mentioned ambiguity,"
+" but it was rejected since such syntax would be hairy, the benefits are "
+"slight, and the readability would be poor."
+msgstr ""
+
+#: ../../pep-0526.txt:569
+msgid ""
+"**Allow annotations in chained assignments:** This has problems of "
+"ambiguity and readability similar to tuple unpacking, for example in::"
+msgstr ""
+
+#: ../../pep-0526.txt:576
+msgid ""
+"it is ambiguous, what should the types of ``y`` and  ``z`` be? Also the "
+"second line is difficult to parse."
+msgstr ""
+
+#: ../../pep-0526.txt:579
+msgid ""
+"**Allow annotations in** ``with`` **and** ``for`` **statement:** This was"
+" rejected because in ``for`` it would make it hard to spot the actual "
+"iterable, and in ``with`` it would confuse the CPython's LL(1) parser."
+msgstr ""
+
+#: ../../pep-0526.txt:583
+msgid ""
+"**Evaluate local annotations at function definition time:** This has been"
+" rejected by Guido because the placement of the annotation strongly "
+"suggests that it's in the same scope as the surrounding code."
+msgstr ""
+
+#: ../../pep-0526.txt:587
+msgid ""
+"**Store variable annotations also in function scope:** The value of "
+"having the annotations available locally is just not enough to "
+"significantly offset the cost of creating and populating the dictionary "
+"on *each* function call."
+msgstr ""
+
+#: ../../pep-0526.txt:592
+msgid ""
+"**Initialize variables annotated without assignment:** It was proposed on"
+" python-ideas to initialize ``x`` in ``x: int`` to ``None`` or to an "
+"additional special constant like Javascript's ``undefined``. However, "
+"adding yet another singleton value to the language would needed to be "
+"checked for everywhere in the code. Therefore, Guido just said plain "
+"\"No\" to this."
+msgstr ""
+
+#: ../../pep-0526.txt:599
+msgid ""
+"**Add also** ``InstanceVar`` **to the typing module:** This is redundant "
+"because instance variables are way more common than class variables. The "
+"more common usage deserves to be the default."
+msgstr ""
+
+#: ../../pep-0526.txt:603
+msgid ""
+"**Allow instance variable annotations only in methods:** The problem is "
+"that many ``__init__`` methods do a lot of things besides initializing "
+"instance variables, and it would be harder (for a human) to find all the "
+"instance variable annotations. And sometimes ``__init__`` is factored "
+"into more helper methods so it's even harder to chase them down. Putting "
+"the instance variable annotations together in the class makes it easier "
+"to find them, and helps a first-time reader of the code."
+msgstr ""
+
+#: ../../pep-0526.txt:612
+msgid ""
+"**Use syntax** ``x: class t = v`` **for class variables:** This would "
+"require a more complicated parser and the ``class`` keyword would confuse"
+" simple-minded syntax highlighters. Anyway we need to have ``ClassVar`` "
+"store class variables to ``__annotations__``, so a simpler syntax was "
+"chosen."
+msgstr ""
+
+#: ../../pep-0526.txt:618
+msgid ""
+"**Forget about** ``ClassVar`` **altogether:** This was proposed since "
+"mypy seems to be getting along fine without a way to distinguish between "
+"class and instance variables. But a type checker can do useful things "
+"with the extra information, for example flag accidental assignments to a "
+"class variable via the instance (which would create an instance variable "
+"shadowing the class variable). It could also flag instance variables with"
+" mutable defaults, a well-known hazard."
+msgstr ""
+
+#: ../../pep-0526.txt:627
+msgid ""
+"**Use** ``ClassAttr`` **instead of** ``ClassVar``: The main reason why "
+"``ClassVar`` is better is following: many things are class attributes, "
+"e.g. methods, descriptors, etc. But only specific attributes are "
+"conceptually class variables (or maybe constants)."
+msgstr ""
+
+#: ../../pep-0526.txt:632
+msgid ""
+"**Do not evaluate annotations, treat them as strings:** This would be "
+"inconsistent with the behavior of function annotations that are always "
+"evaluated. Although this might be reconsidered in future, it was decided "
+"in PEP 484 that this would have to be a separate PEP."
+msgstr ""
+
+#: ../../pep-0526.txt:637
+msgid ""
+"**Annotate variable types in class docstring:** Many projects already use"
+" various docstring conventions, often without much consistency and "
+"generally without conforming to the PEP 484 annotation syntax yet. Also "
+"this would require a special sophisticated parser. This, in turn, would "
+"defeat the purpose of the PEP -- collaborating with the third party type "
+"checking tools."
+msgstr ""
+
+#: ../../pep-0526.txt:644
+msgid ""
+"**Implement** ``__annotations__`` **as a descriptor:** This was proposed "
+"to prohibit setting ``__annotations__`` to something non-dictionary or "
+"non-None. Guido has rejected this idea as unnecessary; instead a "
+"TypeError will be raised if an attempt is made to update "
+"``__annotations__`` when it is anything other than a mapping."
+msgstr ""
+
+#: ../../pep-0526.txt:650
+msgid ""
+"**Treating bare annotations the same as global or nonlocal:** The "
+"rejected proposal would prefer that the presence of an annotation without"
+" assignment in a function body should not involve *any* evaluation.  In "
+"contrast, the PEP implies that if the target is more complex than a "
+"single name, its \"left-hand part\" should be evaluated at the point "
+"where it occurs in the function body, just to enforce that it is defined."
+"  For example, in this example::"
+msgstr ""
+
+#: ../../pep-0526.txt:661
+msgid ""
+"the name ``slef`` should be evaluated, just so that if it is not defined "
+"(as is likely in this example :-), the error will be caught at runtime.  "
+"This is more in line with what happens when there *is* an initial value, "
+"and thus is expected to lead to fewer surprises. (Also note that if the "
+"target was ``self.name`` (this time correctly spelled :-), an optimizing "
+"compiler has no obligation to evaluate ``self`` as long as it can prove "
+"that it will definitely be defined.)"
+msgstr ""
+
+#: ../../pep-0526.txt:672
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0526.txt:674
+msgid "This PEP is fully backwards compatible."
+msgstr ""
+
+#: ../../pep-0526.txt:678
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0526.txt:680
+msgid ""
+"An implementation for Python 3.6 is found on GitHub repo at "
+"https://github.com/ilevkivskyi/cpython/tree/pep-526"
+msgstr ""
+
+#: ../../pep-0526.txt:685
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0526.txt:687
+msgid "This document has been placed in the public domain."
+msgstr ""
+

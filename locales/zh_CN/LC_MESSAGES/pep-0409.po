@@ -1,0 +1,392 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0409.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0409.txt:1
+msgid "409"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0409.txt:2
+msgid "Suppressing exception context"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0409.txt:5
+msgid "Ethan Furman <ethan@stoneleaf.us>"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0409.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0409.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0409.txt:9
+msgid "26-Jan-2012"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0409.txt:10
+msgid "30-Aug-2002, 01-Feb-2012, 03-Feb-2012"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Superseded-By"
+msgstr ""
+
+#: ../../pep-0409.txt:11
+msgid "415"
+msgstr ""
+
+#: ../../pep-0409.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0409.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2012-February/116136.html"
+msgstr ""
+
+#: ../../pep-0409.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0409.txt:18
+msgid ""
+"One of the open issues from PEP 3134 is suppressing context:  currently "
+"there is no way to do it.  This PEP proposes one."
+msgstr ""
+
+#: ../../pep-0409.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0409.txt:25
+msgid "There are two basic ways to generate exceptions:"
+msgstr ""
+
+#: ../../pep-0409.txt:27
+msgid "Python does it (buggy code, missing resources, ending loops, etc.)"
+msgstr ""
+
+#: ../../pep-0409.txt:29
+msgid "manually (with a raise statement)"
+msgstr ""
+
+#: ../../pep-0409.txt:31
+msgid ""
+"When writing libraries, or even just custom classes, it can become "
+"necessary to raise exceptions; moreover it can be useful, even necessary,"
+" to change from one exception to another.  To take an example from my dbf"
+" module::"
+msgstr ""
+
+#: ../../pep-0409.txt:41
+msgid ""
+"Whatever the original exception was (``ValueError``, ``TypeError``, or "
+"something else) is irrelevant.  The exception from this point on is a "
+"``DbfError``, and the original exception is of no value.  However, if "
+"this exception is printed, we would currently see both."
+msgstr ""
+
+#: ../../pep-0409.txt:48
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0409.txt:49
+msgid "Several possibilities have been put forth:"
+msgstr ""
+
+#: ../../pep-0409.txt:51
+msgid "``raise as NewException()``"
+msgstr ""
+
+#: ../../pep-0409.txt:53
+msgid ""
+"Reuses the ``as`` keyword; can be confusing since we are not really "
+"reraising the originating exception"
+msgstr ""
+
+#: ../../pep-0409.txt:56
+msgid "``raise NewException() from None``"
+msgstr ""
+
+#: ../../pep-0409.txt:58
+msgid "Follows existing syntax of explicitly declaring the originating exception"
+msgstr ""
+
+#: ../../pep-0409.txt:61
+msgid "``exc = NewException(); exc.__context__ = None; raise exc``"
+msgstr ""
+
+#: ../../pep-0409.txt:63
+msgid "Very verbose way of the previous method"
+msgstr ""
+
+#: ../../pep-0409.txt:65
+msgid "``raise NewException.no_context(...)``"
+msgstr ""
+
+#: ../../pep-0409.txt:67
+msgid "Make context suppression a class method."
+msgstr ""
+
+#: ../../pep-0409.txt:69
+msgid "All of the above options will require changes to the core."
+msgstr ""
+
+#: ../../pep-0409.txt:73
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0409.txt:75
+msgid "I propose going with the second option::"
+msgstr ""
+
+#: ../../pep-0409.txt:79
+msgid ""
+"It has the advantage of using the existing pattern of explicitly setting "
+"the cause::"
+msgstr ""
+
+#: ../../pep-0409.txt:84
+msgid ""
+"but because the cause is ``None`` the previous context is not displayed "
+"by the default exception printing routines."
+msgstr ""
+
+#: ../../pep-0409.txt:89
+msgid "Implementation Discussion"
+msgstr ""
+
+#: ../../pep-0409.txt:91
+msgid ""
+"Note: after acceptance of this PEP, a cleaner implementation mechanism "
+"was proposed and accepted in PEP 415. Refer to that PEP for more details "
+"on the implementation actually used in Python 3.3."
+msgstr ""
+
+#: ../../pep-0409.txt:95
+msgid ""
+"Currently, ``None`` is the default for both ``__context__`` and "
+"``__cause__``. In order to support ``raise ... from None`` (which would "
+"set ``__cause__`` to ``None``) we need a different default value for "
+"``__cause__``.  Several ideas were put forth on how to implement this at "
+"the language level:"
+msgstr ""
+
+#: ../../pep-0409.txt:100
+msgid ""
+"Overwrite the previous exception information (side-stepping the issue and"
+" leaving ``__cause__`` at ``None``)."
+msgstr ""
+
+#: ../../pep-0409.txt:103
+msgid ""
+"Rejected as this can seriously hinder debugging due to `poor error "
+"messages`_."
+msgstr ""
+
+#: ../../pep-0409.txt:106
+msgid ""
+"Use one of the boolean values in ``__cause__``:  ``False`` would be the "
+"default value, and would be replaced when ``from ...`` was used with the "
+"explicitly chained exception or ``None``."
+msgstr ""
+
+#: ../../pep-0409.txt:110
+msgid ""
+"Rejected as this encourages the use of two different objects types for "
+"``__cause__`` with one of them (boolean) not allowed to have the full "
+"range of possible values (``True`` would never be used)."
+msgstr ""
+
+#: ../../pep-0409.txt:114
+msgid "Create a special exception class, ``__NoException__``."
+msgstr ""
+
+#: ../../pep-0409.txt:116
+msgid ""
+"Rejected as possibly confusing, possibly being mistakenly raised by "
+"users, and not being a truly unique value as ``None``, ``True``, and "
+"``False`` are."
+msgstr ""
+
+#: ../../pep-0409.txt:119
+msgid "Use ``Ellipsis`` as the default value (the ``...`` singleton)."
+msgstr ""
+
+#: ../../pep-0409.txt:121
+msgid "Accepted."
+msgstr ""
+
+#: ../../pep-0409.txt:123
+msgid ""
+"Ellipses are commonly used in English as place holders when words are "
+"omitted.  This works in our favor here as a signal that ``__cause__`` is "
+"omitted, so look in ``__context__`` for more details."
+msgstr ""
+
+#: ../../pep-0409.txt:127
+msgid "Ellipsis is not an exception, so cannot be raised."
+msgstr ""
+
+#: ../../pep-0409.txt:129
+msgid "There is only one Ellipsis, so no unused values."
+msgstr ""
+
+#: ../../pep-0409.txt:131
+msgid ""
+"Error information is not thrown away, so custom code can trace the entire"
+" exception chain even if the default code does not."
+msgstr ""
+
+#: ../../pep-0409.txt:136
+msgid "Language Details"
+msgstr ""
+
+#: ../../pep-0409.txt:138
+msgid ""
+"To support ``raise Exception from None``, ``__context__`` will stay as it"
+" is, but ``__cause__`` will start out as ``Ellipsis`` and will change to "
+"``None`` when the ``raise Exception from None`` method is used."
+msgstr ""
+
+#: ../../pep-0409.txt:143
+msgid "form"
+msgstr ""
+
+#: ../../pep-0409.txt:143
+msgid "__context__"
+msgstr ""
+
+#: ../../pep-0409.txt:143
+msgid "__cause__"
+msgstr ""
+
+#: ../../pep-0409.txt:145
+msgid "raise"
+msgstr ""
+
+#: ../../pep-0409.txt:145
+msgid "``None``"
+msgstr ""
+
+#: ../../pep-0409.txt:145 ../../pep-0409.txt:146
+msgid "``Ellipsis``"
+msgstr ""
+
+#: ../../pep-0409.txt:146
+msgid "reraise"
+msgstr ""
+
+#: ../../pep-0409.txt:146 ../../pep-0409.txt:147
+msgid "previous exception"
+msgstr ""
+
+#: ../../pep-0409.txt:147
+msgid "reraise from ``None`` | ``ChainedException``"
+msgstr ""
+
+#: ../../pep-0409.txt:147
+msgid "``None`` | explicitly chained exception"
+msgstr ""
+
+#: ../../pep-0409.txt:150
+msgid "The default exception printing routine will then:"
+msgstr ""
+
+#: ../../pep-0409.txt:152
+msgid ""
+"If ``__cause__`` is ``Ellipsis`` the ``__context__`` (if any) will be "
+"printed."
+msgstr ""
+
+#: ../../pep-0409.txt:155
+msgid "If ``__cause__`` is ``None`` the ``__context__`` will not be printed."
+msgstr ""
+
+#: ../../pep-0409.txt:157
+msgid "if ``__cause__`` is anything else, ``__cause__`` will be printed."
+msgstr ""
+
+#: ../../pep-0409.txt:159
+msgid "In both of the latter cases the exception chain will stop being followed."
+msgstr ""
+
+#: ../../pep-0409.txt:161
+msgid ""
+"Because the default value for ``__cause__`` is now ``Ellipsis`` and "
+"``raise Exception from Cause`` is simply syntactic sugar for::"
+msgstr ""
+
+#: ../../pep-0409.txt:168
+msgid "``Ellipsis``, as well as ``None``, is now allowed as a cause::"
+msgstr ""
+
+#: ../../pep-0409.txt:174
+msgid "Patches"
+msgstr ""
+
+#: ../../pep-0409.txt:176
+msgid "There is a patch for CPython implementing this attached to `Issue 6210`_."
+msgstr ""
+
+#: ../../pep-0409.txt:180
+msgid "References"
+msgstr ""
+
+#: ../../pep-0409.txt:182
+msgid "Discussion and refinements in this `thread on python-dev`_."
+msgstr ""
+
+#: ../../pep-0409.txt:193
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0409.txt:195
+msgid "This document has been placed in the public domain."
+msgstr ""
+

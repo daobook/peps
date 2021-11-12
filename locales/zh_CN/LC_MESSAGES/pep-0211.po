@@ -1,0 +1,332 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0211.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0211.txt:1
+msgid "211"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0211.txt:2
+msgid "Adding A New Outer Product Operator"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0211.txt:5
+msgid "gvwilson@ddj.com (Greg Wilson)"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0211.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0211.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0211.txt:9
+msgid "15-Jul-2000"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0211.txt:10
+msgid "2.1"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0211.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0211.txt:12
+msgid ""
+"https://www.python.org/dev/peps/pep-0465/#rejected-alternatives-to-"
+"adding-a-new-operator"
+msgstr ""
+
+#: ../../pep-0211.txt:16
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0211.txt:18
+msgid ""
+"This PEP describes a proposal to define ``@`` (pronounced \"across\") as "
+"a new outer product operator in Python 2.2.  When applied to sequences "
+"(or other iterable objects), this operator will combine their iterators, "
+"so that::"
+msgstr ""
+
+#: ../../pep-0211.txt:26
+msgid "will be equivalent to::"
+msgstr ""
+
+#: ../../pep-0211.txt:32
+msgid ""
+"Classes will be able to overload this operator using the special methods "
+"``__across__``, ``__racross__``, and ``__iacross__``.  In particular, the"
+" new Numeric module (PEP 209) will overload this operator for multi-"
+"dimensional arrays to implement matrix multiplication."
+msgstr ""
+
+#: ../../pep-0211.txt:40
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0211.txt:42
+msgid ""
+"Number-crunching is now just a small part of computing, but many "
+"programmers --- including many Python users --- still need to express "
+"complex mathematical operations in code.  Most numerical languages, such "
+"as APL, Fortran-90, MATLAB, IDL, and Mathematica, therefore provide two "
+"forms of the common arithmetic operators. One form works element-by-"
+"element, e.g. multiplies corresponding elements of its matrix arguments."
+"  The other implements the \"mathematical\" definition of that operation,"
+" e.g. performs row-column matrix multiplication."
+msgstr ""
+
+#: ../../pep-0211.txt:52
+msgid ""
+"Zhu and Lielens have proposed doubling up Python's operators in this way "
+"[1]_.  Their proposal would create six new binary infix operators, and "
+"six new in-place operators."
+msgstr ""
+
+#: ../../pep-0211.txt:56
+msgid ""
+"The original version of this proposal was much more conservative. The "
+"author consulted the developers of GNU Octave [2]_, an open source clone "
+"of MATLAB.  Its developers agreed that providing an infix operator for "
+"matrix multiplication was important: numerical programmers really do care"
+" whether they have to write ``mmul(A,B)`` instead of ``A op B``."
+msgstr ""
+
+#: ../../pep-0211.txt:63
+msgid ""
+"On the other hand, when asked how important it was to have infix "
+"operators for matrix solution and other operations, Prof. James Rawlings "
+"replied [3]_:"
+msgstr ""
+
+#: ../../pep-0211.txt:67
+msgid ""
+"I DON'T think it's a must have, and I do a lot of matrix inversion. I "
+"cannot remember if its ``A\\b`` or ``b\\A`` so I always write "
+"``inv(A)*b`` instead. I recommend dropping ``\\``."
+msgstr ""
+
+#: ../../pep-0211.txt:71
+msgid ""
+"Based on this discussion, and feedback from students at the US national "
+"laboratories and elsewhere, we recommended adding only one new operator, "
+"for matrix multiplication, to Python."
+msgstr ""
+
+#: ../../pep-0211.txt:77
+msgid "Iterators"
+msgstr ""
+
+#: ../../pep-0211.txt:79
+msgid ""
+"The planned addition of iterators to Python 2.2 opens up a broader scope "
+"for this proposal.  As part of the discussion of PEP 201, Lockstep "
+"Iteration [4]_, the author of this proposal conducted an informal "
+"usability experiment [5]_.  The results showed that users are "
+"psychologically receptive to \"cross-product\" loop syntax.  For example,"
+" most users expected::"
+msgstr ""
+
+#: ../../pep-0211.txt:91
+msgid ""
+"to print ``11 12 13 21 22 23 31 32 33``.  We believe that users will have"
+" the same reaction to::"
+msgstr ""
+
+#: ../../pep-0211.txt:97
+msgid ""
+"i.e. that they will naturally interpret this as a tidy way to write loop "
+"nests."
+msgstr ""
+
+#: ../../pep-0211.txt:100
+msgid ""
+"This is where iterators come in.  Actually constructing the cross-product"
+" of two (or more) sequences before executing the loop would be very "
+"expensive.  On the other hand, ``@`` could be defined to get its "
+"arguments' iterators, and then create an outer iterator which returns "
+"tuples of the values returned by the inner iterators."
+msgstr ""
+
+#: ../../pep-0211.txt:109
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0211.txt:111
+msgid ""
+"Adding a named function \"across\" would have less impact on Python than "
+"a new infix operator.  However, this would not make Python more appealing"
+" to numerical programmers, who really do care whether they can write "
+"matrix multiplication using an operator, or whether they have to write it"
+" as a function call."
+msgstr ""
+
+#: ../../pep-0211.txt:117
+msgid ""
+"``@`` would have be chainable in the same way as comparison operators, "
+"i.e.::"
+msgstr ""
+
+#: ../../pep-0211.txt:122
+msgid ""
+"would have to return ``(1, 3, 5) ... (2, 4, 6)``, and *not* ``((1, 3), 5)"
+" ... ((2, 4), 6)``.  This should not require special support from the "
+"parser, as the outer iterator created by the first ``@`` could easily be "
+"taught how to combine itself with ordinary iterators."
+msgstr ""
+
+#: ../../pep-0211.txt:128
+msgid ""
+"There would have to be some way to distinguish restartable iterators from"
+" ones that couldn't be restarted.  For example, if ``S`` is an input "
+"stream (e.g. a file), and ``L`` is a list, then ``S @ L`` is "
+"straightforward, but ``L @ S`` is not, since iteration through the stream"
+" cannot be repeated.  This could be treated as an error, or by having the"
+" outer iterator detect non-restartable inner iterators and cache their "
+"values."
+msgstr ""
+
+#: ../../pep-0211.txt:136
+msgid ""
+"Whiteboard testing of this proposal in front of three novice Python users"
+" (all of them experienced programmers) indicates that users will expect::"
+msgstr ""
+
+#: ../../pep-0211.txt:142
+msgid ""
+"to return four strings, not four tuples of pairs of characters.  Opinion "
+"was divided on what::"
+msgstr ""
+
+#: ../../pep-0211.txt:147
+msgid "ought to return..."
+msgstr ""
+
+#: ../../pep-0211.txt:151
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0211.txt:153
+msgid "Do nothing --- keep Python simple."
+msgstr ""
+
+#: ../../pep-0211.txt:155
+msgid "This is always the default choice."
+msgstr ""
+
+#: ../../pep-0211.txt:157
+msgid "Add a named function instead of an operator."
+msgstr ""
+
+#: ../../pep-0211.txt:159
+msgid ""
+"Python is not primarily a numerical language; it may not be worth "
+"complexifying it for this special case.  However, support for real matrix"
+" multiplication *is* frequently requested, and the proposed semantics for"
+" ``@`` for built-in sequence types would simplify expression of a very "
+"common idiom (nested loops)."
+msgstr ""
+
+#: ../../pep-0211.txt:165
+msgid ""
+"Introduce prefixed forms of all existing operators, such as ``~*`` and "
+"``~+``, as proposed in PEP 225 [1]_."
+msgstr ""
+
+#: ../../pep-0211.txt:168
+msgid ""
+"Our objections to this are that there isn't enough demand to justify the "
+"additional complexity (see Rawlings' comments [3]_), and that the "
+"proposed syntax fails the \"low toner\" readability test."
+msgstr ""
+
+#: ../../pep-0211.txt:175
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0211.txt:177
+msgid ""
+"I am grateful to Huaiyu Zhu for initiating this discussion, and to James "
+"Rawlings and students in various Python courses for their discussions of "
+"what numerical programmers really care about."
+msgstr ""
+
+#: ../../pep-0211.txt:183
+msgid "References"
+msgstr ""
+
+#: ../../pep-0211.txt:185
+msgid ""
+"PEP 225, Elementwise/Objectwise Operators, Zhu, Lielens "
+"http://www.python.org/dev/peps/pep-0225/"
+msgstr ""
+
+#: ../../pep-0211.txt:188
+msgid "http://bevo.che.wisc.edu/octave/"
+msgstr ""
+
+#: ../../pep-0211.txt:190
+msgid "http://www.egroups.com/message/python-numeric/4"
+msgstr ""
+
+#: ../../pep-0211.txt:192
+msgid ""
+"PEP 201, Lockstep Iteration, Warsaw "
+"http://www.python.org/dev/peps/pep-0201/"
+msgstr ""
+
+#: ../../pep-0211.txt:195
+msgid "https://mail.python.org/pipermail/python-dev/2000-July/006427.html"
+msgstr ""
+

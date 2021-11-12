@@ -1,0 +1,657 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0565.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0565.rst:1
+msgid "565"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0565.rst:2
+msgid "Show DeprecationWarning in __main__"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0565.rst:3
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0565.rst:4
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0565.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0565.rst:7
+msgid "12-Nov-2017"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0565.rst:8
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0565.rst:9
+msgid "12-Nov-2017, 25-Nov-2017"
+msgstr ""
+
+#: ../../pep-0565.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0565.rst:10
+msgid "https://mail.python.org/pipermail/python-dev/2017-December/151224.html"
+msgstr ""
+
+#: ../../pep-0565.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0565.rst:16
+msgid ""
+"In Python 2.7 and Python 3.2, the default warning filters were updated to"
+" hide DeprecationWarning by default, such that deprecation warnings in "
+"development tools that were themselves written in Python (e.g. linters, "
+"static analysers, test runners, code generators), as well as any other "
+"applications that merely happened to be written in Python, wouldn't be "
+"visible to their users unless those users explicitly opted in to seeing "
+"them."
+msgstr ""
+
+#: ../../pep-0565.rst:23
+msgid ""
+"However, this change has had the unfortunate side effect of making "
+"DeprecationWarning markedly less effective at its primary intended "
+"purpose: providing advance notice of breaking changes in APIs (whether in"
+" CPython, the standard library, or in third party libraries) to users of "
+"those APIs."
+msgstr ""
+
+#: ../../pep-0565.rst:28
+msgid ""
+"To improve this situation, this PEP proposes a single adjustment to the "
+"default warnings filter: displaying deprecation warnings attributed to "
+"the main module by default."
+msgstr ""
+
+#: ../../pep-0565.rst:32
+msgid ""
+"This change will mean that code entered at the interactive prompt and "
+"code in single file scripts will revert to reporting these warnings by "
+"default, while they will continue to be silenced by default for packaged "
+"code distributed as part of an importable module."
+msgstr ""
+
+#: ../../pep-0565.rst:37
+msgid ""
+"The PEP also proposes a number of small adjustments to the reference "
+"interpreter and standard library documentation to help make the warnings "
+"subsystem more approachable for new Python developers."
+msgstr ""
+
+#: ../../pep-0565.rst:41
+msgid ""
+"As part of the documentation updates, it will be made clearer that the "
+"``unittest`` test runner displays all warnings by default when executing "
+"test cases, and that other test runners are advised to follow that "
+"example."
+msgstr ""
+
+#: ../../pep-0565.rst:47
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0565.rst:51
+msgid "New default warnings filter entry"
+msgstr ""
+
+#: ../../pep-0565.rst:53
+msgid "The current set of default warnings filters consists of::"
+msgstr ""
+
+#: ../../pep-0565.rst:61
+msgid ""
+"The default ``unittest`` test runner then uses "
+"``warnings.catch_warnings()`` ``warnings.simplefilter('default')`` to "
+"override the default filters while running test cases."
+msgstr ""
+
+#: ../../pep-0565.rst:65
+msgid ""
+"The change proposed in this PEP is to update the default warning filter "
+"list to be::"
+msgstr ""
+
+#: ../../pep-0565.rst:75
+msgid ""
+"This means that in cases where the nominal location of the warning (as "
+"determined by the ``stacklevel`` parameter to ``warnings.warn``) is in "
+"the ``__main__`` module, the first occurrence of each DeprecationWarning "
+"will once again be reported."
+msgstr ""
+
+#: ../../pep-0565.rst:80
+msgid ""
+"This change will lead to DeprecationWarning being displayed by default "
+"for:"
+msgstr ""
+
+#: ../../pep-0565.rst:82
+msgid "code executed directly at the interactive prompt"
+msgstr ""
+
+#: ../../pep-0565.rst:83
+msgid "code executed directly as part of a single-file script"
+msgstr ""
+
+#: ../../pep-0565.rst:85
+msgid "While continuing to be hidden by default for:"
+msgstr ""
+
+#: ../../pep-0565.rst:87
+msgid ""
+"code imported from another module in a ``zipapp`` archive's "
+"``__main__.py`` file"
+msgstr ""
+
+#: ../../pep-0565.rst:89
+msgid ""
+"code imported from another module in an executable package's ``__main__``"
+" submodule"
+msgstr ""
+
+#: ../../pep-0565.rst:91
+msgid ""
+"code imported from an executable script wrapper generated at installation"
+" time based on a ``console_scripts`` or ``gui_scripts`` entry point "
+"definition"
+msgstr ""
+
+#: ../../pep-0565.rst:94
+msgid ""
+"This means that tool developers that create an installable or executable "
+"artifact (such as a ``zipapp`` archive) for distribution to their users "
+"shouldn't see any change from the status quo, while users of more ad hoc "
+"personal or locally distributed scripts are likely to start seeing "
+"relevant deprecation warnings again (as they did in Python 2.6 and "
+"earlier)."
+msgstr ""
+
+#: ../../pep-0565.rst:102
+msgid "Additional use case for ``FutureWarning``"
+msgstr ""
+
+#: ../../pep-0565.rst:104
+msgid ""
+"The standard library documentation will be updated to explicitly "
+"recommend the use of ``FutureWarning`` (rather than "
+"``DeprecationWarning``) for backwards compatibility warnings that are "
+"intended to be seen by *users* of an application. (This will be in "
+"addition to the existing use of ``FutureWarning`` to warn about "
+"constructs that will remain valid code in the future, but will have "
+"different semantics)."
+msgstr ""
+
+#: ../../pep-0565.rst:111
+msgid ""
+"This will give the following three distinct categories of backwards "
+"compatibility warning, with three different intended audiences:"
+msgstr ""
+
+#: ../../pep-0565.rst:114
+msgid ""
+"``PendingDeprecationWarning``: hidden by default for all code. The "
+"intended audience is Python developers that take an active interest in "
+"ensuring the future compatibility of their software (e.g. professional "
+"Python application developers with specific support obligations)."
+msgstr ""
+
+#: ../../pep-0565.rst:118
+msgid ""
+"``DeprecationWarning``: reported by default for code that runs directly "
+"in the ``__main__`` module (as such code is considered relatively "
+"unlikely to have a dedicated test suite), but hidden by default for code "
+"in other modules. The intended audience is Python developers that are at "
+"risk of upgrades to their dependencies (including upgrades to Python "
+"itself) breaking their software (e.g. developers using Python to script "
+"environments where someone else is in control of the timing of dependency"
+" upgrades)."
+msgstr ""
+
+#: ../../pep-0565.rst:125
+msgid ""
+"``FutureWarning``: reported by default for all code. The intended "
+"audience is users of applications written in Python, rather than other "
+"Python developers (e.g. warning about use of a deprecated setting in a "
+"configuration file format)."
+msgstr ""
+
+#: ../../pep-0565.rst:130
+msgid ""
+"For library and framework authors that want to ensure their API "
+"compatibility warnings are more reliably seen by their users, the "
+"recommendation is to use a custom warning class that derives from "
+"``DeprecationWarning`` in Python 3.7+, and from ``FutureWarning`` in "
+"earlier versions."
+msgstr ""
+
+#: ../../pep-0565.rst:137
+msgid "Recommended filter settings for test runners"
+msgstr ""
+
+#: ../../pep-0565.rst:139
+msgid ""
+"Developers of test runners are advised to implement logic equivalent to "
+"the following when determining their default warnings filters::"
+msgstr ""
+
+#: ../../pep-0565.rst:145
+msgid ""
+"This effectively enables all warnings by default, as if the ``-Wd`` "
+"command line option had been passed."
+msgstr ""
+
+#: ../../pep-0565.rst:148
+msgid ""
+"Note that actually enabling ``BytesWarning`` in a test suite still "
+"requires passing the ``-b`` option to the interpreter at the command "
+"line. For implicit bytes conversion and bytes comparison warnings, the "
+"warnings filter machinery is only used to determine whether they should "
+"be printed as warnings or raised as exceptions - when the command line "
+"flag isn't set, the interpreter doesn't even emit the warning in the "
+"first place."
+msgstr ""
+
+#: ../../pep-0565.rst:157
+msgid "Recommended filter settings for interactive shells"
+msgstr ""
+
+#: ../../pep-0565.rst:159
+msgid ""
+"Developers of interactive shells are advised to add a filter that enables"
+" ``DeprecationWarning`` in the namespace where user code is entered and "
+"executed."
+msgstr ""
+
+#: ../../pep-0565.rst:162
+msgid ""
+"If that namespace is ``__main__`` (as it is for the default CPython "
+"REPL), then no changes are needed beyond those in this PEP."
+msgstr ""
+
+#: ../../pep-0565.rst:165
+msgid ""
+"Interactive shell implementations which use a namespace other than "
+"``__main__`` will need to add their own filter. For example, IPython uses"
+" the following command ([8_]) to set up a suitable filter::"
+msgstr ""
+
+#: ../../pep-0565.rst:174
+msgid "Other documentation updates"
+msgstr ""
+
+#: ../../pep-0565.rst:176
+msgid ""
+"The current reference documentation for the warnings system is relatively"
+" short on specific *examples* of possible settings for the ``-W`` command"
+" line option or the ``PYTHONWARNINGS`` environment variably that achieve "
+"particular end results."
+msgstr ""
+
+#: ../../pep-0565.rst:181
+msgid ""
+"The following improvements are proposed as part of the implementation of "
+"this PEP:"
+msgstr ""
+
+#: ../../pep-0565.rst:184
+msgid ""
+"Explicitly list the following entries under the description of the "
+"``PYTHONWARNINGS`` environment variable::"
+msgstr ""
+
+#: ../../pep-0565.rst:194
+msgid ""
+"Explicitly list the corresponding short options (``-We``, ``-Wa``, "
+"``-Wd``, ``-Wm``, ``-Wo``, ``-Wi``) for each of the warning actions "
+"listed under the ``-W`` command line switch documentation"
+msgstr ""
+
+#: ../../pep-0565.rst:198
+msgid ""
+"Explicitly list the default filter set in the ``warnings`` module "
+"documentation, using the ``action::category`` and "
+"``action::category:module`` notation"
+msgstr ""
+
+#: ../../pep-0565.rst:202
+msgid ""
+"Explicitly list the following snippet in the ``warnings.simplefilter`` "
+"documentation as a recommended approach to turning off all warnings by "
+"default in a Python application while still allowing them to be turned "
+"back on via ``PYTHONWARNINGS`` or the ``-W`` command line switch::"
+msgstr ""
+
+#: ../../pep-0565.rst:210
+msgid ""
+"None of these are *new* (they already work in all still supported Python "
+"versions), but they're not especially obvious given the current structure"
+" of the related documentation."
+msgstr ""
+
+#: ../../pep-0565.rst:216
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0565.rst:218
+msgid ""
+"A reference implementation is available in the PR [4_] linked from the "
+"related tracker issue for this PEP [5_]."
+msgstr ""
+
+#: ../../pep-0565.rst:221
+msgid ""
+"As a side-effect of implementing this PEP, the internal warnings filter "
+"list will start allowing the use of plain strings as part of filter "
+"definitions (in addition to the existing use of compiled regular "
+"expressions). When present, the plain strings will be compared for exact "
+"matches only. This approach allows the new default filter to be added "
+"during interpreter startup without requiring early access to the ``re`` "
+"module."
+msgstr ""
+
+#: ../../pep-0565.rst:230
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0565.rst:232
+msgid ""
+"As discussed in [1_] and mentioned in [2_], Python 2.7 and Python 3.2 "
+"changed the default handling of ``DeprecationWarning`` such that:"
+msgstr ""
+
+#: ../../pep-0565.rst:235
+msgid "the warning was hidden by default during normal code execution"
+msgstr ""
+
+#: ../../pep-0565.rst:236
+msgid ""
+"the ``unittest`` test runner was updated to re-enable it when running "
+"tests"
+msgstr ""
+
+#: ../../pep-0565.rst:238
+msgid "The intent was to avoid cases of tooling output like the following::"
+msgstr ""
+
+#: ../../pep-0565.rst:245
+msgid ""
+"Even when ``devtool`` is a tool specifically for Python programmers, this"
+" is not a particularly useful warning, as it will be shown on every "
+"invocation, even though the main helpful step an end user can take is to "
+"report a bug to the developers of ``devtool``."
+msgstr ""
+
+#: ../../pep-0565.rst:250
+msgid ""
+"The warning is even less helpful for general purpose developer tools that"
+" are used across more languages than just Python, and almost entirely "
+"\\*un\\*helpful for applications that simply happen to be written in "
+"Python, and aren't necessarily intended for a developer audience at all."
+msgstr ""
+
+#: ../../pep-0565.rst:255
+msgid ""
+"However, this change proved to have unintended consequences for the "
+"following audiences:"
+msgstr ""
+
+#: ../../pep-0565.rst:258
+msgid ""
+"anyone using a test runner other than the default one built into "
+"``unittest`` (the request for third party test runners to change their "
+"default warnings filters was never made explicitly, so many of them still"
+" rely on the interpreter defaults that are designed to suit deployed "
+"applications)"
+msgstr ""
+
+#: ../../pep-0565.rst:262
+msgid ""
+"anyone using the default ``unittest`` test runner to test their Python "
+"code in a subprocess (since even ``unittest`` only adjusts the warnings "
+"settings in the current process)"
+msgstr ""
+
+#: ../../pep-0565.rst:265
+msgid ""
+"anyone writing Python code at the interactive prompt or as part of a "
+"directly executed script that didn't have a Python level test suite at "
+"all"
+msgstr ""
+
+#: ../../pep-0565.rst:268
+msgid ""
+"In these cases, ``DeprecationWarning`` ended up become almost entirely "
+"equivalent to ``PendingDeprecationWarning``: it was simply never seen at "
+"all."
+msgstr ""
+
+#: ../../pep-0565.rst:273
+msgid "Limitations on PEP Scope"
+msgstr ""
+
+#: ../../pep-0565.rst:275
+msgid ""
+"This PEP exists specifically to explain both the proposed addition to the"
+" default warnings filter for 3.7, *and* to more clearly articulate the "
+"rationale for the original change to the handling of DeprecationWarning "
+"back in Python 2.7 and 3.2."
+msgstr ""
+
+#: ../../pep-0565.rst:280
+msgid ""
+"This PEP does not solve all known problems with the current approach to "
+"handling deprecation warnings. Most notably:"
+msgstr ""
+
+#: ../../pep-0565.rst:283
+msgid ""
+"The default ``unittest`` test runner does not currently report "
+"deprecation warnings emitted at module import time, as the warnings "
+"filter override is only put in place during test execution, not during "
+"test discovery and loading."
+msgstr ""
+
+#: ../../pep-0565.rst:286
+msgid ""
+"The default ``unittest`` test runner does not currently report "
+"deprecation warnings in subprocesses, as the warnings filter override is "
+"applied directly to the loaded ``warnings`` module, not to the "
+"``PYTHONWARNINGS`` environment variable."
+msgstr ""
+
+#: ../../pep-0565.rst:290
+msgid ""
+"The standard library doesn't provide a straightforward way to opt-in to "
+"seeing all warnings emitted *by* a particular dependency prior to "
+"upgrading it (the third-party ``warn`` module [3_] does provide this, but"
+" enabling it involves monkeypatching the standard library's ``warnings`` "
+"module)."
+msgstr ""
+
+#: ../../pep-0565.rst:294
+msgid ""
+"When software has been factored out into support modules, but those "
+"modules have little or no automated test coverage, re-enabling "
+"deprecation warnings by default in ``__main__`` isn't likely to help find"
+" API compatibility problems. Near term, the best currently available "
+"answer is to run affected applications with "
+"``PYTHONWARNINGS=default::DeprecationWarning`` or ``python -W "
+"default::DeprecationWarning`` and pay attention to their ``stderr`` "
+"output. Longer term, this is really a question for researchers working on"
+" static analysis of Python code: how to reliably find usage of deprecated"
+" APIs, and how to infer that an API or parameter is deprecated based on "
+"``warnings.warn`` calls, without actually running either the code "
+"providing the API or the code accessing it."
+msgstr ""
+
+#: ../../pep-0565.rst:306
+msgid ""
+"While these are real problems with the status quo, they're excluded from "
+"consideration in this PEP because they're going to require more complex "
+"solutions than a single additional entry in the default warnings filter, "
+"and resolving them at least potentially won't require going through the "
+"PEP process."
+msgstr ""
+
+#: ../../pep-0565.rst:312
+msgid ""
+"For anyone interested in pursuing them further, the first two would be "
+"``unittest`` module enhancement requests, the third would be a "
+"``warnings`` module enhancement request, while the last would only "
+"require a PEP if inferring API deprecations from their contents was "
+"deemed to be an intractable code analysis problem, and an explicit "
+"function and parameter marker syntax in annotations was proposed instead."
+msgstr ""
+
+#: ../../pep-0565.rst:319
+msgid ""
+"The CPython reference implementation will also include the following "
+"related changes in 3.7:"
+msgstr ""
+
+#: ../../pep-0565.rst:322
+msgid ""
+"a new ``-X dev`` command line option that combines several developer "
+"centric settings (including ``-Wd``) into one command line flag: "
+"https://bugs.python.org/issue32043"
+msgstr ""
+
+#: ../../pep-0565.rst:325
+msgid ""
+"changing the behaviour in debug builds to show more of the warnings that "
+"are off by default in regular interpreter builds: "
+"https://bugs.python.org/issue32088"
+msgstr ""
+
+#: ../../pep-0565.rst:328
+msgid ""
+"Independently of the proposed changes to the default filters in this PEP,"
+" issue 32229 [9_] is a proposal to add a ``warnings.hide_warnings`` API "
+"to make it simpler for application developers to hide warnings during "
+"normal operation, while easily making them visible when testing."
+msgstr ""
+
+#: ../../pep-0565.rst:335
+msgid "References"
+msgstr ""
+
+#: ../../pep-0565.rst:337
+msgid ""
+"stdlib-sig thread proposing the original default filter change "
+"(https://mail.python.org/pipermail/stdlib-sig/2009-November/000789.html)"
+msgstr ""
+
+#: ../../pep-0565.rst:340
+msgid ""
+"Python 2.7 notification of the default warnings filter change "
+"(https://docs.python.org/3/whatsnew/2.7.html#changes-to-the-handling-of-"
+"deprecation-warnings)"
+msgstr ""
+
+#: ../../pep-0565.rst:343
+msgid ""
+"Emitting warnings based on the location of the warning itself "
+"(https://pypi.org/project/warn/)"
+msgstr ""
+
+#: ../../pep-0565.rst:346
+msgid ""
+"GitHub PR for PEP 565 implementation "
+"(https://github.com/python/cpython/pull/4458)"
+msgstr ""
+
+#: ../../pep-0565.rst:349
+msgid ""
+"Tracker issue for PEP 565 implementation "
+"(https://bugs.python.org/issue31975)"
+msgstr ""
+
+#: ../../pep-0565.rst:352
+msgid ""
+"First python-dev discussion thread (https://mail.python.org/pipermail"
+"/python-dev/2017-November/150477.html)"
+msgstr ""
+
+#: ../../pep-0565.rst:355
+msgid ""
+"Second python-dev discussion thread (https://mail.python.org/pipermail"
+"/python-dev/2017-November/150819.html)"
+msgstr ""
+
+#: ../../pep-0565.rst:358
+msgid ""
+"IPython's DeprecationWarning auto-configuration "
+"(https://github.com/ipython/ipython/blob/6.2.x/IPython/core/interactiveshell.py#L619)"
+msgstr ""
+
+#: ../../pep-0565.rst:361
+msgid ""
+"``warnings.hide_warnings`` API proposal "
+"(https://bugs.python.org/issue32229)"
+msgstr ""
+
+#: ../../pep-0565.rst:365
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0565.rst:367
+msgid "This document has been placed in the public domain."
+msgstr ""
+

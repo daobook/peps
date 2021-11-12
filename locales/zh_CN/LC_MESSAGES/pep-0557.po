@@ -1,0 +1,1231 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0557.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0557.rst:1
+msgid "557"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0557.rst:2
+msgid "Data Classes"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0557.rst:3
+msgid "Eric V. Smith <eric@trueblade.com>"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0557.rst:4
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0557.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0557.rst:7
+msgid "02-Jun-2017"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0557.rst:8
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0557.rst:9
+msgid ""
+"08-Sep-2017, 25-Nov-2017, 30-Nov-2017, 01-Dec-2017, 02-Dec-2017, "
+"06-Jan-2018, 04-Mar-2018"
+msgstr ""
+
+#: ../../pep-0557.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0557.rst:10
+msgid "https://mail.python.org/pipermail/python-dev/2017-December/151034.html"
+msgstr ""
+
+#: ../../pep-0557.rst:13
+msgid "Notice for Reviewers"
+msgstr ""
+
+#: ../../pep-0557.rst:15
+msgid ""
+"This PEP and the initial implementation were drafted in a separate repo: "
+"https://github.com/ericvsmith/dataclasses.  Before commenting in a public"
+" forum please at least read the `discussion`_ listed at the end of this "
+"PEP."
+msgstr ""
+
+#: ../../pep-0557.rst:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0557.rst:23
+msgid ""
+"This PEP describes an addition to the standard library called Data "
+"Classes.  Although they use a very different mechanism, Data Classes can "
+"be thought of as \"mutable namedtuples with defaults\".  Because Data "
+"Classes use normal class definition syntax, you are free to use "
+"inheritance, metaclasses, docstrings, user-defined methods, class "
+"factories, and other Python class features."
+msgstr ""
+
+#: ../../pep-0557.rst:30
+msgid ""
+"A class decorator is provided which inspects a class definition for "
+"variables with type annotations as defined in PEP 526, \"Syntax for "
+"Variable Annotations\".  In this document, such variables are called "
+"fields.  Using these fields, the decorator adds generated method "
+"definitions to the class to support instance initialization, a repr, "
+"comparison methods, and optionally other methods as described in the "
+"Specification_ section.  Such a class is called a Data Class, but there's"
+" really nothing special about the class: the decorator adds generated "
+"methods to the class and returns the same class it was given."
+msgstr ""
+
+#: ../../pep-0557.rst:41
+msgid "As an example::"
+msgstr ""
+
+#: ../../pep-0557.rst:53
+msgid ""
+"The ``@dataclass`` decorator will add the equivalent of these methods to "
+"the InventoryItem class::"
+msgstr ""
+
+#: ../../pep-0557.rst:87
+msgid "Data Classes save you from writing and maintaining these methods."
+msgstr ""
+
+#: ../../pep-0557.rst:90
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0557.rst:92
+msgid ""
+"There have been numerous attempts to define classes which exist primarily"
+" to store values which are accessible by attribute lookup. Some examples "
+"include:"
+msgstr ""
+
+#: ../../pep-0557.rst:96
+msgid "collections.namedtuple in the standard library."
+msgstr ""
+
+#: ../../pep-0557.rst:98
+msgid "typing.NamedTuple in the standard library."
+msgstr ""
+
+#: ../../pep-0557.rst:100
+msgid "The popular attrs [#]_ project."
+msgstr ""
+
+#: ../../pep-0557.rst:102
+msgid ""
+"George Sakkis' recordType recipe [#]_, a mutable data type inspired by "
+"collections.namedtuple."
+msgstr ""
+
+#: ../../pep-0557.rst:105
+msgid ""
+"Many example online recipes [#]_, packages [#]_, and questions [#]_. "
+"David Beazley used a form of data classes as the motivating example in a "
+"PyCon 2013 metaclass talk [#]_."
+msgstr ""
+
+#: ../../pep-0557.rst:109
+msgid "So, why is this PEP needed?"
+msgstr ""
+
+#: ../../pep-0557.rst:111
+msgid ""
+"With the addition of PEP 526, Python has a concise way to specify the "
+"type of class members.  This PEP leverages that syntax to provide a "
+"simple, unobtrusive way to describe Data Classes.  With two exceptions, "
+"the specified attribute type annotation is completely ignored by Data "
+"Classes."
+msgstr ""
+
+#: ../../pep-0557.rst:117
+msgid ""
+"No base classes or metaclasses are used by Data Classes.  Users of these "
+"classes are free to use inheritance and metaclasses without any "
+"interference from Data Classes.  The decorated classes are truly "
+"\"normal\" Python classes.  The Data Class decorator should not interfere"
+" with any usage of the class."
+msgstr ""
+
+#: ../../pep-0557.rst:123
+msgid ""
+"One main design goal of Data Classes is to support static type checkers."
+"  The use of PEP 526 syntax is one example of this, but so is the design "
+"of the ``fields()`` function and the ``@dataclass`` decorator.  Due to "
+"their very dynamic nature, some of the libraries mentioned above are "
+"difficult to use with static type checkers."
+msgstr ""
+
+#: ../../pep-0557.rst:129
+msgid ""
+"Data Classes are not, and are not intended to be, a replacement mechanism"
+" for all of the above libraries.  But being in the standard library will "
+"allow many of the simpler use cases to instead leverage Data Classes.  "
+"Many of the libraries listed have different feature sets, and will of "
+"course continue to exist and prosper."
+msgstr ""
+
+#: ../../pep-0557.rst:135
+msgid "Where is it not appropriate to use Data Classes?"
+msgstr ""
+
+#: ../../pep-0557.rst:137
+msgid "API compatibility with tuples or dicts is required."
+msgstr ""
+
+#: ../../pep-0557.rst:139
+msgid ""
+"Type validation beyond that provided by PEPs 484 and 526 is required, or "
+"value validation or conversion is required."
+msgstr ""
+
+#: ../../pep-0557.rst:145
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0557.rst:147
+msgid ""
+"All of the functions described in this PEP will live in a module named "
+"``dataclasses``."
+msgstr ""
+
+#: ../../pep-0557.rst:150
+msgid ""
+"A function ``dataclass`` which is typically used as a class decorator is "
+"provided to post-process classes and add generated methods, described "
+"below."
+msgstr ""
+
+#: ../../pep-0557.rst:154
+msgid ""
+"The ``dataclass`` decorator examines the class to find ``field``\\s.  A "
+"``field`` is defined as any variable identified in ``__annotations__``.  "
+"That is, a variable that has a type annotation. With two exceptions "
+"described below, none of the Data Class machinery examines the type "
+"specified in the annotation."
+msgstr ""
+
+#: ../../pep-0557.rst:160
+msgid ""
+"Note that ``__annotations__`` is guaranteed to be an ordered mapping, in "
+"class declaration order.  The order of the fields in all of the generated"
+" methods is the order in which they appear in the class."
+msgstr ""
+
+#: ../../pep-0557.rst:164
+msgid ""
+"The ``dataclass`` decorator will add various \"dunder\" methods to the "
+"class, described below.  If any of the added methods already exist on the"
+" class, a ``TypeError`` will be raised.  The decorator returns the same "
+"class that is called on: no new class is created."
+msgstr ""
+
+#: ../../pep-0557.rst:169
+msgid ""
+"The ``dataclass`` decorator is typically used with no parameters and no "
+"parentheses.  However, it also supports the following logical signature::"
+msgstr ""
+
+#: ../../pep-0557.rst:175
+msgid ""
+"If ``dataclass`` is used just as a simple decorator with no parameters, "
+"it acts as if it has the default values documented in this signature.  "
+"That is, these three uses of ``@dataclass`` are equivalent::"
+msgstr ""
+
+#: ../../pep-0557.rst:191
+msgid "The parameters to ``dataclass`` are:"
+msgstr ""
+
+#: ../../pep-0557.rst:193
+msgid "``init``: If true (the default), a ``__init__`` method will be generated."
+msgstr ""
+
+#: ../../pep-0557.rst:196
+msgid ""
+"``repr``: If true (the default), a ``__repr__`` method will be generated."
+"  The generated repr string will have the class name and the name and "
+"repr of each field, in the order they are defined in the class.  Fields "
+"that are marked as being excluded from the repr are not included.  For "
+"example: ``InventoryItem(name='widget', unit_price=3.0, "
+"quantity_on_hand=10)``."
+msgstr ""
+
+#: ../../pep-0557.rst:203
+msgid "If the class already defines ``__repr__``, this parameter is ignored."
+msgstr ""
+
+#: ../../pep-0557.rst:206
+msgid ""
+"``eq``: If true (the default), an ``__eq__`` method will be generated.  "
+"This method compares the class as if it were a tuple of its fields, in "
+"order.  Both instances in the comparison must be of the identical type."
+msgstr ""
+
+#: ../../pep-0557.rst:211
+msgid "If the class already defines ``__eq__``, this parameter is ignored."
+msgstr ""
+
+#: ../../pep-0557.rst:213
+msgid ""
+"``order``: If true (the default is False), ``__lt__``, ``__le__``, "
+"``__gt__``, and ``__ge__`` methods will be generated.  These compare the "
+"class as if it were a tuple of its fields, in order.  Both instances in "
+"the comparison must be of the identical type.  If ``order`` is true and "
+"``eq`` is false, a ``ValueError`` is raised."
+msgstr ""
+
+#: ../../pep-0557.rst:219
+msgid ""
+"If the class already defines any of ``__lt__``, ``__le__``, ``__gt__``, "
+"or ``__ge__``, then ``ValueError`` is raised."
+msgstr ""
+
+#: ../../pep-0557.rst:222
+msgid ""
+"``unsafe_hash``: If ``False`` (the default), the ``__hash__`` method is "
+"generated according to how ``eq`` and ``frozen`` are set."
+msgstr ""
+
+#: ../../pep-0557.rst:225
+msgid ""
+"If ``eq`` and ``frozen`` are both true, Data Classes will generate a "
+"``__hash__`` method for you.  If ``eq`` is true and ``frozen`` is false, "
+"``__hash__`` will be set to ``None``, marking it unhashable (which it "
+"is).  If ``eq`` is false, ``__hash__`` will be left untouched meaning the"
+" ``__hash__`` method of the superclass will be used (if the superclass is"
+" ``object``, this means it will fall back to id-based hashing)."
+msgstr ""
+
+#: ../../pep-0557.rst:233
+msgid ""
+"Although not recommended, you can force Data Classes to create a "
+"``__hash__`` method with ``unsafe_hash=True``. This might be the case if "
+"your class is logically immutable but can nonetheless be mutated. This is"
+" a specialized use case and should be considered carefully."
+msgstr ""
+
+#: ../../pep-0557.rst:239
+msgid ""
+"If a class already has an explicitly defined ``__hash__`` the behavior "
+"when adding ``__hash__`` is modified.  An explicitly defined ``__hash__``"
+" is defined when:"
+msgstr ""
+
+#: ../../pep-0557.rst:243
+msgid ""
+"``__eq__`` is defined in the class and ``__hash__`` is defined with any "
+"value other than ``None``."
+msgstr ""
+
+#: ../../pep-0557.rst:246
+msgid ""
+"``__eq__`` is defined in the class and any non-``None`` ``__hash__`` is "
+"defined."
+msgstr ""
+
+#: ../../pep-0557.rst:249
+msgid "``__eq__`` is not defined on the class, and any ``__hash__`` is defined."
+msgstr ""
+
+#: ../../pep-0557.rst:252
+msgid ""
+"If ``unsafe_hash`` is true and an explicitly defined ``__hash__`` is "
+"present, then ``ValueError`` is raised."
+msgstr ""
+
+#: ../../pep-0557.rst:255
+msgid ""
+"If ``unsafe_hash`` is false and an explicitly defined ``__hash__`` is "
+"present, then no ``__hash__`` is added."
+msgstr ""
+
+#: ../../pep-0557.rst:258
+msgid "See the Python documentation [#]_ for more information."
+msgstr ""
+
+#: ../../pep-0557.rst:260
+msgid ""
+"``frozen``: If true (the default is False), assigning to fields will "
+"generate an exception.  This emulates read-only frozen instances. If "
+"either ``__getattr__`` or ``__setattr__`` is defined in the class, then "
+"``ValueError`` is raised.  See the discussion below."
+msgstr ""
+
+#: ../../pep-0557.rst:265
+msgid ""
+"``field``\\s may optionally specify a default value, using normal Python "
+"syntax::"
+msgstr ""
+
+#: ../../pep-0557.rst:273
+msgid ""
+"In this example, both ``a`` and ``b`` will be included in the added "
+"``__init__`` method, which will be defined as::"
+msgstr ""
+
+#: ../../pep-0557.rst:278
+msgid ""
+"``TypeError`` will be raised if a field without a default value follows a"
+" field with a default value.  This is true either when this occurs in a "
+"single class, or as a result of class inheritance."
+msgstr ""
+
+#: ../../pep-0557.rst:282
+msgid ""
+"For common and simple use cases, no other functionality is required. "
+"There are, however, some Data Class features that require additional per-"
+"field information.  To satisfy this need for additional information, you "
+"can replace the default field value with a call to the provided "
+"``field()`` function.  The signature of ``field()`` is::"
+msgstr ""
+
+#: ../../pep-0557.rst:291
+msgid ""
+"The ``MISSING`` value is a sentinel object used to detect if the "
+"``default`` and ``default_factory`` parameters are provided.  This "
+"sentinel is used because ``None`` is a valid value for ``default``."
+msgstr ""
+
+#: ../../pep-0557.rst:295
+msgid "The parameters to ``field()`` are:"
+msgstr ""
+
+#: ../../pep-0557.rst:297
+msgid ""
+"``default``: If provided, this will be the default value for this field."
+"  This is needed because the ``field`` call itself replaces the normal "
+"position of the default value."
+msgstr ""
+
+#: ../../pep-0557.rst:301
+msgid ""
+"``default_factory``: If provided, it must be a zero-argument callable "
+"that will be called when a default value is needed for this field.  Among"
+" other purposes, this can be used to specify fields with mutable default "
+"values, as discussed below.  It is an error to specify both ``default`` "
+"and ``default_factory``."
+msgstr ""
+
+#: ../../pep-0557.rst:307
+msgid ""
+"``init``: If true (the default), this field is included as a parameter to"
+" the generated ``__init__`` method."
+msgstr ""
+
+#: ../../pep-0557.rst:310
+msgid ""
+"``repr``: If true (the default), this field is included in the string "
+"returned by the generated ``__repr__`` method."
+msgstr ""
+
+#: ../../pep-0557.rst:313
+msgid ""
+"``compare``: If True (the default), this field is included in the "
+"generated equality and comparison methods (``__eq__``, ``__gt__``, et "
+"al.)."
+msgstr ""
+
+#: ../../pep-0557.rst:317
+msgid ""
+"``hash``: This can be a bool or ``None``.  If True, this field is "
+"included in the generated ``__hash__`` method.  If ``None`` (the "
+"default), use the value of ``compare``: this would normally be the "
+"expected behavior.  A field should be considered in the hash if it's used"
+" for comparisons.  Setting this value to anything other than ``None`` is "
+"discouraged."
+msgstr ""
+
+#: ../../pep-0557.rst:324
+msgid ""
+"One possible reason to set ``hash=False`` but ``compare=True`` would be "
+"if a field is expensive to compute a hash value for, that field is needed"
+" for equality testing, and there are other fields that contribute to the "
+"type's hash value.  Even if a field is excluded from the hash, it will "
+"still be used for comparisons."
+msgstr ""
+
+#: ../../pep-0557.rst:330
+msgid ""
+"``metadata``: This can be a mapping or None. None is treated as an empty "
+"dict.  This value is wrapped in ``types.MappingProxyType`` to make it "
+"read-only, and exposed on the Field object. It is not used at all by Data"
+" Classes, and is provided as a third-party extension mechanism.  Multiple"
+" third-parties can each have their own key, to use as a namespace in the "
+"metadata."
+msgstr ""
+
+#: ../../pep-0557.rst:337
+msgid ""
+"If the default value of a field is specified by a call to ``field()``, "
+"then the class attribute for this field will be replaced by the specified"
+" ``default`` value.  If no ``default`` is provided, then the class "
+"attribute will be deleted.  The intent is that after the ``dataclass`` "
+"decorator runs, the class attributes will all contain the default values "
+"for the fields, just as if the default value itself were specified.  For "
+"example, after::"
+msgstr ""
+
+#: ../../pep-0557.rst:352
+msgid ""
+"The class attribute ``C.z`` will be ``10``, the class attribute ``C.t`` "
+"will be ``20``, and the class attributes ``C.x`` and ``C.y`` will not be "
+"set."
+msgstr ""
+
+#: ../../pep-0557.rst:357
+msgid "``Field`` objects"
+msgstr ""
+
+#: ../../pep-0557.rst:359
+msgid ""
+"``Field`` objects describe each defined field. These objects are created "
+"internally, and are returned by the ``fields()`` module-level method (see"
+" below).  Users should never instantiate a ``Field`` object directly.  "
+"Its documented attributes are:"
+msgstr ""
+
+#: ../../pep-0557.rst:364
+msgid "``name``: The name of the field."
+msgstr ""
+
+#: ../../pep-0557.rst:366
+msgid "``type``: The type of the field."
+msgstr ""
+
+#: ../../pep-0557.rst:368
+msgid ""
+"``default``, ``default_factory``, ``init``, ``repr``, ``hash``, "
+"``compare``, and ``metadata`` have the identical meaning and values as "
+"they do in the ``field()`` declaration."
+msgstr ""
+
+#: ../../pep-0557.rst:372
+msgid ""
+"Other attributes may exist, but they are private and must not be "
+"inspected or relied on."
+msgstr ""
+
+#: ../../pep-0557.rst:376
+msgid "post-init processing"
+msgstr ""
+
+#: ../../pep-0557.rst:378
+msgid ""
+"The generated ``__init__`` code will call a method named "
+"``__post_init__``, if it is defined on the class.  It will be called as "
+"``self.__post_init__()``.  If no ``__init__`` method is generated, then "
+"``__post_init__`` will not automatically be called."
+msgstr ""
+
+#: ../../pep-0557.rst:383
+msgid ""
+"Among other uses, this allows for initializing field values that depend "
+"on one or more other fields.  For example::"
+msgstr ""
+
+#: ../../pep-0557.rst:395
+msgid ""
+"See the section below on init-only variables for ways to pass parameters "
+"to ``__post_init__()``.  Also see the warning about how ``replace()`` "
+"handles ``init=False`` fields."
+msgstr ""
+
+#: ../../pep-0557.rst:400
+msgid "Class variables"
+msgstr ""
+
+#: ../../pep-0557.rst:402
+msgid ""
+"One place where ``dataclass`` actually inspects the type of a field is to"
+" determine if a field is a class variable as defined in PEP 526.  It does"
+" this by checking if the type of the field is ``typing.ClassVar``. If a "
+"field is a ``ClassVar``, it is excluded from consideration as a field and"
+" is ignored by the Data Class mechanisms. For more discussion, see [#]_."
+"  Such ``ClassVar`` pseudo-fields are not returned by the module-level "
+"``fields()`` function."
+msgstr ""
+
+#: ../../pep-0557.rst:411
+msgid "Init-only variables"
+msgstr ""
+
+#: ../../pep-0557.rst:413
+msgid ""
+"The other place where ``dataclass`` inspects a type annotation is to "
+"determine if a field is an init-only variable.  It does this by seeing if"
+" the type of a field is of type ``dataclasses.InitVar``.  If a field is "
+"an ``InitVar``, it is considered a pseudo-field called an init-only "
+"field.  As it is not a true field, it is not returned by the module-level"
+" ``fields()`` function.  Init-only fields are added as parameters to the "
+"generated ``__init__`` method, and are passed to the optional "
+"``__post_init__`` method.  They are not otherwise used by Data Classes."
+msgstr ""
+
+#: ../../pep-0557.rst:423
+msgid ""
+"For example, suppose a field will be initialized from a database, if a "
+"value is not provided when creating the class::"
+msgstr ""
+
+#: ../../pep-0557.rst:438
+msgid ""
+"In this case, ``fields()`` will return ``Field`` objects for ``i`` and "
+"``j``, but not for ``database``."
+msgstr ""
+
+#: ../../pep-0557.rst:442
+msgid "Frozen instances"
+msgstr ""
+
+#: ../../pep-0557.rst:444
+msgid ""
+"It is not possible to create truly immutable Python objects.  However, by"
+" passing ``frozen=True`` to the ``@dataclass`` decorator you can emulate "
+"immutability.  In that case, Data Classes will add ``__setattr__`` and "
+"``__delattr__`` methods to the class.  These methods will raise a "
+"``FrozenInstanceError`` when invoked."
+msgstr ""
+
+#: ../../pep-0557.rst:450
+msgid ""
+"There is a tiny performance penalty when using ``frozen=True``: "
+"``__init__`` cannot use simple assignment to initialize fields, and must "
+"use ``object.__setattr__``."
+msgstr ""
+
+#: ../../pep-0557.rst:455
+msgid "Inheritance"
+msgstr ""
+
+#: ../../pep-0557.rst:457
+msgid ""
+"When the Data Class is being created by the ``@dataclass`` decorator, it "
+"looks through all of the class's base classes in reverse MRO (that is, "
+"starting at ``object``) and, for each Data Class that it finds, adds the "
+"fields from that base class to an ordered mapping of fields. After all of"
+" the base class fields are added, it adds its own fields to the ordered "
+"mapping.  All of the generated methods will use this combined, calculated"
+" ordered mapping of fields.  Because the fields are in insertion order, "
+"derived classes override base classes.  An example::"
+msgstr ""
+
+#: ../../pep-0557.rst:477
+msgid ""
+"The final list of fields is, in order, ``x``, ``y``, ``z``.  The final "
+"type of ``x`` is ``int``, as specified in class ``C``."
+msgstr ""
+
+#: ../../pep-0557.rst:480
+msgid "The generated ``__init__`` method for ``C`` will look like::"
+msgstr ""
+
+#: ../../pep-0557.rst:485
+msgid "Default factory functions"
+msgstr ""
+
+#: ../../pep-0557.rst:487
+msgid ""
+"If a field specifies a ``default_factory``, it is called with zero "
+"arguments when a default value for the field is needed.  For example, to "
+"create a new instance of a list, use::"
+msgstr ""
+
+#: ../../pep-0557.rst:493
+msgid ""
+"If a field is excluded from ``__init__`` (using ``init=False``) and the "
+"field also specifies ``default_factory``, then the default factory "
+"function will always be called from the generated ``__init__`` function."
+"  This happens because there is no other way to give the field an initial"
+" value."
+msgstr ""
+
+#: ../../pep-0557.rst:500
+msgid "Mutable default values"
+msgstr ""
+
+#: ../../pep-0557.rst:502
+msgid ""
+"Python stores default member variable values in class attributes. "
+"Consider this example, not using Data Classes::"
+msgstr ""
+
+#: ../../pep-0557.rst:517
+msgid ""
+"Note that the two instances of class ``C`` share the same class variable "
+"``x``, as expected."
+msgstr ""
+
+#: ../../pep-0557.rst:520
+msgid "Using Data Classes, *if* this code was valid::"
+msgstr ""
+
+#: ../../pep-0557.rst:528
+msgid "it would generate code similar to::"
+msgstr ""
+
+#: ../../pep-0557.rst:539
+msgid ""
+"This has the same issue as the original example using class ``C``. That "
+"is, two instances of class ``D`` that do not specify a value for ``x`` "
+"when creating a class instance will share the same copy of ``x``.  "
+"Because Data Classes just use normal Python class creation they also "
+"share this problem.  There is no general way for Data Classes to detect "
+"this condition.  Instead, Data Classes will raise a ``TypeError`` if it "
+"detects a default parameter of type ``list``, ``dict``, or ``set``.  This"
+" is a partial solution, but it does protect against many common errors.  "
+"See `Automatically support mutable default values`_ in the Rejected Ideas"
+" section for more details."
+msgstr ""
+
+#: ../../pep-0557.rst:550
+msgid ""
+"Using default factory functions is a way to create new instances of "
+"mutable types as default values for fields::"
+msgstr ""
+
+#: ../../pep-0557.rst:560
+msgid "Module level helper functions"
+msgstr ""
+
+#: ../../pep-0557.rst:562
+msgid ""
+"``fields(class_or_instance)``: Returns a tuple of ``Field`` objects that "
+"define the fields for this Data Class.  Accepts either a Data Class, or "
+"an instance of a Data Class.  Raises ``ValueError`` if not passed a Data "
+"Class or instance of one.  Does not return pseudo-fields which are "
+"``ClassVar`` or ``InitVar``."
+msgstr ""
+
+#: ../../pep-0557.rst:568
+msgid ""
+"``asdict(instance, *, dict_factory=dict)``: Converts the Data Class "
+"``instance`` to a dict (by using the factory function ``dict_factory``)."
+"  Each Data Class is converted to a dict of its fields, as name:value "
+"pairs.  Data Classes, dicts, lists, and tuples are recursed into.  For "
+"example::"
+msgstr ""
+
+#: ../../pep-0557.rst:589 ../../pep-0557.rst:602
+msgid "Raises ``TypeError`` if ``instance`` is not a Data Class instance."
+msgstr ""
+
+#: ../../pep-0557.rst:591
+msgid ""
+"``astuple(*, tuple_factory=tuple)``: Converts the Data Class ``instance``"
+" to a tuple (by using the factory function ``tuple_factory``).  Each Data"
+" Class is converted to a tuple of its field values.  Data Classes, dicts,"
+" lists, and tuples are recursed into."
+msgstr ""
+
+#: ../../pep-0557.rst:597
+msgid "Continuing from the previous example::"
+msgstr ""
+
+#: ../../pep-0557.rst:604
+msgid ""
+"``make_dataclass(cls_name, fields, *, bases=(), namespace=None)``: "
+"Creates a new Data Class with name ``cls_name``, fields as defined in "
+"``fields``, base classes as given in ``bases``, and initialized with a "
+"namespace as given in ``namespace``.  ``fields`` is an iterable whose "
+"elements are either ``name``, ``(name, type)``, or ``(name, type, "
+"Field)``.  If just ``name`` is supplied, ``typing.Any`` is used for "
+"``type``.  This function is not strictly required, because any Python "
+"mechanism for creating a new class with ``__annotations__`` can then "
+"apply the ``dataclass`` function to convert that class to a Data Class.  "
+"This function is provided as a convenience.  For example::"
+msgstr ""
+
+#: ../../pep-0557.rst:622
+msgid "Is equivalent to::"
+msgstr ""
+
+#: ../../pep-0557.rst:633
+msgid ""
+"``replace(instance, **changes)``: Creates a new object of the same type "
+"of ``instance``, replacing fields with values from ``changes``. If "
+"``instance`` is not a Data Class, raises ``TypeError``.  If values in "
+"``changes`` do not specify fields, raises ``TypeError``."
+msgstr ""
+
+#: ../../pep-0557.rst:638
+msgid ""
+"The newly returned object is created by calling the ``__init__`` method "
+"of the Data Class.  This ensures that ``__post_init__``, if present, is "
+"also called."
+msgstr ""
+
+#: ../../pep-0557.rst:642
+msgid ""
+"Init-only variables without default values, if any exist, must be "
+"specified on the call to ``replace`` so that they can be passed to "
+"``__init__`` and ``__post_init__``."
+msgstr ""
+
+#: ../../pep-0557.rst:646
+msgid ""
+"It is an error for ``changes`` to contain any fields that are defined as "
+"having ``init=False``.  A ``ValueError`` will be raised in this case."
+msgstr ""
+
+#: ../../pep-0557.rst:650
+msgid ""
+"Be forewarned about how ``init=False`` fields work during a call to "
+"``replace()``.  They are not copied from the source object, but rather "
+"are initialized in ``__post_init__()``, if they're initialized at all.  "
+"It is expected that ``init=False`` fields will be rarely and judiciously "
+"used.  If they are used, it might be wise to have alternate class "
+"constructors, or perhaps a custom ``replace()`` (or similarly named) "
+"method which handles instance copying."
+msgstr ""
+
+#: ../../pep-0557.rst:659
+msgid ""
+"``is_dataclass(class_or_instance)``: Returns True if its parameter is a "
+"dataclass or an instance of one, otherwise returns False."
+msgstr ""
+
+#: ../../pep-0557.rst:662
+msgid ""
+"If you need to know if a class is an instance of a dataclass (and not a "
+"dataclass itself), then add a further check for ``not isinstance(obj, "
+"type)``::"
+msgstr ""
+
+#: ../../pep-0557.rst:672
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0557.rst:675
+msgid "python-ideas discussion"
+msgstr ""
+
+#: ../../pep-0557.rst:677
+msgid ""
+"This discussion started on python-ideas [#]_ and was moved to a GitHub "
+"repo [#]_ for further discussion.  As part of this discussion, we made "
+"the decision to use PEP 526 syntax to drive the discovery of fields."
+msgstr ""
+
+#: ../../pep-0557.rst:682
+msgid "Support for automatically setting ``__slots__``?"
+msgstr ""
+
+#: ../../pep-0557.rst:684
+msgid ""
+"At least for the initial release, ``__slots__`` will not be supported. "
+"``__slots__`` needs to be added at class creation time.  The Data Class "
+"decorator is called after the class is created, so in order to add "
+"``__slots__`` the decorator would have to create a new class, set "
+"``__slots__``, and return it.  Because this behavior is somewhat "
+"surprising, the initial version of Data Classes will not support "
+"automatically setting ``__slots__``.  There are a number of workarounds:"
+msgstr ""
+
+#: ../../pep-0557.rst:693
+msgid "Manually add ``__slots__`` in the class definition."
+msgstr ""
+
+#: ../../pep-0557.rst:695
+msgid ""
+"Write a function (which could be used as a decorator) that inspects the "
+"class using ``fields()`` and creates a new class with ``__slots__`` set."
+msgstr ""
+
+#: ../../pep-0557.rst:699 ../../pep-0557.rst:755
+msgid "For more discussion, see [#]_."
+msgstr ""
+
+#: ../../pep-0557.rst:702
+msgid "Why not just use namedtuple?"
+msgstr ""
+
+#: ../../pep-0557.rst:704
+msgid ""
+"Any namedtuple can be accidentally compared to any other with the same "
+"number of fields. For example: ``Point3D(2017, 6, 2) == Date(2017, 6, "
+"2)``.  With Data Classes, this would return False."
+msgstr ""
+
+#: ../../pep-0557.rst:708
+msgid ""
+"A namedtuple can be accidentally compared to a tuple.  For example, "
+"``Point2D(1, 10) == (1, 10)``.  With Data Classes, this would return "
+"False."
+msgstr ""
+
+#: ../../pep-0557.rst:712
+msgid ""
+"Instances are always iterable, which can make it difficult to add fields."
+"  If a library defines::"
+msgstr ""
+
+#: ../../pep-0557.rst:719
+msgid "Then if a user uses this code as::"
+msgstr ""
+
+#: ../../pep-0557.rst:723
+msgid ""
+"then it would not be possible to add a ``second`` field to ``Time`` "
+"without breaking the user's code."
+msgstr ""
+
+#: ../../pep-0557.rst:726
+msgid "No option for mutable instances."
+msgstr ""
+
+#: ../../pep-0557.rst:728
+msgid "Cannot specify default values."
+msgstr ""
+
+#: ../../pep-0557.rst:730
+msgid "Cannot control which fields are used for ``__init__``, ``__repr__``, etc."
+msgstr ""
+
+#: ../../pep-0557.rst:733
+msgid "Cannot support combining fields by inheritance."
+msgstr ""
+
+#: ../../pep-0557.rst:736
+msgid "Why not just use typing.NamedTuple?"
+msgstr ""
+
+#: ../../pep-0557.rst:738
+msgid ""
+"For classes with statically defined fields, it does support similar "
+"syntax to Data Classes, using type annotations.  This produces a "
+"namedtuple, so it shares ``namedtuple``\\s benefits and some of its "
+"downsides.  Data Classes, unlike ``typing.NamedTuple``, support combining"
+" fields via inheritance."
+msgstr ""
+
+#: ../../pep-0557.rst:745
+msgid "Why not just use attrs?"
+msgstr ""
+
+#: ../../pep-0557.rst:747
+msgid ""
+"attrs moves faster than could be accommodated if it were moved in to the "
+"standard library."
+msgstr ""
+
+#: ../../pep-0557.rst:750
+msgid ""
+"attrs supports additional features not being proposed here: validators, "
+"converters, metadata, etc.  Data Classes makes a tradeoff to achieve "
+"simplicity by not implementing these features."
+msgstr ""
+
+#: ../../pep-0557.rst:758
+msgid "post-init parameters"
+msgstr ""
+
+#: ../../pep-0557.rst:760
+msgid ""
+"In an earlier version of this PEP before ``InitVar`` was added, the post-"
+"init function ``__post_init__`` never took any parameters."
+msgstr ""
+
+#: ../../pep-0557.rst:763
+msgid ""
+"The normal way of doing parameterized initialization (and not just with "
+"Data Classes) is to provide an alternate classmethod constructor. For "
+"example::"
+msgstr ""
+
+#: ../../pep-0557.rst:779
+msgid ""
+"Because the ``__post_init__`` function is the last thing called in the "
+"generated ``__init__``, having a classmethod constructor (which can also "
+"execute code immediately after constructing the object) is functionally "
+"equivalent to being able to pass parameters to a ``__post_init__`` "
+"function."
+msgstr ""
+
+#: ../../pep-0557.rst:785
+msgid ""
+"With ``InitVar``\\s, ``__post_init__`` functions can now take parameters."
+"  They are passed first to ``__init__`` which passes them to "
+"``__post_init__`` where user code can use them as needed."
+msgstr ""
+
+#: ../../pep-0557.rst:789
+msgid ""
+"The only real difference between alternate classmethod constructors and "
+"``InitVar`` pseudo-fields is in regards to required non-field parameters "
+"during object creation.  With ``InitVar``\\s, using ``__init__`` and the "
+"module-level ``replace()`` function ``InitVar``\\s must always be "
+"specified.  Consider the case where a ``context`` object is needed to "
+"create an instance, but isn't stored as a field. With alternate "
+"classmethod constructors the ``context`` parameter is always optional, "
+"because you could still create the object by going through ``__init__`` "
+"(unless you suppress its creation).  Which approach is more appropriate "
+"will be application-specific, but both approaches are supported."
+msgstr ""
+
+#: ../../pep-0557.rst:801
+msgid ""
+"Another reason for using ``InitVar`` fields is that the class author can "
+"control the order of ``__init__`` parameters.  This is especially "
+"important with regular fields and ``InitVar`` fields that have default "
+"values, as all fields with defaults must come after all fields without "
+"defaults.  A previous design had all init-only fields coming after "
+"regular fields.  This meant that if any field had a default value, then "
+"all init-only fields would have to have defaults values, too."
+msgstr ""
+
+#: ../../pep-0557.rst:810
+msgid "asdict and astuple function names"
+msgstr ""
+
+#: ../../pep-0557.rst:812
+msgid ""
+"The names of the module-level helper functions ``asdict()`` and "
+"``astuple()`` are arguably not PEP 8 compliant, and should be "
+"``as_dict()`` and ``as_tuple()``, respectively.  However, after "
+"discussion [#]_ it was decided to keep consistency with "
+"``namedtuple._asdict()`` and ``attr.asdict()``."
+msgstr ""
+
+#: ../../pep-0557.rst:820
+msgid "Rejected ideas"
+msgstr ""
+
+#: ../../pep-0557.rst:823
+msgid "Copying ``init=False`` fields after new object creation in replace()"
+msgstr ""
+
+#: ../../pep-0557.rst:825
+msgid ""
+"Fields that are ``init=False`` are by definition not passed to "
+"``__init__``, but instead are initialized with a default value, or by "
+"calling a default factory function in ``__init__``, or by code in "
+"``__post_init__``."
+msgstr ""
+
+#: ../../pep-0557.rst:830
+msgid ""
+"A previous version of this PEP specified that ``init=False`` fields would"
+" be copied from the source object to the newly created object after "
+"``__init__`` returned, but that was deemed to be inconsistent with using "
+"``__init__`` and ``__post_init__`` to initialize the new object.  For "
+"example, consider this case::"
+msgstr ""
+
+#: ../../pep-0557.rst:847
+msgid ""
+"If ``init=False`` fields were copied from the source to the destination "
+"object after ``__post_init__`` is run, then s2 would end up begin "
+"``Square(length=2.0, area=1.0)``, instead of the correct "
+"``Square(length=2.0, area=4.0)``."
+msgstr ""
+
+#: ../../pep-0557.rst:853
+msgid "Automatically support mutable default values"
+msgstr ""
+
+#: ../../pep-0557.rst:855
+msgid ""
+"One proposal was to automatically copy defaults, so that if a literal "
+"list ``[]`` was a default value, each instance would get a new list. "
+"There were undesirable side effects of this decision, so the final "
+"decision is to disallow the 3 known built-in mutable types: list, dict, "
+"and set.  For a complete discussion of this and other options, see [#]_."
+msgstr ""
+
+#: ../../pep-0557.rst:863
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0557.rst:866
+msgid "Custom __init__ method"
+msgstr ""
+
+#: ../../pep-0557.rst:868
+msgid ""
+"Sometimes the generated ``__init__`` method does not suffice. For "
+"example, suppose you wanted to have an object to store ``*args`` and "
+"``**kwargs``::"
+msgstr ""
+
+#: ../../pep-0557.rst:884
+msgid "A complicated example"
+msgstr ""
+
+#: ../../pep-0557.rst:886
+msgid "This code exists in a closed source project::"
+msgstr ""
+
+#: ../../pep-0557.rst:901
+msgid "This can be replaced by::"
+msgstr ""
+
+#: ../../pep-0557.rst:913
+msgid ""
+"The Data Class version is more declarative, has less code, supports "
+"``typing``, and includes the other generated functions."
+msgstr ""
+
+#: ../../pep-0557.rst:917
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0557.rst:919
+msgid ""
+"The following people provided invaluable input during the development of "
+"this PEP and code: Ivan Levkivskyi, Guido van Rossum, Hynek Schlawack, "
+"Raymond Hettinger, and Lisa Roach.  I thank them for their time and "
+"expertise."
+msgstr ""
+
+#: ../../pep-0557.rst:924
+msgid ""
+"A special mention must be made about the ``attrs`` project.  It was a "
+"true inspiration for this PEP, and I respect the design decisions they "
+"made."
+msgstr ""
+
+#: ../../pep-0557.rst:929
+msgid "References"
+msgstr ""
+
+#: ../../pep-0557.rst:931
+msgid "attrs project on github (https://github.com/python-attrs/attrs)"
+msgstr ""
+
+#: ../../pep-0557.rst:934
+msgid ""
+"George Sakkis' recordType recipe "
+"(http://code.activestate.com/recipes/576555-records/)"
+msgstr ""
+
+#: ../../pep-0557.rst:937
+msgid ""
+"DictDotLookup recipe (http://code.activestate.com/recipes/576586-dot-"
+"style-nested-lookups-over-dictionary-based-dat/)"
+msgstr ""
+
+#: ../../pep-0557.rst:940
+msgid "attrdict package (https://pypi.python.org/pypi/attrdict)"
+msgstr ""
+
+#: ../../pep-0557.rst:943
+msgid ""
+"StackOverflow question about data container classes "
+"(https://stackoverflow.com/questions/3357581/using-python-class-as-a"
+"-data-container)"
+msgstr ""
+
+#: ../../pep-0557.rst:946
+msgid ""
+"David Beazley metaclass talk featuring data classes "
+"(https://www.youtube.com/watch?v=sPiWg5jSoZI)"
+msgstr ""
+
+#: ../../pep-0557.rst:949
+msgid ""
+"Python documentation for __hash__ "
+"(https://docs.python.org/3/reference/datamodel.html#object.__hash__)"
+msgstr ""
+
+#: ../../pep-0557.rst:952
+msgid ""
+"ClassVar discussion in PEP 526 (https://www.python.org/dev/peps/pep-0526"
+"/#class-and-instance-variable-annotations)"
+msgstr ""
+
+#: ../../pep-0557.rst:955
+msgid ""
+"Start of python-ideas discussion (https://mail.python.org/pipermail"
+"/python-ideas/2017-May/045618.html)"
+msgstr ""
+
+#: ../../pep-0557.rst:958
+msgid ""
+"GitHub repo where discussions and initial development took place "
+"(https://github.com/ericvsmith/dataclasses)"
+msgstr ""
+
+#: ../../pep-0557.rst:961
+msgid "Support __slots__? (https://github.com/ericvsmith/dataclasses/issues/28)"
+msgstr ""
+
+#: ../../pep-0557.rst:964
+msgid "why not just attrs? (https://github.com/ericvsmith/dataclasses/issues/19)"
+msgstr ""
+
+#: ../../pep-0557.rst:967
+msgid ""
+"PEP 8 names for asdict and astuple "
+"(https://github.com/ericvsmith/dataclasses/issues/110)"
+msgstr ""
+
+#: ../../pep-0557.rst:970
+msgid ""
+"Copying mutable defaults "
+"(https://github.com/ericvsmith/dataclasses/issues/3)"
+msgstr ""
+
+#: ../../pep-0557.rst:975
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0557.rst:977
+msgid "This document has been placed in the public domain."
+msgstr ""
+

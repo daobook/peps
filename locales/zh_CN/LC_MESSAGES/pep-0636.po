@@ -1,0 +1,796 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0636.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0636.rst:1
+msgid "636"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0636.rst:2
+msgid "Structural Pattern Matching: Tutorial"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0636.rst:5
+msgid "Daniel F Moisset <dfmoisset@gmail.com>"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0636.rst:6
+msgid "Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0636.rst:8
+msgid "Python-Dev <python-dev@python.org>"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0636.rst:9
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0636.rst:10
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0636.rst:12
+msgid "12-Sep-2020"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0636.rst:13
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0636.rst:14
+msgid "22-Oct-2020, 08-Feb-2021"
+msgstr ""
+
+#: ../../pep-0636.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0636.rst:15
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"committers@python.org/message/SQC2FTLFV5A7DV7RCEAR2I2IKJKGK7W3"
+msgstr ""
+
+#: ../../pep-0636.rst:19
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0636.rst:21
+msgid "This PEP is a tutorial for the pattern matching introduced by PEP 634."
+msgstr ""
+
+#: ../../pep-0636.rst:23
+msgid ""
+"PEP 622 proposed syntax for pattern matching, which received detailed "
+"discussion both from the community and the Steering Council. A frequent "
+"concern was about how easy it would be to explain (and learn) this "
+"feature. This PEP addresses that concern providing the kind of document "
+"which developers could use to learn about pattern matching in Python."
+msgstr ""
+
+#: ../../pep-0636.rst:29
+msgid ""
+"This is considered supporting material for PEP 634 (the technical "
+"specification for pattern matching) and PEP 635 (the motivation and "
+"rationale for having pattern matching and design considerations)."
+msgstr ""
+
+#: ../../pep-0636.rst:33
+msgid ""
+"For readers who are looking more for a quick review than for a tutorial, "
+"see `Appendix A`_."
+msgstr ""
+
+#: ../../pep-0636.rst:37
+msgid "Tutorial"
+msgstr ""
+
+#: ../../pep-0636.rst:39
+msgid ""
+"As an example to motivate this tutorial, you will be writing a text "
+"adventure. That is a form of interactive fiction where the user enters "
+"text commands to interact with a fictional world and receives text "
+"descriptions of what happens. Commands will be simplified forms of "
+"natural language like ``get sword``, ``attack dragon``, ``go north``, "
+"``enter shop`` or ``buy cheese``."
+msgstr ""
+
+#: ../../pep-0636.rst:46
+msgid "Matching sequences"
+msgstr ""
+
+#: ../../pep-0636.rst:48
+msgid ""
+"Your main loop will need to get input from the user and split it into "
+"words, let's say a list of strings like this::"
+msgstr ""
+
+#: ../../pep-0636.rst:54
+msgid ""
+"The next step is to interpret the words. Most of our commands will have "
+"two words: an action and an object. So you may be tempted to do the "
+"following::"
+msgstr ""
+
+#: ../../pep-0636.rst:60
+msgid ""
+"The problem with that line of code is that it's missing something: what "
+"if the user types more or fewer than 2 words? To prevent this problem you"
+" can either check the length of the list of words, or capture the "
+"``ValueError`` that the statement above would raise."
+msgstr ""
+
+#: ../../pep-0636.rst:64
+msgid "You can use a matching statement instead::"
+msgstr ""
+
+#: ../../pep-0636.rst:70
+msgid ""
+"The match statement evaluates the **\"subject\"** (the value after the "
+"``match`` keyword), and checks it against the **pattern** (the code next "
+"to ``case``). A pattern is able to do two different things:"
+msgstr ""
+
+#: ../../pep-0636.rst:74
+msgid ""
+"Verify that the subject has certain structure. In your case, the "
+"``[action, obj]`` pattern matches any sequence of exactly two elements. "
+"This is called **matching**"
+msgstr ""
+
+#: ../../pep-0636.rst:76
+msgid ""
+"It will bind some names in the pattern to component elements of your "
+"subject. In this case, if the list has two elements, it will bind "
+"``action = subject[0]`` and ``obj = subject[1]``."
+msgstr ""
+
+#: ../../pep-0636.rst:80
+msgid ""
+"If there's a match, the statements inside the case block will be executed"
+" with the bound variables. If there's no match, nothing happens and the "
+"statement after ``match`` is executed next."
+msgstr ""
+
+#: ../../pep-0636.rst:84
+msgid ""
+"Note that, in a similar way to unpacking assignments, you can use either "
+"parenthesis, brackets, or just comma separation as synonyms. So you could"
+" write ``case action, obj`` or ``case (action, obj)`` with the same "
+"meaning. All forms will match any sequence (for example lists or tuples)."
+msgstr ""
+
+#: ../../pep-0636.rst:90
+msgid "Matching multiple patterns"
+msgstr ""
+
+#: ../../pep-0636.rst:92
+msgid ""
+"Even if most commands have the action/object form, you might want to have"
+" user commands of different lengths. For example, you might want to add "
+"single verbs with no object like ``look`` or ``quit``. A match statement "
+"can (and is likely to) have more than one ``case``::"
+msgstr ""
+
+#: ../../pep-0636.rst:103
+msgid ""
+"The match statement will check patterns from top to bottom. If the "
+"pattern doesn't match the subject, the next pattern will be tried. "
+"However, once the *first* matching pattern is found, the body of that "
+"case is executed, and all further cases are ignored. This is similar to "
+"the way that an ``if/elif/elif/...`` statement works."
+msgstr ""
+
+#: ../../pep-0636.rst:110
+msgid "Matching specific values"
+msgstr ""
+
+#: ../../pep-0636.rst:112
+msgid ""
+"Your code still needs to look at the specific actions and conditionally "
+"execute different logic depending on the specific action (e.g., ``quit``,"
+" ``attack``, or ``buy``). You could do that using a chain of "
+"``if/elif/elif/...``, or using a dictionary of functions, but here we'll "
+"leverage pattern matching to solve that task. Instead of a variable, you "
+"can use literal values in patterns (like ``\"quit\"``, ``42``, or "
+"``None``). This allows you to write::"
+msgstr ""
+
+#: ../../pep-0636.rst:131
+msgid ""
+"A pattern like ``[\"get\", obj]`` will match only 2-element sequences "
+"that have a first element equal to ``\"get\"``. It will also bind ``obj ="
+" subject[1]``."
+msgstr ""
+
+#: ../../pep-0636.rst:134
+msgid ""
+"As you can see in the ``go`` case, we also can use different variable "
+"names in different patterns."
+msgstr ""
+
+#: ../../pep-0636.rst:137
+msgid ""
+"Literal values are compared with the ``==`` operator except for the "
+"constants ``True``, ``False`` and ``None`` which are compared with the "
+"``is`` operator."
+msgstr ""
+
+#: ../../pep-0636.rst:141
+msgid "Matching multiple values"
+msgstr ""
+
+#: ../../pep-0636.rst:143
+msgid ""
+"A player may be able to drop multiple items by using a series of commands"
+" ``drop key``, ``drop sword``, ``drop cheese``. This interface might be "
+"cumbersome, and you might like to allow dropping multiple items in a "
+"single command, like ``drop key sword cheese``. In this case you don't "
+"know beforehand how many words will be in the command, but you can use "
+"extended unpacking in patterns in the same way that they are allowed in "
+"assignments::"
+msgstr ""
+
+#: ../../pep-0636.rst:156
+msgid ""
+"This will match any sequences having \"drop\" as its first elements. All "
+"remaining elements will be captured in a ``list`` object which will be "
+"bound to the ``objects`` variable."
+msgstr ""
+
+#: ../../pep-0636.rst:160
+msgid ""
+"This syntax has similar restrictions as sequence unpacking: you can not "
+"have more than one starred name in a pattern."
+msgstr ""
+
+#: ../../pep-0636.rst:164
+msgid "Adding a wildcard"
+msgstr ""
+
+#: ../../pep-0636.rst:166
+msgid ""
+"You may want to print an error message saying that the command wasn't "
+"recognized when all the patterns fail. You could use the feature we just "
+"learned and write ``case [*ignored_words]`` as your last pattern. There's"
+" however a much simpler way::"
+msgstr ""
+
+#: ../../pep-0636.rst:178
+msgid ""
+"This special pattern which is written ``_`` (and called wildcard) always "
+"matches but it doesn't bind any variables."
+msgstr ""
+
+#: ../../pep-0636.rst:181
+msgid ""
+"Note that this will match any object, not just sequences. As such, it "
+"only makes sense to have it by itself as the last pattern (to prevent "
+"errors, Python will stop you from using it before)."
+msgstr ""
+
+#: ../../pep-0636.rst:186
+msgid "Composing patterns"
+msgstr ""
+
+#: ../../pep-0636.rst:188
+msgid ""
+"This is a good moment to step back from the examples and understand how "
+"the patterns that you have been using are built. Patterns can be nested "
+"within each other, and we have been doing that implicitly in the examples"
+" above."
+msgstr ""
+
+#: ../../pep-0636.rst:192
+msgid ""
+"There are some \"simple\" patterns (\"simple\" here meaning that they do "
+"not contain other patterns) that we've seen:"
+msgstr ""
+
+#: ../../pep-0636.rst:195
+msgid ""
+"**Capture patterns** (stand-alone names like ``direction``, ``action``, "
+"``objects``). We never discussed these separately, but used them as part "
+"of other patterns."
+msgstr ""
+
+#: ../../pep-0636.rst:197
+msgid ""
+"**Literal patterns** (string literals, number literals, ``True``, "
+"``False``, and ``None``)"
+msgstr ""
+
+#: ../../pep-0636.rst:199
+msgid "The **wildcard pattern** ``_``"
+msgstr ""
+
+#: ../../pep-0636.rst:201
+msgid ""
+"Until now, the only non-simple pattern we have experimented with is the "
+"sequence pattern. Each element in a sequence pattern can in fact be any "
+"other pattern. This means that you could write a pattern like "
+"``[\"first\", (left, right), _, *rest]``. This will match subjects which "
+"are a sequence of at least three elements, where the first one is equal "
+"to ``\"first\"`` and the second one is in turn a sequence of two "
+"elements. It will also bind ``left=subject[1][0]``, "
+"``right=subject[1][1]``, and ``rest = subject[3:]``"
+msgstr ""
+
+#: ../../pep-0636.rst:210
+msgid "Or patterns"
+msgstr ""
+
+#: ../../pep-0636.rst:212
+msgid ""
+"Going back to the adventure game example, you may find that you'd like to"
+" have several patterns resulting in the same outcome. For example, you "
+"might want the commands ``north`` and ``go north`` to be equivalent. You "
+"may also desire to have aliases for ``get X``, ``pick up X`` and ``pick X"
+" up`` for any X."
+msgstr ""
+
+#: ../../pep-0636.rst:217
+msgid ""
+"The ``|`` symbol in patterns combines them as alternatives. You could for"
+" example write::"
+msgstr ""
+
+#: ../../pep-0636.rst:226
+msgid ""
+"This is called an **or pattern** and will produce the expected result. "
+"Patterns are tried from left to right; this may be relevant to know what "
+"is bound if more than one alternative matches. An important restriction "
+"when writing or patterns is that all alternatives should bind the same "
+"variables. So a pattern ``[1, x] | [2, y]`` is not allowed because it "
+"would make unclear which variable would be bound after a successful "
+"match. ``[1, x] | [2, x]`` is perfectly fine and will always bind ``x`` "
+"if successful."
+msgstr ""
+
+#: ../../pep-0636.rst:235
+msgid "Capturing matched sub-patterns"
+msgstr ""
+
+#: ../../pep-0636.rst:237
+msgid ""
+"The first version of our \"go\" command was written with a ``[\"go\", "
+"direction]`` pattern. The change we did in our last version using the "
+"pattern ``[\"north\"] | [\"go\", \"north\"]`` has some benefits but also "
+"some drawbacks in comparison: the latest version allows the alias, but "
+"also has the direction hardcoded, which will force us to actually have "
+"separate patterns for north/south/east/west. This leads to some code "
+"duplication, but at the same time we get better input validation, and we "
+"will not be getting into that branch if the command entered by the user "
+"is ``\"go figure!\"`` instead of a direction."
+msgstr ""
+
+#: ../../pep-0636.rst:245
+msgid ""
+"We could try to get the best of both worlds doing the following (I'll "
+"omit the aliased version without \"go\" for brevity)::"
+msgstr ""
+
+#: ../../pep-0636.rst:253
+msgid ""
+"This code is a single branch, and it verifies that the word after \"go\" "
+"is really a direction. But the code moving the player around needs to "
+"know which one was chosen and has no way to do so. What we need is a "
+"pattern that behaves like the or pattern but at the same time does a "
+"capture. We can do so with an **as pattern**::"
+msgstr ""
+
+#: ../../pep-0636.rst:262
+msgid ""
+"The as-pattern matches whatever pattern is on its left-hand side, but "
+"also binds the value to a name."
+msgstr ""
+
+#: ../../pep-0636.rst:266
+msgid "Adding conditions to patterns"
+msgstr ""
+
+#: ../../pep-0636.rst:268
+msgid ""
+"The patterns we have explored above can do some powerful data filtering, "
+"but sometimes you may wish for the full power of a boolean expression. "
+"Let's say that you would actually like to allow a \"go\" command only in "
+"a restricted set of directions based on the possible exits from the "
+"current_room. We can achieve that by adding a **guard** to our case. "
+"Guards consist of the ``if`` keyword followed by any expression::"
+msgstr ""
+
+#: ../../pep-0636.rst:280
+msgid ""
+"The guard is not part of the pattern, it's part of the case. It's only "
+"checked if the pattern matches, and after all the pattern variables have "
+"been bound (that's why the condition can use the ``direction`` variable "
+"in the example above). If the pattern matches and the condition is "
+"truthy, the body of the case executes normally. If the pattern matches "
+"but the condition is falsy, the match statement proceeds to check the "
+"next case as if the pattern hadn't matched (with the possible side-effect"
+" of having already bound some variables)."
+msgstr ""
+
+#: ../../pep-0636.rst:289
+msgid "Adding a UI: Matching objects"
+msgstr ""
+
+#: ../../pep-0636.rst:291
+msgid ""
+"Your adventure is becoming a success and you have been asked to implement"
+" a graphical interface. Your UI toolkit of choice allows you to write an "
+"event loop where you can get a new event object by calling "
+"``event.get()``. The resulting object can have different type and "
+"attributes according to the user action, for example:"
+msgstr ""
+
+#: ../../pep-0636.rst:296
+msgid ""
+"A ``KeyPress`` object is generated when the user presses a key. It has a "
+"``key_name`` attribute with the name of the key pressed, and some other "
+"attributes regarding modifiers."
+msgstr ""
+
+#: ../../pep-0636.rst:298
+msgid ""
+"A ``Click`` object is generated when the user clicks the mouse. It has an"
+" attribute ``position`` with the coordinates of the pointer."
+msgstr ""
+
+#: ../../pep-0636.rst:300
+msgid ""
+"A ``Quit`` object is generated when the user clicks on the close button "
+"for the game window."
+msgstr ""
+
+#: ../../pep-0636.rst:303
+msgid ""
+"Rather than writing multiple ``isinstance()`` checks, you can use "
+"patterns to recognize different kinds of objects, and also apply patterns"
+" to its attributes::"
+msgstr ""
+
+#: ../../pep-0636.rst:319
+msgid ""
+"A pattern like ``Click(position=(x, y))`` only matches if the type of the"
+" event is a subclass of the ``Click`` class. It will also require that "
+"the event has a ``position`` attribute that matches the ``(x, y)`` "
+"pattern. If there's a match, the locals ``x`` and ``y`` will get the "
+"expected values."
+msgstr ""
+
+#: ../../pep-0636.rst:324
+msgid ""
+"A pattern like ``KeyPress()``, with no arguments will match any object "
+"which is an instance of the ``KeyPress`` class. Only the attributes you "
+"specify in the pattern are matched, and any other attributes are ignored."
+msgstr ""
+
+#: ../../pep-0636.rst:329
+msgid "Matching positional attributes"
+msgstr ""
+
+#: ../../pep-0636.rst:331
+msgid ""
+"The previous section described how to match named attributes when doing "
+"an object match. For some objects it could be convenient to describe the "
+"matched arguments by position (especially if there are only a few "
+"attributes and they have a \"standard\" ordering). If the classes that "
+"you are using are named tuples or dataclasses, you can do that by "
+"following the same order that you'd use when constructing an object. For "
+"example, if the UI framework above defines their class like this::"
+msgstr ""
+
+#: ../../pep-0636.rst:345
+msgid "then you can rewrite your match statement above as::"
+msgstr ""
+
+#: ../../pep-0636.rst:351
+msgid ""
+"The ``(x, y)`` pattern will be automatically matched against the "
+"``position`` attribute, because the first argument in the pattern "
+"corresponds to the first attribute in your dataclass definition."
+msgstr ""
+
+#: ../../pep-0636.rst:355
+msgid ""
+"Other classes don't have a natural ordering of their attributes so you're"
+" required to use explicit names in your pattern to match with their "
+"attributes. However, it's possible to manually specify the ordering of "
+"the attributes allowing positional matching, like in this alternative "
+"definition::"
+msgstr ""
+
+#: ../../pep-0636.rst:367
+msgid ""
+"The ``__match_args__`` special attribute defines an explicit order for "
+"your attributes that can be used in patterns like ``case Click((x,y))``."
+msgstr ""
+
+#: ../../pep-0636.rst:371
+msgid "Matching against constants and enums"
+msgstr ""
+
+#: ../../pep-0636.rst:373
+msgid ""
+"Your pattern above treats all mouse buttons the same, and you have "
+"decided that you want to accept left-clicks, and ignore other buttons. "
+"While doing so, you notice that the ``button`` attribute is typed as a "
+"``Button`` which is an enumeration built with ``enum.Enum``. You can in "
+"fact match against enumeration values like this::"
+msgstr ""
+
+#: ../../pep-0636.rst:384
+msgid ""
+"This will work with any dotted name (like ``math.pi``). However an "
+"unqualified name (i.e. a bare name with no dots) will be always "
+"interpreted as a capture pattern, so avoid that ambiguity by always using"
+" qualified constants in patterns."
+msgstr ""
+
+#: ../../pep-0636.rst:389
+msgid "Going to the cloud: Mappings"
+msgstr ""
+
+#: ../../pep-0636.rst:391
+msgid ""
+"You have decided to make an online version of your game. All of your "
+"logic will be in a server, and the UI in a client which will communicate "
+"using JSON messages. Via the ``json`` module, those will be mapped to "
+"Python dictionaries, lists and other builtin objects."
+msgstr ""
+
+#: ../../pep-0636.rst:396
+msgid ""
+"Our client will receive a list of dictionaries (parsed from JSON) of "
+"actions to take, each element looking for example like these:"
+msgstr ""
+
+#: ../../pep-0636.rst:399
+msgid ""
+"``{\"text\": \"The shop keeper says 'Ah! We have Camembert, yes sir'\", "
+"\"color\": \"blue\"}``"
+msgstr ""
+
+#: ../../pep-0636.rst:400
+msgid "If the client should make a pause ``{\"sleep\": 3}``"
+msgstr ""
+
+#: ../../pep-0636.rst:401
+msgid "To play a sound ``{\"sound\": \"filename.ogg\", \"format\": \"ogg\"}``"
+msgstr ""
+
+#: ../../pep-0636.rst:403
+msgid ""
+"Until now, our patterns have processed sequences, but there are patterns "
+"to match mappings based on their present keys. In this case you could "
+"use::"
+msgstr ""
+
+#: ../../pep-0636.rst:418
+msgid ""
+"The keys in your mapping pattern need to be literals, but the values can "
+"be any pattern. As in sequence patterns, all subpatterns have to match "
+"for the general pattern to match."
+msgstr ""
+
+#: ../../pep-0636.rst:422
+msgid ""
+"You can use ``**rest`` within a mapping pattern to capture additional "
+"keys in the subject. Note that if you omit this, extra keys in the "
+"subject will be ignored while matching, i.e. the message ``{\"text\": "
+"\"foo\", \"color\": \"red\", \"style\": \"bold\"}`` will match the first "
+"pattern in the example above."
+msgstr ""
+
+#: ../../pep-0636.rst:429
+msgid "Matching builtin classes"
+msgstr ""
+
+#: ../../pep-0636.rst:431
+msgid ""
+"The code above could use some validation. Given that messages came from "
+"an external source, the types of the field could be wrong, leading to "
+"bugs or security issues."
+msgstr ""
+
+#: ../../pep-0636.rst:434
+msgid ""
+"Any class is a valid match target, and that includes built-in classes "
+"like ``bool`` ``str`` or ``int``. That allows us to combine the code "
+"above with a class pattern. So instead of writing ``{\"text\": message, "
+"\"color\": c}`` we can use ``{\"text\": str() as message, \"color\": "
+"str() as c}`` to ensure that ``message`` and ``c`` are both strings. For "
+"many builtin classes (see PEP-634 for the whole list), you can use a "
+"positional parameter as a shorthand, writing ``str(c)`` rather than "
+"``str() as c``. The fully rewritten version looks like this::"
+msgstr ""
+
+#: ../../pep-0636.rst:459
+msgid "Appendix A -- Quick Intro"
+msgstr ""
+
+#: ../../pep-0636.rst:461
+msgid ""
+"A match statement takes an expression and compares its value to "
+"successive patterns given as one or more case blocks.  This is "
+"superficially similar to a switch statement in C, Java or JavaScript (and"
+" many other languages), but much more powerful."
+msgstr ""
+
+#: ../../pep-0636.rst:466
+msgid "The simplest form compares a subject value against one or more literals::"
+msgstr ""
+
+#: ../../pep-0636.rst:479
+msgid ""
+"Note the last block: the \"variable name\" ``_`` acts as a *wildcard* and"
+" never fails to match."
+msgstr ""
+
+#: ../../pep-0636.rst:482
+msgid ""
+"You can combine several literals in a single pattern using ``|`` "
+"(\"or\")::"
+msgstr ""
+
+#: ../../pep-0636.rst:487
+msgid ""
+"Patterns can look like unpacking assignments, and can be used to bind "
+"variables::"
+msgstr ""
+
+#: ../../pep-0636.rst:503
+msgid ""
+"Study that one carefully!  The first pattern has two literals, and can be"
+" thought of as an extension of the literal pattern shown above.  But the "
+"next two patterns combine a literal and a variable, and the variable "
+"*binds* a value from the subject (``point``).  The fourth pattern "
+"captures two values, which makes it conceptually similar to the unpacking"
+" assignment ``(x, y) = point``."
+msgstr ""
+
+#: ../../pep-0636.rst:510
+msgid ""
+"If you are using classes to structure your data you can use the class "
+"name followed by an argument list resembling a constructor, but with the "
+"ability to capture attributes into variables::"
+msgstr ""
+
+#: ../../pep-0636.rst:534
+msgid ""
+"You can use positional parameters with some builtin classes that provide "
+"an ordering for their attributes (e.g. dataclasses). You can also define "
+"a specific position for attributes in patterns by setting the "
+"``__match_args__`` special attribute in your classes. If it's set to "
+"(\"x\", \"y\"), the following patterns are all equivalent (and all bind "
+"the ``y`` attribute to the ``var`` variable)::"
+msgstr ""
+
+#: ../../pep-0636.rst:545
+msgid ""
+"Patterns can be arbitrarily nested.  For example, if we have a short list"
+" of points, we could match it like this::"
+msgstr ""
+
+#: ../../pep-0636.rst:560
+msgid ""
+"We can add an ``if`` clause to a pattern, known as a \"guard\".  If the "
+"guard is false, ``match`` goes on to try the next case block.  Note that "
+"value capture happens before the guard is evaluated::"
+msgstr ""
+
+#: ../../pep-0636.rst:570
+msgid "Several other key features:"
+msgstr ""
+
+#: ../../pep-0636.rst:572
+msgid ""
+"Like unpacking assignments, tuple and list patterns have exactly the same"
+" meaning and actually match arbitrary sequences.  An important exception "
+"is that they don't match iterators or strings. (Technically, the subject"
+"  must be an instance of ``collections.abc.Sequence``.)"
+msgstr ""
+
+#: ../../pep-0636.rst:578
+msgid ""
+"Sequence patterns support wildcards: ``[x, y, *rest]`` and ``(x, y, "
+"*rest)`` work similar to wildcards in unpacking assignments.  The name "
+"after ``*`` may also be ``_``, so ``(x, y, *_)`` matches a sequence of at"
+" least two items without binding the remaining items."
+msgstr ""
+
+#: ../../pep-0636.rst:583
+msgid ""
+"Mapping patterns: ``{\"bandwidth\": b, \"latency\": l}`` captures the "
+"``\"bandwidth\"`` and ``\"latency\"`` values from a dict.  Unlike "
+"sequence patterns, extra keys are ignored.  A wildcard ``**rest`` is also"
+" supported.  (But ``**_`` would be redundant, so it is not allowed.)"
+msgstr ""
+
+#: ../../pep-0636.rst:588
+msgid "Subpatterns may be captured using the ``as`` keyword::"
+msgstr ""
+
+#: ../../pep-0636.rst:592
+msgid ""
+"Most literals are compared by equality, however the singletons ``True``, "
+"``False`` and ``None`` are compared by identity."
+msgstr ""
+
+#: ../../pep-0636.rst:595
+msgid ""
+"Patterns may use named constants.  These must be dotted names to prevent "
+"them from being interpreted as capture variable::"
+msgstr ""
+
+#: ../../pep-0636.rst:613
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0636.rst:615
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

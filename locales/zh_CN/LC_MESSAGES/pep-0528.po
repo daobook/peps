@@ -1,0 +1,290 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0528.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0528.txt:1
+msgid "528"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0528.txt:2
+msgid "Change Windows console encoding to UTF-8"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0528.txt:5
+msgid "Steve Dower <steve.dower@python.org>"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0528.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0528.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0528.txt:9
+msgid "27-Aug-2016"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0528.txt:10
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0528.txt:11
+msgid "01-Sep-2016, 04-Sep-2016"
+msgstr ""
+
+#: ../../pep-0528.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0528.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2016-September/146278.html"
+msgstr ""
+
+#: ../../pep-0528.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0528.txt:17
+msgid ""
+"Historically, Python uses the ANSI APIs for interacting with the Windows "
+"operating system, often via C Runtime functions. However, these have been"
+" long discouraged in favor of the UTF-16 APIs. Within the operating "
+"system, all text is represented as UTF-16, and the ANSI APIs perform "
+"encoding and decoding using the active code page."
+msgstr ""
+
+#: ../../pep-0528.txt:23
+msgid ""
+"This PEP proposes changing the default standard stream implementation on "
+"Windows to use the Unicode APIs. This will allow users to print and input"
+" the full range of Unicode characters at the default Windows console. "
+"This also requires a subtle change to how the tokenizer parses text from "
+"readline hooks."
+msgstr ""
+
+#: ../../pep-0528.txt:29
+msgid "Specific Changes"
+msgstr ""
+
+#: ../../pep-0528.txt:32
+msgid "Add _io.WindowsConsoleIO"
+msgstr ""
+
+#: ../../pep-0528.txt:34
+msgid ""
+"Currently an instance of ``_io.FileIO`` is used to wrap the file "
+"descriptors representing standard input, output and error. We add a new "
+"class (implemented in C) ``_io.WindowsConsoleIO`` that acts as a raw IO "
+"object using the Windows console functions, specifically, "
+"``ReadConsoleW`` and ``WriteConsoleW``."
+msgstr ""
+
+#: ../../pep-0528.txt:39
+msgid ""
+"This class will be used when the legacy-mode flag is not in effect, when "
+"opening a standard stream by file descriptor and the stream is a console "
+"buffer rather than a redirected file. Otherwise, ``_io.FileIO`` will be "
+"used as it is today."
+msgstr ""
+
+#: ../../pep-0528.txt:43
+msgid ""
+"This is a raw (bytes) IO class that requires text to be passed encoded "
+"with utf-8, which will be decoded to utf-16-le and passed to the Windows "
+"APIs. Similarly, bytes read from the class will be provided by the "
+"operating system as utf-16-le and converted into utf-8 when returned to "
+"Python."
+msgstr ""
+
+#: ../../pep-0528.txt:48
+msgid ""
+"The use of an ASCII compatible encoding is required to maintain "
+"compatibility with code that bypasses the ``TextIOWrapper`` and directly "
+"writes ASCII bytes to the standard streams (for example, `Twisted's "
+"process_stdinreader.py`_). Code that assumes a particular encoding for "
+"the standard streams other than ASCII will likely break."
+msgstr ""
+
+#: ../../pep-0528.txt:55
+msgid "Add _PyOS_WindowsConsoleReadline"
+msgstr ""
+
+#: ../../pep-0528.txt:57
+msgid ""
+"To allow Unicode entry at the interactive prompt, a new readline hook is "
+"required. The existing ``PyOS_StdioReadline`` function will delegate to "
+"the new ``_PyOS_WindowsConsoleReadline`` function when reading from a "
+"file descriptor that is a console buffer and the legacy-mode flag is not "
+"in effect (the logic should be identical to above)."
+msgstr ""
+
+#: ../../pep-0528.txt:63
+msgid ""
+"Since the readline interface is required to return an 8-bit encoded "
+"string with no embedded nulls, the ``_PyOS_WindowsConsoleReadline`` "
+"function transcodes from utf-16-le as read from the operating system into"
+" utf-8."
+msgstr ""
+
+#: ../../pep-0528.txt:67
+msgid ""
+"The function ``PyRun_InteractiveOneObject`` which currently obtains the "
+"encoding from ``sys.stdin`` will select utf-8 unless the legacy-mode flag"
+" is in effect. This may require readline hooks to change their encodings "
+"to utf-8, or to require legacy-mode for correct behaviour."
+msgstr ""
+
+#: ../../pep-0528.txt:73
+msgid "Add legacy mode"
+msgstr ""
+
+#: ../../pep-0528.txt:75
+msgid ""
+"Launching Python with the environment variable "
+"``PYTHONLEGACYWINDOWSSTDIO`` set will enable the legacy-mode flag, which "
+"completely restores the previous behaviour."
+msgstr ""
+
+#: ../../pep-0528.txt:80
+msgid "Alternative Approaches"
+msgstr ""
+
+#: ../../pep-0528.txt:82
+msgid ""
+"The `win_unicode_console package`_ is a pure-Python alternative to "
+"changing the default behaviour of the console. It implements essentially "
+"the same modifications as described here using pure Python code."
+msgstr ""
+
+#: ../../pep-0528.txt:87
+msgid "Code that may break"
+msgstr ""
+
+#: ../../pep-0528.txt:89
+msgid ""
+"The following code patterns may break or see different behaviour as a "
+"result of this change. All of these code samples require explicitly "
+"choosing to use a raw file object in place of a more convenient wrapper "
+"that would prevent any visible change."
+msgstr ""
+
+#: ../../pep-0528.txt:95
+msgid "Assuming stdin/stdout encoding"
+msgstr ""
+
+#: ../../pep-0528.txt:97
+msgid ""
+"Code that assumes that the encoding required by ``sys.stdin.buffer`` or "
+"``sys.stdout.buffer`` is ``'mbcs'`` or a more specific encoding may "
+"currently be working by chance, but could encounter issues under this "
+"change. For example::"
+msgstr ""
+
+#: ../../pep-0528.txt:104
+msgid ""
+"To correct this code, the encoding specified on the ``TextIOWrapper`` "
+"should be used, either implicitly or explicitly::"
+msgstr ""
+
+#: ../../pep-0528.txt:116
+msgid "Incorrectly using the raw object"
+msgstr ""
+
+#: ../../pep-0528.txt:118
+msgid ""
+"Code that uses the raw IO object and does not correctly handle partial "
+"reads and writes may be affected. This is particularly important for "
+"reads, where the number of characters read will never exceed one-fourth "
+"of the number of bytes allowed, as there is no feasible way to prevent "
+"input from encoding as much longer utf-8 strings::"
+msgstr ""
+
+#: ../../pep-0528.txt:131
+msgid ""
+"To correct this code, the buffered reader/writer should be used, or the "
+"caller should continue reading until its buffer is full::"
+msgstr ""
+
+#: ../../pep-0528.txt:149
+msgid "Using the raw object with small buffers"
+msgstr ""
+
+#: ../../pep-0528.txt:151
+msgid ""
+"Code that uses the raw IO object and attempts to read less than four "
+"characters will now receive an error. Because it's possible that any "
+"single character may require up to four bytes when represented in utf-8, "
+"requests must fail::"
+msgstr ""
+
+#: ../../pep-0528.txt:161
+msgid "The only workaround is to pass a larger buffer::"
+msgstr ""
+
+#: ../../pep-0528.txt:170
+msgid ""
+"(The extra ``>>>`` is due to the newline remaining in the input buffer "
+"and is expected in this situation.)"
+msgstr ""
+
+#: ../../pep-0528.txt:174
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0528.txt:176
+msgid "This document has been placed in the public domain."
+msgstr ""
+
+#: ../../pep-0528.txt:179
+msgid "References"
+msgstr ""
+

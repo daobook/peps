@@ -1,0 +1,505 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3149.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3149.txt:1
+msgid "3149"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3149.txt:2
+msgid "ABI version tagged .so files"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3149.txt:5
+msgid "Barry Warsaw <barry@python.org>"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3149.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3149.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3149.txt:9
+msgid "09-Jul-2010"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3149.txt:10
+msgid "3.2"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3149.txt:11
+msgid "2010-07-14, 2010-07-22"
+msgstr ""
+
+#: ../../pep-3149.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-3149.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2010-September/103408.html"
+msgstr ""
+
+#: ../../pep-3149.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3149.txt:18
+msgid ""
+"PEP 3147 [1]_ described an extension to Python's import machinery that "
+"improved the sharing of Python source code, by allowing more than one "
+"byte compilation file (.pyc) to be co-located with each source file."
+msgstr ""
+
+#: ../../pep-3149.txt:22
+msgid ""
+"This PEP defines an adjunct feature which allows the co-location of "
+"extension module files (.so) in a similar manner.  This optional, build-"
+"time feature will enable downstream distributions of Python to more "
+"easily provide more than one Python major version at a time."
+msgstr ""
+
+#: ../../pep-3149.txt:29
+msgid "Background"
+msgstr ""
+
+#: ../../pep-3149.txt:31
+msgid ""
+"PEP 3147 defined the file system layout for a pure-Python package, where "
+"multiple versions of Python are available on the system.  For example, "
+"where the `alpha` package containing source modules `one.py` and `two.py`"
+" exist on a system with Python 3.2 and 3.3, the post-byte compilation "
+"file system layout would be::"
+msgstr ""
+
+#: ../../pep-3149.txt:49
+msgid ""
+"For packages with extension modules, a similar differentiation is needed "
+"for the module's .so files.  Extension modules compiled for different "
+"Python major versions are incompatible with each other due to changes in "
+"the ABI.  Different configuration/compilation options for the same Python"
+" version can result in different ABIs (e.g. --with-wide-unicode)."
+msgstr ""
+
+#: ../../pep-3149.txt:56
+msgid ""
+"While PEP 384 [2]_ defines a stable ABI, it will minimize, but not "
+"eliminate extension module incompatibilities between Python builds or "
+"major versions.  Thus a mechanism for discriminating extension module "
+"file names is proposed."
+msgstr ""
+
+#: ../../pep-3149.txt:63
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3149.txt:65
+msgid ""
+"Linux distributions such as Ubuntu [3]_ and Debian [4]_ provide more than"
+" one Python version at the same time to their users.  For example, Ubuntu"
+" 9.10 Karmic Koala users can install Python 2.5, 2.6, and 3.1, with "
+"Python 2.6 being the default."
+msgstr ""
+
+#: ../../pep-3149.txt:70
+msgid ""
+"In order to share as much as possible between the available Python "
+"versions, these distributions install third party package modules "
+"(``.pyc`` and ``.so`` files) into `/usr/share/pyshared` and symlink to "
+"them from `/usr/lib/pythonX.Y/dist-packages`.  The symlinks exist because"
+" in a pre-PEP 3147 world (i.e < Python 3.2), the `.pyc` files resulting "
+"from byte compilation by the various installed Pythons will name collide "
+"with each other.  For Python versions >= 3.2, all pure-Python packages "
+"can be shared, because the `.pyc` files will no longer cause file system "
+"naming conflicts.  Eliminating these symlinks makes for a simpler, more "
+"robust Python distribution."
+msgstr ""
+
+#: ../../pep-3149.txt:81
+msgid ""
+"A similar situation arises with shared library extensions.  Because "
+"extension modules are typically named `foo.so` for a `foo` extension "
+"module, these would also name collide if `foo` was provided for more than"
+" one Python version."
+msgstr ""
+
+#: ../../pep-3149.txt:86
+msgid ""
+"In addition, because different configuration/compilation options for the "
+"same Python version can cause different ABIs to be presented to extension"
+" modules.  On POSIX systems for example, the configure options ``--with-"
+"pydebug``, ``--with-pymalloc``, and ``--with-wide-unicode`` all change "
+"the ABI.  This PEP proposes to encode build-time options in the file name"
+" of the ``.so`` extension module files."
+msgstr ""
+
+#: ../../pep-3149.txt:94
+msgid ""
+"PyPy [5]_ can also benefit from this PEP, allowing it to avoid name "
+"collisions in extension modules built for its API, but with a different "
+"`.so` tag."
+msgstr ""
+
+#: ../../pep-3149.txt:100
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-3149.txt:102
+msgid ""
+"The configure/compilation options chosen at Python interpreter build-time"
+" will be encoded in the shared library file name for extension modules.  "
+"This \"tag\" will appear between the module base name and the operation "
+"file system extension for shared libraries."
+msgstr ""
+
+#: ../../pep-3149.txt:107
+msgid ""
+"The following information *MUST* be included in the shared library file "
+"name:"
+msgstr ""
+
+#: ../../pep-3149.txt:110
+msgid "The Python implementation (e.g. cpython, pypy, jython, etc.)"
+msgstr ""
+
+#: ../../pep-3149.txt:111
+msgid "The interpreter's major and minor version numbers"
+msgstr ""
+
+#: ../../pep-3149.txt:113
+msgid ""
+"These two fields are separated by a hyphen and no dots are to appear "
+"between the major and minor version numbers.  E.g. ``cpython-32``."
+msgstr ""
+
+#: ../../pep-3149.txt:116
+msgid ""
+"Python implementations *MAY* include additional flags in the file name "
+"tag as appropriate.  For example, on POSIX systems these flags will also "
+"contribute to the file name:"
+msgstr ""
+
+#: ../../pep-3149.txt:120
+msgid "``--with-pydebug`` (flag: ``d``)"
+msgstr ""
+
+#: ../../pep-3149.txt:121
+msgid "``--with-pymalloc`` (flag: ``m``)"
+msgstr ""
+
+#: ../../pep-3149.txt:122
+msgid "``--with-wide-unicode`` (flag: ``u``)"
+msgstr ""
+
+#: ../../pep-3149.txt:124
+msgid ""
+"By default in Python 3.2, ``configure`` enables ``--with-pymalloc`` so "
+"shared library file names would appear as ``foo.cpython-32m.so``. When "
+"the other two flags are also enabled, the file names would be ``foo"
+".cpython-32dmu.so``."
+msgstr ""
+
+#: ../../pep-3149.txt:129
+msgid ""
+"The shared library file name tag is used unconditionally; it cannot be "
+"changed.  The tag and extension module suffix are available through the "
+"``sysconfig`` modules via the following variables::"
+msgstr ""
+
+#: ../../pep-3149.txt:138
+msgid ""
+"Note that ``$SOABI`` contains just the tag, while ``$EXT_SUFFIX`` "
+"includes the platform extension for shared library files, and is the "
+"exact suffix added to the extension module name."
+msgstr ""
+
+#: ../../pep-3149.txt:142
+msgid ""
+"For an arbitrary package `foo`, you might see these files when the "
+"distribution package was installed::"
+msgstr ""
+
+#: ../../pep-3149.txt:148
+msgid ""
+"(These paths are for example purposes only.  Distributions are free to "
+"use whatever filesystem layout they choose, and nothing in this PEP "
+"changes the locations where from-source builds of Python are installed.)"
+msgstr ""
+
+#: ../../pep-3149.txt:153
+msgid ""
+"Python's dynamic module loader will recognize and import shared library "
+"extension modules with a tag that matches its build-time options.  For "
+"backward compatibility, Python will also continue to import untagged "
+"extension modules, e.g. ``foo.so``."
+msgstr ""
+
+#: ../../pep-3149.txt:158
+msgid ""
+"This shared library tag would be used globally for all distutils-based "
+"extension modules, regardless of where on the file system they are built."
+"  Extension modules built by means other than distutils would either have"
+" to calculate the tag manually, or fallback to the non-tagged `.so` file "
+"name."
+msgstr ""
+
+#: ../../pep-3149.txt:166
+msgid "Proven approach"
+msgstr ""
+
+#: ../../pep-3149.txt:168
+msgid ""
+"The approach described here is already proven, in a sense, on Debian and "
+"Ubuntu system where different extensions are used for debug builds of "
+"Python and extension modules.  Debug builds on Windows also already use a"
+" different file extension for dynamic libraries, and in fact encoded (in "
+"a different way than proposed in this PEP) the Python major and minor "
+"version in the `.dll` file name."
+msgstr ""
+
+#: ../../pep-3149.txt:177
+msgid "Windows"
+msgstr ""
+
+#: ../../pep-3149.txt:179
+msgid ""
+"This PEP only addresses build issues on POSIX systems that use the "
+"``configure`` script.  While Windows or other platform support is not "
+"explicitly disallowed under this PEP, platform expertise is needed in "
+"order to evaluate, describe, and implement support on such platforms. It "
+"is not currently clear that the facilities in this PEP are even useful "
+"for Windows."
+msgstr ""
+
+#: ../../pep-3149.txt:188 ../../pep-3149.txt:294
+msgid "PEP 384"
+msgstr ""
+
+#: ../../pep-3149.txt:190
+msgid ""
+"PEP 384 defines a stable ABI for extension modules.  In theory, universal"
+" adoption of PEP 384 would eliminate the need for this PEP because all "
+"extension modules could be compatible with any Python version.  In "
+"practice of course, it will be impossible to achieve universal adoption, "
+"and as described above, different build-time flags still affect the ABI."
+"  Thus even with a stable ABI, this PEP may still be necessary.  While a "
+"complete specification is reserved for PEP 384, here is a discussion of "
+"the relevant issues."
+msgstr ""
+
+#: ../../pep-3149.txt:199
+msgid ""
+"PEP 384 describes a change to ``PyModule_Create()`` where ``3`` is passed"
+" as the API version if the extension was compiled with "
+"``Py_LIMITED_API``.  This should be formalized into an official macro "
+"called ``PYTHON_ABI_VERSION`` to mirror ``PYTHON_API_VERSION``.  If and "
+"when the ABI changes in an incompatible way, this version number would be"
+" bumped.  To facilitate sharing, Python would be extended to search for "
+"extension modules with the ``PYTHON_ABI_VERSION`` number in its name.  "
+"The prefix ``abi`` is reserved for Python's use."
+msgstr ""
+
+#: ../../pep-3149.txt:208
+msgid ""
+"Thus, an initial implementation of PEP 384, when Python is configured "
+"with the default set of flags, would search for the following file names "
+"when extension module `foo` is imported (in this order)::"
+msgstr ""
+
+#: ../../pep-3149.txt:216
+msgid ""
+"The distutils [6]_ ``build_ext`` command would also have to be extended "
+"to compile to shared library files with the ``abi3`` tag, when the module"
+" author indicates that their extension supports that version of the ABI."
+"  This could be done in a backward compatible way by adding a keyword "
+"argument to the ``Extension`` class, such as::"
+msgstr ""
+
+#: ../../pep-3149.txt:224
+msgid ""
+"Martin v. Löwis describes his thoughts [7]_ about the applicability of "
+"this PEP to PEP 384.  In summary:"
+msgstr ""
+
+#: ../../pep-3149.txt:227
+msgid ""
+"``--with-pydebug`` would not be supported by the stable ABI because this "
+"changes the layout of ``PyObject``, which is an exposed structure."
+msgstr ""
+
+#: ../../pep-3149.txt:230
+msgid "``--with-pymalloc`` has no bearing on the issue."
+msgstr ""
+
+#: ../../pep-3149.txt:231
+msgid ""
+"``--with-wide-unicode`` is trickier, though Martin's inclination is to "
+"force the stable ABI to use a ``Py_UNICODE`` that matches the platform's "
+"``wchar_t``."
+msgstr ""
+
+#: ../../pep-3149.txt:237
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-3149.txt:239
+msgid ""
+"In the initial python-dev thread [8]_ where this idea was first "
+"introduced, several alternatives were suggested.  For completeness they "
+"are listed here, along with the reasons for not adopting them."
+msgstr ""
+
+#: ../../pep-3149.txt:245
+msgid "Independent directories or symlinks"
+msgstr ""
+
+#: ../../pep-3149.txt:247
+msgid ""
+"Debian and Ubuntu could simply add a version-specific directory to "
+"``sys.path`` that would contain just the extension modules for that "
+"version of Python.  Or the symlink trick eliminated in PEP 3147 could be "
+"retained for just shared libraries.  This approach is rejected because it"
+" propagates the essential complexity that PEP 3147 tries to avoid, and "
+"adds potentially several additional directories to search for all "
+"modules, even when the number of extension modules is much fewer than the"
+" total number of Python packages.  For example, builds were made "
+"available both with and without wide unicode, with and without pydebug, "
+"and with and without pymalloc, the total number of directories search "
+"increases substantially."
+msgstr ""
+
+#: ../../pep-3149.txt:261
+msgid "Don't share packages with extension modules"
+msgstr ""
+
+#: ../../pep-3149.txt:263
+msgid ""
+"It has been suggested that Python packages with extension modules not be "
+"shared among all supported Python versions on a distribution.  Even with "
+"adoption of PEP 3149, extension modules will have to be compiled for "
+"every supported Python version, so perhaps sharing of such packages isn't"
+" useful anyway.  Not sharing packages with extensions though is "
+"infeasible for several reasons."
+msgstr ""
+
+#: ../../pep-3149.txt:270
+msgid ""
+"If a pure-Python package is shared in one version, should it suddenly be "
+"not-shared if the next release adds an extension module for speed? Also, "
+"even though all extension shared libraries will be compiled and "
+"distributed once for every supported Python, there's a big difference "
+"between duplicating the `.so` files and duplicating all `.py` files. The "
+"extra size increases the download time for such packages, and more "
+"immediately, increases the space pressures on already constrained "
+"distribution CD-ROMs."
+msgstr ""
+
+#: ../../pep-3149.txt:281
+msgid "Reference implementation"
+msgstr ""
+
+#: ../../pep-3149.txt:283
+msgid ""
+"Work on this code is tracked in a Bazaar branch on Launchpad [9]_ until "
+"it's ready for merge into Python 3.2.  The work-in-progress diff can also"
+" be viewed [10]_ and is updated automatically as new changes are "
+"uploaded."
+msgstr ""
+
+#: ../../pep-3149.txt:290
+msgid "References"
+msgstr ""
+
+#: ../../pep-3149.txt:292
+msgid "PEP 3147"
+msgstr ""
+
+#: ../../pep-3149.txt:296
+msgid "Ubuntu: <http://www.ubuntu.com>"
+msgstr ""
+
+#: ../../pep-3149.txt:298
+msgid "Debian: <http://www.debian.org>"
+msgstr ""
+
+#: ../../pep-3149.txt:300
+msgid "http://codespeak.net/pypy/dist/pypy/doc/"
+msgstr ""
+
+#: ../../pep-3149.txt:302
+msgid "http://docs.python.org/py3k/distutils/index.html"
+msgstr ""
+
+#: ../../pep-3149.txt:304
+msgid "https://mail.python.org/pipermail/python-dev/2010-August/103330.html"
+msgstr ""
+
+#: ../../pep-3149.txt:306
+msgid "https://mail.python.org/pipermail/python-dev/2010-June/100998.html"
+msgstr ""
+
+#: ../../pep-3149.txt:308
+msgid "https://code.edge.launchpad.net/~barry/python/sovers"
+msgstr ""
+
+#: ../../pep-3149.txt:310
+msgid "https://code.edge.launchpad.net/~barry/python/sovers/+merge/29411"
+msgstr ""
+
+#: ../../pep-3149.txt:314
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3149.txt:316
+msgid "This document has been placed in the public domain."
+msgstr ""
+

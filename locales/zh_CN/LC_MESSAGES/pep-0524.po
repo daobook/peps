@@ -1,0 +1,802 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0524.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0524.txt:1
+msgid "524"
+msgstr ""
+
+#: ../../pep-0524.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0524.txt:2 ../../pep-0524.txt:241
+msgid "Make os.urandom() blocking on Linux"
+msgstr ""
+
+#: ../../pep-0524.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0524.txt:5
+msgid "Victor Stinner <vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0524.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0524.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0524.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0524.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0524.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0524.txt:9
+msgid "20-Jun-2016"
+msgstr ""
+
+#: ../../pep-0524.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0524.txt:10
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0524.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0524.txt:16
+msgid ""
+"Modify ``os.urandom()`` to block on Linux 3.17 and newer until the OS "
+"urandom is initialized to increase the security."
+msgstr ""
+
+#: ../../pep-0524.txt:19
+msgid ""
+"Add also a new ``os.getrandom()`` function (for Linux and Solaris) to be "
+"able to choose how to handle when ``os.urandom()`` is going to block on "
+"Linux."
+msgstr ""
+
+#: ../../pep-0524.txt:25
+msgid "The bug"
+msgstr ""
+
+#: ../../pep-0524.txt:28
+msgid "Original bug"
+msgstr ""
+
+#: ../../pep-0524.txt:30
+msgid ""
+"Python 3.5.0 was enhanced to use the new ``getrandom()`` syscall "
+"introduced in Linux 3.17 and Solaris 11.3. The problem is that users "
+"started to complain that Python 3.5 blocks at startup on Linux in virtual"
+" machines and embedded devices: see issues `#25420 "
+"<http://bugs.python.org/issue25420>`_ and `#26839 "
+"<http://bugs.python.org/issue26839>`_."
+msgstr ""
+
+#: ../../pep-0524.txt:37
+msgid ""
+"On Linux, ``getrandom(0)`` blocks until the kernel initialized urandom "
+"with 128 bits of entropy. The issue #25420 describes a Linux build "
+"platform blocking at ``import random``. The issue #26839 describes a "
+"short Python script used to compute a MD5 hash, systemd-cron, script "
+"called very early in the init process. The system initialization blocks "
+"on this script which blocks on ``getrandom(0)`` to initialize Python."
+msgstr ""
+
+#: ../../pep-0524.txt:44
+msgid ""
+"The Python initialization requires random bytes to implement a counter-"
+"measure against the hash denial-of-service (hash DoS), see:"
+msgstr ""
+
+#: ../../pep-0524.txt:47
+msgid ""
+"`Issue #13703: Hash collision security issue "
+"<http://bugs.python.org/issue13703>`_"
+msgstr ""
+
+#: ../../pep-0524.txt:49
+msgid ""
+"`PEP 456: Secure and interchangeable hash algorithm "
+"<https://www.python.org/dev/peps/pep-0456/>`_"
+msgstr ""
+
+#: ../../pep-0524.txt:52
+msgid ""
+"Importing the ``random`` module creates an instance of ``random.Random``:"
+" ``random._inst``. On Python 3.5, random.Random constructor reads 2500 "
+"bytes from ``os.urandom()`` to seed a Mersenne Twister RNG (random number"
+" generator)."
+msgstr ""
+
+#: ../../pep-0524.txt:57
+msgid ""
+"Other platforms may be affected by this bug, but in practice, only Linux "
+"systems use Python scripts to initialize the system."
+msgstr ""
+
+#: ../../pep-0524.txt:62
+msgid "Status in Python 3.5.2"
+msgstr ""
+
+#: ../../pep-0524.txt:64
+msgid ""
+"Python 3.5.2 behaves like Python 2.7 and Python 3.4. If the system "
+"urandom is not initialized, the startup does not block, but "
+"``os.urandom()`` can return low-quality entropy (even it is not easily "
+"guessable)."
+msgstr ""
+
+#: ../../pep-0524.txt:71
+msgid "Use Cases"
+msgstr ""
+
+#: ../../pep-0524.txt:73
+msgid ""
+"The following use cases are used to help to choose the right compromise "
+"between security and practicability."
+msgstr ""
+
+#: ../../pep-0524.txt:78
+msgid "Use Case 1: init script"
+msgstr ""
+
+#: ../../pep-0524.txt:80
+msgid ""
+"Use a Python 3 script to initialize the system, like systemd-cron. If the"
+" script blocks, the system initialize is stuck too. The issue #26839 is a"
+" good example of this use case."
+msgstr ""
+
+#: ../../pep-0524.txt:85
+msgid "Use case 1.1: No secret needed"
+msgstr ""
+
+#: ../../pep-0524.txt:87
+msgid ""
+"If the init script doesn't have to generate any secure secret, this use "
+"case is already handled correctly in Python 3.5.2: Python startup doesn't"
+" block on system urandom anymore."
+msgstr ""
+
+#: ../../pep-0524.txt:92
+msgid "Use case 1.2: Secure secret required"
+msgstr ""
+
+#: ../../pep-0524.txt:94
+msgid ""
+"If the init script has to generate a secure secret, there is no safe "
+"solution."
+msgstr ""
+
+#: ../../pep-0524.txt:97
+msgid ""
+"Falling back to weak entropy is not acceptable, it would reduce the "
+"security of the program."
+msgstr ""
+
+#: ../../pep-0524.txt:100
+msgid ""
+"Python cannot produce itself secure entropy, it can only wait until "
+"system urandom is initialized. But in this use case, the whole system "
+"initialization is blocked by this script, so the system fails to boot."
+msgstr ""
+
+#: ../../pep-0524.txt:104
+msgid ""
+"The real answer is that the system initialization must not be blocked by "
+"such script. It is ok to start the script very early at system "
+"initialization, but the script may blocked a few seconds until it is able"
+" to generate the secret."
+msgstr ""
+
+#: ../../pep-0524.txt:109
+msgid ""
+"Reminder: in some cases, the initialization of the system urandom never "
+"occurs and so programs waiting for system urandom blocks forever."
+msgstr ""
+
+#: ../../pep-0524.txt:114
+msgid "Use Case 2: Web server"
+msgstr ""
+
+#: ../../pep-0524.txt:116
+msgid ""
+"Run a Python 3 web server serving web pages using HTTP and HTTPS "
+"protocols. The server is started as soon as possible."
+msgstr ""
+
+#: ../../pep-0524.txt:119
+msgid ""
+"The first target of the hash DoS attack was web server: it's important "
+"that the hash secret cannot be easily guessed by an attacker."
+msgstr ""
+
+#: ../../pep-0524.txt:122
+msgid ""
+"If serving a web page needs a secret to create a cookie, create an "
+"encryption key, ..., the secret must be created with good entropy: again,"
+" it must be hard to guess the secret."
+msgstr ""
+
+#: ../../pep-0524.txt:126
+msgid ""
+"A web server requires security. If a choice must be made between security"
+" and running the server with weak entropy, security is more important. If"
+" there is no good entropy: the server must block or fail with an error."
+msgstr ""
+
+#: ../../pep-0524.txt:131
+msgid ""
+"The question is if it makes sense to start a web server on a host before "
+"system urandom is initialized."
+msgstr ""
+
+#: ../../pep-0524.txt:134
+msgid ""
+"The issues #25420 and #26839 are restricted to the Python startup, not to"
+" generate a secret before the system urandom is initialized."
+msgstr ""
+
+#: ../../pep-0524.txt:139
+msgid "Fix system urandom"
+msgstr ""
+
+#: ../../pep-0524.txt:142
+msgid "Load entropy from disk at boot"
+msgstr ""
+
+#: ../../pep-0524.txt:144
+msgid ""
+"Collecting entropy can take up to several minutes. To accelerate the "
+"system initialization, operating systems store entropy on disk at "
+"shutdown, and then reload entropy from disk at the boot."
+msgstr ""
+
+#: ../../pep-0524.txt:148
+msgid ""
+"If a system collects enough entropy at least once, the system urandom "
+"will be initialized quickly, as soon as the entropy is reloaded from "
+"disk."
+msgstr ""
+
+#: ../../pep-0524.txt:154
+msgid "Virtual machines"
+msgstr ""
+
+#: ../../pep-0524.txt:156
+msgid ""
+"Virtual machines don't have a direct access to the hardware and so have "
+"less sources of entropy than bare metal. A solution is to add a `virtio-"
+"rng device <https://fedoraproject.org/wiki/Features/Virtio_RNG>`_ to pass"
+" entropy from the host to the virtual machine."
+msgstr ""
+
+#: ../../pep-0524.txt:164
+msgid "Embedded devices"
+msgstr ""
+
+#: ../../pep-0524.txt:166
+msgid "A solution for embedded devices is to plug an hardware RNG."
+msgstr ""
+
+#: ../../pep-0524.txt:168
+msgid ""
+"For example, Raspberry Pi have an hardware RNG but it's not used by "
+"default. See: `Hardware RNG on Raspberry Pi <http://fios.sector16.net"
+"/hardware-rng-on-raspberry-pi/>`_."
+msgstr ""
+
+#: ../../pep-0524.txt:175
+msgid "Denial-of-service when reading random"
+msgstr ""
+
+#: ../../pep-0524.txt:178
+msgid "Don't use /dev/random but /dev/urandom"
+msgstr ""
+
+#: ../../pep-0524.txt:180
+msgid ""
+"The ``/dev/random`` device should only used for very specific use cases. "
+"Reading from ``/dev/random`` on Linux is likely to block. Users don't "
+"like when an application blocks longer than 5 seconds to generate a "
+"secret. It is only expected for specific cases like generating explicitly"
+" an encryption key."
+msgstr ""
+
+#: ../../pep-0524.txt:186
+msgid ""
+"When the system has no available entropy, choosing between blocking until"
+" entropy is available or falling back on lower quality entropy is a "
+"matter of compromise between security and practicability. The choice "
+"depends on the use case."
+msgstr ""
+
+#: ../../pep-0524.txt:191
+msgid ""
+"On Linux, ``/dev/urandom`` is secure, it should be used instead of "
+"``/dev/random``. See `Myths about /dev/urandom <http://www.2uo.de/myths-"
+"about-urandom/>`_ by Thomas Hühn: \"Fact: /dev/urandom is the preferred "
+"source of cryptographic randomness on UNIX-like systems\""
+msgstr ""
+
+#: ../../pep-0524.txt:199
+msgid "getrandom(size, 0) can block forever on Linux"
+msgstr ""
+
+#: ../../pep-0524.txt:201
+msgid ""
+"The origin of the Python issue #26839 is the `Debian bug report #822431 "
+"<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=822431>`_: in fact, "
+"``getrandom(size, 0)`` blocks forever on the virtual machine. The system "
+"succeeded to boot because systemd killed the blocked process after 90 "
+"seconds."
+msgstr ""
+
+#: ../../pep-0524.txt:208
+msgid ""
+"Solutions like `Load entropy from disk at boot`_ reduces the risk of this"
+" bug."
+msgstr ""
+
+#: ../../pep-0524.txt:213
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0524.txt:215
+msgid ""
+"On Linux, reading the ``/dev/urandom`` can return \"weak\" entropy before"
+" urandom is fully initialized, before the kernel collected 128 bits of "
+"entropy. Linux 3.17 adds a new ``getrandom()`` syscall which allows to "
+"block until urandom is initialized."
+msgstr ""
+
+#: ../../pep-0524.txt:220
+msgid ""
+"On Python 3.5.2, os.urandom() uses the ``getrandom(size, "
+"GRND_NONBLOCK)``, but falls back on reading the non-blocking "
+"``/dev/urandom`` if ``getrandom(size, GRND_NONBLOCK)`` fails with "
+"``EAGAIN``."
+msgstr ""
+
+#: ../../pep-0524.txt:225
+msgid ""
+"Security experts promotes ``os.urandom()`` to generate cryptographic keys"
+" because it is implemented with a `Cryptographically secure pseudo-random"
+" number generator (CSPRNG) "
+"<https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator>`_."
+" By the way, ``os.urandom()`` is preferred over ``ssl.RAND_bytes()`` for "
+"different reasons."
+msgstr ""
+
+#: ../../pep-0524.txt:232
+msgid ""
+"This PEP proposes to modify os.urandom() to use ``getrandom()`` in "
+"blocking mode to not return weak entropy, but also ensure that Python "
+"will not block at startup."
+msgstr ""
+
+#: ../../pep-0524.txt:238
+msgid "Changes"
+msgstr ""
+
+#: ../../pep-0524.txt:243
+msgid "All changes described in this section are specific to the Linux platform."
+msgstr ""
+
+#: ../../pep-0524.txt:246
+msgid "Changes:"
+msgstr ""
+
+#: ../../pep-0524.txt:248
+msgid ""
+"Modify os.urandom() to block until system urandom is initialized: "
+"``os.urandom()`` (C function ``_PyOS_URandom()``) is modified to always "
+"call ``getrandom(size, 0)`` (blocking mode) on Linux and Solaris."
+msgstr ""
+
+#: ../../pep-0524.txt:252
+msgid ""
+"Add a new private ``_PyOS_URandom_Nonblocking()`` function: try to call "
+"``getrandom(size, GRND_NONBLOCK)`` on Linux and Solaris, but falls back "
+"on reading ``/dev/urandom`` if it fails with ``EAGAIN``."
+msgstr ""
+
+#: ../../pep-0524.txt:255
+msgid ""
+"Initialize hash secret from non-blocking system urandom: "
+"``_PyRandom_Init()`` is modified to call ``_PyOS_URandom_Nonblocking()``."
+msgstr ""
+
+#: ../../pep-0524.txt:258
+msgid ""
+"``random.Random`` constructor now uses non-blocking system urandom: it is"
+" modified to use internally the new ``_PyOS_URandom_Nonblocking()`` "
+"function to seed the RNG."
+msgstr ""
+
+#: ../../pep-0524.txt:264
+msgid "Add a new os.getrandom() function"
+msgstr ""
+
+#: ../../pep-0524.txt:266
+msgid ""
+"A new ``os.getrandom(size, flags=0)`` function is added: use "
+"``getrandom()`` syscall on Linux and ``getrandom()`` C function on "
+"Solaris."
+msgstr ""
+
+#: ../../pep-0524.txt:270
+msgid "The function comes with 2 new flags:"
+msgstr ""
+
+#: ../../pep-0524.txt:272
+msgid ""
+"``os.GRND_RANDOM``: read bytes from ``/dev/random`` rather than reading "
+"``/dev/urandom``"
+msgstr ""
+
+#: ../../pep-0524.txt:274
+msgid ""
+"``os.GRND_NONBLOCK``: raise a BlockingIOError if ``os.getrandom()`` would"
+" block"
+msgstr ""
+
+#: ../../pep-0524.txt:277
+msgid ""
+"The ``os.getrandom()`` is a thin wrapper on the ``getrandom()`` syscall/C"
+" function and so inherit of its behaviour. For example, on Linux, it can "
+"return less bytes than requested if the syscall is interrupted by a "
+"signal."
+msgstr ""
+
+#: ../../pep-0524.txt:284
+msgid "Examples using os.getrandom()"
+msgstr ""
+
+#: ../../pep-0524.txt:287
+msgid "Best-effort RNG"
+msgstr ""
+
+#: ../../pep-0524.txt:289
+msgid ""
+"Example of a portable non-blocking RNG function: try to get random bytes "
+"from the OS urandom, or fallback on the random module."
+msgstr ""
+
+#: ../../pep-0524.txt:314
+msgid ""
+"This function *can* block in theory on a platform where "
+"``os.getrandom()`` is not available but ``os.urandom()`` can block."
+msgstr ""
+
+#: ../../pep-0524.txt:319
+msgid "wait_for_system_rng()"
+msgstr ""
+
+#: ../../pep-0524.txt:321
+msgid ""
+"Example of function waiting *timeout* seconds until the OS urandom is "
+"initialized on Linux or Solaris::"
+msgstr ""
+
+#: ../../pep-0524.txt:343
+msgid ""
+"This function is *not* portable. For example, ``os.urandom()`` can block "
+"on FreeBSD in theory, at the early stage of the system initialization."
+msgstr ""
+
+#: ../../pep-0524.txt:348
+msgid "Create a best-effort RNG"
+msgstr ""
+
+#: ../../pep-0524.txt:350
+msgid ""
+"Simpler example to create a non-blocking RNG on Linux: choose between "
+"``Random.SystemRandom`` and ``Random.Random`` depending if "
+"``getrandom(size)`` would block."
+msgstr ""
+
+#: ../../pep-0524.txt:367
+msgid ""
+"This function is *not* portable. For example, ``random.SystemRandom`` can"
+" block on FreeBSD in theory, at the early stage of the system "
+"initialization."
+msgstr ""
+
+#: ../../pep-0524.txt:373
+msgid "Alternative"
+msgstr ""
+
+#: ../../pep-0524.txt:376
+msgid "Leave os.urandom() unchanged, add os.getrandom()"
+msgstr ""
+
+#: ../../pep-0524.txt:378
+msgid ""
+"os.urandom() remains unchanged: never block, but it can return weak "
+"entropy if system urandom is not initialized yet."
+msgstr ""
+
+#: ../../pep-0524.txt:381
+msgid ""
+"Only add the new ``os.getrandom()`` function (wrapper to the "
+"``getrandom()`` syscall/C function)."
+msgstr ""
+
+#: ../../pep-0524.txt:384
+msgid ""
+"The ``secrets.token_bytes()`` function should be used to write portable "
+"code."
+msgstr ""
+
+#: ../../pep-0524.txt:387
+msgid ""
+"The problem with this change is that it expects that users understand "
+"well security and know well each platforms. Python has the tradition of "
+"hiding \"implementation details\". For example, ``os.urandom()`` is not a"
+" thin wrapper to the ``/dev/urandom`` device: it uses "
+"``CryptGenRandom()`` on Windows, it uses ``getentropy()`` on OpenBSD, it "
+"tries ``getrandom()`` on Linux and Solaris or falls back on reading "
+"``/dev/urandom``. Python already uses the best available system RNG "
+"depending on the platform."
+msgstr ""
+
+#: ../../pep-0524.txt:396
+msgid "This PEP does not change the API:"
+msgstr ""
+
+#: ../../pep-0524.txt:398
+msgid "``os.urandom()``, ``random.SystemRandom`` and ``secrets`` for security"
+msgstr ""
+
+#: ../../pep-0524.txt:399
+msgid "``random`` module (except ``random.SystemRandom``) for all other usages"
+msgstr ""
+
+#: ../../pep-0524.txt:403
+msgid "Raise BlockingIOError in os.urandom()"
+msgstr ""
+
+#: ../../pep-0524.txt:406
+msgid "Proposition"
+msgstr ""
+
+#: ../../pep-0524.txt:408
+msgid ""
+"`PEP 522: Allow BlockingIOError in security sensitive APIs on Linux "
+"<https://www.python.org/dev/peps/pep-0522/>`_."
+msgstr ""
+
+#: ../../pep-0524.txt:411
+msgid ""
+"Python should not decide for the developer how to handle `The bug`_: "
+"raising immediately a ``BlockingIOError`` if ``os.urandom()`` is going to"
+" block allows developers to choose how to handle this case:"
+msgstr ""
+
+#: ../../pep-0524.txt:415
+msgid ""
+"catch the exception and falls back to a non-secure entropy source: read "
+"``/dev/urandom`` on Linux, use the Python ``random`` module (which is not"
+" secure at all), use time, use process identifier, etc."
+msgstr ""
+
+#: ../../pep-0524.txt:418
+msgid "don't catch the error, the whole program fails with this fatal exception"
+msgstr ""
+
+#: ../../pep-0524.txt:421
+msgid ""
+"More generally, the exception helps to notify when sometimes goes wrong. "
+"The application can emit a warning when it starts to wait for "
+"``os.urandom()``."
+msgstr ""
+
+#: ../../pep-0524.txt:426
+msgid "Criticism"
+msgstr ""
+
+#: ../../pep-0524.txt:428
+msgid ""
+"For the use case 2 (web server), falling back on non-secure entropy is "
+"not acceptable. The application must handle ``BlockingIOError``: poll "
+"``os.urandom()`` until it completes. Example::"
+msgstr ""
+
+#: ../../pep-0524.txt:448
+msgid ""
+"For correctness, all applications which must generate a secure secret "
+"must be modified to handle ``BlockingIOError`` even if `The bug`_ is "
+"unlikely."
+msgstr ""
+
+#: ../../pep-0524.txt:452
+msgid ""
+"The case of applications using ``os.urandom()`` but don't really require "
+"security is not well defined. Maybe these applications should not use "
+"``os.urandom()`` at the first place, but always the non-blocking "
+"``random`` module. If ``os.urandom()`` is used for security, we are back "
+"to the use case 2 described above: `Use Case 2: Web server`_. If a "
+"developer doesn't want to drop ``os.urandom()``, the code should be "
+"modified. Example::"
+msgstr ""
+
+#: ../../pep-0524.txt:466
+msgid ""
+"The question is if `The bug`_ is common enough to require that so many "
+"applications have to be modified."
+msgstr ""
+
+#: ../../pep-0524.txt:469
+msgid ""
+"Another simpler choice is to refuse to start before the system urandom is"
+" initialized::"
+msgstr ""
+
+#: ../../pep-0524.txt:480
+msgid ""
+"Compared to Python 2.7, Python 3.4 and Python 3.5.2 where os.urandom() "
+"never blocks nor raise an exception on Linux, such behaviour change can "
+"be seen as a major regression."
+msgstr ""
+
+#: ../../pep-0524.txt:486
+msgid "Add an optional block parameter to os.urandom()"
+msgstr ""
+
+#: ../../pep-0524.txt:488
+msgid ""
+"See the `issue #27250: Add os.urandom_block() "
+"<http://bugs.python.org/issue27250>`_."
+msgstr ""
+
+#: ../../pep-0524.txt:491
+msgid ""
+"Add an optional block parameter to os.urandom(). The default value may be"
+" ``True`` (block by default) or ``False`` (non-blocking)."
+msgstr ""
+
+#: ../../pep-0524.txt:494
+msgid ""
+"The first technical issue is to implement ``os.urandom(block=False)`` on "
+"all platforms. Only Linux 3.17 (and newer) and Solaris 11.3 (and newer) "
+"have a well defined non-blocking API (``getrandom(size, "
+"GRND_NONBLOCK)``)."
+msgstr ""
+
+#: ../../pep-0524.txt:499
+msgid ""
+"As `Raise BlockingIOError in os.urandom()`_, it doesn't seem worth it to "
+"make the API more complex for a theoretical (or at least very rare) use "
+"case."
+msgstr ""
+
+#: ../../pep-0524.txt:503
+msgid ""
+"As `Leave os.urandom() unchanged, add os.getrandom()`_, the problem is "
+"that it makes the API more complex and so more error-prone."
+msgstr ""
+
+#: ../../pep-0524.txt:508
+msgid "Acceptance"
+msgstr ""
+
+#: ../../pep-0524.txt:510
+msgid ""
+"The PEP was `accepted on 2016-08-08 by Guido van Rossum "
+"<https://mail.python.org/pipermail/security-"
+"sig/2016-August/000101.html>`_."
+msgstr ""
+
+#: ../../pep-0524.txt:515
+msgid "Annexes"
+msgstr ""
+
+#: ../../pep-0524.txt:518
+msgid "Operating system random functions"
+msgstr ""
+
+#: ../../pep-0524.txt:520
+msgid "``os.urandom()`` uses the following functions:"
+msgstr ""
+
+#: ../../pep-0524.txt:522
+msgid ""
+"`OpenBSD: getentropy() <http://man.openbsd.org/OpenBSD-"
+"current/man2/getentropy.2>`_ (OpenBSD 5.6)"
+msgstr ""
+
+#: ../../pep-0524.txt:525
+msgid ""
+"`Linux: getrandom() <http://man7.org/linux/man-"
+"pages/man2/getrandom.2.html>`_ (Linux 3.17) -- see also `A system call "
+"for random numbers: getrandom() <https://lwn.net/Articles/606141/>`_"
+msgstr ""
+
+#: ../../pep-0524.txt:529
+msgid ""
+"Solaris: `getentropy() "
+"<https://docs.oracle.com/cd/E53394_01/html/E54765/getentropy-2.html#scrolltoc>`_,"
+" `getrandom() "
+"<https://docs.oracle.com/cd/E53394_01/html/E54765/getrandom-2.html>`_ "
+"(both need Solaris 11.3)"
+msgstr ""
+
+#: ../../pep-0524.txt:534
+msgid "UNIX, BSD: /dev/urandom, /dev/random"
+msgstr ""
+
+#: ../../pep-0524.txt:535
+msgid ""
+"Windows: `CryptGenRandom() <https://msdn.microsoft.com/en-"
+"us/library/windows/desktop/aa379942%28v=vs.85%29.aspx>`_ (Windows XP)"
+msgstr ""
+
+#: ../../pep-0524.txt:539
+msgid ""
+"On Linux, commands to get the status of ``/dev/random`` (results are "
+"number of bytes)::"
+msgstr ""
+
+#: ../../pep-0524.txt:548
+msgid "Why using os.urandom()?"
+msgstr ""
+
+#: ../../pep-0524.txt:550
+msgid ""
+"Since ``os.urandom()`` is implemented in the kernel, it doesn't have "
+"issues of user-space RNG. For example, it is much harder to get its "
+"state. It is usually built on a CSPRNG, so even if its state is "
+"\"stolen\", it is hard to compute previously generated numbers. The "
+"kernel has a good knowledge of entropy sources and feed regularly the "
+"entropy pool."
+msgstr ""
+
+#: ../../pep-0524.txt:557
+msgid "That's also why ``os.urandom()`` is preferred over ``ssl.RAND_bytes()``."
+msgstr ""
+
+#: ../../pep-0524.txt:561
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0524.txt:563
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,658 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0585.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0585.rst:1
+msgid "585"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0585.rst:2
+msgid "Type Hinting Generics In Standard Collections"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0585.rst:5
+msgid "Łukasz Langa <lukasz@python.org>"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0585.rst:6
+msgid "Typing-Sig <typing-sig@python.org>"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0585.rst:7
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0585.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0585.rst:10
+msgid "03-Mar-2019"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0585.rst:11
+msgid "3.9"
+msgstr ""
+
+#: ../../pep-0585.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0585.rst:12
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/HW2NFOEMCVCTAFLBLC3V7MLM6ZNMKP42/"
+msgstr ""
+
+#: ../../pep-0585.rst:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0585.rst:17
+msgid ""
+"Static typing as defined by PEPs 484, 526, 544, 560, and 563 was built "
+"incrementally on top of the existing Python runtime and constrained by "
+"existing syntax and runtime behavior.  This led to the existence of a "
+"duplicated collection hierarchy in the ``typing`` module due to generics "
+"(for example ``typing.List`` and the built-in ``list``)."
+msgstr ""
+
+#: ../../pep-0585.rst:23
+msgid ""
+"This PEP proposes to enable support for the generics syntax in all "
+"standard collections currently available in the ``typing`` module."
+msgstr ""
+
+#: ../../pep-0585.rst:28
+msgid "Rationale and Goals"
+msgstr ""
+
+#: ../../pep-0585.rst:30
+msgid ""
+"This change removes the necessity for a parallel type hierarchy in the "
+"``typing`` module, making it easier for users to annotate their programs "
+"and easier for teachers to teach Python."
+msgstr ""
+
+#: ../../pep-0585.rst:36
+msgid "Terminology"
+msgstr ""
+
+#: ../../pep-0585.rst:38
+msgid ""
+"Generic (n.) -- a type that can be parameterized, typically a container. "
+"Also known as a *parametric type* or a *generic type*.  For example: "
+"``dict``."
+msgstr ""
+
+#: ../../pep-0585.rst:42
+msgid ""
+"parameterized generic -- a specific instance of a generic with the "
+"expected types for container elements provided.  Also known as a "
+"*parameterized type*.  For example: ``dict[str, int]``."
+msgstr ""
+
+#: ../../pep-0585.rst:48
+msgid "Backwards compatibility"
+msgstr ""
+
+#: ../../pep-0585.rst:50
+msgid ""
+"Tooling, including type checkers and linters, will have to be adapted to "
+"recognize standard collections as generics."
+msgstr ""
+
+#: ../../pep-0585.rst:53
+msgid ""
+"On the source level, the newly described functionality requires Python "
+"3.9.  For use cases restricted to type annotations, Python files with the"
+" \"annotations\" future-import (available since Python 3.7) can "
+"parameterize standard collections, including builtins.  To reiterate, "
+"that depends on the external tools understanding that this is valid."
+msgstr ""
+
+#: ../../pep-0585.rst:60
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0585.rst:62
+msgid ""
+"Starting with Python 3.7, when ``from __future__ import annotations`` is "
+"used, function and variable annotations can parameterize standard "
+"collections directly.  Example::"
+msgstr ""
+
+#: ../../pep-0585.rst:71
+msgid ""
+"Usefulness of this syntax before PEP 585 is limited as external tooling "
+"like Mypy does not recognize standard collections as generic.  Moreover, "
+"certain features of typing like type aliases or casting require putting "
+"types outside of annotations, in runtime context.  While these are "
+"relatively less common than type annotations, it's important to allow "
+"using the same type syntax in all contexts.  This is why starting with "
+"Python 3.9, the following collections become generic using "
+"``__class_getitem__()`` to parameterize contained types:"
+msgstr ""
+
+#: ../../pep-0585.rst:80
+msgid "``tuple``  # typing.Tuple"
+msgstr ""
+
+#: ../../pep-0585.rst:81
+msgid "``list``  # typing.List"
+msgstr ""
+
+#: ../../pep-0585.rst:82
+msgid "``dict``  # typing.Dict"
+msgstr ""
+
+#: ../../pep-0585.rst:83
+msgid "``set``  # typing.Set"
+msgstr ""
+
+#: ../../pep-0585.rst:84
+msgid "``frozenset``  # typing.FrozenSet"
+msgstr ""
+
+#: ../../pep-0585.rst:85
+msgid "``type``  # typing.Type"
+msgstr ""
+
+#: ../../pep-0585.rst:86
+msgid "``collections.deque``"
+msgstr ""
+
+#: ../../pep-0585.rst:87
+msgid "``collections.defaultdict``"
+msgstr ""
+
+#: ../../pep-0585.rst:88
+msgid "``collections.OrderedDict``"
+msgstr ""
+
+#: ../../pep-0585.rst:89
+msgid "``collections.Counter``"
+msgstr ""
+
+#: ../../pep-0585.rst:90
+msgid "``collections.ChainMap``"
+msgstr ""
+
+#: ../../pep-0585.rst:91
+msgid "``collections.abc.Awaitable``"
+msgstr ""
+
+#: ../../pep-0585.rst:92
+msgid "``collections.abc.Coroutine``"
+msgstr ""
+
+#: ../../pep-0585.rst:93
+msgid "``collections.abc.AsyncIterable``"
+msgstr ""
+
+#: ../../pep-0585.rst:94
+msgid "``collections.abc.AsyncIterator``"
+msgstr ""
+
+#: ../../pep-0585.rst:95
+msgid "``collections.abc.AsyncGenerator``"
+msgstr ""
+
+#: ../../pep-0585.rst:96
+msgid "``collections.abc.Iterable``"
+msgstr ""
+
+#: ../../pep-0585.rst:97
+msgid "``collections.abc.Iterator``"
+msgstr ""
+
+#: ../../pep-0585.rst:98
+msgid "``collections.abc.Generator``"
+msgstr ""
+
+#: ../../pep-0585.rst:99
+msgid "``collections.abc.Reversible``"
+msgstr ""
+
+#: ../../pep-0585.rst:100
+msgid "``collections.abc.Container``"
+msgstr ""
+
+#: ../../pep-0585.rst:101
+msgid "``collections.abc.Collection``"
+msgstr ""
+
+#: ../../pep-0585.rst:102
+msgid "``collections.abc.Callable``"
+msgstr ""
+
+#: ../../pep-0585.rst:103
+msgid "``collections.abc.Set``  # typing.AbstractSet"
+msgstr ""
+
+#: ../../pep-0585.rst:104
+msgid "``collections.abc.MutableSet``"
+msgstr ""
+
+#: ../../pep-0585.rst:105
+msgid "``collections.abc.Mapping``"
+msgstr ""
+
+#: ../../pep-0585.rst:106
+msgid "``collections.abc.MutableMapping``"
+msgstr ""
+
+#: ../../pep-0585.rst:107
+msgid "``collections.abc.Sequence``"
+msgstr ""
+
+#: ../../pep-0585.rst:108
+msgid "``collections.abc.MutableSequence``"
+msgstr ""
+
+#: ../../pep-0585.rst:109
+msgid "``collections.abc.ByteString``"
+msgstr ""
+
+#: ../../pep-0585.rst:110
+msgid "``collections.abc.MappingView``"
+msgstr ""
+
+#: ../../pep-0585.rst:111
+msgid "``collections.abc.KeysView``"
+msgstr ""
+
+#: ../../pep-0585.rst:112
+msgid "``collections.abc.ItemsView``"
+msgstr ""
+
+#: ../../pep-0585.rst:113
+msgid "``collections.abc.ValuesView``"
+msgstr ""
+
+#: ../../pep-0585.rst:114
+msgid "``contextlib.AbstractContextManager``  # typing.ContextManager"
+msgstr ""
+
+#: ../../pep-0585.rst:115
+msgid "``contextlib.AbstractAsyncContextManager``  # typing.AsyncContextManager"
+msgstr ""
+
+#: ../../pep-0585.rst:116
+msgid "``re.Pattern``  # typing.Pattern, typing.re.Pattern"
+msgstr ""
+
+#: ../../pep-0585.rst:117
+msgid "``re.Match``  # typing.Match, typing.re.Match"
+msgstr ""
+
+#: ../../pep-0585.rst:119
+msgid ""
+"Importing those from ``typing`` is deprecated.  Due to PEP 563 and the "
+"intention to minimize the runtime impact of typing, this deprecation will"
+" not generate DeprecationWarnings.  Instead, type checkers may warn about"
+" such deprecated usage when the target version of the checked program is "
+"signalled to be Python 3.9 or newer.  It's recommended to allow for those"
+" warnings to be silenced on a project-wide basis."
+msgstr ""
+
+#: ../../pep-0585.rst:126
+msgid ""
+"The deprecated functionality will be removed from the ``typing`` module "
+"in the first Python version released 5 years after the release of Python "
+"3.9.0."
+msgstr ""
+
+#: ../../pep-0585.rst:132
+msgid "Parameters to generics are available at runtime"
+msgstr ""
+
+#: ../../pep-0585.rst:134
+msgid ""
+"Preserving the generic type at runtime enables introspection of the type "
+"which can be used for API generation or runtime type checking.  Such "
+"usage is already present in the wild."
+msgstr ""
+
+#: ../../pep-0585.rst:138
+msgid ""
+"Just like with the ``typing`` module today, the parameterized generic "
+"types listed in the previous section all preserve their type parameters "
+"at runtime::"
+msgstr ""
+
+#: ../../pep-0585.rst:149
+msgid ""
+"This is implemented using a thin proxy type that forwards all method "
+"calls and attribute accesses to the bare origin type with the following "
+"exceptions:"
+msgstr ""
+
+#: ../../pep-0585.rst:153
+msgid "the ``__repr__`` shows the parameterized type;"
+msgstr ""
+
+#: ../../pep-0585.rst:154
+msgid ""
+"the ``__origin__`` attribute points at the non-parameterized generic "
+"class;"
+msgstr ""
+
+#: ../../pep-0585.rst:156
+msgid ""
+"the ``__args__`` attribute is a tuple (possibly of length 1) of generic "
+"types passed to the original ``__class_getitem__``;"
+msgstr ""
+
+#: ../../pep-0585.rst:158
+msgid ""
+"the ``__parameters__`` attribute is a lazily computed tuple (possibly "
+"empty) of unique type variables found in ``__args__``;"
+msgstr ""
+
+#: ../../pep-0585.rst:160
+msgid ""
+"the ``__getitem__`` raises an exception to disallow mistakes like "
+"``dict[str][str]``.  However it allows e.g. ``dict[str, T][int]`` and in "
+"that case returns ``dict[str, int]``."
+msgstr ""
+
+#: ../../pep-0585.rst:164
+msgid ""
+"This design means that it is possible to create instances of "
+"parameterized collections, like::"
+msgstr ""
+
+#: ../../pep-0585.rst:184
+msgid ""
+"Objects created with bare types and parameterized types are exactly the "
+"same.  The generic parameters are not preserved in instances created with"
+" parameterized types, in other words generic types erase type parameters "
+"during object creation."
+msgstr ""
+
+#: ../../pep-0585.rst:189
+msgid ""
+"One important consequence of this is that the interpreter does **not** "
+"attempt to type check operations on the collection created with a "
+"parameterized type.  This provides symmetry between::"
+msgstr ""
+
+#: ../../pep-0585.rst:195
+msgid "and::"
+msgstr ""
+
+#: ../../pep-0585.rst:199
+msgid ""
+"For accessing the proxy type from Python code, it will be exported from "
+"the ``types`` module as ``GenericAlias``."
+msgstr ""
+
+#: ../../pep-0585.rst:202
+msgid ""
+"Pickling or (shallow- or deep-) copying a ``GenericAlias`` instance will "
+"preserve the type, origin, attributes and parameters."
+msgstr ""
+
+#: ../../pep-0585.rst:207
+msgid "Forward compatibility"
+msgstr ""
+
+#: ../../pep-0585.rst:209
+msgid "Future standard collections must implement the same behavior."
+msgstr ""
+
+#: ../../pep-0585.rst:213
+msgid "Reference implementation"
+msgstr ""
+
+#: ../../pep-0585.rst:215
+msgid ""
+"A proof-of-concept or prototype `implementation "
+"<https://bugs.python.org/issue39481>`__ exists."
+msgstr ""
+
+#: ../../pep-0585.rst:220
+msgid "Rejected alternatives"
+msgstr ""
+
+#: ../../pep-0585.rst:223
+msgid "Do nothing"
+msgstr ""
+
+#: ../../pep-0585.rst:225
+msgid ""
+"Keeping the status quo forces Python programmers to perform book-keeping "
+"of imports from the ``typing`` module for standard collections, making "
+"all but the simplest annotations cumbersome to maintain.  The existence "
+"of parallel types is confusing to newcomers (why is there both ``list`` "
+"and ``List``?)."
+msgstr ""
+
+#: ../../pep-0585.rst:231
+msgid ""
+"The above problems also don't exist in user-built generic classes which "
+"share runtime functionality and the ability to use them as generic type "
+"annotations.  Making standard collections harder to use in type hinting "
+"from user classes hindered typing adoption and usability."
+msgstr ""
+
+#: ../../pep-0585.rst:237
+msgid "Generics erasure"
+msgstr ""
+
+#: ../../pep-0585.rst:239
+msgid ""
+"It would be easier to implement ``__class_getitem__`` on the listed "
+"standard collections in a way that doesn't preserve the generic type, in "
+"other words::"
+msgstr ""
+
+#: ../../pep-0585.rst:250
+msgid ""
+"This is problematic as it breaks backwards compatibility: current "
+"equivalents of those types in the ``typing`` module **do** preserve the "
+"generic type::"
+msgstr ""
+
+#: ../../pep-0585.rst:262
+msgid ""
+"As mentioned in the \"Implementation\" section, preserving the generic "
+"type at runtime enables runtime introspection of the type which can be "
+"used for API generation or runtime type checking.  Such usage is already "
+"present in the wild."
+msgstr ""
+
+#: ../../pep-0585.rst:267
+msgid ""
+"Additionally, implementing subscripts as identity functions would make "
+"Python less friendly to beginners.  Say, if a user is mistakenly passing "
+"a list type instead of a list object to a function, and that function is "
+"indexing the received object, the code would no longer raise an error."
+msgstr ""
+
+#: ../../pep-0585.rst:272
+msgid "Today::"
+msgstr ""
+
+#: ../../pep-0585.rst:278
+msgid "With ``__class_getitem__`` as an identity function::"
+msgstr ""
+
+#: ../../pep-0585.rst:284
+msgid ""
+"The indexing being successful here would likely end up raising an "
+"exception at a distance, confusing the user."
+msgstr ""
+
+#: ../../pep-0585.rst:288
+msgid "Disallowing instantiation of parameterized types"
+msgstr ""
+
+#: ../../pep-0585.rst:290
+msgid ""
+"Given that the proxy type which preserves ``__origin__`` and ``__args__``"
+" is mostly useful for runtime introspection purposes, we might have "
+"disallowed instantiation of parameterized types."
+msgstr ""
+
+#: ../../pep-0585.rst:294
+msgid ""
+"In fact, forbidding instantiation of parameterized types is what the "
+"``typing`` module does today for types which parallel builtin collections"
+" (instantiation of other parameterized types is allowed)."
+msgstr ""
+
+#: ../../pep-0585.rst:298
+msgid ""
+"The original reason for this decision was to discourage spurious "
+"parameterization which made object creation up to two orders of magnitude"
+" slower compared to the special syntax available for those builtin "
+"collections."
+msgstr ""
+
+#: ../../pep-0585.rst:303
+msgid ""
+"This rationale is not strong enough to allow the exceptional treatment of"
+" builtins.  All other parameterized types can be instantiated, including "
+"parallels of collections in the standard library.  Moreover, Python "
+"allows for instantiation of lists using ``list()`` and some builtin "
+"collections don't provide special syntax for instantiation."
+msgstr ""
+
+#: ../../pep-0585.rst:310
+msgid "Making ``isinstance(obj, list[str])`` perform a check ignoring generics"
+msgstr ""
+
+#: ../../pep-0585.rst:312
+msgid ""
+"An earlier version of this PEP suggested treating parameterized generics "
+"like ``list[str]`` as equivalent to their non-parameterized variants like"
+" ``list`` for purposes of ``isinstance()`` and ``issubclass()``. This "
+"would be symmetrical to how ``list[str]()`` creates a regular list."
+msgstr ""
+
+#: ../../pep-0585.rst:317
+msgid ""
+"This design was rejected because ``isinstance()`` and ``issubclass()`` "
+"checks with parameterized generics would read like element-by-element "
+"runtime type checks.  The result of those checks would be surprising, for"
+" example::"
+msgstr ""
+
+#: ../../pep-0585.rst:325
+msgid ""
+"Note the object doesn't match the provided generic type but "
+"``isinstance()`` still returns ``True`` because it only checks whether "
+"the object is a list."
+msgstr ""
+
+#: ../../pep-0585.rst:329
+msgid ""
+"If a library is faced with a parameterized generic and would like to "
+"perform an ``isinstance()`` check using the base type, that type can be "
+"retrieved using the ``__origin__`` attribute on the parameterized "
+"generic."
+msgstr ""
+
+#: ../../pep-0585.rst:335
+msgid "Making ``isinstance(obj, list[str])`` perform a runtime type check"
+msgstr ""
+
+#: ../../pep-0585.rst:337
+msgid ""
+"This functionality requires iterating over the collection which is a "
+"destructive operation in some of them.  This functionality would have "
+"been useful, however implementing the type checker within Python that "
+"would deal with complex types, nested type checking, type variables, "
+"string forward references, and so on is out of scope for this PEP."
+msgstr ""
+
+#: ../../pep-0585.rst:344
+msgid "Naming the type ``GenericType`` instead of ``GenericAlias``"
+msgstr ""
+
+#: ../../pep-0585.rst:346
+msgid ""
+"We considered a different name for this type, but decided "
+"``GenericAlias`` is better -- these aren't real types, they are aliases "
+"for the corresponding container type with some extra metadata attached."
+msgstr ""
+
+#: ../../pep-0585.rst:353
+msgid "Note on the initial draft"
+msgstr ""
+
+#: ../../pep-0585.rst:355
+msgid ""
+"An early version of this PEP discussed matters beyond generics in "
+"standard collections.  Those unrelated topics were removed for clarity."
+msgstr ""
+
+#: ../../pep-0585.rst:360
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0585.rst:362
+msgid ""
+"Thank you to Guido van Rossum for his work on Python, and the "
+"implementation of this PEP specifically."
+msgstr ""
+
+#: ../../pep-0585.rst:367
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0585.rst:369
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

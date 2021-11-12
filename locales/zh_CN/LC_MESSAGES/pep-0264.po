@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0264.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0264.txt:1
+msgid "264"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0264.txt:2
+msgid "Future statements in simulated shells"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0264.txt:5
+msgid "Michael Hudson <mwh@python.net>"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0264.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0264.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Requires"
+msgstr ""
+
+#: ../../pep-0264.txt:9
+msgid "236"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0264.txt:10 ../../pep-0264.txt:12
+msgid "30-Jul-2001"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0264.txt:11
+msgid "2.2"
+msgstr ""
+
+#: ../../pep-0264.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0264.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0264.txt:18
+msgid ""
+"As noted in PEP 236, there is no clear way for \"simulated interactive "
+"shells\" to simulate the behaviour of ``__future__`` statements in "
+"\"real\" interactive shells, i.e. have ``__future__`` statements' effects"
+" last the life of the shell."
+msgstr ""
+
+#: ../../pep-0264.txt:23
+msgid ""
+"The PEP also takes the opportunity to clean up the other unresolved issue"
+" mentioned in PEP 236, the inability to stop ``compile()`` inheriting the"
+" effect of future statements affecting the code calling ``compile()``."
+msgstr ""
+
+#: ../../pep-0264.txt:28
+msgid ""
+"This PEP proposes to address the first problem by adding an optional "
+"fourth argument to the builtin function \"compile\", adding information "
+"to the ``_Feature`` instances defined in ``__future__.py`` and adding "
+"machinery to the standard library modules \"codeop\" and \"code\" to make"
+" the construction of such shells easy."
+msgstr ""
+
+#: ../../pep-0264.txt:34
+msgid ""
+"The second problem is dealt with by simply adding *another* optional "
+"argument to ``compile()``, which if non-zero suppresses the inheriting of"
+" future statements' effects."
+msgstr ""
+
+#: ../../pep-0264.txt:40
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0264.txt:42
+msgid ""
+"I propose adding a fourth, optional, \"flags\" argument to the builtin "
+"\"compile\" function.  If this argument is omitted, there will be no "
+"change in behaviour from that of Python 2.1."
+msgstr ""
+
+#: ../../pep-0264.txt:46
+msgid ""
+"If it is present it is expected to be an integer, representing various "
+"possible compile time options as a bitfield.  The bitfields will have the"
+" same values as the ``CO_*`` flags already used by the C part of Python "
+"interpreter to refer to future statements."
+msgstr ""
+
+#: ../../pep-0264.txt:51
+msgid ""
+"``compile()`` shall raise a ``ValueError`` exception if it does not "
+"recognize any of the bits set in the supplied flags."
+msgstr ""
+
+#: ../../pep-0264.txt:54
+msgid ""
+"The flags supplied will be bitwise-\"or\"ed with the flags that would be "
+"set anyway, unless the new fifth optional argument is a non-zero integer,"
+" in which case the flags supplied will be exactly the set used."
+msgstr ""
+
+#: ../../pep-0264.txt:59
+msgid ""
+"The above-mentioned flags are not currently exposed to Python.  I propose"
+" adding ``.compiler_flag`` attributes to the ``_Feature`` objects in "
+"``__future__.py`` that contain the necessary bits, so one might write "
+"code such as::"
+msgstr ""
+
+#: ../../pep-0264.txt:69
+msgid ""
+"A recent change means that these same bits can be used to tell if a code "
+"object was compiled with a given feature; for instance ::"
+msgstr ""
+
+#: ../../pep-0264.txt:74
+msgid ""
+"will be non-zero if and only if the code object \"codeob\" was compiled "
+"in an environment where generators were allowed."
+msgstr ""
+
+#: ../../pep-0264.txt:77
+msgid ""
+"I will also add a ``.all_feature_flags`` attribute to the ``__future__`` "
+"module, giving a low-effort way of enumerating all the ``__future__`` "
+"options supported by the running interpreter."
+msgstr ""
+
+#: ../../pep-0264.txt:81
+msgid ""
+"I also propose adding a pair of classes to the standard library module "
+"codeop."
+msgstr ""
+
+#: ../../pep-0264.txt:84
+msgid ""
+"One - ``Compile`` - will sport a ``__call__`` method which will act much "
+"like the builtin \"compile\" of 2.1 with the difference that after it has"
+" compiled a ``__future__`` statement, it \"remembers\" it and compiles "
+"all subsequent code with the ``__future__`` option in effect."
+msgstr ""
+
+#: ../../pep-0264.txt:89
+msgid ""
+"It will do this by using the new features of the ``__future__`` module "
+"mentioned above."
+msgstr ""
+
+#: ../../pep-0264.txt:92
+msgid ""
+"Objects of the other class added to codeop - ``CommandCompiler`` - will "
+"do the job of the existing ``codeop.compile_command`` function, but in a "
+"``__future__``-aware way."
+msgstr ""
+
+#: ../../pep-0264.txt:96
+msgid ""
+"Finally, I propose to modify the class ``InteractiveInterpreter`` in the "
+"standard library module code to use a ``CommandCompiler`` to emulate "
+"still more closely the behaviour of the default Python shell."
+msgstr ""
+
+#: ../../pep-0264.txt:103
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-0264.txt:105
+msgid ""
+"Should be very few or none; the changes to compile will make no "
+"difference to existing code, nor will adding new functions or classes to "
+"codeop.  Existing code using ``code.InteractiveInterpreter`` may change "
+"in behaviour, but only for the better in that the \"real\" Python shell "
+"will be being better impersonated."
+msgstr ""
+
+#: ../../pep-0264.txt:114
+msgid "Forward Compatibility"
+msgstr ""
+
+#: ../../pep-0264.txt:116
+msgid ""
+"The fiddling that needs to be done to ``Lib/__future__.py`` when adding a"
+" ``__future__`` feature will be a touch more complicated. Everything else"
+" should just work."
+msgstr ""
+
+#: ../../pep-0264.txt:122
+msgid "Issues"
+msgstr ""
+
+#: ../../pep-0264.txt:124
+msgid "I hope the above interface is not too disruptive to implement for Jython."
+msgstr ""
+
+#: ../../pep-0264.txt:129
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0264.txt:131
+msgid "A series of preliminary implementations are at [1]_."
+msgstr ""
+
+#: ../../pep-0264.txt:133
+msgid "After light massaging by Tim Peters, they have now been checked in."
+msgstr ""
+
+#: ../../pep-0264.txt:137
+msgid "References"
+msgstr ""
+
+#: ../../pep-0264.txt:139
+msgid "http://sourceforge.net/tracker/?func=detail&atid=305470&aid=449043&group_id=5470"
+msgstr ""
+
+#: ../../pep-0264.txt:142
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0264.txt:144
+msgid "This document has been placed in the public domain."
+msgstr ""
+

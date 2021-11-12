@@ -1,0 +1,3008 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0418.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0418.txt:1
+msgid "418"
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0418.txt:2
+msgid "Add monotonic time, performance counter, and process time functions"
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0418.txt:5
+msgid ""
+"Cameron Simpson <cs@cskk.id.au>, Jim Jewett <jimjjewett@gmail.com>, "
+"Stephen J. Turnbull <stephen@xemacs.org>, Victor Stinner "
+"<vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0418.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0418.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0418.txt:9
+msgid "26-Mar-2012"
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0418.txt:10
+msgid "3.3"
+msgstr ""
+
+#: ../../pep-0418.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0418.txt:16
+msgid ""
+"This PEP proposes to add ``time.get_clock_info(name)``, "
+"``time.monotonic()``, ``time.perf_counter()`` and ``time.process_time()``"
+" functions to Python 3.3."
+msgstr ""
+
+#: ../../pep-0418.txt:22
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0418.txt:24
+msgid ""
+"If a program uses the system time to schedule events or to implement a "
+"timeout, it may fail to run events at the right moment or stop the "
+"timeout too early or too late when the system time is changed manually or"
+" adjusted automatically by NTP.  A monotonic clock should be used instead"
+" to not be affected by system time updates: ``time.monotonic()``."
+msgstr ""
+
+#: ../../pep-0418.txt:31
+msgid ""
+"To measure the performance of a function, ``time.clock()`` can be used "
+"but it is very different on Windows and on Unix.  On Windows, "
+"``time.clock()`` includes time elapsed during sleep, whereas it does not "
+"on Unix.  ``time.clock()`` resolution is very good on Windows, but very "
+"bad on Unix.  The new ``time.perf_counter()`` function should be used "
+"instead to always get the most precise performance counter with a "
+"portable behaviour (ex: include time spend during sleep)."
+msgstr ""
+
+#: ../../pep-0418.txt:39
+msgid ""
+"Until now, Python did not provide directly a portable function to measure"
+" CPU time.  ``time.clock()`` can be used on Unix, but it has bad "
+"resolution.  ``resource.getrusage()`` or ``os.times()`` can also be used "
+"on Unix, but they require to compute the sum of time spent in kernel "
+"space and user space.  The new ``time.process_time()`` function acts as a"
+" portable counter that always measures CPU time (excluding time elapsed "
+"during sleep) and has the best available resolution."
+msgstr ""
+
+#: ../../pep-0418.txt:49
+msgid ""
+"Each operating system implements clocks and performance counters "
+"differently, and it is useful to know exactly which function is used and "
+"some properties of the clock like its resolution.  The new "
+"``time.get_clock_info()`` function gives access to all available "
+"information about each Python time function."
+msgstr ""
+
+#: ../../pep-0418.txt:55
+msgid "New functions:"
+msgstr ""
+
+#: ../../pep-0418.txt:57
+msgid ""
+"``time.monotonic()``: timeout and scheduling, not affected by system "
+"clock updates"
+msgstr ""
+
+#: ../../pep-0418.txt:59
+msgid "``time.perf_counter()``: benchmarking, most precise clock for short period"
+msgstr ""
+
+#: ../../pep-0418.txt:61
+msgid "``time.process_time()``: profiling, CPU time of the process"
+msgstr ""
+
+#: ../../pep-0418.txt:63
+msgid "Users of new functions:"
+msgstr ""
+
+#: ../../pep-0418.txt:65
+msgid ""
+"time.monotonic(): concurrent.futures, multiprocessing, queue, subprocess,"
+" telnet and threading modules to implement timeout"
+msgstr ""
+
+#: ../../pep-0418.txt:67
+msgid "time.perf_counter(): trace and timeit modules, pybench program"
+msgstr ""
+
+#: ../../pep-0418.txt:68
+msgid "time.process_time(): profile module"
+msgstr ""
+
+#: ../../pep-0418.txt:69
+msgid ""
+"time.get_clock_info(): pybench program to display information about the "
+"timer like the resolution"
+msgstr ""
+
+#: ../../pep-0418.txt:72
+msgid ""
+"The ``time.clock()`` function is deprecated because it is not portable: "
+"it behaves differently depending on the operating system. "
+"``time.perf_counter()`` or ``time.process_time()`` should be used "
+"instead, depending on your requirements. ``time.clock()`` is marked as "
+"deprecated but is not planned for removal."
+msgstr ""
+
+#: ../../pep-0418.txt:78
+msgid "Limitations:"
+msgstr ""
+
+#: ../../pep-0418.txt:80
+msgid ""
+"The behaviour of clocks after a system suspend is not defined in the "
+"documentation of new functions. The behaviour depends on the operating "
+"system: see the `Monotonic Clocks`_ section below. Some recent operating "
+"systems provide two clocks, one including time elapsed during system "
+"suspend, one not including this time. Most operating systems only provide"
+" one kind of clock."
+msgstr ""
+
+#: ../../pep-0418.txt:86
+msgid ""
+"time.monotonic() and time.perf_counter() may or may not be adjusted. For "
+"example, ``CLOCK_MONOTONIC`` is slewed on Linux, whereas "
+"``GetTickCount()`` is not adjusted on Windows. "
+"``time.get_clock_info('monotonic')['adjustable']`` can be used to check "
+"if the monotonic clock is adjustable or not."
+msgstr ""
+
+#: ../../pep-0418.txt:91
+msgid ""
+"No time.thread_time() function is proposed by this PEP because it is not "
+"needed by Python standard library nor a common asked feature. Such "
+"function would only be available on Windows and Linux. On Linux, it is "
+"possible to use ``time.clock_gettime(CLOCK_THREAD_CPUTIME_ID)``. On "
+"Windows, ctypes or another module can be used to call the "
+"``GetThreadTimes()`` function."
+msgstr ""
+
+#: ../../pep-0418.txt:101
+msgid "Python functions"
+msgstr ""
+
+#: ../../pep-0418.txt:104
+msgid "New Functions"
+msgstr ""
+
+#: ../../pep-0418.txt:107
+msgid "time.get_clock_info(name)"
+msgstr ""
+
+#: ../../pep-0418.txt:109
+msgid "Get information on the specified clock.  Supported clock names:"
+msgstr ""
+
+#: ../../pep-0418.txt:111
+msgid "``\"clock\"``: ``time.clock()``"
+msgstr ""
+
+#: ../../pep-0418.txt:112
+msgid "``\"monotonic\"``: ``time.monotonic()``"
+msgstr ""
+
+#: ../../pep-0418.txt:113
+msgid "``\"perf_counter\"``: ``time.perf_counter()``"
+msgstr ""
+
+#: ../../pep-0418.txt:114
+msgid "``\"process_time\"``: ``time.process_time()``"
+msgstr ""
+
+#: ../../pep-0418.txt:115
+msgid "``\"time\"``: ``time.time()``"
+msgstr ""
+
+#: ../../pep-0418.txt:117
+msgid "Return a ``time.clock_info`` object which has the following attributes:"
+msgstr ""
+
+#: ../../pep-0418.txt:119
+msgid ""
+"``implementation`` (str): name of the underlying operating system "
+"function.  Examples: ``\"QueryPerformanceCounter()\"``, "
+"``\"clock_gettime(CLOCK_REALTIME)\"``."
+msgstr ""
+
+#: ../../pep-0418.txt:122
+msgid "``monotonic`` (bool): True if the clock cannot go backward."
+msgstr ""
+
+#: ../../pep-0418.txt:123
+msgid ""
+"``adjustable`` (bool): ``True`` if the clock can be changed automatically"
+" (e.g. by a NTP daemon) or manually by the system administrator, "
+"``False`` otherwise"
+msgstr ""
+
+#: ../../pep-0418.txt:126
+msgid "``resolution`` (float): resolution in seconds of the clock."
+msgstr ""
+
+#: ../../pep-0418.txt:130
+msgid "time.monotonic()"
+msgstr ""
+
+#: ../../pep-0418.txt:132
+msgid ""
+"Monotonic clock, i.e. cannot go backward.  It is not affected by system "
+"clock updates.  The reference point of the returned value is undefined, "
+"so that only the difference between the results of consecutive calls is "
+"valid and is a number of seconds."
+msgstr ""
+
+#: ../../pep-0418.txt:137
+msgid ""
+"On Windows versions older than Vista, ``time.monotonic()`` detects "
+"``GetTickCount()`` integer overflow (32 bits, roll-over after 49.7 days)."
+"  It increases an internal epoch (reference time by) 2\\ :sup:`32` each "
+"time that an overflow is detected.  The epoch is stored in the process-"
+"local state and so the value of ``time.monotonic()`` may be different in "
+"two Python processes running for more than 49 days. On more recent "
+"versions of Windows and on other operating systems, ``time.monotonic()`` "
+"is system-wide."
+msgstr ""
+
+#: ../../pep-0418.txt:147
+msgid ""
+"Availability: Windows, Mac OS X, Linux, FreeBSD, OpenBSD, Solaris. Not "
+"available on GNU/Hurd."
+msgstr ""
+
+#: ../../pep-0418.txt:150 ../../pep-0418.txt:241 ../../pep-0418.txt:303
+#: ../../pep-0418.txt:338 ../../pep-0418.txt:393
+msgid "Pseudo-code [#pseudo]_::"
+msgstr ""
+
+#: ../../pep-0418.txt:185
+msgid ""
+"On Windows, ``QueryPerformanceCounter()`` is not used even though it has "
+"a better resolution than ``GetTickCount()``.  It is not reliable and has "
+"too many issues."
+msgstr ""
+
+#: ../../pep-0418.txt:191
+msgid "time.perf_counter()"
+msgstr ""
+
+#: ../../pep-0418.txt:193
+msgid ""
+"Performance counter with the highest available resolution to measure a "
+"short duration.  It does include time elapsed during sleep and is system-"
+"wide.  The reference point of the returned value is undefined, so that "
+"only the difference between the results of consecutive calls is valid and"
+" is a number of seconds."
+msgstr ""
+
+#: ../../pep-0418.txt:199 ../../pep-0418.txt:239
+msgid "It is available on all platforms."
+msgstr ""
+
+#: ../../pep-0418.txt:201
+msgid "Pseudo-code::"
+msgstr ""
+
+#: ../../pep-0418.txt:231
+msgid "time.process_time()"
+msgstr ""
+
+#: ../../pep-0418.txt:233
+msgid ""
+"Sum of the system and user CPU time of the current process. It does not "
+"include time elapsed during sleep. It is process-wide by definition.  The"
+" reference point of the returned value is undefined, so that only the "
+"difference between the results of consecutive calls is valid."
+msgstr ""
+
+#: ../../pep-0418.txt:292
+msgid "Existing Functions"
+msgstr ""
+
+#: ../../pep-0418.txt:295
+msgid "time.time()"
+msgstr ""
+
+#: ../../pep-0418.txt:297
+msgid ""
+"The system time which is usually the civil time. It is system-wide by "
+"definition. It can be set manually by the system administrator or "
+"automatically by a NTP daemon."
+msgstr ""
+
+#: ../../pep-0418.txt:301
+msgid "It is available on all platforms and cannot fail."
+msgstr ""
+
+#: ../../pep-0418.txt:329
+msgid "time.sleep()"
+msgstr ""
+
+#: ../../pep-0418.txt:331
+msgid ""
+"Suspend execution for the given number of seconds.  The actual suspension"
+" time may be less than that requested because any caught signal will "
+"terminate the ``time.sleep()`` following execution of that signal's "
+"catching routine.  Also, the suspension time may be longer than requested"
+" by an arbitrary amount because of the scheduling of other activity in "
+"the system."
+msgstr ""
+
+#: ../../pep-0418.txt:376
+msgid "Deprecated Function"
+msgstr ""
+
+#: ../../pep-0418.txt:379
+msgid "time.clock()"
+msgstr ""
+
+#: ../../pep-0418.txt:381
+msgid ""
+"On Unix, return the current processor time as a floating point number "
+"expressed in seconds. It is process-wide by definition. The resolution, "
+"and in fact the very definition of the meaning of \"processor time\", "
+"depends on that of the C function of the same name, but in any case, this"
+" is the function to use for benchmarking Python or timing algorithms."
+msgstr ""
+
+#: ../../pep-0418.txt:388
+msgid ""
+"On Windows, this function returns wall-clock seconds elapsed since the "
+"first call to this function, as a floating point number, based on the "
+"Win32 function ``QueryPerformanceCounter()``.  The resolution is "
+"typically better than one microsecond.  It is system-wide."
+msgstr ""
+
+#: ../../pep-0418.txt:411
+msgid "Alternatives: API design"
+msgstr ""
+
+#: ../../pep-0418.txt:414
+msgid "Other names for time.monotonic()"
+msgstr ""
+
+#: ../../pep-0418.txt:416
+msgid "time.counter()"
+msgstr ""
+
+#: ../../pep-0418.txt:417
+msgid "time.metronomic()"
+msgstr ""
+
+#: ../../pep-0418.txt:418
+msgid "time.seconds()"
+msgstr ""
+
+#: ../../pep-0418.txt:419
+msgid ""
+"time.steady(): \"steady\" is ambiguous: it means different things to "
+"different people. For example, on Linux, CLOCK_MONOTONIC is adjusted. If "
+"we uses the real time as the reference clock, we may say that "
+"CLOCK_MONOTONIC is steady.  But CLOCK_MONOTONIC gets suspended on system "
+"suspend, whereas real time includes any time spent in suspend."
+msgstr ""
+
+#: ../../pep-0418.txt:425
+msgid "time.timeout_clock()"
+msgstr ""
+
+#: ../../pep-0418.txt:426
+msgid ""
+"time.wallclock(): time.monotonic() is not the system time aka the \"wall "
+"clock\", but a monotonic clock with an unspecified starting point."
+msgstr ""
+
+#: ../../pep-0418.txt:430
+msgid ""
+"The name \"time.try_monotonic()\" was also proposed for an older version "
+"of time.monotonic() which would fall back to the system time when no "
+"monotonic clock was available."
+msgstr ""
+
+#: ../../pep-0418.txt:435
+msgid "Other names for time.perf_counter()"
+msgstr ""
+
+#: ../../pep-0418.txt:437
+msgid "time.high_precision()"
+msgstr ""
+
+#: ../../pep-0418.txt:438
+msgid "time.highres()"
+msgstr ""
+
+#: ../../pep-0418.txt:439
+msgid "time.hires()"
+msgstr ""
+
+#: ../../pep-0418.txt:440
+msgid "time.performance_counter()"
+msgstr ""
+
+#: ../../pep-0418.txt:441
+msgid "time.timer()"
+msgstr ""
+
+#: ../../pep-0418.txt:444
+msgid "Only expose operating system clocks"
+msgstr ""
+
+#: ../../pep-0418.txt:446
+msgid ""
+"To not have to define high-level clocks, which is a difficult task, a "
+"simpler approach is to only expose operating system clocks. "
+"time.clock_gettime() and related clock identifiers were already added to "
+"Python 3.3 for example."
+msgstr ""
+
+#: ../../pep-0418.txt:453
+msgid "time.monotonic(): Fallback to system time"
+msgstr ""
+
+#: ../../pep-0418.txt:455
+msgid ""
+"If no monotonic clock is available, time.monotonic() falls back to the "
+"system time."
+msgstr ""
+
+#: ../../pep-0418.txt:458
+msgid "Issues:"
+msgstr ""
+
+#: ../../pep-0418.txt:460
+msgid ""
+"It is hard to define such a function correctly in the documentation: is "
+"it monotonic? Is it steady? Is it adjusted?"
+msgstr ""
+
+#: ../../pep-0418.txt:462
+msgid ""
+"Some users want to decide what to do when no monotonic clock is "
+"available: use another clock, display an error, or do something else."
+msgstr ""
+
+#: ../../pep-0418.txt:466
+msgid "Different APIs were proposed to define such function."
+msgstr ""
+
+#: ../../pep-0418.txt:469
+msgid "One function with a flag: time.monotonic(fallback=True)"
+msgstr ""
+
+#: ../../pep-0418.txt:471
+msgid ""
+"time.monotonic(fallback=True) falls back to the system time if no "
+"monotonic clock is available or if the monotonic clock failed."
+msgstr ""
+
+#: ../../pep-0418.txt:473
+msgid ""
+"time.monotonic(fallback=False) raises OSError if monotonic clock fails "
+"and NotImplementedError if the system does not provide a monotonic clock"
+msgstr ""
+
+#: ../../pep-0418.txt:477
+msgid ""
+"A keyword argument that gets passed as a constant in the caller is "
+"usually poor API."
+msgstr ""
+
+#: ../../pep-0418.txt:480
+msgid ""
+"Raising NotImplementedError for a function is something uncommon in "
+"Python and should be avoided."
+msgstr ""
+
+#: ../../pep-0418.txt:485
+msgid "One time.monotonic() function, no flag"
+msgstr ""
+
+#: ../../pep-0418.txt:487
+msgid "time.monotonic() returns (time: float, is_monotonic: bool)."
+msgstr ""
+
+#: ../../pep-0418.txt:489
+msgid ""
+"An alternative is to use a function attribute: "
+"time.monotonic.is_monotonic.  The attribute value would be None before "
+"the first call to time.monotonic()."
+msgstr ""
+
+#: ../../pep-0418.txt:496
+msgid "Choosing the clock from a list of constraints"
+msgstr ""
+
+#: ../../pep-0418.txt:498
+msgid ""
+"The PEP as proposed offers a few new clocks, but their guarantees are "
+"deliberately loose in order to offer useful clocks on different "
+"platforms. This inherently embeds policy in the calls, and the caller "
+"must thus choose a policy."
+msgstr ""
+
+#: ../../pep-0418.txt:503
+msgid ""
+"The \"choose a clock\" approach suggests an additional API to let callers"
+" implement their own policy if necessary by making most platform clocks "
+"available and letting the caller pick amongst them. The PEP's suggested "
+"clocks are still expected to be available for the common simple use "
+"cases."
+msgstr ""
+
+#: ../../pep-0418.txt:509
+msgid ""
+"To do this two facilities are needed: an enumeration of clocks, and "
+"metadata on the clocks to enable the user to evaluate their suitability."
+msgstr ""
+
+#: ../../pep-0418.txt:513
+msgid ""
+"The primary interface is a function make simple choices easy: the caller "
+"can use ``time.get_clock(*flags)`` with some combination of flags. This "
+"includes at least:"
+msgstr ""
+
+#: ../../pep-0418.txt:517
+msgid "time.MONOTONIC: clock cannot go backward"
+msgstr ""
+
+#: ../../pep-0418.txt:518
+msgid "time.STEADY: clock rate is steady"
+msgstr ""
+
+#: ../../pep-0418.txt:519
+msgid "time.ADJUSTED: clock may be adjusted, for example by NTP"
+msgstr ""
+
+#: ../../pep-0418.txt:520
+msgid "time.HIGHRES: clock with the highest resolution"
+msgstr ""
+
+#: ../../pep-0418.txt:522
+msgid ""
+"It returns a clock object with a .now() method returning the current "
+"time. The clock object is annotated with metadata describing the clock "
+"feature set; its .flags field will contain at least all the requested "
+"flags."
+msgstr ""
+
+#: ../../pep-0418.txt:526
+msgid ""
+"time.get_clock() returns None if no matching clock is found and so calls "
+"can be chained using the or operator.  Example of a simple policy "
+"decision::"
+msgstr ""
+
+#: ../../pep-0418.txt:532
+msgid ""
+"The available clocks always at least include a wrapper for "
+"``time.time()``, so a final call with no flags can always be used to "
+"obtain a working clock."
+msgstr ""
+
+#: ../../pep-0418.txt:535
+msgid "Examples of flags of system clocks:"
+msgstr ""
+
+#: ../../pep-0418.txt:537
+msgid "QueryPerformanceCounter: MONOTONIC | HIGHRES"
+msgstr ""
+
+#: ../../pep-0418.txt:538
+msgid "GetTickCount: MONOTONIC | STEADY"
+msgstr ""
+
+#: ../../pep-0418.txt:539
+msgid "CLOCK_MONOTONIC: MONOTONIC | STEADY (or only MONOTONIC on Linux)"
+msgstr ""
+
+#: ../../pep-0418.txt:540
+msgid "CLOCK_MONOTONIC_RAW: MONOTONIC | STEADY"
+msgstr ""
+
+#: ../../pep-0418.txt:541
+msgid "gettimeofday(): (no flag)"
+msgstr ""
+
+#: ../../pep-0418.txt:543
+msgid ""
+"The clock objects contain other metadata including the clock flags with "
+"additional feature flags above those listed above, the name of the "
+"underlying OS facility, and clock precisions."
+msgstr ""
+
+#: ../../pep-0418.txt:547
+msgid ""
+"``time.get_clock()`` still chooses a single clock; an enumeration "
+"facility is also required. The most obvious method is to offer "
+"``time.get_clocks()`` with the same signature as ``time.get_clock()``, "
+"but returning a sequence of all clocks matching the requested flags. "
+"Requesting no flags would thus enumerate all available clocks, allowing "
+"the caller to make an arbitrary choice amongst them based on their "
+"metadata."
+msgstr ""
+
+#: ../../pep-0418.txt:556
+msgid ""
+"Example partial implementation: `clockutils.py "
+"<http://hg.python.org/peps/file/tip/pep-0418/clockutils.py>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:560
+msgid "Working around operating system bugs?"
+msgstr ""
+
+#: ../../pep-0418.txt:562
+msgid ""
+"Should Python ensure that a monotonic clock is truly monotonic by "
+"computing the maximum with the clock value and the previous value?"
+msgstr ""
+
+#: ../../pep-0418.txt:566
+msgid ""
+"Since it's relatively straightforward to cache the last value returned "
+"using a static variable, it might be interesting to use this to make sure"
+" that the values returned are indeed monotonic."
+msgstr ""
+
+#: ../../pep-0418.txt:570
+msgid "Virtual machines provide less reliable clocks."
+msgstr ""
+
+#: ../../pep-0418.txt:571
+msgid "QueryPerformanceCounter() has known bugs (only one is not fixed yet)"
+msgstr ""
+
+#: ../../pep-0418.txt:573
+msgid ""
+"Python may only work around a specific known operating system bug: "
+"`KB274323`_ contains a code example to workaround the bug (use "
+"GetTickCount() to detect QueryPerformanceCounter() leap)."
+msgstr ""
+
+#: ../../pep-0418.txt:577
+msgid "Issues with \"correcting\" non-monotonicities:"
+msgstr ""
+
+#: ../../pep-0418.txt:579
+msgid ""
+"if the clock is accidentally set forward by an hour and then back again, "
+"you wouldn't have a useful clock for an hour"
+msgstr ""
+
+#: ../../pep-0418.txt:581
+msgid ""
+"the cache is not shared between processes so different processes wouldn't"
+" see the same clock value"
+msgstr ""
+
+#: ../../pep-0418.txt:586
+msgid "Glossary"
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Accuracy"
+msgstr ""
+
+#: ../../pep-0418.txt:589
+msgid ""
+"The amount of deviation of measurements by a given instrument from true "
+"values. See also `Accuracy and precision "
+"<http://en.wikipedia.org/wiki/Accuracy_and_precision>`_. Inaccuracy in "
+"clocks may be caused by lack of precision, drift, or an incorrect initial"
+" setting of the clock (e.g., timing of threads is inherently inaccurate "
+"because perfect synchronization in resetting counters is quite "
+"difficult)."
+msgstr ""
+
+#: ../../pep-0418.txt ../../pep-0418.txt:905
+msgid "Adjusted"
+msgstr ""
+
+#: ../../pep-0418.txt:598
+msgid ""
+"Resetting a clock to the correct time.  This may be done either with a "
+"<Step> or by <Slewing>."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Civil Time"
+msgstr ""
+
+#: ../../pep-0418.txt:602
+msgid ""
+"Time of day; external to the system.  10:45:13am is a Civil time; 45 "
+"seconds is not.  Provided by existing function ``time.localtime()`` and "
+"``time.gmtime()``.  Not changed by this PEP."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Clock"
+msgstr ""
+
+#: ../../pep-0418.txt:608
+msgid ""
+"An instrument for measuring time.  Different clocks have different "
+"characteristics; for example, a clock with nanosecond <precision> may "
+"start to <drift> after a few minutes, while a less precise clock remained"
+" accurate for days.  This PEP is primarily concerned with clocks which "
+"use a unit of seconds."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Counter"
+msgstr ""
+
+#: ../../pep-0418.txt:615
+msgid ""
+"A clock which increments each time a certain event occurs.  A counter is "
+"strictly monotonic, but not a monotonic clock.  It can be used to "
+"generate a unique (and ordered) timestamp, but these timestamps cannot be"
+" mapped to <civil time>; tick creation may well be bursty, with several "
+"advances in the same millisecond followed by several days without any "
+"advance."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "CPU Time"
+msgstr ""
+
+#: ../../pep-0418.txt:623
+msgid ""
+"A measure of how much CPU effort has been spent on a certain task. CPU "
+"seconds are often normalized (so that a variable number can occur in the "
+"same actual second).  CPU seconds can be important when profiling, but "
+"they do not map directly to user response time, nor are they directly "
+"comparable to (real time) seconds."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Drift"
+msgstr ""
+
+#: ../../pep-0418.txt:630
+msgid ""
+"The accumulated error against \"true\" time, as defined externally to the"
+" system.  Drift may be due to imprecision, or to a difference between the"
+" average rate at which clock time advances and that of real time."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Epoch"
+msgstr ""
+
+#: ../../pep-0418.txt:636
+msgid ""
+"The reference point of a clock.  For clocks providing <civil time>, this "
+"is often midnight as the day (and year) rolled over to January 1, 1970.  "
+"For a <clock_monotonic> clock, the epoch may be undefined (represented as"
+" None)."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Latency"
+msgstr ""
+
+#: ../../pep-0418.txt:642
+msgid ""
+"Delay.  By the time a clock call returns, the <real time> has advanced, "
+"possibly by more than the precision of the clock."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Monotonic"
+msgstr ""
+
+#: ../../pep-0418.txt:646
+msgid ""
+"The characteristics expected of a monotonic clock in practice. Moving in "
+"at most one direction; for clocks, that direction is forward. The <clock>"
+" should also be <steady>, and should be convertible to a unit of seconds."
+"  The tradeoffs often include lack of a defined <epoch> or mapping to "
+"<Civil Time>."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Precision"
+msgstr ""
+
+#: ../../pep-0418.txt:653
+msgid ""
+"The amount of deviation among measurements of the same physical value by "
+"a single instrument.  Imprecision in clocks may be caused by a "
+"fluctuation of the rate at which clock time advances relative to real "
+"time, including clock adjustment by slewing."
+msgstr ""
+
+#: ../../pep-0418.txt ../../pep-0418.txt:1237
+msgid "Process Time"
+msgstr ""
+
+#: ../../pep-0418.txt:659
+msgid ""
+"Time elapsed since the process began.  It is typically measured in <CPU "
+"time> rather than <real time>, and typically does not advance while the "
+"process is suspended."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Real Time"
+msgstr ""
+
+#: ../../pep-0418.txt:664
+msgid ""
+"Time in the real world.  This differs from <Civil time> in that it is not"
+" <adjusted>, but they should otherwise advance in lockstep. It is not "
+"related to the \"real time\" of \"Real Time [Operating] Systems\".  It is"
+" sometimes called \"wall clock time\" to avoid that ambiguity; "
+"unfortunately, that introduces different ambiguities."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0418.txt:671
+msgid ""
+"The smallest difference between two physical values that results in a "
+"different measurement by a given instrument."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Slew"
+msgstr ""
+
+#: ../../pep-0418.txt:675
+msgid ""
+"A slight change to a clock's speed, usually intended to correct <drift> "
+"with respect to an external authority."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Stability"
+msgstr ""
+
+#: ../../pep-0418.txt:679
+msgid "Persistence of accuracy.  A measure of expected <drift>."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Steady"
+msgstr ""
+
+#: ../../pep-0418.txt:682
+msgid ""
+"A clock with high <stability> and relatively high <accuracy> and "
+"<precision>.  In practice, it is often used to indicate a "
+"<clock_monotonic> clock, but places greater emphasis on the consistency "
+"of the duration between subsequent ticks."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Step"
+msgstr ""
+
+#: ../../pep-0418.txt:688
+msgid ""
+"An instantaneous change in the represented time.  Instead of speeding or "
+"slowing the clock (<slew>), a single offset is permanently added."
+msgstr ""
+
+#: ../../pep-0418.txt ../../pep-0418.txt:1165
+msgid "System Time"
+msgstr ""
+
+#: ../../pep-0418.txt:693
+msgid "Time as represented by the Operating System."
+msgstr ""
+
+#: ../../pep-0418.txt ../../pep-0418.txt:1321
+msgid "Thread Time"
+msgstr ""
+
+#: ../../pep-0418.txt:696
+msgid ""
+"Time elapsed since the thread began.  It is typically measured in <CPU "
+"time> rather than <real time>, and typically does not advance while the "
+"thread is idle."
+msgstr ""
+
+#: ../../pep-0418.txt
+msgid "Wallclock"
+msgstr ""
+
+#: ../../pep-0418.txt:701
+msgid ""
+"What the clock on the wall says.  This is typically used as a synonym for"
+" <real time>; unfortunately, wall time is itself ambiguous."
+msgstr ""
+
+#: ../../pep-0418.txt:707
+msgid "Hardware clocks"
+msgstr ""
+
+#: ../../pep-0418.txt:710
+msgid "List of hardware clocks"
+msgstr ""
+
+#: ../../pep-0418.txt:712
+msgid ""
+"HPET: A High Precision Event Timer (HPET) chip consists of a 64-bit up-"
+"counter (main counter) counting at least at 10 MHz and a set of up to 256"
+" comparators (at least 3).  Each HPET can have up to 32 timers.  HPET can"
+" cause around 3 seconds of drift per day."
+msgstr ""
+
+#: ../../pep-0418.txt:716
+msgid ""
+"TSC (Time Stamp Counter): Historically, the TSC increased with every "
+"internal processor clock cycle, but now the rate is usually constant "
+"(even if the processor changes frequency) and usually equals the maximum "
+"processor frequency.  Multiple cores have different TSC values.  "
+"Hibernation of system will reset TSC value.  The RDTSC instruction can be"
+" used to read this counter.  CPU frequency scaling for power saving."
+msgstr ""
+
+#: ../../pep-0418.txt:723
+msgid ""
+"ACPI Power Management Timer: ACPI 24-bit timer with a frequency of 3.5 "
+"MHz (3,579,545 Hz)."
+msgstr ""
+
+#: ../../pep-0418.txt:725
+msgid ""
+"Cyclone: The Cyclone timer uses a 32-bit counter on IBM Extended "
+"X-Architecture (EXA) chipsets which include computers that use the IBM "
+"\"Summit\" series chipsets (ex: x440).  This is available in IA32 and "
+"IA64 architectures."
+msgstr ""
+
+#: ../../pep-0418.txt:729
+msgid ""
+"PIT (programmable interrupt timer): Intel 8253/8254 chipsets with a "
+"configurable frequency in range 18.2 Hz - 1.2 MHz.  It uses a 16-bit "
+"counter."
+msgstr ""
+
+#: ../../pep-0418.txt:732
+msgid ""
+"RTC (Real-time clock).  Most RTCs use a crystal oscillator with a "
+"frequency of 32,768 Hz."
+msgstr ""
+
+#: ../../pep-0418.txt:737
+msgid "Linux clocksource"
+msgstr ""
+
+#: ../../pep-0418.txt:739
+msgid ""
+"There were 4 implementations of the time in the Linux kernel: UTIME "
+"(1996), timer wheel (1997), HRT (2001) and hrtimers (2007).  The latter "
+"is the result of the \"high-res-timers\" project started by George "
+"Anzinger in 2001, with contributions by Thomas Gleixner and Douglas "
+"Niehaus.  The hrtimers implementation was merged into Linux 2.6.21, "
+"released in 2007."
+msgstr ""
+
+#: ../../pep-0418.txt:746
+msgid ""
+"hrtimers supports various clock sources.  It sets a priority to each "
+"source to decide which one will be used. Linux supports the following "
+"clock sources:"
+msgstr ""
+
+#: ../../pep-0418.txt:750
+msgid "tsc"
+msgstr ""
+
+#: ../../pep-0418.txt:751
+msgid "hpet"
+msgstr ""
+
+#: ../../pep-0418.txt:752
+msgid "pit"
+msgstr ""
+
+#: ../../pep-0418.txt:753
+msgid "pmtmr: ACPI Power Management Timer"
+msgstr ""
+
+#: ../../pep-0418.txt:754
+msgid "cyclone"
+msgstr ""
+
+#: ../../pep-0418.txt:756
+msgid ""
+"High-resolution timers are not supported on all hardware architectures.  "
+"They are at least provided on x86/x86_64, ARM and PowerPC."
+msgstr ""
+
+#: ../../pep-0418.txt:760
+msgid ""
+"clock_getres() returns 1 nanosecond for ``CLOCK_REALTIME`` and "
+"``CLOCK_MONOTONIC`` regardless of underlying clock source.  Read `Re: "
+"clock_getres() and real resolution <http://lkml.org/lkml/2012/2/9/100>`_ "
+"from Thomas Gleixner (9 Feb 2012) for an explanation."
+msgstr ""
+
+#: ../../pep-0418.txt:766
+msgid ""
+"The ``/sys/devices/system/clocksource/clocksource0`` directory contains "
+"two useful files:"
+msgstr ""
+
+#: ../../pep-0418.txt:769
+msgid "``available_clocksource``: list of available clock sources"
+msgstr ""
+
+#: ../../pep-0418.txt:770
+msgid ""
+"``current_clocksource``: clock source currently used.  It is possible to "
+"change the current clocksource by writing the name of a clocksource into "
+"this file."
+msgstr ""
+
+#: ../../pep-0418.txt:774
+msgid "``/proc/timer_list`` contains the list of all hardware timers."
+msgstr ""
+
+#: ../../pep-0418.txt:776
+msgid ""
+"Read also the `time(7) manual page <http://www.kernel.org/doc/man-"
+"pages/online/pages/man7/time.7.html>`_: \"overview of time and timers\"."
+msgstr ""
+
+#: ../../pep-0418.txt:782
+msgid "FreeBSD timecounter"
+msgstr ""
+
+#: ../../pep-0418.txt:784
+msgid ""
+"kern.timecounter.choice lists available hardware clocks with their "
+"priority.  The sysctl program can be used to change the timecounter. "
+"Example::"
+msgstr ""
+
+#: ../../pep-0418.txt:799
+msgid "Available clocks:"
+msgstr ""
+
+#: ../../pep-0418.txt:801
+msgid "\"TSC\": Time Stamp Counter of the processor"
+msgstr ""
+
+#: ../../pep-0418.txt:802
+msgid "\"HPET\": High Precision Event Timer"
+msgstr ""
+
+#: ../../pep-0418.txt:803
+msgid "\"ACPI-fast\": ACPI Power Management timer (fast mode)"
+msgstr ""
+
+#: ../../pep-0418.txt:804
+msgid "\"ACPI-safe\": ACPI Power Management timer (safe mode)"
+msgstr ""
+
+#: ../../pep-0418.txt:805
+msgid "\"i8254\": PIT with Intel 8254 chipset"
+msgstr ""
+
+#: ../../pep-0418.txt:807
+msgid ""
+"The `commit 222222 "
+"<http://svnweb.freebsd.org/base?view=revision&revision=222222>`_ (May "
+"2011) decreased ACPI-fast timecounter quality to 900 and increased HPET "
+"timecounter quality to 950: \"HPET on modern platforms usually have "
+"better resolution and lower latency than ACPI timer\"."
+msgstr ""
+
+#: ../../pep-0418.txt:813
+msgid ""
+"Read `Timecounters: Efficient and precise timekeeping in SMP kernels "
+"<http://phk.freebsd.dk/pubs/timecounter.pdf>`_ by Poul-Henning Kamp "
+"(2002) for the FreeBSD Project."
+msgstr ""
+
+#: ../../pep-0418.txt:819
+msgid "Performance"
+msgstr ""
+
+#: ../../pep-0418.txt:821
+msgid ""
+"Reading a hardware clock has a cost.  The following table compares the "
+"performance of different hardware clocks on Linux 3.3 with Intel Core "
+"i7-2600 at 3.40GHz (8 cores). The `bench_time.c "
+"<http://hg.python.org/peps/file/tip/pep-0418/bench_time.c>`_ program was "
+"used to fill these tables."
+msgstr ""
+
+#: ../../pep-0418.txt:828 ../../pep-0418.txt:845
+msgid "Function"
+msgstr ""
+
+#: ../../pep-0418.txt:828 ../../pep-0418.txt:845
+msgid "TSC"
+msgstr ""
+
+#: ../../pep-0418.txt:828
+msgid "ACPI PM"
+msgstr ""
+
+#: ../../pep-0418.txt:828 ../../pep-0418.txt:845
+msgid "HPET"
+msgstr ""
+
+#: ../../pep-0418.txt:830 ../../pep-0418.txt:847 ../../pep-0418.txt:1175
+msgid "time()"
+msgstr ""
+
+#: ../../pep-0418.txt:830 ../../pep-0418.txt:929
+msgid "2 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:831 ../../pep-0418.txt:1171 ../../pep-0418.txt:1191
+#: ../../pep-0418.txt:1192
+msgid "CLOCK_REALTIME_COARSE"
+msgstr ""
+
+#: ../../pep-0418.txt:831 ../../pep-0418.txt:928
+msgid "10 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:832 ../../pep-0418.txt:910 ../../pep-0418.txt:937
+#: ../../pep-0418.txt:938
+msgid "CLOCK_MONOTONIC_COARSE"
+msgstr ""
+
+#: ../../pep-0418.txt:832
+msgid "12 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:832
+msgid "13 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:833 ../../pep-0418.txt:852 ../../pep-0418.txt:1329
+#: ../../pep-0418.txt:1341 ../../pep-0418.txt:1342
+msgid "CLOCK_THREAD_CPUTIME_ID"
+msgstr ""
+
+#: ../../pep-0418.txt:833
+msgid "134 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:833
+msgid "135 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:834 ../../pep-0418.txt:1246 ../../pep-0418.txt:1260
+#: ../../pep-0418.txt:1264
+msgid "CLOCK_PROCESS_CPUTIME_ID"
+msgstr ""
+
+#: ../../pep-0418.txt:834
+msgid "127 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:834
+msgid "129 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:835 ../../pep-0418.txt:855 ../../pep-0418.txt:1249
+#: ../../pep-0418.txt:1266 ../../pep-0418.txt:1270 ../../pep-0418.txt:1271
+#: ../../pep-0418.txt:1273 ../../pep-0418.txt:1276 ../../pep-0418.txt:1279
+msgid "clock()"
+msgstr ""
+
+#: ../../pep-0418.txt:835
+msgid "146 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:835
+msgid "143 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:836 ../../pep-0418.txt:860 ../../pep-0418.txt:1173
+#: ../../pep-0418.txt:1188
+msgid "gettimeofday()"
+msgstr ""
+
+#: ../../pep-0418.txt:836
+msgid "23 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:836
+msgid "726 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:836
+msgid "637 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:837 ../../pep-0418.txt:911 ../../pep-0418.txt:931
+msgid "CLOCK_MONOTONIC_RAW"
+msgstr ""
+
+#: ../../pep-0418.txt:837
+msgid "31 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:837
+msgid "716 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:837
+msgid "607 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:838 ../../pep-0418.txt:857 ../../pep-0418.txt:1170
+#: ../../pep-0418.txt:1186 ../../pep-0418.txt:1187 ../../pep-0418.txt:1189
+#: ../../pep-0418.txt:1190
+msgid "CLOCK_REALTIME"
+msgstr ""
+
+#: ../../pep-0418.txt:838 ../../pep-0418.txt:839
+msgid "27 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:838
+msgid "707 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:838
+msgid "629 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:839 ../../pep-0418.txt:862 ../../pep-0418.txt:909
+#: ../../pep-0418.txt:930 ../../pep-0418.txt:934 ../../pep-0418.txt:935
+msgid "CLOCK_MONOTONIC"
+msgstr ""
+
+#: ../../pep-0418.txt:839
+msgid "723 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:839
+msgid "635 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:842
+msgid "FreeBSD 8.0 in kvm with hardware virtualization:"
+msgstr ""
+
+#: ../../pep-0418.txt:845
+msgid "ACPI-Safe"
+msgstr ""
+
+#: ../../pep-0418.txt:845
+msgid "i8254"
+msgstr ""
+
+#: ../../pep-0418.txt:847 ../../pep-0418.txt:850
+msgid "191 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:847 ../../pep-0418.txt:851
+msgid "188 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:847 ../../pep-0418.txt:849 ../../pep-0418.txt:851
+msgid "189 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:848
+msgid "CLOCK_SECOND"
+msgstr ""
+
+#: ../../pep-0418.txt:848 ../../pep-0418.txt:849 ../../pep-0418.txt:851
+msgid "187 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:848
+msgid "184 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:848
+msgid "183 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:849
+msgid "CLOCK_REALTIME_FAST"
+msgstr ""
+
+#: ../../pep-0418.txt:849
+msgid "180 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:849
+msgid "190 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:850
+msgid "CLOCK_UPTIME_FAST"
+msgstr ""
+
+#: ../../pep-0418.txt:850
+msgid "185 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:850
+msgid "186 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:850 ../../pep-0418.txt:857
+msgid "196 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:851
+msgid "CLOCK_MONOTONIC_FAST"
+msgstr ""
+
+#: ../../pep-0418.txt:852
+msgid "208 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:852
+msgid "206 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:852
+msgid "207 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:852
+msgid "220 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:853
+msgid "CLOCK_VIRTUAL"
+msgstr ""
+
+#: ../../pep-0418.txt:853 ../../pep-0418.txt:854
+msgid "280 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:853
+msgid "279 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:853
+msgid "283 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:853
+msgid "296 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:854 ../../pep-0418.txt:1261 ../../pep-0418.txt:1267
+msgid "CLOCK_PROF"
+msgstr ""
+
+#: ../../pep-0418.txt:854
+msgid "289 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:854
+msgid "282 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:854
+msgid "286 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:855
+msgid "342 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:855
+msgid "340 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:855
+msgid "337 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:855
+msgid "344 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:856
+msgid "CLOCK_UPTIME_PRECISE"
+msgstr ""
+
+#: ../../pep-0418.txt:856 ../../pep-0418.txt:859 ../../pep-0418.txt:861
+msgid "197 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:856
+msgid "10380 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:856
+msgid "4402 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:856
+msgid "4097 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:857
+msgid "10376 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:857
+msgid "4337 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:857
+msgid "4054 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:858
+msgid "CLOCK_MONOTONIC_PRECISE"
+msgstr ""
+
+#: ../../pep-0418.txt:858
+msgid "198 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:858
+msgid "10493 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:858
+msgid "4413 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:858
+msgid "3958 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:859 ../../pep-0418.txt:913 ../../pep-0418.txt:936
+msgid "CLOCK_UPTIME"
+msgstr ""
+
+#: ../../pep-0418.txt:859
+msgid "10523 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:859
+msgid "4458 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:859
+msgid "4058 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:860
+msgid "202 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:860
+msgid "10524 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:860
+msgid "4186 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:860
+msgid "3962 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:861
+msgid "CLOCK_REALTIME_PRECISE"
+msgstr ""
+
+#: ../../pep-0418.txt:861
+msgid "10599 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:861
+msgid "4394 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:861
+msgid "4060 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:862
+msgid "201 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:862
+msgid "10766 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:862
+msgid "4498 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:862
+msgid "3943 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:865
+msgid ""
+"Each function was called 100,000 times and CLOCK_MONOTONIC was used to "
+"get the time before and after.  The benchmark was run 5 times, keeping "
+"the minimum time."
+msgstr ""
+
+#: ../../pep-0418.txt:871
+msgid "NTP adjustment"
+msgstr ""
+
+#: ../../pep-0418.txt:873
+msgid "NTP has different methods to adjust a clock:"
+msgstr ""
+
+#: ../../pep-0418.txt:875
+msgid ""
+"\"slewing\": change the clock frequency to be slightly faster or slower "
+"(which is done with ``adjtime()``).  Since the slew rate is limited to "
+"0.5 millisecond per second, each second of adjustment requires an "
+"amortization interval of 2000 seconds.  Thus, an adjustment of many "
+"seconds can take hours or days to amortize."
+msgstr ""
+
+#: ../../pep-0418.txt:880
+msgid ""
+"\"stepping\": jump by a large amount in a single discrete step (which is "
+"done with ``settimeofday()``)"
+msgstr ""
+
+#: ../../pep-0418.txt:883
+msgid ""
+"By default, the time is slewed if the offset is less than 128 ms, but "
+"stepped otherwise."
+msgstr ""
+
+#: ../../pep-0418.txt:886
+msgid ""
+"Slewing is generally desirable (i.e. we should use CLOCK_MONOTONIC, not "
+"CLOCK_MONOTONIC_RAW) if one wishes to measure \"real\" time (and not a "
+"time-like object like CPU cycles).  This is because the clock on the "
+"other end of the NTP connection from you is probably better at keeping "
+"time: hopefully that thirty-five thousand dollars of Cesium timekeeping "
+"goodness is doing something better than your PC's $3 quartz crystal, "
+"after all."
+msgstr ""
+
+#: ../../pep-0418.txt:894
+msgid ""
+"Get more detail in the `documentation of the NTP daemon "
+"<http://doc.ntp.org/4.1.2/ntpd.htm>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:899
+msgid "Operating system time functions"
+msgstr ""
+
+#: ../../pep-0418.txt:902
+msgid "Monotonic Clocks"
+msgstr ""
+
+#: ../../pep-0418.txt:905 ../../pep-0418.txt:926 ../../pep-0418.txt:1168
+#: ../../pep-0418.txt:1184 ../../pep-0418.txt:1243 ../../pep-0418.txt:1258
+#: ../../pep-0418.txt:1327 ../../pep-0418.txt:1339 ../../pep-0418.txt:1399
+#: ../../pep-0418.txt:1411
+msgid "Name"
+msgstr ""
+
+#: ../../pep-0418.txt:905 ../../pep-0418.txt:1168 ../../pep-0418.txt:1243
+#: ../../pep-0418.txt:1327 ../../pep-0418.txt:1399 ../../pep-0418.txt:1411
+msgid "C Resolution"
+msgstr ""
+
+#: ../../pep-0418.txt:905 ../../pep-0418.txt:1168 ../../pep-0418.txt:1243
+#: ../../pep-0418.txt:1327
+msgid "Include Sleep"
+msgstr ""
+
+#: ../../pep-0418.txt:905 ../../pep-0418.txt:1168 ../../pep-0418.txt:1243
+#: ../../pep-0418.txt:1327
+msgid "Include Suspend"
+msgstr ""
+
+#: ../../pep-0418.txt:907
+msgid "gethrtime()"
+msgstr ""
+
+#: ../../pep-0418.txt:907 ../../pep-0418.txt:908 ../../pep-0418.txt:909
+#: ../../pep-0418.txt:910 ../../pep-0418.txt:911 ../../pep-0418.txt:912
+#: ../../pep-0418.txt:913 ../../pep-0418.txt:914 ../../pep-0418.txt:930
+#: ../../pep-0418.txt:931 ../../pep-0418.txt:932 ../../pep-0418.txt:933
+#: ../../pep-0418.txt:1170 ../../pep-0418.txt:1171 ../../pep-0418.txt:1187
+#: ../../pep-0418.txt:1246 ../../pep-0418.txt:1260 ../../pep-0418.txt:1264
+#: ../../pep-0418.txt:1329 ../../pep-0418.txt:1342 ../../pep-0418.txt:1401
+#: ../../pep-0418.txt:1402 ../../pep-0418.txt:1413 ../../pep-0418.txt:1414
+#: ../../pep-0418.txt:1415
+msgid "1 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:907 ../../pep-0418.txt:908 ../../pep-0418.txt:909
+#: ../../pep-0418.txt:910 ../../pep-0418.txt:911 ../../pep-0418.txt:913
+#: ../../pep-0418.txt:914 ../../pep-0418.txt:915 ../../pep-0418.txt:916
+#: ../../pep-0418.txt:917 ../../pep-0418.txt:1245 ../../pep-0418.txt:1246
+#: ../../pep-0418.txt:1247 ../../pep-0418.txt:1248 ../../pep-0418.txt:1249
+#: ../../pep-0418.txt:1330
+msgid "No"
+msgstr ""
+
+#: ../../pep-0418.txt:907 ../../pep-0418.txt:908 ../../pep-0418.txt:909
+#: ../../pep-0418.txt:910 ../../pep-0418.txt:911 ../../pep-0418.txt:912
+#: ../../pep-0418.txt:913 ../../pep-0418.txt:914 ../../pep-0418.txt:915
+#: ../../pep-0418.txt:916 ../../pep-0418.txt:917 ../../pep-0418.txt:1170
+#: ../../pep-0418.txt:1171 ../../pep-0418.txt:1172 ../../pep-0418.txt:1173
+#: ../../pep-0418.txt:1174 ../../pep-0418.txt:1175 ../../pep-0418.txt:1329
+msgid "Yes"
+msgstr ""
+
+#: ../../pep-0418.txt:908 ../../pep-0418.txt:929
+msgid "CLOCK_HIGHRES"
+msgstr ""
+
+#: ../../pep-0418.txt:909 ../../pep-0418.txt:910
+msgid "Slewed on Linux"
+msgstr ""
+
+#: ../../pep-0418.txt:912 ../../pep-0418.txt:932
+msgid "CLOCK_BOOTTIME"
+msgstr ""
+
+#: ../../pep-0418.txt:912 ../../pep-0418.txt:913 ../../pep-0418.txt:915
+#: ../../pep-0418.txt:917 ../../pep-0418.txt:1330
+msgid "?"
+msgstr ""
+
+#: ../../pep-0418.txt:914 ../../pep-0418.txt:933
+msgid "mach_absolute_time()"
+msgstr ""
+
+#: ../../pep-0418.txt:915
+msgid "QueryPerformanceCounter()"
+msgstr ""
+
+#: ../../pep-0418.txt:915 ../../pep-0418.txt:1194 ../../pep-0418.txt:1248
+#: ../../pep-0418.txt:1249 ../../pep-0418.txt:1262 ../../pep-0418.txt:1263
+#: ../../pep-0418.txt:1265 ../../pep-0418.txt:1267 ../../pep-0418.txt:1268
+#: ../../pep-0418.txt:1269
+msgid "\\-"
+msgstr ""
+
+#: ../../pep-0418.txt:916
+msgid "GetTickCount[64]()"
+msgstr ""
+
+#: ../../pep-0418.txt:916 ../../pep-0418.txt:917 ../../pep-0418.txt:937
+#: ../../pep-0418.txt:1174 ../../pep-0418.txt:1191 ../../pep-0418.txt:1193
+#: ../../pep-0418.txt:1194 ../../pep-0418.txt:1279 ../../pep-0418.txt:1417
+#: ../../pep-0418.txt:1418 ../../pep-0418.txt:1419
+msgid "1 ms"
+msgstr ""
+
+#: ../../pep-0418.txt:917
+msgid "timeGetTime()"
+msgstr ""
+
+#: ../../pep-0418.txt:920 ../../pep-0418.txt:1178 ../../pep-0418.txt:1252
+#: ../../pep-0418.txt:1333 ../../pep-0418.txt:1422
+msgid ""
+"The \"C Resolution\" column is the resolution of the underlying C "
+"structure."
+msgstr ""
+
+#: ../../pep-0418.txt:923 ../../pep-0418.txt:1181 ../../pep-0418.txt:1255
+#: ../../pep-0418.txt:1336
+msgid "Examples of clock resolution on x86_64:"
+msgstr ""
+
+#: ../../pep-0418.txt:926 ../../pep-0418.txt:1184 ../../pep-0418.txt:1258
+#: ../../pep-0418.txt:1339
+msgid "Operating system"
+msgstr ""
+
+#: ../../pep-0418.txt:926 ../../pep-0418.txt:1184 ../../pep-0418.txt:1258
+#: ../../pep-0418.txt:1339
+msgid "OS Resolution"
+msgstr ""
+
+#: ../../pep-0418.txt:926 ../../pep-0418.txt:1184 ../../pep-0418.txt:1258
+#: ../../pep-0418.txt:1339
+msgid "Python Resolution"
+msgstr ""
+
+#: ../../pep-0418.txt:928
+msgid "QueryPerformanceCounter"
+msgstr ""
+
+#: ../../pep-0418.txt:928 ../../pep-0418.txt:939 ../../pep-0418.txt:1193
+#: ../../pep-0418.txt:1194 ../../pep-0418.txt:1278 ../../pep-0418.txt:1279
+#: ../../pep-0418.txt:1343
+msgid "Windows Seven"
+msgstr ""
+
+#: ../../pep-0418.txt:929 ../../pep-0418.txt:1186 ../../pep-0418.txt:1263
+#: ../../pep-0418.txt:1276 ../../pep-0418.txt:1277
+msgid "SunOS 5.11"
+msgstr ""
+
+#: ../../pep-0418.txt:929
+msgid "265 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:930 ../../pep-0418.txt:938 ../../pep-0418.txt:1187
+#: ../../pep-0418.txt:1192 ../../pep-0418.txt:1264 ../../pep-0418.txt:1268
+#: ../../pep-0418.txt:1271 ../../pep-0418.txt:1272
+msgid "Linux 3.0"
+msgstr ""
+
+#: ../../pep-0418.txt:930
+msgid "322 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:931 ../../pep-0418.txt:932 ../../pep-0418.txt:937
+#: ../../pep-0418.txt:1191 ../../pep-0418.txt:1260 ../../pep-0418.txt:1342
+msgid "Linux 3.3"
+msgstr ""
+
+#: ../../pep-0418.txt:931 ../../pep-0418.txt:932
+msgid "628 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:933 ../../pep-0418.txt:1188 ../../pep-0418.txt:1265
+#: ../../pep-0418.txt:1266 ../../pep-0418.txt:1275
+msgid "Mac OS 10.6"
+msgstr ""
+
+#: ../../pep-0418.txt:933
+msgid "3 µs"
+msgstr ""
+
+#: ../../pep-0418.txt:934 ../../pep-0418.txt:936 ../../pep-0418.txt:1189
+#: ../../pep-0418.txt:1261 ../../pep-0418.txt:1262 ../../pep-0418.txt:1270
+#: ../../pep-0418.txt:1341
+msgid "FreeBSD 8.2"
+msgstr ""
+
+#: ../../pep-0418.txt:934 ../../pep-0418.txt:936 ../../pep-0418.txt:1189
+msgid "11 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:934 ../../pep-0418.txt:935 ../../pep-0418.txt:1190
+#: ../../pep-0418.txt:1265 ../../pep-0418.txt:1266 ../../pep-0418.txt:1267
+msgid "5 µs"
+msgstr ""
+
+#: ../../pep-0418.txt:935 ../../pep-0418.txt:1190 ../../pep-0418.txt:1267
+#: ../../pep-0418.txt:1269 ../../pep-0418.txt:1273 ../../pep-0418.txt:1274
+msgid "OpenBSD 5.0"
+msgstr ""
+
+#: ../../pep-0418.txt:935 ../../pep-0418.txt:1186 ../../pep-0418.txt:1190
+#: ../../pep-0418.txt:1261 ../../pep-0418.txt:1271 ../../pep-0418.txt:1272
+#: ../../pep-0418.txt:1273 ../../pep-0418.txt:1274 ../../pep-0418.txt:1275
+#: ../../pep-0418.txt:1276 ../../pep-0418.txt:1277
+msgid "10 ms"
+msgstr ""
+
+#: ../../pep-0418.txt:936 ../../pep-0418.txt:1189
+msgid "6 µs"
+msgstr ""
+
+#: ../../pep-0418.txt:938 ../../pep-0418.txt:1192 ../../pep-0418.txt:1268
+msgid "4 ms"
+msgstr ""
+
+#: ../../pep-0418.txt:939
+msgid "GetTickCount64()"
+msgstr ""
+
+#: ../../pep-0418.txt:939 ../../pep-0418.txt:1193 ../../pep-0418.txt:1278
+#: ../../pep-0418.txt:1343
+msgid "16 ms"
+msgstr ""
+
+#: ../../pep-0418.txt:939
+msgid "15 ms"
+msgstr ""
+
+#: ../../pep-0418.txt:942 ../../pep-0418.txt:1197 ../../pep-0418.txt:1282
+#: ../../pep-0418.txt:1346
+msgid ""
+"The \"OS Resolution\" is the resolution announced by the operating "
+"system. The \"Python Resolution\" is the smallest difference between two "
+"calls to the time function computed in Python using the "
+"`clock_resolution.py "
+"<http://hg.python.org/peps/file/tip/pep-0418/clock_resolution.py>`_ "
+"program."
+msgstr ""
+
+#: ../../pep-0418.txt:950
+msgid "mach_absolute_time"
+msgstr ""
+
+#: ../../pep-0418.txt:952
+msgid ""
+"Mac OS X provides a monotonic clock: mach_absolute_time().  It is based "
+"on absolute elapsed time since system boot.  It is not adjusted and "
+"cannot be set."
+msgstr ""
+
+#: ../../pep-0418.txt:956
+msgid ""
+"mach_timebase_info() gives a fraction to convert the clock value to a "
+"number of nanoseconds.  See also the `Technical Q&A QA1398 "
+"<https://developer.apple.com/library/mac/#qa/qa1398/>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:960
+msgid ""
+"mach_absolute_time() stops during a sleep on a PowerPC CPU, but not on an"
+" Intel CPU: `Different behaviour of mach_absolute_time() on i386/ppc "
+"<http://lists.apple.com/archives/PerfOptimization-"
+"dev/2006/Jul/msg00024.html>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:965
+msgid "CLOCK_MONOTONIC, CLOCK_MONOTONIC_RAW, CLOCK_BOOTTIME"
+msgstr ""
+
+#: ../../pep-0418.txt:967
+msgid ""
+"CLOCK_MONOTONIC and CLOCK_MONOTONIC_RAW represent monotonic time since "
+"some unspecified starting point.  They cannot be set.  The resolution can"
+" be read using ``clock_getres()``."
+msgstr ""
+
+#: ../../pep-0418.txt:971
+msgid ""
+"Documentation: refer to the manual page of your operating system. "
+"Examples:"
+msgstr ""
+
+#: ../../pep-0418.txt:974
+msgid ""
+"`FreeBSD clock_gettime() manual page "
+"<http://www.freebsd.org/cgi/man.cgi?query=clock_gettime>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:976
+msgid ""
+"`Linux clock_gettime() manual page "
+"<http://linux.die.net/man/3/clock_gettime>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:979
+msgid "CLOCK_MONOTONIC is available at least on the following operating systems:"
+msgstr ""
+
+#: ../../pep-0418.txt:982
+msgid "DragonFly BSD, FreeBSD >= 5.0, OpenBSD, NetBSD"
+msgstr ""
+
+#: ../../pep-0418.txt:983
+msgid "Linux"
+msgstr ""
+
+#: ../../pep-0418.txt:984
+msgid "Solaris"
+msgstr ""
+
+#: ../../pep-0418.txt:986
+msgid "The following operating systems don't support CLOCK_MONOTONIC:"
+msgstr ""
+
+#: ../../pep-0418.txt:988
+msgid ""
+"GNU/Hurd (see `open issues/ clock_gettime "
+"<http://www.gnu.org/software/hurd/open_issues/clock_gettime.html>`_)"
+msgstr ""
+
+#: ../../pep-0418.txt:990
+msgid "Mac OS X"
+msgstr ""
+
+#: ../../pep-0418.txt:991
+msgid "Windows"
+msgstr ""
+
+#: ../../pep-0418.txt:993
+msgid ""
+"On Linux, NTP may adjust the CLOCK_MONOTONIC rate (slewed), but it cannot"
+" jump backward."
+msgstr ""
+
+#: ../../pep-0418.txt:996
+msgid ""
+"CLOCK_MONOTONIC_RAW is specific to Linux.  It is similar to "
+"CLOCK_MONOTONIC, but provides access to a raw hardware-based time that is"
+" not subject to NTP adjustments.  CLOCK_MONOTONIC_RAW requires Linux "
+"2.6.28 or later."
+msgstr ""
+
+#: ../../pep-0418.txt:1001
+msgid ""
+"Linux 2.6.39 and glibc 2.14 introduces a new clock: CLOCK_BOOTTIME. "
+"CLOCK_BOOTTIME is identical to CLOCK_MONOTONIC, except that it also "
+"includes any time spent in suspend.  Read also `Waking systems from "
+"suspend <http://lwn.net/Articles/429925/>`_ (March, 2011)."
+msgstr ""
+
+#: ../../pep-0418.txt:1006
+msgid "CLOCK_MONOTONIC stops while the machine is suspended."
+msgstr ""
+
+#: ../../pep-0418.txt:1008
+msgid ""
+"Linux provides also CLOCK_MONOTONIC_COARSE since Linux 2.6.32. It is "
+"similar to CLOCK_MONOTONIC, less precise but faster."
+msgstr ""
+
+#: ../../pep-0418.txt:1011
+msgid ""
+"``clock_gettime()`` fails if the system does not support the specified "
+"clock, even if the standard C library supports it.  For example, "
+"CLOCK_MONOTONIC_RAW requires a kernel version 2.6.28 or later."
+msgstr ""
+
+#: ../../pep-0418.txt:1017
+msgid "Windows: QueryPerformanceCounter"
+msgstr ""
+
+#: ../../pep-0418.txt:1019
+msgid ""
+"High-resolution performance counter.  It is monotonic. The frequency of "
+"the counter can be read using QueryPerformanceFrequency(). The resolution"
+" is 1 / QueryPerformanceFrequency()."
+msgstr ""
+
+#: ../../pep-0418.txt:1023
+msgid ""
+"It has a much higher resolution, but has lower long term precision than "
+"GetTickCount() and timeGetTime() clocks.  For example, it will drift "
+"compared to the low precision clocks."
+msgstr ""
+
+#: ../../pep-0418.txt:1027
+msgid "Documentation:"
+msgstr ""
+
+#: ../../pep-0418.txt:1029
+msgid ""
+"`MSDN: QueryPerformanceCounter() documentation <http://msdn.microsoft.com"
+"/en-us/library/windows/desktop/ms644904%28v=vs.85%29.aspx>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1031
+msgid ""
+"`MSDN: QueryPerformanceFrequency() documentation "
+"<http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms644905%28v=vs.85%29.aspx>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1034
+msgid "Hardware clocks used by QueryPerformanceCounter:"
+msgstr ""
+
+#: ../../pep-0418.txt:1036
+msgid ""
+"Windows XP: RDTSC instruction of Intel processors, the clock frequency is"
+" the frequency of the processor (between 200 MHz and 3 GHz, usually "
+"greater than 1 GHz nowadays)."
+msgstr ""
+
+#: ../../pep-0418.txt:1039
+msgid ""
+"Windows 2000: ACPI power management timer, frequency = 3,549,545 Hz. It "
+"can be forced through the \"/usepmtimer\" flag in boot.ini."
+msgstr ""
+
+#: ../../pep-0418.txt:1044
+msgid ""
+"QueryPerformanceFrequency() should only be called once: the frequency "
+"will not change while the system is running.  It fails if the installed "
+"hardware does not support a high-resolution performance counter."
+msgstr ""
+
+#: ../../pep-0418.txt:1049
+msgid ""
+"QueryPerformanceCounter() cannot be adjusted: `SetSystemTimeAdjustment() "
+"<http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms724943(v=vs.85).aspx>`_ only adjusts the "
+"system time."
+msgstr ""
+
+#: ../../pep-0418.txt:1054
+msgid "Bugs:"
+msgstr ""
+
+#: ../../pep-0418.txt:1056
+msgid ""
+"The performance counter value may unexpectedly leap forward because of a "
+"hardware bug, see `KB274323`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1058
+msgid ""
+"On VirtualBox, QueryPerformanceCounter() does not increment the high part"
+" every time the low part overflows, see `Monotonic timers <http://code-"
+"factor.blogspot.fr/2009/11/monotonic-timers.html>`_ (2009)."
+msgstr ""
+
+#: ../../pep-0418.txt:1062
+msgid ""
+"VirtualBox had a bug in its HPET virtualized device: "
+"QueryPerformanceCounter() did jump forward by approx. 42 seconds (`issue "
+"#8707 <https://www.virtualbox.org/ticket/8707>`_)."
+msgstr ""
+
+#: ../../pep-0418.txt:1065
+msgid ""
+"Windows XP had a bug (see `KB896256`_): on a multiprocessor computer, "
+"QueryPerformanceCounter() returned a different value for each processor."
+"  The bug was fixed in Windows XP SP2."
+msgstr ""
+
+#: ../../pep-0418.txt:1068
+msgid ""
+"Issues with processor with variable frequency: the frequency is changed "
+"depending on the workload to reduce memory consumption."
+msgstr ""
+
+#: ../../pep-0418.txt:1070
+msgid ""
+"Chromium don't use QueryPerformanceCounter() on Athlon X2 CPUs (model 15)"
+" because \"QueryPerformanceCounter is unreliable\" (see base/time_win.cc "
+"in Chromium source code)"
+msgstr ""
+
+#: ../../pep-0418.txt:1079
+msgid "Windows: GetTickCount(), GetTickCount64()"
+msgstr ""
+
+#: ../../pep-0418.txt:1081
+msgid ""
+"GetTickCount() and GetTickCount64() are monotonic, cannot fail and are "
+"not adjusted by SetSystemTimeAdjustment().  MSDN documentation: "
+"`GetTickCount() <http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms724408(v=vs.85).aspx>`_, `GetTickCount64() "
+"<http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms724411(v=vs.85).aspx>`_. The resolution can "
+"be read using GetSystemTimeAdjustment()."
+msgstr ""
+
+#: ../../pep-0418.txt:1089
+msgid ""
+"The elapsed time retrieved by GetTickCount() or GetTickCount64() includes"
+" time the system spends in sleep or hibernation."
+msgstr ""
+
+#: ../../pep-0418.txt:1092
+msgid "GetTickCount64() was added to Windows Vista and Windows Server 2008."
+msgstr ""
+
+#: ../../pep-0418.txt:1094
+#, python-format
+msgid ""
+"It is possible to improve the precision using the `undocumented "
+"NtSetTimerResolution() function "
+"<http://undocumented.ntinternals.net/UserMode/Undocumented%20Functions/Time/NtSetTimerResolution.html>`_."
+" There are applications using this undocumented function, example: `Timer"
+" Resolution <http://www.lucashale.com/timer-resolution/>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1100
+msgid ""
+"WaitForSingleObject() uses the same timer as GetTickCount() with the same"
+" precision."
+msgstr ""
+
+#: ../../pep-0418.txt:1105
+msgid "Windows: timeGetTime"
+msgstr ""
+
+#: ../../pep-0418.txt:1107
+msgid ""
+"The timeGetTime function retrieves the system time, in milliseconds. The "
+"system time is the time elapsed since Windows was started.  Read the "
+"`timeGetTime() documentation <http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/dd757629(v=vs.85).aspx>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1112
+msgid ""
+"The return type of timeGetTime() is a 32-bit unsigned integer.  As "
+"GetTickCount(), timeGetTime() rolls over after 2^32 milliseconds (49.7 "
+"days)."
+msgstr ""
+
+#: ../../pep-0418.txt:1116
+msgid ""
+"The elapsed time retrieved by timeGetTime() includes time the system "
+"spends in sleep."
+msgstr ""
+
+#: ../../pep-0418.txt:1119
+msgid ""
+"The default precision of the timeGetTime function can be five "
+"milliseconds or more, depending on the machine."
+msgstr ""
+
+#: ../../pep-0418.txt:1122
+msgid ""
+"timeBeginPeriod() can be used to increase the precision of timeGetTime() "
+"up to 1 millisecond, but it negatively affects power consumption.  "
+"Calling timeBeginPeriod() also affects the granularity of some other "
+"timing calls, such as CreateWaitableTimer(), WaitForSingleObject() and "
+"Sleep()."
+msgstr ""
+
+#: ../../pep-0418.txt:1130
+msgid ""
+"timeGetTime() and timeBeginPeriod() are part the Windows multimedia "
+"library and so require to link the program against winmm or to "
+"dynamically load the library."
+msgstr ""
+
+#: ../../pep-0418.txt:1135
+msgid "Solaris: CLOCK_HIGHRES"
+msgstr ""
+
+#: ../../pep-0418.txt:1137
+msgid ""
+"The Solaris OS has a CLOCK_HIGHRES timer that attempts to use an optimal "
+"hardware source, and may give close to nanosecond resolution. "
+"CLOCK_HIGHRES is the nonadjustable, high-resolution clock.  For timers "
+"created with a clockid_t value of CLOCK_HIGHRES, the system will attempt "
+"to use an optimal hardware source."
+msgstr ""
+
+#: ../../pep-0418.txt:1143
+msgid "The resolution of CLOCK_HIGHRES can be read using ``clock_getres()``."
+msgstr ""
+
+#: ../../pep-0418.txt:1146
+msgid "Solaris: gethrtime"
+msgstr ""
+
+#: ../../pep-0418.txt:1148
+msgid ""
+"The gethrtime() function returns the current high-resolution real time.  "
+"Time is expressed as nanoseconds since some arbitrary time in the past; "
+"it is not correlated in any way to the time of day, and thus is not "
+"subject to resetting or drifting by way of adjtime() or settimeofday().  "
+"The hires timer is ideally suited to performance measurement tasks, where"
+" cheap, accurate interval timing is required."
+msgstr ""
+
+#: ../../pep-0418.txt:1155
+msgid ""
+"The linearity of gethrtime() is not preserved across a suspend-resume "
+"cycle (`Bug 4272663 <http://wesunsolve.net/bugid/id/4272663>`_)."
+msgstr ""
+
+#: ../../pep-0418.txt:1158
+msgid ""
+"Read the `gethrtime() manual page of Solaris 11 "
+"<http://docs.oracle.com/cd/E23824_01/html/821-1465/gethrtime-"
+"3c.html#scrolltoc>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1161
+msgid "On Solaris, gethrtime() is the same as clock_gettime(CLOCK_MONOTONIC)."
+msgstr ""
+
+#: ../../pep-0418.txt:1172
+msgid "GetSystemTimeAsFileTime"
+msgstr ""
+
+#: ../../pep-0418.txt:1172 ../../pep-0418.txt:1245 ../../pep-0418.txt:1330
+msgid "100 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:1173 ../../pep-0418.txt:1188 ../../pep-0418.txt:1247
+#: ../../pep-0418.txt:1261 ../../pep-0418.txt:1262 ../../pep-0418.txt:1263
+#: ../../pep-0418.txt:1264 ../../pep-0418.txt:1266 ../../pep-0418.txt:1271
+#: ../../pep-0418.txt:1276 ../../pep-0418.txt:1277 ../../pep-0418.txt:1341
+#: ../../pep-0418.txt:1403 ../../pep-0418.txt:1404 ../../pep-0418.txt:1416
+msgid "1 µs"
+msgstr ""
+
+#: ../../pep-0418.txt:1174 ../../pep-0418.txt:1194
+msgid "ftime()"
+msgstr ""
+
+#: ../../pep-0418.txt:1175 ../../pep-0418.txt:1405
+msgid "1 sec"
+msgstr ""
+
+#: ../../pep-0418.txt:1186 ../../pep-0418.txt:1187
+msgid "238 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:1188
+msgid "4 µs"
+msgstr ""
+
+#: ../../pep-0418.txt:1193
+msgid "GetSystemTimeAsFileTime()"
+msgstr ""
+
+#: ../../pep-0418.txt:1206
+msgid "Windows: GetSystemTimeAsFileTime"
+msgstr ""
+
+#: ../../pep-0418.txt:1208
+msgid ""
+"The system time can be read using GetSystemTimeAsFileTime(), ftime() and "
+"time(). The resolution of the system time can be read using "
+"GetSystemTimeAdjustment()."
+msgstr ""
+
+#: ../../pep-0418.txt:1212
+msgid ""
+"Read the `GetSystemTimeAsFileTime() documentation "
+"<http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms724397(v=vs.85).aspx>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1215
+msgid "The system time can be set using SetSystemTime()."
+msgstr ""
+
+#: ../../pep-0418.txt:1218
+msgid "System time on UNIX"
+msgstr ""
+
+#: ../../pep-0418.txt:1220
+msgid ""
+"gettimeofday(), ftime(), time() and clock_gettime(CLOCK_REALTIME) return "
+"the system time. The resolution of CLOCK_REALTIME can be read using "
+"clock_getres()."
+msgstr ""
+
+#: ../../pep-0418.txt:1224
+msgid ""
+"The system time can be set using settimeofday() or "
+"clock_settime(CLOCK_REALTIME)."
+msgstr ""
+
+#: ../../pep-0418.txt:1227
+msgid ""
+"Linux provides also CLOCK_REALTIME_COARSE since Linux 2.6.32. It is "
+"similar to CLOCK_REALTIME, less precise but faster."
+msgstr ""
+
+#: ../../pep-0418.txt:1230
+msgid ""
+"Alexander Shishkin proposed an API for Linux to be notified when the "
+"system clock is changed: `timerfd: add TFD_NOTIFY_CLOCK_SET to watch for "
+"clock changes <http://lwn.net/Articles/432395/>`_ (4th version of the "
+"API, March 2011). The API is not accepted yet, but CLOCK_BOOTTIME "
+"provides a similar feature."
+msgstr ""
+
+#: ../../pep-0418.txt:1239
+msgid ""
+"The process time cannot be set.  It is not monotonic: the clocks stop "
+"while the process is idle."
+msgstr ""
+
+#: ../../pep-0418.txt:1245 ../../pep-0418.txt:1278
+msgid "GetProcessTimes()"
+msgstr ""
+
+#: ../../pep-0418.txt:1247 ../../pep-0418.txt:1262 ../../pep-0418.txt:1263
+#: ../../pep-0418.txt:1265 ../../pep-0418.txt:1268 ../../pep-0418.txt:1269
+msgid "getrusage(RUSAGE_SELF)"
+msgstr ""
+
+#: ../../pep-0418.txt:1248 ../../pep-0418.txt:1272 ../../pep-0418.txt:1274
+#: ../../pep-0418.txt:1275 ../../pep-0418.txt:1277
+msgid "times()"
+msgstr ""
+
+#: ../../pep-0418.txt:1249
+msgid "Yes on Windows, No otherwise"
+msgstr ""
+
+#: ../../pep-0418.txt:1269 ../../pep-0418.txt:1270
+msgid "8 ms"
+msgstr ""
+
+#: ../../pep-0418.txt:1290 ../../pep-0418.txt:1355 ../../pep-0418.txt:1427
+msgid "Functions"
+msgstr ""
+
+#: ../../pep-0418.txt:1292
+msgid ""
+"Windows: `GetProcessTimes() <http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms683223(v=vs.85).aspx>`_. The resolution can "
+"be read using GetSystemTimeAdjustment()."
+msgstr ""
+
+#: ../../pep-0418.txt:1295
+msgid ""
+"clock_gettime(CLOCK_PROCESS_CPUTIME_ID): High-resolution per-process "
+"timer from the CPU. The resolution can be read using clock_getres()."
+msgstr ""
+
+#: ../../pep-0418.txt:1297
+msgid "clock(). The resolution is 1 / CLOCKS_PER_SEC."
+msgstr ""
+
+#: ../../pep-0418.txt:1299
+msgid ""
+"Windows: The elapsed wall-clock time since the start of the process "
+"(elapsed time in seconds times CLOCKS_PER_SEC). Include time elapsed "
+"during sleep.  It can fail."
+msgstr ""
+
+#: ../../pep-0418.txt:1302
+msgid "UNIX: returns an approximation of processor time used by the program."
+msgstr ""
+
+#: ../../pep-0418.txt:1305
+msgid ""
+"getrusage(RUSAGE_SELF) returns a structure of resource usage of the "
+"currenet process.  ru_utime is user CPU time and ru_stime is the system "
+"CPU time."
+msgstr ""
+
+#: ../../pep-0418.txt:1307
+msgid ""
+"times(): structure of process times. The resolution is 1 / "
+"ticks_per_seconds, where ticks_per_seconds is sysconf(_SC_CLK_TCK) or the"
+" HZ constant."
+msgstr ""
+
+#: ../../pep-0418.txt:1310
+msgid ""
+"Python source code includes a portable library to get the process time "
+"(CPU time): `Tools/pybench/systimes.py "
+"<http://hg.python.org/cpython/file/tip/Tools/pybench/systimes.py>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1314
+msgid ""
+"See also the `QueryProcessCycleTime() function <http://msdn.microsoft.com"
+"/en-us/library/windows/desktop/ms684929(v=vs.85).aspx>`_ (sum of the "
+"cycle time of all threads) and `clock_getcpuclockid() "
+"<http://www.kernel.org/doc/man-"
+"pages/online/pages/man3/clock_getcpuclockid.3.html>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1323
+msgid ""
+"The thread time cannot be set.  It is not monotonic: the clocks stop "
+"while the thread is idle."
+msgstr ""
+
+#: ../../pep-0418.txt:1329
+msgid "Epoch changes"
+msgstr ""
+
+#: ../../pep-0418.txt:1330 ../../pep-0418.txt:1343
+msgid "GetThreadTimes()"
+msgstr ""
+
+#: ../../pep-0418.txt:1342
+msgid "649 ns"
+msgstr ""
+
+#: ../../pep-0418.txt:1357
+msgid ""
+"Windows: `GetThreadTimes() <http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms683237(v=vs.85).aspx>`_. The resolution can "
+"be read using GetSystemTimeAdjustment()."
+msgstr ""
+
+#: ../../pep-0418.txt:1360
+msgid ""
+"clock_gettime(CLOCK_THREAD_CPUTIME_ID): Thread-specific CPU-time clock. "
+"It uses a number of CPU cycles, not a number of seconds. The resolution "
+"can be read using of clock_getres()."
+msgstr ""
+
+#: ../../pep-0418.txt:1364
+msgid ""
+"See also the `QueryThreadCycleTime() function <http://msdn.microsoft.com"
+"/en-us/library/windows/desktop/ms684943(v=vs.85).aspx>`_ (cycle time for "
+"the specified thread) and pthread_getcpuclockid()."
+msgstr ""
+
+#: ../../pep-0418.txt:1370
+msgid "Windows: QueryUnbiasedInterruptTime"
+msgstr ""
+
+#: ../../pep-0418.txt:1372
+msgid ""
+"Gets the current unbiased interrupt time from the biased interrupt time "
+"and the current sleep bias amount.  This time is not affected by power "
+"management sleep transitions."
+msgstr ""
+
+#: ../../pep-0418.txt:1376
+msgid ""
+"The elapsed time retrieved by the QueryUnbiasedInterruptTime function "
+"includes only time that the system spends in the working state. "
+"QueryUnbiasedInterruptTime() is not monotonic."
+msgstr ""
+
+#: ../../pep-0418.txt:1380
+msgid "QueryUnbiasedInterruptTime() was introduced in Windows 7."
+msgstr ""
+
+#: ../../pep-0418.txt:1382
+msgid ""
+"See also `QueryIdleProcessorCycleTime() function "
+"<http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms684922(v=vs.85).aspx>`_ (cycle time for the "
+"idle thread of each processor)"
+msgstr ""
+
+#: ../../pep-0418.txt:1388
+msgid "Sleep"
+msgstr ""
+
+#: ../../pep-0418.txt:1390
+msgid ""
+"Suspend execution of the process for the given number of seconds. Sleep "
+"is not affected by system time updates. Sleep is paused during system "
+"suspend. For example, if a process sleeps for 60 seconds and the system "
+"is suspended for 30 seconds in the middle of the sleep, the sleep "
+"duration is 90 seconds in the real time."
+msgstr ""
+
+#: ../../pep-0418.txt:1396
+msgid "Sleep can be interrupted by a signal: the function fails with EINTR."
+msgstr ""
+
+#: ../../pep-0418.txt:1401
+msgid "nanosleep()"
+msgstr ""
+
+#: ../../pep-0418.txt:1402
+msgid "clock_nanosleep()"
+msgstr ""
+
+#: ../../pep-0418.txt:1403
+msgid "usleep()"
+msgstr ""
+
+#: ../../pep-0418.txt:1404
+msgid "delay()"
+msgstr ""
+
+#: ../../pep-0418.txt:1405
+msgid "sleep()"
+msgstr ""
+
+#: ../../pep-0418.txt:1408
+msgid "Other functions:"
+msgstr ""
+
+#: ../../pep-0418.txt:1413
+msgid "sigtimedwait()"
+msgstr ""
+
+#: ../../pep-0418.txt:1414
+msgid "pthread_cond_timedwait()"
+msgstr ""
+
+#: ../../pep-0418.txt:1415
+msgid "sem_timedwait()"
+msgstr ""
+
+#: ../../pep-0418.txt:1416 ../../pep-0418.txt:1455
+msgid "select()"
+msgstr ""
+
+#: ../../pep-0418.txt:1417
+msgid "epoll()"
+msgstr ""
+
+#: ../../pep-0418.txt:1418
+msgid "poll()"
+msgstr ""
+
+#: ../../pep-0418.txt:1419
+msgid "WaitForSingleObject()"
+msgstr ""
+
+#: ../../pep-0418.txt:1429
+msgid "sleep(seconds)"
+msgstr ""
+
+#: ../../pep-0418.txt:1430
+msgid "usleep(microseconds)"
+msgstr ""
+
+#: ../../pep-0418.txt:1431
+msgid ""
+"nanosleep(nanoseconds, remaining): `Linux manpage of nanosleep() "
+"<http://www.kernel.org/doc/man-"
+"pages/online/pages/man2/nanosleep.2.html>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1434
+msgid "delay(milliseconds)"
+msgstr ""
+
+#: ../../pep-0418.txt:1438
+msgid "clock_nanosleep"
+msgstr ""
+
+#: ../../pep-0418.txt:1440
+msgid ""
+"clock_nanosleep(clock_id, flags, nanoseconds, remaining): `Linux manpage "
+"of clock_nanosleep() <http://www.kernel.org/doc/man-"
+"pages/online/pages/man2/clock_nanosleep.2.html>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1444
+msgid ""
+"If flags is TIMER_ABSTIME, then request is interpreted as an absolute "
+"time as measured by the clock, clock_id.  If request is less than or "
+"equal to the current value of the clock, then clock_nanosleep() returns "
+"immediately without suspending the calling thread."
+msgstr ""
+
+#: ../../pep-0418.txt:1449
+msgid ""
+"POSIX.1 specifies that changing the value of the CLOCK_REALTIME clock via"
+" clock_settime(2) shall have no effect on a thread that is blocked on a "
+"relative clock_nanosleep()."
+msgstr ""
+
+#: ../../pep-0418.txt:1457
+msgid "select(nfds, readfds, writefds, exceptfs, timeout)."
+msgstr ""
+
+#: ../../pep-0418.txt:1459
+msgid ""
+"Since Linux 2.6.28, select() uses high-resolution timers to handle the "
+"timeout.  A process has a \"slack\" attribute to configure the precision "
+"of the timeout, the default slack is 50 microseconds.  Before Linux "
+"2.6.28, timeouts for select() were handled by the main timing subsystem "
+"at a jiffy-level resolution.  Read also `High- (but not too high-) "
+"resolution timeouts <http://lwn.net/Articles/296578/>`_ and `Timer slack "
+"<http://lwn.net/Articles/369549/>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1469
+msgid "Other functions"
+msgstr ""
+
+#: ../../pep-0418.txt:1471
+msgid "poll(), epoll()"
+msgstr ""
+
+#: ../../pep-0418.txt:1472
+msgid ""
+"sigtimedwait(). POSIX: \"If the Monotonic Clock option is supported, the "
+"CLOCK_MONOTONIC clock shall be used to measure the time interval "
+"specified by the timeout argument.\""
+msgstr ""
+
+#: ../../pep-0418.txt:1475
+msgid ""
+"pthread_cond_timedwait(), pthread_condattr_setclock(). \"The default "
+"value of the clock attribute shall refer to the system time.\""
+msgstr ""
+
+#: ../../pep-0418.txt:1477
+msgid ""
+"sem_timedwait(): \"If the Timers option is supported, the timeout shall "
+"be based on the CLOCK_REALTIME clock.  If the Timers option is not "
+"supported, the timeout shall be based on the system time as returned by "
+"the time() function.  The precision of the timeout shall be the precision"
+" of the clock on which it is based.\""
+msgstr ""
+
+#: ../../pep-0418.txt:1482
+msgid ""
+"WaitForSingleObject(): use the same timer than GetTickCount() with the "
+"same precision."
+msgstr ""
+
+#: ../../pep-0418.txt:1487
+msgid "System Standby"
+msgstr ""
+
+#: ../../pep-0418.txt:1489
+msgid ""
+"The ACPI power state \"S3\" is a system standby mode, also called "
+"\"Suspend to RAM\". RAM remains powered."
+msgstr ""
+
+#: ../../pep-0418.txt:1492
+msgid ""
+"On Windows, the ``WM_POWERBROADCAST`` message is sent to Windows "
+"applications to notify them of power-management events (ex: owner status "
+"has changed)."
+msgstr ""
+
+#: ../../pep-0418.txt:1496
+msgid ""
+"For Mac OS X, read `Registering and unregistering for sleep and wake "
+"notifications "
+"<http://developer.apple.com/library/mac/#qa/qa1340/_index.html>`_ "
+"(Technical Q&A QA1340)."
+msgstr ""
+
+#: ../../pep-0418.txt:1503
+msgid "Footnotes"
+msgstr ""
+
+#: ../../pep-0418.txt:1505
+msgid ""
+"\"_time\" is a hypothetical module only used for the example. The time "
+"module is implemented in C and so there is no need for such a module."
+msgstr ""
+
+#: ../../pep-0418.txt:1511
+msgid "Links"
+msgstr ""
+
+#: ../../pep-0418.txt:1513
+msgid "Related Python issues:"
+msgstr ""
+
+#: ../../pep-0418.txt:1515
+msgid ""
+"`Issue #12822: NewGIL should use CLOCK_MONOTONIC if possible. "
+"<http://bugs.python.org/issue12822>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1517
+msgid ""
+"`Issue #14222: Use time.steady() to implement timeout "
+"<http://bugs.python.org/issue14222>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1519
+msgid ""
+"`Issue #14309: Deprecate time.clock() "
+"<http://bugs.python.org/issue14309>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1521
+msgid ""
+"`Issue #14397: Use GetTickCount/GetTickCount64 instead of "
+"QueryPerformanceCounter for monotonic clock "
+"<http://bugs.python.org/issue14397>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1524
+msgid ""
+"`Issue #14428: Implementation of the PEP 418 "
+"<http://bugs.python.org/issue14428>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1526
+msgid ""
+"`Issue #14555: clock_gettime/settime/getres: Add more clock identifiers "
+"<http://bugs.python.org/issue14555>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1529
+msgid "Libraries exposing monotonic clocks:"
+msgstr ""
+
+#: ../../pep-0418.txt:1531
+msgid ""
+"`Java: System.nanoTime "
+"<http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/System.html#nanoTime()>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1533
+msgid ""
+"`Qt library: QElapsedTimer <http://qt-"
+"project.org/doc/qt-4.8/qelapsedtimer.html>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1535
+msgid ""
+"`glib library: g_get_monotonic_time () "
+"<http://developer.gnome.org/glib/2.30/glib-Date-and-Time-Functions.html#g"
+"-get-monotonic-time>`_ uses GetTickCount64()/GetTickCount() on Windows, "
+"clock_gettime(CLOCK_MONOTONIC) on UNIX or falls back to the system clock"
+msgstr ""
+
+#: ../../pep-0418.txt:1540
+msgid ""
+"`python-monotonic-time <http://code.google.com/p/python-monotonic-"
+"time/>`_ (`github <https://github.com/gavinbeatty/python-monotonic-"
+"time>`_)"
+msgstr ""
+
+#: ../../pep-0418.txt:1543
+msgid ""
+"`Monoclock.nano_count() <https://github.com/ludios/Monoclock>`_ uses "
+"clock_gettime(CLOCK_MONOTONIC) and returns a number of nanoseconds"
+msgstr ""
+
+#: ../../pep-0418.txt:1546
+msgid ""
+"`monotonic_clock <https://github.com/ThomasHabets/monotonic_clock>`_ by "
+"Thomas Habets"
+msgstr ""
+
+#: ../../pep-0418.txt:1547
+msgid ""
+"`Perl: Time::HiRes <http://perldoc.perl.org/Time/HiRes.html>`_ exposes "
+"clock_gettime(CLOCK_MONOTONIC)"
+msgstr ""
+
+#: ../../pep-0418.txt:1549
+msgid ""
+"`Ruby: AbsoluteTime.now <https://github.com/bwbuchanan/absolute_time/>`_:"
+" use clock_gettime(CLOCK_MONOTONIC), mach_absolute_time() or "
+"gettimeofday().  \"AbsoluteTime.monotonic?\" method indicates if "
+"AbsoluteTime.now is monotonic or not."
+msgstr ""
+
+#: ../../pep-0418.txt:1554
+msgid ""
+"`libpthread <http://code.google.com/p/libpthread/>`_: POSIX thread "
+"library for Windows (`clock.c "
+"<http://code.google.com/p/libpthread/source/browse/src/clock.c>`_)"
+msgstr ""
+
+#: ../../pep-0418.txt:1557
+msgid ""
+"`Boost.Chrono "
+"<http://www.boost.org/doc/libs/1_49_0/doc/html/chrono.html>`_ uses:"
+msgstr ""
+
+#: ../../pep-0418.txt:1560
+msgid "system_clock:"
+msgstr ""
+
+#: ../../pep-0418.txt:1562
+msgid "mac = gettimeofday()"
+msgstr ""
+
+#: ../../pep-0418.txt:1563
+msgid "posix = clock_gettime(CLOCK_REALTIME)"
+msgstr ""
+
+#: ../../pep-0418.txt:1564
+msgid "win = GetSystemTimeAsFileTime()"
+msgstr ""
+
+#: ../../pep-0418.txt:1566
+msgid "steady_clock:"
+msgstr ""
+
+#: ../../pep-0418.txt:1568
+msgid "mac = mach_absolute_time()"
+msgstr ""
+
+#: ../../pep-0418.txt:1569
+msgid "posix = clock_gettime(CLOCK_MONOTONIC)"
+msgstr ""
+
+#: ../../pep-0418.txt:1570
+msgid "win = QueryPerformanceCounter()"
+msgstr ""
+
+#: ../../pep-0418.txt:1572
+msgid "high_resolution_clock:"
+msgstr ""
+
+#: ../../pep-0418.txt:1574
+msgid "steady_clock, if available system_clock, otherwise"
+msgstr ""
+
+#: ../../pep-0418.txt:1576
+msgid "Time:"
+msgstr ""
+
+#: ../../pep-0418.txt:1578
+msgid ""
+"`Twisted issue #2424: Add reactor option to start with monotonic clock "
+"<http://twistedmatrix.com/trac/ticket/2424>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1580
+msgid ""
+"`gettimeofday() should never be used to measure time "
+"<http://blog.habets.pp.se/2010/09/gettimeofday-should-never-be-used-to-"
+"measure-time>`_ by Thomas Habets (2010-09-05)"
+msgstr ""
+
+#: ../../pep-0418.txt:1582
+msgid ""
+"`hrtimers - subsystem for high-resolution kernel timers "
+"<http://www.kernel.org/doc/Documentation/timers/hrtimers.txt>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1584
+msgid ""
+"`C++ Timeout Specification <http://www.open-"
+"std.org/jtc1/sc22/wg21/docs/papers/2010/n3128.html>`_ by Lawrence Crowl "
+"(2010-08-19)"
+msgstr ""
+
+#: ../../pep-0418.txt:1586
+msgid ""
+"`Windows: Game Timing and Multicore Processors <http://msdn.microsoft.com"
+"/en-us/library/ee417693.aspx>`_ by Chuck Walbourn (December 2005)"
+msgstr ""
+
+#: ../../pep-0418.txt:1588
+msgid ""
+"`Implement a Continuously Updating, High-Resolution Time Provider for "
+"Windows <http://msdn.microsoft.com/en-us/magazine/cc163996.aspx>`_ by "
+"Johan Nilsson (March 2004)"
+msgstr ""
+
+#: ../../pep-0418.txt:1591
+msgid ""
+"`clockspeed <http://cr.yp.to/clockspeed.html>`_ uses a hardware tick "
+"counter to compensate for a persistently fast or slow system time, by D. "
+"J. Bernstein (1998)"
+msgstr ""
+
+#: ../../pep-0418.txt:1593
+msgid ""
+"`Retrieving system time "
+"<http://en.wikipedia.org/wiki/System_time#Retrieving_system_time>`_ lists"
+" hardware clocks and time functions with their resolution and epoch or "
+"range"
+msgstr ""
+
+#: ../../pep-0418.txt:1597
+msgid ""
+"On Windows, the JavaScript runtime of Firefox interpolates "
+"GetSystemTimeAsFileTime() with QueryPerformanceCounter() to get a higher "
+"resolution. See the `Bug 363258 - bad millisecond resolution for (new "
+"Date).getTime() / Date.now() on Windows "
+"<https://bugzilla.mozilla.org/show_bug.cgi?id=363258>`_."
+msgstr ""
+
+#: ../../pep-0418.txt:1602
+msgid ""
+"`When microseconds matter "
+"<http://www.ibm.com/developerworks/library/i-seconds/>`_: How the IBM "
+"High Resolution Time Stamp Facility accurately measures itty bits of "
+"time, by W. Nathaniel Mills, III (Apr 2002)"
+msgstr ""
+
+#: ../../pep-0418.txt:1606
+msgid ""
+"`Win32 Performance Measurement Options "
+"<http://drdobbs.com/windows/184416651>`_ by Matthew Wilson (May, 2003)"
+msgstr ""
+
+#: ../../pep-0418.txt:1608
+msgid ""
+"`Counter Availability and Characteristics for Feed-forward Based "
+"Synchronization "
+"<http://www.cubinlab.ee.unimelb.edu.au/~jrid/Publications/ridoux_ispcs09.pdf>`_"
+" by Timothy Broomhead, Julien Ridoux, Darryl Veitch (2009)"
+msgstr ""
+
+#: ../../pep-0418.txt:1611
+msgid "System Management Interrupt (SMI) issues:"
+msgstr ""
+
+#: ../../pep-0418.txt:1613
+msgid ""
+"`System Management Interrupt Free Hardware "
+"<http://linuxplumbersconf.org/2009/slides/Keith-Mannthey-SMI-"
+"plumers-2009.pdf>`_ by Keith Mannthey (2009)"
+msgstr ""
+
+#: ../../pep-0418.txt:1616
+msgid ""
+"`IBM Real-Time \"SMI Free\" mode driver "
+"<http://lwn.net/Articles/318725/>`_ by Keith Mannthey (Feb 2009)"
+msgstr ""
+
+#: ../../pep-0418.txt:1618
+msgid ""
+"`Fixing Realtime problems caused by SMI on Ubuntu "
+"<http://wiki.linuxcnc.org/cgi-bin/wiki.pl?FixingSMIIssues>`_"
+msgstr ""
+
+#: ../../pep-0418.txt:1620
+msgid ""
+"`[RFC] simple SMI detector <http://lwn.net/Articles/316622/>`_ by Jon "
+"Masters (Jan 2009)"
+msgstr ""
+
+#: ../../pep-0418.txt:1622
+msgid ""
+"`[PATCH 2.6.34-rc3] A nonintrusive SMI sniffer for x86 "
+"<http://marc.info/?l=linux-kernel&m=127058720921201&w=1>`_ by Joe Korty "
+"(2010-04)"
+msgstr ""
+
+#: ../../pep-0418.txt:1627
+msgid "Acceptance"
+msgstr ""
+
+#: ../../pep-0418.txt:1629
+msgid ""
+"The PEP was accepted on 2012-04-28 by Guido van Rossum [1]_.  The PEP "
+"implementation has since been committed to the repository."
+msgstr ""
+
+#: ../../pep-0418.txt:1634
+msgid "References"
+msgstr ""
+
+#: ../../pep-0418.txt:1636
+msgid "https://mail.python.org/pipermail/python-dev/2012-April/119094.html"
+msgstr ""
+
+#: ../../pep-0418.txt:1640
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0418.txt:1642
+msgid "This document has been placed in the public domain."
+msgstr ""
+

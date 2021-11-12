@@ -1,0 +1,866 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0574.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0574.rst:1
+msgid "574"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0574.rst:2
+msgid "Pickle protocol 5 with out-of-band data"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0574.rst:5
+msgid "Antoine Pitrou <solipsis@pitrou.net>"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0574.rst:6
+msgid "Nick Coghlan"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0574.rst:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0574.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0574.rst:10
+msgid "23-Mar-2018"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0574.rst:11
+msgid "3.8"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0574.rst:12
+msgid "28-Mar-2018, 30-Apr-2019"
+msgstr ""
+
+#: ../../pep-0574.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0574.rst:13
+msgid "https://mail.python.org/pipermail/python-dev/2019-May/157284.html"
+msgstr ""
+
+#: ../../pep-0574.rst:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0574.rst:19
+msgid ""
+"This PEP proposes to standardize a new pickle protocol version, and "
+"accompanying APIs to take full advantage of it:"
+msgstr ""
+
+#: ../../pep-0574.rst:22
+msgid ""
+"A new pickle protocol version (5) to cover the extra metadata needed for "
+"out-of-band data buffers."
+msgstr ""
+
+#: ../../pep-0574.rst:24
+msgid ""
+"A new ``PickleBuffer`` type for ``__reduce_ex__`` implementations to "
+"return out-of-band data buffers."
+msgstr ""
+
+#: ../../pep-0574.rst:26
+msgid ""
+"A new ``buffer_callback`` parameter when pickling, to handle out-of-band "
+"data buffers."
+msgstr ""
+
+#: ../../pep-0574.rst:28
+msgid ""
+"A new ``buffers`` parameter when unpickling to provide out-of-band data "
+"buffers."
+msgstr ""
+
+#: ../../pep-0574.rst:31
+msgid "The PEP guarantees unchanged behaviour for anyone not using the new APIs."
+msgstr ""
+
+#: ../../pep-0574.rst:35
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0574.rst:37
+msgid ""
+"The pickle protocol was originally designed in 1995 for on-disk "
+"persistency of arbitrary Python objects.  The performance of a 1995-era "
+"storage medium probably made it irrelevant to focus on performance "
+"metrics such as use of RAM bandwidth when copying temporary data before "
+"writing it to disk."
+msgstr ""
+
+#: ../../pep-0574.rst:42
+msgid ""
+"Nowadays the pickle protocol sees a growing use in applications where "
+"most of the data isn't ever persisted to disk (or, when it is, it uses a "
+"portable format instead of Python-specific).  Instead, pickle is being "
+"used to transmit data and commands from one process to another, either on"
+" the same machine or on multiple machines.  Those applications will "
+"sometimes deal with very large data (such as Numpy arrays or Pandas "
+"dataframes) that need to be transferred around.  For those applications, "
+"pickle is currently wasteful as it imposes spurious memory copies of the "
+"data being serialized."
+msgstr ""
+
+#: ../../pep-0574.rst:51
+msgid ""
+"As a matter of fact, the standard ``multiprocessing`` module uses pickle "
+"for serialization, and therefore also suffers from this problem when "
+"sending large data to another process."
+msgstr ""
+
+#: ../../pep-0574.rst:55
+msgid ""
+"Third-party Python libraries, such as Dask [#dask]_, PyArrow [#pyarrow]_ "
+"and IPyParallel [#ipyparallel]_, have started implementing alternative "
+"serialization schemes with the explicit goal of avoiding copies on large "
+"data.  Implementing a new serialization scheme is difficult and often "
+"leads to reduced generality (since many Python objects support pickle but"
+" not the new serialization scheme).  Falling back on pickle for "
+"unsupported types is an option, but then you get back the spurious memory"
+" copies you wanted to avoid in the first place.  For example, ``dask`` is"
+" able to avoid memory copies for Numpy arrays and built-in containers "
+"thereof (such as lists or dicts containing Numpy arrays), but if a large "
+"Numpy array is an attribute of a user-defined object, ``dask`` will "
+"serialize the user-defined object as a pickle stream, leading to memory "
+"copies."
+msgstr ""
+
+#: ../../pep-0574.rst:69
+msgid ""
+"The common theme of these third-party serialization efforts is to "
+"generate a stream of object metadata (which contains pickle-like "
+"information about the objects being serialized) and a separate stream of "
+"zero-copy buffer objects for the payloads of large objects.  Note that, "
+"in this scheme, small objects such as ints, etc. can be dumped together "
+"with the metadata stream.  Refinements can include opportunistic "
+"compression of large data depending on its type and layout, like ``dask``"
+" does."
+msgstr ""
+
+#: ../../pep-0574.rst:77
+msgid ""
+"This PEP aims to make ``pickle`` usable in a way where large data is "
+"handled as a separate stream of zero-copy buffers, letting the "
+"application handle those buffers optimally."
+msgstr ""
+
+#: ../../pep-0574.rst:83
+msgid "Example"
+msgstr ""
+
+#: ../../pep-0574.rst:85
+msgid ""
+"To keep the example simple and avoid requiring knowledge of third-party "
+"libraries, we will focus here on a bytearray object (but the issue is "
+"conceptually the same with more sophisticated objects such as Numpy "
+"arrays). Like most objects, the bytearray object isn't immediately "
+"understood by the pickle module and must therefore specify its "
+"decomposition scheme."
+msgstr ""
+
+#: ../../pep-0574.rst:91
+msgid "Here is how a bytearray object currently decomposes for pickling::"
+msgstr ""
+
+#: ../../pep-0574.rst:96
+msgid ""
+"This is because the ``bytearray.__reduce_ex__`` implementation reads "
+"morally as follows::"
+msgstr ""
+
+#: ../../pep-0574.rst:106
+msgid "In turn it produces the following pickle code::"
+msgstr ""
+
+#: ../../pep-0574.rst:119
+msgid ""
+"(the call to ``pickletools.optimize`` above is only meant to make the "
+"pickle stream more readable by removing the MEMOIZE opcodes)"
+msgstr ""
+
+#: ../../pep-0574.rst:122
+msgid ""
+"We can notice several things about the bytearray's payload (the sequence "
+"of bytes ``b'abc'``):"
+msgstr ""
+
+#: ../../pep-0574.rst:125
+msgid ""
+"``bytearray.__reduce_ex__`` produces a first copy by instantiating a new "
+"bytes object from the bytearray's data."
+msgstr ""
+
+#: ../../pep-0574.rst:127
+msgid ""
+"``pickle.dumps`` produces a second copy when inserting the contents of "
+"that bytes object into the pickle stream, after the SHORT_BINBYTES "
+"opcode."
+msgstr ""
+
+#: ../../pep-0574.rst:129
+msgid ""
+"Furthermore, when deserializing the pickle stream, a temporary bytes "
+"object is created when the SHORT_BINBYTES opcode is encountered (inducing"
+" a data copy)."
+msgstr ""
+
+#: ../../pep-0574.rst:133
+msgid "What we really want is something like the following:"
+msgstr ""
+
+#: ../../pep-0574.rst:135
+msgid "``bytearray.__reduce_ex__`` produces a *view* of the bytearray's data."
+msgstr ""
+
+#: ../../pep-0574.rst:136
+msgid ""
+"``pickle.dumps`` doesn't try to copy that data into the pickle stream but"
+" instead passes the buffer view to its caller (which can decide on the "
+"most efficient handling of that buffer)."
+msgstr ""
+
+#: ../../pep-0574.rst:139
+msgid ""
+"When deserializing, ``pickle.loads`` takes the pickle stream and the "
+"buffer view separately, and passes the buffer view directly to the "
+"bytearray constructor."
+msgstr ""
+
+#: ../../pep-0574.rst:143
+msgid "We see that several conditions are required for the above to work:"
+msgstr ""
+
+#: ../../pep-0574.rst:145
+msgid ""
+"``__reduce__`` or ``__reduce_ex__`` must be able to return *something* "
+"that indicates a serializable no-copy buffer view."
+msgstr ""
+
+#: ../../pep-0574.rst:147
+msgid ""
+"The pickle protocol must be able to represent references to such buffer "
+"views, instructing the unpickler that it may have to get the actual "
+"buffer out of band."
+msgstr ""
+
+#: ../../pep-0574.rst:150
+msgid ""
+"The ``pickle.Pickler`` API must provide its caller with a way to receive "
+"such buffer views while serializing."
+msgstr ""
+
+#: ../../pep-0574.rst:152
+msgid ""
+"The ``pickle.Unpickler`` API must similarly allow its caller to provide "
+"the buffer views required for deserialization."
+msgstr ""
+
+#: ../../pep-0574.rst:154
+msgid ""
+"For compatibility, the pickle protocol must also be able to contain "
+"direct serializations of such buffer views, such that current uses of the"
+" ``pickle`` API don't have to be modified if they are not concerned with "
+"memory copies."
+msgstr ""
+
+#: ../../pep-0574.rst:160
+msgid "Producer API"
+msgstr ""
+
+#: ../../pep-0574.rst:162
+msgid ""
+"We are introducing a new type ``pickle.PickleBuffer`` which can be "
+"instantiated from any buffer-supporting object, and is specifically meant"
+" to be returned from ``__reduce__`` implementations::"
+msgstr ""
+
+#: ../../pep-0574.rst:173
+msgid ""
+"``PickleBuffer`` is a simple wrapper that doesn't have all the memoryview"
+" semantics and functionality, but is specifically recognized by the "
+"``pickle`` module if protocol 5 or higher is enabled.  It is an error to "
+"try to serialize a ``PickleBuffer`` with pickle protocol version 4 or "
+"earlier."
+msgstr ""
+
+#: ../../pep-0574.rst:178
+msgid ""
+"Only the raw *data* of the ``PickleBuffer`` will be considered by the "
+"``pickle`` module.  Any type-specific *metadata* (such as shapes or "
+"datatype) must be returned separately by the type's ``__reduce__`` "
+"implementation, as is already the case."
+msgstr ""
+
+#: ../../pep-0574.rst:185
+msgid "PickleBuffer objects"
+msgstr ""
+
+#: ../../pep-0574.rst:187
+msgid ""
+"The ``PickleBuffer`` class supports a very simple Python API.  Its "
+"constructor takes a single PEP 3118-compatible object [#pep-3118]_.  "
+"``PickleBuffer`` objects themselves support the buffer protocol, so "
+"consumers can call ``memoryview(...)`` on them to get additional "
+"information about the underlying buffer (such as the original type, "
+"shape, etc.). In addition, ``PickleBuffer`` objects have the following "
+"methods:"
+msgstr ""
+
+#: ../../pep-0574.rst:194
+msgid "``raw()``"
+msgstr ""
+
+#: ../../pep-0574.rst:196
+msgid ""
+"Return a memoryview of the raw memory bytes underlying the PickleBuffer, "
+"erasing any shape, strides and format information.  This is required to "
+"handle Fortran-contiguous buffers correctly in the pure Python pickle "
+"implementation."
+msgstr ""
+
+#: ../../pep-0574.rst:201
+msgid "``release()``"
+msgstr ""
+
+#: ../../pep-0574.rst:203
+msgid "Release the PickleBuffer's underlying buffer, making it unusable."
+msgstr ""
+
+#: ../../pep-0574.rst:205
+msgid ""
+"On the C side, a simple API will be provided to create and inspect "
+"PickleBuffer objects:"
+msgstr ""
+
+#: ../../pep-0574.rst:208
+msgid "``PyObject *PyPickleBuffer_FromObject(PyObject *obj)``"
+msgstr ""
+
+#: ../../pep-0574.rst:210
+msgid ""
+"Create a ``PickleBuffer`` object holding a view over the PEP "
+"3118-compatible *obj*."
+msgstr ""
+
+#: ../../pep-0574.rst:213
+msgid "``PyPickleBuffer_Check(PyObject *obj)``"
+msgstr ""
+
+#: ../../pep-0574.rst:215
+msgid "Return whether *obj* is a ``PickleBuffer`` instance."
+msgstr ""
+
+#: ../../pep-0574.rst:217
+msgid "``const Py_buffer *PyPickleBuffer_GetBuffer(PyObject *picklebuf)``"
+msgstr ""
+
+#: ../../pep-0574.rst:219
+msgid ""
+"Return a pointer to the internal ``Py_buffer`` owned by the "
+"``PickleBuffer`` instance.  An exception is raised if the buffer is "
+"released."
+msgstr ""
+
+#: ../../pep-0574.rst:222
+msgid "``int PyPickleBuffer_Release(PyObject *picklebuf)``"
+msgstr ""
+
+#: ../../pep-0574.rst:224
+msgid "Release the ``PickleBuffer`` instance's underlying buffer."
+msgstr ""
+
+#: ../../pep-0574.rst:228
+msgid "Buffer requirements"
+msgstr ""
+
+#: ../../pep-0574.rst:230
+msgid ""
+"``PickleBuffer`` can wrap any kind of buffer, including non-contiguous "
+"buffers.  However, it is required that ``__reduce__`` only returns a "
+"contiguous ``PickleBuffer`` (*contiguity* here is meant in the PEP 3118 "
+"sense: either C-ordered or Fortran-ordered).  Non-contiguous buffers will"
+" raise an error when pickled."
+msgstr ""
+
+#: ../../pep-0574.rst:236
+msgid ""
+"This restriction is primarily an ease-of-implementation issue for the "
+"``pickle`` module but also other consumers of out-of-band buffers. The "
+"simplest solution on the provider side is to return a contiguous copy of "
+"a non-contiguous buffer; a sophisticated provider, though, may decide "
+"instead to return a sequence of contiguous sub-buffers."
+msgstr ""
+
+#: ../../pep-0574.rst:244
+msgid "Consumer API"
+msgstr ""
+
+#: ../../pep-0574.rst:246
+msgid ""
+"``pickle.Pickler.__init__`` and ``pickle.dumps`` are augmented with an "
+"additional ``buffer_callback`` parameter::"
+msgstr ""
+
+#: ../../pep-0574.rst:272
+msgid ""
+"``pickle.Unpickler.__init__`` and ``pickle.loads`` are augmented with an "
+"additional ``buffers`` parameter::"
+msgstr ""
+
+#: ../../pep-0574.rst:296
+msgid "Protocol changes"
+msgstr ""
+
+#: ../../pep-0574.rst:298
+msgid "Three new opcodes are introduced:"
+msgstr ""
+
+#: ../../pep-0574.rst:300
+msgid ""
+"``BYTEARRAY8`` creates a bytearray from the data following it in the "
+"pickle stream and pushes it on the stack (just like ``BINBYTES8`` does "
+"for bytes objects);"
+msgstr ""
+
+#: ../../pep-0574.rst:303
+msgid ""
+"``NEXT_BUFFER`` fetches a buffer from the ``buffers`` iterable and pushes"
+" it on the stack."
+msgstr ""
+
+#: ../../pep-0574.rst:305
+msgid "``READONLY_BUFFER`` makes a readonly view of the top of the stack."
+msgstr ""
+
+#: ../../pep-0574.rst:307
+msgid ""
+"When pickling encounters a ``PickleBuffer``, that buffer can be "
+"considered in-band or out-of-band depending on the following conditions:"
+msgstr ""
+
+#: ../../pep-0574.rst:310
+msgid "if no ``buffer_callback`` is given, the buffer is in-band;"
+msgstr ""
+
+#: ../../pep-0574.rst:311
+msgid ""
+"if a ``buffer_callback`` is given, it is called with the buffer.  If the "
+"callback returns a true value, the buffer is in-band; if the callback "
+"returns a false value, the buffer is out-of-band."
+msgstr ""
+
+#: ../../pep-0574.rst:315
+msgid "An in-band buffer is serialized as follows:"
+msgstr ""
+
+#: ../../pep-0574.rst:317
+msgid ""
+"If the buffer is writable, it is serialized into the pickle stream as if "
+"it were a ``bytearray`` object."
+msgstr ""
+
+#: ../../pep-0574.rst:319
+msgid ""
+"If the buffer is readonly, it is serialized into the pickle stream as if "
+"it were a ``bytes`` object."
+msgstr ""
+
+#: ../../pep-0574.rst:322
+msgid "An out-of-band buffer is serialized as follows:"
+msgstr ""
+
+#: ../../pep-0574.rst:324
+msgid ""
+"If the buffer is writable, a ``NEXT_BUFFER`` opcode is appended to the "
+"pickle stream."
+msgstr ""
+
+#: ../../pep-0574.rst:326
+msgid ""
+"If the buffer is readonly, a ``NEXT_BUFFER`` opcode is appended to the "
+"pickle stream, followed by a ``READONLY_BUFFER`` opcode."
+msgstr ""
+
+#: ../../pep-0574.rst:329
+msgid ""
+"The distinction between readonly and writable buffers is motivated below "
+"(see \"Mutability\")."
+msgstr ""
+
+#: ../../pep-0574.rst:334
+msgid "Side effects"
+msgstr ""
+
+#: ../../pep-0574.rst:337
+msgid "Improved in-band performance"
+msgstr ""
+
+#: ../../pep-0574.rst:339
+msgid ""
+"Even in-band pickling can be improved by returning a ``PickleBuffer`` "
+"instance from ``__reduce_ex__``, as one copy is avoided on the "
+"serialization path [#arrow-pickle5-benchmark]_ [#numpy-"
+"pickle5-benchmark]_."
+msgstr ""
+
+#: ../../pep-0574.rst:345
+msgid "Caveats"
+msgstr ""
+
+#: ../../pep-0574.rst:348
+msgid "Mutability"
+msgstr ""
+
+#: ../../pep-0574.rst:350
+msgid ""
+"PEP 3118 buffers [#pep-3118]_ can be readonly or writable.  Some objects,"
+" such as Numpy arrays, need to be backed by a mutable buffer for full "
+"operation.  Pickle consumers that use the ``buffer_callback`` and "
+"``buffers`` arguments will have to be careful to recreate mutable "
+"buffers.  When doing I/O, this implies using buffer-passing API variants "
+"such as ``readinto`` (which are also often preferable for performance)."
+msgstr ""
+
+#: ../../pep-0574.rst:358
+msgid "Data sharing"
+msgstr ""
+
+#: ../../pep-0574.rst:360
+msgid ""
+"If you pickle and then unpickle an object in the same process, passing "
+"out-of-band buffer views, then the unpickled object may be backed by the "
+"same buffer as the original pickled object."
+msgstr ""
+
+#: ../../pep-0574.rst:364
+msgid ""
+"For example, it might be reasonable to implement reduction of a Numpy "
+"array as follows (crucial metadata such as shapes is omitted for "
+"simplicity)::"
+msgstr ""
+
+#: ../../pep-0574.rst:374
+msgid ""
+"Then simply passing the PickleBuffer around from ``dumps`` to ``loads`` "
+"will produce a new Numpy array sharing the same underlying memory as the "
+"original Numpy object (and, incidentally, keeping it alive)::"
+msgstr ""
+
+#: ../../pep-0574.rst:389
+msgid ""
+"This won't happen with the traditional ``pickle`` API (i.e. without "
+"passing ``buffers`` and ``buffer_callback`` parameters), because then the"
+" buffer view is serialized inside the pickle stream with a copy."
+msgstr ""
+
+#: ../../pep-0574.rst:395
+msgid "Rejected alternatives"
+msgstr ""
+
+#: ../../pep-0574.rst:398
+msgid "Using the existing persistent load interface"
+msgstr ""
+
+#: ../../pep-0574.rst:400
+msgid ""
+"The ``pickle`` persistence interface is a way of storing references to "
+"designated objects in the pickle stream while handling their actual "
+"serialization out of band.  For example, one might consider the following"
+" for zero-copy serialization of bytearrays::"
+msgstr ""
+
+#: ../../pep-0574.rst:433
+msgid "This mechanism has two drawbacks:"
+msgstr ""
+
+#: ../../pep-0574.rst:435
+msgid ""
+"Each ``pickle`` consumer must reimplement ``Pickler`` and ``Unpickler`` "
+"subclasses, with custom code for each type of interest.  Essentially, N "
+"pickle consumers end up each implementing custom code for M producers. "
+"This is difficult (especially for sophisticated types such as Numpy "
+"arrays) and poorly scalable."
+msgstr ""
+
+#: ../../pep-0574.rst:441
+msgid ""
+"Each object encountered by the pickle module (even simple built-in "
+"objects such as ints and strings) triggers a call to the user's "
+"``persistent_id()`` method, leading to a possible performance drop "
+"compared to nominal."
+msgstr ""
+
+#: ../../pep-0574.rst:445
+msgid ""
+"(the Python 2 ``cPickle`` module supported an undocumented "
+"``inst_persistent_id()`` hook that was only called on non-built-in types;"
+" it was added in 1997 in order to alleviate the performance issue of "
+"calling ``persistent_id``, presumably at ZODB's request)"
+msgstr ""
+
+#: ../../pep-0574.rst:451
+msgid "Passing a sequence of buffers in ``buffer_callback``"
+msgstr ""
+
+#: ../../pep-0574.rst:453
+msgid ""
+"By passing a sequence of buffers, rather than a single buffer, we would "
+"potentially save on function call overhead in case a large number of "
+"buffers are produced during serialization.  This would need additional "
+"support in the Pickler to save buffers before calling the callback.  "
+"However, it would also prevent the buffer callback from returning a "
+"boolean to indicate whether a buffer is to be serialized in-band or out-"
+"of-band."
+msgstr ""
+
+#: ../../pep-0574.rst:461
+msgid ""
+"We consider that having a large number of buffers to serialize is an "
+"unlikely case, and decided to pass a single buffer to the buffer "
+"callback."
+msgstr ""
+
+#: ../../pep-0574.rst:465
+msgid "Allow serializing a ``PickleBuffer`` in protocol 4 and earlier"
+msgstr ""
+
+#: ../../pep-0574.rst:467
+msgid ""
+"If we were to allow serializing a ``PickleBuffer`` in protocols 4 and "
+"earlier, it would actually make a supplementary memory copy when the "
+"buffer is mutable. Indeed, a mutable ``PickleBuffer`` would serialize as "
+"a bytearray object in those protocols (that is a first copy), and "
+"serializing the bytearray object would call ``bytearray.__reduce_ex__`` "
+"which returns a bytes object (that is a second copy)."
+msgstr ""
+
+#: ../../pep-0574.rst:474
+msgid ""
+"To prevent ``__reduce__`` implementors from introducing involuntary "
+"performance regressions, we decided to reject ``PickleBuffer`` when the "
+"protocol is smaller than 5.  This forces implementors to switch to "
+"``__reduce_ex__`` and implement protocol-dependent serialization, taking "
+"advantage of the best path for each protocol (or at least treat protocol "
+"5 and upwards separately from protocols 4 and downwards)."
+msgstr ""
+
+#: ../../pep-0574.rst:483
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0574.rst:485
+msgid ""
+"The PEP was initially implemented in the author's GitHub fork "
+"[#pickle5-git]_. It was later merged into Python 3.8 [#pickle5-pr]_."
+msgstr ""
+
+#: ../../pep-0574.rst:488
+msgid ""
+"A backport for Python 3.6 and 3.7 is downloadable from PyPI "
+"[#pickle5-pypi]_."
+msgstr ""
+
+#: ../../pep-0574.rst:491
+msgid ""
+"Support for pickle protocol 5 and out-of-band buffers was added to Numpy "
+"[#numpy-pickle5-pr]_."
+msgstr ""
+
+#: ../../pep-0574.rst:494
+msgid ""
+"Support for pickle protocol 5 and out-of-band buffers was added to the "
+"Apache Arrow Python bindings [#arrow-pickle5-pr]_."
+msgstr ""
+
+#: ../../pep-0574.rst:499
+msgid "Related work"
+msgstr ""
+
+#: ../../pep-0574.rst:501
+msgid ""
+"Dask.distributed implements a custom zero-copy serialization with "
+"fallback to pickle [#dask-serialization]_."
+msgstr ""
+
+#: ../../pep-0574.rst:504
+msgid ""
+"PyArrow implements zero-copy component-based serialization for a few "
+"selected types [#pyarrow-serialization]_."
+msgstr ""
+
+#: ../../pep-0574.rst:507
+msgid ""
+"PEP 554 proposes hosting multiple interpreters in a single process, with "
+"provisions for transferring buffers between interpreters as a "
+"communication scheme [#pep-554]_."
+msgstr ""
+
+#: ../../pep-0574.rst:513
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0574.rst:515
+msgid ""
+"Thanks to the following people for early feedback: Nick Coghlan, Olivier "
+"Grisel, Stefan Krah, MinRK, Matt Rocklin, Eric Snow."
+msgstr ""
+
+#: ../../pep-0574.rst:518
+msgid ""
+"Thanks to Pierre Glaser and Olivier Grisel for experimenting with the "
+"implementation."
+msgstr ""
+
+#: ../../pep-0574.rst:523
+msgid "References"
+msgstr ""
+
+#: ../../pep-0574.rst:525
+msgid ""
+"Dask.distributed -- A lightweight library for distributed computing in "
+"Python https://distributed.readthedocs.io/"
+msgstr ""
+
+#: ../../pep-0574.rst:529
+msgid ""
+"Dask.distributed custom serialization "
+"https://distributed.readthedocs.io/en/latest/serialization.html"
+msgstr ""
+
+#: ../../pep-0574.rst:532
+msgid ""
+"IPyParallel -- Using IPython for parallel computing "
+"https://ipyparallel.readthedocs.io/"
+msgstr ""
+
+#: ../../pep-0574.rst:535
+msgid ""
+"PyArrow -- A cross-language development platform for in-memory data "
+"https://arrow.apache.org/docs/python/"
+msgstr ""
+
+#: ../../pep-0574.rst:538
+msgid ""
+"PyArrow IPC and component-based serialization "
+"https://arrow.apache.org/docs/python/ipc.html#component-based-"
+"serialization"
+msgstr ""
+
+#: ../../pep-0574.rst:541
+msgid ""
+"PEP 3118 -- Revising the buffer protocol "
+"https://www.python.org/dev/peps/pep-3118/"
+msgstr ""
+
+#: ../../pep-0574.rst:544
+msgid ""
+"PEP 554 -- Multiple Interpreters in the Stdlib "
+"https://www.python.org/dev/peps/pep-0554/"
+msgstr ""
+
+#: ../../pep-0574.rst:547
+msgid ""
+"``pickle5`` branch on GitHub "
+"https://github.com/pitrou/cpython/tree/pickle5"
+msgstr ""
+
+#: ../../pep-0574.rst:550
+msgid "PEP 574 Pull Request on GitHub https://github.com/python/cpython/pull/7076"
+msgstr ""
+
+#: ../../pep-0574.rst:553
+msgid "``pickle5`` project on PyPI https://pypi.org/project/pickle5/"
+msgstr ""
+
+#: ../../pep-0574.rst:556
+msgid ""
+"Pull request: Experimental zero-copy pickling in Apache Arrow "
+"https://github.com/apache/arrow/pull/2161"
+msgstr ""
+
+#: ../../pep-0574.rst:559
+msgid ""
+"Benchmark zero-copy pickling in Apache Arrow "
+"https://github.com/apache/arrow/pull/2161#issuecomment-407859213"
+msgstr ""
+
+#: ../../pep-0574.rst:562
+msgid ""
+"Pull request: Support pickle protocol 5 in Numpy "
+"https://github.com/numpy/numpy/pull/12011"
+msgstr ""
+
+#: ../../pep-0574.rst:565
+msgid ""
+"Benchmark pickling Numpy arrays with different pickle protocols "
+"https://github.com/numpy/numpy/issues/11161#issuecomment-424035962"
+msgstr ""
+
+#: ../../pep-0574.rst:570
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0574.rst:572
+msgid "This document has been placed into the public domain."
+msgstr ""
+

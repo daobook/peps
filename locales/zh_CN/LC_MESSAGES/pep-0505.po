@@ -1,0 +1,892 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0505.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0505.rst:1
+msgid "505"
+msgstr ""
+
+#: ../../pep-0505.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0505.rst:2
+msgid "None-aware operators"
+msgstr ""
+
+#: ../../pep-0505.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0505.rst:5
+msgid "Mark E. Haase <mehaase@gmail.com>, Steve Dower <steve.dower@python.org>"
+msgstr ""
+
+#: ../../pep-0505.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0505.rst:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0505.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0505.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0505.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0505.rst:9
+msgid "18-Sep-2015"
+msgstr ""
+
+#: ../../pep-0505.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0505.rst:10
+msgid "3.8"
+msgstr ""
+
+#: ../../pep-0505.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0505.rst:15
+msgid ""
+"Several modern programming languages have so-called "
+"\"``null``-coalescing\" or \"``null``- aware\" operators, including C# "
+"[1]_, Dart [2]_, Perl, Swift, and PHP (starting in version 7). There are "
+"also stage 3 draft proposals for their addition to ECMAScript (a.k.a. "
+"JavaScript) [3]_ [4]_. These operators provide syntactic sugar for common"
+" patterns involving null references."
+msgstr ""
+
+#: ../../pep-0505.rst:21
+msgid ""
+"The \"``null``-coalescing\" operator is a binary operator that returns "
+"its left operand if it is not ``null``. Otherwise it returns its right "
+"operand."
+msgstr ""
+
+#: ../../pep-0505.rst:23
+msgid ""
+"The \"``null``-aware member access\" operator accesses an instance member"
+" only if that instance is non-``null``. Otherwise it returns ``null``. "
+"(This is also called a \"safe navigation\" operator.)"
+msgstr ""
+
+#: ../../pep-0505.rst:26
+msgid ""
+"The \"``null``-aware index access\" operator accesses an element of a "
+"collection only if that collection is non-``null``. Otherwise it returns "
+"``null``. (This is another type of \"safe navigation\" operator.)"
+msgstr ""
+
+#: ../../pep-0505.rst:30
+msgid ""
+"This PEP proposes three ``None``-aware operators for Python, based on the"
+" definitions and other language's implementations of those above. "
+"Specifically:"
+msgstr ""
+
+#: ../../pep-0505.rst:33
+msgid ""
+"The \"``None`` coalescing\" binary operator ``??`` returns the left hand "
+"side if it evaluates to a value that is not ``None``, or else it "
+"evaluates and returns the right hand side. A coalescing ``??=`` augmented"
+" assignment operator is included."
+msgstr ""
+
+#: ../../pep-0505.rst:37
+msgid ""
+"The \"``None``-aware attribute access\" operator ``?.`` (\"maybe dot\") "
+"evaluates the complete expression if the left hand side evaluates to a "
+"value that is not ``None``"
+msgstr ""
+
+#: ../../pep-0505.rst:40
+msgid ""
+"The \"``None``-aware indexing\" operator ``?[]`` (\"maybe subscript\") "
+"evaluates the complete expression if the left hand site evaluates to a "
+"value that is not ``None``"
+msgstr ""
+
+#: ../../pep-0505.rst:44
+msgid ""
+"See the `Grammar changes`_ section for specifics and examples of the "
+"required grammar changes."
+msgstr ""
+
+#: ../../pep-0505.rst:47
+msgid ""
+"See the `Examples`_ section for more realistic examples of code that "
+"could be updated to use the new operators."
+msgstr ""
+
+#: ../../pep-0505.rst:51
+msgid "Syntax and Semantics"
+msgstr ""
+
+#: ../../pep-0505.rst:54
+msgid "Specialness of ``None``"
+msgstr ""
+
+#: ../../pep-0505.rst:56
+msgid ""
+"The ``None`` object denotes the lack of a value. For the purposes of "
+"these operators, the lack of a value indicates that the remainder of the "
+"expression also lacks a value and should not be evaluated."
+msgstr ""
+
+#: ../../pep-0505.rst:60
+msgid ""
+"A rejected proposal was to treat any value that evaluates as \"false\" in"
+" a Boolean context as not having a value. However, the purpose of these "
+"operators is to propagate the \"lack of value\" state, rather than the "
+"\"false\" state."
+msgstr ""
+
+#: ../../pep-0505.rst:64
+msgid ""
+"Some argue that this makes ``None`` special. We contend that ``None`` is "
+"already special, and that using it as both the test and the result of "
+"these operators does not change the existing semantics in any way."
+msgstr ""
+
+#: ../../pep-0505.rst:68
+msgid "See the `Rejected Ideas`_ section for discussions on alternate approaches."
+msgstr ""
+
+#: ../../pep-0505.rst:71
+msgid "Grammar changes"
+msgstr ""
+
+#: ../../pep-0505.rst:73
+msgid "The following rules of the Python grammar are updated to read::"
+msgstr ""
+
+#: ../../pep-0505.rst:88
+msgid "The coalesce rule"
+msgstr ""
+
+#: ../../pep-0505.rst:90
+msgid ""
+"The ``coalesce`` rule provides the ``??`` binary operator. Unlike most "
+"binary operators, the right-hand side is not evaluated until the left-"
+"hand side is determined to be ``None``."
+msgstr ""
+
+#: ../../pep-0505.rst:94
+msgid ""
+"The ``??`` operator binds more tightly than other binary operators as "
+"most existing implementations of these do not propagate ``None`` values "
+"(they will typically raise ``TypeError``). Expressions that are known to "
+"potentially result in ``None`` can be substituted for a default value "
+"without needing additional parentheses."
+msgstr ""
+
+#: ../../pep-0505.rst:100
+msgid ""
+"Some examples of how implicit parentheses are placed when evaluating "
+"operator precedence in the presence of the ``??`` operator::"
+msgstr ""
+
+#: ../../pep-0505.rst:114
+msgid ""
+"Particularly for cases such as ``a ?? 2 ** b ?? 3``, parenthesizing the "
+"sub-expressions any other way would result in ``TypeError``, as "
+"``int.__pow__`` cannot be called with ``None`` (and the fact that the "
+"``??`` operator is used at all implies that ``a`` or ``b`` may be "
+"``None``). However, as usual, while parentheses are not required they "
+"should be added if it helps improve readability."
+msgstr ""
+
+#: ../../pep-0505.rst:121
+msgid ""
+"An augmented assignment for the ``??`` operator is also added. Augmented "
+"coalescing assignment only rebinds the name if its current value is "
+"``None``. If the target name already has a value, the right-hand side is "
+"not evaluated. For example::"
+msgstr ""
+
+#: ../../pep-0505.rst:139
+msgid "The maybe-dot and maybe-subscript operators"
+msgstr ""
+
+#: ../../pep-0505.rst:141
+msgid ""
+"The maybe-dot and maybe-subscript operators are added as trailers for "
+"atoms, so that they may be used in all the same locations as the regular "
+"operators, including as part of an assignment target (more details "
+"below). As the existing evaluation rules are not directly embedded in the"
+" grammar, we specify the required changes below."
+msgstr ""
+
+#: ../../pep-0505.rst:147
+msgid ""
+"Assume that the ``atom`` is always successfully evaluated. Each "
+"``trailer`` is then evaluated from left to right, applying its own "
+"parameter (either its arguments, subscripts or attribute name) to produce"
+" the value for the next ``trailer``. Finally, if present, ``await`` is "
+"applied."
+msgstr ""
+
+#: ../../pep-0505.rst:152
+msgid ""
+"For example, ``await a.b(c).d[e]`` is currently parsed as ``['await', "
+"'a', '.b', '(c)', '.d', '[e]']`` and evaluated::"
+msgstr ""
+
+#: ../../pep-0505.rst:162
+msgid ""
+"When a ``None``-aware operator is present, the left-to-right evaluation "
+"may be short-circuited. For example, ``await a?.b(c).d?[e]`` is "
+"evaluated::"
+msgstr ""
+
+#: ../../pep-0505.rst:175
+msgid ""
+"``await`` will almost certainly fail in this context, as it would in the "
+"case where code attempts ``await None``. We are not proposing to add a "
+"``None``-aware ``await`` keyword here, and merely include it in this "
+"example for completeness of the specification, since the ``atom_expr`` "
+"grammar rule includes the keyword. If it were in its own rule, we would "
+"have never mentioned it."
+msgstr ""
+
+#: ../../pep-0505.rst:182
+msgid ""
+"Parenthesised expressions are handled by the ``atom`` rule (not shown "
+"above), which will implicitly terminate the short-circuiting behaviour of"
+" the above transformation. For example, ``(a?.b ?? c).d?.e`` is evaluated"
+" as::"
+msgstr ""
+
+#: ../../pep-0505.rst:200
+msgid ""
+"When used as an assignment target, the ``None``-aware operations may only"
+" be used in a \"load\" context. That is, ``a?.b = 1`` and ``a?[b] = 1`` "
+"will raise ``SyntaxError``. Use earlier in the expression (``a?.b.c = "
+"1``) is permitted, though unlikely to be useful unless combined with a "
+"coalescing operation::"
+msgstr ""
+
+#: ../../pep-0505.rst:208
+msgid "Reading expressions"
+msgstr ""
+
+#: ../../pep-0505.rst:210
+msgid ""
+"For the maybe-dot and maybe-subscript operators, the intention is that "
+"expressions including these operators should be read and interpreted as "
+"for the regular versions of these operators. In \"normal\" cases, the end"
+" results are going to be identical between an expression such as "
+"``a?.b?[c]`` and ``a.b[c]``, and just as we do not currently read \"a.b\""
+" as \"read attribute b from a *if it has an attribute a or else it raises"
+" AttributeError*\", there is no need to read \"a?.b\" as \"read attribute"
+" b from a *if a is not None*\" (unless in a context where the listener "
+"needs to be aware of the specific behaviour)."
+msgstr ""
+
+#: ../../pep-0505.rst:220
+msgid ""
+"For coalescing expressions using the ``??`` operator, expressions should "
+"either be read as \"or ... if None\" or \"coalesced with\". For example, "
+"the expression ``a.get_value() ?? 100`` would be read \"call a dot "
+"get_value or 100 if None\", or \"call a dot get_value coalesced with "
+"100\"."
+msgstr ""
+
+#: ../../pep-0505.rst:226
+msgid ""
+"Reading code in spoken text is always lossy, and so we make no attempt to"
+" define an unambiguous way of speaking these operators. These suggestions"
+" are intended to add context to the implications of adding the new "
+"syntax."
+msgstr ""
+
+#: ../../pep-0505.rst:231
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0505.rst:233
+msgid ""
+"This section presents some examples of common ``None`` patterns and shows"
+" what conversion to use ``None``-aware operators may look like."
+msgstr ""
+
+#: ../../pep-0505.rst:237
+msgid "Standard Library"
+msgstr ""
+
+#: ../../pep-0505.rst:239
+msgid ""
+"Using the ``find-pep505.py`` script[5]_ an analysis of the Python 3.7 "
+"standard library discovered up to 678 code snippets that could be "
+"replaced with use of one of the ``None``-aware operators::"
+msgstr ""
+
+#: ../../pep-0505.rst:252
+msgid ""
+"Some of these are shown below as examples before and after converting to "
+"use the new operators."
+msgstr ""
+
+#: ../../pep-0505.rst:255
+msgid "From ``bisect.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:263
+msgid "After updating to use the ``??=`` augmented assignment statement::"
+msgstr ""
+
+#: ../../pep-0505.rst:270
+msgid "From ``calendar.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:277
+msgid "After updating to use the ``??`` operator::"
+msgstr ""
+
+#: ../../pep-0505.rst:282
+msgid ""
+"From ``email/generator.py`` (and importantly note that there is no way to"
+" substitute ``or`` for ``??`` in this situation)::"
+msgstr ""
+
+#: ../../pep-0505.rst:287 ../../pep-0505.rst:339
+msgid "After updating::"
+msgstr ""
+
+#: ../../pep-0505.rst:292
+msgid "From ``asyncio/subprocess.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:304 ../../pep-0505.rst:324 ../../pep-0505.rst:353
+msgid "After updating to use the ``?.`` operator::"
+msgstr ""
+
+#: ../../pep-0505.rst:316
+msgid "From ``asyncio/tasks.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:332
+msgid "From ``ctypes/_aix.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:344
+msgid "From ``os.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:362
+msgid "From ``importlib/abc.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:370
+msgid "After partially updating::"
+msgstr ""
+
+#: ../../pep-0505.rst:377
+msgid ""
+"After extensive updating (arguably excessive, though that's for the style"
+" guides to determine)::"
+msgstr ""
+
+#: ../../pep-0505.rst:384
+msgid "From ``dis.py``::"
+msgstr ""
+
+#: ../../pep-0505.rst:392
+msgid "After updating to use the ``?[]`` and ``??`` operators::"
+msgstr ""
+
+#: ../../pep-0505.rst:400
+msgid "jsonify"
+msgstr ""
+
+#: ../../pep-0505.rst:402
+msgid ""
+"This example is from a Python web crawler that uses the Flask framework "
+"as its front-end. This function retrieves information about a web site "
+"from a SQL database and formats it as JSON to send to an HTTP client::"
+msgstr ""
+
+#: ../../pep-0505.rst:419
+msgid ""
+"Both ``first_seen`` and ``last_seen`` are allowed to be ``null`` in the "
+"database, and they are also allowed to be ``null`` in the JSON response. "
+"JSON does not have a native way to represent a ``datetime``, so the "
+"server's contract states that any non-``null`` date is represented as an "
+"ISO-8601 string."
+msgstr ""
+
+#: ../../pep-0505.rst:424
+msgid ""
+"Without knowing the exact semantics of the ``first_seen`` and "
+"``last_seen`` attributes, it is impossible to know whether the attribute "
+"can be safely or performantly accessed multiple times."
+msgstr ""
+
+#: ../../pep-0505.rst:428
+msgid ""
+"One way to fix this code is to replace each conditional expression with "
+"an explicit value assignment and a full ``if``/``else`` block::"
+msgstr ""
+
+#: ../../pep-0505.rst:456
+msgid ""
+"This adds ten lines of code and four new code paths to the function, "
+"dramatically increasing the apparent complexity. Rewriting using the "
+"``None``-aware attribute operator results in shorter code with more clear"
+" intent::"
+msgstr ""
+
+#: ../../pep-0505.rst:475
+msgid "Grab"
+msgstr ""
+
+#: ../../pep-0505.rst:477
+msgid ""
+"The next example is from a Python scraping library called `Grab "
+"<https://github.com/lorien/grab/blob/4c95b18dcb0fa88eeca81f5643c0ebfb114bf728/gr"
+" ab/upload.py>`_::"
+msgstr ""
+
+#: ../../pep-0505.rst:513
+msgid ""
+"This example contains several good examples of needing to provide default"
+" values. Rewriting to use conditional expressions reduces the overall "
+"lines of code, but does not necessarily improve readability::"
+msgstr ""
+
+#: ../../pep-0505.rst:538
+msgid ""
+"The first ternary expression is tidy, but it reverses the intuitive order"
+" of the operands: it should return ``ctype`` if it has a value and use "
+"the string literal as fallback. The other ternary expressions are "
+"unintuitive and so long that they must be wrapped. The overall "
+"readability is worsened, not improved."
+msgstr ""
+
+#: ../../pep-0505.rst:544
+msgid "Rewriting using the ``None`` coalescing operator::"
+msgstr ""
+
+#: ../../pep-0505.rst:563
+msgid ""
+"This syntax has an intuitive ordering of the operands. In "
+"``find_content_type``, for example, the preferred value ``ctype`` appears"
+" before the fallback value. The terseness of the syntax also makes for "
+"fewer lines of code and less code to visually parse, and reading from "
+"left-to-right and top-to-bottom more accurately follows the execution "
+"flow."
+msgstr ""
+
+#: ../../pep-0505.rst:571
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0505.rst:573
+msgid ""
+"The first three ideas in this section are oft-proposed alternatives to "
+"treating ``None`` as special. For further background on why these are "
+"rejected, see their treatment in `PEP 531 "
+"<https://www.python.org/dev/peps/pep-0531/>`_ and `PEP 532 "
+"<https://www.python.org/dev/peps/pep-0532/>`_ and the associated "
+"discussions."
+msgstr ""
+
+#: ../../pep-0505.rst:580
+msgid "No-Value Protocol"
+msgstr ""
+
+#: ../../pep-0505.rst:582
+msgid ""
+"The operators could be generalised to user-defined types by defining a "
+"protocol to indicate when a value represents \"no value\". Such a "
+"protocol may be a dunder method ``__has_value__(self)`` that returns "
+"``True`` if the value should be treated as having a value, and ``False`` "
+"if the value should be treated as no value."
+msgstr ""
+
+#: ../../pep-0505.rst:588
+msgid ""
+"With this generalization, ``object`` would implement a dunder method "
+"equivalent to this::"
+msgstr ""
+
+#: ../../pep-0505.rst:594
+msgid "``NoneType`` would implement a dunder method equivalent to this::"
+msgstr ""
+
+#: ../../pep-0505.rst:599
+msgid ""
+"In the specification section, all uses of ``x is None`` would be replaced"
+" with ``not x.__has_value__()``."
+msgstr ""
+
+#: ../../pep-0505.rst:602
+msgid ""
+"This generalization would allow for domain-specific \"no-value\" objects "
+"to be coalesced just like ``None``. For example, the ``pyasn1`` package "
+"has a type called ``Null`` that represents an ASN.1 ``null``::"
+msgstr ""
+
+#: ../../pep-0505.rst:610
+msgid ""
+"Similarly, values such as ``math.nan`` and ``NotImplemented`` could be "
+"treated as representing no value."
+msgstr ""
+
+#: ../../pep-0505.rst:613
+msgid ""
+"However, the \"no-value\" nature of these values is domain-specific, "
+"which means they *should* be treated as a value by the language. For "
+"example, ``math.nan.imag`` is well defined (it's ``0.0``), and so short-"
+"circuiting ``math.nan?.imag`` to return ``math.nan`` would be incorrect."
+msgstr ""
+
+#: ../../pep-0505.rst:618
+msgid ""
+"As ``None`` is already defined by the language as being the value that "
+"represents \"no value\", and the current specification would not preclude"
+" switching to a protocol in the future (though changes to built-in "
+"objects would not be compatible), this idea is rejected for now."
+msgstr ""
+
+#: ../../pep-0505.rst:624
+msgid "Boolean-aware operators"
+msgstr ""
+
+#: ../../pep-0505.rst:626
+msgid ""
+"This suggestion is fundamentally the same as adding a no-value protocol, "
+"and so the discussion above also applies."
+msgstr ""
+
+#: ../../pep-0505.rst:629
+msgid ""
+"Similar behavior to the ``??`` operator can be achieved with an ``or`` "
+"expression, however ``or`` checks whether its left operand is false-y and"
+" not specifically ``None``. This approach is attractive, as it requires "
+"fewer changes to the language, but ultimately does not solve the "
+"underlying problem correctly."
+msgstr ""
+
+#: ../../pep-0505.rst:634
+msgid ""
+"Assuming the check is for truthiness rather than ``None``, there is no "
+"longer a need for the ``??`` operator. However, applying this check to "
+"the ``?.`` and ``?[]`` operators prevents perfectly valid operations "
+"applying"
+msgstr ""
+
+#: ../../pep-0505.rst:638
+msgid ""
+"Consider the following example, where ``get_log_list()`` may return "
+"either a list containing current log messages (potentially empty), or "
+"``None`` if logging is not enabled::"
+msgstr ""
+
+#: ../../pep-0505.rst:645
+msgid ""
+"If ``?.`` is checking for true values rather than specifically ``None`` "
+"and the log has not been initialized with any items, no item will ever be"
+" appended. This violates the obvious intent of the code, which is to "
+"append an item. The ``append`` method is available on an empty list, as "
+"are all other list methods, and there is no reason to assume that these "
+"members should not be used because the list is presently empty."
+msgstr ""
+
+#: ../../pep-0505.rst:652
+msgid ""
+"Further, there is no sensible result to use in place of the expression. A"
+" normal ``lst.append`` returns ``None``, but under this idea "
+"``lst?.append`` may result in either ``[]`` or ``None``, depending on the"
+" value of ``lst``. As with the examples in the previous section, this "
+"makes no sense."
+msgstr ""
+
+#: ../../pep-0505.rst:657
+msgid ""
+"As checking for truthiness rather than ``None`` results in apparently "
+"valid expressions no longer executing as intended, this idea is rejected."
+msgstr ""
+
+#: ../../pep-0505.rst:661
+msgid "Exception-aware operators"
+msgstr ""
+
+#: ../../pep-0505.rst:663
+msgid ""
+"Arguably, the reason to short-circuit an expression when ``None`` is "
+"encountered is to avoid the ``AttributeError`` or ``TypeError`` that "
+"would be raised under normal circumstances. As an alternative to testing "
+"for ``None``, the ``?.`` and ``?[]`` operators could instead handle "
+"``AttributeError`` and ``TypeError`` raised by the operation and skip the"
+" remainder of the expression."
+msgstr ""
+
+#: ../../pep-0505.rst:669
+msgid "This produces a transformation for ``a?.b.c?.d.e`` similar to this::"
+msgstr ""
+
+#: ../../pep-0505.rst:685
+msgid ""
+"One open question is which value should be returned as the expression "
+"when an exception is handled. The above example simply leaves the partial"
+" result, but this is not helpful for replacing with a default value. An "
+"alternative would be to force the result to ``None``, which then raises "
+"the question as to why ``None`` is special enough to be the result but "
+"not special enough to be the test."
+msgstr ""
+
+#: ../../pep-0505.rst:692
+msgid ""
+"Secondly, this approach masks errors within code executed implicitly as "
+"part of the expression. For ``?.``, any ``AttributeError`` within a "
+"property or ``__getattr__`` implementation would be hidden, and similarly"
+" for ``?[]`` and ``__getitem__`` implementations."
+msgstr ""
+
+#: ../../pep-0505.rst:697
+msgid ""
+"Similarly, simple typing errors such as ``{}?.ietms()`` could go "
+"unnoticed."
+msgstr ""
+
+#: ../../pep-0505.rst:699
+msgid ""
+"Existing conventions for handling these kinds of errors in the form of "
+"the ``getattr`` builtin and the ``.get(key, default)`` method pattern "
+"established by ``dict`` show that it is already possible to explicitly "
+"use this behaviour."
+msgstr ""
+
+#: ../../pep-0505.rst:703
+msgid "As this approach would hide errors in code, it is rejected."
+msgstr ""
+
+#: ../../pep-0505.rst:706
+msgid "``None``-aware Function Call"
+msgstr ""
+
+#: ../../pep-0505.rst:708
+msgid ""
+"The ``None``-aware syntax applies to attribute and index access, so it "
+"seems natural to ask if it should also apply to function invocation "
+"syntax. It might be written as ``foo?()``, where ``foo`` is only called "
+"if it is not None."
+msgstr ""
+
+#: ../../pep-0505.rst:712
+msgid ""
+"This has been deferred on the basis of the proposed operators being "
+"intended to aid traversal of partially populated hierarchical data "
+"structures, *not* for traversal of arbitrary class hierarchies. This is "
+"reflected in the fact that none of the other mainstream languages that "
+"already offer this syntax have found it worthwhile to support a similar "
+"syntax for optional function invocations."
+msgstr ""
+
+#: ../../pep-0505.rst:719
+msgid ""
+"A workaround similar to that used by C# would be to write "
+"``maybe_none?.__call__(arguments)``. If the callable is ``None``, the "
+"expression will not be evaluated. (The C# equivalent uses ``?.Invoke()`` "
+"on its callable type.)"
+msgstr ""
+
+#: ../../pep-0505.rst:725
+msgid "``?`` Unary Postfix Operator"
+msgstr ""
+
+#: ../../pep-0505.rst:727
+msgid ""
+"To generalize the ``None``-aware behavior and limit the number of new "
+"operators introduced, a unary, postfix operator spelled ``?`` was "
+"suggested. The idea is that ``?`` might return a special object that "
+"could would override dunder methods that return ``self``. For example, "
+"``foo?`` would evaluate to ``foo`` if it is not ``None``, otherwise it "
+"would evaluate to an instance of ``NoneQuestion``::"
+msgstr ""
+
+#: ../../pep-0505.rst:745
+msgid ""
+"With this new operator and new type, an expression like ``foo?.bar[baz]``"
+" evaluates to ``NoneQuestion`` if ``foo`` is None. This is a nifty "
+"generalization, but it's difficult to use in practice since most existing"
+" code won't know what ``NoneQuestion`` is."
+msgstr ""
+
+#: ../../pep-0505.rst:750
+msgid ""
+"Going back to one of the motivating examples above, consider the "
+"following::"
+msgstr ""
+
+#: ../../pep-0505.rst:756
+msgid ""
+"The JSON serializer does not know how to serialize ``NoneQuestion``, nor "
+"will any other API. This proposal actually requires *lots of specialized "
+"logic* throughout the standard library and any third party library."
+msgstr ""
+
+#: ../../pep-0505.rst:760
+msgid ""
+"At the same time, the ``?`` operator may also be **too general**, in the "
+"sense that it can be combined with any other operator. What should the "
+"following expressions mean?::"
+msgstr ""
+
+#: ../../pep-0505.rst:769
+msgid ""
+"This degree of generalization is not useful. The operators actually "
+"proposed herein are intentionally limited to a few operators that are "
+"expected to make it easier to write common code patterns."
+msgstr ""
+
+#: ../../pep-0505.rst:774
+msgid "Built-in ``maybe``"
+msgstr ""
+
+#: ../../pep-0505.rst:776
+msgid ""
+"Haskell has a concept called `Maybe <https://wiki.haskell.org/Maybe>`_ "
+"that encapsulates the idea of an optional value without relying on any "
+"special keyword (e.g. ``null``) or any special instance (e.g. ``None``). "
+"In Haskell, the purpose of ``Maybe`` is to avoid separate handling of "
+"\"something\" and nothing\"."
+msgstr ""
+
+#: ../../pep-0505.rst:781
+msgid ""
+"A Python package called `pymaybe <https://pypi.org/p/pymaybe/>`_ provides"
+" a rough approximation. The documentation shows the following example::"
+msgstr ""
+
+#: ../../pep-0505.rst:790
+msgid ""
+"The function ``maybe()`` returns either a ``Something`` instance or a "
+"``Nothing`` instance. Similar to the unary postfix operator described in "
+"the previous section, ``Nothing`` overrides dunder methods in order to "
+"allow chaining on a missing value."
+msgstr ""
+
+#: ../../pep-0505.rst:795
+msgid ""
+"Note that ``or_else()`` is eventually required to retrieve the underlying"
+" value from ``pymaybe``'s wrappers. Furthermore, ``pymaybe`` does not "
+"short circuit any evaluation. Although ``pymaybe`` has some strengths and"
+" may be useful in its own right, it also demonstrates why a pure Python "
+"implementation of coalescing is not nearly as powerful as support built "
+"into the language."
+msgstr ""
+
+#: ../../pep-0505.rst:801
+msgid ""
+"The idea of adding a builtin ``maybe`` type to enable this scenario is "
+"rejected."
+msgstr ""
+
+#: ../../pep-0505.rst:804
+msgid "Just use a conditional expression"
+msgstr ""
+
+#: ../../pep-0505.rst:806
+msgid ""
+"Another common way to initialize default values is to use the ternary "
+"operator. Here is an excerpt from the popular `Requests package "
+"<https://github.com/kennethreitz/requests/blob/14a555ac716866678bf17e43e23230d81"
+" a8149f5/requests/models.py#L212>`_::"
+msgstr ""
+
+#: ../../pep-0505.rst:817
+msgid ""
+"This particular formulation has the undesirable effect of putting the "
+"operands in an unintuitive order: the brain thinks, \"use ``data`` if "
+"possible and use ``[]`` as a fallback,\" but the code puts the fallback "
+"*before* the preferred value."
+msgstr ""
+
+#: ../../pep-0505.rst:822
+msgid "The author of this package could have written it like this instead::"
+msgstr ""
+
+#: ../../pep-0505.rst:830
+msgid ""
+"This ordering of the operands is more intuitive, but it requires 4 extra "
+"characters (for \"not \"). It also highlights the repetition of "
+"identifiers: ``data if data``, ``files if files``, etc."
+msgstr ""
+
+#: ../../pep-0505.rst:834
+msgid "When written using the ``None`` coalescing operator, the sample reads::"
+msgstr ""
+
+#: ../../pep-0505.rst:844
+msgid "References"
+msgstr ""
+
+#: ../../pep-0505.rst:846
+msgid ""
+"C# Reference: Operators (https://msdn.microsoft.com/en-"
+"us/library/6a71f45d.aspx)"
+msgstr ""
+
+#: ../../pep-0505.rst:849
+msgid ""
+"A Tour of the Dart Language: Operators (https://www.dartlang.org/docs"
+"/dart-up-and-running/ch02.html#operators)"
+msgstr ""
+
+#: ../../pep-0505.rst:852
+msgid ""
+"Proposal: Nullish Coalescing for JavaScript (https://github.com/tc39"
+"/proposal-nullish-coalescing)"
+msgstr ""
+
+#: ../../pep-0505.rst:855
+msgid ""
+"Proposal: Optional Chaining for JavaScript (https://github.com/tc39"
+"/proposal-optional-chaining)"
+msgstr ""
+
+#: ../../pep-0505.rst:858
+msgid "Associated scripts (https://github.com/python/peps/tree/master/pep-0505/)"
+msgstr ""
+
+#: ../../pep-0505.rst:862
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0505.rst:864
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,576 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0624.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0624.rst:1
+msgid "624"
+msgstr ""
+
+#: ../../pep-0624.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0624.rst:2
+msgid "Remove Py_UNICODE encoder APIs"
+msgstr ""
+
+#: ../../pep-0624.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0624.rst:3
+msgid "Inada Naoki <songofacandy@gmail.com>"
+msgstr ""
+
+#: ../../pep-0624.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0624.rst:4
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0624.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0624.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0624.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0624.rst:7
+msgid "06-Jul-2020"
+msgstr ""
+
+#: ../../pep-0624.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0624.rst:8
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0624.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0624.rst:9
+msgid "08-Jul-2020"
+msgstr ""
+
+#: ../../pep-0624.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0624.rst:15
+msgid ""
+"This PEP proposes to remove deprecated ``Py_UNICODE`` encoder APIs in "
+"Python 3.11:"
+msgstr ""
+
+#: ../../pep-0624.rst:17 ../../pep-0624.rst:88 ../../pep-0624.rst:127
+msgid "``PyUnicode_Encode()``"
+msgstr ""
+
+#: ../../pep-0624.rst:18 ../../pep-0624.rst:89 ../../pep-0624.rst:128
+#: ../../pep-0624.rst:162
+msgid "``PyUnicode_EncodeASCII()``"
+msgstr ""
+
+#: ../../pep-0624.rst:19 ../../pep-0624.rst:90 ../../pep-0624.rst:129
+#: ../../pep-0624.rst:163
+msgid "``PyUnicode_EncodeLatin1()``"
+msgstr ""
+
+#: ../../pep-0624.rst:20 ../../pep-0624.rst:91 ../../pep-0624.rst:130
+#: ../../pep-0624.rst:164
+msgid "``PyUnicode_EncodeUTF7()``"
+msgstr ""
+
+#: ../../pep-0624.rst:21 ../../pep-0624.rst:71 ../../pep-0624.rst:92
+#: ../../pep-0624.rst:131 ../../pep-0624.rst:165
+msgid "``PyUnicode_EncodeUTF8()``"
+msgstr ""
+
+#: ../../pep-0624.rst:22 ../../pep-0624.rst:72 ../../pep-0624.rst:93
+#: ../../pep-0624.rst:132 ../../pep-0624.rst:166
+msgid "``PyUnicode_EncodeUTF16()``"
+msgstr ""
+
+#: ../../pep-0624.rst:23 ../../pep-0624.rst:94 ../../pep-0624.rst:133
+#: ../../pep-0624.rst:167
+msgid "``PyUnicode_EncodeUTF32()``"
+msgstr ""
+
+#: ../../pep-0624.rst:24 ../../pep-0624.rst:95 ../../pep-0624.rst:134
+msgid "``PyUnicode_EncodeUnicodeEscape()``"
+msgstr ""
+
+#: ../../pep-0624.rst:25 ../../pep-0624.rst:96 ../../pep-0624.rst:135
+msgid "``PyUnicode_EncodeRawUnicodeEscape()``"
+msgstr ""
+
+#: ../../pep-0624.rst:26 ../../pep-0624.rst:97 ../../pep-0624.rst:136
+msgid "``PyUnicode_EncodeCharmap()``"
+msgstr ""
+
+#: ../../pep-0624.rst:27 ../../pep-0624.rst:98 ../../pep-0624.rst:137
+msgid "``PyUnicode_TranslateCharmap()``"
+msgstr ""
+
+#: ../../pep-0624.rst:28 ../../pep-0624.rst:99 ../../pep-0624.rst:138
+msgid "``PyUnicode_EncodeDecimal()``"
+msgstr ""
+
+#: ../../pep-0624.rst:29 ../../pep-0624.rst:100 ../../pep-0624.rst:139
+msgid "``PyUnicode_TransformDecimalToASCII()``"
+msgstr ""
+
+#: ../../pep-0624.rst:33
+msgid ""
+"`PEP 623  <https://www.python.org/dev/peps/pep-0623/>`_ propose to remove"
+" Unicode object APIs relating to ``Py_UNICODE``. On the other hand, this "
+"PEP is not relating to Unicode object. These PEPs are split because they "
+"have different motivations and need different discussions."
+msgstr ""
+
+#: ../../pep-0624.rst:40
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0624.rst:42
+msgid ""
+"In general, reducing the number of APIs that have been deprecated for a "
+"long time and have few users is a good idea for not only it improves the "
+"maintainability of CPython, but it also helps API users and other Python "
+"implementations."
+msgstr ""
+
+#: ../../pep-0624.rst:49
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0624.rst:52
+msgid "Deprecated since Python 3.3"
+msgstr ""
+
+#: ../../pep-0624.rst:54
+msgid "``Py_UNICODE`` and APIs using it has been deprecated since Python 3.3."
+msgstr ""
+
+#: ../../pep-0624.rst:58
+msgid "Inefficient"
+msgstr ""
+
+#: ../../pep-0624.rst:60
+msgid ""
+"All of these APIs are implemented using ``PyUnicode_FromWideChar``. So "
+"these APIs are inefficient when user want to encode Unicode object."
+msgstr ""
+
+#: ../../pep-0624.rst:66
+msgid "Not used widely"
+msgstr ""
+
+#: ../../pep-0624.rst:68
+msgid ""
+"When searching from the top 4000 PyPI packages [1]_, only pyodbc use "
+"these APIs."
+msgstr ""
+
+#: ../../pep-0624.rst:74
+msgid ""
+"pyodbc uses these APIs to encode Unicode object into bytes object. So it "
+"is easy to fix it. [2]_"
+msgstr ""
+
+#: ../../pep-0624.rst:79 ../../pep-0624.rst:86
+msgid "Alternative APIs"
+msgstr ""
+
+#: ../../pep-0624.rst:81
+msgid ""
+"There are alternative APIs to accept ``PyObject *unicode`` instead of "
+"``Py_UNICODE *``. Users can migrate to them."
+msgstr ""
+
+#: ../../pep-0624.rst:86
+msgid "Deprecated API"
+msgstr ""
+
+#: ../../pep-0624.rst:88
+msgid "``PyUnicode_AsEncodedString()``"
+msgstr ""
+
+#: ../../pep-0624.rst:89
+msgid "``PyUnicode_AsASCIIString()`` \\(1)"
+msgstr ""
+
+#: ../../pep-0624.rst:90
+msgid "``PyUnicode_AsLatin1String()`` \\(1)"
+msgstr ""
+
+#: ../../pep-0624.rst:91
+msgid "\\(2)"
+msgstr ""
+
+#: ../../pep-0624.rst:92
+msgid "``PyUnicode_AsUTF8String()`` \\(1)"
+msgstr ""
+
+#: ../../pep-0624.rst:93
+msgid "``PyUnicode_AsUTF16String()`` \\(3)"
+msgstr ""
+
+#: ../../pep-0624.rst:94
+msgid "``PyUnicode_AsUTF32String()`` \\(3)"
+msgstr ""
+
+#: ../../pep-0624.rst:95
+msgid "``PyUnicode_AsUnicodeEscapeString()``"
+msgstr ""
+
+#: ../../pep-0624.rst:96
+msgid "``PyUnicode_AsRawUnicodeEscapeString()``"
+msgstr ""
+
+#: ../../pep-0624.rst:97
+msgid "``PyUnicode_AsCharmapString()`` \\(1)"
+msgstr ""
+
+#: ../../pep-0624.rst:98
+msgid "``PyUnicode_Translate()``"
+msgstr ""
+
+#: ../../pep-0624.rst:99 ../../pep-0624.rst:100
+msgid "\\(4)"
+msgstr ""
+
+#: ../../pep-0624.rst:103
+msgid "Notes:"
+msgstr ""
+
+#: ../../pep-0624.rst:106
+msgid "``const char *errors`` parameter is missing."
+msgstr ""
+
+#: ../../pep-0624.rst:109
+msgid ""
+"There is no public alternative API. But user can use generic "
+"``PyUnicode_AsEncodedString()`` instead."
+msgstr ""
+
+#: ../../pep-0624.rst:113
+msgid "``const char *errors, int byteorder`` parameters are missing."
+msgstr ""
+
+#: ../../pep-0624.rst:116
+msgid ""
+"There is no direct replacement. But ``Py_UNICODE_TODECIMAL`` can be used "
+"instead. CPython uses ``_PyUnicode_TransformDecimalAndSpaceToASCII`` for "
+"converting from Unicode to numbers instead."
+msgstr ""
+
+#: ../../pep-0624.rst:123
+msgid "Plan"
+msgstr ""
+
+#: ../../pep-0624.rst:125
+msgid "Remove these APIs in Python 3.11. They have been deprecated already."
+msgstr ""
+
+#: ../../pep-0624.rst:143
+msgid "Alternative Ideas"
+msgstr ""
+
+#: ../../pep-0624.rst:146
+msgid "Replace ``Py_UNICODE*`` with ``PyObject*``"
+msgstr ""
+
+#: ../../pep-0624.rst:148
+msgid ""
+"As described in the \"Alternative APIs\" section, some APIs don't have "
+"public alternative APIs accepting ``PyObject *unicode`` input. And some "
+"public alternative APIs have restrictions like missing ``errors`` and "
+"``byteorder`` parameters."
+msgstr ""
+
+#: ../../pep-0624.rst:153
+msgid ""
+"Instead of removing deprecated APIs, we can reuse their names for "
+"alternative public APIs."
+msgstr ""
+
+#: ../../pep-0624.rst:156
+msgid ""
+"Since we have private alternative APIs already, it is just renaming from "
+"private name to public and deprecated names."
+msgstr ""
+
+#: ../../pep-0624.rst:160
+msgid "Rename to"
+msgstr ""
+
+#: ../../pep-0624.rst:160
+msgid "Rename from"
+msgstr ""
+
+#: ../../pep-0624.rst:162
+msgid "``_PyUnicode_AsASCIIString()``"
+msgstr ""
+
+#: ../../pep-0624.rst:163
+msgid "``_PyUnicode_AsLatin1String()``"
+msgstr ""
+
+#: ../../pep-0624.rst:164
+msgid "``_PyUnicode_EncodeUTF7()``"
+msgstr ""
+
+#: ../../pep-0624.rst:165
+msgid "``_PyUnicode_AsUTF8String()``"
+msgstr ""
+
+#: ../../pep-0624.rst:166
+msgid "``_PyUnicode_EncodeUTF16()``"
+msgstr ""
+
+#: ../../pep-0624.rst:167
+msgid "``_PyUnicode_EncodeUTF32()``"
+msgstr ""
+
+#: ../../pep-0624.rst:170 ../../pep-0624.rst:194 ../../pep-0624.rst:221
+msgid "Pros:"
+msgstr ""
+
+#: ../../pep-0624.rst:172
+msgid "We have a more consistent API set."
+msgstr ""
+
+#: ../../pep-0624.rst:174 ../../pep-0624.rst:199 ../../pep-0624.rst:228
+msgid "Cons:"
+msgstr ""
+
+#: ../../pep-0624.rst:176 ../../pep-0624.rst:201
+msgid "Backward incompatible."
+msgstr ""
+
+#: ../../pep-0624.rst:177 ../../pep-0624.rst:202 ../../pep-0624.rst:233
+msgid "We have more public APIs to maintain for rare use cases."
+msgstr ""
+
+#: ../../pep-0624.rst:178
+msgid ""
+"Existing public APIs are enough for most use cases, and "
+"``PyUnicode_AsEncodedString()`` can be used in other cases."
+msgstr ""
+
+#: ../../pep-0624.rst:183
+msgid "Replace ``Py_UNICODE*`` with ``Py_UCS4*``"
+msgstr ""
+
+#: ../../pep-0624.rst:185
+msgid "We can replace ``Py_UNICODE`` with ``Py_UCS4`` and undeprecate these APIs."
+msgstr ""
+
+#: ../../pep-0624.rst:188
+msgid ""
+"UTF-8, UTF-16, UTF-32 encoders support ``Py_UCS4`` internally. So "
+"``PyUnicode_EncodeUTF8()``, ``PyUnicode_EncodeUTF16()``, and "
+"``PyUnicode_EncodeUTF32()`` can avoid to create a temporary Unicode "
+"object."
+msgstr ""
+
+#: ../../pep-0624.rst:196
+msgid ""
+"We can avoid creating temporary Unicode object when encoding from "
+"``Py_UCS4*`` into bytes object with UTF-8, UTF-16, UTF-32 codecs."
+msgstr ""
+
+#: ../../pep-0624.rst:203 ../../pep-0624.rst:234
+msgid ""
+"Other Python implementations that want to support Python/C API need to "
+"support these APIs too."
+msgstr ""
+
+#: ../../pep-0624.rst:205 ../../pep-0624.rst:236
+msgid ""
+"If we change the Unicode internal representation to UTF-8 in the future, "
+"we need to keep UCS-4 support only for these APIs."
+msgstr ""
+
+#: ../../pep-0624.rst:210
+msgid "Replace ``Py_UNICODE*`` with ``wchar_t*``"
+msgstr ""
+
+#: ../../pep-0624.rst:212
+msgid ""
+"We can replace ``Py_UNICODE`` with ``wchar_t``. Since ``Py_UNICODE`` is "
+"typedef of ``wchar_t`` already, this is status quo."
+msgstr ""
+
+#: ../../pep-0624.rst:215
+msgid ""
+"On platforms where ``sizeof(wchar_t) == 4``, we can avoid to create a "
+"temporary Unicode object when encoding from ``wchar_t*`` to bytes objects"
+" using UTF-8, UTF-16, and UTF-32 codec, like the \"Replace "
+"``Py_UNICODE*`` with ``Py_UCS4*``\" idea."
+msgstr ""
+
+#: ../../pep-0624.rst:223
+msgid "Backward compatible."
+msgstr ""
+
+#: ../../pep-0624.rst:224
+msgid ""
+"We can avoid creating temporary Unicode object when encode from "
+"``Py_UCS4*`` into bytes object with UTF-8, UTF-16, UTF-32 codecs on "
+"platform where ``sizeof(wchar_t) == 4``."
+msgstr ""
+
+#: ../../pep-0624.rst:230
+msgid ""
+"Although Windows is the most major platform that uses ``wchar_t`` "
+"heavily, these APIs need to create a temporary Unicode object always "
+"because ``sizeof(wchar_t) == 2`` on Windows."
+msgstr ""
+
+#: ../../pep-0624.rst:241
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0624.rst:244
+msgid "Emit runtime warning"
+msgstr ""
+
+#: ../../pep-0624.rst:246
+msgid ""
+"In addition to existing compiler warning, emitting runtime "
+"``DeprecationWarning`` is suggested."
+msgstr ""
+
+#: ../../pep-0624.rst:249
+msgid ""
+"But these APIs doesn't release GIL for now. Emitting a warning from such "
+"APIs is not safe. See this example."
+msgstr ""
+
+#: ../../pep-0624.rst:262
+msgid ""
+"If we emit Python warning from ``PyUnicode_EncodeUTF8()``, warning "
+"filters and other threads may change the ``list`` and ``u`` can be a "
+"dangling reference after ``PyUnicode_EncodeUTF8()`` returned."
+msgstr ""
+
+#: ../../pep-0624.rst:268
+msgid "Discussions"
+msgstr ""
+
+#: ../../pep-0624.rst:270
+msgid ""
+"`[python-dev] Plan to remove Py_UNICODE APis except PEP 623 "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/S7KW2U6IGXZFBMGS6WSJB26NZIBW4OLE/#S7KW2U6IGXZFBMGS6WSJB26NZIBW4OLE>`_"
+msgstr ""
+
+#: ../../pep-0624.rst:272
+msgid ""
+"`bpo-41123: Remove Py_UNICODE APIs except PEP 623 "
+"<https://bugs.python.org/issue41123>`_"
+msgstr ""
+
+#: ../../pep-0624.rst:274
+msgid ""
+"`[python-dev] PEP 624: Remove Py_UNICODE encoder APIs "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/THXVM7FZVT56B7CPEDIYKJG6VMAYIEK5/#QUGBVLQNBFVNX25AEIL77WSFOHQES6LJ>`_"
+msgstr ""
+
+#: ../../pep-0624.rst:279
+msgid "Objections"
+msgstr ""
+
+#: ../../pep-0624.rst:281
+msgid ""
+"Removing these APIs removes ability to use codec without temporary "
+"Unicode."
+msgstr ""
+
+#: ../../pep-0624.rst:284
+msgid ""
+"Codecs can not encode Unicode buffer directly without temporary Unicode "
+"object since Python 3.3. All these APIs creates temporary Unicode object "
+"for now. So removing them doesn't reduce any abilities."
+msgstr ""
+
+#: ../../pep-0624.rst:289
+msgid "Why not remove decoder APIs too?"
+msgstr ""
+
+#: ../../pep-0624.rst:291
+msgid "They are part of stable ABI."
+msgstr ""
+
+#: ../../pep-0624.rst:293
+msgid ""
+"``PyUnicode_DecodeASCII()`` and ``PyUnicode_DecodeUTF8()`` are used very "
+"widely. Deprecating them is not worth enough."
+msgstr ""
+
+#: ../../pep-0624.rst:296
+msgid ""
+"Decoder APIs can decode from byte buffer directly, without creating "
+"temporary bytes object. On the other hand, encoder APIs can not avoid "
+"temporary Unicode object."
+msgstr ""
+
+#: ../../pep-0624.rst:302
+msgid "References"
+msgstr ""
+
+#: ../../pep-0624.rst:304
+msgid ""
+"Source package list chosen from top 4000 PyPI packages. "
+"(https://github.com/methane/notes/blob/master/2020/wchar-"
+"cache/package_list.txt)"
+msgstr ""
+
+#: ../../pep-0624.rst:307
+msgid ""
+"pyodbc -- Don't use PyUnicode_Encode API #792 "
+"(https://github.com/mkleehammer/pyodbc/pull/792)"
+msgstr ""
+
+#: ../../pep-0624.rst:312
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0624.rst:314
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -1,0 +1,1129 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0620.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0620.rst:1
+msgid "620"
+msgstr ""
+
+#: ../../pep-0620.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0620.rst:2
+msgid "Hide implementation details from the C API"
+msgstr ""
+
+#: ../../pep-0620.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0620.rst:3
+msgid "Victor Stinner <vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0620.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0620.rst:4
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0620.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0620.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0620.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0620.rst:7
+msgid "19-Jun-2020"
+msgstr ""
+
+#: ../../pep-0620.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0620.rst:8
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0620.rst:11
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0620.rst:13
+msgid "Introduce C API incompatible changes to hide implementation details."
+msgstr ""
+
+#: ../../pep-0620.rst:15
+msgid ""
+"Once most implementation details will be hidden, evolution of CPython "
+"internals would be less limited by C API backward compatibility issues. "
+"It will be way easier to add new features."
+msgstr ""
+
+#: ../../pep-0620.rst:19
+msgid ""
+"It becomes possible to experiment with more advanced optimizations in "
+"CPython than just micro-optimizations, like tagged pointers."
+msgstr ""
+
+#: ../../pep-0620.rst:22
+msgid "Define a process to reduce the number of broken C extensions."
+msgstr ""
+
+#: ../../pep-0620.rst:24
+msgid ""
+"The implementation of this PEP is expected to be done carefully over "
+"multiple Python versions. It already started in Python 3.7 and most "
+"changes are already completed. The `Process to reduce the number of "
+"broken C extensions`_ dictates the rhythm."
+msgstr ""
+
+#: ../../pep-0620.rst:31
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0620.rst:34
+msgid "The C API blocks CPython evolutions"
+msgstr ""
+
+#: ../../pep-0620.rst:36
+msgid ""
+"Adding or removing members of C structures is causing multiple backward "
+"compatibility issues."
+msgstr ""
+
+#: ../../pep-0620.rst:39
+msgid ""
+"Adding a new member breaks the stable ABI (PEP 384), especially for types"
+" declared statically (e.g. ``static PyTypeObject MyType = {...};``). In "
+"Python 3.4, the PEP 442 \"Safe object finalization\" added the "
+"``tp_finalize`` member at the end of the ``PyTypeObject`` structure. For "
+"ABI backward compatibility, a new ``Py_TPFLAGS_HAVE_FINALIZE`` type flag "
+"was required to announce if the type structure contains the "
+"``tp_finalize`` member. The flag was removed in Python 3.8 (`bpo-32388 "
+"<https://bugs.python.org/issue32388>`_)."
+msgstr ""
+
+#: ../../pep-0620.rst:48
+msgid ""
+"The ``PyTypeObject.tp_print`` member, deprecated since Python 3.0 "
+"released in 2009, has been removed in the Python 3.8 development cycle. "
+"But the change broke too many C extensions and had to be reverted before "
+"3.8 final release. Finally, the member was removed again in Python 3.9."
+msgstr ""
+
+#: ../../pep-0620.rst:53
+msgid ""
+"C extensions rely on the ability to access structure members, indirectly "
+"through the C API, or even directly. Modifying structures like "
+"``PyListObject`` cannot be even considered."
+msgstr ""
+
+#: ../../pep-0620.rst:57
+msgid ""
+"The ``PyTypeObject`` structure is the one which evolved the most, simply "
+"because there was no other way to evolve CPython than modifying it."
+msgstr ""
+
+#: ../../pep-0620.rst:60
+msgid ""
+"A C extension can technically dereference a ``PyObject*`` pointer and "
+"access ``PyObject`` members. This prevents experiments like tagged "
+"pointers (storing small values as ``PyObject*`` which does not point to a"
+" valid ``PyObject`` structure)."
+msgstr ""
+
+#: ../../pep-0620.rst:65
+msgid ""
+"Replacing Python garbage collector with a tracing garbage collector would"
+" also need to remove ``PyObject.ob_refcnt`` reference counter, whereas "
+"currently ``Py_INCREF()`` and ``Py_DECREF()`` macros access directly to "
+"``PyObject.ob_refcnt``."
+msgstr ""
+
+#: ../../pep-0620.rst:71
+msgid "Same CPython design since 1990: structures and reference counting"
+msgstr ""
+
+#: ../../pep-0620.rst:73
+msgid ""
+"When the CPython project was created, it was written with one principle: "
+"keep the implementation simple enough so it can be maintained by a single"
+" developer. CPython complexity grew a lot and many micro-optimizations "
+"have been implemented, but CPython core design has not changed."
+msgstr ""
+
+#: ../../pep-0620.rst:79
+msgid ""
+"Members of ``PyObject`` and ``PyTupleObject`` structures have not changed"
+" since the \"Initial revision\" commit (1990)::"
+msgstr ""
+
+#: ../../pep-0620.rst:95
+msgid ""
+"Only names changed: ``object`` was renamed to ``PyObject`` and "
+"``tupleobject`` was renamed to ``PyTupleObject``."
+msgstr ""
+
+#: ../../pep-0620.rst:98
+msgid ""
+"CPython still tracks Python objects lifetime using reference counting "
+"internally and for third party C extensions (through the Python C API)."
+msgstr ""
+
+#: ../../pep-0620.rst:101
+msgid "All Python objects must be allocated on the heap and cannot be moved."
+msgstr ""
+
+#: ../../pep-0620.rst:104
+msgid "Why is PyPy more efficient than CPython?"
+msgstr ""
+
+#: ../../pep-0620.rst:106
+msgid ""
+"The PyPy project is a Python implementation which is 4.2x faster than "
+"CPython on average. PyPy developers chose to not fork CPython, but start "
+"from scratch to have more freedom in terms of optimization choices."
+msgstr ""
+
+#: ../../pep-0620.rst:110
+msgid ""
+"PyPy does not use reference counting, but a tracing garbage collector "
+"which moves objects. Objects can be allocated on the stack (or even not "
+"at all), rather than always having to be allocated on the heap."
+msgstr ""
+
+#: ../../pep-0620.rst:114
+msgid ""
+"Objects layouts are designed with performance in mind. For example, a "
+"list strategy stores integers directly as integers, rather than objects."
+msgstr ""
+
+#: ../../pep-0620.rst:117
+msgid ""
+"Moreover, PyPy also has a JIT compiler which emits fast code thanks to "
+"the efficient PyPy design."
+msgstr ""
+
+#: ../../pep-0620.rst:121
+msgid "PyPy bottleneck: the Python C API"
+msgstr ""
+
+#: ../../pep-0620.rst:123
+msgid ""
+"While PyPy is way more efficient than CPython to run pure Python code, it"
+" is as efficient or slower than CPython to run C extensions."
+msgstr ""
+
+#: ../../pep-0620.rst:126
+msgid ""
+"Since the C API requires ``PyObject*`` and allows to access directly "
+"structure members, PyPy has to associate a CPython object to PyPy objects"
+" and maintain both consistent. Converting a PyPy object to a CPython "
+"object is inefficient. Moreover, reference counting also has to be "
+"implemented on top of PyPy tracing garbage collector."
+msgstr ""
+
+#: ../../pep-0620.rst:132
+msgid ""
+"These conversions are required because the Python C API is too close to "
+"the CPython implementation: there is no high-level abstraction. For "
+"example, structures members are part of the public C API and nothing "
+"prevents a C extension to get or set directly "
+"``PyTupleObject.ob_item[0]`` (the first item of a tuple)."
+msgstr ""
+
+#: ../../pep-0620.rst:138
+msgid ""
+"See `Inside cpyext: Why emulating CPython C API is so Hard "
+"<https://morepypy.blogspot.com/2018/09/inside-cpyext-why-emulating-"
+"cpython-c.html>`_ (Sept 2018) by Antonio Cuni for more details."
+msgstr ""
+
+#: ../../pep-0620.rst:144
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0620.rst:147
+msgid "Hide implementation details"
+msgstr ""
+
+#: ../../pep-0620.rst:149
+msgid "Hiding implementation details from the C API has multiple advantages:"
+msgstr ""
+
+#: ../../pep-0620.rst:151
+msgid ""
+"It becomes possible to experiment with more advanced optimizations in "
+"CPython than just micro-optimizations. For example, tagged pointers, and "
+"replace the garbage collector with a tracing garbage collector which can "
+"move objects."
+msgstr ""
+
+#: ../../pep-0620.rst:155
+msgid "Adding new features in CPython becomes easier."
+msgstr ""
+
+#: ../../pep-0620.rst:156
+msgid ""
+"PyPy should be able to avoid conversions to CPython objects in more "
+"cases: keep efficient PyPy objects."
+msgstr ""
+
+#: ../../pep-0620.rst:158
+msgid "It becomes easier to implement the C API for a new Python implementation."
+msgstr ""
+
+#: ../../pep-0620.rst:160
+msgid ""
+"More C extensions will be compatible with Python implementations other "
+"than CPython."
+msgstr ""
+
+#: ../../pep-0620.rst:164
+msgid "Relationship with the limited C API"
+msgstr ""
+
+#: ../../pep-0620.rst:166
+msgid ""
+"The PEP 384 \"Defining a Stable ABI\" is implemented in Python 3.4. It "
+"introduces the \"limited C API\": a subset of the C API. When the limited"
+" C API is used, it becomes possible to build a C extension only once and "
+"use it on multiple Python versions: that's the stable ABI."
+msgstr ""
+
+#: ../../pep-0620.rst:171
+msgid ""
+"The main limitation of the PEP 384 is that C extensions have to opt-in "
+"for the limited C API. Only very few projects made this choice, usually "
+"to ease distribution of binaries, especially on Windows."
+msgstr ""
+
+#: ../../pep-0620.rst:175
+msgid "This PEP moves the C API towards the limited C API."
+msgstr ""
+
+#: ../../pep-0620.rst:177
+msgid ""
+"Ideally, the C API will become the limited C API and all C extensions "
+"will use the stable ABI, but this is out of this PEP scope."
+msgstr ""
+
+#: ../../pep-0620.rst:182
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0620.rst:185
+msgid "Summary"
+msgstr ""
+
+#: ../../pep-0620.rst:187
+msgid ""
+"(**Completed**) Reorganize the C API header files: create "
+"``Include/cpython/`` and ``Include/internal/`` subdirectories."
+msgstr ""
+
+#: ../../pep-0620.rst:189
+msgid ""
+"(**Completed**) Move private functions exposing implementation details to"
+" the internal C API."
+msgstr ""
+
+#: ../../pep-0620.rst:191
+msgid "(**Completed**) Convert macros to static inline functions."
+msgstr ""
+
+#: ../../pep-0620.rst:192
+msgid ""
+"(**Completed**) Add new functions ``Py_SET_TYPE()``, ``Py_SET_REFCNT()`` "
+"and ``Py_SET_SIZE()``. The ``Py_TYPE()``, ``Py_REFCNT()`` and "
+"``Py_SIZE()`` macros become functions which cannot be used as l-value."
+msgstr ""
+
+#: ../../pep-0620.rst:195
+msgid "(**Completed**) New C API functions must not return borrowed references."
+msgstr ""
+
+#: ../../pep-0620.rst:197
+msgid "(**In Progress**) Provide ``pythoncapi_compat.h`` header file."
+msgstr ""
+
+#: ../../pep-0620.rst:198
+msgid "(**In Progress**) Make structures opaque, add getter and setter functions."
+msgstr ""
+
+#: ../../pep-0620.rst:200
+msgid "(**Not Started**) Deprecate ``PySequence_Fast_ITEMS()``."
+msgstr ""
+
+#: ../../pep-0620.rst:201
+msgid ""
+"(**Not Started**) Convert ``PyTuple_GET_ITEM()`` and "
+"``PyList_GET_ITEM()`` macros to static inline functions."
+msgstr ""
+
+#: ../../pep-0620.rst:205
+msgid "Reorganize the C API header files"
+msgstr ""
+
+#: ../../pep-0620.rst:207
+msgid ""
+"The first consumer of the C API was Python itself. There is no clear "
+"separation between APIs which must not be used outside Python, and API "
+"which are public on purpose."
+msgstr ""
+
+#: ../../pep-0620.rst:211
+msgid "Header files must be reorganized in 3 API:"
+msgstr ""
+
+#: ../../pep-0620.rst:213
+msgid ""
+"``Include/`` directory is the limited C API: no implementation details, "
+"structures are opaque. C extensions using it get a stable ABI."
+msgstr ""
+
+#: ../../pep-0620.rst:216
+msgid ""
+"``Include/cpython/`` directory is the CPython C API: less \"portable\" "
+"API, depends more on the Python version, expose some implementation "
+"details, few incompatible changes can happen."
+msgstr ""
+
+#: ../../pep-0620.rst:219
+msgid ""
+"``Include/internal/`` directory is the internal C API: implementation "
+"details, incompatible changes are likely at each Python release."
+msgstr ""
+
+#: ../../pep-0620.rst:222
+msgid ""
+"The creation of the ``Include/cpython/`` directory is fully backward "
+"compatible. ``Include/cpython/`` header files cannot be included directly"
+" and are included automatically by ``Include/`` header files when the "
+"``Py_LIMITED_API`` macro is not defined."
+msgstr ""
+
+#: ../../pep-0620.rst:227
+msgid ""
+"The internal C API is installed and can be used for specific usage like "
+"debuggers and profilers which must access structures members without "
+"executing code. C extensions using the internal C API are tightly coupled"
+" to a Python version and must be recompiled at each Python version."
+msgstr ""
+
+#: ../../pep-0620.rst:233
+msgid "**STATUS**: Completed (in Python 3.8)"
+msgstr ""
+
+#: ../../pep-0620.rst:235
+msgid ""
+"The reorganization of header files started in Python 3.7 and was "
+"completed in Python 3.8:"
+msgstr ""
+
+#: ../../pep-0620.rst:238
+msgid ""
+"`bpo-35134 <https://bugs.python.org/issue35134>`_: Add a new "
+"Include/cpython/ subdirectory for the \"CPython API\" with implementation"
+" details."
+msgstr ""
+
+#: ../../pep-0620.rst:241
+msgid ""
+"`bpo-35081 <https://bugs.python.org/issue35081>`_: Move internal headers "
+"to ``Include/internal/``"
+msgstr ""
+
+#: ../../pep-0620.rst:245
+msgid "Move private functions to the internal C API"
+msgstr ""
+
+#: ../../pep-0620.rst:247
+msgid ""
+"Private functions which expose implementation details must be moved to "
+"the internal C API."
+msgstr ""
+
+#: ../../pep-0620.rst:250
+msgid ""
+"If a C extension relies on a CPython private function which exposes "
+"CPython implementation details, other Python implementations have to re-"
+"implement this private function to support this C extension."
+msgstr ""
+
+#: ../../pep-0620.rst:254 ../../pep-0620.rst:318 ../../pep-0620.rst:465
+msgid "**STATUS**: Completed (in Python 3.9)"
+msgstr ""
+
+#: ../../pep-0620.rst:256
+msgid "Private functions moved to the internal C API in Python 3.8:"
+msgstr ""
+
+#: ../../pep-0620.rst:258
+msgid "``_PyObject_GC_TRACK()``, ``_PyObject_GC_UNTRACK()``"
+msgstr ""
+
+#: ../../pep-0620.rst:260
+msgid "Macros and functions excluded from the limited C API in Python 3.9:"
+msgstr ""
+
+#: ../../pep-0620.rst:262
+msgid "``_PyObject_SIZE()``, ``_PyObject_VAR_SIZE()``"
+msgstr ""
+
+#: ../../pep-0620.rst:263
+msgid "``PyThreadState_DeleteCurrent()``"
+msgstr ""
+
+#: ../../pep-0620.rst:264
+msgid "``PyFPE_START_PROTECT()``, ``PyFPE_END_PROTECT()``"
+msgstr ""
+
+#: ../../pep-0620.rst:265
+msgid "``_Py_NewReference()``, ``_Py_ForgetReference()``"
+msgstr ""
+
+#: ../../pep-0620.rst:266
+msgid "``_PyTraceMalloc_NewReference()``"
+msgstr ""
+
+#: ../../pep-0620.rst:267
+msgid "``_Py_GetRefTotal()``"
+msgstr ""
+
+#: ../../pep-0620.rst:269
+msgid "Private functions moved to the internal C API in Python 3.9:"
+msgstr ""
+
+#: ../../pep-0620.rst:271
+msgid ""
+"GC functions like ``_Py_AS_GC()``, ``_PyObject_GC_IS_TRACKED()`` and "
+"``_PyGCHead_NEXT()``"
+msgstr ""
+
+#: ../../pep-0620.rst:273
+msgid "``_Py_AddToAllObjects()`` (not exported)"
+msgstr ""
+
+#: ../../pep-0620.rst:274
+msgid ""
+"``_PyDebug_PrintTotalRefs()``, ``_Py_PrintReferences()``, "
+"``_Py_PrintReferenceAddresses()`` (not exported)"
+msgstr ""
+
+#: ../../pep-0620.rst:277
+msgid ""
+"Public \"clear free list\" functions moved to the internal C API and "
+"renamed to private functions in Python 3.9:"
+msgstr ""
+
+#: ../../pep-0620.rst:280
+msgid "``PyAsyncGen_ClearFreeLists()``"
+msgstr ""
+
+#: ../../pep-0620.rst:281
+msgid "``PyContext_ClearFreeList()``"
+msgstr ""
+
+#: ../../pep-0620.rst:282
+msgid "``PyDict_ClearFreeList()``"
+msgstr ""
+
+#: ../../pep-0620.rst:283
+msgid "``PyFloat_ClearFreeList()``"
+msgstr ""
+
+#: ../../pep-0620.rst:284
+msgid "``PyFrame_ClearFreeList()``"
+msgstr ""
+
+#: ../../pep-0620.rst:285
+msgid "``PyList_ClearFreeList()``"
+msgstr ""
+
+#: ../../pep-0620.rst:286
+msgid "``PyTuple_ClearFreeList()``"
+msgstr ""
+
+#: ../../pep-0620.rst:287
+msgid "Functions simply removed:"
+msgstr ""
+
+#: ../../pep-0620.rst:289
+msgid ""
+"``PyMethod_ClearFreeList()`` and ``PyCFunction_ClearFreeList()``: bound "
+"method free list removed in Python 3.9."
+msgstr ""
+
+#: ../../pep-0620.rst:291
+msgid "``PySet_ClearFreeList()``: set free list removed in Python 3.4."
+msgstr ""
+
+#: ../../pep-0620.rst:292
+msgid "``PyUnicode_ClearFreeList()``: Unicode free list removed in Python 3.3."
+msgstr ""
+
+#: ../../pep-0620.rst:296
+msgid "Convert macros to static inline functions"
+msgstr ""
+
+#: ../../pep-0620.rst:298
+msgid "Converting macros to static inline functions has multiple advantages:"
+msgstr ""
+
+#: ../../pep-0620.rst:300
+msgid "Functions have well defined parameter types and return type."
+msgstr ""
+
+#: ../../pep-0620.rst:301
+msgid "Functions can use variables with a well defined scope (the function)."
+msgstr ""
+
+#: ../../pep-0620.rst:302
+msgid ""
+"Debugger can be put breakpoints on functions and profilers can display "
+"the function name in the call stacks. In most cases, it works even when a"
+" static inline function is inlined."
+msgstr ""
+
+#: ../../pep-0620.rst:305
+msgid ""
+"Functions don't have `macros pitfalls <https://gcc.gnu.org/onlinedocs/cpp"
+"/Macro-Pitfalls.html>`_."
+msgstr ""
+
+#: ../../pep-0620.rst:308
+msgid ""
+"Converting macros to static inline functions should only impact very few "
+"C extensions that use macros in unusual ways."
+msgstr ""
+
+#: ../../pep-0620.rst:311
+msgid ""
+"For backward compatibility, functions must continue to accept any type, "
+"not only ``PyObject*``, to avoid compiler warnings, since most macros "
+"cast their parameters to ``PyObject*``."
+msgstr ""
+
+#: ../../pep-0620.rst:315
+msgid ""
+"Python 3.6 requires C compilers to support static inline functions: the "
+"PEP 7 requires a subset of C99."
+msgstr ""
+
+#: ../../pep-0620.rst:320
+msgid "Macros converted to static inline functions in Python 3.8:"
+msgstr ""
+
+#: ../../pep-0620.rst:322
+msgid "``Py_INCREF()``, ``Py_DECREF()``"
+msgstr ""
+
+#: ../../pep-0620.rst:323
+msgid "``Py_XINCREF()``, ``Py_XDECREF()``"
+msgstr ""
+
+#: ../../pep-0620.rst:324 ../../pep-0620.rst:331
+msgid "``PyObject_INIT()``, ``PyObject_INIT_VAR()``"
+msgstr ""
+
+#: ../../pep-0620.rst:325
+msgid "``_PyObject_GC_TRACK()``, ``_PyObject_GC_UNTRACK()``, ``_Py_Dealloc()``"
+msgstr ""
+
+#: ../../pep-0620.rst:327
+msgid "Macros converted to regular functions in Python 3.9:"
+msgstr ""
+
+#: ../../pep-0620.rst:329
+msgid ""
+"``Py_EnterRecursiveCall()``, ``Py_LeaveRecursiveCall()`` (added to the "
+"limited C API)"
+msgstr ""
+
+#: ../../pep-0620.rst:332
+msgid "``PyObject_GET_WEAKREFS_LISTPTR()``"
+msgstr ""
+
+#: ../../pep-0620.rst:333
+msgid "``PyObject_CheckBuffer()``"
+msgstr ""
+
+#: ../../pep-0620.rst:334
+msgid "``PyIndex_Check()``"
+msgstr ""
+
+#: ../../pep-0620.rst:335
+msgid "``PyObject_IS_GC()``"
+msgstr ""
+
+#: ../../pep-0620.rst:336
+msgid ""
+"``PyObject_NEW()`` (alias to ``PyObject_New()``), ``PyObject_NEW_VAR()`` "
+"(alias to ``PyObject_NewVar()``)"
+msgstr ""
+
+#: ../../pep-0620.rst:338
+msgid "``PyType_HasFeature()`` (always call ``PyType_GetFlags()``)"
+msgstr ""
+
+#: ../../pep-0620.rst:339
+msgid ""
+"``Py_TRASHCAN_BEGIN_CONDITION()`` and ``Py_TRASHCAN_END()`` macros now "
+"call functions which hide implementation details, rather than accessing "
+"directly members of the ``PyThreadState`` structure."
+msgstr ""
+
+#: ../../pep-0620.rst:344
+msgid "Make structures opaque"
+msgstr ""
+
+#: ../../pep-0620.rst:346
+msgid "The following structures of the C API become opaque:"
+msgstr ""
+
+#: ../../pep-0620.rst:348
+msgid "``PyInterpreterState``"
+msgstr ""
+
+#: ../../pep-0620.rst:349
+msgid "``PyThreadState``"
+msgstr ""
+
+#: ../../pep-0620.rst:350
+msgid "``PyGC_Head``"
+msgstr ""
+
+#: ../../pep-0620.rst:351 ../../pep-0620.rst:353
+msgid "``PyTypeObject``"
+msgstr ""
+
+#: ../../pep-0620.rst:352
+msgid "``PyObject`` and ``PyVarObject``"
+msgstr ""
+
+#: ../../pep-0620.rst:354
+msgid "All types which inherit from ``PyObject`` or ``PyVarObject``"
+msgstr ""
+
+#: ../../pep-0620.rst:356
+msgid ""
+"C extensions must use getter or setter functions to get or set structure "
+"members. For example, ``tuple->ob_item[0]`` must be replaced with "
+"``PyTuple_GET_ITEM(tuple, 0)``."
+msgstr ""
+
+#: ../../pep-0620.rst:360
+msgid ""
+"To be able to move away from reference counting, ``PyObject`` must become"
+" opaque. Currently, the reference counter ``PyObject.ob_refcnt`` is "
+"exposed in the C API. All structures must become opaque, since they "
+"\"inherit\" from PyObject. For, ``PyFloatObject`` inherits from "
+"``PyObject``::"
+msgstr ""
+
+#: ../../pep-0620.rst:371
+msgid ""
+"Making ``PyObject`` fully opaque requires converting ``Py_INCREF()`` and "
+"``Py_DECREF()`` macros to function calls. This change has an impact on "
+"performance. It is likely to be one of the very last changes when making "
+"structures opaque."
+msgstr ""
+
+#: ../../pep-0620.rst:376
+msgid ""
+"Making ``PyTypeObject`` structure opaque breaks C extensions declaring "
+"types statically (e.g. ``static PyTypeObject MyType = {...};``). C "
+"extensions must use ``PyType_FromSpec()`` to allocate types on the heap "
+"instead. Using heap types has other advantages like being compatible with"
+" subinterpreters. Combined with PEP 489 \"Multi-phase extension module "
+"initialization\", it makes a C extension behavior closer to a Python "
+"module, like allowing to create more than one module instance."
+msgstr ""
+
+#: ../../pep-0620.rst:384
+msgid ""
+"Making ``PyThreadState`` structure opaque requires adding getter and "
+"setter functions for members used by C extensions."
+msgstr ""
+
+#: ../../pep-0620.rst:387
+msgid "**STATUS**: In Progress (started in Python 3.8)"
+msgstr ""
+
+#: ../../pep-0620.rst:389
+msgid ""
+"The ``PyInterpreterState`` structure was made opaque in Python 3.8 "
+"(`bpo-35886 <https://bugs.python.org/issue35886>`_) and the ``PyGC_Head``"
+" structure (`bpo-40241 <https://bugs.python.org/issue40241>`_) was made "
+"opaque in Python 3.9."
+msgstr ""
+
+#: ../../pep-0620.rst:394
+msgid ""
+"Issues tracking the work to prepare the C API to make following "
+"structures opaque:"
+msgstr ""
+
+#: ../../pep-0620.rst:397
+msgid "``PyObject``: `bpo-39573 <https://bugs.python.org/issue39573>`_"
+msgstr ""
+
+#: ../../pep-0620.rst:398
+msgid "``PyTypeObject``: `bpo-40170 <https://bugs.python.org/issue40170>`_"
+msgstr ""
+
+#: ../../pep-0620.rst:399
+msgid "``PyFrameObject``: `bpo-40421 <https://bugs.python.org/issue40421>`_"
+msgstr ""
+
+#: ../../pep-0620.rst:401
+msgid ""
+"Python 3.9 adds ``PyFrame_GetCode()`` and ``PyFrame_GetBack()`` getter "
+"functions, and moves ``PyFrame_GetLineNumber`` to the limited C API."
+msgstr ""
+
+#: ../../pep-0620.rst:405
+msgid "``PyThreadState``: `bpo-39947 <https://bugs.python.org/issue39947>`_"
+msgstr ""
+
+#: ../../pep-0620.rst:407
+msgid ""
+"Python 3.9 adds 3 getter functions: ``PyThreadState_GetFrame()``, "
+"``PyThreadState_GetID()``, ``PyThreadState_GetInterpreter()``."
+msgstr ""
+
+#: ../../pep-0620.rst:411
+msgid "Disallow using Py_TYPE() as l-value"
+msgstr ""
+
+#: ../../pep-0620.rst:413
+msgid ""
+"The ``Py_TYPE()`` function gets an object type, its ``PyObject.ob_type`` "
+"member. It is implemented as a macro which can be used as an l-value to "
+"set the type: ``Py_TYPE(obj) = new_type``. This code relies on the "
+"assumption that ``PyObject.ob_type`` can be modified directly. It "
+"prevents making the ``PyObject`` structure opaque."
+msgstr ""
+
+#: ../../pep-0620.rst:419
+msgid ""
+"New setter functions ``Py_SET_TYPE()``, ``Py_SET_REFCNT()`` and "
+"``Py_SET_SIZE()`` are added and must be used instead."
+msgstr ""
+
+#: ../../pep-0620.rst:422
+msgid ""
+"The ``Py_TYPE()``, ``Py_REFCNT()`` and ``Py_SIZE()`` macros must be "
+"converted to static inline functions which can not be used as l-value."
+msgstr ""
+
+#: ../../pep-0620.rst:425
+msgid "For example, the ``Py_TYPE()`` macro::"
+msgstr ""
+
+#: ../../pep-0620.rst:429
+msgid "becomes::"
+msgstr ""
+
+#: ../../pep-0620.rst:439
+msgid "**STATUS**: Completed (in Python 3.10)"
+msgstr ""
+
+#: ../../pep-0620.rst:441
+msgid ""
+"New functions ``Py_SET_TYPE()``, ``Py_SET_REFCNT()`` and "
+"``Py_SET_SIZE()`` were added to Python 3.9."
+msgstr ""
+
+#: ../../pep-0620.rst:444
+msgid ""
+"In Python 3.10, ``Py_TYPE()``, ``Py_REFCNT()`` and ``Py_SIZE()`` can no "
+"longer be used as l-value and the new setter functions must be used "
+"instead."
+msgstr ""
+
+#: ../../pep-0620.rst:449
+msgid "New C API functions must not return borrowed references"
+msgstr ""
+
+#: ../../pep-0620.rst:451
+msgid ""
+"When a function returns a borrowed reference, Python cannot track when "
+"the caller stops using this reference."
+msgstr ""
+
+#: ../../pep-0620.rst:454
+msgid ""
+"For example, if the Python ``list`` type is specialized for small "
+"integers, store directly \"raw\" numbers rather than Python objects, "
+"``PyList_GetItem()`` has to create a temporary Python object. The problem"
+" is to decide when it is safe to delete the temporary object."
+msgstr ""
+
+#: ../../pep-0620.rst:459
+msgid ""
+"The general guidelines is to avoid returning borrowed references for new "
+"C API functions."
+msgstr ""
+
+#: ../../pep-0620.rst:462
+msgid ""
+"No function returning borrowed references is scheduled for removal by "
+"this PEP."
+msgstr ""
+
+#: ../../pep-0620.rst:467
+msgid ""
+"In Python 3.9, new C API functions returning Python objects only return "
+"strong references:"
+msgstr ""
+
+#: ../../pep-0620.rst:470
+msgid "``PyFrame_GetBack()``"
+msgstr ""
+
+#: ../../pep-0620.rst:471
+msgid "``PyFrame_GetCode()``"
+msgstr ""
+
+#: ../../pep-0620.rst:472
+msgid "``PyObject_CallNoArgs()``"
+msgstr ""
+
+#: ../../pep-0620.rst:473
+msgid "``PyObject_CallOneArg()``"
+msgstr ""
+
+#: ../../pep-0620.rst:474
+msgid "``PyThreadState_GetFrame()``"
+msgstr ""
+
+#: ../../pep-0620.rst:477
+msgid "Avoid functions returning PyObject**"
+msgstr ""
+
+#: ../../pep-0620.rst:479
+msgid ""
+"The ``PySequence_Fast_ITEMS()`` function gives a direct access to an "
+"array of ``PyObject*`` objects. The function is deprecated in favor of "
+"``PyTuple_GetItem()`` and ``PyList_GetItem()``."
+msgstr ""
+
+#: ../../pep-0620.rst:483
+msgid ""
+"``PyTuple_GET_ITEM()`` can be abused to access directly the "
+"``PyTupleObject.ob_item`` member::"
+msgstr ""
+
+#: ../../pep-0620.rst:488
+msgid ""
+"The ``PyTuple_GET_ITEM()`` and ``PyList_GET_ITEM()`` macros are converted"
+" to static inline functions to disallow that."
+msgstr ""
+
+#: ../../pep-0620.rst:491
+msgid "**STATUS**: Not Started"
+msgstr ""
+
+#: ../../pep-0620.rst:494
+msgid "New pythoncapi_compat.h header file"
+msgstr ""
+
+#: ../../pep-0620.rst:496
+msgid ""
+"Making structures opaque requires modifying C extensions to use getter "
+"and setter functions. The practical issue is how to keep support for old "
+"Python versions which don't have these functions."
+msgstr ""
+
+#: ../../pep-0620.rst:500
+msgid ""
+"For example, in Python 3.10, it is no longer possible to use "
+"``Py_TYPE()`` as an l-value. The new ``Py_SET_TYPE()`` function must be "
+"used instead::"
+msgstr ""
+
+#: ../../pep-0620.rst:510
+msgid ""
+"This code may ring a bell to developers who ported their Python code base"
+" from Python 2 to Python 3."
+msgstr ""
+
+#: ../../pep-0620.rst:513
+msgid ""
+"Python will distribute a new ``pythoncapi_compat.h`` header file which "
+"provides new C API functions to old Python versions. Example::"
+msgstr ""
+
+#: ../../pep-0620.rst:525
+msgid ""
+"Using this header file, ``Py_SET_TYPE()`` can be used on old Python "
+"versions as well."
+msgstr ""
+
+#: ../../pep-0620.rst:528
+msgid ""
+"Developers can copy this file in their project, or even to only "
+"copy/paste the few functions needed by their C extension."
+msgstr ""
+
+#: ../../pep-0620.rst:531
+msgid "**STATUS**: In Progress (implemented but not distributed by CPython yet)"
+msgstr ""
+
+#: ../../pep-0620.rst:533
+msgid ""
+"The ``pythoncapi_compat.h`` header file is currently developed at: "
+"https://github.com/pythoncapi/pythoncapi_compat"
+msgstr ""
+
+#: ../../pep-0620.rst:537
+msgid "Process to reduce the number of broken C extensions"
+msgstr ""
+
+#: ../../pep-0620.rst:539
+msgid ""
+"Process to reduce the number of broken C extensions when introducing C "
+"API incompatible changes listed in this PEP:"
+msgstr ""
+
+#: ../../pep-0620.rst:542
+msgid ""
+"Estimate how many popular C extensions are affected by the incompatible "
+"change."
+msgstr ""
+
+#: ../../pep-0620.rst:544
+msgid ""
+"Coordinate with maintainers of broken C extensions to prepare their code "
+"for the future incompatible change."
+msgstr ""
+
+#: ../../pep-0620.rst:546
+msgid ""
+"Introduce the incompatible changes in Python. The documentation must "
+"explain how to port existing code. It is recommended to merge such "
+"changes at the beginning of a development cycle to have more time for "
+"tests."
+msgstr ""
+
+#: ../../pep-0620.rst:550
+msgid ""
+"Changes which are the most likely to break a large number of C extensions"
+" should be announced on the capi-sig mailing list to notify C extensions "
+"maintainers to prepare their project for the next Python."
+msgstr ""
+
+#: ../../pep-0620.rst:553
+msgid ""
+"If the change breaks too many projects, reverting the change should be "
+"discussed, taking in account the number of broken packages, their "
+"importance in the Python community, and the importance of the change."
+msgstr ""
+
+#: ../../pep-0620.rst:557
+msgid ""
+"The coordination usually means reporting issues to the projects, or even "
+"proposing changes. It does not require waiting for a new release "
+"including fixes for every broken project."
+msgstr ""
+
+#: ../../pep-0620.rst:561
+msgid ""
+"Since more and more C extensions are written using Cython, rather "
+"directly using the C API, it is important to ensure that Cython is "
+"prepared in advance for incompatible changes. It gives more time for C "
+"extension maintainers to release a new version with code generated with "
+"the updated Cython (for C extensions distributing the code generated by "
+"Cython)."
+msgstr ""
+
+#: ../../pep-0620.rst:568
+msgid ""
+"Future incompatible changes can be announced by deprecating a function in"
+" the documentation and by annotating the function with "
+"``Py_DEPRECATED()``. But making a structure opaque and preventing the "
+"usage of a macro as l-value cannot be deprecated with "
+"``Py_DEPRECATED()``."
+msgstr ""
+
+#: ../../pep-0620.rst:574
+msgid ""
+"The important part is coordination and finding a balance between CPython "
+"evolutions and backward compatibility. For example, breaking a random, "
+"old, obscure and unmaintained C extension on PyPI is less severe than "
+"breaking numpy."
+msgstr ""
+
+#: ../../pep-0620.rst:579
+msgid ""
+"If a change is reverted, we move back to the coordination step to better "
+"prepare the change. Once more C extensions are ready, the incompatible "
+"change can be reconsidered."
+msgstr ""
+
+#: ../../pep-0620.rst:585
+msgid "Version History"
+msgstr ""
+
+#: ../../pep-0620.rst:587
+msgid ""
+"Version 3, June 2020: PEP rewritten from scratch. Python now distributes "
+"a new ``pythoncapi_compat.h`` header and a process is defined to reduce "
+"the number of broken C extensions when introducing C API incompatible "
+"changes listed in this PEP."
+msgstr ""
+
+#: ../../pep-0620.rst:591
+msgid ""
+"Version 2, April 2020: `PEP: Modify the C API to hide implementation "
+"details <https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/HKM774XKU7DPJNLUTYHUB5U6VR6EQMJF/#TKHNENOXP6H34E73XGFOL2KKXSM4Z6T2>`_."
+msgstr ""
+
+#: ../../pep-0620.rst:594
+msgid ""
+"Version 1, July 2017: `PEP: Hide implementation details in the C API "
+"<https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/6XATDGWK4VBUQPRHCRLKQECTJIPBVNJQ/#HFBGCWVLSM47JEP6SO67MRFT7Y3EOC44>`_"
+" sent to python-ideas"
+msgstr ""
+
+#: ../../pep-0620.rst:601
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0620.rst:603
+msgid "This document has been placed in the public domain."
+msgstr ""
+

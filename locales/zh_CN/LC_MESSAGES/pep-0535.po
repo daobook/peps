@@ -1,0 +1,271 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0535.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0535.txt:1
+msgid "535"
+msgstr ""
+
+#: ../../pep-0535.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0535.txt:2
+msgid "Rich comparison chaining"
+msgstr ""
+
+#: ../../pep-0535.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0535.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0535.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0535.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0535.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0535.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0535.txt
+msgid "Requires"
+msgstr ""
+
+#: ../../pep-0535.txt:9
+msgid "532"
+msgstr ""
+
+#: ../../pep-0535.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0535.txt:10
+msgid "12-Nov-2016"
+msgstr ""
+
+#: ../../pep-0535.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0535.txt:11
+msgid "3.8"
+msgstr ""
+
+#: ../../pep-0535.txt:14
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0535.txt:16
+msgid ""
+"Further consideration of this PEP has been deferred until Python 3.8 at "
+"the earliest."
+msgstr ""
+
+#: ../../pep-0535.txt:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0535.txt:23
+msgid ""
+"Inspired by PEP 335, and building on the circuit breaking protocol "
+"described in PEP 532, this PEP proposes a change to the definition of "
+"chained comparisons, where the comparison chaining will be updated to use"
+" the left-associative circuit breaking operator (``else``) rather than "
+"the logical disjunction operator  (``and``) if the left hand comparison "
+"returns a circuit breaker as its result."
+msgstr ""
+
+#: ../../pep-0535.txt:30
+msgid ""
+"While there are some practical complexities arising from the current "
+"handling of single-valued arrays in NumPy, this change should be "
+"sufficient to allow elementwise chained comparison operations for "
+"matrices, where the result is a matrix of boolean values, rather than "
+"raising ``ValueError`` or tautologically returning ``True`` (indicating a"
+" non-empty matrix)."
+msgstr ""
+
+#: ../../pep-0535.txt:38
+msgid "Relationship with other PEPs"
+msgstr ""
+
+#: ../../pep-0535.txt:40
+msgid ""
+"This PEP has been extracted from earlier iterations of PEP 532, as a "
+"follow-on use case for the circuit breaking protocol, rather than an "
+"essential part of its introduction."
+msgstr ""
+
+#: ../../pep-0535.txt:44
+msgid ""
+"The specific proposal in this PEP to handle the element-wise comparison "
+"use case by changing the semantic definition of comparison chaining is "
+"drawn directly from Guido's rejection of PEP 335."
+msgstr ""
+
+#: ../../pep-0535.txt:50
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0535.txt:52
+msgid "A chained comparison like ``0 < x < 10`` written as::"
+msgstr ""
+
+#: ../../pep-0535.txt:56
+msgid "is currently roughly semantically equivalent to::"
+msgstr ""
+
+#: ../../pep-0535.txt:62
+msgid ""
+"Using the circuit breaking concepts introduced in PEP 532, this PEP "
+"proposes that comparison chaining be changed to explicitly check if the "
+"left comparison returns a circuit breaker, and if so, use ``else`` rather"
+" than ``and`` to implement the comparison chaining::"
+msgstr ""
+
+#: ../../pep-0535.txt:74
+msgid ""
+"This allows types like NumPy arrays to control the behaviour of chained "
+"comparisons by returning suitably defined circuit breakers from "
+"comparison operations."
+msgstr ""
+
+#: ../../pep-0535.txt:78
+msgid ""
+"The expansion of this logic to an arbitrary number of chained comparison "
+"operations would be the same as the existing expansion for ``and``."
+msgstr ""
+
+#: ../../pep-0535.txt:82
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0535.txt:84
+msgid "In ultimately rejecting PEP 335, Guido van Rossum noted [1_]:"
+msgstr ""
+
+#: ../../pep-0535.txt:86
+msgid ""
+"The NumPy folks brought up a somewhat separate issue: for them, the most "
+"common use case is chained comparisons (e.g. A < B < C)."
+msgstr ""
+
+#: ../../pep-0535.txt:89
+msgid ""
+"To understand this observation, we first need to look at how comparisons "
+"work with NumPy arrays::"
+msgstr ""
+
+#: ../../pep-0535.txt:102
+msgid ""
+"Here we see that NumPy array comparisons are element-wise by default, "
+"comparing each element in the left hand array to the corresponding "
+"element in the right hand array, and producing a matrix of boolean "
+"results."
+msgstr ""
+
+#: ../../pep-0535.txt:106
+msgid ""
+"If either side of the comparison is a scalar value, then it is broadcast "
+"across the array and compared to each individual element::"
+msgstr ""
+
+#: ../../pep-0535.txt:114
+msgid ""
+"However, this broadcasting idiom breaks down if we attempt to use chained"
+" comparisons::"
+msgstr ""
+
+#: ../../pep-0535.txt:122
+msgid ""
+"The problem is that internally, Python implicitly expands this chained "
+"comparison into the form::"
+msgstr ""
+
+#: ../../pep-0535.txt:130
+msgid ""
+"And NumPy only permits implicit coercion to a boolean value for single-"
+"element arrays where ``a.any()`` and ``a.all()`` can be assured of having"
+" the same result::"
+msgstr ""
+
+#: ../../pep-0535.txt:143
+msgid ""
+"The proposal in this PEP would allow this situation to be changed by "
+"updating the definition of element-wise comparison operations in NumPy to"
+" return a dedicated subclass that implements the new circuit breaking "
+"protocol and also changes the result array's interpretation in a boolean "
+"context to always return ``False`` and hence never trigger the short-"
+"circuiting behaviour::"
+msgstr ""
+
+#: ../../pep-0535.txt:164
+msgid ""
+"With this change, the chained comparison example above would be able to "
+"return::"
+msgstr ""
+
+#: ../../pep-0535.txt:171
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0535.txt:173
+msgid ""
+"Actual implementation has been deferred pending in-principle interest in "
+"the idea of making the changes proposed in PEP 532."
+msgstr ""
+
+#: ../../pep-0535.txt:176
+msgid "...TBD..."
+msgstr ""
+
+#: ../../pep-0535.txt:180
+msgid "References"
+msgstr ""
+
+#: ../../pep-0535.txt:182
+msgid ""
+"PEP 335 rejection notification (https://mail.python.org/pipermail/python-"
+"dev/2012-March/117510.html)"
+msgstr ""
+
+#: ../../pep-0535.txt:186
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0535.txt:188
+msgid ""
+"This document has been placed in the public domain under the terms of the"
+" CC0 1.0 license: https://creativecommons.org/publicdomain/zero/1.0/"
+msgstr ""
+

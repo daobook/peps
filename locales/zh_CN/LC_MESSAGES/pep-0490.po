@@ -1,0 +1,605 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0490.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0490.txt:1
+msgid "490"
+msgstr ""
+
+#: ../../pep-0490.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0490.txt:2
+msgid "Chain exceptions at C level"
+msgstr ""
+
+#: ../../pep-0490.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0490.txt:5
+msgid "Victor Stinner <vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0490.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0490.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0490.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0490.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0490.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0490.txt:9
+msgid "25-Mar-2015"
+msgstr ""
+
+#: ../../pep-0490.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0490.txt:10
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0490.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0490.txt:16
+msgid "Chain exceptions at C level, as already done at Python level."
+msgstr ""
+
+#: ../../pep-0490.txt:20
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0490.txt:22
+msgid ""
+"Python 3 introduced a new killer feature: exceptions are chained by "
+"default, PEP 3134."
+msgstr ""
+
+#: ../../pep-0490.txt:25
+msgid "Example::"
+msgstr ""
+
+#: ../../pep-0490.txt:32
+msgid "Output::"
+msgstr ""
+
+#: ../../pep-0490.txt:46
+msgid ""
+"Exceptions are chained by default in Python code, but not in extensions "
+"written in C."
+msgstr ""
+
+#: ../../pep-0490.txt:49
+msgid ""
+"A new private ``_PyErr_ChainExceptions()`` function was introduced in "
+"Python 3.4.3 and 3.5 to chain exceptions. Currently, it must be called "
+"explicitly to chain exceptions and its usage is not trivial."
+msgstr ""
+
+#: ../../pep-0490.txt:53
+msgid ""
+"Example of ``_PyErr_ChainExceptions()`` usage from the ``zipimport`` "
+"module to chain the previous ``OSError`` to a new ``ZipImportError`` "
+"exception::"
+msgstr ""
+
+#: ../../pep-0490.txt:62
+msgid ""
+"This PEP proposes to also chain exceptions automatically at C level to "
+"stay consistent and give more information on failures to help debugging. "
+"The previous example becomes simply::"
+msgstr ""
+
+#: ../../pep-0490.txt:70
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0490.txt:73
+msgid "Modify PyErr_*() functions to chain exceptions"
+msgstr ""
+
+#: ../../pep-0490.txt:75
+msgid ""
+"Modify C functions raising exceptions of the Python C API to "
+"automatically chain exceptions: modify ``PyErr_SetString()``, "
+"``PyErr_Format()``, ``PyErr_SetNone()``, etc."
+msgstr ""
+
+#: ../../pep-0490.txt:81
+msgid "Modify functions to not chain exceptions"
+msgstr ""
+
+#: ../../pep-0490.txt:83
+msgid ""
+"Keeping the previous exception is not always interesting when the new "
+"exception contains information of the previous exception or even more "
+"information, especially when the two exceptions have the same type."
+msgstr ""
+
+#: ../../pep-0490.txt:87
+msgid "Example of an useless exception chain with ``int(str)``::"
+msgstr ""
+
+#: ../../pep-0490.txt:97
+msgid ""
+"The new ``TypeError`` exception contains more information than the "
+"previous exception. The previous exception should be hidden."
+msgstr ""
+
+#: ../../pep-0490.txt:100
+msgid ""
+"The ``PyErr_Clear()`` function can be called to clear the current "
+"exception before raising a new exception, to not chain the current "
+"exception with a new exception."
+msgstr ""
+
+#: ../../pep-0490.txt:106
+msgid "Modify functions to chain exceptions"
+msgstr ""
+
+#: ../../pep-0490.txt:108
+msgid ""
+"Some functions save and then restore the current exception. If a new "
+"exception is raised, the exception is currently displayed into sys.stderr"
+" or ignored depending on the function.  Some of these functions should be"
+" modified to chain exceptions instead."
+msgstr ""
+
+#: ../../pep-0490.txt:113
+msgid "Examples of function ignoring the new exception(s):"
+msgstr ""
+
+#: ../../pep-0490.txt:115
+msgid "``ptrace_enter_call()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:116
+msgid "``subprocess_fork_exec()``: ignore exception raised by enable_gc()"
+msgstr ""
+
+#: ../../pep-0490.txt:117
+msgid ""
+"``t_bootstrap()`` of the ``_thread`` module: ignore exception raised by "
+"trying to display the bootstrap function to ``sys.stderr``"
+msgstr ""
+
+#: ../../pep-0490.txt:119
+msgid ""
+"``PyDict_GetItem()``, ``_PyDict_GetItem_KnownHash()``: ignore exception "
+"raised by looking for a key in the dictionary"
+msgstr ""
+
+#: ../../pep-0490.txt:121
+msgid "``_PyErr_TrySetFromCause()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:122
+msgid "``PyFrame_LocalsToFast()``: ignore exception raised by ``dict_to_map()``"
+msgstr ""
+
+#: ../../pep-0490.txt:124
+msgid ""
+"``_PyObject_Dump()``: ignore exception. ``_PyObject_Dump()`` is used to "
+"debug, to inspect a running process, it should not modify the Python "
+"state."
+msgstr ""
+
+#: ../../pep-0490.txt:127
+msgid ""
+"``Py_ReprLeave()``: ignore exception \"because there is no way to report "
+"them\""
+msgstr ""
+
+#: ../../pep-0490.txt:129
+msgid "``type_dealloc()``: ignore exception raised by ``remove_all_subclasses()``"
+msgstr ""
+
+#: ../../pep-0490.txt:131
+msgid "``PyObject_ClearWeakRefs()``: ignore exception?"
+msgstr ""
+
+#: ../../pep-0490.txt:132
+msgid "``call_exc_trace()``, ``call_trace_protected()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:133
+msgid "``remove_importlib_frames()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:134
+msgid ""
+"``do_mktuple()``, helper used by ``Py_BuildValue()`` for example: ignore "
+"exception?"
+msgstr ""
+
+#: ../../pep-0490.txt:136
+msgid "``flush_io()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:137
+msgid "``sys_write()``, ``sys_format()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:138
+msgid "``_PyTraceback_Add()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:139
+msgid "``PyTraceBack_Print()``: ignore exception"
+msgstr ""
+
+#: ../../pep-0490.txt:141
+msgid "Examples of function displaying the new exception to ``sys.stderr``:"
+msgstr ""
+
+#: ../../pep-0490.txt:143
+msgid ""
+"``atexit_callfuncs()``: display exceptions with ``PyErr_Display()`` and "
+"return the latest exception, the function calls multiple callbacks and "
+"only returns the latest exception"
+msgstr ""
+
+#: ../../pep-0490.txt:146
+msgid ""
+"``sock_dealloc()``: log the ``ResourceWarning`` exception with "
+"``PyErr_WriteUnraisable()``"
+msgstr ""
+
+#: ../../pep-0490.txt:148
+msgid "``slot_tp_del()``: display exception with ``PyErr_WriteUnraisable()``"
+msgstr ""
+
+#: ../../pep-0490.txt:150
+msgid ""
+"``_PyGen_Finalize()``: display ``gen_close()`` exception with "
+"``PyErr_WriteUnraisable()``"
+msgstr ""
+
+#: ../../pep-0490.txt:152
+msgid ""
+"``slot_tp_finalize()``: display exception raised by the ``__del__()`` "
+"method with ``PyErr_WriteUnraisable()``"
+msgstr ""
+
+#: ../../pep-0490.txt:154
+msgid ""
+"``PyErr_GivenExceptionMatches()``: display exception raised by "
+"``PyType_IsSubtype()`` with ``PyErr_WriteUnraisable()``"
+msgstr ""
+
+#: ../../pep-0490.txt:159
+msgid "Backward compatibility"
+msgstr ""
+
+#: ../../pep-0490.txt:161
+msgid ""
+"A side effect of chaining exceptions is that exceptions store traceback "
+"objects which store frame objects which store local variables.  Local "
+"variables are kept alive by exceptions. A common issue is a reference "
+"cycle between local variables and exceptions: an exception is stored in a"
+" local variable and the frame indirectly stored in the exception. The "
+"cycle only impacts applications storing exceptions."
+msgstr ""
+
+#: ../../pep-0490.txt:169
+msgid ""
+"The reference cycle can now be fixed with the new "
+"``traceback.TracebackException`` object introduced in Python 3.5. It "
+"stores information required to format a full textual traceback without "
+"storing local variables."
+msgstr ""
+
+#: ../../pep-0490.txt:174
+msgid ""
+"The ``asyncio`` is impacted by the reference cycle issue. This module is "
+"also maintained outside Python standard library to release a version for "
+"Python 3.3.  ``traceback.TracebackException`` will maybe be backported in"
+" a private ``asyncio`` module to fix reference cycle issues."
+msgstr ""
+
+#: ../../pep-0490.txt:182
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0490.txt:185
+msgid "No change"
+msgstr ""
+
+#: ../../pep-0490.txt:187
+msgid ""
+"A new private ``_PyErr_ChainExceptions()`` function is enough to chain "
+"manually exceptions."
+msgstr ""
+
+#: ../../pep-0490.txt:190
+msgid "Exceptions will only be chained explicitly where it makes sense."
+msgstr ""
+
+#: ../../pep-0490.txt:194
+msgid "New helpers to chain exceptions"
+msgstr ""
+
+#: ../../pep-0490.txt:196
+msgid ""
+"Functions like ``PyErr_SetString()`` don't chain automatically "
+"exceptions. To make the usage of ``_PyErr_ChainExceptions()`` easier, new"
+" private functions are added:"
+msgstr ""
+
+#: ../../pep-0490.txt:200
+msgid "``_PyErr_SetStringChain(exc_type, message)``"
+msgstr ""
+
+#: ../../pep-0490.txt:201
+msgid "``_PyErr_FormatChain(exc_type, format, ...)``"
+msgstr ""
+
+#: ../../pep-0490.txt:202
+msgid "``_PyErr_SetNoneChain(exc_type)``"
+msgstr ""
+
+#: ../../pep-0490.txt:203
+msgid "``_PyErr_SetObjectChain(exc_type, exc_value)``"
+msgstr ""
+
+#: ../../pep-0490.txt:205
+msgid ""
+"Helper functions to raise specific exceptions like "
+"``_PyErr_SetKeyError(key)`` or ``PyErr_SetImportError(message, name, "
+"path)`` don't chain exceptions.  The generic "
+"``_PyErr_ChainExceptions(exc_type, exc_value, exc_tb)`` should be used to"
+" chain exceptions with these helper functions."
+msgstr ""
+
+#: ../../pep-0490.txt:213
+msgid "Appendix"
+msgstr ""
+
+#: ../../pep-0490.txt:216
+msgid "PEPs"
+msgstr ""
+
+#: ../../pep-0490.txt:218
+msgid ""
+"`PEP 3134 -- Exception Chaining and Embedded Tracebacks "
+"<https://www.python.org/dev/peps/pep-3134/>`_ (Python 3.0): new "
+"``__context__`` and ``__cause__`` attributes for exceptions"
+msgstr ""
+
+#: ../../pep-0490.txt:221
+msgid ""
+"`PEP 415 - Implement context suppression with exception attributes "
+"<https://www.python.org/dev/peps/pep-0415/>`_ (Python 3.3): ``raise exc "
+"from None``"
+msgstr ""
+
+#: ../../pep-0490.txt:224
+msgid ""
+"`PEP 409 - Suppressing exception context "
+"<https://www.python.org/dev/peps/pep-0409/>`_ (superseded by the PEP 415)"
+msgstr ""
+
+#: ../../pep-0490.txt:230
+msgid "Python C API"
+msgstr ""
+
+#: ../../pep-0490.txt:232
+msgid ""
+"The header file ``Include/pyerror.h`` declares functions related to "
+"exceptions."
+msgstr ""
+
+#: ../../pep-0490.txt:235
+msgid "Functions raising exceptions:"
+msgstr ""
+
+#: ../../pep-0490.txt:237
+msgid "``PyErr_SetNone(exc_type)``"
+msgstr ""
+
+#: ../../pep-0490.txt:238
+msgid "``PyErr_SetObject(exc_type, exc_value)``"
+msgstr ""
+
+#: ../../pep-0490.txt:239
+msgid "``PyErr_SetString(exc_type, message)``"
+msgstr ""
+
+#: ../../pep-0490.txt:240
+msgid "``PyErr_Format(exc, format, ...)``"
+msgstr ""
+
+#: ../../pep-0490.txt:242
+msgid "Helpers to raise specific exceptions:"
+msgstr ""
+
+#: ../../pep-0490.txt:244
+msgid "``PyErr_BadArgument()``"
+msgstr ""
+
+#: ../../pep-0490.txt:245
+msgid "``PyErr_BadInternalCall()``"
+msgstr ""
+
+#: ../../pep-0490.txt:246
+msgid "``PyErr_NoMemory()``"
+msgstr ""
+
+#: ../../pep-0490.txt:247
+msgid "``PyErr_SetFromErrno(exc)``"
+msgstr ""
+
+#: ../../pep-0490.txt:248
+msgid "``PyErr_SetFromWindowsErr(err)``"
+msgstr ""
+
+#: ../../pep-0490.txt:249
+msgid "``PyErr_SetImportError(message, name, path)``"
+msgstr ""
+
+#: ../../pep-0490.txt:250
+msgid "``_PyErr_SetKeyError(key)``"
+msgstr ""
+
+#: ../../pep-0490.txt:251
+msgid "``_PyErr_TrySetFromCause(prefix_format, ...)``"
+msgstr ""
+
+#: ../../pep-0490.txt:253
+msgid "Manage the current exception:"
+msgstr ""
+
+#: ../../pep-0490.txt:255
+msgid "``PyErr_Clear()``: clear the current exception, like ``except: pass``"
+msgstr ""
+
+#: ../../pep-0490.txt:257
+msgid "``PyErr_Fetch(exc_type, exc_value, exc_tb)``"
+msgstr ""
+
+#: ../../pep-0490.txt:258
+msgid "``PyErr_Restore(exc_type, exc_value, exc_tb)``"
+msgstr ""
+
+#: ../../pep-0490.txt:259
+msgid "``PyErr_GetExcInfo(exc_type, exc_value, exc_tb)``"
+msgstr ""
+
+#: ../../pep-0490.txt:260
+msgid "``PyErr_SetExcInfo(exc_type, exc_value, exc_tb)``"
+msgstr ""
+
+#: ../../pep-0490.txt:262
+msgid "Others function to handle exceptions:"
+msgstr ""
+
+#: ../../pep-0490.txt:264
+msgid "``PyErr_ExceptionMatches(exc)``: check to implement ``except exc:  ...``"
+msgstr ""
+
+#: ../../pep-0490.txt:266
+msgid "``PyErr_GivenExceptionMatches(exc1, exc2)``"
+msgstr ""
+
+#: ../../pep-0490.txt:267
+msgid "``PyErr_NormalizeException(exc_type, exc_value, exc_tb)``"
+msgstr ""
+
+#: ../../pep-0490.txt:268
+msgid "``_PyErr_ChainExceptions(exc_type, exc_value, exc_tb)``"
+msgstr ""
+
+#: ../../pep-0490.txt:272
+msgid "Python Issues"
+msgstr ""
+
+#: ../../pep-0490.txt:274
+msgid "Chain exceptions:"
+msgstr ""
+
+#: ../../pep-0490.txt:276
+msgid "`Issue #23763: Chain exceptions in C <http://bugs.python.org/issue23763>`_"
+msgstr ""
+
+#: ../../pep-0490.txt:278
+msgid ""
+"`Issue #23696: zipimport: chain ImportError to OSError "
+"<http://bugs.python.org/issue23696>`_"
+msgstr ""
+
+#: ../../pep-0490.txt:280
+msgid ""
+"`Issue #21715: Chaining exceptions at C level "
+"<http://bugs.python.org/issue21715>`_: added ``_PyErr_ChainExceptions()``"
+msgstr ""
+
+#: ../../pep-0490.txt:283
+msgid ""
+"`Issue #18488: sqlite: finalize() method of user function may be called "
+"with an exception set if a call to step() method failed "
+"<http://bugs.python.org/issue18488>`_"
+msgstr ""
+
+#: ../../pep-0490.txt:286
+msgid ""
+"`Issue #23781: Add private _PyErr_ReplaceException() in 2.7 "
+"<http://bugs.python.org/issue23781>`_"
+msgstr ""
+
+#: ../../pep-0490.txt:288
+msgid ""
+"`Issue #23782: Leak in _PyTraceback_Add "
+"<http://bugs.python.org/issue23782>`_"
+msgstr ""
+
+#: ../../pep-0490.txt:291
+msgid "Changes preventing to loose exceptions:"
+msgstr ""
+
+#: ../../pep-0490.txt:293
+msgid ""
+"`Issue #23571: Raise SystemError if a function returns a result with an "
+"exception set <http://bugs.python.org/issue23571>`_"
+msgstr ""
+
+#: ../../pep-0490.txt:295
+msgid ""
+"`Issue #18408: Fixes crashes found by pyfailmalloc "
+"<http://bugs.python.org/issue18408>`_"
+msgstr ""
+
+#: ../../pep-0490.txt:300
+msgid "Rejection"
+msgstr ""
+
+#: ../../pep-0490.txt:302
+msgid ""
+"The PEP was rejected on 2017-09-12 by Victor Stinner. It was decided in "
+"the python-dev discussion to not chain C exceptions by default, but "
+"instead chain them explicitly only where it makes sense."
+msgstr ""
+
+#: ../../pep-0490.txt:308
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0490.txt:310
+msgid "This document has been placed in the public domain."
+msgstr ""
+

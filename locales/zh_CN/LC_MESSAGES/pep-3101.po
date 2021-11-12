@@ -1,0 +1,1079 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3101.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3101.txt:1
+msgid "3101"
+msgstr ""
+
+#: ../../pep-3101.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3101.txt:2
+msgid "Advanced String Formatting"
+msgstr ""
+
+#: ../../pep-3101.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3101.txt:5
+msgid "Talin <viridia@gmail.com>"
+msgstr ""
+
+#: ../../pep-3101.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3101.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3101.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3101.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3101.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3101.txt:9
+msgid "16-Apr-2006"
+msgstr ""
+
+#: ../../pep-3101.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3101.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3101.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3101.txt:11
+msgid "28-Apr-2006, 6-May-2006, 10-Jun-2007, 14-Aug-2007, 14-Sep-2008"
+msgstr ""
+
+#: ../../pep-3101.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3101.txt:17
+msgid ""
+"This PEP proposes a new system for built-in string formatting operations,"
+" intended as a replacement for the existing '%' string formatting "
+"operator."
+msgstr ""
+
+#: ../../pep-3101.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3101.txt:25
+msgid "Python currently provides two methods of string interpolation:"
+msgstr ""
+
+#: ../../pep-3101.txt:27
+msgid "The '%' operator for strings. [1]_"
+msgstr ""
+
+#: ../../pep-3101.txt:29
+msgid "The string.Template module. [2]_"
+msgstr ""
+
+#: ../../pep-3101.txt:31
+msgid ""
+"The primary scope of this PEP concerns proposals for built-in string "
+"formatting operations (in other words, methods of the built-in string "
+"type)."
+msgstr ""
+
+#: ../../pep-3101.txt:35
+msgid ""
+"The '%' operator is primarily limited by the fact that it is a binary "
+"operator, and therefore can take at most two arguments. One of those "
+"arguments is already dedicated to the format string, leaving all other "
+"variables to be squeezed into the remaining argument.  The current "
+"practice is to use either a dictionary or a tuple as the second argument,"
+" but as many people have commented [3]_, this lacks flexibility.  The "
+"\"all or nothing\" approach (meaning that one must choose between only "
+"positional arguments, or only named arguments) is felt to be overly "
+"constraining."
+msgstr ""
+
+#: ../../pep-3101.txt:45
+msgid ""
+"While there is some overlap between this proposal and string.Template, it"
+" is felt that each serves a distinct need, and that one does not obviate "
+"the other.  This proposal is for a mechanism which, like '%', is "
+"efficient for small strings which are only used once, so, for example, "
+"compilation of a string into a template is not contemplated in this "
+"proposal, although the proposal does take care to define format strings "
+"and the API in such a way that an efficient template package could reuse "
+"the syntax and even some of the underlying formatting code."
+msgstr ""
+
+#: ../../pep-3101.txt:58
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3101.txt:60
+msgid "The specification will consist of the following parts:"
+msgstr ""
+
+#: ../../pep-3101.txt:62
+msgid ""
+"Specification of a new formatting method to be added to the built-in "
+"string class."
+msgstr ""
+
+#: ../../pep-3101.txt:65
+msgid ""
+"Specification of functions and flag values to be added to the string "
+"module, so that the underlying formatting engine can be used with "
+"additional options."
+msgstr ""
+
+#: ../../pep-3101.txt:69
+msgid "Specification of a new syntax for format strings."
+msgstr ""
+
+#: ../../pep-3101.txt:71
+msgid ""
+"Specification of a new set of special methods to control the formatting "
+"and conversion of objects."
+msgstr ""
+
+#: ../../pep-3101.txt:74
+msgid "Specification of an API for user-defined formatting classes."
+msgstr ""
+
+#: ../../pep-3101.txt:76
+msgid "Specification of how formatting errors are handled."
+msgstr ""
+
+#: ../../pep-3101.txt:78
+msgid ""
+"Note on string encodings: When discussing this PEP in the context of "
+"Python 3.0, it is assumed that all strings are unicode strings, and that "
+"the use of the word 'string' in the context of this document will "
+"generally refer to a Python 3.0 string, which is the same as Python 2.x "
+"unicode object."
+msgstr ""
+
+#: ../../pep-3101.txt:84
+msgid ""
+"In the context of Python 2.x, the use of the word 'string' in this "
+"document refers to an object which may either be a regular string or a "
+"unicode object.  All of the function call interfaces described in this "
+"PEP can be used for both strings and unicode objects, and in all cases "
+"there is sufficient information to be able to properly deduce the output "
+"string type (in other words, there is no need for two separate APIs). In "
+"all cases, the type of the format string dominates - that is, the result "
+"of the conversion will always result in an object that contains the same "
+"representation of characters as the input format string."
+msgstr ""
+
+#: ../../pep-3101.txt:98
+msgid "String Methods"
+msgstr ""
+
+#: ../../pep-3101.txt:100
+msgid ""
+"The built-in string class (and also the unicode class in 2.6) will gain a"
+" new method, 'format', which takes an arbitrary number of positional and "
+"keyword arguments::"
+msgstr ""
+
+#: ../../pep-3101.txt:106
+msgid ""
+"Within a format string, each positional argument is identified with a "
+"number, starting from zero, so in the above example, 'a' is argument 0 "
+"and 'b' is argument 1.  Each keyword argument is identified by its "
+"keyword name, so in the above example, 'c' is used to refer to the third "
+"argument."
+msgstr ""
+
+#: ../../pep-3101.txt:112
+msgid ""
+"There is also a global built-in function, 'format' which formats a single"
+" value::"
+msgstr ""
+
+#: ../../pep-3101.txt:117
+msgid "This function is described in a later section."
+msgstr ""
+
+#: ../../pep-3101.txt:121
+msgid "Format Strings"
+msgstr ""
+
+#: ../../pep-3101.txt:123
+msgid "Format strings consist of intermingled character data and markup."
+msgstr ""
+
+#: ../../pep-3101.txt:125
+msgid ""
+"Character data is data which is transferred unchanged from the format "
+"string to the output string; markup is not transferred from the format "
+"string directly to the output, but instead is used to define 'replacement"
+" fields' that describe to the format engine what should be placed in the "
+"output string in place of the markup."
+msgstr ""
+
+#: ../../pep-3101.txt:131
+msgid ""
+"Brace characters ('curly braces') are used to indicate a replacement "
+"field within the string::"
+msgstr ""
+
+#: ../../pep-3101.txt:136
+msgid "The result of this is the string::"
+msgstr ""
+
+#: ../../pep-3101.txt:140
+msgid "Braces can be escaped by doubling::"
+msgstr ""
+
+#: ../../pep-3101.txt:144
+msgid "Which would produce::"
+msgstr ""
+
+#: ../../pep-3101.txt:148
+msgid ""
+"The element within the braces is called a 'field'.  Fields consist of a "
+"'field name', which can either be simple or compound, and an optional "
+"'format specifier'."
+msgstr ""
+
+#: ../../pep-3101.txt:154
+msgid "Simple and Compound Field Names"
+msgstr ""
+
+#: ../../pep-3101.txt:156
+msgid ""
+"Simple field names are either names or numbers.  If numbers, they must be"
+" valid base-10 integers; if names, they must be valid Python identifiers."
+"  A number is used to identify a positional argument, while a name is "
+"used to identify a keyword argument."
+msgstr ""
+
+#: ../../pep-3101.txt:161
+msgid ""
+"A compound field name is a combination of multiple simple field names in "
+"an expression::"
+msgstr ""
+
+#: ../../pep-3101.txt:166
+msgid ""
+"This example shows the use of the 'getattr' or 'dot' operator in a field "
+"expression.  The dot operator allows an attribute of an input value to be"
+" specified as the field value."
+msgstr ""
+
+#: ../../pep-3101.txt:170
+msgid ""
+"Unlike some other programming languages, you cannot embed arbitrary "
+"expressions in format strings.  This is by design - the types of "
+"expressions that you can use is deliberately limited.  Only two operators"
+" are supported: the '.' (getattr) operator, and the '[]' (getitem) "
+"operator.  The reason for allowing these operators is that they don't "
+"normally have side effects in non-pathological code."
+msgstr ""
+
+#: ../../pep-3101.txt:177
+msgid "An example of the 'getitem' syntax::"
+msgstr ""
+
+#: ../../pep-3101.txt:181
+msgid ""
+"It should be noted that the use of 'getitem' within a format string is "
+"much more limited than its conventional usage.  In the above example, the"
+" string 'name' really is the literal string 'name', not a variable named "
+"'name'.  The rules for parsing an item key are very simple. If it starts "
+"with a digit, then it is treated as a number, otherwise it is used as a "
+"string."
+msgstr ""
+
+#: ../../pep-3101.txt:188
+msgid ""
+"Because keys are not quote-delimited, it is not possible to specify "
+"arbitrary dictionary keys (e.g., the strings \"10\" or \":-]\") from "
+"within a format string."
+msgstr ""
+
+#: ../../pep-3101.txt:192
+msgid ""
+"Implementation note: The implementation of this proposal is not required "
+"to enforce the rule about a simple or dotted name being a valid Python "
+"identifier.  Instead, it will rely on the getattr function of the "
+"underlying object to throw an exception if the identifier is not legal.  "
+"The ``str.format()`` function will have a minimalist parser which only "
+"attempts to figure out when it is \"done\" with an identifier (by finding"
+" a '.' or a ']', or '}', etc.)."
+msgstr ""
+
+#: ../../pep-3101.txt:203
+msgid "Format Specifiers"
+msgstr ""
+
+#: ../../pep-3101.txt:205
+msgid ""
+"Each field can also specify an optional set of 'format specifiers' which "
+"can be used to adjust the format of that field. Format specifiers follow "
+"the field name, with a colon (':') character separating the two::"
+msgstr ""
+
+#: ../../pep-3101.txt:212
+msgid ""
+"The meaning and syntax of the format specifiers depends on the type of "
+"object that is being formatted, but there is a standard set of format "
+"specifiers used for any object that does not override them."
+msgstr ""
+
+#: ../../pep-3101.txt:217
+msgid ""
+"Format specifiers can themselves contain replacement fields. For example,"
+" a field whose field width is itself a parameter could be specified via::"
+msgstr ""
+
+#: ../../pep-3101.txt:223
+msgid ""
+"These 'internal' replacement fields can only occur in the format "
+"specifier part of the replacement field.  Internal replacement fields "
+"cannot themselves have format specifiers.  This implies also that "
+"replacement fields cannot be nested to arbitrary levels."
+msgstr ""
+
+#: ../../pep-3101.txt:228
+msgid ""
+"Note that the doubled '}' at the end, which would normally be escaped, is"
+" not escaped in this case.  The reason is because the '{{' and '}}' "
+"syntax for escapes is only applied when used **outside** of a format "
+"field.  Within a format field, the brace characters always have their "
+"normal meaning."
+msgstr ""
+
+#: ../../pep-3101.txt:234
+msgid ""
+"The syntax for format specifiers is open-ended, since a class can "
+"override the standard format specifiers.  In such cases, the "
+"``str.format()`` method merely passes all of the characters between the "
+"first colon and the matching brace to the relevant underlying formatting "
+"method."
+msgstr ""
+
+#: ../../pep-3101.txt:242
+msgid "Standard Format Specifiers"
+msgstr ""
+
+#: ../../pep-3101.txt:244
+msgid ""
+"If an object does not define its own format specifiers, a standard set of"
+" format specifiers is used.  These are similar in concept to the format "
+"specifiers used by the existing '%' operator, however there are also a "
+"number of differences."
+msgstr ""
+
+#: ../../pep-3101.txt:249
+msgid "The general form of a standard format specifier is::"
+msgstr ""
+
+#: ../../pep-3101.txt:253
+msgid "The brackets ([]) indicate an optional element."
+msgstr ""
+
+#: ../../pep-3101.txt:255
+msgid "Then the optional align flag can be one of the following::"
+msgstr ""
+
+#: ../../pep-3101.txt:268
+msgid ""
+"Note that unless a minimum field width is defined, the field width will "
+"always be the same size as the data to fill it, so that the alignment "
+"option has no meaning in this case."
+msgstr ""
+
+#: ../../pep-3101.txt:272
+msgid ""
+"The optional 'fill' character defines the character to be used to pad the"
+" field to the minimum width.  The fill character, if present, must be "
+"followed by an alignment flag."
+msgstr ""
+
+#: ../../pep-3101.txt:276
+msgid ""
+"The 'sign' option is only valid for numeric types, and can be one of the "
+"following::"
+msgstr ""
+
+#: ../../pep-3101.txt:286
+msgid ""
+"If the '#' character is present, integers use the 'alternate form' for "
+"formatting.  This means that binary, octal, and hexadecimal output will "
+"be prefixed with '0b', '0o', and '0x', respectively."
+msgstr ""
+
+#: ../../pep-3101.txt:290
+msgid ""
+"'width' is a decimal integer defining the minimum field width.  If not "
+"specified, then the field width will be determined by the content."
+msgstr ""
+
+#: ../../pep-3101.txt:294
+msgid ""
+"If the width field is preceded by a zero ('0') character, this enables "
+"zero-padding.  This is equivalent to an alignment type of '=' and a fill "
+"character of '0'."
+msgstr ""
+
+#: ../../pep-3101.txt:298
+msgid ""
+"The 'precision' is a decimal number indicating how many digits should be "
+"displayed after the decimal point in a floating point conversion.  For "
+"non-numeric types the field indicates the maximum field size - in other "
+"words, how many characters will be used from the field content.  The "
+"precision is ignored for integer conversions."
+msgstr ""
+
+#: ../../pep-3101.txt:304
+msgid "Finally, the 'type' determines how the data should be presented."
+msgstr ""
+
+#: ../../pep-3101.txt:306
+msgid "The available integer presentation types are::"
+msgstr ""
+
+#: ../../pep-3101.txt:322
+msgid "The available floating point presentation types are::"
+msgstr ""
+
+#: ../../pep-3101.txt:345
+msgid ""
+"Objects are able to define their own format specifiers to replace the "
+"standard ones.  An example is the 'datetime' class, whose format "
+"specifiers might look something like the arguments to the ``strftime()`` "
+"function::"
+msgstr ""
+
+#: ../../pep-3101.txt:352
+msgid ""
+"For all built-in types, an empty format specification will produce the "
+"equivalent of ``str(value)``.  It is recommended that objects defining "
+"their own format specifiers follow this convention as well."
+msgstr ""
+
+#: ../../pep-3101.txt:359
+msgid "Explicit Conversion Flag"
+msgstr ""
+
+#: ../../pep-3101.txt:361
+msgid ""
+"The explicit conversion flag is used to transform the format field value "
+"before it is formatted.  This can be used to override the type-specific "
+"formatting behavior, and format the value as if it were a more generic "
+"type.  Currently, two explicit conversion flags are recognized::"
+msgstr ""
+
+#: ../../pep-3101.txt:370
+msgid "These flags are placed before the format specifier::"
+msgstr ""
+
+#: ../../pep-3101.txt:374
+msgid ""
+"In the preceding example, the string \"Hello\" will be printed, with "
+"quotes, in a field of at least 20 characters width."
+msgstr ""
+
+#: ../../pep-3101.txt:377
+msgid ""
+"A custom Formatter class can define additional conversion flags. The "
+"built-in formatter will raise a ValueError if an invalid conversion flag "
+"is specified."
+msgstr ""
+
+#: ../../pep-3101.txt:383
+msgid "Controlling Formatting on a Per-Type Basis"
+msgstr ""
+
+#: ../../pep-3101.txt:385
+msgid ""
+"Each Python type can control formatting of its instances by defining a "
+"``__format__`` method.  The ``__format__`` method is responsible for "
+"interpreting the format specifier, formatting the value, and returning "
+"the resulting string."
+msgstr ""
+
+#: ../../pep-3101.txt:390
+msgid ""
+"The new, global built-in function 'format' simply calls this special "
+"method, similar to how ``len()`` and ``str()`` simply call their "
+"respective special methods::"
+msgstr ""
+
+#: ../../pep-3101.txt:397
+msgid ""
+"It is safe to call this function with a value of \"None\" (because the "
+"\"None\" value in Python is an object and can have methods.)"
+msgstr ""
+
+#: ../../pep-3101.txt:400
+msgid ""
+"Several built-in types, including 'str', 'int', 'float', and 'object' "
+"define ``__format__`` methods.  This means that if you derive from any of"
+" those types, your class will know how to format itself."
+msgstr ""
+
+#: ../../pep-3101.txt:404
+msgid ""
+"The ``object.__format__`` method is the simplest: It simply converts the "
+"object to a string, and then calls format again::"
+msgstr ""
+
+#: ../../pep-3101.txt:411
+msgid ""
+"The ``__format__`` methods for 'int' and 'float' will do numeric "
+"formatting based on the format specifier.  In some cases, these "
+"formatting operations may be delegated to other types.  So for example, "
+"in the case where the 'int' formatter sees a format type of 'f' (meaning "
+"'float') it can simply cast the value to a float and call ``format()`` "
+"again."
+msgstr ""
+
+#: ../../pep-3101.txt:417
+msgid ""
+"Any class can override the ``__format__`` method to provide custom "
+"formatting for that type::"
+msgstr ""
+
+#: ../../pep-3101.txt:424
+msgid ""
+"Note for Python 2.x: The 'format_spec' argument will be either a string "
+"object or a unicode object, depending on the type of the original format "
+"string.  The ``__format__`` method should test the type of the specifiers"
+" parameter to determine whether to return a string or unicode object.  It"
+" is the responsibility of the ``__format__`` method to return an object "
+"of the proper type."
+msgstr ""
+
+#: ../../pep-3101.txt:431
+msgid ""
+"Note that the 'explicit conversion' flag mentioned above is not passed to"
+" the ``__format__`` method.  Rather, it is expected that the conversion "
+"specified by the flag will be performed before calling ``__format__``."
+msgstr ""
+
+#: ../../pep-3101.txt:437
+msgid "User-Defined Formatting"
+msgstr ""
+
+#: ../../pep-3101.txt:439
+msgid ""
+"There will be times when customizing the formatting of fields on a per-"
+"type basis is not enough.  An example might be a spreadsheet application,"
+" which displays hash marks '#' when a value is too large to fit in the "
+"available space."
+msgstr ""
+
+#: ../../pep-3101.txt:444
+msgid ""
+"For more powerful and flexible formatting, access to the underlying "
+"format engine can be obtained through the 'Formatter' class that lives in"
+" the 'string' module.  This class takes additional options which are not "
+"accessible via the normal str.format method."
+msgstr ""
+
+#: ../../pep-3101.txt:449
+msgid ""
+"An application can subclass the Formatter class to create its own "
+"customized formatting behavior."
+msgstr ""
+
+#: ../../pep-3101.txt:452
+msgid ""
+"The PEP does not attempt to exactly specify all methods and properties "
+"defined by the ``Formatter`` class; instead, those will be defined and "
+"documented in the initial implementation.  However, this PEP will specify"
+" the general requirements for the ``Formatter`` class, which are listed "
+"below."
+msgstr ""
+
+#: ../../pep-3101.txt:458
+msgid ""
+"Although ``string.format()`` does not directly use the ``Formatter`` "
+"class to do formatting, both use the same underlying implementation.  The"
+" reason that ``string.format()`` does not use the ``Formatter`` class "
+"directly is because \"string\" is a built-in type, which means that all "
+"of its methods must be implemented in C, whereas ``Formatter`` is a "
+"Python class.  ``Formatter`` provides an extensible wrapper around the "
+"same C functions as are used by ``string.format()``."
+msgstr ""
+
+#: ../../pep-3101.txt:468
+msgid "Formatter Methods"
+msgstr ""
+
+#: ../../pep-3101.txt:470
+msgid "The ``Formatter`` class takes no initialization arguments::"
+msgstr ""
+
+#: ../../pep-3101.txt:474
+msgid "The public API methods of class ``Formatter`` are as follows::"
+msgstr ""
+
+#: ../../pep-3101.txt:479
+msgid ""
+"'format' is the primary API method.  It takes a format template, and an "
+"arbitrary set of positional and keyword arguments. 'format' is just a "
+"wrapper that calls 'vformat'."
+msgstr ""
+
+#: ../../pep-3101.txt:483
+msgid ""
+"'vformat' is the function that does the actual work of formatting.  It is"
+" exposed as a separate function for cases where you want to pass in a "
+"predefined dictionary of arguments, rather than unpacking and repacking "
+"the dictionary as individual arguments using the ``*args`` and ``**kwds``"
+" syntax.  'vformat' does the work of breaking up the format template "
+"string into character data and replacement fields.  It calls the "
+"'get_positional' and 'get_index' methods as appropriate (described "
+"below.)"
+msgstr ""
+
+#: ../../pep-3101.txt:492
+msgid "``Formatter`` defines the following overridable methods::"
+msgstr ""
+
+#: ../../pep-3101.txt:498
+msgid ""
+"'get_value' is used to retrieve a given field value.  The 'key' argument "
+"will be either an integer or a string.  If it is an integer, it "
+"represents the index of the positional argument in 'args'; If it is a "
+"string, then it represents a named argument in 'kwargs'."
+msgstr ""
+
+#: ../../pep-3101.txt:503
+msgid ""
+"The 'args' parameter is set to the list of positional arguments to "
+"'vformat', and the 'kwargs' parameter is set to the dictionary of "
+"positional arguments."
+msgstr ""
+
+#: ../../pep-3101.txt:507
+msgid ""
+"For compound field names, these functions are only called for the first "
+"component of the field name; subsequent components are handled through "
+"normal attribute and indexing operations."
+msgstr ""
+
+#: ../../pep-3101.txt:511
+msgid ""
+"So for example, the field expression '0.name' would cause 'get_value' to "
+"be called with a 'key' argument of 0.  The 'name' attribute will be "
+"looked up after 'get_value' returns by calling the built-in 'getattr' "
+"function."
+msgstr ""
+
+#: ../../pep-3101.txt:516
+msgid ""
+"If the index or keyword refers to an item that does not exist, then an "
+"``IndexError/KeyError`` should be raised."
+msgstr ""
+
+#: ../../pep-3101.txt:519
+msgid ""
+"'check_unused_args' is used to implement checking for unused arguments if"
+" desired.  The arguments to this function is the set of all argument keys"
+" that were actually referred to in the format string (integers for "
+"positional arguments, and strings for named arguments), and a reference "
+"to the args and kwargs that was passed to vformat.  The set of unused "
+"args can be calculated from these parameters.  'check_unused_args' is "
+"assumed to throw an exception if the check fails."
+msgstr ""
+
+#: ../../pep-3101.txt:527
+msgid ""
+"'format_field' simply calls the global 'format' built-in.  The method is "
+"provided so that subclasses can override it."
+msgstr ""
+
+#: ../../pep-3101.txt:530
+msgid ""
+"To get a better understanding of how these functions relate to each "
+"other, here is pseudocode that explains the general operation of "
+"vformat::"
+msgstr ""
+
+#: ../../pep-3101.txt:580
+msgid ""
+"Note that the actual algorithm of the Formatter class (which will be "
+"implemented in C) may not be the one presented here.  (It's likely that "
+"the actual implementation won't be a 'class' at all - rather, vformat may"
+" just call a C function which accepts the other overridable methods as "
+"arguments.)  The primary purpose of this code example is to illustrate "
+"the order in which overridable methods are called."
+msgstr ""
+
+#: ../../pep-3101.txt:589
+msgid "Customizing Formatters"
+msgstr ""
+
+#: ../../pep-3101.txt:591
+msgid ""
+"This section describes some typical ways that Formatter objects can be "
+"customized."
+msgstr ""
+
+#: ../../pep-3101.txt:594
+msgid ""
+"To support alternative format-string syntax, the 'vformat' method can be "
+"overridden to alter the way format strings are parsed."
+msgstr ""
+
+#: ../../pep-3101.txt:597
+msgid ""
+"One common desire is to support a 'default' namespace, so that you don't "
+"need to pass in keyword arguments to the ``format()`` method, but can "
+"instead use values in a pre-existing namespace. This can easily be done "
+"by overriding ``get_value()`` as follows::"
+msgstr ""
+
+#: ../../pep-3101.txt:617
+msgid ""
+"One can use this to easily create a formatting function that allows "
+"access to global variables, for example::"
+msgstr ""
+
+#: ../../pep-3101.txt:625
+msgid ""
+"A similar technique can be done with the ``locals()`` dictionary to gain "
+"access to the locals dictionary."
+msgstr ""
+
+#: ../../pep-3101.txt:628
+msgid ""
+"It would also be possible to create a 'smart' namespace formatter that "
+"could automatically access both locals and globals through snooping of "
+"the calling stack.  Due to the need for compatibility with the different "
+"versions of Python, such a capability will not be included in the "
+"standard library, however it is anticipated that someone will create and "
+"publish a recipe for doing this."
+msgstr ""
+
+#: ../../pep-3101.txt:635
+msgid ""
+"Another type of customization is to change the way that built-in types "
+"are formatted by overriding the 'format_field' method.  (For non-built-in"
+" types, you can simply define a ``__format__`` special method on that "
+"type.)  So for example, you could override the formatting of numbers to "
+"output scientific notation when needed."
+msgstr ""
+
+#: ../../pep-3101.txt:643
+msgid "Error handling"
+msgstr ""
+
+#: ../../pep-3101.txt:645
+msgid ""
+"There are two classes of exceptions which can occur during formatting: "
+"exceptions generated by the formatter code itself, and exceptions "
+"generated by user code (such as a field object's 'getattr' function)."
+msgstr ""
+
+#: ../../pep-3101.txt:649
+msgid ""
+"In general, exceptions generated by the formatter code itself are of the "
+"\"ValueError\" variety -- there is an error in the actual \"value\" of "
+"the format string.  (This is not always true; for example, the "
+"``string.format()`` function might be passed a non-string as its first "
+"parameter, which would result in a ``TypeError``.)"
+msgstr ""
+
+#: ../../pep-3101.txt:655
+msgid ""
+"The text associated with these internally generated ``ValueError`` "
+"exceptions will indicate the location of the exception inside the format "
+"string, as well as the nature of the exception."
+msgstr ""
+
+#: ../../pep-3101.txt:659
+msgid ""
+"For exceptions generated by user code, a trace record and dummy frame "
+"will be added to the traceback stack to help in determining the location "
+"in the string where the exception occurred.  The inserted traceback will "
+"indicate that the error occurred at::"
+msgstr ""
+
+#: ../../pep-3101.txt:667
+msgid ""
+"where XX and YY represent the line and character position information in "
+"the string, respectively."
+msgstr ""
+
+#: ../../pep-3101.txt:672
+msgid "Alternate Syntax"
+msgstr ""
+
+#: ../../pep-3101.txt:674
+msgid ""
+"Naturally, one of the most contentious issues is the syntax of the format"
+" strings, and in particular the markup conventions used to indicate "
+"fields."
+msgstr ""
+
+#: ../../pep-3101.txt:678
+msgid ""
+"Rather than attempting to exhaustively list all of the various proposals,"
+" I will cover the ones that are most widely used already."
+msgstr ""
+
+#: ../../pep-3101.txt:682
+msgid ""
+"Shell variable syntax: ``$name`` and ``$(name)`` (or in some variants, "
+"``${name}``).  This is probably the oldest convention out there, and is "
+"used by Perl and many others.  When used without the braces, the length "
+"of the variable is determined by lexically scanning until an invalid "
+"character is found."
+msgstr ""
+
+#: ../../pep-3101.txt:688
+msgid ""
+"This scheme is generally used in cases where interpolation is implicit - "
+"that is, in environments where any string can contain interpolation "
+"variables, and no special substitution function need be invoked.  In such"
+" cases, it is important to prevent the interpolation behavior from "
+"occurring accidentally, so the '$' (which is otherwise a relatively "
+"uncommonly-used character) is used to signal when the behavior should "
+"occur."
+msgstr ""
+
+#: ../../pep-3101.txt:696
+msgid ""
+"It is the author's opinion, however, that in cases where the formatting "
+"is explicitly invoked, that less care needs to be taken to prevent "
+"accidental interpolation, in which case a lighter and less unwieldy "
+"syntax can be used."
+msgstr ""
+
+#: ../../pep-3101.txt:701
+msgid ""
+"printf and its cousins ('%'), including variations that add a field "
+"index, so that fields can be interpolated out of order."
+msgstr ""
+
+#: ../../pep-3101.txt:704
+msgid ""
+"Other bracket-only variations.  Various MUDs (Multi-User Dungeons) such "
+"as MUSH have used brackets (e.g. ``[name]``) to do string interpolation."
+"  The Microsoft .Net libraries uses braces (``{}``), and a syntax which "
+"is very similar to the one in this proposal, although the syntax for "
+"format specifiers is quite different. [4]_"
+msgstr ""
+
+#: ../../pep-3101.txt:711
+msgid ""
+"Backquoting.  This method has the benefit of minimal syntactical clutter,"
+" however it lacks many of the benefits of a function call syntax (such as"
+" complex expression arguments, custom formatters, etc.)."
+msgstr ""
+
+#: ../../pep-3101.txt:716
+msgid "Other variations include Ruby's ``#{}``, PHP's ``{$name}``, and so on."
+msgstr ""
+
+#: ../../pep-3101.txt:719
+msgid "Some specific aspects of the syntax warrant additional comments:"
+msgstr ""
+
+#: ../../pep-3101.txt:721
+msgid ""
+"1) Backslash character for escapes.  The original version of this PEP "
+"used backslash rather than doubling to escape a bracket. This worked "
+"because backslashes in Python string literals that don't conform to a "
+"standard backslash sequence such as ``\\n`` are left unmodified.  "
+"However, this caused a certain amount of confusion, and led to potential "
+"situations of multiple recursive escapes, i.e. ``\\\\\\\\{`` to place a "
+"literal backslash in front of a bracket."
+msgstr ""
+
+#: ../../pep-3101.txt:730
+msgid ""
+"2) The use of the colon character (':') as a separator for format "
+"specifiers.  This was chosen simply because that's what .Net uses."
+msgstr ""
+
+#: ../../pep-3101.txt:736
+msgid "Alternate Feature Proposals"
+msgstr ""
+
+#: ../../pep-3101.txt:738
+msgid ""
+"Restricting attribute access: An earlier version of the PEP restricted "
+"the ability to access attributes beginning with a leading underscore, for"
+" example \"{0}._private\".  However, this is a useful ability to have "
+"when debugging, so the feature was dropped."
+msgstr ""
+
+#: ../../pep-3101.txt:744
+msgid ""
+"Some developers suggested that the ability to do 'getattr' and 'getitem' "
+"access should be dropped entirely.  However, this is in conflict with the"
+" needs of another set of developers who strongly lobbied for the ability "
+"to pass in a large dict as a single argument (without flattening it into "
+"individual keyword arguments using the ``**kwargs`` syntax) and then have"
+" the format string refer to dict entries individually."
+msgstr ""
+
+#: ../../pep-3101.txt:752
+msgid ""
+"There has also been suggestions to expand the set of expressions that are"
+" allowed in a format string.  However, this was seen to go against the "
+"spirit of TOOWTDI, since the same effect can be achieved in most cases by"
+" executing the same expression on the parameter before it's passed in to "
+"the formatting function. For cases where the format string is being use "
+"to do arbitrary formatting in a data-rich environment, it's recommended "
+"to use a template engine specialized for this purpose, such as Genshi "
+"[5]_ or Cheetah [6]_."
+msgstr ""
+
+#: ../../pep-3101.txt:762
+msgid ""
+"Many other features were considered and rejected because they could "
+"easily be achieved by subclassing ``Formatter`` instead of building the "
+"feature into the base implementation.  This includes alternate syntax, "
+"comments in format strings, and many others."
+msgstr ""
+
+#: ../../pep-3101.txt:769
+msgid "Security Considerations"
+msgstr ""
+
+#: ../../pep-3101.txt:771
+msgid ""
+"Historically, string formatting has been a common source of security "
+"holes in web-based applications, particularly if the string formatting "
+"system allows arbitrary expressions to be embedded in format strings."
+msgstr ""
+
+#: ../../pep-3101.txt:776
+msgid ""
+"The best way to use string formatting in a way that does not create "
+"potential security holes is to never use format strings that come from an"
+" untrusted source."
+msgstr ""
+
+#: ../../pep-3101.txt:780
+msgid ""
+"Barring that, the next best approach is to ensure that string formatting "
+"has no side effects.  Because of the open nature of Python, it is "
+"impossible to guarantee that any non-trivial operation has this property."
+"  What this PEP does is limit the types of expressions in format strings "
+"to those in which visible side effects are both rare and strongly "
+"discouraged by the culture of Python developers.  So for example, "
+"attribute access is allowed because it would be considered pathological "
+"to write code where the mere access of an attribute has visible side "
+"effects (whether the code has **invisible** side effects - such as "
+"creating a cache entry for faster lookup - is irrelevant.)"
+msgstr ""
+
+#: ../../pep-3101.txt:794
+msgid "Sample Implementation"
+msgstr ""
+
+#: ../../pep-3101.txt:796
+msgid ""
+"An implementation of an earlier version of this PEP was created by "
+"Patrick Maupin and Eric V. Smith, and can be found in the pep3101 sandbox"
+" at:"
+msgstr ""
+
+#: ../../pep-3101.txt:800
+msgid "http://svn.python.org/view/sandbox/trunk/pep3101/"
+msgstr ""
+
+#: ../../pep-3101.txt:804
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-3101.txt:806
+msgid ""
+"Backwards compatibility can be maintained by leaving the existing "
+"mechanisms in place.  The new system does not collide with any of the "
+"method names of the existing string formatting techniques, so both "
+"systems can co-exist until it comes time to deprecate the older system."
+msgstr ""
+
+#: ../../pep-3101.txt:814
+msgid "References"
+msgstr ""
+
+#: ../../pep-3101.txt:816
+msgid ""
+"Python Library Reference - String formatting operations "
+"http://docs.python.org/library/stdtypes.html#string-formatting-operations"
+msgstr ""
+
+#: ../../pep-3101.txt:819
+msgid ""
+"Python Library References - Template strings "
+"http://docs.python.org/library/string.html#string.Template"
+msgstr ""
+
+#: ../../pep-3101.txt:822
+msgid ""
+"[Python-3000] String formatting operations in python 3k "
+"https://mail.python.org/pipermail/python-3000/2006-April/000285.html"
+msgstr ""
+
+#: ../../pep-3101.txt:825
+msgid ""
+"Composite Formatting - [.Net Framework Developer's Guide] "
+"http://msdn.microsoft.com/library/en-"
+"us/cpguide/html/cpconcompositeformatting.asp?frame=true"
+msgstr ""
+
+#: ../../pep-3101.txt:828
+msgid "Genshi templating engine. http://genshi.edgewall.org/"
+msgstr ""
+
+#: ../../pep-3101.txt:831
+msgid ""
+"Cheetah - The Python-Powered Template Engine. "
+"http://www.cheetahtemplate.org/"
+msgstr ""
+
+#: ../../pep-3101.txt:836
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3101.txt:838
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,439 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0591.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0591.rst:1
+msgid "591"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0591.rst:2
+msgid "Adding a final qualifier to typing"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0591.rst:3
+msgid ""
+"Michael J. Sullivan <sully@msully.net>, Ivan Levkivskyi "
+"<levkivskyi@gmail.com>"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0591.rst:4
+msgid "Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0591.rst:5
+msgid "typing-sig@python.org"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0591.rst:6
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0591.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0591.rst:9
+msgid "15-Mar-2019"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0591.rst:10
+msgid "3.8"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0591.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0591.rst:12
+msgid ""
+"https://mail.python.org/archives/list/typing-"
+"sig@python.org/message/FDO4KFYWYQEP3U2HVVBEBR3SXPHQSHYR/"
+msgstr ""
+
+#: ../../pep-0591.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0591.rst:18
+msgid ""
+"This PEP proposes a \"final\" qualifier to be added to the ``typing`` "
+"module---in the form of a ``final`` decorator and a ``Final`` type "
+"annotation---to serve three related purposes:"
+msgstr ""
+
+#: ../../pep-0591.rst:22
+msgid "Declaring that a method should not be overridden"
+msgstr ""
+
+#: ../../pep-0591.rst:23
+msgid "Declaring that a class should not be subclassed"
+msgstr ""
+
+#: ../../pep-0591.rst:24
+msgid "Declaring that a variable or attribute should not be reassigned"
+msgstr ""
+
+#: ../../pep-0591.rst:28
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0591.rst:31 ../../pep-0591.rst:71
+msgid "The ``final`` decorator"
+msgstr ""
+
+#: ../../pep-0591.rst:32
+msgid ""
+"The current ``typing`` module lacks a way to restrict the use of "
+"inheritance or overriding at a typechecker level. This is a common "
+"feature in other object-oriented languages (such as Java), and is useful "
+"for reducing the potential space of behaviors of a class, easing "
+"reasoning."
+msgstr ""
+
+#: ../../pep-0591.rst:38
+msgid "Some situations where a final class or method may be useful include:"
+msgstr ""
+
+#: ../../pep-0591.rst:40
+msgid ""
+"A class wasn’t designed to be subclassed or a method wasn't designed to "
+"be overridden. Perhaps it would not work as expected, or be error-prone."
+msgstr ""
+
+#: ../../pep-0591.rst:43
+msgid ""
+"Subclassing or overriding would make code harder to understand or "
+"maintain. For example, you may want to prevent unnecessarily tight "
+"coupling between base classes and subclasses."
+msgstr ""
+
+#: ../../pep-0591.rst:46
+msgid ""
+"You want to retain the freedom to arbitrarily change the class "
+"implementation in the future, and these changes might break subclasses."
+msgstr ""
+
+#: ../../pep-0591.rst:51 ../../pep-0591.rst:124
+msgid "The ``Final`` annotation"
+msgstr ""
+
+#: ../../pep-0591.rst:53
+msgid ""
+"The current ``typing`` module lacks a way to indicate that a variable "
+"will not be assigned to. This is a useful feature in several situations:"
+msgstr ""
+
+#: ../../pep-0591.rst:57
+msgid ""
+"Preventing unintended modification of module and class level constants "
+"and documenting them as constants in a checkable way."
+msgstr ""
+
+#: ../../pep-0591.rst:59
+msgid ""
+"Creating a read-only attribute that may not be overridden by subclasses. "
+"(``@property`` can make an attribute read-only but does not prevent "
+"overriding)"
+msgstr ""
+
+#: ../../pep-0591.rst:62
+msgid ""
+"Allowing a name to be used in situations where ordinarily a literal is "
+"expected (for example as a field name for ``NamedTuple``, a tuple of "
+"types passed to ``isinstance``, or an argument to a function with "
+"arguments of ``Literal`` type [#PEP-586]_)."
+msgstr ""
+
+#: ../../pep-0591.rst:68
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0591.rst:73
+msgid ""
+"The ``typing.final`` decorator is used to restrict the use of inheritance"
+" and overriding."
+msgstr ""
+
+#: ../../pep-0591.rst:76
+msgid ""
+"A type checker should prohibit any class decorated with ``@final`` from "
+"being subclassed and any method decorated with ``@final`` from being "
+"overridden in a subclass. The method decorator version may be used with "
+"all of instance methods, class methods, static methods, and properties."
+msgstr ""
+
+#: ../../pep-0591.rst:81
+msgid "For example::"
+msgstr ""
+
+#: ../../pep-0591.rst:92
+msgid "and::"
+msgstr ""
+
+#: ../../pep-0591.rst:107
+msgid ""
+"For overloaded methods, ``@final`` should be placed on the implementation"
+" (or on the first overload, for stubs)::"
+msgstr ""
+
+#: ../../pep-0591.rst:121
+msgid "It is an error to use ``@final`` on a non-method function."
+msgstr ""
+
+#: ../../pep-0591.rst:126
+msgid ""
+"The ``typing.Final`` type qualifier is used to indicate that a variable "
+"or attribute should not be reassigned, redefined, or overridden."
+msgstr ""
+
+#: ../../pep-0591.rst:130
+msgid "Syntax"
+msgstr ""
+
+#: ../../pep-0591.rst:132
+msgid "``Final`` may be used in one of several forms:"
+msgstr ""
+
+#: ../../pep-0591.rst:134
+msgid "With an explicit type, using the syntax ``Final[<type>]``. Example::"
+msgstr ""
+
+#: ../../pep-0591.rst:138
+msgid "With no type annotation. Example::"
+msgstr ""
+
+#: ../../pep-0591.rst:142
+msgid ""
+"The typechecker should apply its usual type inference mechanisms to "
+"determine the type of ``ID`` (here, likely, ``int``). Note that unlike "
+"for generic classes this is *not* the same as ``Final[Any]``."
+msgstr ""
+
+#: ../../pep-0591.rst:146
+msgid ""
+"In class bodies and stub files you can omit the right hand side and just "
+"write ``ID: Final[float]``.  If the right hand side is omitted, there "
+"must be an explicit type argument to ``Final``."
+msgstr ""
+
+#: ../../pep-0591.rst:150
+msgid ""
+"Finally, as ``self.id: Final = 1`` (also optionally with a type in square"
+" brackets). This is allowed *only* in ``__init__`` methods, so that the "
+"final instance attribute is assigned only once when an instance is "
+"created."
+msgstr ""
+
+#: ../../pep-0591.rst:157
+msgid "Semantics and examples"
+msgstr ""
+
+#: ../../pep-0591.rst:159
+msgid "The two main rules for defining a final name are:"
+msgstr ""
+
+#: ../../pep-0591.rst:161
+msgid ""
+"There can be *at most one* final declaration per module or class for a "
+"given attribute. There can't be separate class-level and instance-level "
+"constants with the same name."
+msgstr ""
+
+#: ../../pep-0591.rst:165
+msgid "There must be *exactly one* assignment to a final name."
+msgstr ""
+
+#: ../../pep-0591.rst:167
+msgid ""
+"This means a type checker should prevent further assignments to final "
+"names in type-checked code::"
+msgstr ""
+
+#: ../../pep-0591.rst:180
+msgid ""
+"Note that a type checker need not allow ``Final`` declarations inside "
+"loops since the runtime will see multiple assignments to the same "
+"variable in subsequent iterations."
+msgstr ""
+
+#: ../../pep-0591.rst:184
+msgid ""
+"Additionally, a type checker should prevent final attributes from being "
+"overridden in a subclass::"
+msgstr ""
+
+#: ../../pep-0591.rst:196
+msgid ""
+"A final attribute declared in a class body without an initializer must be"
+" initialized in the ``__init__`` method (except in stub files)::"
+msgstr ""
+
+#: ../../pep-0591.rst:206
+msgid ""
+"Type checkers should infer a final attribute that is initialized in a "
+"class body as being a class variable. Variables should not be annotated "
+"with both ``ClassVar`` and ``Final``."
+msgstr ""
+
+#: ../../pep-0591.rst:210
+msgid ""
+"``Final`` may only be used as the outermost type in assignments or "
+"variable annotations. Using it in any other position is an error. In "
+"particular, ``Final`` can't be used in annotations for function "
+"arguments::"
+msgstr ""
+
+#: ../../pep-0591.rst:219
+msgid ""
+"Note that declaring a name as final only guarantees that the name will "
+"not be re-bound to another value, but does not make the value immutable. "
+"Immutable ABCs and containers may be used in combination with ``Final`` "
+"to prevent mutating such values::"
+msgstr ""
+
+#: ../../pep-0591.rst:232
+msgid ""
+"Type checkers should treat uses of a final name that was initialized with"
+" a literal as if it was replaced by the literal. For example, the "
+"following should be allowed::"
+msgstr ""
+
+#: ../../pep-0591.rst:244
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0591.rst:246
+msgid ""
+"The mypy [#mypy]_ type checker supports ``Final`` and ``final``. A "
+"reference implementation of the runtime component is provided in the "
+"``typing_extensions`` [#typing_extensions]_ module."
+msgstr ""
+
+#: ../../pep-0591.rst:252
+msgid "Rejected/deferred Ideas"
+msgstr ""
+
+#: ../../pep-0591.rst:254
+msgid ""
+"The name ``Const`` was also considered as the name for the ``Final`` type"
+" annotation. The name ``Final`` was chosen instead because the concepts "
+"are related and it seemed best to be consistent between them."
+msgstr ""
+
+#: ../../pep-0591.rst:258
+msgid ""
+"We considered using a single name ``Final`` instead of introducing "
+"``final`` as well, but ``@Final`` just looked too weird to us."
+msgstr ""
+
+#: ../../pep-0591.rst:261
+msgid ""
+"A related feature to final classes would be Scala-style sealed classes, "
+"where a class is allowed to be inherited only by classes defined in the "
+"same module. Sealed classes seem most useful in combination with pattern "
+"matching, so it does not seem to justify the complexity in our case. This"
+" could be revisited in the future."
+msgstr ""
+
+#: ../../pep-0591.rst:267
+msgid ""
+"It would be possible to have the ``@final`` decorator on classes "
+"dynamically prevent subclassing at runtime. Nothing else in ``typing`` "
+"does any runtime enforcement, though, so ``final`` will not either. A "
+"workaround for when both runtime enforcement and static checking is "
+"desired is to use this idiom (possibly in a support module)::"
+msgstr ""
+
+#: ../../pep-0591.rst:280
+msgid "References"
+msgstr ""
+
+#: ../../pep-0591.rst:282
+msgid ""
+"PEP 484, Type Hints, van Rossum, Lehtosalo, Langa "
+"(http://www.python.org/dev/peps/pep-0484)"
+msgstr ""
+
+#: ../../pep-0591.rst:285
+msgid ""
+"PEP 526, Syntax for Variable Annotations, Gonzalez, House, Levkivskyi, "
+"Roach, van Rossum (http://www.python.org/dev/peps/pep-0526)"
+msgstr ""
+
+#: ../../pep-0591.rst:289
+msgid ""
+"PEP 586, Literal Types, Lee, Levkivskyi, Lehtosalo "
+"(http://www.python.org/dev/peps/pep-0586)"
+msgstr ""
+
+#: ../../pep-0591.rst:292
+msgid "http://www.mypy-lang.org/"
+msgstr ""
+
+#: ../../pep-0591.rst:294
+msgid "https://github.com/python/typing/tree/master/typing_extensions"
+msgstr ""
+
+#: ../../pep-0591.rst:297
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0591.rst:299
+msgid "This document has been placed in the public domain."
+msgstr ""
+

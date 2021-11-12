@@ -1,0 +1,270 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0629.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0629.rst:1
+msgid "629"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0629.rst:2
+msgid "Versioning PyPI's Simple API"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0629.rst:3
+msgid "Donald Stufft <donald@stufft.io>"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0629.rst:4
+msgid "Brett Cannon <brett@python.org>"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0629.rst:5
+msgid "https://discuss.python.org/t/pep-629-versioning-pypis-simple-api/4720"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0629.rst:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0629.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0629.rst:9 ../../pep-0629.rst:10
+msgid "16-Jul-2020"
+msgstr ""
+
+#: ../../pep-0629.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0629.rst:14
+msgid ""
+"This PEP was `accepted on 2020-08-20 "
+"<https://discuss.python.org/t/pep-629-versioning-pypis-simple-"
+"api/4720/15>`__. PyPI `merged an implementation "
+"<2bfa5a8c75e3af218494fe8de1eb809a43e3bbb9>`__ on 2020-01-28, marking this"
+" PEP as \"Final\"."
+msgstr ""
+
+#: ../../pep-0629.rst:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0629.rst:23
+msgid ""
+"This PEP proposes adding a method for versioning the simple API so that "
+"clients can determine which features of the simple API that a specific "
+"repository supports."
+msgstr ""
+
+#: ../../pep-0629.rst:29
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0629.rst:31
+msgid ""
+"When evolving the simple API, clients wish to be able to determine which "
+"features the repository supports. Currently there is no mechanism to do "
+"this, except by attempting to detect new features by looking at the data "
+"in the responses and see if it appears like a particular feature is in "
+"use."
+msgstr ""
+
+#: ../../pep-0629.rst:37
+msgid ""
+"This works reasonably well for a modern version of a client to determine "
+"if the repository supports all of the features it wants to implement, "
+"however it does not do anything to tell an older version the client that "
+"the repository supports features that it might not understand and to "
+"allow messaging to indicate that it might not be correctly understanding "
+"the output of the repository."
+msgstr ""
+
+#: ../../pep-0629.rst:44
+msgid ""
+"An example of a scenario where this happened was the phasing in of "
+"python-requires metadata, while existing clients could still successfully"
+" use the repository, they were lacking the ability to understand this new"
+" piece of data which would have informed their behavior to select a "
+"better file for end users."
+msgstr ""
+
+#: ../../pep-0629.rst:52
+msgid "Overview"
+msgstr ""
+
+#: ../../pep-0629.rst:54
+msgid ""
+"This PEP proposes the inclusion of a meta tag on the responses of every "
+"successful request to a simple API page, which contains a name attribute "
+"of \"pypi:repository-version\", and a content that is a PEP 440 "
+"compatible version number, which is further constrained to ONLY be "
+"Major.Minor, and none of the additional features supported by PEP 440."
+msgstr ""
+
+#: ../../pep-0629.rst:60
+msgid "This would end up looking like::"
+msgstr ""
+
+#: ../../pep-0629.rst:64
+msgid "When interpreting the repository version:"
+msgstr ""
+
+#: ../../pep-0629.rst:66
+msgid ""
+"Incrementing the major version is used to signal a backwards incompatible"
+" change such that existing clients would no longer be expected to be able"
+" to meaningfully use the API."
+msgstr ""
+
+#: ../../pep-0629.rst:69
+msgid ""
+"Incrementing the minor version is used to signal a backwards compatible "
+"change such that existing clients would still be expected to be able to "
+"meaningfully use the API."
+msgstr ""
+
+#: ../../pep-0629.rst:73
+msgid ""
+"It is left up to the discretion of any future PEPs as to what "
+"specifically constitutes a backwards incompatible vs compatible change "
+"beyond the broad suggestion that existing clients will be able to "
+"\"meaningfully\" continue to use the API, and can include adding, "
+"modifying, or removing existing features."
+msgstr ""
+
+#: ../../pep-0629.rst:79
+msgid ""
+"It is expectation of this PEP that the major version will never be "
+"incremented, and any future major API evolutions would utilize a "
+"different mechanism for API evolution. However the major version is "
+"included to disambiguate with future versions (e.g. a hypothetical simple"
+" api v2 that lived at /v2/, but which would be confusing if the "
+"repository-version was set to a version >= 2)."
+msgstr ""
+
+#: ../../pep-0629.rst:86
+msgid ""
+"This PEP sets the current API version to \"1.0\", and expects that future"
+" PEPs that further evolve the simple API will increment the minor version"
+" number."
+msgstr ""
+
+#: ../../pep-0629.rst:92
+msgid "Clients"
+msgstr ""
+
+#: ../../pep-0629.rst:94
+msgid ""
+"Clients interacting with the simple API **SHOULD** introspect each "
+"response for the repository version, and if that data does not exist "
+"**MUST** assume that it is version 1.0."
+msgstr ""
+
+#: ../../pep-0629.rst:98
+msgid ""
+"When encountering a major version greater than expected, clients **MUST**"
+" hard fail with an appropriate error message for the user."
+msgstr ""
+
+#: ../../pep-0629.rst:101
+msgid ""
+"When encountering a minor version greater than expected, clients "
+"**SHOULD** warn users with an appropriate message."
+msgstr ""
+
+#: ../../pep-0629.rst:104
+msgid ""
+"Clients **MAY** still continue to use feature detection in order to "
+"determine what features a repository uses."
+msgstr ""
+
+#: ../../pep-0629.rst:109
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0629.rst:112
+msgid "Using a Header"
+msgstr ""
+
+#: ../../pep-0629.rst:114
+msgid ""
+"Instead of baking this information into the actual HTML, an alternative "
+"would be to use a HTTP header. This idea was considered and ultimately "
+"was rejected because it would make mirrors have to start modifying "
+"headers instead of being able to operate as a \"dumb\" HTTP server of "
+"files."
+msgstr ""
+
+#: ../../pep-0629.rst:122
+msgid "Using an URL"
+msgstr ""
+
+#: ../../pep-0629.rst:124
+msgid ""
+"Another traditional mechanism for versioning APIs is to bake it into the "
+"URL, something like ``/1.0/simple/`` or so. This works well for major "
+"version changes where olders clients are not expected to be capable of "
+"continuing to use it, but it is not well suited to minor version bumps, "
+"particularly when the version numbers can be viewed as largely advisory "
+"for end users."
+msgstr ""
+
+#: ../../pep-0629.rst:135
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0629.rst:137
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

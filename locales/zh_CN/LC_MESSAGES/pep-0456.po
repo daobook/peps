@@ -1,0 +1,1136 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0456.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0456.txt:1
+msgid "456"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0456.txt:2
+msgid "Secure and interchangeable hash algorithm"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0456.txt:5
+msgid "Christian Heimes <christian@python.org>"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0456.txt:6
+msgid "Nick Coghlan"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0456.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0456.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0456.txt:10
+msgid "27-Sep-2013"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0456.txt:11
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0456.txt:12
+msgid "06-Oct-2013, 14-Nov-2013, 20-Nov-2013"
+msgstr ""
+
+#: ../../pep-0456.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0456.txt:13
+msgid "https://mail.python.org/pipermail/python-dev/2013-November/130400.html"
+msgstr ""
+
+#: ../../pep-0456.txt:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0456.txt:19
+msgid ""
+"This PEP proposes SipHash as default string and bytes hash algorithm to "
+"properly fix hash randomization once and for all. It also proposes "
+"modifications to Python's C code in order to unify the hash code and to "
+"make it easily interchangeable."
+msgstr ""
+
+#: ../../pep-0456.txt:26
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0456.txt:28
+msgid ""
+"Despite the last attempt [issue13703]_ CPython is still vulnerable to "
+"hash collision DoS attacks [29c3]_ [issue14621]_. The current hash "
+"algorithm and its randomization is not resilient against attacks. Only a "
+"proper cryptographic hash function prevents the extraction of secret "
+"randomization keys. Although no practical attack against a Python-based "
+"service has been seen yet, the weakness has to be fixed. Jean-Philippe "
+"Aumasson and Daniel J. Bernstein have already shown how the seed for the "
+"current implementation can be recovered [poc]_."
+msgstr ""
+
+#: ../../pep-0456.txt:37
+msgid ""
+"Furthermore, the current hash algorithm is hard-coded and implemented "
+"multiple times for bytes and three different Unicode representations "
+"UCS1, UCS2 and UCS4. This makes it impossible for embedders to replace it"
+" with a different implementation without patching and recompiling large "
+"parts of the interpreter. Embedders may want to choose a more suitable "
+"hash function."
+msgstr ""
+
+#: ../../pep-0456.txt:43
+msgid ""
+"Finally the current implementation code does not perform well. In the "
+"common case it only processes one or two bytes per cycle. On a modern "
+"64-bit processor the code can easily be adjusted to deal with eight bytes"
+" at once."
+msgstr ""
+
+#: ../../pep-0456.txt:47
+msgid ""
+"This PEP proposes three major changes to the hash code for strings and "
+"bytes:"
+msgstr ""
+
+#: ../../pep-0456.txt:49
+msgid ""
+"SipHash [sip]_ is introduced as default hash algorithm. It is fast and "
+"small despite its cryptographic properties. Due to the fact that it was "
+"designed by well known security and crypto experts, it is safe to assume "
+"that its secure for the near future."
+msgstr ""
+
+#: ../../pep-0456.txt:54
+msgid ""
+"The existing FNV code is kept for platforms without a 64-bit data type. "
+"The algorithm is optimized to process larger chunks per cycle."
+msgstr ""
+
+#: ../../pep-0456.txt:57
+msgid ""
+"Calculation of the hash of strings and bytes is moved into a single API "
+"function instead of multiple specialized implementations in "
+"``Objects/object.c`` and ``Objects/unicodeobject.c``. The function takes "
+"a void pointer plus length and returns the hash for it."
+msgstr ""
+
+#: ../../pep-0456.txt:62
+msgid ""
+"The algorithm can be selected at compile time. FNV is guaranteed to exist"
+" on all platforms. SipHash is available on the majority of modern "
+"systems."
+msgstr ""
+
+#: ../../pep-0456.txt:67
+msgid "Requirements for a hash function"
+msgstr ""
+
+#: ../../pep-0456.txt:69
+msgid ""
+"It MUST be able to hash arbitrarily large blocks of memory from 1 byte up"
+" to the maximum ``ssize_t`` value."
+msgstr ""
+
+#: ../../pep-0456.txt:72
+msgid ""
+"It MUST produce at least 32 bits on 32-bit platforms and at least 64 bits"
+" on 64-bit platforms. (Note: Larger outputs can be compressed with e.g. "
+"``v ^ (v >> 32)``.)"
+msgstr ""
+
+#: ../../pep-0456.txt:76
+msgid ""
+"It MUST support hashing of unaligned memory in order to support "
+"hash(memoryview)."
+msgstr ""
+
+#: ../../pep-0456.txt:79
+msgid ""
+"It is highly RECOMMENDED that the length of the input influences the "
+"outcome, so that ``hash(b'\\00') != hash(b'\\x00\\x00')``."
+msgstr ""
+
+#: ../../pep-0456.txt:82
+msgid ""
+"The internal interface code between the hash function and the tp_hash "
+"slots implements special cases for zero length input and a return value "
+"of ``-1``. An input of length ``0`` is mapped to hash value ``0``. The "
+"output ``-1`` is mapped to ``-2``."
+msgstr ""
+
+#: ../../pep-0456.txt:89
+msgid "Current implementation with modified FNV"
+msgstr ""
+
+#: ../../pep-0456.txt:91
+msgid ""
+"CPython currently uses a variant of the Fowler-Noll-Vo hash function "
+"[fnv]_. The variant is has been modified to reduce the amount and cost of"
+" hash collisions for common strings. The first character of the string is"
+" added twice, the first time with a bit shift of 7. The length of the "
+"input string is XOR-ed to the final value. Both deviations from the "
+"original FNV algorithm reduce the amount of hash collisions for short "
+"strings."
+msgstr ""
+
+#: ../../pep-0456.txt:98
+msgid ""
+"Recently [issue13703]_ a random prefix and suffix were added as an "
+"attempt to randomize the hash values. In order to protect the hash secret"
+" the code still returns ``0`` for zero length input."
+msgstr ""
+
+#: ../../pep-0456.txt:102
+msgid "C code::"
+msgstr ""
+
+#: ../../pep-0456.txt:122
+msgid "Which roughly translates to Python::"
+msgstr ""
+
+#: ../../pep-0456.txt:144
+msgid ""
+"FNV is a simple multiply and XOR algorithm with no cryptographic "
+"properties. The randomization was not part of the initial hash code, but "
+"was added as counter measure against hash collision attacks as explained "
+"in oCERT-2011-003 [ocert]_. Because FNV is not a cryptographic hash "
+"algorithm and the dict implementation is not fortified against side "
+"channel analysis, the randomization secrets can be calculated by a remote"
+" attacker. The author of this PEP strongly believes that the nature of a "
+"non-cryptographic hash function makes it impossible to conceal the "
+"secrets."
+msgstr ""
+
+#: ../../pep-0456.txt:155
+msgid "Examined hashing algorithms"
+msgstr ""
+
+#: ../../pep-0456.txt:157
+msgid ""
+"The author of this PEP has researched several hashing algorithms that are"
+" considered modern, fast and state-of-the-art."
+msgstr ""
+
+#: ../../pep-0456.txt:161
+msgid "SipHash"
+msgstr ""
+
+#: ../../pep-0456.txt:163
+msgid ""
+"SipHash [sip]_ is a cryptographic pseudo random function with a 128-bit "
+"seed and 64-bit output. It was designed by Jean-Philippe Aumasson and "
+"Daniel J. Bernstein as a fast and secure keyed hash algorithm. It's used "
+"by Ruby, Perl, OpenDNS, Rust, Redis, FreeBSD and more. The C reference "
+"implementation has been released under CC0 license (public domain)."
+msgstr ""
+
+#: ../../pep-0456.txt:169
+msgid "Quote from SipHash's site:"
+msgstr ""
+
+#: ../../pep-0456.txt:171
+msgid ""
+"SipHash is a family of pseudorandom functions (a.k.a. keyed hash "
+"functions) optimized for speed on short messages. Target applications "
+"include network traffic authentication and defense against hash-flooding "
+"DoS attacks."
+msgstr ""
+
+#: ../../pep-0456.txt:176
+msgid ""
+"siphash24 is the recommend variant with best performance. It uses 2 "
+"rounds per message block and 4 finalization rounds. Besides the reference"
+" implementation several other implementations are available. Some are "
+"single-shot functions, others use a Merkle–Damgård construction-like "
+"approach with init, update and finalize functions. Marek Majkowski C "
+"implementation csiphash [csiphash]_ defines the prototype of the "
+"function. (Note: ``k`` is split up into two uint64_t)::"
+msgstr ""
+
+#: ../../pep-0456.txt:186
+msgid ""
+"SipHash requires a 64-bit data type and is not compatible with pure C89 "
+"platforms."
+msgstr ""
+
+#: ../../pep-0456.txt:191
+msgid "MurmurHash"
+msgstr ""
+
+#: ../../pep-0456.txt:193
+msgid ""
+"MurmurHash [murmur]_ is a family of non-cryptographic keyed hash function"
+" developed by Austin Appleby. Murmur3 is the latest and fast variant of "
+"MurmurHash. The C++ reference implementation has been released into "
+"public domain. It features 32- or 128-bit output with a 32-bit seed. "
+"(Note: The out parameter is a buffer with either 1 or 4 bytes.)"
+msgstr ""
+
+#: ../../pep-0456.txt:199
+msgid "Murmur3's function prototypes are::"
+msgstr ""
+
+#: ../../pep-0456.txt:207
+msgid ""
+"The 128-bit variants requires a 64-bit data type and are not compatible "
+"with pure C89 platforms. The 32-bit variant is fully C89-compatible."
+msgstr ""
+
+#: ../../pep-0456.txt:210
+msgid ""
+"Aumasson, Bernstein and Boßlet have shown [sip]_ [ocert-2012-001]_ that "
+"Murmur3 is not resilient against hash collision attacks. Therefore, "
+"Murmur3 can no longer be considered as secure algorithm. It still may be "
+"an alternative if hash collision attacks are of no concern."
+msgstr ""
+
+#: ../../pep-0456.txt:217
+msgid "CityHash"
+msgstr ""
+
+#: ../../pep-0456.txt:219
+msgid ""
+"CityHash [city]_ is a family of non-cryptographic hash function developed"
+" by Geoff Pike and Jyrki Alakuijala for Google. The C++ reference "
+"implementation has been released under MIT license. The algorithm is "
+"partly based on MurmurHash and claims to be faster. It supports 64- and "
+"128-bit output with a 128-bit seed as well as 32-bit output without seed."
+msgstr ""
+
+#: ../../pep-0456.txt:225
+msgid "The relevant function prototype for 64-bit CityHash with 128-bit seed is::"
+msgstr ""
+
+#: ../../pep-0456.txt:230
+msgid ""
+"CityHash also offers SSE 4.2 optimizations with CRC32 intrinsic for long "
+"inputs. All variants except CityHash32 require 64-bit data types. "
+"CityHash32 uses only 32-bit data types but it doesn't support seeding."
+msgstr ""
+
+#: ../../pep-0456.txt:234
+msgid ""
+"Like MurmurHash Aumasson, Bernstein and Boßlet have shown [sip]_ a "
+"similar weakness in CityHash."
+msgstr ""
+
+#: ../../pep-0456.txt:239
+msgid "DJBX33A"
+msgstr ""
+
+#: ../../pep-0456.txt:241
+msgid ""
+"DJBX33A is a very simple multiplication and addition algorithm by Daniel "
+"J. Bernstein. It is fast and has low setup costs but it's not secure "
+"against hash collision attacks. Its properties make it a viable choice "
+"for small string hashing optimization."
+msgstr ""
+
+#: ../../pep-0456.txt:248
+msgid "Other"
+msgstr ""
+
+#: ../../pep-0456.txt:250
+msgid ""
+"Crypto algorithms such as HMAC, MD5, SHA-1 or SHA-2 are too slow and have"
+" high setup and finalization costs. For these reasons they are not "
+"considered fit for this purpose. Modern AMD and Intel CPUs have AES-NI "
+"(AES instruction set) [aes-ni]_ to speed up AES encryption. CMAC with "
+"AES-NI might be a viable option but it's probably too slow for daily "
+"operation. (testing required)"
+msgstr ""
+
+#: ../../pep-0456.txt:258
+msgid "Conclusion"
+msgstr ""
+
+#: ../../pep-0456.txt:260
+msgid ""
+"SipHash provides the best combination of speed and security. Developers "
+"of other prominent projects have came to the same conclusion."
+msgstr ""
+
+#: ../../pep-0456.txt:265
+msgid "Small string optimization"
+msgstr ""
+
+#: ../../pep-0456.txt:267
+msgid ""
+"Hash functions like SipHash24 have a costly initialization and "
+"finalization code that can dominate speed of the algorithm for very short"
+" strings. On the other hand, Python calculates the hash value of short "
+"strings quite often. A simple and fast function for especially for "
+"hashing of small strings can make a measurable impact on performance. For"
+" example, these measurements were taken during a run of Python's "
+"regression tests. Additional measurements of other code have shown a "
+"similar distribution."
+msgstr ""
+
+#: ../../pep-0456.txt:276
+msgid "bytes"
+msgstr ""
+
+#: ../../pep-0456.txt:276
+msgid "hash() calls"
+msgstr ""
+
+#: ../../pep-0456.txt:276
+msgid "portion"
+msgstr ""
+
+#: ../../pep-0456.txt:278
+msgid "1"
+msgstr ""
+
+#: ../../pep-0456.txt:278
+msgid "18709"
+msgstr ""
+
+#: ../../pep-0456.txt:278
+msgid "0.2%"
+msgstr ""
+
+#: ../../pep-0456.txt:279
+msgid "2"
+msgstr ""
+
+#: ../../pep-0456.txt:279
+msgid "737480"
+msgstr ""
+
+#: ../../pep-0456.txt:279
+msgid "9.5%"
+msgstr ""
+
+#: ../../pep-0456.txt:280
+msgid "3"
+msgstr ""
+
+#: ../../pep-0456.txt:280
+msgid "636178"
+msgstr ""
+
+#: ../../pep-0456.txt:280
+msgid "17.6%"
+msgstr ""
+
+#: ../../pep-0456.txt:281
+msgid "4"
+msgstr ""
+
+#: ../../pep-0456.txt:281
+msgid "1518313"
+msgstr ""
+
+#: ../../pep-0456.txt:281
+msgid "36.7%"
+msgstr ""
+
+#: ../../pep-0456.txt:282
+msgid "5"
+msgstr ""
+
+#: ../../pep-0456.txt:282
+msgid "643022"
+msgstr ""
+
+#: ../../pep-0456.txt:282
+msgid "44.9%"
+msgstr ""
+
+#: ../../pep-0456.txt:283
+msgid "6"
+msgstr ""
+
+#: ../../pep-0456.txt:283
+msgid "770478"
+msgstr ""
+
+#: ../../pep-0456.txt:283
+msgid "54.6%"
+msgstr ""
+
+#: ../../pep-0456.txt:284
+msgid "7"
+msgstr ""
+
+#: ../../pep-0456.txt:284
+msgid "525150"
+msgstr ""
+
+#: ../../pep-0456.txt:284
+msgid "61.2%"
+msgstr ""
+
+#: ../../pep-0456.txt:285
+msgid "8"
+msgstr ""
+
+#: ../../pep-0456.txt:285
+msgid "304873"
+msgstr ""
+
+#: ../../pep-0456.txt:285
+msgid "65.1%"
+msgstr ""
+
+#: ../../pep-0456.txt:286
+msgid "9"
+msgstr ""
+
+#: ../../pep-0456.txt:286
+msgid "297272"
+msgstr ""
+
+#: ../../pep-0456.txt:286
+msgid "68.8%"
+msgstr ""
+
+#: ../../pep-0456.txt:287
+msgid "10"
+msgstr ""
+
+#: ../../pep-0456.txt:287
+msgid "68191"
+msgstr ""
+
+#: ../../pep-0456.txt:287
+msgid "69.7%"
+msgstr ""
+
+#: ../../pep-0456.txt:288
+msgid "11"
+msgstr ""
+
+#: ../../pep-0456.txt:288
+msgid "1388484"
+msgstr ""
+
+#: ../../pep-0456.txt:288
+msgid "87.2%"
+msgstr ""
+
+#: ../../pep-0456.txt:289
+msgid "12"
+msgstr ""
+
+#: ../../pep-0456.txt:289
+msgid "480786"
+msgstr ""
+
+#: ../../pep-0456.txt:289
+msgid "93.3%"
+msgstr ""
+
+#: ../../pep-0456.txt:290
+msgid "13"
+msgstr ""
+
+#: ../../pep-0456.txt:290
+msgid "52730"
+msgstr ""
+
+#: ../../pep-0456.txt:290
+msgid "93.9%"
+msgstr ""
+
+#: ../../pep-0456.txt:291
+msgid "14"
+msgstr ""
+
+#: ../../pep-0456.txt:291
+msgid "65309"
+msgstr ""
+
+#: ../../pep-0456.txt:291
+msgid "94.8%"
+msgstr ""
+
+#: ../../pep-0456.txt:292
+msgid "15"
+msgstr ""
+
+#: ../../pep-0456.txt:292
+msgid "44245"
+msgstr ""
+
+#: ../../pep-0456.txt:292
+msgid "95.3%"
+msgstr ""
+
+#: ../../pep-0456.txt:293
+msgid "16"
+msgstr ""
+
+#: ../../pep-0456.txt:293
+msgid "85643"
+msgstr ""
+
+#: ../../pep-0456.txt:293
+msgid "96.4%"
+msgstr ""
+
+#: ../../pep-0456.txt:294
+msgid "Total"
+msgstr ""
+
+#: ../../pep-0456.txt:294
+msgid "7921678"
+msgstr ""
+
+#: ../../pep-0456.txt:297
+#, python-format
+msgid ""
+"However a fast function like DJBX33A is not as secure as SipHash24. A "
+"cutoff at about 5 to 7 bytes should provide a decent safety margin and "
+"speed up at the same time. The PEP's reference implementation provides "
+"such a cutoff with ``Py_HASH_CUTOFF``. The optimization is disabled by "
+"default for several reasons. For one the security implications are "
+"unclear yet and should be thoroughly studied before the optimization is "
+"enabled by default. Secondly the performance benefits vary. On 64 bit "
+"Linux system with Intel Core i7 multiple runs of Python's benchmark suite"
+" [pybench]_ show an average speedups between 3% and 5% for benchmarks "
+"such as django_v2, mako and etree with a cutoff of 7. Benchmarks with X86"
+" binaries and Windows X86_64 builds on the same machine are a bit slower "
+"with small string optimization."
+msgstr ""
+
+#: ../../pep-0456.txt:309
+msgid ""
+"The state of small string optimization will be assessed during the beta "
+"phase of Python 3.4. The feature will either be enabled with appropriate "
+"values or the code will be removed before beta 2 is released."
+msgstr ""
+
+#: ../../pep-0456.txt:315
+msgid "C API additions"
+msgstr ""
+
+#: ../../pep-0456.txt:317
+msgid "All C API extension modifications are not part of the stable API."
+msgstr ""
+
+#: ../../pep-0456.txt:320
+msgid "hash secret"
+msgstr ""
+
+#: ../../pep-0456.txt:322
+msgid ""
+"The ``_Py_HashSecret_t`` type of Python 2.6 to 3.3 has two members with "
+"either 32- or 64-bit length each. SipHash requires two 64-bit unsigned "
+"integers as keys. The typedef will be changed to a union with a "
+"guaranteed size of 24 bytes on all architectures. The union provides a "
+"128 bit random key for SipHash24 and FNV as well as an additional value "
+"of 64 bit for the optional small string optimization and pyexpat seed. "
+"The additional 64 bit seed ensures that pyexpat or small string "
+"optimization cannot reveal bits of the SipHash24 seed."
+msgstr ""
+
+#: ../../pep-0456.txt:331
+msgid "memory layout on 64 bit systems::"
+msgstr ""
+
+#: ../../pep-0456.txt:339
+msgid "memory layout on 32 bit systems::"
+msgstr ""
+
+#: ../../pep-0456.txt:347
+msgid "new type definition::"
+msgstr ""
+
+#: ../../pep-0456.txt:376
+msgid ""
+"``_Py_HashSecret_t`` is initialized in "
+"``Python/random.c:_PyRandom_Init()`` exactly once at startup."
+msgstr ""
+
+#: ../../pep-0456.txt:381
+msgid "hash function definition"
+msgstr ""
+
+#: ../../pep-0456.txt:383 ../../pep-0456.txt:425
+msgid "Implementation::"
+msgstr ""
+
+#: ../../pep-0456.txt:397
+msgid "autoconf"
+msgstr ""
+
+#: ../../pep-0456.txt:399
+msgid ""
+"A new test is added to the configure script. The test sets "
+"``HAVE_ALIGNED_REQUIRED``, when it detects a platform, that requires "
+"aligned memory access for integers. Must current platforms such as X86, "
+"X86_64 and modern ARM don't need aligned data."
+msgstr ""
+
+#: ../../pep-0456.txt:404
+msgid ""
+"A new option ``--with-hash-algorithm`` enables the user to select a hash "
+"algorithm in the configure step."
+msgstr ""
+
+#: ../../pep-0456.txt:409
+msgid "hash function selection"
+msgstr ""
+
+#: ../../pep-0456.txt:411
+msgid ""
+"The value of the macro ``Py_HASH_ALGORITHM`` defines which hash algorithm"
+" is used internally. It may be set to any of the three values "
+"``Py_HASH_SIPHASH24``, ``Py_HASH_FNV`` or ``Py_HASH_EXTERNAL``. If "
+"``Py_HASH_ALGORITHM`` is not defined at all, then the best available "
+"algorithm is selected. On platforms which don't require aligned memory "
+"access (``HAVE_ALIGNED_REQUIRED`` not defined) and an unsigned 64 bit "
+"integer type ``PY_UINT64_T``, SipHash24 is used. On strict C89 platforms "
+"without a 64 bit data type, or architectures such as SPARC, FNV is "
+"selected as fallback. A hash algorithm can be selected with an autoconf "
+"option, for example ``./configure --with-hash-algorithm=fnv``."
+msgstr ""
+
+#: ../../pep-0456.txt:421
+msgid ""
+"The value ``Py_HASH_EXTERNAL`` allows 3rd parties to provide their own "
+"implementation at compile time."
+msgstr ""
+
+#: ../../pep-0456.txt:438
+msgid "Python API addition"
+msgstr ""
+
+#: ../../pep-0456.txt:441
+msgid "sys module"
+msgstr ""
+
+#: ../../pep-0456.txt:443
+msgid ""
+"The sys module already has a hash_info struct sequence. More fields are "
+"added to the object to reflect the active hash algorithm and its "
+"properties."
+msgstr ""
+
+#: ../../pep-0456.txt:461
+msgid "Necessary modifications to C code"
+msgstr ""
+
+#: ../../pep-0456.txt:464
+msgid "_Py_HashBytes() (Objects/object.c)"
+msgstr ""
+
+#: ../../pep-0456.txt:466
+msgid ""
+"``_Py_HashBytes`` is an internal helper function that provides the "
+"hashing code for bytes, memoryview and datetime classes. It currently "
+"implements FNV for ``unsigned char *``."
+msgstr ""
+
+#: ../../pep-0456.txt:470
+msgid ""
+"The function is moved to Python/pyhash.c and modified to use the hash "
+"function through PyHash_Func.hash(). The function signature is altered to"
+" take a ``const void *`` as first argument. ``_Py_HashBytes`` also takes "
+"care of special cases: it maps zero length input to ``0`` and return "
+"value of ``-1`` to ``-2``."
+msgstr ""
+
+#: ../../pep-0456.txt:477
+msgid "bytes_hash() (Objects/bytesobject.c)"
+msgstr ""
+
+#: ../../pep-0456.txt:479
+msgid ""
+"``bytes_hash`` uses ``_Py_HashBytes`` to provide the tp_hash slot "
+"function for bytes objects. The function will continue to use "
+"``_Py_HashBytes`` but without a type cast."
+msgstr ""
+
+#: ../../pep-0456.txt:484
+msgid "memory_hash() (Objects/memoryobject.c)"
+msgstr ""
+
+#: ../../pep-0456.txt:486
+msgid ""
+"``memory_hash`` provides the tp_hash slot function for read-only memory "
+"views if the original object is hashable, too. It's the only function "
+"that has to support hashing of unaligned memory segments in the future. "
+"The function will continue to use ``_Py_HashBytes`` but without a type "
+"cast."
+msgstr ""
+
+#: ../../pep-0456.txt:493
+msgid "unicode_hash() (Objects/unicodeobject.c)"
+msgstr ""
+
+#: ../../pep-0456.txt:495
+msgid ""
+"``unicode_hash`` provides the tp_hash slot function for unicode. Right "
+"now it implements the FNV algorithm three times for ``unsigned char*``, "
+"``Py_UCS2`` and ``Py_UCS4``. A reimplementation of the function must take"
+" care to use the correct length. Since the macro ``PyUnicode_GET_LENGTH``"
+" returns the length of the unicode string and not its size in octets, the"
+" length must be multiplied with the size of the internal unicode kind::"
+msgstr ""
+
+#: ../../pep-0456.txt:509
+msgid "generic_hash() (Modules/_datetimemodule.c)"
+msgstr ""
+
+#: ../../pep-0456.txt:511
+msgid ""
+"``generic_hash`` acts as a wrapper around ``_Py_HashBytes`` for the "
+"tp_hash slots of date, time and datetime types. timedelta objects are "
+"hashed by their state (days, seconds, microseconds) and tzinfo objects "
+"are not hashable. The data members of date, time and datetime types' "
+"struct are not ``void*`` aligned. This can easily by fixed with "
+"memcpy()ing four to ten bytes to an aligned buffer."
+msgstr ""
+
+#: ../../pep-0456.txt:520
+msgid "Performance"
+msgstr ""
+
+#: ../../pep-0456.txt:522
+msgid ""
+"In general the PEP 456 code with SipHash24 is about as fast as the old "
+"code with FNV. SipHash24 seems to make better use of modern compilers, "
+"CPUs and large L1 cache. Several benchmarks show a small speed "
+"improvement on 64 bit CPUs such as Intel Core i5 and Intel Core i7 "
+"processes. 32 bit builds and benchmarks on older CPUs such as an AMD "
+"Athlon X2 are slightly slower with SipHash24. The performance increase or"
+" decrease are so small that they should not affect any application code."
+msgstr ""
+
+#: ../../pep-0456.txt:530
+msgid ""
+"The benchmarks were conducted on CPython default branch revision "
+"b08868fd5994 and the PEP repository [pep-456-repos]_. All upstream "
+"changes were merged into the pep-456 branch. The \"performance\" CPU "
+"governor was configured and almost all programs were stopped so the "
+"benchmarks were able to utilize TurboBoost and the CPU caches as much as "
+"possible. The raw benchmark results of multiple machines and platforms "
+"are made available at [benchmarks]_."
+msgstr ""
+
+#: ../../pep-0456.txt:539
+msgid "Hash value distribution"
+msgstr ""
+
+#: ../../pep-0456.txt:541
+msgid ""
+"A good distribution of hash values is important for dict and set "
+"performance. Both SipHash24 and FNV take the length of the input into "
+"account, so that strings made up entirely of NULL bytes don't have the "
+"same hash value. The last bytes of the input tend to affect the least "
+"significant bits of the hash value, too. That attribute reduces the "
+"amount of hash collisions for strings with a common prefix."
+msgstr ""
+
+#: ../../pep-0456.txt:550
+msgid "Typical length"
+msgstr ""
+
+#: ../../pep-0456.txt:552
+msgid ""
+"Serhiy Storchaka has shown in [issue16427]_ that a modified FNV "
+"implementation with 64 bits per cycle is able to process long strings "
+"several times faster than the current FNV implementation."
+msgstr ""
+
+#: ../../pep-0456.txt:556
+#, python-format
+msgid ""
+"However, according to statistics [issue19183]_ a typical Python program "
+"as well as the Python test suite have a hash ratio of about 50% small "
+"strings between 1 and 6 bytes. Only 5% of the strings are larger than 16 "
+"bytes."
+msgstr ""
+
+#: ../../pep-0456.txt:562
+msgid "Grand Unified Python Benchmark Suite"
+msgstr ""
+
+#: ../../pep-0456.txt:564
+#, python-format
+msgid ""
+"Initial tests with an experimental implementation and the Grand Unified "
+"Python Benchmark Suite have shown minimal deviations. The summarized "
+"total runtime of the benchmark is within 1% of the runtime of an "
+"unmodified Python 3.4 binary. The tests were run on an Intel i7-2860QM "
+"machine with a 64-bit Linux installation. The interpreter was compiled "
+"with GCC 4.7 for 64- and 32-bit."
+msgstr ""
+
+#: ../../pep-0456.txt:570
+msgid "More benchmarks will be conducted."
+msgstr ""
+
+#: ../../pep-0456.txt:574
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0456.txt:576
+msgid "The modifications don't alter any existing API."
+msgstr ""
+
+#: ../../pep-0456.txt:578
+msgid ""
+"The output of ``hash()`` for strings and bytes are going to be different."
+" The hash values for ASCII Unicode and ASCII bytes will stay equal."
+msgstr ""
+
+#: ../../pep-0456.txt:583
+msgid "Alternative counter measures against hash collision DoS"
+msgstr ""
+
+#: ../../pep-0456.txt:585
+msgid ""
+"Three alternative countermeasures against hash collisions were discussed "
+"in the past, but are not subject of this PEP."
+msgstr ""
+
+#: ../../pep-0456.txt:588
+msgid ""
+"Marc-Andre Lemburg has suggested that dicts shall count hash collisions. "
+"In case an insert operation causes too many collisions an exception shall"
+" be raised."
+msgstr ""
+
+#: ../../pep-0456.txt:592
+msgid ""
+"Some applications (e.g. PHP) limit the amount of keys for GET and POST "
+"HTTP requests. The approach effectively leverages the impact of a hash "
+"collision attack. (XXX citation needed)"
+msgstr ""
+
+#: ../../pep-0456.txt:596
+msgid ""
+"Hash maps have a worst case of O(n) for insertion and lookup of keys. "
+"This results in a quadratic runtime during a hash collision attack. The "
+"introduction of a new and additional data structure with O(log n) worst "
+"case behavior would eliminate the root cause. A data structures like red-"
+"black-tree or prefix trees (trie [trie]_) would have other benefits, too."
+" Prefix trees with stringed keyed can reduce memory usage as common "
+"prefixes are stored within the tree structure."
+msgstr ""
+
+#: ../../pep-0456.txt:606
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0456.txt:609
+msgid "Pluggable"
+msgstr ""
+
+#: ../../pep-0456.txt:611
+msgid ""
+"The first draft of this PEP made the hash algorithm pluggable at runtime."
+" It supported multiple hash algorithms in one binary to give the user the"
+" possibility to select a hash algorithm at startup. The approach was "
+"considered an unnecessary complication by several core committers "
+"[pluggable]_. Subsequent versions of the PEP aim for compile time "
+"configuration."
+msgstr ""
+
+#: ../../pep-0456.txt:618
+msgid "Non-aligned memory access"
+msgstr ""
+
+#: ../../pep-0456.txt:620
+msgid ""
+"The implementation of SipHash24 were criticized because it ignores the "
+"issue of non-aligned memory and therefore doesn't work on architectures "
+"that requires alignment of integer types. The PEP deliberately neglects "
+"this special case and doesn't support SipHash24 on such platforms. It's "
+"simply not considered worth the trouble until proven otherwise. All major"
+" platforms like X86, X86_64 and ARMv6+ can handle unaligned memory with "
+"minimal or even no speed impact. [alignmentmyth]_"
+msgstr ""
+
+#: ../../pep-0456.txt:628
+msgid ""
+"Almost every block is properly aligned anyway. At present bytes' and "
+"str's data are always aligned. Only memoryviews can point to unaligned "
+"blocks under rare circumstances. The PEP implementation is optimized and "
+"simplified for the common case."
+msgstr ""
+
+#: ../../pep-0456.txt:634
+msgid "ASCII str / bytes hash collision"
+msgstr ""
+
+#: ../../pep-0456.txt:636
+msgid ""
+"Since the implementation of [pep-0393]_ bytes and ASCII text have the "
+"same memory layout. Because of this the new hashing API will keep the "
+"invariant::"
+msgstr ""
+
+#: ../../pep-0456.txt:641
+msgid ""
+"for ASCII string and ASCII bytes. Equal hash values result in a hash "
+"collision and therefore cause a minor speed penalty for dicts and sets "
+"with mixed keys. The cause of the collision could be removed by e.g. "
+"subtracting ``2`` from the hash value of bytes. ``-2`` because "
+"``hash(b\"\") == 0`` and ``-1`` is reserved. The PEP doesn't change the "
+"hash value."
+msgstr ""
+
+#: ../../pep-0456.txt:649
+msgid "References"
+msgstr ""
+
+#: ../../pep-0456.txt:651
+msgid "Issue 19183 [issue19183]_ contains a reference implementation."
+msgstr ""
+
+#: ../../pep-0456.txt:653
+msgid "http://events.ccc.de/congress/2012/Fahrplan/events/5152.en.html"
+msgstr ""
+
+#: ../../pep-0456.txt:655
+msgid "http://en.wikipedia.org/wiki/Fowler-Noll-Vo_hash_function"
+msgstr ""
+
+#: ../../pep-0456.txt:657
+msgid "https://131002.net/siphash/"
+msgstr ""
+
+#: ../../pep-0456.txt:659
+msgid "http://www.nruns.com/_downloads/advisory28122011.pdf"
+msgstr ""
+
+#: ../../pep-0456.txt:661
+msgid "http://www.ocert.org/advisories/ocert-2012-001.html"
+msgstr ""
+
+#: ../../pep-0456.txt:663
+msgid "https://131002.net/siphash/poc.py"
+msgstr ""
+
+#: ../../pep-0456.txt:665
+msgid "http://bugs.python.org/issue13703"
+msgstr ""
+
+#: ../../pep-0456.txt:667
+msgid "http://bugs.python.org/issue14621"
+msgstr ""
+
+#: ../../pep-0456.txt:669
+msgid "http://bugs.python.org/issue16427"
+msgstr ""
+
+#: ../../pep-0456.txt:671
+msgid "http://bugs.python.org/issue19183"
+msgstr ""
+
+#: ../../pep-0456.txt:673
+msgid "http://en.wikipedia.org/wiki/Trie"
+msgstr ""
+
+#: ../../pep-0456.txt:675
+msgid "http://code.google.com/p/cityhash/"
+msgstr ""
+
+#: ../../pep-0456.txt:677
+msgid "http://code.google.com/p/smhasher/"
+msgstr ""
+
+#: ../../pep-0456.txt:679
+msgid "https://github.com/majek/csiphash/"
+msgstr ""
+
+#: ../../pep-0456.txt:681
+msgid "http://www.python.org/dev/peps/pep-0393/"
+msgstr ""
+
+#: ../../pep-0456.txt:683
+msgid "http://en.wikipedia.org/wiki/AES_instruction_set"
+msgstr ""
+
+#: ../../pep-0456.txt:685
+msgid "https://mail.python.org/pipermail/python-dev/2013-October/129138.html"
+msgstr ""
+
+#: ../../pep-0456.txt:687
+msgid ""
+"http://lemire.me/blog/archives/2012/05/31/data-alignment-for-speed-myth-"
+"or-reality/"
+msgstr ""
+
+#: ../../pep-0456.txt:689
+msgid "http://hg.python.org/benchmarks/"
+msgstr ""
+
+#: ../../pep-0456.txt:691
+msgid "https://bitbucket.org/tiran/pep-456-benchmarks/src"
+msgstr ""
+
+#: ../../pep-0456.txt:693
+msgid "http://hg.python.org/features/pep-456"
+msgstr ""
+
+#: ../../pep-0456.txt:697
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0456.txt:699
+msgid "This document has been placed in the public domain."
+msgstr ""
+

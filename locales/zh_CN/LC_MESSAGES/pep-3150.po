@@ -1,0 +1,990 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3150.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3150.txt:1
+msgid "3150"
+msgstr ""
+
+#: ../../pep-3150.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3150.txt:2
+msgid "Statement local namespaces (aka \"given\" clause)"
+msgstr ""
+
+#: ../../pep-3150.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3150.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-3150.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3150.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-3150.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3150.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3150.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3150.txt:9
+msgid "09-Jul-2010"
+msgstr ""
+
+#: ../../pep-3150.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3150.txt:10
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-3150.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3150.txt:11
+msgid "2010-07-14, 2011-04-21, 2011-06-13"
+msgstr ""
+
+#: ../../pep-3150.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3150.txt:17
+msgid ""
+"This PEP proposes the addition of an optional ``given`` clause to several"
+" Python statements that do not currently have an associated code suite. "
+"This clause will create a statement local namespace for additional names "
+"that are accessible in the associated statement, but do not become part "
+"of the containing namespace."
+msgstr ""
+
+#: ../../pep-3150.txt:23
+msgid ""
+"Adoption of a new symbol, ``?``, is proposed to denote a forward "
+"reference to the namespace created by running the associated code suite. "
+"It will be a reference to a ``types.SimpleNamespace`` object."
+msgstr ""
+
+#: ../../pep-3150.txt:27
+msgid ""
+"The primary motivation is to enable a more declarative style of "
+"programming, where the operation to be performed is presented to the "
+"reader first, and the details of the necessary subcalculations are "
+"presented in the following indented suite. As a key example, this would "
+"elevate ordinary assignment statements to be on par with ``class`` and "
+"``def`` statements where the name of the item to be defined is presented "
+"to the reader in advance of the details of how the value of that item is "
+"calculated. It also allows named functions to be used in a \"multi-line "
+"lambda\" fashion, where the name is used solely as a placeholder in the "
+"current expression and then defined in the following suite."
+msgstr ""
+
+#: ../../pep-3150.txt:38
+msgid ""
+"A secondary motivation is to simplify interim calculations in module and "
+"class level code without polluting the resulting namespaces."
+msgstr ""
+
+#: ../../pep-3150.txt:41
+msgid ""
+"The intent is that the relationship between a given clause and a separate"
+" function definition that performs the specified operation will be "
+"similar to the existing relationship between an explicit while loop and a"
+" generator that produces the same sequence of operations as that while "
+"loop."
+msgstr ""
+
+#: ../../pep-3150.txt:46
+msgid ""
+"The specific proposal in this PEP has been informed by various "
+"explorations of this and related concepts over the years (e.g. [1]_, "
+"[2]_, [3]_, [6]_, [8]_), and is inspired to some degree by the ``where`` "
+"and ``let`` clauses in Haskell. It avoids some problems that have been "
+"identified in past proposals, but has not yet itself been subject to the "
+"test of implementation."
+msgstr ""
+
+#: ../../pep-3150.txt:54
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-3150.txt:56
+msgid ""
+"This PEP proposes the addition of an optional ``given`` clause to the "
+"syntax for simple statements which may contain an expression, or may "
+"substitute for such a statement for purely syntactic purposes. The "
+"current list of simple statements that would be affected by this addition"
+" is as follows:"
+msgstr ""
+
+#: ../../pep-3150.txt:62
+msgid "expression statement"
+msgstr ""
+
+#: ../../pep-3150.txt:63
+msgid "assignment statement"
+msgstr ""
+
+#: ../../pep-3150.txt:64
+msgid "augmented assignment statement"
+msgstr ""
+
+#: ../../pep-3150.txt:65
+msgid "del statement"
+msgstr ""
+
+#: ../../pep-3150.txt:66
+msgid "return statement"
+msgstr ""
+
+#: ../../pep-3150.txt:67
+msgid "yield statement"
+msgstr ""
+
+#: ../../pep-3150.txt:68
+msgid "raise statement"
+msgstr ""
+
+#: ../../pep-3150.txt:69
+msgid "assert statement"
+msgstr ""
+
+#: ../../pep-3150.txt:70
+msgid "pass statement"
+msgstr ""
+
+#: ../../pep-3150.txt:72
+msgid ""
+"The ``given`` clause would allow subexpressions to be referenced by name "
+"in the header line, with the actual definitions following in the indented"
+" clause. As a simple example::"
+msgstr ""
+
+#: ../../pep-3150.txt:80
+msgid ""
+"The new symbol ``?`` is used to refer to the given namespace. It would be"
+" a ``types.SimpleNamespace`` instance, so ``?.sort_key`` functions as a "
+"forward reference to a name defined in the ``given`` clause."
+msgstr ""
+
+#: ../../pep-3150.txt:84
+msgid ""
+"A docstring would be permitted in the given clause, and would be attached"
+" to the result namespace as its ``__doc__`` attribute."
+msgstr ""
+
+#: ../../pep-3150.txt:87
+msgid ""
+"The ``pass`` statement is included to provide a consistent way to skip "
+"inclusion of a meaningful expression in the header line. While this is "
+"not an intended use case, it isn't one that can be prevented as multiple "
+"alternatives (such as ``...`` and ``()``) remain available even if "
+"``pass`` itself is disallowed."
+msgstr ""
+
+#: ../../pep-3150.txt:93
+msgid ""
+"The body of the given clause will execute in a new scope, using normal "
+"function closure semantics. To support early binding of loop variables "
+"and global references, as well as to allow access to other names defined "
+"at class scope, the ``given`` clause will also allow explicit binding "
+"operations in the header line::"
+msgstr ""
+
+#: ../../pep-3150.txt:109
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-3150.txt:111
+msgid "The following statement::"
+msgstr ""
+
+#: ../../pep-3150.txt:119
+msgid ""
+"Would be roughly equivalent to the following code (``__var`` denotes a "
+"hidden compiler variable or simply an entry on the interpreter stack)::"
+msgstr ""
+
+#: ../../pep-3150.txt:134
+msgid ""
+"A ``given`` clause is essentially a nested function which is created and "
+"then immediately executed. Unless explicitly passed in, names are looked "
+"up using normal scoping rules, and thus names defined at class scope will"
+" not be visible. Names declared as forward references are returned and "
+"used in the header statement, without being bound locally in the "
+"surrounding namespace."
+msgstr ""
+
+#: ../../pep-3150.txt:143
+msgid "Syntax Change"
+msgstr ""
+
+#: ../../pep-3150.txt:145
+msgid "Current::"
+msgstr ""
+
+#: ../../pep-3150.txt:157
+msgid "New::"
+msgstr ""
+
+#: ../../pep-3150.txt:169
+msgid ""
+"(Note that ``expr_stmt`` in the grammar is a slight misnomer, as it "
+"covers assignment and augmented assignment in addition to simple "
+"expression statements)"
+msgstr ""
+
+#: ../../pep-3150.txt:174
+msgid ""
+"These proposed grammar changes don't yet cover the forward reference "
+"expression syntax for accessing names defined in the statement local "
+"namespace."
+msgstr ""
+
+#: ../../pep-3150.txt:179
+msgid ""
+"The new clause is added as an optional element of the existing statements"
+" rather than as a new kind of compound statement in order to avoid "
+"creating an ambiguity in the grammar. It is applied only to the specific "
+"elements listed so that nonsense like the following is disallowed::"
+msgstr ""
+
+#: ../../pep-3150.txt:190
+msgid ""
+"However, the precise Grammar change described above is inadequate, as it "
+"creates problems for the definition of simple_stmt (which allows chaining"
+" of multiple single line statements with \";\" rather than \"\\\\n\")."
+msgstr ""
+
+#: ../../pep-3150.txt:194
+msgid ""
+"So the above syntax change should instead be taken as a statement of "
+"intent. Any actual proposal would need to resolve the simple_stmt parsing"
+" problem before it could be seriously considered. This would likely "
+"require a non-trivial restructuring of the grammar, breaking up "
+"small_stmt and flow_stmt to separate the statements that potentially "
+"contain arbitrary subexpressions and then allowing a single one of those "
+"statements with a ``given`` clause at the simple_stmt level. Something "
+"along the lines of::"
+msgstr ""
+
+#: ../../pep-3150.txt:213
+msgid "For reference, here are the current definitions at that level::"
+msgstr ""
+
+#: ../../pep-3150.txt:221
+msgid ""
+"In addition to the above changes, the definition of ``atom`` would be "
+"changed to also allow ``?``. The restriction of this usage to statements "
+"with an associated ``given`` clause would be handled by a later stage of "
+"the compilation process (likely AST construction, which already enforces "
+"other restrictions where the grammar is overly permissive in order to "
+"simplify the initial parsing step)."
+msgstr ""
+
+#: ../../pep-3150.txt:230
+msgid "New PEP 8 Guidelines"
+msgstr ""
+
+#: ../../pep-3150.txt:232
+msgid ""
+"As discussed on python-ideas ([7]_, [9]_) new PEP 8 guidelines would also"
+" need to be developed to provide appropriate direction on when to use the"
+" ``given`` clause over ordinary variable assignments."
+msgstr ""
+
+#: ../../pep-3150.txt:236
+msgid ""
+"Based on the similar guidelines already present for ``try`` statements, "
+"this PEP proposes the following additions for ``given`` statements to the"
+" \"Programming Conventions\" section of PEP 8:"
+msgstr ""
+
+#: ../../pep-3150.txt:240
+msgid ""
+"for code that could reasonably be factored out into a separate function, "
+"but is not currently reused anywhere, consider using a ``given`` clause. "
+"This clearly indicates which variables are being used only to define "
+"subcomponents of another statement rather than to hold algorithm or "
+"application state. This is an especially useful technique when passing "
+"multi-line functions to operations which take callable arguments."
+msgstr ""
+
+#: ../../pep-3150.txt:248
+msgid ""
+"keep ``given`` clauses concise. If they become unwieldy, either break "
+"them up into multiple steps or else move the details into a separate "
+"function."
+msgstr ""
+
+#: ../../pep-3150.txt:254
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3150.txt:256
+msgid ""
+"Function and class statements in Python have a unique property relative "
+"to ordinary assignment statements: to some degree, they are "
+"*declarative*. They present the reader of the code with some critical "
+"information about a name that is about to be defined, before proceeding "
+"on with the details of the actual definition in the function or class "
+"body."
+msgstr ""
+
+#: ../../pep-3150.txt:263
+msgid ""
+"The *name* of the object being declared is the first thing stated after "
+"the keyword. Other important information is also given the honour of "
+"preceding the implementation details:"
+msgstr ""
+
+#: ../../pep-3150.txt:267
+msgid ""
+"decorators (which can greatly affect the behaviour of the created object,"
+" and were placed ahead of even the keyword and name as a matter of "
+"practicality more so than aesthetics)"
+msgstr ""
+
+#: ../../pep-3150.txt:270
+msgid "the docstring (on the first line immediately following the header line)"
+msgstr ""
+
+#: ../../pep-3150.txt:271
+msgid "parameters, default values and annotations for function definitions"
+msgstr ""
+
+#: ../../pep-3150.txt:272
+msgid ""
+"parent classes, metaclass and optionally other details (depending on the "
+"metaclass) for class definitions"
+msgstr ""
+
+#: ../../pep-3150.txt:275
+msgid ""
+"This PEP proposes to make a similar declarative style available for "
+"arbitrary assignment operations, by permitting the inclusion of a "
+"\"given\" suite following any simple assignment statement::"
+msgstr ""
+
+#: ../../pep-3150.txt:282
+msgid ""
+"By convention, code in the body of the suite should be oriented solely "
+"towards correctly defining the assignment operation carried out in the "
+"header line. The header line operation should also be adequately "
+"descriptive (e.g. through appropriate choices of variable names) to give "
+"a reader a reasonable idea of the purpose of the operation without "
+"reading the body of the suite."
+msgstr ""
+
+#: ../../pep-3150.txt:289
+msgid ""
+"However, while they are the initial motivating use case, limiting this "
+"feature solely to simple assignments would be overly restrictive. Once "
+"the feature is defined at all, it would be quite arbitrary to prevent its"
+" use for augmented assignments, return statements, yield expressions, "
+"comprehensions and arbitrary expressions that may modify the application "
+"state."
+msgstr ""
+
+#: ../../pep-3150.txt:296
+msgid ""
+"The ``given`` clause may also function as a more readable alternative to "
+"some uses of lambda expressions and similar constructs when passing one-"
+"off functions to operations like ``sorted()`` or in callback based event-"
+"driven programming."
+msgstr ""
+
+#: ../../pep-3150.txt:301
+msgid ""
+"In module and class level code, the ``given`` clause will serve as a "
+"clear and reliable replacement for usage of the ``del`` statement to keep"
+" interim working variables from polluting the resulting namespace."
+msgstr ""
+
+#: ../../pep-3150.txt:305
+msgid ""
+"One potentially useful way to think of the proposed clause is as a middle"
+" ground between conventional in-line code and separation of an operation "
+"out into a dedicated function, just as an inline while loop may "
+"eventually be factored out into a dedicated generator."
+msgstr ""
+
+#: ../../pep-3150.txt:312
+msgid "Design Discussion"
+msgstr ""
+
+#: ../../pep-3150.txt:315
+msgid "Keyword Choice"
+msgstr ""
+
+#: ../../pep-3150.txt:317
+msgid ""
+"This proposal initially used ``where`` based on the name of a similar "
+"construct in Haskell. However, it has been pointed out that there are "
+"existing Python libraries (such as Numpy [4]_) that already use ``where``"
+" in the SQL query condition sense, making that keyword choice potentially"
+" confusing."
+msgstr ""
+
+#: ../../pep-3150.txt:323
+msgid ""
+"While ``given`` may also be used as a variable name (and hence would be "
+"deprecated using the usual ``__future__`` dance for introducing new "
+"keywords), it is associated much more strongly with the desired \"here "
+"are some extra variables this expression may use\" semantics for the new "
+"clause."
+msgstr ""
+
+#: ../../pep-3150.txt:329
+msgid ""
+"Reusing the ``with`` keyword has also been proposed. This has the "
+"advantage of avoiding the addition of a new keyword, but also has a high "
+"potential for confusion as the ``with`` clause and ``with`` statement "
+"would look similar but do completely different things. That way lies C++ "
+"and Perl :)"
+msgstr ""
+
+#: ../../pep-3150.txt:337
+msgid "Relation to PEP 403"
+msgstr ""
+
+#: ../../pep-3150.txt:339
+msgid ""
+"PEP 403 (General Purpose Decorator Clause) attempts to achieve the main "
+"goals of this PEP using a less radical language change inspired by the "
+"existing decorator syntax."
+msgstr ""
+
+#: ../../pep-3150.txt:343
+msgid ""
+"Despite having the same author, the two PEPs are in direct competition "
+"with each other. PEP 403 represents a minimalist approach that attempts "
+"to achieve useful functionality with a minimum of change from the status "
+"quo. This PEP instead aims for a more flexible standalone statement "
+"design, which requires a larger degree of change to the language."
+msgstr ""
+
+#: ../../pep-3150.txt:349
+msgid ""
+"Note that where PEP 403 is better suited to explaining the behaviour of "
+"generator expressions correctly, this PEP is better able to explain the "
+"behaviour of decorator clauses in general. Both PEPs support adequate "
+"explanations for the semantics of container comprehensions."
+msgstr ""
+
+#: ../../pep-3150.txt:356
+msgid "Explaining Container Comprehensions and Generator Expressions"
+msgstr ""
+
+#: ../../pep-3150.txt:358
+msgid ""
+"One interesting feature of the proposed construct is that it can be used "
+"as a primitive to explain the scoping and execution order semantics of "
+"container comprehensions::"
+msgstr ""
+
+#: ../../pep-3150.txt:374
+msgid ""
+"The important point in this expansion is that it explains why "
+"comprehensions appear to misbehave at class scope: only the outermost "
+"iterator is evaluated at class scope, while all predicates, nested "
+"iterators and value expressions are evaluated inside a nested scope."
+msgstr ""
+
+#: ../../pep-3150.txt:379
+msgid ""
+"Not that, unlike PEP 403, the current version of this PEP *cannot* "
+"provide a precisely equivalent expansion for a generator expression. The "
+"closest it can get is to define an additional level of scoping::"
+msgstr ""
+
+#: ../../pep-3150.txt:391
+msgid ""
+"This limitation could be remedied by permitting the given clause to be a "
+"generator function, in which case ? would refer to a generator-iterator "
+"object rather than a simple namespace::"
+msgstr ""
+
+#: ../../pep-3150.txt:402
+msgid ""
+"However, this would make the meaning of \"?\" quite ambiguous, even more "
+"so than is already the case for the meaning of ``def`` statements (which "
+"will usually have a docstring indicating whether or not a function "
+"definition is actually a generator)"
+msgstr ""
+
+#: ../../pep-3150.txt:408
+msgid "Explaining Decorator Clause Evaluation and Application"
+msgstr ""
+
+#: ../../pep-3150.txt:410
+msgid ""
+"The standard explanation of decorator clause evaluation and application "
+"has to deal with the idea of hidden compiler variables in order to show "
+"steps in their order of execution. The given statement allows a decorated"
+" function definition like::"
+msgstr ""
+
+#: ../../pep-3150.txt:419
+msgid "To instead be explained as roughly equivalent to::"
+msgstr ""
+
+#: ../../pep-3150.txt:427
+msgid "Anticipated Objections"
+msgstr ""
+
+#: ../../pep-3150.txt:431
+msgid "Two Ways To Do It"
+msgstr ""
+
+#: ../../pep-3150.txt:433
+msgid ""
+"A lot of code may now be written with values defined either before the "
+"expression where they are used or afterwards in a ``given`` clause, "
+"creating two ways to do it, perhaps without an obvious way of choosing "
+"between them."
+msgstr ""
+
+#: ../../pep-3150.txt:437
+msgid ""
+"On reflection, I feel this is a misapplication of the \"one obvious way\""
+" aphorism. Python already offers *lots* of ways to write code. We can use"
+" a for loop or a while loop, a functional style or an imperative style or"
+" an object oriented style. The language, in general, is designed to let "
+"people write code that matches the way they think. Since different people"
+" think differently, the way they write their code will change "
+"accordingly."
+msgstr ""
+
+#: ../../pep-3150.txt:444
+msgid ""
+"Such stylistic questions in a code base are rightly left to the "
+"development group responsible for that code. When does an expression get "
+"so complicated that the subexpressions should be taken out and assigned "
+"to variables, even though those variables are only going to be used once?"
+" When should an inline while loop be replaced with a generator that "
+"implements the same logic? Opinions differ, and that's OK."
+msgstr ""
+
+#: ../../pep-3150.txt:451
+msgid ""
+"However, explicit PEP 8 guidance will be needed for CPython and the "
+"standard library, and that is discussed in the proposal above."
+msgstr ""
+
+#: ../../pep-3150.txt:456
+msgid "Out of Order Execution"
+msgstr ""
+
+#: ../../pep-3150.txt:458
+msgid ""
+"The ``given`` clause makes execution jump around a little strangely, as "
+"the body of the ``given`` clause is executed before the simple statement "
+"in the clause header. The closest any other part of Python comes to this "
+"is the out of order evaluation in list comprehensions, generator "
+"expressions and conditional expressions and the delayed application of "
+"decorator functions to the function they decorate (the decorator "
+"expressions themselves are executed in the order they are written)."
+msgstr ""
+
+#: ../../pep-3150.txt:466
+msgid ""
+"While this is true, the syntax is intended for cases where people are "
+"themselves *thinking* about a problem out of sequence (at least as far as"
+" the language is concerned). As an example of this, consider the "
+"following thought in the mind of a Python user:"
+msgstr ""
+
+#: ../../pep-3150.txt:471
+msgid ""
+"I want to sort the items in this sequence according to the values of "
+"attr1 and attr2 on each item."
+msgstr ""
+
+#: ../../pep-3150.txt:474
+msgid ""
+"If they're comfortable with Python's ``lambda`` expressions, then they "
+"might choose to write it like this::"
+msgstr ""
+
+#: ../../pep-3150.txt:479
+msgid ""
+"That gets the job done, but it hardly reaches the standard of "
+"``executable pseudocode`` that fits Python's reputation."
+msgstr ""
+
+#: ../../pep-3150.txt:482
+msgid ""
+"If they don't like ``lambda`` specifically, the ``operator`` module "
+"offers an alternative that still allows the key function to be defined "
+"inline::"
+msgstr ""
+
+#: ../../pep-3150.txt:488
+msgid ""
+"Again, it gets the job done, but even the most generous of readers would "
+"not consider that to be \"executable pseudocode\"."
+msgstr ""
+
+#: ../../pep-3150.txt:491
+msgid ""
+"If they think both of the above options are ugly and confusing, or they "
+"need logic in their key function that can't be expressed as an expression"
+" (such as catching an exception), then Python currently forces them to "
+"reverse the order of their original thought and define the sorting "
+"criteria first::"
+msgstr ""
+
+#: ../../pep-3150.txt:501
+msgid ""
+"\"Just define a function\" has been the rote response to requests for "
+"multi-line lambda support for years. As with the above options, it gets "
+"the job done, but it really does represent a break between what the user "
+"is thinking and what the language allows them to express."
+msgstr ""
+
+#: ../../pep-3150.txt:506
+msgid ""
+"I believe the proposal in this PEP would finally let Python get close to "
+"the \"executable pseudocode\" bar for the kind of thought expressed "
+"above::"
+msgstr ""
+
+#: ../../pep-3150.txt:513
+msgid ""
+"Everything is in the same order as it was in the user's original thought,"
+" and they don't even need to come up with a name for the sorting "
+"criteria: it is possible to reuse the keyword argument name directly."
+msgstr ""
+
+#: ../../pep-3150.txt:517
+msgid ""
+"A possible enhancement to those proposal would be to provide a convenient"
+" shorthand syntax to say \"use the given clause contents as keyword "
+"arguments\". Even without dedicated syntax, that can be written simply as"
+" ``**vars(?)``."
+msgstr ""
+
+#: ../../pep-3150.txt:524
+msgid "Harmful to Introspection"
+msgstr ""
+
+#: ../../pep-3150.txt:526
+msgid ""
+"Poking around in module and class internals is an invaluable tool for "
+"white-box testing and interactive debugging. The ``given`` clause will be"
+" quite effective at preventing access to temporary state used during "
+"calculations (although no more so than current usage of ``del`` "
+"statements in that regard)."
+msgstr ""
+
+#: ../../pep-3150.txt:532
+msgid ""
+"While this is a valid concern, design for testability is an issue that "
+"cuts across many aspects of programming. If a component needs to be "
+"tested independently, then a ``given`` statement should be refactored in "
+"to separate statements so that information is exposed to the test suite. "
+"This isn't significantly different from refactoring an operation hidden "
+"inside a function or generator out into its own function purely to allow "
+"it to be tested in isolation."
+msgstr ""
+
+#: ../../pep-3150.txt:542
+msgid "Lack of Real World Impact Assessment"
+msgstr ""
+
+#: ../../pep-3150.txt:544
+msgid ""
+"The examples in the current PEP are almost all relatively small \"toy\" "
+"examples. The proposal in this PEP needs to be subjected to the test of "
+"application to a large code base (such as the standard library or a large"
+" Twisted application) in a search for examples where the readability of "
+"real world code is genuinely enhanced."
+msgstr ""
+
+#: ../../pep-3150.txt:550
+msgid ""
+"This is more of a deficiency in the PEP rather than the idea, though. If "
+"it wasn't a real world problem, we wouldn't get so many complaints about "
+"the lack of multi-line lambda support and Ruby's block construct probably"
+" wouldn't be quite so popular."
+msgstr ""
+
+#: ../../pep-3150.txt:557
+msgid "Open Questions"
+msgstr ""
+
+#: ../../pep-3150.txt:560
+msgid "Syntax for Forward References"
+msgstr ""
+
+#: ../../pep-3150.txt:562
+msgid ""
+"The ``?`` symbol is proposed for forward references to the given "
+"namespace as it is short, currently unused and suggests \"there's "
+"something missing here that will be filled in later\"."
+msgstr ""
+
+#: ../../pep-3150.txt:566
+msgid ""
+"The proposal in the PEP doesn't neatly parallel any existing Python "
+"feature, so reusing an already used symbol has been deliberately avoided."
+msgstr ""
+
+#: ../../pep-3150.txt:571
+msgid "Handling of ``nonlocal`` and ``global``"
+msgstr ""
+
+#: ../../pep-3150.txt:573
+msgid ""
+"``nonlocal`` and ``global`` are explicitly disallowed in the ``given`` "
+"clause suite and will be syntax errors if they occur. They will work "
+"normally if they appear within a ``def`` statement within that suite."
+msgstr ""
+
+#: ../../pep-3150.txt:577
+msgid ""
+"Alternatively, they could be defined as operating as if the anonymous "
+"functions were defined as in the expansion above."
+msgstr ""
+
+#: ../../pep-3150.txt:582
+msgid "Handling of ``break`` and ``continue``"
+msgstr ""
+
+#: ../../pep-3150.txt:584
+msgid ""
+"``break`` and ``continue`` will operate as if the anonymous functions "
+"were defined as in the expansion above. They will be syntax errors if "
+"they occur in the ``given`` clause suite but will work normally if they "
+"appear within a ``for`` or ``while`` loop as part of that suite."
+msgstr ""
+
+#: ../../pep-3150.txt:591
+msgid "Handling of ``return`` and ``yield``"
+msgstr ""
+
+#: ../../pep-3150.txt:593
+msgid ""
+"``return`` and ``yield`` are explicitly disallowed in the ``given`` "
+"clause suite and will be syntax errors if they occur. They will work "
+"normally if they appear within a ``def`` statement within that suite."
+msgstr ""
+
+#: ../../pep-3150.txt:599
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-3150.txt:601
+msgid "Defining callbacks for event driven programming::"
+msgstr ""
+
+#: ../../pep-3150.txt:620
+msgid "Defining \"one-off\" classes which typically only have a single instance::"
+msgstr ""
+
+#: ../../pep-3150.txt:642
+msgid ""
+"Calculating attributes without polluting the local namespace (from "
+"os.py)::"
+msgstr ""
+
+#: ../../pep-3150.txt:656
+msgid "Replacing default argument hack (from functools.lru_cache)::"
+msgstr ""
+
+#: ../../pep-3150.txt:677
+msgid "Possible Additions"
+msgstr ""
+
+#: ../../pep-3150.txt:679
+msgid ""
+"The current proposal allows the addition of a ``given`` clause only for "
+"simple statements. Extending the idea to allow the use of compound "
+"statements would be quite possible (by appending the given clause as an "
+"independent suite at the end), but doing so raises serious readability "
+"concerns (as values defined in the ``given`` clause may be used well "
+"before they are defined, exactly the kind of readability trap that other "
+"features like decorators and ``with`` statements are designed to "
+"eliminate)"
+msgstr ""
+
+#: ../../pep-3150.txt:688
+msgid ""
+"The \"explicit early binding\" variant may be applicable to the "
+"discussions on python-ideas on how to eliminate the default argument "
+"hack. A ``given`` clause in the header line for functions (after the "
+"return type annotation) may be the answer to that question."
+msgstr ""
+
+#: ../../pep-3150.txt:695
+msgid "Rejected Alternatives"
+msgstr ""
+
+#: ../../pep-3150.txt:697
+msgid ""
+"An earlier version of this PEP allowed implicit forward references to the"
+" names in the trailing suite, and also used implicit early binding "
+"semantics. Both of these ideas substantially complicated the proposal "
+"without providing a sufficient increase in expressive power. The current "
+"proposing with explicit forward references and early binding brings the "
+"new construct into line with existing scoping semantics, greatly "
+"improving the chances the idea can actually be implemented."
+msgstr ""
+
+#: ../../pep-3150.txt:705
+msgid ""
+"In addition to the proposals made here, there have also been suggestions "
+"of two suite \"in-order\" variants which provide the limited scoping of "
+"names without supporting out-of-order execution. I believe these "
+"suggestions largely miss the point of what people are complaining about "
+"when they ask for multi-line lambda support - it isn't that coming up "
+"with a name for the subexpression is especially difficult, it's that "
+"naming the function before the statement that uses it means the code no "
+"longer matches the way the developer thinks about the problem at hand."
+msgstr ""
+
+#: ../../pep-3150.txt:714
+msgid ""
+"I've made some unpublished attempts to allow direct references to the "
+"closure implicitly created by the ``given`` clause, while still retaining"
+" the general structure of the syntax as defined in this PEP (For example,"
+" allowing a subexpression like ``?given`` or ``:given`` to be used in "
+"expressions to indicate a direct reference to the implied closure, thus "
+"preventing it from being called automatically to create the local "
+"namespace). All such attempts have appeared unattractive and confusing "
+"compared to the simpler decorator-inspired proposal in PEP 403."
+msgstr ""
+
+#: ../../pep-3150.txt:724
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-3150.txt:726
+msgid ""
+"None as yet. If you want a crash course in Python namespace semantics and"
+" code compilation, feel free to try ;)"
+msgstr ""
+
+#: ../../pep-3150.txt:731
+msgid "TO-DO"
+msgstr ""
+
+#: ../../pep-3150.txt:733
+msgid "Mention PEP 359 and possible uses for locals() in the ``given`` clause"
+msgstr ""
+
+#: ../../pep-3150.txt:735
+msgid ""
+"Figure out if this can be used internally to make the implementation of "
+"zero-argument super() calls less awful"
+msgstr ""
+
+#: ../../pep-3150.txt:739
+msgid "References"
+msgstr ""
+
+#: ../../pep-3150.txt:741
+msgid ""
+"Explicitation lines in Python: https://mail.python.org/pipermail/python-"
+"ideas/2010-June/007476.html"
+msgstr ""
+
+#: ../../pep-3150.txt:744
+msgid ""
+"'where' statement in Python: https://mail.python.org/pipermail/python-"
+"ideas/2010-July/007584.html"
+msgstr ""
+
+#: ../../pep-3150.txt:747
+msgid ""
+"Where-statement (Proposal for function expressions): "
+"https://mail.python.org/pipermail/python-ideas/2009-July/005132.html"
+msgstr ""
+
+#: ../../pep-3150.txt:750
+msgid ""
+"Name conflict with NumPy for 'where' keyword choice: "
+"https://mail.python.org/pipermail/python-ideas/2010-July/007596.html"
+msgstr ""
+
+#: ../../pep-3150.txt:753
+msgid ""
+"The \"Status quo wins a stalemate\" design principle: "
+"http://www.boredomandlaziness.org/2011/02/status-quo-wins-stalemate.html"
+msgstr ""
+
+#: ../../pep-3150.txt:756
+msgid ""
+"Assignments in list/generator expressions: "
+"https://mail.python.org/pipermail/python-ideas/2011-April/009863.html"
+msgstr ""
+
+#: ../../pep-3150.txt:759
+msgid ""
+"Possible PEP 3150 style guidelines (#1): "
+"https://mail.python.org/pipermail/python-ideas/2011-April/009869.html"
+msgstr ""
+
+#: ../../pep-3150.txt:762
+msgid ""
+"Discussion of PEP 403 (statement local function definition): "
+"https://mail.python.org/pipermail/python-ideas/2011-October/012276.html"
+msgstr ""
+
+#: ../../pep-3150.txt:765
+msgid ""
+"Possible PEP 3150 style guidelines (#2): "
+"https://mail.python.org/pipermail/python-ideas/2011-October/012341.html"
+msgstr ""
+
+#: ../../pep-3150.txt:768
+msgid ""
+"Multi-line lambdas (again!) https://mail.python.org/pipermail/python-"
+"ideas/2013-August/022526.html"
+msgstr ""
+
+#: ../../pep-3150.txt:772
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3150.txt:774
+msgid "This document has been placed in the public domain."
+msgstr ""
+

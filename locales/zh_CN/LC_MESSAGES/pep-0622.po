@@ -1,0 +1,2908 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0622.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0622.rst:1
+msgid "622"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0622.rst:2
+msgid "Structural Pattern Matching"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0622.rst:5
+msgid ""
+"Brandt Bucher <brandt@python.org>, Daniel F Moisset "
+"<dfmoisset@gmail.com>, Tobias Kohn <kohnt@tobiaskohn.ch>, Ivan Levkivskyi"
+" <levkivskyi@gmail.com>, Guido van Rossum <guido@python.org>, Talin "
+"<viridia@gmail.com>"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0622.rst:12
+msgid "Python-Dev <python-dev@python.org>"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0622.rst:13
+msgid "Superseded"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0622.rst:14
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0622.rst:16
+msgid "23-Jun-2020"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0622.rst:17
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0622.rst:18
+msgid "23-Jun-2020, 8-Jul-2020"
+msgstr ""
+
+#: ../../pep-0622.rst
+msgid "Superseded-By"
+msgstr ""
+
+#: ../../pep-0622.rst:19
+msgid "634"
+msgstr ""
+
+#: ../../pep-0622.rst:23
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0622.rst:25
+msgid ""
+"This PEP proposes to add a **pattern matching statement** to Python, "
+"inspired by similar syntax found in Scala, Erlang, and other languages."
+msgstr ""
+
+#: ../../pep-0622.rst:29
+msgid "Patterns and shapes"
+msgstr ""
+
+#: ../../pep-0622.rst:31
+msgid ""
+"The **pattern syntax** builds on Python’s existing syntax for sequence "
+"unpacking (e.g., ``a, b = value``)."
+msgstr ""
+
+#: ../../pep-0622.rst:34
+msgid ""
+"A ``match`` statement compares a value (the **subject**) to several "
+"different shapes (the **patterns**) until a shape fits. Each pattern "
+"describes the type and structure of the accepted values as well as the "
+"variables where to capture its contents."
+msgstr ""
+
+#: ../../pep-0622.rst:39
+msgid "Patterns can specify the shape to be:"
+msgstr ""
+
+#: ../../pep-0622.rst:41
+msgid "a sequence to be unpacked, as already mentioned"
+msgstr ""
+
+#: ../../pep-0622.rst:42
+msgid "a mapping with specific keys"
+msgstr ""
+
+#: ../../pep-0622.rst:43
+msgid "an instance of a given class with (optionally) specific attributes"
+msgstr ""
+
+#: ../../pep-0622.rst:44
+msgid "a specific value"
+msgstr ""
+
+#: ../../pep-0622.rst:45
+msgid "a wildcard"
+msgstr ""
+
+#: ../../pep-0622.rst:47
+msgid "Patterns can be composed in several ways."
+msgstr ""
+
+#: ../../pep-0622.rst:50
+msgid "Syntax"
+msgstr ""
+
+#: ../../pep-0622.rst:52
+msgid "Syntactically, a ``match`` statement contains:"
+msgstr ""
+
+#: ../../pep-0622.rst:54
+msgid "a *subject* expression"
+msgstr ""
+
+#: ../../pep-0622.rst:55
+msgid "one or more ``case`` clauses"
+msgstr ""
+
+#: ../../pep-0622.rst:57
+msgid "Each ``case`` clause specifies:"
+msgstr ""
+
+#: ../../pep-0622.rst:59
+msgid "a pattern (the overall shape to be matched)"
+msgstr ""
+
+#: ../../pep-0622.rst:60
+msgid "an optional “guard” (a condition to be checked if the pattern matches)"
+msgstr ""
+
+#: ../../pep-0622.rst:61
+msgid "a code block to be executed if the case clause is selected"
+msgstr ""
+
+#: ../../pep-0622.rst:64
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0622.rst:66
+msgid "The rest of the PEP:"
+msgstr ""
+
+#: ../../pep-0622.rst:68
+msgid "motivates why we believe pattern matching makes a good addition to Python"
+msgstr ""
+
+#: ../../pep-0622.rst:69
+msgid "explains our design choices"
+msgstr ""
+
+#: ../../pep-0622.rst:70
+msgid "contains a precise syntactic and runtime specification"
+msgstr ""
+
+#: ../../pep-0622.rst:71
+msgid ""
+"gives guidance for static type checkers (and one small addition to the "
+"``typing`` module)"
+msgstr ""
+
+#: ../../pep-0622.rst:72
+msgid ""
+"discusses the main objections and alternatives that have been brought up "
+"during extensive discussion of the proposal, both within the group of "
+"authors and in the python-dev community"
+msgstr ""
+
+#: ../../pep-0622.rst:76
+msgid ""
+"Finally, we discuss some possible extensions that might be considered in "
+"the future, once the community has ample experience with the currently "
+"proposed syntax and semantics."
+msgstr ""
+
+#: ../../pep-0622.rst:83
+msgid "Overview"
+msgstr ""
+
+#: ../../pep-0622.rst:85
+msgid ""
+"Patterns are a new syntactical category with their own rules and special "
+"cases. Patterns mix input (given values) and output (captured variables) "
+"in novel ways. They may take a little time to use effectively. The "
+"authors have provided a brief introduction to the basic concepts here. "
+"Note that this section is not intended to be complete or entirely "
+"accurate."
+msgstr ""
+
+#: ../../pep-0622.rst:93
+msgid "Pattern, a new syntactic construct, and destructuring"
+msgstr ""
+
+#: ../../pep-0622.rst:95
+msgid ""
+"A new syntactic construct called **pattern** is introduced in this PEP. "
+"Syntactically, patterns look like a subset of expressions. The following "
+"are examples of patterns:"
+msgstr ""
+
+#: ../../pep-0622.rst:99
+msgid "``[first, second, *rest]``"
+msgstr ""
+
+#: ../../pep-0622.rst:100
+msgid "``Point2d(x, 0)``"
+msgstr ""
+
+#: ../../pep-0622.rst:101
+msgid "``{\"name\": \"Bruce\", \"age\": age}``"
+msgstr ""
+
+#: ../../pep-0622.rst:102
+msgid "``42``"
+msgstr ""
+
+#: ../../pep-0622.rst:104
+msgid ""
+"The above expressions may look like examples of object construction with "
+"a constructor which takes some values as parameters and builds an object "
+"from those components."
+msgstr ""
+
+#: ../../pep-0622.rst:108
+msgid ""
+"When viewed as a pattern, the above patterns mean the inverse operation "
+"of construction, which we call **destructuring**. **Destructuring** takes"
+" a subject value and extracts its components."
+msgstr ""
+
+#: ../../pep-0622.rst:112
+msgid ""
+"The syntactic similarity between object construction and destructuring is"
+" intentional. It also follows the existing Pythonic style of contexts "
+"which makes assignment targets (write contexts) look like expressions "
+"(read contexts)."
+msgstr ""
+
+#: ../../pep-0622.rst:117
+msgid ""
+"Pattern matching never creates objects. This is in the same way that "
+"``[a, b] = my_list`` doesn't create a new ``[a, b]`` list, nor reads the "
+"values of ``a`` and ``b``."
+msgstr ""
+
+#: ../../pep-0622.rst:123
+msgid "Matching process"
+msgstr ""
+
+#: ../../pep-0622.rst:131
+msgid ""
+"During this matching process, the structure of the pattern may not fit "
+"the subject, and matching *fails*."
+msgstr ""
+
+#: ../../pep-0622.rst:134
+msgid ""
+"For example, matching the pattern ``Point2d(x, 0)`` to the subject "
+"``Point2d(3, 0)`` successfully matches. The match also **binds** the "
+"pattern's free variable ``x`` to the subject's value ``3``."
+msgstr ""
+
+#: ../../pep-0622.rst:138
+msgid ""
+"As another example, if the subject is ``[3, 0]``, the match fails because"
+" the subject's type ``list`` is not the pattern's ``Point2d``."
+msgstr ""
+
+#: ../../pep-0622.rst:141
+msgid ""
+"As a third example, if the subject is ``Point2d(3, 7)``, the match fails "
+"because the subject's second coordinate ``7`` is not the same as the "
+"pattern's ``0``."
+msgstr ""
+
+#: ../../pep-0622.rst:145
+msgid ""
+"The ``match`` statement tries to match a single subject to each of the "
+"patterns in its ``case`` clauses. At the first successful match to a "
+"pattern in a ``case`` clause:"
+msgstr ""
+
+#: ../../pep-0622.rst:149
+msgid "the variables in the pattern are assigned, and"
+msgstr ""
+
+#: ../../pep-0622.rst:150
+msgid "a corresponding block is executed."
+msgstr ""
+
+#: ../../pep-0622.rst:152
+msgid ""
+"Each ``case`` clause can also specify an optional boolean condition, "
+"known as a **guard**."
+msgstr ""
+
+#: ../../pep-0622.rst:155
+msgid ""
+"Let's look at a more detailed example of a ``match`` statement. The "
+"``match`` statement is used within a function to define the building of "
+"3D points. In this example, the function can accept as input any of the "
+"following: tuple with 2 elements, tuple with 3 elements, an existing "
+"Point2d object or an existing Point3d object::"
+msgstr ""
+
+#: ../../pep-0622.rst:174
+msgid ""
+"Without pattern matching, this function's implementation would require "
+"several ``isinstance()`` checks, one or two ``len()`` calls, and a more "
+"convoluted control flow. The ``match`` example version and the "
+"traditional Python version without ``match`` translate into similar code "
+"under the hood. With familiarity of pattern matching, a user reading this"
+" function using ``match`` will likely find this version clearer than the "
+"traditional approach."
+msgstr ""
+
+#: ../../pep-0622.rst:183
+msgid "Rationale and Goals"
+msgstr ""
+
+#: ../../pep-0622.rst:185
+msgid ""
+"Python programs frequently need to handle data which varies in type, "
+"presence of attributes/keys, or number of elements. Typical examples are "
+"operating on nodes of a mixed structure like an AST, handling UI events "
+"of different types, processing structured input (like structured files or"
+" network messages), or “parsing” arguments for a function that can accept"
+" different combinations of types and numbers of parameters. In fact, the "
+"classic 'visitor' pattern is an example of this, done in an OOP style -- "
+"but matching makes it much less tedious to write."
+msgstr ""
+
+#: ../../pep-0622.rst:194
+msgid ""
+"Much of the code to do so tends to consist of complex chains of nested "
+"``if``/``elif`` statements, including multiple calls to ``len()``, "
+"``isinstance()`` and index/key/attribute access. Inside those branches "
+"users sometimes need to destructure the data further to extract the "
+"required component values, which may be nested several objects deep."
+msgstr ""
+
+#: ../../pep-0622.rst:200
+msgid ""
+"Pattern matching as present in many other languages provides an elegant "
+"solution to this problem. These range from statically compiled functional"
+" languages like F# and Haskell, via mixed-paradigm languages like Scala "
+"[4]_ and Rust [3]_, to dynamic languages like Elixir and Ruby, and is "
+"under consideration for JavaScript. We are indebted to these languages "
+"for guiding the way to Pythonic pattern matching, as Python is indebted "
+"to so many other languages for many of its features: many basic syntactic"
+" features were inherited from C, exceptions from Modula-3, classes were "
+"inspired by C++, slicing came from Icon, regular expressions from Perl, "
+"decorators resemble Java annotations, and so on."
+msgstr ""
+
+#: ../../pep-0622.rst:212
+msgid ""
+"The usual logic for operating on heterogeneous data can be summarized in "
+"the following way:"
+msgstr ""
+
+#: ../../pep-0622.rst:215
+msgid ""
+"Some analysis is done on the *shape* (type and components) of the data: "
+"This could involve ``isinstance()`` or ``len()`` calls and/or extracting "
+"components (via indexing or attribute access) which are checked for "
+"specific values or conditions."
+msgstr ""
+
+#: ../../pep-0622.rst:219
+msgid ""
+"If the shape is as expected, some more components are possibly extracted "
+"and some operation is done using the extracted values."
+msgstr ""
+
+#: ../../pep-0622.rst:222
+msgid ""
+"Take for example `this piece of the Django web framework "
+"<https://github.com/django/django/blob/5166097d7c80cab757e44f2d02f3d148fbbc2ff6/django/db/models/enums.py#L13>`_::"
+msgstr ""
+
+#: ../../pep-0622.rst:235
+msgid ""
+"We can see the shape analysis of the ``value`` at the top, following by "
+"the destructuring inside."
+msgstr ""
+
+#: ../../pep-0622.rst:238
+msgid ""
+"Note that shape analysis here involves checking the types both of the "
+"container and of one of its components, and some checks on its number of "
+"elements. Once we match the shape, we need to decompose the sequence. "
+"With the proposal in this PEP, we could rewrite that code into this::"
+msgstr ""
+
+#: ../../pep-0622.rst:250
+msgid ""
+"This syntax makes much more explicit which formats are possible for the "
+"input data, and which components are extracted from where. You can see a "
+"pattern similar to list unpacking, but also type checking: the "
+"``Promise()`` pattern is not an object construction, but represents "
+"anything that's an instance of ``Promise``. The pattern operator ``|`` "
+"separates alternative patterns (not unlike regular expressions or EBNF "
+"grammars), and ``_`` is a wildcard. (Note that the match syntax used here"
+" will accept user-defined sequences, as well as lists and tuples.)"
+msgstr ""
+
+#: ../../pep-0622.rst:259
+msgid ""
+"In some occasions, extraction of information is not as relevant as "
+"identifying structure. Take the following example from the `Python "
+"standard library "
+"<https://github.com/python/cpython/blob/c4cacc8/Lib/lib2to3/fixer_util.py#L158>`_::"
+msgstr ""
+
+#: ../../pep-0622.rst:275
+msgid ""
+"This example shows an example of finding out the \"shape\" of the data "
+"without doing significant extraction. This code is not very easy to read,"
+" and the intended shape that this is trying to match is not evident. "
+"Compare with the updated code using the proposed syntax::"
+msgstr ""
+
+#: ../../pep-0622.rst:289
+msgid ""
+"Note that the proposed code will work without any modifications to the "
+"definition of ``Node`` and other classes here. As shown in the examples "
+"above, the proposal supports not just unpacking sequences, but also doing"
+" ``isinstance`` checks (like ``LParen()`` or ``str()``), looking into "
+"object attributes (``Leaf(value=\"(\")`` for example) and comparisons "
+"with literals."
+msgstr ""
+
+#: ../../pep-0622.rst:296
+msgid ""
+"That last feature helps with some kinds of code which look more like the "
+"\"switch\" statement as present in other languages::"
+msgstr ""
+
+#: ../../pep-0622.rst:312
+msgid ""
+"Although this will work, it's not necessarily what the proposal is "
+"focused on, and the new syntax has been designed to best support the "
+"destructuring scenarios."
+msgstr ""
+
+#: ../../pep-0622.rst:316
+msgid "See the `syntax`_ sections below for a more detailed specification."
+msgstr ""
+
+#: ../../pep-0622.rst:318
+msgid ""
+"We propose that destructuring objects can be customized by a new special "
+"``__match_args__`` attribute. As part of this PEP we specify the general "
+"API and its implementation for some standard library classes (including "
+"named tuples and dataclasses). See the `runtime`_ section below."
+msgstr ""
+
+#: ../../pep-0622.rst:324
+msgid ""
+"Finally, we aim to provide comprehensive support for static type checkers"
+" and similar tools. For this purpose, we propose to introduce a "
+"``@typing.sealed`` class decorator that will be a no-op at runtime but "
+"will indicate to static tools that all sub-classes of this class must be "
+"defined in the same module. This will allow effective static "
+"exhaustiveness checks, and together with dataclasses, will provide basic "
+"support for algebraic data types [2]_. See the `static checkers`_ section"
+" for more details."
+msgstr ""
+
+#: ../../pep-0622.rst:337
+msgid "Syntax and Semantics"
+msgstr ""
+
+#: ../../pep-0622.rst:340
+msgid "Patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:342
+msgid ""
+"The **pattern** is a new syntactic construct, that could be considered a "
+"loose generalization of assignment targets. The key properties of a "
+"pattern are what types and shapes of subjects it accepts, what variables "
+"it captures and how it extracts them from the subject. For example, the "
+"pattern ``[a, b]`` matches only sequences of exactly 2 elements, "
+"extracting the first element into ``a`` and the second one into ``b``."
+msgstr ""
+
+#: ../../pep-0622.rst:349
+msgid ""
+"This PEP defines several types of patterns. These are certainly not the "
+"only possible ones, so the design decision was made to choose a subset of"
+" functionality that is useful now but conservative. More patterns can be "
+"added later as this feature gets more widespread use. See the `rejected "
+"ideas`_ and `deferred ideas`_ sections for more details."
+msgstr ""
+
+#: ../../pep-0622.rst:355
+msgid ""
+"The patterns listed here are described in more detail below, but "
+"summarized together in this section for simplicity:"
+msgstr ""
+
+#: ../../pep-0622.rst:358
+msgid ""
+"A **literal pattern** is useful to filter constant values in a structure."
+" It looks like a Python literal (including some values like ``True``, "
+"``False`` and ``None``). It only matches objects equal to the literal, "
+"and never binds."
+msgstr ""
+
+#: ../../pep-0622.rst:362
+msgid ""
+"A **capture pattern** looks like ``x`` and is equivalent to an identical "
+"assignment target: it always matches and binds the variable with the "
+"given (simple) name."
+msgstr ""
+
+#: ../../pep-0622.rst:365
+msgid ""
+"The **wildcard pattern** is a single underscore: ``_``. It always "
+"matches, but does not capture any variable (which prevents interference "
+"with other uses for ``_`` and allows for some optimizations)."
+msgstr ""
+
+#: ../../pep-0622.rst:368
+msgid ""
+"A **constant value pattern** works like the literal but for certain named"
+" constants. Note that it must be a qualified (dotted) name, given the "
+"possible ambiguity with a capture pattern. It looks like ``Color.RED`` "
+"and only matches values equal to the corresponding value. It never binds."
+msgstr ""
+
+#: ../../pep-0622.rst:372
+msgid ""
+"A **sequence pattern** looks like ``[a, *rest, b]`` and is similar to a "
+"list unpacking. An important difference is that the elements nested "
+"within it can be any kind of patterns, not just names or sequences. It "
+"matches only sequences of appropriate length, as long as all the sub-"
+"patterns also match. It makes all the bindings of its sub-patterns."
+msgstr ""
+
+#: ../../pep-0622.rst:377
+msgid ""
+"A **mapping pattern** looks like ``{\"user\": u, \"emails\": [*es]}``. It"
+" matches mappings with at least the set of provided keys, and if all the "
+"sub-patterns match their corresponding values. It binds whatever the sub-"
+"patterns bind while matching with the values corresponding to the keys. "
+"Adding ``**rest`` at the end of the pattern to capture extra items is "
+"allowed."
+msgstr ""
+
+#: ../../pep-0622.rst:382
+msgid ""
+"A **class pattern** is similar to the above but matches attributes "
+"instead of keys. It looks like ``datetime.date(year=y, day=d)``. It "
+"matches instances of the given type, having at least the specified "
+"attributes, as long as the attributes match with the corresponding sub-"
+"patterns. It binds whatever the sub-patterns bind when matching with the "
+"values of the given attributes. An optional protocol also allows matching"
+" positional arguments."
+msgstr ""
+
+#: ../../pep-0622.rst:390
+msgid ""
+"An **OR pattern** looks like ``[*x] | {\"elems\": [*x]}``. It matches if "
+"any of its sub-patterns match. It uses the binding for the leftmost "
+"pattern that matched."
+msgstr ""
+
+#: ../../pep-0622.rst:393
+msgid ""
+"A **walrus pattern** looks like ``d := datetime(year=2020, month=m)``. It"
+" matches only if its sub-pattern also matches. It binds whatever the sub-"
+"pattern match does, and also binds the named variable to the entire "
+"object."
+msgstr ""
+
+#: ../../pep-0622.rst:399
+msgid "The ``match`` statement"
+msgstr ""
+
+#: ../../pep-0622.rst:401
+msgid "A simplified, approximate grammar for the proposed syntax is::"
+msgstr ""
+
+#: ../../pep-0622.rst:423
+msgid ""
+"See `Appendix A`_ for the full, unabridged grammar. The simplified "
+"grammars in this section are there for helping the reader, not as a full "
+"specification."
+msgstr ""
+
+#: ../../pep-0622.rst:426
+msgid ""
+"We propose that the match operation should be a statement, not an "
+"expression. Although in many languages it is an expression, being a "
+"statement better suits the general logic of Python syntax. See `rejected "
+"ideas`_ for more discussion. The allowed patterns are described in detail"
+" below in the `patterns`_ subsection."
+msgstr ""
+
+#: ../../pep-0622.rst:433
+msgid ""
+"The ``match`` and ``case`` keywords are proposed to be soft keywords, so "
+"that they are recognized as keywords at the beginning of a match "
+"statement or case block respectively, but are allowed to be used in other"
+" places as variable or argument names."
+msgstr ""
+
+#: ../../pep-0622.rst:438
+msgid "The proposed indentation structure is as following::"
+msgstr ""
+
+#: ../../pep-0622.rst:446
+msgid ""
+"Here, ``some_expression`` represents the value that is being matched "
+"against, which will be referred to hereafter as the *subject* of the "
+"match."
+msgstr ""
+
+#: ../../pep-0622.rst:451
+msgid "Match semantics"
+msgstr ""
+
+#: ../../pep-0622.rst:453
+msgid ""
+"The proposed large scale semantics for choosing the match is to choose "
+"the first matching pattern and execute the corresponding suite. The "
+"remaining patterns are not tried. If there are no matching patterns, the "
+"statement 'falls through', and execution continues at the following "
+"statement."
+msgstr ""
+
+#: ../../pep-0622.rst:458
+msgid ""
+"Essentially this is equivalent to a chain of ``if ... elif ... else`` "
+"statements. Note that unlike for the previously proposed ``switch`` "
+"statement, the pre-computed dispatch dictionary semantics does not apply "
+"here."
+msgstr ""
+
+#: ../../pep-0622.rst:462
+msgid ""
+"There is no ``default`` or ``else`` case - instead the special wildcard "
+"``_`` can be used (see the section on `capture_pattern`_) as a final "
+"'catch-all' pattern."
+msgstr ""
+
+#: ../../pep-0622.rst:466
+msgid ""
+"Name bindings made during a successful pattern match outlive the executed"
+" suite and can be used after the match statement. This follows the logic "
+"of other Python statements that can bind names, such as ``for`` loop and "
+"``with`` statement. For example::"
+msgstr ""
+
+#: ../../pep-0622.rst:478
+msgid ""
+"During failed pattern matches, some sub-patterns may succeed. For "
+"example, while matching the value ``[0, 1, 2]`` with the pattern ``(0, x,"
+" 1)``, the sub-pattern ``x`` may succeed if the list elements are matched"
+" from left to right. The implementation may choose to either make "
+"persistent bindings for those partial matches or not. User code including"
+" a ``match`` statement should not rely on the bindings being made for a "
+"failed match, but also shouldn't assume that variables are unchanged by a"
+" failed match. This part of the behavior is left intentionally "
+"unspecified so different implementations can add optimizations, and to "
+"prevent introducing semantic restrictions that could limit the "
+"extensibility of this feature."
+msgstr ""
+
+#: ../../pep-0622.rst:489
+msgid ""
+"Note that some pattern types below define more specific rules about when "
+"the binding is made."
+msgstr ""
+
+#: ../../pep-0622.rst:495
+msgid "Allowed patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:497
+msgid ""
+"We introduce the proposed syntax gradually. Here we start from the main "
+"building blocks. The following patterns are supported:"
+msgstr ""
+
+#: ../../pep-0622.rst:504
+msgid "Literal Patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:506 ../../pep-0622.rst:559 ../../pep-0622.rst:607
+#: ../../pep-0622.rst:627 ../../pep-0622.rst:660 ../../pep-0622.rst:699
+#: ../../pep-0622.rst:743
+msgid "Simplified syntax::"
+msgstr ""
+
+#: ../../pep-0622.rst:516
+msgid ""
+"A literal pattern consists of a simple literal like a string, a number, a"
+" Boolean literal (``True`` or ``False``), or ``None``::"
+msgstr ""
+
+#: ../../pep-0622.rst:531
+msgid ""
+"Literal pattern uses equality with literal on the right hand side, so "
+"that in the above example ``number == 0`` and then possibly ``number == "
+"1``, etc will be evaluated. Note that although technically negative "
+"numbers are represented using unary minus, they are considered literals "
+"for the purpose of pattern matching. Unary plus is not allowed. Binary "
+"plus and minus are allowed only to join a real number and an imaginary "
+"number to form a complex number, such as ``1+1j``."
+msgstr ""
+
+#: ../../pep-0622.rst:539
+msgid ""
+"Note that because equality (``__eq__``) is used, and the equivalency "
+"between Booleans and the integers ``0`` and ``1``, there is no practical "
+"difference between the following two::"
+msgstr ""
+
+#: ../../pep-0622.rst:549
+msgid ""
+"Triple-quoted strings are supported.  Raw strings and byte strings are "
+"supported. F-strings are not allowed (since in general they are not "
+"really literals)."
+msgstr ""
+
+#: ../../pep-0622.rst:557
+msgid "Capture Patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:563
+msgid ""
+"A capture pattern serves as an assignment target for the matched "
+"expression::"
+msgstr ""
+
+#: ../../pep-0622.rst:571
+msgid ""
+"Only a single name is allowed (a dotted name is a constant value "
+"pattern). A capture pattern always succeeds. A capture pattern appearing "
+"in a scope makes the name local to that scope. For example, using "
+"``name`` after the above snippet may raise ``UnboundLocalError`` rather "
+"than ``NameError``, if the ``\"\"`` case clause was taken::"
+msgstr ""
+
+#: ../../pep-0622.rst:585
+msgid ""
+"While matching against each case clause, a name may be bound at most "
+"once, having two capture patterns with coinciding names is an error::"
+msgstr ""
+
+#: ../../pep-0622.rst:592
+msgid ""
+"Note: one can still match on a collection with equal items using "
+"`guards`_. Also, ``[x, y] | Point(x, y)`` is a legal pattern because the "
+"two alternatives are never matched at the same time."
+msgstr ""
+
+#: ../../pep-0622.rst:596
+msgid ""
+"The single underscore (``_``) is not considered a ``NAME`` and treated "
+"specially as a `wildcard pattern`_."
+msgstr ""
+
+#: ../../pep-0622.rst:599
+msgid ""
+"Reminder: ``None``, ``False`` and ``True`` are keywords denoting "
+"literals, not names."
+msgstr ""
+
+#: ../../pep-0622.rst:605
+msgid "Wildcard Pattern"
+msgstr ""
+
+#: ../../pep-0622.rst:611
+msgid ""
+"The single underscore (``_``) name is a special kind of pattern that "
+"always matches but *never* binds::"
+msgstr ""
+
+#: ../../pep-0622.rst:619
+msgid ""
+"Given that no binding is made, it can be used as many times as desired, "
+"unlike capture patterns."
+msgstr ""
+
+#: ../../pep-0622.rst:625
+msgid "Constant Value Patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:631
+msgid ""
+"This is used to match against constants and enum values. Every dotted "
+"name in a pattern is looked up using normal Python name resolution rules,"
+" and the value is used for comparison by equality with the match subject "
+"(same as for literals)::"
+msgstr ""
+
+#: ../../pep-0622.rst:649
+msgid ""
+"Note that there is no way to use unqualified names as constant value "
+"patterns (they always denote variables to be captured).  See `rejected "
+"ideas`_ for other syntactic alternatives that were considered for "
+"constant value patterns."
+msgstr ""
+
+#: ../../pep-0622.rst:658
+msgid "Sequence Patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:668
+msgid ""
+"A sequence pattern follows the same semantics as unpacking assignment. "
+"Like unpacking assignment, both tuple-like and list-like syntax can be "
+"used, with identical semantics.  Each element can be an arbitrary "
+"pattern; there may also be at most one ``*name`` pattern to catch all "
+"remaining items::"
+msgstr ""
+
+#: ../../pep-0622.rst:680
+msgid ""
+"To match a sequence pattern the subject must be an instance of "
+"``collections.abc.Sequence``, and it cannot be any kind of string "
+"(``str``, ``bytes``, ``bytearray``). It cannot be an iterator. For "
+"matching on a specific collection class, see class pattern below."
+msgstr ""
+
+#: ../../pep-0622.rst:685
+msgid ""
+"The ``_`` wildcard can be starred to match sequences of varying lengths. "
+"For example:"
+msgstr ""
+
+#: ../../pep-0622.rst:688
+msgid "``[*_]`` matches a sequence of any length."
+msgstr ""
+
+#: ../../pep-0622.rst:689
+msgid "``(_, _, *_)``, matches any sequence of length two or more."
+msgstr ""
+
+#: ../../pep-0622.rst:690
+msgid ""
+"``[\"a\", *_, \"z\"]`` matches any sequence of length two or more that "
+"starts with ``\"a\"`` and ends with ``\"z\"``."
+msgstr ""
+
+#: ../../pep-0622.rst:697
+msgid "Mapping Patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:708
+msgid ""
+"Mapping pattern is a generalization of iterable unpacking to mappings. "
+"Its syntax is similar to dictionary display but each key and value are "
+"patterns ``\"{\" (pattern \":\" pattern)+ \"}\"``. A ``**rest`` pattern "
+"is also allowed, to extract the remaining items.  Only literal and "
+"constant value patterns are allowed in key positions::"
+msgstr ""
+
+#: ../../pep-0622.rst:722
+msgid ""
+"The subject must be an instance of ``collections.abc.Mapping``. Extra "
+"keys in the subject are ignored even if ``**rest`` is not present. This "
+"is different from sequence pattern, where extra items will cause a match "
+"to fail. But mappings are actually different from sequences: they have "
+"natural structural sub-typing behavior, i.e., passing a dictionary with "
+"extra keys somewhere will likely just work."
+msgstr ""
+
+#: ../../pep-0622.rst:729
+msgid ""
+"For this reason, ``**_`` is invalid in mapping patterns; it would always "
+"be a no-op that could be removed without consequence."
+msgstr ""
+
+#: ../../pep-0622.rst:732
+msgid ""
+"Matched key-value pairs must already be present in the mapping, and not "
+"created on-the-fly by ``__missing__`` or ``__getitem__``.  For example, "
+"``collections.defaultdict`` instances will only match patterns with keys "
+"that were already present when the ``match`` block was entered."
+msgstr ""
+
+#: ../../pep-0622.rst:741
+msgid "Class Patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:753
+msgid ""
+"A class pattern provides support for destructuring arbitrary objects. "
+"There are two possible ways of matching on object attributes: by position"
+" like ``Point(1, 2)``, and by name like ``Point(x=1, y=2)``. These two "
+"can be combined, but a positional match cannot follow a match by name. "
+"Each item in a class pattern can be an arbitrary pattern. A simple "
+"example::"
+msgstr ""
+
+#: ../../pep-0622.rst:766
+msgid ""
+"Whether a match succeeds or not is determined by the equivalent of an "
+"``isinstance`` call.  If the subject (``shape``, in the example) is not "
+"an instance of the named class (``Point`` or ``Rectangle``), the match "
+"fails.  Otherwise, it continues (see details in the `runtime`_ section)."
+msgstr ""
+
+#: ../../pep-0622.rst:772
+msgid ""
+"The named class must inherit from ``type``.  It may be a single name or a"
+" dotted name (e.g. ``some_mod.SomeClass`` or ``mod.pkg.Class``). The "
+"leading name must not be ``_``, so e.g. ``_(...)`` and ``_.C(...)`` are "
+"invalid. Use ``object(foo=_)`` to check whether the matched object has an"
+" attribute ``foo``."
+msgstr ""
+
+#: ../../pep-0622.rst:778
+msgid ""
+"By default, sub-patterns may only be matched by keyword for user-defined "
+"classes. In order to support positional sub-patterns, a custom "
+"``__match_args__`` attribute is required. The runtime allows matching "
+"against arbitrarily nested patterns by chaining all of the instance "
+"checks and attribute lookups appropriately."
+msgstr ""
+
+#: ../../pep-0622.rst:787
+msgid "Combining multiple patterns (OR patterns)"
+msgstr ""
+
+#: ../../pep-0622.rst:789
+msgid ""
+"Multiple alternative patterns can be combined into one using ``|``. This "
+"means the whole pattern matches if at least one alternative matches. "
+"Alternatives are tried from left to right and have a short-circuit "
+"property, subsequent patterns are not tried if one matched. Examples::"
+msgstr ""
+
+#: ../../pep-0622.rst:804
+msgid ""
+"The alternatives may bind variables, as long as each alternative binds "
+"the same set of variables (excluding ``_``).  For example::"
+msgstr ""
+
+#: ../../pep-0622.rst:823
+msgid "Guards"
+msgstr ""
+
+#: ../../pep-0622.rst:825
+msgid ""
+"Each *top-level* pattern can be followed by a **guard** of the form ``if "
+"expression``. A case clause succeeds if the pattern matches and the guard"
+" evaluates to a true value. For example::"
+msgstr ""
+
+#: ../../pep-0622.rst:839
+msgid ""
+"If evaluating a guard raises an exception, it is propagated onwards "
+"rather than fail the case clause. Names that appear in a pattern are "
+"bound before the guard succeeds. So this will work::"
+msgstr ""
+
+#: ../../pep-0622.rst:852
+msgid ""
+"Note that guards are not allowed for nested patterns, so that ``[x if x >"
+" 0]`` is a ``SyntaxError`` and ``1 | 2 if 3 | 4`` will be parsed as ``(1 "
+"| 2) if (3 | 4)``."
+msgstr ""
+
+#: ../../pep-0622.rst:858
+msgid "Walrus patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:860
+msgid ""
+"It is often useful to match a sub-pattern *and* bind the corresponding "
+"value to a name. For example, it can be useful to write more efficient "
+"matches, or simply to avoid repetition. To simplify such cases, any "
+"pattern (other than the walrus pattern itself) can be preceded by a name "
+"and the walrus operator (``:=``). For example::"
+msgstr ""
+
+#: ../../pep-0622.rst:870
+msgid ""
+"The name on the left of the walrus operator can be used in a guard, in "
+"the match suite, or after the match statement.  However, the name will "
+"*only* be bound if the sub-pattern succeeds.  Another example::"
+msgstr ""
+
+#: ../../pep-0622.rst:880
+msgid ""
+"Technically, most such examples can be rewritten using guards and/or "
+"nested match statements, but this will be less readable and/or will "
+"produce less efficient code. Essentially, most of the arguments in PEP "
+"572 apply here equally."
+msgstr ""
+
+#: ../../pep-0622.rst:885
+msgid "The wildcard ``_`` is not a valid name here."
+msgstr ""
+
+#: ../../pep-0622.rst:891
+msgid "Runtime specification"
+msgstr ""
+
+#: ../../pep-0622.rst:894
+msgid "The Match Protocol"
+msgstr ""
+
+#: ../../pep-0622.rst:896
+msgid ""
+"The equivalent of an ``isinstance`` call is used to decide whether an "
+"object matches a given class pattern and to extract the corresponding "
+"attributes.  Classes requiring different matching semantics (such as "
+"duck-typing) can do so by defining ``__instancecheck__`` (a pre-existing "
+"metaclass hook) or by using ``typing.Protocol``."
+msgstr ""
+
+#: ../../pep-0622.rst:902
+msgid "The procedure is as following:"
+msgstr ""
+
+#: ../../pep-0622.rst:904
+msgid ""
+"The class object for ``Class`` in ``Class(<sub-patterns>)`` is looked up "
+"and ``isinstance(obj, Class)`` is called, where ``obj`` is the value "
+"being matched.  If false, the match fails."
+msgstr ""
+
+#: ../../pep-0622.rst:908
+msgid ""
+"Otherwise, if any sub-patterns are given in the form of positional or "
+"keyword arguments, these are matched from left to right, as follows.  The"
+" match fails as soon as a sub-pattern fails; if all sub-patterns succeed,"
+" the overall class pattern match succeeds."
+msgstr ""
+
+#: ../../pep-0622.rst:913
+msgid ""
+"If there are match-by-position items and the class has a "
+"``__match_args__`` attribute, the item at position ``i`` is matched "
+"against the value looked up by attribute ``__match_args__[i]``. For "
+"example, a pattern ``Point2d(5, 8)``, where ``Point2d.__match_args__ == "
+"[\"x\", \"y\"]``, is translated (approximately) into ``obj.x == 5 and "
+"obj.y == 8``."
+msgstr ""
+
+#: ../../pep-0622.rst:920
+msgid ""
+"If there are more positional items than the length of ``__match_args__``,"
+" a ``TypeError`` is raised."
+msgstr ""
+
+#: ../../pep-0622.rst:923
+msgid ""
+"If the ``__match_args__`` attribute is absent on the matched class, and "
+"one or more positional item appears in a match, ``TypeError`` is also "
+"raised. We don't fall back on using ``__slots__`` or ``__annotations__`` "
+"-- \"In the face of ambiguity, refuse the temptation to guess.\""
+msgstr ""
+
+#: ../../pep-0622.rst:929
+msgid ""
+"If there are any match-by-keyword items the keywords are looked up as "
+"attributes on the subject.  If the lookup succeeds the value is matched "
+"against the corresponding sub-pattern.  If the lookup fails, the match "
+"fails."
+msgstr ""
+
+#: ../../pep-0622.rst:934
+msgid ""
+"Such a protocol favors simplicity of implementation over flexibility and "
+"performance. For other considered alternatives, see `extended matching`_."
+msgstr ""
+
+#: ../../pep-0622.rst:937
+msgid ""
+"For the most commonly-matched built-in types (``bool``, ``bytearray``, "
+"``bytes``, ``dict``, ``float``, ``frozenset``, ``int``, ``list``, "
+"``set``, ``str``, and ``tuple``), a single positional sub-pattern is "
+"allowed to be passed to the call. Rather than being matched against any "
+"particular attribute on the subject, it is instead matched against the "
+"subject itself.  This creates behavior that is useful and intuitive for "
+"these objects:"
+msgstr ""
+
+#: ../../pep-0622.rst:945
+msgid "``bool(False)`` matches ``False`` (but not ``0``)."
+msgstr ""
+
+#: ../../pep-0622.rst:946
+msgid "``tuple((0, 1, 2))`` matches ``(0, 1, 2)`` (but not ``[0, 1, 2]``)."
+msgstr ""
+
+#: ../../pep-0622.rst:947
+msgid "``int(i)`` matches any ``int`` and binds it to the name ``i``."
+msgstr ""
+
+#: ../../pep-0622.rst:951
+msgid "Overlapping sub-patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:953
+msgid ""
+"Certain classes of overlapping matches are detected at runtime and will "
+"raise exceptions. In addition to basic checks described in the previous "
+"subsection:"
+msgstr ""
+
+#: ../../pep-0622.rst:957
+msgid ""
+"The interpreter will check that two match items are not targeting the "
+"same attribute, for example ``Point2d(1, 2, y=3)`` is an error."
+msgstr ""
+
+#: ../../pep-0622.rst:960
+msgid ""
+"It will also check that a mapping pattern does not attempt to match the "
+"same key more than once."
+msgstr ""
+
+#: ../../pep-0622.rst:965
+msgid "Special attribute ``__match_args__``"
+msgstr ""
+
+#: ../../pep-0622.rst:967
+msgid ""
+"The ``__match_args__`` attribute is always looked up on the type object "
+"named in the pattern.  If present, it must be a list or tuple of strings "
+"naming the allowed positional arguments."
+msgstr ""
+
+#: ../../pep-0622.rst:971
+msgid ""
+"In deciding what names should be available for matching, the recommended "
+"practice is that class patterns should be the mirror of construction; "
+"that is, the set of available names and their types should resemble the "
+"arguments to ``__init__()``."
+msgstr ""
+
+#: ../../pep-0622.rst:976
+msgid ""
+"Only match-by-name will work by default, and classes should define "
+"``__match_args__`` as a class attribute if they would like to support "
+"match-by-position.  Additionally, dataclasses and named tuples will "
+"support match-by-position out of the box. See below for more details."
+msgstr ""
+
+#: ../../pep-0622.rst:982
+msgid "Exceptions and side effects"
+msgstr ""
+
+#: ../../pep-0622.rst:984
+msgid ""
+"While matching each case, the ``match`` statement may trigger execution "
+"of other functions (for example ``__getitem__()``, ``__len__()`` or a "
+"property). Almost every exception caused by those propagates outside of "
+"the match statement normally. The only case where an exception is not "
+"propagated is an ``AttributeError`` raised while trying to lookup an "
+"attribute while matching attributes of a Class Pattern; that case results"
+" in just a matching failure, and the rest of the statement proceeds "
+"normally."
+msgstr ""
+
+#: ../../pep-0622.rst:992
+msgid ""
+"The only side-effect carried on explicitly by the matching process is the"
+" binding of names. However, the process relies on attribute access, "
+"instance checks, ``len()``, equality and item access on the subject and "
+"some of its components. It also evaluates constant value patterns and the"
+" left side of class patterns. While none of those typically create any "
+"side-effects, some of these objects could. This proposal intentionally "
+"leaves out any specification of what methods are called or how many "
+"times. User code relying on that behavior should be considered buggy."
+msgstr ""
+
+#: ../../pep-0622.rst:1002
+msgid "The standard library"
+msgstr ""
+
+#: ../../pep-0622.rst:1004
+msgid ""
+"To facilitate the use of pattern matching, several changes will be made "
+"to the standard library:"
+msgstr ""
+
+#: ../../pep-0622.rst:1007
+msgid "Namedtuples and dataclasses will have auto-generated ``__match_args__``."
+msgstr ""
+
+#: ../../pep-0622.rst:1009
+msgid ""
+"For dataclasses the order of attributes in the generated "
+"``__match_args__`` will be the same as the order of corresponding "
+"arguments in the generated ``__init__()`` method. This includes the "
+"situations where attributes are inherited from a superclass."
+msgstr ""
+
+#: ../../pep-0622.rst:1014
+msgid ""
+"In addition, a systematic effort will be put into going through existing "
+"standard library classes and adding ``__match_args__`` where it looks "
+"beneficial."
+msgstr ""
+
+#: ../../pep-0622.rst:1022
+msgid "Static checkers specification"
+msgstr ""
+
+#: ../../pep-0622.rst:1025
+msgid "Exhaustiveness checks"
+msgstr ""
+
+#: ../../pep-0622.rst:1027
+msgid ""
+"From a reliability perspective, experience shows that missing a case when"
+" dealing with a set of possible data values leads to hard to debug "
+"issues, thus forcing people to add safety asserts like this::"
+msgstr ""
+
+#: ../../pep-0622.rst:1039
+msgid ""
+"PEP 484 specifies that static type checkers should support exhaustiveness"
+" in conditional checks with respect to enum values. PEP 586 later "
+"generalized this requirement to literal types."
+msgstr ""
+
+#: ../../pep-0622.rst:1043
+msgid ""
+"This PEP further generalizes this requirement to arbitrary patterns. A "
+"typical situation where this applies is matching an expression with a "
+"union type::"
+msgstr ""
+
+#: ../../pep-0622.rst:1057
+msgid ""
+"The exhaustiveness checks should also apply where both pattern matching "
+"and enum values are combined::"
+msgstr ""
+
+#: ../../pep-0622.rst:1084
+msgid ""
+"Obviously, no ``Matchable`` protocol (in terms of PEP 544) is needed, "
+"since every class is matchable and therefore is subject to the checks "
+"specified above."
+msgstr ""
+
+#: ../../pep-0622.rst:1090
+msgid "Sealed classes as algebraic data types"
+msgstr ""
+
+#: ../../pep-0622.rst:1092
+msgid ""
+"Quite often it is desirable to apply exhaustiveness to a set of classes "
+"without defining ad-hoc union types, which is itself fragile if a class "
+"is missing in the union definition. A design pattern where a group of "
+"record-like classes is combined into a union is popular in other "
+"languages that support pattern matching and is known under a name of "
+"algebraic data types [2]_."
+msgstr ""
+
+#: ../../pep-0622.rst:1098
+msgid ""
+"We propose to add a special decorator class ``@sealed`` to the ``typing``"
+" module [6]_, that will have no effect at runtime, but will indicate to "
+"static type checkers that all subclasses (direct and indirect) of this "
+"class should be defined in the same module as the base class."
+msgstr ""
+
+#: ../../pep-0622.rst:1103
+msgid ""
+"The idea is that since all subclasses are known, the type checker can "
+"treat the sealed base class as a union of all its subclasses. Together "
+"with dataclasses this allows a clean and safe support of algebraic data "
+"types in Python. Consider this example::"
+msgstr ""
+
+#: ../../pep-0622.rst:1140
+msgid ""
+"With such definition, a type checker can safely treat ``Node`` as "
+"``Union[Name, Operation, Assignment, Print]``, and also safely treat e.g."
+" ``Expression`` as ``Union[Name, Operation]``. So this will result in a "
+"type checking error in the below snippet, because ``Name`` is not handled"
+" (and type checker can give a useful error message)::"
+msgstr ""
+
+#: ../../pep-0622.rst:1157
+msgid "Type erasure"
+msgstr ""
+
+#: ../../pep-0622.rst:1159
+msgid ""
+"Class patterns are subject to runtime type erasure. Namely, although one "
+"can define a type alias ``IntQueue = Queue[int]`` so that a pattern like "
+"``IntQueue()`` is syntactically valid, type checkers should reject such a"
+" match::"
+msgstr ""
+
+#: ../../pep-0622.rst:1169
+msgid ""
+"Note that the above snippet actually fails at runtime with the current "
+"implementation of generic classes in the ``typing`` module, as well as "
+"with builtin generic classes in the recently accepted PEP 585, because "
+"they prohibit ``isinstance`` checks."
+msgstr ""
+
+#: ../../pep-0622.rst:1174
+msgid ""
+"To clarify, generic classes are not prohibited in general from "
+"participating in pattern matching, just that their type parameters can't "
+"be explicitly specified. It is still fine if sub-patterns or literals "
+"bind the type variables. For example::"
+msgstr ""
+
+#: ../../pep-0622.rst:1197
+msgid "Note about constants"
+msgstr ""
+
+#: ../../pep-0622.rst:1199
+msgid ""
+"The fact that a capture pattern is always an assignment target may create"
+" unwanted consequences when a user by mistake tries to \"match\" a value "
+"against a constant instead of using the constant value pattern. As a "
+"result, at runtime such a match will always succeed and moreover override"
+" the value of the constant. It is important therefore that static type "
+"checkers warn about such situations. For example::"
+msgstr ""
+
+#: ../../pep-0622.rst:1218
+msgid ""
+"Note that the CPython reference implementation also generates a "
+"``SyntaxWarning`` message for this case."
+msgstr ""
+
+#: ../../pep-0622.rst:1223
+msgid "Precise type checking of star matches"
+msgstr ""
+
+#: ../../pep-0622.rst:1225
+msgid ""
+"Type checkers should perform precise type checking of star items in "
+"pattern matching giving them either a heterogeneous ``list[T]`` type, or "
+"a ``TypedDict`` type as specified by PEP 589. For example::"
+msgstr ""
+
+#: ../../pep-0622.rst:1238
+msgid "Performance Considerations"
+msgstr ""
+
+#: ../../pep-0622.rst:1240
+msgid ""
+"Ideally, a ``match`` statement should have good runtime performance "
+"compared to an equivalent chain of if-statements. Although the history of"
+" programming languages is rife with examples of new features which "
+"increased engineer productivity at the expense of additional CPU cycles, "
+"it would be unfortunate if the benefits of ``match`` were counter-"
+"balanced by a significant overall decrease in runtime performance."
+msgstr ""
+
+#: ../../pep-0622.rst:1247
+msgid ""
+"Although this PEP does not specify any particular implementation "
+"strategy, a few words about the prototype implementation and how it "
+"attempts to maximize performance are in order."
+msgstr ""
+
+#: ../../pep-0622.rst:1251
+msgid ""
+"Basically, the prototype implementation transforms all of the ``match`` "
+"statement syntax into equivalent if/else blocks - or more accurately, "
+"into Python byte codes that have the same effect. In other words, all of "
+"the logic for testing instance types, sequence lengths, mapping keys and "
+"so on are inlined in place of the ``match``."
+msgstr ""
+
+#: ../../pep-0622.rst:1257
+msgid ""
+"This is not the only possible strategy, nor is it necessarily the best. "
+"For example, the instance checks could be memoized, especially if there "
+"are multiple instances of the same class type but with different "
+"arguments in a single match statement. It is also theoretically possible "
+"for a future implementation to process case clauses or sub-patterns in "
+"parallel using a decision tree rather than testing them one by one."
+msgstr ""
+
+#: ../../pep-0622.rst:1266
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0622.rst:1268
+msgid ""
+"This PEP is fully backwards compatible: the ``match`` and ``case`` "
+"keywords are proposed to be (and stay!) soft keywords, so their use as "
+"variable, function, class, module or attribute names is not impeded at "
+"all."
+msgstr ""
+
+#: ../../pep-0622.rst:1273
+msgid ""
+"This is important because ``match`` is the name of a popular and well-"
+"known function and method in the ``re`` module, which we have no desire "
+"to break or deprecate."
+msgstr ""
+
+#: ../../pep-0622.rst:1277
+msgid ""
+"The difference between hard and soft keywords is that hard keywords are "
+"*always* reserved words, even in positions where they make no sense (e.g."
+" ``x = class + 1``), while soft keywords only get a special meaning in "
+"context.  Since PEP 617 the parser backtracks, that means that on "
+"different attempts to parse a code fragment it could interpret a soft "
+"keyword differently."
+msgstr ""
+
+#: ../../pep-0622.rst:1284
+msgid "For example, suppose the parser encounters the following input::"
+msgstr ""
+
+#: ../../pep-0622.rst:1288
+msgid ""
+"The parser first attempts to parse this as an expression statement. It "
+"interprets ``match`` as a NAME token, and then considers ``[x, y]`` to be"
+" a double subscript.  It then encounters the colon and has to backtrack, "
+"since an expression statement cannot be followed by a colon.  The parser "
+"then backtracks to the start of the line and finds that ``match`` is a "
+"soft keyword allowed in this position.  It then considers ``[x, y]`` to "
+"be a list expression.  The colon then is just what the parser expected, "
+"and the parse succeeds."
+msgstr ""
+
+#: ../../pep-0622.rst:1299
+msgid "Impacts on third-party tools"
+msgstr ""
+
+#: ../../pep-0622.rst:1301
+msgid ""
+"There are a lot of tools in the Python ecosystem that operate on Python "
+"source code: linters, syntax highlighters, auto-formatters, and IDEs. "
+"These will all need to be updated to include awareness of the ``match`` "
+"statement."
+msgstr ""
+
+#: ../../pep-0622.rst:1305
+msgid "In general, these tools fall into one of two categories:"
+msgstr ""
+
+#: ../../pep-0622.rst:1307
+msgid ""
+"**Shallow** parsers don't try to understand the full syntax of Python, "
+"but instead scan the source code for specific known patterns. IDEs, such "
+"as Visual Studio Code, Emacs and TextMate, tend to fall in this category,"
+" since frequently the source code is invalid while being edited, and a "
+"strict approach to parsing would fail."
+msgstr ""
+
+#: ../../pep-0622.rst:1313
+msgid ""
+"For these kinds of tools, adding knowledge of a new keyword is relatively"
+" easy, just an addition to a table, or perhaps modification of a regular "
+"expression."
+msgstr ""
+
+#: ../../pep-0622.rst:1317
+msgid ""
+"**Deep** parsers understand the complete syntax of Python. An example of "
+"this is the auto-formatter Black [9]_. A particular requirement with "
+"these kinds of tools is that they not only need to understand the syntax "
+"of the current version of Python, but older versions of Python as well."
+msgstr ""
+
+#: ../../pep-0622.rst:1322
+msgid ""
+"The ``match`` statement uses a soft keyword, and it is one of the first "
+"major Python features to take advantage of the capabilities of the new "
+"PEG parser. This means that third-party parsers which are not 'PEG-"
+"compatible' will have a hard time with the new syntax."
+msgstr ""
+
+#: ../../pep-0622.rst:1327
+msgid ""
+"It has been noted that a number of these third-party tools leverage "
+"common parsing libraries (Black for example uses a fork of the lib2to3 "
+"parser). It may be helpful to identify widely used parsing libraries "
+"(such as parso [10]_ and libCST [11]_) and upgrade them to be PEG "
+"compatible."
+msgstr ""
+
+#: ../../pep-0622.rst:1332
+msgid ""
+"However, since this work would need to be done not only for the match "
+"statement, but for *any* new Python syntax that leverages the "
+"capabilities of the PEG parser, it is considered out of scope for this "
+"PEP. (Although it is suggested that this would make a fine Summer of Code"
+" project.)"
+msgstr ""
+
+#: ../../pep-0622.rst:1339
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0622.rst:1341
+msgid ""
+"A `feature-complete CPython implementation "
+"<https://github.com/brandtbucher/cpython/tree/patma>`_ is available on "
+"GitHub."
+msgstr ""
+
+#: ../../pep-0622.rst:1345
+msgid ""
+"An `interactive playground "
+"<https://mybinder.org/v2/gh/gvanrossum/patma/master?urlpath=lab/tree/playground-622.ipynb>`_"
+" based on the above implementation was created using Binder [12]_ and "
+"Jupyter [13]_."
+msgstr ""
+
+#: ../../pep-0622.rst:1350
+msgid "Example Code"
+msgstr ""
+
+#: ../../pep-0622.rst:1352
+msgid ""
+"A small `collection of example code "
+"<https://github.com/gvanrossum/patma/tree/master/examples>`_ is available"
+" on GitHub."
+msgstr ""
+
+#: ../../pep-0622.rst:1360
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0622.rst:1362
+msgid ""
+"This general idea has been floating around for a pretty long time, and "
+"many back and forth decisions were made. Here we summarize many "
+"alternative paths that were taken but eventually abandoned."
+msgstr ""
+
+#: ../../pep-0622.rst:1367
+msgid "Don't do this, pattern matching is hard to learn"
+msgstr ""
+
+#: ../../pep-0622.rst:1369
+msgid ""
+"In our opinion, the proposed pattern matching is not more difficult than "
+"adding ``isinstance()`` and ``getattr()`` to iterable unpacking. Also, we"
+" believe the proposed syntax significantly improves readability for a "
+"wide range of code patterns, by allowing to express *what* one wants to "
+"do, rather than *how* to do it. We hope the few real code snippets we "
+"included in the PEP above illustrate this comparison well enough. For "
+"more real code examples and their translations see Ref. [7]_."
+msgstr ""
+
+#: ../../pep-0622.rst:1379
+msgid "Don't do this, use existing method dispatching mechanisms"
+msgstr ""
+
+#: ../../pep-0622.rst:1381
+msgid ""
+"We recognize that some of the use cases for the ``match`` statement "
+"overlap with what can be done with traditional object-oriented "
+"programming (OOP) design techniques using class inheritance. The ability "
+"to choose alternate behaviors based on testing the runtime type of a "
+"match subject might even seem heretical to strict OOP purists."
+msgstr ""
+
+#: ../../pep-0622.rst:1387
+msgid ""
+"However, Python has always been a language that embraces a variety of "
+"programming styles and paradigms. Classic Python design idioms such as "
+"\"duck\"-typing go beyond the traditional OOP model."
+msgstr ""
+
+#: ../../pep-0622.rst:1391
+msgid ""
+"We believe that there are important use cases where the use of ``match`` "
+"results in a cleaner and more maintainable architecture. These use cases "
+"tend to be characterized by a number of features:"
+msgstr ""
+
+#: ../../pep-0622.rst:1395
+msgid ""
+"Algorithms which cut across traditional lines of data encapsulation. If "
+"an algorithm is processing heterogeneous elements of different types "
+"(such as evaluating or transforming an abstract syntax tree, or doing "
+"algebraic manipulation of mathematical symbols), forcing the user to "
+"implement the algorithm as individual methods on each element type "
+"results in logic that is smeared across the entire codebase instead of "
+"being neatly localized in one place."
+msgstr ""
+
+#: ../../pep-0622.rst:1402
+msgid ""
+"Program architectures where the set of possible data types is relatively "
+"stable, but there is an ever-expanding set of operations to be performed "
+"on those data types. Doing this in a strict OOP fashion requires "
+"constantly adding new methods to both the base class and subclasses to "
+"support the new methods, \"polluting\" the base class with lots of very "
+"specialized method definitions, and causing widespread disruption and "
+"churn in the code. By contrast, in a ``match``-based dispatch, adding a "
+"new behavior merely involves writing a new ``match`` statement."
+msgstr ""
+
+#: ../../pep-0622.rst:1410
+msgid ""
+"OOP also does not handle dispatching based on the *shape* of an object, "
+"such as the length of a tuple, or the presence of an attribute -- instead"
+" any such dispatching decision must be encoded into the object's type. "
+"Shape-based dispatching is particularly interesting when it comes to "
+"handling \"duck\"-typed objects."
+msgstr ""
+
+#: ../../pep-0622.rst:1416
+msgid ""
+"Where OOP is clearly superior is in the opposite case: where the set of "
+"possible operations is relatively stable and well-defined, but there is "
+"an ever-growing set of data types to operate on. A classic example of "
+"this is UI widget toolkits, where there is a fixed set of interaction "
+"types (repaint, mouse click, keypress, and so on), but the set of widget "
+"types is constantly expanding as developers invent new and creative user "
+"interaction styles. Adding a new kind of widget is a simple matter of "
+"writing a new subclass, whereas with a match-based approach you end up "
+"having to add a new case clause to many widespread match statements. We "
+"therefore don't recommend using ``match`` in such a situation."
+msgstr ""
+
+#: ../../pep-0622.rst:1428
+msgid "Allow more flexible assignment targets instead"
+msgstr ""
+
+#: ../../pep-0622.rst:1430
+msgid ""
+"There was an idea to instead just generalize the iterable unpacking to "
+"much more general assignment targets, instead of adding a new kind of "
+"statement. This concept is known in some other languages as \"irrefutable"
+" matches\". We decided not to do this because inspection of real-life "
+"potential use cases showed that in vast majority of cases destructuring "
+"is related to an ``if`` condition. Also many of those are grouped in a "
+"series of exclusive choices."
+msgstr ""
+
+#: ../../pep-0622.rst:1439
+msgid "Make it an expression"
+msgstr ""
+
+#: ../../pep-0622.rst:1441
+msgid ""
+"In most other languages pattern matching is represented by an expression,"
+" not statement. But making it an expression would be inconsistent with "
+"other syntactic choices in Python. All decision making logic is expressed"
+" almost exclusively in statements, so we decided to not deviate from "
+"this."
+msgstr ""
+
+#: ../../pep-0622.rst:1448
+msgid "Use a hard keyword"
+msgstr ""
+
+#: ../../pep-0622.rst:1450
+msgid ""
+"There were options to make ``match`` a hard keyword, or choose a "
+"different keyword. Although using a hard keyword would simplify life for "
+"simple-minded syntax highlighters, we decided not to use hard keyword for"
+" several reasons:"
+msgstr ""
+
+#: ../../pep-0622.rst:1454
+msgid ""
+"Most importantly, the new parser doesn't require us to do this. Unlike "
+"with ``async`` that caused hardships with being a soft keyword for few "
+"releases, here we can make ``match`` a permanent soft keyword."
+msgstr ""
+
+#: ../../pep-0622.rst:1458
+msgid ""
+"``match`` is so commonly used in existing code, that it would break "
+"almost every existing program and will put a burden to fix code on many "
+"people who may not even benefit from the new syntax."
+msgstr ""
+
+#: ../../pep-0622.rst:1462
+msgid ""
+"It is hard to find an alternative keyword that would not be commonly used"
+" in existing programs as an identifier, and would still clearly reflect "
+"the meaning of the statement."
+msgstr ""
+
+#: ../../pep-0622.rst:1468
+msgid "Use ``as`` or ``|`` instead of ``case`` for case clauses"
+msgstr ""
+
+#: ../../pep-0622.rst:1470
+msgid ""
+"The pattern matching proposed here is a combination of multi-branch "
+"control flow (in line with ``switch`` in Algol-derived languages or "
+"``cond`` in Lisp) and object-deconstruction as found in functional "
+"languages.  While the proposed keyword ``case`` highlights the multi-"
+"branch aspect, alternative keywords such as ``as`` would equally be "
+"possible, highlighting the deconstruction aspect. ``as`` or ``with``, for"
+" instance, also have the advantage of already being keywords in Python.  "
+"However, since ``case`` as a keyword can only occur as a leading keyword "
+"inside  a ``match`` statement, it is easy for a parser to distinguish "
+"between its use as a keyword or as a variable."
+msgstr ""
+
+#: ../../pep-0622.rst:1480
+msgid ""
+"Other variants would use a symbol like ``|`` or ``=>``, or go entirely "
+"without special marker."
+msgstr ""
+
+#: ../../pep-0622.rst:1483
+msgid ""
+"Since Python is a statement-oriented language in the tradition of Algol, "
+"and as each composite statement starts with an identifying keyword, "
+"``case`` seemed to be most in line with Python's style and traditions."
+msgstr ""
+
+#: ../../pep-0622.rst:1489
+msgid "Use a flat indentation scheme"
+msgstr ""
+
+#: ../../pep-0622.rst:1491
+msgid ""
+"There was an idea to use an alternative indentation scheme, for example "
+"where every case clause would not be indented with respect to the initial"
+" ``match`` part::"
+msgstr ""
+
+#: ../../pep-0622.rst:1501
+msgid ""
+"The motivation is that although flat indentation saves some horizontal "
+"space, it may look awkward to an eye of a Python programmer, because "
+"everywhere else colon is followed by an indent. This will also complicate"
+" life for simple-minded code editors. Finally, the horizontal space issue"
+" can be alleviated by allowing \"half-indent\" (i.e. two spaces instead "
+"of four) for match statements."
+msgstr ""
+
+#: ../../pep-0622.rst:1508
+msgid ""
+"In sample programs using ``match``, written as part of the development of"
+" this PEP, a noticeable improvement in code brevity is observed, more "
+"than making up for the additional indentation level."
+msgstr ""
+
+#: ../../pep-0622.rst:1512
+msgid ""
+"Another proposal considered was to use flat indentation but put the "
+"expression on the line after ``match:``, like this::"
+msgstr ""
+
+#: ../../pep-0622.rst:1522
+msgid ""
+"This was ultimately rejected because the first block would be a novelty "
+"in Python's grammar: a block whose only content is a single expression "
+"rather than a sequence of statements."
+msgstr ""
+
+#: ../../pep-0622.rst:1528
+msgid "Alternatives for constant value pattern"
+msgstr ""
+
+#: ../../pep-0622.rst:1530
+msgid ""
+"This is probably the trickiest item. Matching against some pre-defined "
+"constants is very common, but the dynamic nature of Python also makes it "
+"ambiguous with capture patterns. Five other alternatives were considered:"
+msgstr ""
+
+#: ../../pep-0622.rst:1534
+msgid ""
+"Use some implicit rules. For example, if a name was defined in the global"
+" scope, then it refers to a constant, rather than representing a capture "
+"pattern::"
+msgstr ""
+
+#: ../../pep-0622.rst:1545
+msgid ""
+"This however can cause surprises and action at a distance if someone "
+"defines an unrelated coinciding name before the match statement."
+msgstr ""
+
+#: ../../pep-0622.rst:1548
+msgid ""
+"Use a rule based on the case of a name. In particular, if the name starts"
+" with a lowercase letter it would be a capture pattern, while if it "
+"starts with uppercase it would refer to a constant::"
+msgstr ""
+
+#: ../../pep-0622.rst:1556
+msgid ""
+"This works well with the recommendations for naming constants from PEP 8."
+" The main objection is that there's no other part of core Python where "
+"the case of a name is semantically significant. In addition, Python "
+"allows identifiers to use different scripts, many of which (e.g. CJK) "
+"don't have a case distinction."
+msgstr ""
+
+#: ../../pep-0622.rst:1562
+msgid ""
+"Use extra parentheses to indicate lookup semantics for a given name. For "
+"example::"
+msgstr ""
+
+#: ../../pep-0622.rst:1569
+msgid ""
+"This may be a viable option, but it can create some visual noise if used "
+"often. Also honestly it looks pretty unusual, especially in nested "
+"contexts."
+msgstr ""
+
+#: ../../pep-0622.rst:1572
+msgid ""
+"This also has the problem that we may want or need parentheses to "
+"disambiguate grouping in patterns, e.g. in ``Point(x, y=(y := "
+"complex()))``."
+msgstr ""
+
+#: ../../pep-0622.rst:1576
+msgid ""
+"Introduce a special symbol, for example ``.``, ``?``, ``$``, or ``^`` to "
+"indicate that a given name is a value to be matched against, not to be "
+"assigned to.  An earlier version of this proposal used a leading-dot "
+"rule::"
+msgstr ""
+
+#: ../../pep-0622.rst:1585
+msgid ""
+"While potentially useful, it introduces strange-looking new syntax "
+"without making the pattern syntax any more expressive.  Indeed, named "
+"constants can be made to work with the existing rules by converting them "
+"to ``Enum`` types, or enclosing them in their own namespace (considered "
+"by the authors to be one honking great idea)::"
+msgstr ""
+
+#: ../../pep-0622.rst:1595
+msgid ""
+"If needed, the leading-dot rule (or a similar variant) could be added "
+"back later with no backward-compatibility issues."
+msgstr ""
+
+#: ../../pep-0622.rst:1598
+msgid ""
+"There was also an idea to make lookup semantics the default, and require "
+"``$`` or ``?`` to be used in capture patterns::"
+msgstr ""
+
+#: ../../pep-0622.rst:1605
+msgid "There are a few issues with this:"
+msgstr ""
+
+#: ../../pep-0622.rst:1607
+msgid ""
+"Capture patterns are more common in typical code, so it is undesirable to"
+" require special syntax for them."
+msgstr ""
+
+#: ../../pep-0622.rst:1610
+msgid ""
+"The authors are not aware of any other language that adorns captures in "
+"this way."
+msgstr ""
+
+#: ../../pep-0622.rst:1613
+msgid ""
+"None of the proposed syntaxes have any precedent in Python; no other "
+"place in Python that binds names (e.g. ``import``, ``def``, ``for``) uses"
+" special marker syntax."
+msgstr ""
+
+#: ../../pep-0622.rst:1617
+msgid "It would break the syntactic parallels of the current grammar::"
+msgstr ""
+
+#: ../../pep-0622.rst:1624
+msgid ""
+"In the end, these alternatives were rejected because of the mentioned "
+"drawbacks."
+msgstr ""
+
+#: ../../pep-0622.rst:1628
+msgid "Disallow float literals in patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:1630
+msgid ""
+"Because of the inexactness of floats, an early version of this proposal "
+"did not allow floating-point constants to be used as match patterns. Part"
+" of the justification for this prohibition is that Rust does this."
+msgstr ""
+
+#: ../../pep-0622.rst:1634
+msgid ""
+"However, during implementation, it was discovered that distinguishing "
+"between float values and other types required extra code in the VM that "
+"would slow matches generally. Given that Python and Rust are very "
+"different languages with different user bases and underlying "
+"philosophies, it was felt that allowing float literals would not cause "
+"too much harm, and would be less surprising to users."
+msgstr ""
+
+#: ../../pep-0622.rst:1643
+msgid "Range matching patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:1645
+msgid ""
+"This would allow patterns such as ``1...6``. However, there are a host of"
+" ambiguities:"
+msgstr ""
+
+#: ../../pep-0622.rst:1648
+msgid ""
+"Is the range open, half-open, or closed? (I.e. is ``6`` included in the "
+"above example or not?)"
+msgstr ""
+
+#: ../../pep-0622.rst:1650
+msgid "Does the range match a single number, or a range object?"
+msgstr ""
+
+#: ../../pep-0622.rst:1651
+msgid ""
+"Range matching is often used for character ranges ('a'...'z') but that "
+"won't work in Python since there's no character data type, just strings."
+msgstr ""
+
+#: ../../pep-0622.rst:1653
+msgid ""
+"Range matching can be a significant performance optimization if you can "
+"pre-build a jump table, but that's not generally possible in Python due "
+"to the fact that names can be dynamically rebound."
+msgstr ""
+
+#: ../../pep-0622.rst:1657
+msgid ""
+"Rather than creating a special-case syntax for ranges, it was decided "
+"that allowing custom pattern objects (``InRange(0, 6)``) would be more "
+"flexible and less ambiguous; however those ideas have been postponed for "
+"the time being (See `deferred ideas`_)."
+msgstr ""
+
+#: ../../pep-0622.rst:1664
+msgid "Use dispatch dict semantics for matches"
+msgstr ""
+
+#: ../../pep-0622.rst:1666
+msgid ""
+"Implementations for classic ``switch`` statement sometimes use a pre-"
+"computed hash table instead of a chained equality comparisons to gain "
+"some performance. In the context of ``match`` statement this is "
+"technically also possible for matches against literal patterns. However, "
+"having subtly different semantics for different kinds of patterns would "
+"be too surprising for potentially modest performance win."
+msgstr ""
+
+#: ../../pep-0622.rst:1673
+msgid ""
+"We can still experiment with possible performance optimizations in this "
+"direction if they will not cause semantic differences."
+msgstr ""
+
+#: ../../pep-0622.rst:1678
+msgid "Use ``continue`` and ``break`` in case clauses."
+msgstr ""
+
+#: ../../pep-0622.rst:1680
+msgid ""
+"Another rejected proposal was to define new meanings for ``continue`` and"
+" ``break`` inside of ``match``, which would have the following behavior:"
+msgstr ""
+
+#: ../../pep-0622.rst:1683
+msgid ""
+"``continue`` would exit the current case clause and continue matching at "
+"the next case clause."
+msgstr ""
+
+#: ../../pep-0622.rst:1685
+msgid "``break`` would exit the match statement."
+msgstr ""
+
+#: ../../pep-0622.rst:1687
+msgid ""
+"However, there is a serious drawback to this proposal: if the ``match`` "
+"statement is nested inside of a loop, the meanings of ``continue`` and "
+"``break`` are now changed. This may cause unexpected behavior during "
+"refactorings; also, an argument can be made that there are other means to"
+" get the same behavior (such as using guard conditions), and that in "
+"practice it's likely that the existing behavior of ``continue`` and "
+"``break`` are far more useful."
+msgstr ""
+
+#: ../../pep-0622.rst:1696
+msgid "AND (``&``) patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:1698
+msgid ""
+"This proposal defines an OR-pattern (``|``) to match one of several "
+"alternates; why not also an AND-pattern (``&``)? Especially given that "
+"some other languages (F# for example) support this."
+msgstr ""
+
+#: ../../pep-0622.rst:1702
+msgid ""
+"However, it's not clear how useful this would be. The semantics for "
+"matching dictionaries, objects and sequences already incorporates an "
+"implicit 'and': all attributes and elements mentioned must be present for"
+" the match to succeed. Guard conditions can also support many of the use "
+"cases that a hypothetical 'and' operator would be used for."
+msgstr ""
+
+#: ../../pep-0622.rst:1708
+msgid ""
+"In the end, it was decided that this would make the syntax more complex "
+"without adding a significant benefit."
+msgstr ""
+
+#: ../../pep-0622.rst:1713
+msgid "Negative match patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:1715
+msgid ""
+"A negation of a match pattern using the operator ``!`` as a prefix would "
+"match exactly if the pattern itself does not match.  For instance, ``!(3 "
+"| 4)`` would match anything except ``3`` or ``4``."
+msgstr ""
+
+#: ../../pep-0622.rst:1719
+msgid ""
+"This was rejected because there is documented evidence [8]_ that this "
+"feature is rarely useful (in languages which support it) or used as "
+"double negation ``!!`` to control variable scopes and prevent variable "
+"bindings (which does not apply to Python). It can also be simulated using"
+" guard conditions."
+msgstr ""
+
+#: ../../pep-0622.rst:1726
+msgid "Check exhaustiveness at runtime"
+msgstr ""
+
+#: ../../pep-0622.rst:1728
+msgid ""
+"The question is what to do if no case clause has a matching pattern, and "
+"there is no default case. An earlier version of the proposal specified "
+"that the behavior in this case would be to throw an exception rather than"
+" silently falling through."
+msgstr ""
+
+#: ../../pep-0622.rst:1733
+msgid ""
+"The arguments back and forth were many, but in the end the EIBTI "
+"(Explicit Is Better Than Implicit) argument won out: it's better to have "
+"the programmer explicitly throw an exception if that is the behavior they"
+" want."
+msgstr ""
+
+#: ../../pep-0622.rst:1737
+msgid ""
+"For cases such as sealed classes and enums, where the patterns are all "
+"known to be members of a discrete set, `static checkers`_ can warn about "
+"missing patterns."
+msgstr ""
+
+#: ../../pep-0622.rst:1743
+msgid "Type annotations for pattern variables"
+msgstr ""
+
+#: ../../pep-0622.rst:1745
+msgid "The proposal was to combine patterns with type annotations::"
+msgstr ""
+
+#: ../../pep-0622.rst:1752
+msgid ""
+"This idea has a lot of problems. For one, the colon can only be used "
+"inside of brackets or parens, otherwise the syntax becomes ambiguous. And"
+" because Python disallows ``isinstance()`` checks on generic types, type "
+"annotations containing generics will not work as expected."
+msgstr ""
+
+#: ../../pep-0622.rst:1760
+msgid "Allow ``*rest`` in class patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:1762
+msgid ""
+"It was proposed to allow ``*rest`` in a class pattern, giving a variable "
+"to be bound to all positional arguments at once (similar to its use in "
+"unpacking assignments).  It would provide some symmetry with sequence "
+"patterns.  But it might be confused with a feature to provide the "
+"*values* for all positional arguments at once.  And there seems to be no "
+"practical need for it, so it was scrapped.  (It could easily be added at "
+"a later stage if a need arises.)"
+msgstr ""
+
+#: ../../pep-0622.rst:1771
+msgid "Disallow ``_.a`` in constant value patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:1773
+msgid ""
+"The first public draft said that the initial name in a constant value "
+"pattern must not be ``_`` because ``_`` has a special meaning in pattern "
+"matching, so this would be invalid::"
+msgstr ""
+
+#: ../../pep-0622.rst:1779
+msgid ""
+"(However, ``a._`` would be legal and load the attribute with name ``_`` "
+"of the object ``a`` as usual.)"
+msgstr ""
+
+#: ../../pep-0622.rst:1782
+msgid ""
+"There was some pushback against this on python-dev (some people have a "
+"legitimate use for ``_`` as an important global variable, esp. in i18n) "
+"and the only reason for this prohibition was to prevent some user "
+"confusion.  But it's not the hill to die on."
+msgstr ""
+
+#: ../../pep-0622.rst:1788
+msgid "Use some other token as wildcard"
+msgstr ""
+
+#: ../../pep-0622.rst:1790
+msgid ""
+"It has been proposed to use ``...`` (i.e., the ellipsis token) or ``*`` "
+"(star) as a wildcard.  However, both these look as if an arbitrary number"
+" of items is omitted::"
+msgstr ""
+
+#: ../../pep-0622.rst:1797
+msgid ""
+"Both look like the would match a sequence of at two or more items, "
+"capturing the first and last values."
+msgstr ""
+
+#: ../../pep-0622.rst:1800
+msgid ""
+"In addition, if ``*`` were to be used as the wildcard character, we would"
+" have to come up with some other way to capture the rest of a sequence, "
+"currently spelled like this::"
+msgstr ""
+
+#: ../../pep-0622.rst:1806
+msgid ""
+"Using an ellipsis would also be more confusing in documentation and "
+"examples, where ``...`` is routinely used to indicate something obvious "
+"or irrelevant.  (Yes, this would also be an argument against the other "
+"uses of ``...`` in Python, but that water is already under the bridge.)"
+msgstr ""
+
+#: ../../pep-0622.rst:1812
+msgid ""
+"Another proposal was to use ``?``.  This could be acceptable, although it"
+" would require modifying the tokenizer."
+msgstr ""
+
+#: ../../pep-0622.rst:1815
+msgid ""
+"Also, ``_`` is already used as a throwaway target in other contexts, and "
+"this use is pretty similar.  This example is from ``difflib.py`` in the "
+"stdlib::"
+msgstr ""
+
+#: ../../pep-0622.rst:1821
+msgid ""
+"Perhaps the most convincing argument is that ``_`` is used as the "
+"wildcard in every other language we've looked at supporting pattern "
+"matching: C#, Elixir, Erlang, F#, Haskell, Mathematica, OCaml, Ruby, "
+"Rust, Scala, and Swift.  Now, in general, we should not be concerned too "
+"much with what another language does, since Python is clearly different "
+"from all these languages.  However, if there is such an overwhelming and "
+"strong consensus, Python should not go out of its way to do something "
+"completely different -- particularly given that ``_`` works well in "
+"Python and is already in use as a throwaway target."
+msgstr ""
+
+#: ../../pep-0622.rst:1831
+msgid ""
+"Note that ``_`` is not assigned to by patterns -- this avoids conflicts "
+"with the use of ``_`` as a marker for translatable strings and an alias "
+"for ``gettext.gettext``, as recommended by the ``gettext`` module "
+"documentation."
+msgstr ""
+
+#: ../../pep-0622.rst:1837
+msgid "Use some other syntax instead of ``|`` for OR patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:1839
+msgid ""
+"A few alternatives to using ``|`` to separate the alternatives in OR "
+"patterns have been proposed.  Instead of::"
+msgstr ""
+
+#: ../../pep-0622.rst:1845
+msgid "the following proposals have been fielded:"
+msgstr ""
+
+#: ../../pep-0622.rst:1847
+msgid "Use a comma::"
+msgstr ""
+
+#: ../../pep-0622.rst:1852
+msgid ""
+"This looks too much like a tuple -- we would have to find a different way"
+" to spell tuples, and the construct would have to be parenthesized inside"
+" the argument list of a class pattern.  In general, commas already have "
+"many different meanings in Python, we shouldn't add more."
+msgstr ""
+
+#: ../../pep-0622.rst:1858
+msgid "Allow stacked cases::"
+msgstr ""
+
+#: ../../pep-0622.rst:1865
+msgid ""
+"This is how this would be done in C, using its fall-through semantics for"
+" cases.  However, we don't want to mislead people into thinking that "
+"``match``/``case`` uses fall-through semantics (which are a common source"
+" of bugs in C).  Also, this would be a novel indentation pattern, which "
+"might make it harder to support in IDEs and such (it would break the "
+"simple rule \"add an indentation level after a line ending in a colon\")."
+"  Finally, this wouldn't support OR patterns nested inside other "
+"patterns."
+msgstr ""
+
+#: ../../pep-0622.rst:1874
+msgid "Use ``case in`` followed by a comma-separated list::"
+msgstr ""
+
+#: ../../pep-0622.rst:1879
+msgid "This wouldn't work for OR patterns nested inside other patterns, like::"
+msgstr ""
+
+#: ../../pep-0622.rst:1885
+msgid "Use the ``or`` keyword::"
+msgstr ""
+
+#: ../../pep-0622.rst:1890
+msgid ""
+"This could work, and the readability is not too different from using "
+"``|``.  Some users expressed a preference for ``or`` because they "
+"associate ``|`` with bitwise OR.  However:"
+msgstr ""
+
+#: ../../pep-0622.rst:1894
+msgid ""
+"Many other languages that have pattern matching use ``|`` (the list "
+"includes Elixir, Erlang, F#, Mathematica, OCaml, Ruby, Rust, and Scala)."
+msgstr ""
+
+#: ../../pep-0622.rst:1897
+msgid ""
+"``|`` is shorter, which may contribute to the readability of nested "
+"patterns like ``Point(0|1, 0|1)``."
+msgstr ""
+
+#: ../../pep-0622.rst:1899
+msgid ""
+"Some people mistakenly believe that ``|`` has the wrong priority; but "
+"since patterns don't support other operators it has the same priority as "
+"in expressions."
+msgstr ""
+
+#: ../../pep-0622.rst:1902
+msgid ""
+"Python users use ``or`` very frequently, and may build an impression that"
+" it is strongly associated with Boolean short-circuiting."
+msgstr ""
+
+#: ../../pep-0622.rst:1905
+msgid ""
+"``|`` is used between alternatives in regular expressions and in EBNF "
+"grammars (like Python's own)."
+msgstr ""
+
+#: ../../pep-0622.rst:1907
+msgid ""
+"``|`` not just used for bitwise OR -- it's used for set unions, dict "
+"merging (:pep:`584`) and is being considered as an alternative to "
+"``typing.Union`` (:pep:`604`)."
+msgstr ""
+
+#: ../../pep-0622.rst:1910
+msgid ""
+"``|`` works better as a visual separator, especially between strings.  "
+"Compare::"
+msgstr ""
+
+#: ../../pep-0622.rst:1915
+msgid "to::"
+msgstr ""
+
+#: ../../pep-0622.rst:1920
+msgid "Add an ``else`` clause"
+msgstr ""
+
+#: ../../pep-0622.rst:1922
+msgid "We decided not to add an ``else`` clause for several reasons."
+msgstr ""
+
+#: ../../pep-0622.rst:1924
+msgid "It is redundant, since we already have ``case _:``"
+msgstr ""
+
+#: ../../pep-0622.rst:1926
+msgid ""
+"There will forever be confusion about the indentation level of the "
+"``else:`` -- should it align with the list of cases or with the ``match``"
+" keyword?"
+msgstr ""
+
+#: ../../pep-0622.rst:1930
+msgid ""
+"Completionist arguments like \"every other statement has one\" are false "
+"-- only those statements have an ``else`` clause where it adds new "
+"functionality."
+msgstr ""
+
+#: ../../pep-0622.rst:1938
+msgid "Deferred Ideas"
+msgstr ""
+
+#: ../../pep-0622.rst:1940
+msgid ""
+"There were a number of proposals to extend the matching syntax that we "
+"decided to postpone for possible future PEP. These fall into the realm of"
+" \"cool idea but not essential\", and it was felt that it might be better"
+" to acquire some real-world data on how the match statement will be used "
+"in practice before moving forward with some of these proposals."
+msgstr ""
+
+#: ../../pep-0622.rst:1946
+msgid ""
+"Note that in each case, the idea was judged to be a \"two-way door\", "
+"meaning that there should be no backwards-compatibility issues with "
+"adding these features later."
+msgstr ""
+
+#: ../../pep-0622.rst:1951
+msgid "One-off syntax variant"
+msgstr ""
+
+#: ../../pep-0622.rst:1953
+msgid ""
+"While inspecting some code-bases that may benefit the most from the "
+"proposed syntax, it was found that single clause matches would be used "
+"relatively often, mostly for various special-casing. In other languages "
+"this is supported in the form of one-off matches. We proposed to support "
+"such one-off matches too::"
+msgstr ""
+
+#: ../../pep-0622.rst:1961
+msgid "or, alternatively, without the ``if``::"
+msgstr ""
+
+#: ../../pep-0622.rst:1966
+msgid "as equivalent to the following expansion::"
+msgstr ""
+
+#: ../../pep-0622.rst:1972
+msgid ""
+"To illustrate how this will benefit readability, consider this (slightly "
+"simplified) snippet from real code::"
+msgstr ""
+
+#: ../../pep-0622.rst:1983
+msgid "This can be rewritten in a more straightforward way as::"
+msgstr ""
+
+#: ../../pep-0622.rst:1989
+msgid ""
+"This one-off form would not allow ``elif match`` statements, as it was "
+"only meant to handle a single pattern case. It was intended to be special"
+" case of a ``match`` statement, not a special case of an ``if`` "
+"statement::"
+msgstr ""
+
+#: ../../pep-0622.rst:2002
+msgid ""
+"This would defeat the purpose of one-off matches as a complement to "
+"exhaustive full matches - it's better and clearer to use a full match in "
+"this case."
+msgstr ""
+
+#: ../../pep-0622.rst:2005
+msgid ""
+"Similarly, ``if not match`` would not be allowed, since ``match ... as "
+"...`` is not an expression. Nor do we propose a ``while match`` construct"
+" present in some languages with pattern matching, since although it may "
+"be handy, it will likely be used rarely."
+msgstr ""
+
+#: ../../pep-0622.rst:2011
+msgid "Other pattern-based constructions"
+msgstr ""
+
+#: ../../pep-0622.rst:2013
+msgid ""
+"Many other languages supporting pattern-matching use it as a basis for "
+"multiple language constructs, including a matching operator, a "
+"generalized form of assignment, a filter for loops, a method for "
+"synchronizing communication, or specialized if statements. Some of these "
+"were mentioned in the discussion of the first draft. Another question "
+"asked was why this particular form (joining binding and conditional "
+"selection) was chosen while other forms were not."
+msgstr ""
+
+#: ../../pep-0622.rst:2020
+msgid ""
+"Introducing more uses of patterns would be too bold and premature given "
+"the experience we have using patterns, and would make this proposal too "
+"complicated. The statement as presented provides a form of the feature "
+"that is sufficiently general to be useful while being self-contained, and"
+" without having a massive impact on the syntax and semantics of the "
+"language as a whole."
+msgstr ""
+
+#: ../../pep-0622.rst:2026
+msgid ""
+"After some experience with this feature, the community may have a better "
+"feeling for what other uses of pattern matching could be valuable in "
+"Python."
+msgstr ""
+
+#: ../../pep-0622.rst:2030
+msgid "Algebraic matching of repeated names"
+msgstr ""
+
+#: ../../pep-0622.rst:2032
+msgid ""
+"A technique occasionally seen in functional languages like Erlang and "
+"Elixir is to use a match variable multiple times in the same pattern::"
+msgstr ""
+
+#: ../../pep-0622.rst:2039
+msgid ""
+"The idea here is that the first appearance of ``x`` would bind the value "
+"to the name, and subsequent occurrences would verify that the incoming "
+"value was equal to the value previously bound. If the value was not "
+"equal, the match would fail."
+msgstr ""
+
+#: ../../pep-0622.rst:2044
+msgid ""
+"However, there are a number of subtleties involved with mixing load-store"
+" semantics for capture patterns. For the moment, we decided to make "
+"repeated use of names within the same pattern an error; we can always "
+"relax this restriction later without affecting backwards compatibility."
+msgstr ""
+
+#: ../../pep-0622.rst:2049
+msgid ""
+"Note that you **can** use the same name more than once in alternate "
+"choices::"
+msgstr ""
+
+#: ../../pep-0622.rst:2059
+msgid "Custom matching protocol"
+msgstr ""
+
+#: ../../pep-0622.rst:2061
+msgid ""
+"During the initial design discussions for this PEP, there were a lot of "
+"ideas thrown around about custom matchers. There were a couple of "
+"motivations for this:"
+msgstr ""
+
+#: ../../pep-0622.rst:2065
+msgid ""
+"Some classes might want to expose a different set of \"matchable\" names "
+"than the actual class properties."
+msgstr ""
+
+#: ../../pep-0622.rst:2067
+msgid ""
+"Some classes might have properties that are expensive to calculate, and "
+"therefore shouldn't be evaluated unless the match pattern actually needed"
+" access to them."
+msgstr ""
+
+#: ../../pep-0622.rst:2070
+msgid ""
+"There were ideas for exotic matchers such as ``IsInstance()``, "
+"``InRange()``, ``RegexMatchingGroup()`` and so on."
+msgstr ""
+
+#: ../../pep-0622.rst:2072
+msgid ""
+"In order for built-in types and standard library classes to be able to "
+"support matching in a reasonable and intuitive way, it was believed that "
+"these types would need to implement special matching logic."
+msgstr ""
+
+#: ../../pep-0622.rst:2076
+msgid ""
+"These customized match behaviors would be controlled by a special "
+"``__match__`` method on the class name. There were two competing "
+"variants:"
+msgstr ""
+
+#: ../../pep-0622.rst:2079
+msgid ""
+"A 'full-featured' match protocol which would pass in not only the subject"
+" to be matched, but detailed information about which attributes the "
+"specified pattern was interested in."
+msgstr ""
+
+#: ../../pep-0622.rst:2082
+msgid ""
+"A simplified match protocol, which only passed in the subject value, and "
+"which returned a \"proxy object\" (which in most cases could be just the "
+"subject) containing the matchable attributes."
+msgstr ""
+
+#: ../../pep-0622.rst:2086
+msgid "Here's an example of one version of the more complex protocol proposed::"
+msgstr ""
+
+#: ../../pep-0622.rst:2104
+msgid ""
+"One drawback of this protocol is that the arguments to ``__match__`` "
+"would be expensive to construct, and could not be pre-computed due to the"
+" fact that, because of the way names are bound, there are no real "
+"constants in Python. It also meant that the ``__match__`` method would "
+"have to re-implement much of the logic of matching which would otherwise "
+"be implemented in C code in the Python VM. As a result, this option would"
+" perform poorly compared to an equilvalent ``if``-statement."
+msgstr ""
+
+#: ../../pep-0622.rst:2112
+msgid ""
+"The simpler protocol suffered from the fact that although it was more "
+"performant, it was much less flexible, and did not allow for many of the "
+"creative custom matchers that people were dreaming up."
+msgstr ""
+
+#: ../../pep-0622.rst:2116
+msgid ""
+"Late in the design process, however, it was realized that the need for a "
+"custom matching protocol was much less than anticipated. Virtually all "
+"the realistic (as opposed to fanciful) uses cases brought up could be "
+"handled by the built-in matching behavior, although in a few cases an "
+"extra guard condition was required to get the desired effect."
+msgstr ""
+
+#: ../../pep-0622.rst:2122
+msgid ""
+"Moreover, it turned out that none of the standard library classes really "
+"needed any special matching support other than an appropriate "
+"``__match_args__`` property."
+msgstr ""
+
+#: ../../pep-0622.rst:2126
+msgid ""
+"The decision to postpone this feature came with a realization that this "
+"is not a one-way door; that a more flexible and customizable matching "
+"protocol can be added later, especially as we gain more experience with "
+"real-world use cases and actual user needs."
+msgstr ""
+
+#: ../../pep-0622.rst:2131
+msgid ""
+"The authors of this PEP expect that the ``match`` statement will evolve "
+"over time as usage patterns and idioms evolve, in a way similar to what "
+"other \"multi-stage\" PEPs have done in the past. When this happens, the "
+"extended matching issue can be revisited."
+msgstr ""
+
+#: ../../pep-0622.rst:2138
+msgid "Parameterized Matching Syntax"
+msgstr ""
+
+#: ../../pep-0622.rst:2140
+msgid "(Also known as \"Class Instance Matchers\".)"
+msgstr ""
+
+#: ../../pep-0622.rst:2142
+msgid ""
+"This is another variant of the \"custom match classes\" idea that would "
+"allow diverse kinds of custom matchers mentioned in the previous section "
+"-- however, instead of using an extended matching protocol, it would be "
+"achieved by introducing an additional pattern type with its own syntax. "
+"This pattern type would accept two distinct sets of parameters: one set "
+"which consists of the actual parameters passed into the pattern object's "
+"constructor, and another set representing the binding variables for the "
+"pattern."
+msgstr ""
+
+#: ../../pep-0622.rst:2150
+msgid ""
+"The ``__match__`` method of these objects could use the constructor "
+"parameter values in deciding what was a valid match."
+msgstr ""
+
+#: ../../pep-0622.rst:2153
+msgid ""
+"This would allow patterns such as ``InRange<0, 6>(value)``, which would "
+"match a number in the range 0..6 and assign the matched value to 'value'."
+" Similarly, one could have a pattern which tests for the existence of a "
+"named group in a regular expression match result (different meaning of "
+"the word 'match')."
+msgstr ""
+
+#: ../../pep-0622.rst:2158
+msgid ""
+"Although there is some support for this idea, there was a lot of "
+"bikeshedding on the syntax (there are not a lot of attractive options "
+"available) and no clear consensus was reached, so it was decided that for"
+" now, this feature is not essential to the PEP."
+msgstr ""
+
+#: ../../pep-0622.rst:2165
+msgid "Pattern Utility Library"
+msgstr ""
+
+#: ../../pep-0622.rst:2167
+msgid ""
+"Both of the previous ideas would be accompanied by a new Python standard "
+"library module which would contain a rich set of useful matchers. "
+"However, it is not really possible to implement such a library without "
+"adopting one of the extended pattern proposals given in the previous "
+"sections, so this idea is also deferred."
+msgstr ""
+
+#: ../../pep-0622.rst:2175
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0622.rst:2177
+msgid ""
+"We are grateful for the help of the following individuals (among many "
+"others) for helping out during various phases of the writing of this PEP:"
+msgstr ""
+
+#: ../../pep-0622.rst:2181
+msgid "Gregory P. Smith"
+msgstr ""
+
+#: ../../pep-0622.rst:2182
+msgid "Jim Jewett"
+msgstr ""
+
+#: ../../pep-0622.rst:2183
+msgid "Mark Shannon"
+msgstr ""
+
+#: ../../pep-0622.rst:2184
+msgid "Nate Lust"
+msgstr ""
+
+#: ../../pep-0622.rst:2185
+msgid "Taine Zhao"
+msgstr ""
+
+#: ../../pep-0622.rst:2189
+msgid "Version History"
+msgstr ""
+
+#: ../../pep-0622.rst:2191
+msgid "Initial version"
+msgstr ""
+
+#: ../../pep-0622.rst:2193
+msgid "Substantial rewrite, including:"
+msgstr ""
+
+#: ../../pep-0622.rst:2195
+msgid "Minor clarifications, grammar and typo corrections"
+msgstr ""
+
+#: ../../pep-0622.rst:2196
+msgid "Rename various concepts"
+msgstr ""
+
+#: ../../pep-0622.rst:2197
+msgid "Additional discussion of rejected ideas, including:"
+msgstr ""
+
+#: ../../pep-0622.rst:2199
+msgid "Why we choose ``_`` for wildcard patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:2200
+msgid "Why we choose ``|`` for OR patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:2201
+msgid "Why we choose not to use special syntax for capture variables"
+msgstr ""
+
+#: ../../pep-0622.rst:2202
+msgid "Why this pattern matching operation and not others"
+msgstr ""
+
+#: ../../pep-0622.rst:2204
+msgid "Clarify exception and side effect semantics"
+msgstr ""
+
+#: ../../pep-0622.rst:2205
+msgid "Clarify partial binding semantics"
+msgstr ""
+
+#: ../../pep-0622.rst:2206
+msgid "Drop restriction on use of ``_`` in load contexts"
+msgstr ""
+
+#: ../../pep-0622.rst:2207
+msgid ""
+"Drop the default single positional argument being the whole subject "
+"except for a handful of built-in types"
+msgstr ""
+
+#: ../../pep-0622.rst:2209
+msgid "Simplify behavior of ``__match_args__``"
+msgstr ""
+
+#: ../../pep-0622.rst:2210
+msgid "Drop the ``__match__`` protocol (moved to `deferred ideas`_)"
+msgstr ""
+
+#: ../../pep-0622.rst:2211
+msgid "Drop ``ImpossibleMatchError`` exception"
+msgstr ""
+
+#: ../../pep-0622.rst:2212
+msgid "Drop leading dot for loads (moved to `deferred ideas`_)"
+msgstr ""
+
+#: ../../pep-0622.rst:2213
+msgid "Reworked the initial sections (everything before `syntax`_)"
+msgstr ""
+
+#: ../../pep-0622.rst:2214
+msgid ""
+"Added an overview of all the types of patterns before the detailed "
+"description"
+msgstr ""
+
+#: ../../pep-0622.rst:2216
+msgid "Added simplified syntax next to the description of each pattern"
+msgstr ""
+
+#: ../../pep-0622.rst:2217
+msgid "Separate description of the wildcard from capture patterns"
+msgstr ""
+
+#: ../../pep-0622.rst:2218
+msgid "Added Daniel F Moisset as sixth co-author"
+msgstr ""
+
+#: ../../pep-0622.rst:2221
+msgid "References"
+msgstr ""
+
+#: ../../pep-0622.rst:2224
+msgid "https://en.wikipedia.org/wiki/Pattern_matching"
+msgstr ""
+
+#: ../../pep-0622.rst:2227
+msgid "https://en.wikipedia.org/wiki/Algebraic_data_type"
+msgstr ""
+
+#: ../../pep-0622.rst:2230
+msgid "https://doc.rust-lang.org/reference/patterns.html"
+msgstr ""
+
+#: ../../pep-0622.rst:2233
+msgid "https://docs.scala-lang.org/tour/pattern-matching.html"
+msgstr ""
+
+#: ../../pep-0622.rst:2236
+msgid "https://docs.python.org/3/library/dataclasses.html"
+msgstr ""
+
+#: ../../pep-0622.rst:2239
+msgid "https://docs.python.org/3/library/typing.html"
+msgstr ""
+
+#: ../../pep-0622.rst:2242
+msgid "https://github.com/gvanrossum/patma/blob/master/EXAMPLES.md"
+msgstr ""
+
+#: ../../pep-0622.rst:2245
+msgid "https://dl.acm.org/doi/abs/10.1145/2480360.2384582"
+msgstr ""
+
+#: ../../pep-0622.rst:2248
+msgid "https://black.readthedocs.io/en/stable/"
+msgstr ""
+
+#: ../../pep-0622.rst:2251
+msgid "https://github.com/davidhalter/parso"
+msgstr ""
+
+#: ../../pep-0622.rst:2254
+msgid "https://github.com/Instagram/LibCST"
+msgstr ""
+
+#: ../../pep-0622.rst:2257
+msgid "https://mybinder.org"
+msgstr ""
+
+#: ../../pep-0622.rst:2260
+msgid "https://jupyter.org"
+msgstr ""
+
+#: ../../pep-0622.rst:2266
+msgid "Appendix A -- Full Grammar"
+msgstr ""
+
+#: ../../pep-0622.rst:2268
+msgid ""
+"Here is the full grammar for ``match_stmt``.  This is an additional "
+"alternative for ``compound_stmt``.  It should be understood that "
+"``match`` and ``case`` are soft keywords, i.e. they are not reserved "
+"words in other grammatical contexts (including at the start of a line if "
+"there is no colon where expected).  By convention, hard keywords use "
+"single quotes while soft keywords use double quotes."
+msgstr ""
+
+#: ../../pep-0622.rst:2275
+msgid "Other notation used beyond standard EBNF:"
+msgstr ""
+
+#: ../../pep-0622.rst:2277
+msgid "``SEP.RULE+`` is shorthand for ``RULE (SEP RULE)*``"
+msgstr ""
+
+#: ../../pep-0622.rst:2278
+msgid "``!RULE`` is a negative lookahead assertion"
+msgstr ""
+
+#: ../../pep-0622.rst:2331
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0622.rst:2333
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

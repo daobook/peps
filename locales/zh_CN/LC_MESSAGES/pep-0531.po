@@ -1,0 +1,1164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0531.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0531.txt:1
+msgid "531"
+msgstr ""
+
+#: ../../pep-0531.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0531.txt:2
+msgid "Existence checking operators"
+msgstr ""
+
+#: ../../pep-0531.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0531.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0531.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0531.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0531.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0531.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0531.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0531.txt:9
+msgid "25-Oct-2016"
+msgstr ""
+
+#: ../../pep-0531.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0531.txt:10
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0531.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0531.txt:11
+msgid "28-Oct-2016"
+msgstr ""
+
+#: ../../pep-0531.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0531.txt:16
+msgid ""
+"Inspired by PEP 505 and the related discussions, this PEP proposes the "
+"addition of two new control flow operators to Python:"
+msgstr ""
+
+#: ../../pep-0531.txt:19
+msgid "Existence-checking precondition (\"exists-then\"): ``expr1 ?then expr2``"
+msgstr ""
+
+#: ../../pep-0531.txt:20
+msgid "Existence-checking fallback (\"exists-else\"): ``expr1 ?else expr2``"
+msgstr ""
+
+#: ../../pep-0531.txt:22
+msgid ""
+"as well as the following abbreviations for common existence checking "
+"expressions and statements:"
+msgstr ""
+
+#: ../../pep-0531.txt:25
+msgid ""
+"Existence-checking attribute access: ``obj?.attr`` (for ``obj ?then "
+"obj.attr``)"
+msgstr ""
+
+#: ../../pep-0531.txt:27
+msgid ""
+"Existence-checking subscripting: ``obj?[expr]`` (for ``obj ?then "
+"obj[expr]``)"
+msgstr ""
+
+#: ../../pep-0531.txt:29
+msgid ""
+"Existence-checking assignment: ``value ?= expr`` (for ``value = value "
+"?else expr``)"
+msgstr ""
+
+#: ../../pep-0531.txt:32
+msgid ""
+"The common ``?`` symbol in these new operator definitions indicates that "
+"they use a new \"existence checking\" protocol rather than the "
+"established truth-checking protocol used by if statements, while loops, "
+"comprehensions, generator expressions, conditional expressions, logical "
+"conjunction, and logical disjunction."
+msgstr ""
+
+#: ../../pep-0531.txt:38
+msgid ""
+"This new protocol would be made available as ``operator.exists``, with "
+"the following characteristics:"
+msgstr ""
+
+#: ../../pep-0531.txt:41
+msgid ""
+"types can define a new ``__exists__`` magic method (Python) or "
+"``tp_exists`` slot (C) to override the default behaviour. This optional "
+"method has the same signature and possible return values as ``__bool__``."
+msgstr ""
+
+#: ../../pep-0531.txt:44
+msgid "``operator.exists(None)`` returns ``False``"
+msgstr ""
+
+#: ../../pep-0531.txt:45
+msgid "``operator.exists(NotImplemented)`` returns ``False``"
+msgstr ""
+
+#: ../../pep-0531.txt:46
+msgid "``operator.exists(Ellipsis)`` returns ``False``"
+msgstr ""
+
+#: ../../pep-0531.txt:47
+msgid ""
+"``float``, ``complex`` and ``decimal.Decimal`` will override the "
+"existence check such that ``NaN`` values return ``False`` and other "
+"values (including zero values) return ``True``"
+msgstr ""
+
+#: ../../pep-0531.txt:50
+msgid ""
+"for any other type, ``operator.exists(obj)`` returns True by default. "
+"Most importantly, values that evaluate to False in a truth checking "
+"context (zeroes, empty containers) will still evaluate to True in an "
+"existence checking context"
+msgstr ""
+
+#: ../../pep-0531.txt:56
+msgid "PEP Withdrawal"
+msgstr ""
+
+#: ../../pep-0531.txt:58
+msgid ""
+"When posting this PEP for discussion on python-ideas [4_], I asked "
+"reviewers to consider 3 high level design questions before moving on to "
+"considering the specifics of this particular syntactic proposal:"
+msgstr ""
+
+#: ../../pep-0531.txt:62
+msgid ""
+"1. Do we collectively agree that \"existence checking\" is a useful "
+"general concept that exists in software development and is distinct from "
+"the concept of \"truth checking\"? 2. Do we collectively agree that the "
+"Python ecosystem would benefit from an existence checking protocol that "
+"permits generalisation of algorithms (especially short circuiting ones) "
+"across different \"data missing\" indicators, including those defined in "
+"the language definition, the standard library, and custom user code? 3. "
+"Do we collectively agree that it would be easier to use such a protocol "
+"effectively if existence-checking equivalents to the truth-checking "
+"\"and\" and \"or\" control flow operators were available?"
+msgstr ""
+
+#: ../../pep-0531.txt:74
+msgid ""
+"While the answers to the first question were generally positive, it "
+"quickly became clear that the answer to the second question is \"No\"."
+msgstr ""
+
+#: ../../pep-0531.txt:77
+msgid ""
+"Steven D'Aprano articulated the counter-argument well in [5_], but the "
+"general idea is that when checking for \"missing data\" sentinels, we're "
+"almost always looking for a *specific* sentinel value, rather than *any* "
+"sentinel value."
+msgstr ""
+
+#: ../../pep-0531.txt:81
+msgid ""
+"``NotImplemented`` exists, for example, due to ``None`` being a "
+"potentially legitimate result from overloaded arithmetic operators and "
+"exception handling imposing too much runtime overhead to be useful for "
+"operand coercion."
+msgstr ""
+
+#: ../../pep-0531.txt:85
+msgid ""
+"Similarly, ``Ellipsis`` exists for multi-dimensional slicing support due "
+"to ``None`` already have another meaning in a slicing context (indicating"
+" the use of the default start or stop indices, or the default step size)."
+msgstr ""
+
+#: ../../pep-0531.txt:89
+msgid ""
+"In mathematics, the value of ``NaN`` is that *programmatically* it "
+"behaves like a normal value of its type (e.g. exposing all the usual "
+"attributes and methods), while arithmetically it behaves according to the"
+" mathematical rules for handling ``NaN`` values."
+msgstr ""
+
+#: ../../pep-0531.txt:94
+msgid ""
+"With that core design concept invalidated, the proposal as a whole "
+"doesn't make sense, and it is accordingly withdrawn."
+msgstr ""
+
+#: ../../pep-0531.txt:97
+msgid ""
+"However, the discussion of the proposal did prompt consideration of a "
+"potential protocol based approach to make the existing ``and``, ``or`` "
+"and ``if-else`` operators more flexible [6_] without introducing any new "
+"syntax, so I'll be writing that up as another possible alternative to PEP"
+" 505."
+msgstr ""
+
+#: ../../pep-0531.txt:104
+msgid "Relationship with other PEPs"
+msgstr ""
+
+#: ../../pep-0531.txt:106
+msgid ""
+"While this PEP was inspired by and builds on Mark Haase's excellent work "
+"in putting together PEP 505, it ultimately competes with that PEP due to "
+"significant differences in the specifics of the proposed syntax and "
+"semantics for the feature."
+msgstr ""
+
+#: ../../pep-0531.txt:111
+msgid ""
+"It also presents a different perspective on the rationale for the change "
+"by focusing on the benefits to existing Python users as the typical "
+"demands of application and service development activities are genuinely "
+"changing. It isn't an accident that similar features are now appearing in"
+" multiple programming languages, and while it's a good idea for us to "
+"learn from how other language designers are handling the problem, "
+"precedents being set elsewhere are more relevant to *how* we would go "
+"about tackling this problem than they are to whether or not we think it's"
+" a problem we should address in the first place."
+msgstr ""
+
+#: ../../pep-0531.txt:123
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0531.txt:126
+msgid "Existence checking expressions"
+msgstr ""
+
+#: ../../pep-0531.txt:128
+msgid ""
+"An increasingly common requirement in modern software development is the "
+"need to work with \"semi-structured data\": data where the structure of "
+"the data is known in advance, but pieces of it may be missing at runtime,"
+" and the software manipulating that data is expected to degrade "
+"gracefully (e.g. by omitting results that depend on the missing data) "
+"rather than failing outright."
+msgstr ""
+
+#: ../../pep-0531.txt:134
+msgid "Some particularly common cases where this issue arises are:"
+msgstr ""
+
+#: ../../pep-0531.txt:136
+msgid ""
+"handling optional application configuration settings and function "
+"parameters"
+msgstr ""
+
+#: ../../pep-0531.txt:137
+msgid "handling external service failures in distributed systems"
+msgstr ""
+
+#: ../../pep-0531.txt:138
+msgid "handling data sets that include some partial records"
+msgstr ""
+
+#: ../../pep-0531.txt:140
+msgid ""
+"It is the latter two cases that are the primary motivation for this PEP -"
+" while needing to deal with optional configuration settings and "
+"parameters is a design requirement at least as old as Python itself, the "
+"rise of public cloud infrastructure, the development of software systems "
+"as collaborative networks of distributed services, and the availability "
+"of large public and private data sets for analysis means that the ability"
+" to degrade operations gracefully in the face of partial service failures"
+" or partial data availability is becoming an essential feature of modern "
+"programming environments."
+msgstr ""
+
+#: ../../pep-0531.txt:149
+msgid ""
+"At the moment, writing such software in Python can be genuinely awkward, "
+"as your code ends up littered with expressions like:"
+msgstr ""
+
+#: ../../pep-0531.txt:152
+msgid "``value1 = expr1.field.of.interest if expr1 is not None else None``"
+msgstr ""
+
+#: ../../pep-0531.txt:153
+msgid ""
+"``value2 = expr2[\"field\"][\"of\"][\"interest\"] if expr2 is not None "
+"else None``"
+msgstr ""
+
+#: ../../pep-0531.txt:154
+msgid ""
+"``value3 = expr3 if expr3 is not None else expr4 if expr4 is not None "
+"else expr5``"
+msgstr ""
+
+#: ../../pep-0531.txt:156
+msgid ""
+"If these are only occasional, then expanding out to full statement forms "
+"may help improve readability, but if you have 4 or 5 of them in a row "
+"(which is a fairly common situation in data transformation pipelines), "
+"then replacing them with 16 or 20 lines of conditional logic really "
+"doesn't help matters."
+msgstr ""
+
+#: ../../pep-0531.txt:161
+msgid ""
+"Expanding the three examples above that way hopefully helps illustrate "
+"that::"
+msgstr ""
+
+#: ../../pep-0531.txt:179
+msgid ""
+"The combined impact of the proposals in this PEP is to allow the above "
+"sample expressions to instead be written as:"
+msgstr ""
+
+#: ../../pep-0531.txt:182
+msgid "``value1 = expr1?.field.of.interest``"
+msgstr ""
+
+#: ../../pep-0531.txt:183
+msgid "``value2 = expr2?[\"field\"][\"of\"][\"interest\"]``"
+msgstr ""
+
+#: ../../pep-0531.txt:184
+msgid "``value3 = expr3 ?else expr4 ?else expr5``"
+msgstr ""
+
+#: ../../pep-0531.txt:186
+msgid ""
+"In these forms, almost all of the information presented to the reader is "
+"immediately relevant to the question \"What does this code do?\", while "
+"the boilerplate code to handle missing data by passing it through to the "
+"output or falling back to an alternative input, has shrunk to two uses of"
+" the ``?`` symbol and two uses of the ``?else`` keyword."
+msgstr ""
+
+#: ../../pep-0531.txt:192
+msgid ""
+"In the first two examples, the 31 character boilerplate clause ``if exprN"
+" is not None else None`` (minimally 27 characters for a single letter "
+"variable name) has been replaced by a single ``?`` character, "
+"substantially improving the signal-to-pattern-noise ratio of the lines "
+"(especially if it encourages the use of more meaningful variable and "
+"field names rather than making them shorter purely for the sake of "
+"expression brevity)."
+msgstr ""
+
+#: ../../pep-0531.txt:199
+msgid ""
+"In the last example, two instances of the 21 character boilerplate, ``if "
+"exprN is not None`` (minimally 17 characters) are replaced with single "
+"characters, again substantially improving the signal-to-pattern-noise "
+"ratio."
+msgstr ""
+
+#: ../../pep-0531.txt:203
+msgid ""
+"Furthermore, each of our 5 \"subexpressions of potential interest\" is "
+"included exactly once, rather than 4 of them needing to be duplicated or "
+"pulled out to a named variable in order to first check if they exist."
+msgstr ""
+
+#: ../../pep-0531.txt:207
+msgid ""
+"The existence checking precondition operator is mainly defined to provide"
+" a clear conceptual basis for the existence checking attribute access and"
+" subscripting operators:"
+msgstr ""
+
+#: ../../pep-0531.txt:211
+msgid "``obj?.attr`` is roughly equivalent to ``obj ?then obj.attr``"
+msgstr ""
+
+#: ../../pep-0531.txt:212
+msgid "``obj?[expr]`` is roughly equivalent to ``obj ?then obj[expr]``"
+msgstr ""
+
+#: ../../pep-0531.txt:214
+msgid ""
+"The main semantic difference between the shorthand forms and their "
+"expanded equivalents is that the common subexpression to the left of the "
+"existence checking operator is evaluated only once in the shorthand form "
+"(similar to the benefit offered by augmented assignment statements)."
+msgstr ""
+
+#: ../../pep-0531.txt:221
+msgid "Existence checking assignment"
+msgstr ""
+
+#: ../../pep-0531.txt:223
+msgid ""
+"Existence-checking assignment is proposed as a relatively straightforward"
+" expansion of the concepts in this PEP to also cover the common "
+"configuration handling idiom:"
+msgstr ""
+
+#: ../../pep-0531.txt:227
+msgid "``value = value if value is not None else expensive_default()``"
+msgstr ""
+
+#: ../../pep-0531.txt:229
+msgid "by allowing that to instead be abbreviated as:"
+msgstr ""
+
+#: ../../pep-0531.txt:231
+msgid "``value ?= expensive_default()``"
+msgstr ""
+
+#: ../../pep-0531.txt:233
+msgid ""
+"This is mainly beneficial when the target is a subscript operation or "
+"subattribute, as even without this specific change, the PEP would still "
+"permit this idiom to be updated to:"
+msgstr ""
+
+#: ../../pep-0531.txt:237
+msgid "``value = value ?else expensive_default()``"
+msgstr ""
+
+#: ../../pep-0531.txt:239
+msgid ""
+"The main argument *against* adding this form is that it's arguably "
+"ambiguous and could mean either:"
+msgstr ""
+
+#: ../../pep-0531.txt:242
+msgid "``value = value ?else expensive_default()``; or"
+msgstr ""
+
+#: ../../pep-0531.txt:243
+msgid "``value = value ?then value.subfield.of.interest``"
+msgstr ""
+
+#: ../../pep-0531.txt:245
+msgid ""
+"The second form isn't at all useful, but if this concern was deemed "
+"significant enough to address while still keeping the augmented "
+"assignment feature, the full keyword could be included in the syntax:"
+msgstr ""
+
+#: ../../pep-0531.txt:249
+msgid "``value ?else= expensive_default()``"
+msgstr ""
+
+#: ../../pep-0531.txt:251
+msgid ""
+"Alternatively, augmented assignment could just be dropped from the "
+"current proposal entirely and potentially reconsidered at a later date."
+msgstr ""
+
+#: ../../pep-0531.txt:256
+msgid "Existence checking protocol"
+msgstr ""
+
+#: ../../pep-0531.txt:258
+msgid ""
+"The existence checking protocol is including in this proposal primarily "
+"to allow for proxy objects (e.g. local representations of remote "
+"resources) and mock objects used in testing to correctly indicate non-"
+"existence of target resources, even though the proxy or mock object "
+"itself is not None."
+msgstr ""
+
+#: ../../pep-0531.txt:263
+msgid ""
+"However, with that protocol defined, it then seems natural to expand it "
+"to provide a type independent way of checking for ``NaN`` values in "
+"numeric types - at the moment you need to be aware of the exact data type"
+" you're working with (e.g. builtin floats, builtin complex numbers, the "
+"decimal module) and use the appropriate operation (e.g. ``math.isnan``, "
+"``cmath.isnan``, ``decimal.getcontext().is_nan()``, respectively)"
+msgstr ""
+
+#: ../../pep-0531.txt:270
+msgid ""
+"Similarly, it seems reasonable to declare that the other placeholder "
+"builtin singletons, ``Ellipsis`` and ``NotImplemented``, also qualify as "
+"objects that represent the absence of data more so than they represent "
+"data."
+msgstr ""
+
+#: ../../pep-0531.txt:276
+msgid "Proposed symbolic notation"
+msgstr ""
+
+#: ../../pep-0531.txt:278
+msgid ""
+"Python has historically only had one kind of implied boolean context: "
+"truth checking, which can be invoked directly via the ``bool()`` builtin."
+" As this PEP proposes a new kind of control flow operation based on "
+"existence checking rather than truth checking, it is considered valuable "
+"to have a reminder directly in the code when existence checking is being "
+"used rather than truth checking."
+msgstr ""
+
+#: ../../pep-0531.txt:284
+msgid ""
+"The mathematical symbol for existence assertions is U+2203 'THERE "
+"EXISTS': ``∃``"
+msgstr ""
+
+#: ../../pep-0531.txt:286
+msgid ""
+"Accordingly, one possible approach to the syntactic additions proposed in"
+" this PEP would be to use that already defined mathematical notation:"
+msgstr ""
+
+#: ../../pep-0531.txt:289
+msgid "``expr1 ∃then expr2``"
+msgstr ""
+
+#: ../../pep-0531.txt:290
+msgid "``expr1 ∃else expr2``"
+msgstr ""
+
+#: ../../pep-0531.txt:291
+msgid "``obj∃.attr``"
+msgstr ""
+
+#: ../../pep-0531.txt:292
+msgid "``obj∃[expr]``"
+msgstr ""
+
+#: ../../pep-0531.txt:293
+msgid "``target ∃= expr``"
+msgstr ""
+
+#: ../../pep-0531.txt:295
+msgid ""
+"However, there are two major problems with that approach, one practical, "
+"and one pedagogical."
+msgstr ""
+
+#: ../../pep-0531.txt:298
+msgid ""
+"The practical problem is the usual one that most keyboards don't offer "
+"any easy way of entering mathematical symbols other than those used in "
+"basic arithmetic (even the symbols appearing in this PEP were ultimately "
+"copied & pasted from [3]_ rather than being entered directly)."
+msgstr ""
+
+#: ../../pep-0531.txt:303
+msgid ""
+"The pedagogical problem is that the symbols for existence assertions "
+"(``∃``) and universal assertions (``∀``) aren't going to be familiar to "
+"most people the way basic arithmetic operators are, so we wouldn't "
+"actually be making the proposed syntax easier to understand by adopting "
+"``∃``."
+msgstr ""
+
+#: ../../pep-0531.txt:308
+msgid ""
+"By contrast, ``?`` is one of the few remaining unused ASCII punctuation "
+"characters in Python's syntax, making it available as a candidate "
+"syntactic marker for \"this control flow operation is based on an "
+"existence check, not a truth check\"."
+msgstr ""
+
+#: ../../pep-0531.txt:313
+msgid ""
+"Taking that path would also have the advantage of aligning Python's "
+"syntax with corresponding syntax in other languages that offer similar "
+"features."
+msgstr ""
+
+#: ../../pep-0531.txt:316
+msgid ""
+"Drawing from the existing summary in PEP 505 and the Wikipedia articles "
+"on the \"safe navigation operator [1]_ and the \"null coalescing "
+"operator\" [2]_, we see:"
+msgstr ""
+
+#: ../../pep-0531.txt:320
+msgid ""
+"The ``?.`` existence checking attribute access syntax precisely aligns "
+"with:"
+msgstr ""
+
+#: ../../pep-0531.txt:322
+msgid "the \"safe navigation\" attribute access operator in C# (``?.``)"
+msgstr ""
+
+#: ../../pep-0531.txt:323
+msgid "the \"optional chaining\" operator in Swift (``?.``)"
+msgstr ""
+
+#: ../../pep-0531.txt:324
+msgid "the \"safe navigation\" attribute access operator in Groovy (``?.``)"
+msgstr ""
+
+#: ../../pep-0531.txt:325
+msgid "the \"conditional member access\" operator in Dart (``?.``)"
+msgstr ""
+
+#: ../../pep-0531.txt:327
+msgid ""
+"The ``?[]`` existence checking attribute access syntax precisely aligns "
+"with:"
+msgstr ""
+
+#: ../../pep-0531.txt:329
+msgid "the \"safe navigation\" subscript operator in C# (``?[]``)"
+msgstr ""
+
+#: ../../pep-0531.txt:330
+msgid "the \"optional subscript\" operator in Swift (``?[].``)"
+msgstr ""
+
+#: ../../pep-0531.txt:332
+msgid "The ``?else`` existence checking fallback syntax semantically aligns with:"
+msgstr ""
+
+#: ../../pep-0531.txt:334
+msgid "the \"null-coalescing\" operator in C# (``??``)"
+msgstr ""
+
+#: ../../pep-0531.txt:335
+msgid "the \"null-coalescing\" operator in PHP (``??``)"
+msgstr ""
+
+#: ../../pep-0531.txt:336
+msgid "the \"nil-coalescing\" operator in Swift (``??``)"
+msgstr ""
+
+#: ../../pep-0531.txt:338
+msgid ""
+"To be clear, these aren't the only spelling of these operators used in "
+"other languages, but they're the most common ones, and the ``?`` symbol "
+"is the most common syntactic marker by far (presumably prompted by the "
+"use of ``?`` to introduce the \"then\" clause in C-style conditional "
+"expressions, which many of these languages also offer)."
+msgstr ""
+
+#: ../../pep-0531.txt:346
+msgid "Proposed keywords"
+msgstr ""
+
+#: ../../pep-0531.txt:348
+msgid ""
+"Given the symbolic marker ``?``, it would be syntactically unambiguous to"
+" spell the existence checking precondition and fallback operations using "
+"the same keywords as their truth checking counterparts:"
+msgstr ""
+
+#: ../../pep-0531.txt:352
+msgid "``expr1 ?and expr2`` (instead of ``expr1 ?then expr2``)"
+msgstr ""
+
+#: ../../pep-0531.txt:353
+msgid "``expr1 ?or expr2`` (instead of ``expr1 ?else expr2``)"
+msgstr ""
+
+#: ../../pep-0531.txt:355
+msgid ""
+"However, while syntactically unambiguous when written, this approach "
+"makes the code incredibly hard to *pronounce* (What's the pronunciation "
+"of \"?\"?) and also hard to *describe* (given reused keywords, there's no"
+" obvious shorthand terms for \"existence checking precondition (?and)\" "
+"and \"existence checking fallback (?or)\" that would distinguish them "
+"from \"logical conjunction (and)\" and \"logical disjunction (or)\")."
+msgstr ""
+
+#: ../../pep-0531.txt:362
+msgid ""
+"We could try to encourage folks to pronounce the ``?`` symbol as "
+"\"exists\", making the shorthand names the \"exists-and expression\" and "
+"the \"exists-or expression\", but there'd be no way of guessing those "
+"names purely from seeing them written in a piece of code."
+msgstr ""
+
+#: ../../pep-0531.txt:367
+msgid ""
+"Instead, this PEP takes advantage of the proposed symbolic syntax to "
+"introduce a new keyword (``?then``) and borrow an existing one "
+"(``?else``) in a way that allows people to refer to \"then expressions\" "
+"and \"else expressions\" without ambiguity."
+msgstr ""
+
+#: ../../pep-0531.txt:372
+msgid ""
+"These keywords also align well with the conditional expressions that are "
+"semantically equivalent to the proposed expressions."
+msgstr ""
+
+#: ../../pep-0531.txt:375
+msgid "For ``?else`` expressions, ``expr1 ?else expr2`` is equivalent to::"
+msgstr ""
+
+#: ../../pep-0531.txt:380
+msgid ""
+"Here the parallel is clear, since the ``else expr2`` appears at the end "
+"of both the abbreviated and expanded forms."
+msgstr ""
+
+#: ../../pep-0531.txt:383
+msgid "For ``?then`` expressions, ``expr1 ?then expr2`` is equivalent to::"
+msgstr ""
+
+#: ../../pep-0531.txt:388
+msgid ""
+"Here the parallel isn't as immediately obvious due to Python's "
+"traditionally anonymous \"then\" clauses (introduced by ``:`` in ``if`` "
+"statements and suffixed by ``if`` in conditional expressions), but it's "
+"still reasonably clear as long as you're already familiar with the \"if-"
+"then-else\" explanation of conditional control flow."
+msgstr ""
+
+#: ../../pep-0531.txt:396
+msgid "Risks and concerns"
+msgstr ""
+
+#: ../../pep-0531.txt:399
+msgid "Readability"
+msgstr ""
+
+#: ../../pep-0531.txt:401
+msgid ""
+"Learning to read and write the new syntax effectively mainly requires "
+"internalising two concepts:"
+msgstr ""
+
+#: ../../pep-0531.txt:404
+msgid ""
+"expressions containing ``?`` include an existence check and may short "
+"circuit"
+msgstr ""
+
+#: ../../pep-0531.txt:405
+msgid ""
+"if ``None`` or another \"non-existent\" value is an expected input, and "
+"the correct handling is to propagate that to the result, then the "
+"existence checking operators are likely what you want"
+msgstr ""
+
+#: ../../pep-0531.txt:409
+msgid ""
+"Currently, these concepts aren't explicitly represented at the language "
+"level, so it's a matter of learning to recognise and use the various "
+"idiomatic patterns based on conditional expressions and statements."
+msgstr ""
+
+#: ../../pep-0531.txt:415
+msgid "Magic syntax"
+msgstr ""
+
+#: ../../pep-0531.txt:417
+msgid ""
+"There's nothing about ``?`` as a syntactic element that inherently "
+"suggests ``is not None`` or ``operator.exists``. The main current use of "
+"``?`` as a symbol in Python code is as a trailing suffix in IPython "
+"environments to request help information for the result of the preceding "
+"expression."
+msgstr ""
+
+#: ../../pep-0531.txt:422
+msgid ""
+"However, the notion of existence checking really does benefit from a "
+"pervasive visual marker that distinguishes it from truth checking, and "
+"that calls for a single-character symbolic syntax if we're going to do it"
+" at all."
+msgstr ""
+
+#: ../../pep-0531.txt:428
+msgid "Conceptual complexity"
+msgstr ""
+
+#: ../../pep-0531.txt:430
+msgid ""
+"This proposal takes the currently ad hoc and informal concept of "
+"\"existence checking\" and elevates it to the status of being a syntactic"
+" language feature with a clearly defined operator protocol."
+msgstr ""
+
+#: ../../pep-0531.txt:434
+msgid ""
+"In many ways, this should actually *reduce* the overall conceptual "
+"complexity of the language, as many more expectations will map correctly "
+"between truth checking with ``bool(expr)`` and existence checking with "
+"``operator.exists(expr)`` than currently map between truth checking and "
+"existence checking with ``expr is not None`` (or ``expr is not "
+"NotImplemented`` in the context of operand coercion, or the various NaN-"
+"checking operations in mathematical libraries)."
+msgstr ""
+
+#: ../../pep-0531.txt:442
+msgid "As a simple example of the new parallels introduced by this PEP, compare::"
+msgstr ""
+
+#: ../../pep-0531.txt:451
+msgid "Design Discussion"
+msgstr ""
+
+#: ../../pep-0531.txt:454
+msgid "Subtleties in chaining existence checking expressions"
+msgstr ""
+
+#: ../../pep-0531.txt:456
+msgid ""
+"Similar subtleties arise in chaining existence checking expressions as "
+"already exist in chaining logical operators: the behaviour can be "
+"surprising if the right hand side of one of the expressions in the chain "
+"itself returns a value that doesn't exist."
+msgstr ""
+
+#: ../../pep-0531.txt:461
+msgid ""
+"As a result, ``value = arg1 ?then f(arg1) ?else default()`` would be "
+"dubious for essentially the same reason that ``value = cond and expr1 or "
+"expr2`` is dubious: the former will evaluate ``default()`` if ``f(arg1)``"
+" returns ``None``, just as the latter will evaluate ``expr2`` if "
+"``expr1`` evaluates to ``False`` in a boolean context."
+msgstr ""
+
+#: ../../pep-0531.txt:469
+msgid "Ambiguous interaction with conditional expressions"
+msgstr ""
+
+#: ../../pep-0531.txt:471
+msgid "In the proposal as currently written, the following is a syntax error:"
+msgstr ""
+
+#: ../../pep-0531.txt:473
+msgid "``value = f(arg) if arg ?else default``"
+msgstr ""
+
+#: ../../pep-0531.txt:475
+msgid ""
+"While the following is a valid operation that checks a second condition "
+"if the first doesn't exist rather than merely being false:"
+msgstr ""
+
+#: ../../pep-0531.txt:478
+msgid "``value = expr1 if cond1 ?else cond2 else expr2``"
+msgstr ""
+
+#: ../../pep-0531.txt:480
+msgid ""
+"The expression chaining problem described above means that the argument "
+"can be made that the first operation should instead be equivalent to:"
+msgstr ""
+
+#: ../../pep-0531.txt:483
+msgid "``value = f(arg) if operator.exists(arg) else default``"
+msgstr ""
+
+#: ../../pep-0531.txt:485
+msgid "requiring the second to be written in the arguably clearer form:"
+msgstr ""
+
+#: ../../pep-0531.txt:487
+msgid "``value = expr1 if (cond1 ?else cond2) else expr2``"
+msgstr ""
+
+#: ../../pep-0531.txt:489
+msgid ""
+"Alternatively, the first form could remain a syntax error, and the "
+"existence checking symbol could instead be attached to the ``if`` "
+"keyword:"
+msgstr ""
+
+#: ../../pep-0531.txt:492
+msgid "``value = expr1 if? cond else expr2``"
+msgstr ""
+
+#: ../../pep-0531.txt:496
+msgid "Existence checking in other truth-checking contexts"
+msgstr ""
+
+#: ../../pep-0531.txt:498
+msgid ""
+"The truth-checking protocol is currently used in the following syntactic "
+"constructs:"
+msgstr ""
+
+#: ../../pep-0531.txt:501
+msgid "logical conjunction (and-expressions)"
+msgstr ""
+
+#: ../../pep-0531.txt:502
+msgid "logical disjunction (or-expressions)"
+msgstr ""
+
+#: ../../pep-0531.txt:503
+msgid "conditional expressions (if-else expressions)"
+msgstr ""
+
+#: ../../pep-0531.txt:504
+msgid "if statements"
+msgstr ""
+
+#: ../../pep-0531.txt:505
+msgid "while loops"
+msgstr ""
+
+#: ../../pep-0531.txt:506
+msgid "filter clauses in comprehensions and generator expressions"
+msgstr ""
+
+#: ../../pep-0531.txt:508
+msgid ""
+"In the current PEP, switching from truth-checking with ``and`` and ``or``"
+" to existence-checking is a matter of substituting in the new keywords, "
+"``?then`` and ``?else`` in the appropriate places."
+msgstr ""
+
+#: ../../pep-0531.txt:512
+msgid ""
+"For other truth-checking contexts, it proposes either importing and using"
+" the ``operator.exists`` API, or else continuing with the current idiom "
+"of checking specifically for ``expr is not None`` (or the context "
+"appropriate equivalent)."
+msgstr ""
+
+#: ../../pep-0531.txt:517
+msgid ""
+"The simplest possible enhancement in that regard would be to elevate the "
+"proposed ``exists()`` API from an operator module function to a new "
+"builtin function."
+msgstr ""
+
+#: ../../pep-0531.txt:521
+msgid ""
+"Alternatively, the ``?`` existence checking symbol could be supported as "
+"a modifier on the ``if`` and ``while`` keywords to indicate the use of an"
+" existence check rather than a truth check."
+msgstr ""
+
+#: ../../pep-0531.txt:525
+msgid ""
+"However, it isn't at all clear that the potential consistency benefits "
+"gained for either suggestion would justify the additional disruption, so "
+"they've currently been omitted from the proposal."
+msgstr ""
+
+#: ../../pep-0531.txt:531
+msgid ""
+"Defining expected invariant relations between ``__bool__`` and "
+"``__exists__``"
+msgstr ""
+
+#: ../../pep-0531.txt:533
+msgid ""
+"The PEP currently leaves the definition of ``__bool__`` on all existing "
+"types unmodified, which ensures the entire proposal remains backwards "
+"compatible, but results in the following cases where ``bool(obj)`` "
+"returns ``True``, but the proposed ``operator.exists(obj)`` would return "
+"``False``:"
+msgstr ""
+
+#: ../../pep-0531.txt:538
+msgid "``NaN`` values for ``float``, ``complex``, and ``decimal.Decimal``"
+msgstr ""
+
+#: ../../pep-0531.txt:539
+msgid "``Ellipsis``"
+msgstr ""
+
+#: ../../pep-0531.txt:540
+msgid "``NotImplemented``"
+msgstr ""
+
+#: ../../pep-0531.txt:542
+msgid ""
+"The main argument for potentially changing these is that it becomes "
+"easier to reason about potential code behaviour if we have a recommended "
+"invariant in place saying that values which indicate they don't exist in "
+"an existence checking context should also report themselves as being "
+"``False`` in a truth checking context."
+msgstr ""
+
+#: ../../pep-0531.txt:548
+msgid ""
+"Failing to define such an invariant would lead to arguably odd outcomes "
+"like ``float(\"NaN\") ?else 0.0`` returning ``0.0`` while "
+"``float(\"NaN\") or 0.0`` returns ``NaN``."
+msgstr ""
+
+#: ../../pep-0531.txt:554
+msgid "Limitations"
+msgstr ""
+
+#: ../../pep-0531.txt:557
+msgid "Arbitrary sentinel objects"
+msgstr ""
+
+#: ../../pep-0531.txt:559
+msgid ""
+"This proposal doesn't attempt to provide syntactic support for the "
+"\"sentinel object\" idiom, where ``None`` is a permitted explicit value, "
+"so a separate sentinel object is defined to indicate missing values::"
+msgstr ""
+
+#: ../../pep-0531.txt:567
+msgid ""
+"This could potentially be supported at the expense of making the "
+"existence protocol definition significantly more complex, both to define "
+"and to use:"
+msgstr ""
+
+#: ../../pep-0531.txt:570
+msgid ""
+"at the Python layer, ``operator.exists`` and ``__exists__`` "
+"implementations would return the empty tuple to indicate non-existence, "
+"and otherwise return a singleton tuple containing a reference to the "
+"object to be used as the result of the existence check"
+msgstr ""
+
+#: ../../pep-0531.txt:574
+msgid ""
+"at the C layer, ``tp_exists`` implementations would return NULL to "
+"indicate non-existence, and otherwise return a `PyObject *` pointer as "
+"the result of the existence check"
+msgstr ""
+
+#: ../../pep-0531.txt:578
+msgid "Given that change, the sentinel object idiom could be rewritten as::"
+msgstr ""
+
+#: ../../pep-0531.txt:590
+msgid ""
+"However, I don't think cases where the 3 proposed standard sentinel "
+"values (i.e. ``None``, ``Ellipsis`` and ``NotImplemented``) can't be used"
+" are going to be anywhere near common enough for the additional protocol "
+"complexity and the loss of symmetry between ``__bool__`` and "
+"``__exists__`` to be worth it."
+msgstr ""
+
+#: ../../pep-0531.txt:597
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0531.txt:599
+msgid ""
+"The Abstract already gives the gist of the proposal and the Rationale "
+"gives some specific examples. If there's enough interest in the basic "
+"idea, then a full specification will need to provide a precise "
+"correspondence between the proposed syntactic sugar and the underlying "
+"conditional expressions that is sufficient to guide the creation of a "
+"reference implementation."
+msgstr ""
+
+#: ../../pep-0531.txt:605 ../../pep-0531.txt:619
+msgid "...TBD..."
+msgstr ""
+
+#: ../../pep-0531.txt:609
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0531.txt:611
+msgid ""
+"As with PEP 505, actual implementation has been deferred pending in-"
+"principle interest in the idea of adding these operators - the "
+"implementation isn't the hard part of these proposals, the hard part is "
+"deciding whether or not this is a change where the long term benefits for"
+" new and existing Python users outweigh the short term costs involved in "
+"the wider ecosystem (including developers of other implementations, "
+"language curriculum developers, and authors of other Python related "
+"educational material) adjusting to the change."
+msgstr ""
+
+#: ../../pep-0531.txt:623
+msgid "References"
+msgstr ""
+
+#: ../../pep-0531.txt:625
+msgid ""
+"Wikipedia: Safe navigation operator "
+"(https://en.wikipedia.org/wiki/Safe_navigation_operator)"
+msgstr ""
+
+#: ../../pep-0531.txt:628
+msgid ""
+"Wikipedia: Null coalescing operator "
+"(https://en.wikipedia.org/wiki/Null_coalescing_operator)"
+msgstr ""
+
+#: ../../pep-0531.txt:631
+msgid ""
+"FileFormat.info: Unicode Character 'THERE EXISTS' (U+2203) "
+"(http://www.fileformat.info/info/unicode/char/2203/index.htm)"
+msgstr ""
+
+#: ../../pep-0531.txt:634
+msgid ""
+"python-ideas discussion thread (https://mail.python.org/pipermail/python-"
+"ideas/2016-October/043415.html)"
+msgstr ""
+
+#: ../../pep-0531.txt:637
+msgid ""
+"Steven D'Aprano's critique of the proposal "
+"(https://mail.python.org/pipermail/python-ideas/2016-October/043453.html)"
+msgstr ""
+
+#: ../../pep-0531.txt:640
+msgid ""
+"Considering a link to the idea of overloadable Boolean operators "
+"(https://mail.python.org/pipermail/python-ideas/2016-October/043447.html)"
+msgstr ""
+
+#: ../../pep-0531.txt:644
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0531.txt:646
+msgid ""
+"This document has been placed in the public domain under the terms of the"
+" CC0 1.0 license: https://creativecommons.org/publicdomain/zero/1.0/"
+msgstr ""
+

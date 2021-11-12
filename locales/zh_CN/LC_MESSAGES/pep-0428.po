@@ -1,0 +1,759 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0428.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0428.txt:1
+msgid "428"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0428.txt:2
+msgid "The pathlib module -- object-oriented filesystem paths"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0428.txt:5
+msgid "Antoine Pitrou <solipsis@pitrou.net>"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0428.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0428.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0428.txt:9
+msgid "30-Jul-2012"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0428.txt:10
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0428.txt:11
+msgid "https://mail.python.org/pipermail/python-ideas/2012-October/016338.html"
+msgstr ""
+
+#: ../../pep-0428.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0428.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2013-November/130424.html"
+msgstr ""
+
+#: ../../pep-0428.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0428.txt:18
+msgid ""
+"This PEP proposes the inclusion of a third-party module, `pathlib`_, in "
+"the standard library.  The inclusion is proposed under the provisional "
+"label, as described in :pep:`411`.  Therefore, API changes can be done, "
+"either as part of the PEP process, or after acceptance in the standard "
+"library (and until the provisional label is removed)."
+msgstr ""
+
+#: ../../pep-0428.txt:24
+msgid ""
+"The aim of this library is to provide a simple hierarchy of classes to "
+"handle filesystem paths and the common operations users do over them."
+msgstr ""
+
+#: ../../pep-0428.txt:31
+msgid "Related work"
+msgstr ""
+
+#: ../../pep-0428.txt:33
+msgid ""
+"An object-oriented API for filesystem paths has already been proposed and"
+" rejected in :pep:`355`.  Several third-party implementations of the idea"
+" of object-oriented filesystem paths exist in the wild:"
+msgstr ""
+
+#: ../../pep-0428.txt:37
+msgid ""
+"The historical `path.py module`_ by Jason Orendorff, Jason R. Coombs and "
+"others, which provides a ``str``-subclassing ``Path`` class;"
+msgstr ""
+
+#: ../../pep-0428.txt:40
+msgid "Twisted's slightly specialized `FilePath class`_;"
+msgstr ""
+
+#: ../../pep-0428.txt:42
+msgid ""
+"An `AlternativePathClass proposal`_, subclassing ``tuple`` rather than "
+"``str``;"
+msgstr ""
+
+#: ../../pep-0428.txt:45
+msgid ""
+"`Unipath`_, a variation on the str-subclassing approach with two public "
+"classes, an ``AbstractPath`` class for operations which don't do I/O and "
+"a ``Path`` class for all common operations."
+msgstr ""
+
+#: ../../pep-0428.txt:49
+msgid ""
+"This proposal attempts to learn from these previous attempts and the "
+"rejection of :pep:`355`."
+msgstr ""
+
+#: ../../pep-0428.txt:60
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0428.txt:62
+msgid ""
+"The implementation of this proposal is tracked in the ``pep428`` branch "
+"of pathlib's `Mercurial repository`_."
+msgstr ""
+
+#: ../../pep-0428.txt:69
+msgid "Why an object-oriented API"
+msgstr ""
+
+#: ../../pep-0428.txt:71
+msgid ""
+"The rationale to represent filesystem paths using dedicated classes is "
+"the same as for other kinds of stateless objects, such as dates, times or"
+" IP addresses.  Python has been slowly moving away from strictly "
+"replicating the C language's APIs to providing better, more helpful "
+"abstractions around all kinds of common functionality.  Even if this PEP "
+"isn't accepted, it is likely that another form of filesystem handling "
+"abstraction will be adopted one day into the standard library."
+msgstr ""
+
+#: ../../pep-0428.txt:79
+msgid ""
+"Indeed, many people will prefer handling dates and times using the high-"
+"level objects provided by the ``datetime`` module, rather than using "
+"numeric timestamps and the ``time`` module API.  Moreover, using a "
+"dedicated class allows to enable desirable behaviours by default, for "
+"example the case insensitivity of Windows paths."
+msgstr ""
+
+#: ../../pep-0428.txt:87
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0428.txt:90
+msgid "Class hierarchy"
+msgstr ""
+
+#: ../../pep-0428.txt:92
+msgid "The `pathlib`_ module implements a simple hierarchy of classes::"
+msgstr ""
+
+#: ../../pep-0428.txt:123
+msgid "This hierarchy divides path classes along two dimensions:"
+msgstr ""
+
+#: ../../pep-0428.txt:125
+msgid ""
+"a path class can be either pure or concrete: pure classes support only "
+"operations that don't need to do any actual I/O, which are most path "
+"manipulation operations; concrete classes support all the operations of "
+"pure classes, plus operations that do I/O."
+msgstr ""
+
+#: ../../pep-0428.txt:130
+msgid ""
+"a path class is of a given flavour according to the kind of operating "
+"system paths it represents.  `pathlib`_ implements two flavours: Windows "
+"paths for the filesystem semantics embodied in Windows systems, POSIX "
+"paths for other systems."
+msgstr ""
+
+#: ../../pep-0428.txt:135
+msgid ""
+"Any pure class can be instantiated on any system: for example, you can "
+"manipulate ``PurePosixPath`` objects under Windows, ``PureWindowsPath`` "
+"objects under Unix, and so on.  However, concrete classes can only be "
+"instantiated on a matching system: indeed, it would be error-prone to "
+"start doing I/O with ``WindowsPath`` objects under Unix, or vice-versa."
+msgstr ""
+
+#: ../../pep-0428.txt:141
+msgid ""
+"Furthermore, there are two base classes which also act as system-"
+"dependent factories: ``PurePath`` will instantiate either a "
+"``PurePosixPath`` or a ``PureWindowsPath`` depending on the operating "
+"system.  Similarly, ``Path`` will instantiate either a ``PosixPath`` or a"
+" ``WindowsPath``."
+msgstr ""
+
+#: ../../pep-0428.txt:146
+msgid ""
+"It is expected that, in most uses, using the ``Path`` class is adequate, "
+"which is why it has the shortest name of all."
+msgstr ""
+
+#: ../../pep-0428.txt:151
+msgid "No confusion with builtins"
+msgstr ""
+
+#: ../../pep-0428.txt:153
+msgid ""
+"In this proposal, the path classes do not derive from a builtin type.  "
+"This contrasts with some other Path class proposals which were derived "
+"from ``str``.  They also do not pretend to implement the sequence "
+"protocol: if you want a path to act as a sequence, you have to lookup a "
+"dedicated attribute (the ``parts`` attribute)."
+msgstr ""
+
+#: ../../pep-0428.txt:159
+msgid ""
+"The key reasoning behind not inheriting from ``str`` is to prevent "
+"accidentally performing operations with a string representing a path and "
+"a string that doesn't, e.g. ``path + an_accident``. Since operations with"
+" a string will not necessarily lead to a valid or expected file system "
+"path, \"explicit is better than implicit\" by avoiding accidental "
+"operations with strings by not subclassing it. A `blog post`_ by a Python"
+" core developer goes into more detail on the reasons behind this specific"
+" design decision."
+msgstr ""
+
+#: ../../pep-0428.txt:171
+msgid "Immutability"
+msgstr ""
+
+#: ../../pep-0428.txt:173
+msgid ""
+"Path objects are immutable, which makes them hashable and also prevents a"
+" class of programming errors."
+msgstr ""
+
+#: ../../pep-0428.txt:178
+msgid "Sane behaviour"
+msgstr ""
+
+#: ../../pep-0428.txt:180
+msgid ""
+"Little of the functionality from os.path is reused.  Many os.path "
+"functions are tied by backwards compatibility to confusing or plain wrong"
+" behaviour (for example, the fact that ``os.path.abspath()`` simplifies "
+"\"..\" path components without resolving symlinks first)."
+msgstr ""
+
+#: ../../pep-0428.txt:187
+msgid "Comparisons"
+msgstr ""
+
+#: ../../pep-0428.txt:189
+msgid ""
+"Paths of the same flavour are comparable and orderable, whether pure or "
+"not::"
+msgstr ""
+
+#: ../../pep-0428.txt:198
+msgid "Comparing and ordering Windows path objects is case-insensitive::"
+msgstr ""
+
+#: ../../pep-0428.txt:203
+msgid ""
+"Paths of different flavours always compare unequal, and cannot be "
+"ordered::"
+msgstr ""
+
+#: ../../pep-0428.txt:212
+msgid ""
+"Paths compare unequal to, and are not orderable with instances of builtin"
+" types (such as ``str``) and any other types."
+msgstr ""
+
+#: ../../pep-0428.txt:217
+msgid "Useful notations"
+msgstr ""
+
+#: ../../pep-0428.txt:219
+msgid ""
+"The API tries to provide useful notations all the while avoiding magic. "
+"Some examples::"
+msgstr ""
+
+#: ../../pep-0428.txt:238
+msgid "Pure paths API"
+msgstr ""
+
+#: ../../pep-0428.txt:240
+msgid ""
+"The philosophy of the ``PurePath`` API is to provide a consistent array "
+"of useful path manipulation operations, without exposing a hodge-podge of"
+" functions like ``os.path`` does."
+msgstr ""
+
+#: ../../pep-0428.txt:246
+msgid "Definitions"
+msgstr ""
+
+#: ../../pep-0428.txt:248
+msgid "First a couple of conventions:"
+msgstr ""
+
+#: ../../pep-0428.txt:250
+msgid ""
+"All paths can have a drive and a root.  For POSIX paths, the drive is "
+"always empty."
+msgstr ""
+
+#: ../../pep-0428.txt:253
+msgid "A relative path has neither drive nor root."
+msgstr ""
+
+#: ../../pep-0428.txt:255
+msgid ""
+"A POSIX path is absolute if it has a root.  A Windows path is absolute if"
+" it has both a drive *and* a root.  A Windows UNC path (e.g. "
+"``\\\\host\\share\\myfile.txt``) always has a drive and a root (here, "
+"``\\\\host\\share`` and ``\\``, respectively)."
+msgstr ""
+
+#: ../../pep-0428.txt:260
+msgid ""
+"A path which has either a drive *or* a root is said to be anchored. Its "
+"anchor is the concatenation of the drive and root.  Under POSIX, "
+"\"anchored\" is the same as \"absolute\"."
+msgstr ""
+
+#: ../../pep-0428.txt:266
+msgid "Construction"
+msgstr ""
+
+#: ../../pep-0428.txt:268
+msgid ""
+"We will present construction and joining together since they expose "
+"similar semantics."
+msgstr ""
+
+#: ../../pep-0428.txt:271
+msgid ""
+"The simplest way to construct a path is to pass it its string "
+"representation::"
+msgstr ""
+
+#: ../../pep-0428.txt:276
+msgid "Extraneous path separators and ``\".\"`` components are eliminated::"
+msgstr ""
+
+#: ../../pep-0428.txt:281
+msgid "If you pass several arguments, they will be automatically joined::"
+msgstr ""
+
+#: ../../pep-0428.txt:286
+msgid ""
+"Joining semantics are similar to os.path.join, in that anchored paths "
+"ignore the information from the previously joined components::"
+msgstr ""
+
+#: ../../pep-0428.txt:292
+msgid "However, with Windows paths, the drive is retained as necessary::"
+msgstr ""
+
+#: ../../pep-0428.txt:299
+msgid "Also, path separators are normalized to the platform default::"
+msgstr ""
+
+#: ../../pep-0428.txt:304
+msgid ""
+"Extraneous path separators and ``\".\"`` components are eliminated, but "
+"not ``\"..\"`` components::"
+msgstr ""
+
+#: ../../pep-0428.txt:312
+msgid ""
+"Multiple leading slashes are treated differently depending on the path "
+"flavour.  They are always retained on Windows paths (because of the UNC "
+"notation)::"
+msgstr ""
+
+#: ../../pep-0428.txt:319
+msgid ""
+"On POSIX, they are collapsed except if there are exactly two leading "
+"slashes, which is a special case in the POSIX specification on `pathname "
+"resolution`_ (this is also necessary for Cygwin compatibility)::"
+msgstr ""
+
+#: ../../pep-0428.txt:328
+msgid ""
+"Calling the constructor without any argument creates a path object "
+"pointing to the logical \"current directory\" (without looking up its "
+"absolute path, which is the job of the ``cwd()`` classmethod on concrete "
+"paths)::"
+msgstr ""
+
+#: ../../pep-0428.txt:339
+msgid "Representing"
+msgstr ""
+
+#: ../../pep-0428.txt:341
+msgid ""
+"To represent a path (e.g. to pass it to third-party libraries), just call"
+" ``str()`` on it::"
+msgstr ""
+
+#: ../../pep-0428.txt:351
+msgid ""
+"To force the string representation with forward slashes, use the "
+"``as_posix()`` method::"
+msgstr ""
+
+#: ../../pep-0428.txt:357
+msgid ""
+"To get the bytes representation (which might be useful under Unix "
+"systems), call ``bytes()`` on it, which internally uses "
+"``os.fsencode()``::"
+msgstr ""
+
+#: ../../pep-0428.txt:363
+msgid "To represent the path as a ``file:`` URI, call the ``as_uri()`` method::"
+msgstr ""
+
+#: ../../pep-0428.txt:372
+msgid ""
+"The repr() of a path always uses forward slashes, even under Windows, for"
+" readability and to remind users that forward slashes are ok::"
+msgstr ""
+
+#: ../../pep-0428.txt:381
+msgid "Properties"
+msgstr ""
+
+#: ../../pep-0428.txt:383
+msgid "Several simple properties are provided on every path (each can be empty)::"
+msgstr ""
+
+#: ../../pep-0428.txt:403
+msgid "Deriving new paths"
+msgstr ""
+
+#: ../../pep-0428.txt:406
+msgid "Joining"
+msgstr ""
+
+#: ../../pep-0428.txt:408
+msgid "A path can be joined with another using the ``/`` operator::"
+msgstr ""
+
+#: ../../pep-0428.txt:418
+msgid ""
+"As with the constructor, multiple path components can be specified, "
+"either collapsed or separately::"
+msgstr ""
+
+#: ../../pep-0428.txt:426
+msgid "A joinpath() method is also provided, with the same behaviour::"
+msgstr ""
+
+#: ../../pep-0428.txt:432
+msgid "Changing the path's final component"
+msgstr ""
+
+#: ../../pep-0428.txt:434
+msgid "The ``with_name()`` method returns a new path, with the name changed::"
+msgstr ""
+
+#: ../../pep-0428.txt:440
+msgid "It fails with a ``ValueError`` if the path doesn't have an actual name::"
+msgstr ""
+
+#: ../../pep-0428.txt:452
+msgid ""
+"The ``with_suffix()`` method returns a new path with the suffix changed. "
+"However, if the path has no suffix, the new suffix is added::"
+msgstr ""
+
+#: ../../pep-0428.txt:463
+msgid "Making the path relative"
+msgstr ""
+
+#: ../../pep-0428.txt:465
+msgid ""
+"The ``relative_to()`` method computes the relative difference of a path "
+"to another::"
+msgstr ""
+
+#: ../../pep-0428.txt:471
+msgid "ValueError is raised if the method cannot return a meaningful value::"
+msgstr ""
+
+#: ../../pep-0428.txt:482
+msgid "Sequence-like access"
+msgstr ""
+
+#: ../../pep-0428.txt:484
+msgid ""
+"The ``parts`` property returns a tuple providing read-only sequence "
+"access to a path's components::"
+msgstr ""
+
+#: ../../pep-0428.txt:491
+msgid "Windows paths handle the drive and the root as a single path component::"
+msgstr ""
+
+#: ../../pep-0428.txt:497
+msgid ""
+"(separating them would be wrong, since ``C:`` is not the parent of "
+"``C:\\\\``)."
+msgstr ""
+
+#: ../../pep-0428.txt:499
+msgid "The ``parent`` property returns the logical parent of the path::"
+msgstr ""
+
+#: ../../pep-0428.txt:505
+msgid ""
+"The ``parents`` property returns an immutable sequence of the path's "
+"logical ancestors::"
+msgstr ""
+
+#: ../../pep-0428.txt:520
+msgid "Querying"
+msgstr ""
+
+#: ../../pep-0428.txt:522
+msgid ""
+"``is_relative()`` returns True if the path is relative (see definition "
+"above), False otherwise."
+msgstr ""
+
+#: ../../pep-0428.txt:525
+msgid ""
+"``is_reserved()`` returns True if a Windows path is a reserved path such "
+"as ``CON`` or ``NUL``.  It always returns False for POSIX paths."
+msgstr ""
+
+#: ../../pep-0428.txt:528
+msgid ""
+"``match()`` matches the path against a glob pattern. It operates on "
+"individual parts and matches from the right:"
+msgstr ""
+
+#: ../../pep-0428.txt:541
+msgid "This behaviour respects the following expectations:"
+msgstr ""
+
+#: ../../pep-0428.txt:543
+msgid ""
+"A simple pattern such as \"\\*.py\" matches arbitrarily long paths as "
+"long as the last part matches, e.g. \"/usr/foo/bar.py\"."
+msgstr ""
+
+#: ../../pep-0428.txt:546
+msgid ""
+"Longer patterns can be used as well for more complex matching, e.g. "
+"\"/usr/foo/\\*.py\" matches \"/usr/foo/bar.py\"."
+msgstr ""
+
+#: ../../pep-0428.txt:551
+msgid "Concrete paths API"
+msgstr ""
+
+#: ../../pep-0428.txt:553
+msgid ""
+"In addition to the operations of the pure API, concrete paths provide "
+"additional methods which actually access the filesystem to query or "
+"mutate information."
+msgstr ""
+
+#: ../../pep-0428.txt:559
+msgid "Constructing"
+msgstr ""
+
+#: ../../pep-0428.txt:561
+msgid ""
+"The classmethod ``cwd()`` creates a path object pointing to the current "
+"working directory in absolute form::"
+msgstr ""
+
+#: ../../pep-0428.txt:569
+msgid "File metadata"
+msgstr ""
+
+#: ../../pep-0428.txt:571
+msgid ""
+"The ``stat()`` returns the file's stat() result; similarly, ``lstat()`` "
+"returns the file's lstat() result (which is different iff the file is a "
+"symbolic link)::"
+msgstr ""
+
+#: ../../pep-0428.txt:578
+msgid "Higher-level methods help examine the kind of the file::"
+msgstr ""
+
+#: ../../pep-0428.txt:597
+msgid ""
+"The file owner and group names (rather than numeric ids) are queried "
+"through corresponding methods::"
+msgstr ""
+
+#: ../../pep-0428.txt:608
+msgid "Path resolution"
+msgstr ""
+
+#: ../../pep-0428.txt:610
+msgid ""
+"The ``resolve()`` method makes a path absolute, resolving any symlink on "
+"the way (like the POSIX realpath() call).  It is the only operation which"
+" will remove \"``..``\" path components.  On Windows, this method will "
+"also take care to return the canonical path (with the right casing)."
+msgstr ""
+
+#: ../../pep-0428.txt:617
+msgid "Directory walking"
+msgstr ""
+
+#: ../../pep-0428.txt:619
+msgid ""
+"Simple (non-recursive) directory access is done by calling the iterdir() "
+"method, which returns an iterator over the child paths::"
+msgstr ""
+
+#: ../../pep-0428.txt:633
+msgid "This allows simple filtering through list comprehensions::"
+msgstr ""
+
+#: ../../pep-0428.txt:639
+msgid "Simple and recursive globbing is also provided::"
+msgstr ""
+
+#: ../../pep-0428.txt:651
+msgid "File opening"
+msgstr ""
+
+#: ../../pep-0428.txt:653
+msgid ""
+"The ``open()`` method provides a file opening API similar to the builtin "
+"``open()`` method::"
+msgstr ""
+
+#: ../../pep-0428.txt:663
+msgid "Filesystem modification"
+msgstr ""
+
+#: ../../pep-0428.txt:665
+msgid ""
+"Several common filesystem operations are provided as methods: "
+"``touch()``, ``mkdir()``, ``rename()``, ``replace()``, ``unlink()``, "
+"``rmdir()``, ``chmod()``, ``lchmod()``, ``symlink_to()``.  More "
+"operations could be provided, for example some of the functionality of "
+"the shutil module."
+msgstr ""
+
+#: ../../pep-0428.txt:670
+msgid ""
+"Detailed documentation of the proposed API can be found at the `pathlib "
+"docs`_."
+msgstr ""
+
+#: ../../pep-0428.txt:677
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0428.txt:680
+msgid "Division operator"
+msgstr ""
+
+#: ../../pep-0428.txt:682
+msgid ""
+"The division operator came out first in a `poll`_ about the path joining "
+"operator.  Initial versions of `pathlib`_ used square brackets (i.e. "
+"``__getitem__``) instead."
+msgstr ""
+
+#: ../../pep-0428.txt:689
+msgid "joinpath()"
+msgstr ""
+
+#: ../../pep-0428.txt:691
+msgid ""
+"The joinpath() method was initially called join(), but several people "
+"objected that it could be confused with str.join() which has different "
+"semantics.  Therefore, it was renamed to joinpath()."
+msgstr ""
+
+#: ../../pep-0428.txt:696
+msgid "Case-sensitivity"
+msgstr ""
+
+#: ../../pep-0428.txt:698
+msgid ""
+"Windows users consider filesystem paths to be case-insensitive and expect"
+" path objects to observe that characteristic, even though in some rare "
+"situations some foreign filesystem mounts may be case-sensitive under "
+"Windows."
+msgstr ""
+
+#: ../../pep-0428.txt:703
+msgid "In the words of one commenter,"
+msgstr ""
+
+#: ../../pep-0428.txt:705
+msgid ""
+"\"If glob(\"\\*.py\") failed to find SETUP.PY on Windows, that would be a"
+" usability disaster\"."
+msgstr ""
+
+#: ../../pep-0428.txt:714
+msgid ""
+"Paul Moore in https://mail.python.org/pipermail/python-"
+"dev/2013-April/125254.html"
+msgstr ""
+
+#: ../../pep-0428.txt:713
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0428.txt:715
+msgid "This document has been placed into the public domain."
+msgstr ""
+

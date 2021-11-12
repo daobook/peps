@@ -1,0 +1,570 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0290.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0290.txt:1
+msgid "290"
+msgstr ""
+
+#: ../../pep-0290.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0290.txt:2
+msgid "Code Migration and Modernization"
+msgstr ""
+
+#: ../../pep-0290.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0290.txt:5
+msgid "Raymond Hettinger <python@rcn.com>"
+msgstr ""
+
+#: ../../pep-0290.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0290.txt:6
+msgid "Active"
+msgstr ""
+
+#: ../../pep-0290.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0290.txt:7
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0290.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0290.txt:9
+msgid "06-Jun-2002"
+msgstr ""
+
+#: ../../pep-0290.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0290.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0290.txt:16
+msgid ""
+"This PEP is a collection of procedures and ideas for updating Python "
+"applications when newer versions of Python are installed."
+msgstr ""
+
+#: ../../pep-0290.txt:19
+msgid ""
+"The migration tips highlight possible areas of incompatibility and make "
+"suggestions on how to find and resolve those differences.  The "
+"modernization procedures show how older code can be updated to take "
+"advantage of new language features."
+msgstr ""
+
+#: ../../pep-0290.txt:26
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0290.txt:28
+msgid ""
+"This repository of procedures serves as a catalog or checklist of known "
+"migration issues and procedures for addressing those issues."
+msgstr ""
+
+#: ../../pep-0290.txt:31
+msgid ""
+"Migration issues can arise for several reasons.  Some obsolete features "
+"are slowly deprecated according to the guidelines in PEP 4 [1]_.  Also, "
+"some code relies on undocumented behaviors which are subject to change "
+"between versions.  Some code may rely on behavior which was subsequently "
+"shown to be a bug and that behavior changes when the bug is fixed."
+msgstr ""
+
+#: ../../pep-0290.txt:38
+msgid ""
+"Modernization options arise when new versions of Python add features that"
+" allow improved clarity or higher performance than previously available."
+msgstr ""
+
+#: ../../pep-0290.txt:44
+msgid "Guidelines for New Entries"
+msgstr ""
+
+#: ../../pep-0290.txt:46
+msgid ""
+"Developers with commit access may update this PEP directly.  Others can "
+"send their ideas to a developer for possible inclusion."
+msgstr ""
+
+#: ../../pep-0290.txt:49
+msgid ""
+"While a consistent format makes the repository easier to use, feel free "
+"to add or subtract sections to improve clarity."
+msgstr ""
+
+#: ../../pep-0290.txt:52
+msgid ""
+"Grep patterns may be supplied as tool to help maintainers locate code for"
+" possible updates.  However, fully automated search/replace style regular"
+" expressions are not recommended.  Instead, each code fragment should be "
+"evaluated individually."
+msgstr ""
+
+#: ../../pep-0290.txt:57
+msgid ""
+"The contra-indications section is the most important part of a new entry."
+"  It lists known situations where the update SHOULD NOT be applied."
+msgstr ""
+
+#: ../../pep-0290.txt:63
+msgid "Migration Issues"
+msgstr ""
+
+#: ../../pep-0290.txt:66
+msgid "Comparison Operators Not a Shortcut for Producing 0 or 1"
+msgstr ""
+
+#: ../../pep-0290.txt:68
+msgid ""
+"Prior to Python 2.3, comparison operations returned 0 or 1 rather than "
+"True or False.  Some code may have used this as a shortcut for producing "
+"zero or one in places where their boolean counterparts are not "
+"appropriate.  For example::"
+msgstr ""
+
+#: ../../pep-0290.txt:77
+msgid "In Python 2.2, a call to identity(2) would produce::"
+msgstr ""
+
+#: ../../pep-0290.txt:81
+msgid "In Python 2.3, the same call would produce::"
+msgstr ""
+
+#: ../../pep-0290.txt:85
+msgid ""
+"Since booleans are a subclass of integers, the matrix would continue to "
+"calculate normally, but it will not print as expected.  The list "
+"comprehension should be changed to read::"
+msgstr ""
+
+#: ../../pep-0290.txt:91
+msgid ""
+"There are similar concerns when storing data to be used by other "
+"applications which may expect a number instead of True or False."
+msgstr ""
+
+#: ../../pep-0290.txt:96
+msgid "Modernization Procedures"
+msgstr ""
+
+#: ../../pep-0290.txt:98
+msgid ""
+"Procedures are grouped by the Python version required to be able to take "
+"advantage of the modernization."
+msgstr ""
+
+#: ../../pep-0290.txt:102
+msgid "Python 2.4 or Later"
+msgstr ""
+
+#: ../../pep-0290.txt:105
+msgid "Inserting and Popping at the Beginning of Lists"
+msgstr ""
+
+#: ../../pep-0290.txt:107
+msgid ""
+"Python's lists are implemented to perform best with appends and pops on "
+"the right.  Use of ``pop(0)`` or ``insert(0, x)`` triggers O(n) data "
+"movement for the entire list.  To help address this need, Python 2.4 "
+"introduces a new container, ``collections.deque()`` which has efficient "
+"append and pop operations on the both the left and right (the trade-off "
+"is much slower getitem/setitem access).  The new container is especially "
+"helpful for implementing data queues:"
+msgstr ""
+
+#: ../../pep-0290.txt:115 ../../pep-0290.txt:162 ../../pep-0290.txt:218
+#: ../../pep-0290.txt:232 ../../pep-0290.txt:254 ../../pep-0290.txt:278
+#: ../../pep-0290.txt:312 ../../pep-0290.txt:326 ../../pep-0290.txt:345
+#: ../../pep-0290.txt:362 ../../pep-0290.txt:378 ../../pep-0290.txt:392
+#: ../../pep-0290.txt:408 ../../pep-0290.txt:425 ../../pep-0290.txt:443
+msgid "Pattern::"
+msgstr ""
+
+#: ../../pep-0290.txt:121
+msgid "Locating::"
+msgstr ""
+
+#: ../../pep-0290.txt:127
+msgid "Simplifying Custom Sorts"
+msgstr ""
+
+#: ../../pep-0290.txt:129
+msgid ""
+"In Python 2.4, the ``sort`` method for lists and the new ``sorted`` "
+"built-in function both accept a ``key`` function for computing sort keys."
+"  Unlike the ``cmp`` function which gets applied to every comparison, the"
+" key function gets applied only once to each record. It is much faster "
+"than cmp and typically more readable while using less code.  The key "
+"function also maintains the stability of the sort (records with the same "
+"key are left in their original order."
+msgstr ""
+
+#: ../../pep-0290.txt:137
+msgid "Original code using a comparison function::"
+msgstr ""
+
+#: ../../pep-0290.txt:141
+msgid "Alternative original code with explicit decoration::"
+msgstr ""
+
+#: ../../pep-0290.txt:147
+msgid "Revised code using a key function::"
+msgstr ""
+
+#: ../../pep-0290.txt:152
+msgid "Locating: ``grep sort *.py``"
+msgstr ""
+
+#: ../../pep-0290.txt:155
+msgid "Replacing Common Uses of Lambda"
+msgstr ""
+
+#: ../../pep-0290.txt:157
+msgid ""
+"In Python 2.4, the ``operator`` module gained two new functions, "
+"itemgetter() and attrgetter() that can replace common uses of the "
+"``lambda`` keyword.  The new functions run faster and are considered by "
+"some to improve readability."
+msgstr ""
+
+#: ../../pep-0290.txt:167
+msgid "Typical contexts::"
+msgstr ""
+
+#: ../../pep-0290.txt:172
+msgid "Locating: ``grep lambda *.py``"
+msgstr ""
+
+#: ../../pep-0290.txt:175
+msgid "Simplified Reverse Iteration"
+msgstr ""
+
+#: ../../pep-0290.txt:177
+msgid ""
+"Python 2.4 introduced the ``reversed`` builtin function for reverse "
+"iteration.  The existing approaches to reverse iteration suffered from "
+"wordiness, performance issues (speed and memory consumption), and/or lack"
+" of clarity.  A preferred style is to express the sequence in a forwards "
+"direction, apply ``reversed`` to the result, and then loop over the "
+"resulting fast, memory friendly iterator."
+msgstr ""
+
+#: ../../pep-0290.txt:184
+msgid "Original code expressed with half-open intervals::"
+msgstr ""
+
+#: ../../pep-0290.txt:189
+msgid "Alternative original code reversed in multiple steps::"
+msgstr ""
+
+#: ../../pep-0290.txt:196
+msgid "Alternative original code expressed with extending slicing::"
+msgstr ""
+
+#: ../../pep-0290.txt:201
+msgid "Revised code using the ``reversed`` function::"
+msgstr ""
+
+#: ../../pep-0290.txt:207
+msgid "Python 2.3 or Later"
+msgstr ""
+
+#: ../../pep-0290.txt:210
+msgid "Testing String Membership"
+msgstr ""
+
+#: ../../pep-0290.txt:212
+msgid ""
+"In Python 2.3, for ``string2 in string1``, the length restriction on "
+"``string2`` is lifted; it can now be a string of any length.  When "
+"searching for a substring, where you don't care about the position of the"
+" substring in the original string, using the ``in`` operator makes the "
+"meaning clear."
+msgstr ""
+
+#: ../../pep-0290.txt:224
+msgid "Replace apply() with a Direct Function Call"
+msgstr ""
+
+#: ../../pep-0290.txt:226
+msgid ""
+"In Python 2.3, apply() was marked for Pending Deprecation because it was "
+"made obsolete by Python 1.6's introduction of * and ** in function calls."
+"  Using a direct function call was always a little faster than apply() "
+"because it saved the lookup for the builtin. Now, apply() is even slower "
+"due to its use of the warnings module."
+msgstr ""
+
+#: ../../pep-0290.txt:236
+msgid ""
+"Note: The Pending Deprecation was removed from apply() in Python 2.3.3 "
+"since it creates pain for people who need to maintain code that works "
+"with Python versions as far back as 1.5.2, where there was no alternative"
+" to apply().  The function remains deprecated, however."
+msgstr ""
+
+#: ../../pep-0290.txt:243
+msgid "Python 2.2 or Later"
+msgstr ""
+
+#: ../../pep-0290.txt:246
+msgid "Testing Dictionary Membership"
+msgstr ""
+
+#: ../../pep-0290.txt:248
+msgid ""
+"For testing dictionary membership, use the 'in' keyword instead of the "
+"'has_key()' method.  The result is shorter and more readable.  The style "
+"becomes consistent with tests for membership in lists.  The result is "
+"slightly faster because ``has_key`` requires an attribute search and uses"
+" a relatively expensive function call."
+msgstr ""
+
+#: ../../pep-0290.txt:258 ../../pep-0290.txt:285
+msgid "Contra-indications:"
+msgstr ""
+
+#: ../../pep-0290.txt:260
+msgid "Some dictionary-like objects may not define a ``__contains__()`` method::"
+msgstr ""
+
+#: ../../pep-0290.txt:265
+msgid "Locating: ``grep has_key``"
+msgstr ""
+
+#: ../../pep-0290.txt:269
+msgid "Looping Over Dictionaries"
+msgstr ""
+
+#: ../../pep-0290.txt:271
+msgid ""
+"Use the new ``iter`` methods for looping over dictionaries.  The ``iter``"
+" methods are faster because they do not have to create a new list object "
+"with a complete copy of all of the keys, values, or items. Selecting only"
+" keys, values, or items (key/value pairs) as needed saves the time for "
+"creating throwaway object references and, in the case of items, saves a "
+"second hash look-up of the key."
+msgstr ""
+
+#: ../../pep-0290.txt:287
+msgid "If you need a list, do not change the return type::"
+msgstr ""
+
+#: ../../pep-0290.txt:291
+msgid "Some dictionary-like objects may not define ``iter`` methods::"
+msgstr ""
+
+#: ../../pep-0290.txt:296
+msgid "Iterators do not support slicing, sorting or other operations::"
+msgstr ""
+
+#: ../../pep-0290.txt:300
+msgid "Dictionary iterators prohibit modifying the dictionary::"
+msgstr ""
+
+#: ../../pep-0290.txt:306
+msgid "``stat`` Methods"
+msgstr ""
+
+#: ../../pep-0290.txt:308
+msgid ""
+"Replace ``stat`` constants or indices with new ``os.stat`` attributes and"
+" methods.  The ``os.stat`` attributes and methods are not order-dependent"
+" and do not require an import of the ``stat`` module."
+msgstr ""
+
+#: ../../pep-0290.txt:317
+msgid "Locating: ``grep os.stat`` or ``grep stat.S``"
+msgstr ""
+
+#: ../../pep-0290.txt:321
+msgid "Reduce Dependency on ``types`` Module"
+msgstr ""
+
+#: ../../pep-0290.txt:323
+msgid ""
+"The ``types`` module is likely to be deprecated in the future.  Use "
+"built-in constructor functions instead.  They may be slightly faster."
+msgstr ""
+
+#: ../../pep-0290.txt:331
+msgid ""
+"Full use of this technique requires Python 2.3 or later (``basestring`` "
+"was introduced in Python 2.3), but Python 2.2 is sufficient for most "
+"uses."
+msgstr ""
+
+#: ../../pep-0290.txt:335
+msgid "Locating: ``grep types *.py | grep import``"
+msgstr ""
+
+#: ../../pep-0290.txt:339
+msgid "Avoid Variable Names that Clash with the ``__builtins__`` Module"
+msgstr ""
+
+#: ../../pep-0290.txt:341
+msgid ""
+"In Python 2.2, new built-in types were added for ``dict`` and ``file``. "
+"Scripts should avoid assigning variable names that mask those types. The "
+"same advice also applies to existing builtins like ``list``."
+msgstr ""
+
+#: ../../pep-0290.txt:350
+msgid "Locating:  ``grep 'file ' *.py``"
+msgstr ""
+
+#: ../../pep-0290.txt:354
+msgid "Python 2.1 or Later"
+msgstr ""
+
+#: ../../pep-0290.txt:357
+msgid "``whrandom`` Module Deprecated"
+msgstr ""
+
+#: ../../pep-0290.txt:359
+msgid ""
+"All random-related methods have been collected in one place, the "
+"``random`` module."
+msgstr ""
+
+#: ../../pep-0290.txt:366
+msgid "Locating: ``grep whrandom``"
+msgstr ""
+
+#: ../../pep-0290.txt:370
+msgid "Python 2.0 or Later"
+msgstr ""
+
+#: ../../pep-0290.txt:373
+msgid "String Methods"
+msgstr ""
+
+#: ../../pep-0290.txt:375
+msgid ""
+"The string module is likely to be deprecated in the future.  Use string "
+"methods instead.  They're faster too."
+msgstr ""
+
+#: ../../pep-0290.txt:383
+msgid "Locating: ``grep string *.py | grep import``"
+msgstr ""
+
+#: ../../pep-0290.txt:387
+msgid "``startswith`` and ``endswith`` String Methods"
+msgstr ""
+
+#: ../../pep-0290.txt:389
+msgid ""
+"Use these string methods instead of slicing.  No slice has to be created "
+"and there's no risk of miscounting."
+msgstr ""
+
+#: ../../pep-0290.txt:399
+msgid "The ``atexit`` Module"
+msgstr ""
+
+#: ../../pep-0290.txt:401
+msgid ""
+"The atexit module supports multiple functions to be executed upon program"
+" termination.  Also, it supports parameterized functions. Unfortunately, "
+"its implementation conflicts with the sys.exitfunc attribute which only "
+"supports a single exit function.  Code relying on sys.exitfunc may "
+"interfere with other modules (including library modules) that elect to "
+"use the newer and more versatile atexit module."
+msgstr ""
+
+#: ../../pep-0290.txt:414
+msgid "Python 1.5 or Later"
+msgstr ""
+
+#: ../../pep-0290.txt:417
+msgid "Class-Based Exceptions"
+msgstr ""
+
+#: ../../pep-0290.txt:419
+msgid ""
+"String exceptions are deprecated, so derive from the ``Exception`` base "
+"class.  Unlike the obsolete string exceptions, class exceptions all "
+"derive from another exception or the ``Exception`` base class. This "
+"allows meaningful groupings of exceptions.  It also allows an \"``except "
+"Exception``\" clause to catch all exceptions."
+msgstr ""
+
+#: ../../pep-0290.txt:429
+msgid "Locating: Use PyChecker_."
+msgstr ""
+
+#: ../../pep-0290.txt:433
+msgid "All Python Versions"
+msgstr ""
+
+#: ../../pep-0290.txt:436
+msgid "Testing for ``None``"
+msgstr ""
+
+#: ../../pep-0290.txt:438
+msgid ""
+"Since there is only one ``None`` object, equality can be tested with "
+"identity.  Identity tests are slightly faster than equality tests. Also, "
+"some object types may overload comparison, so equality testing may be "
+"much slower."
+msgstr ""
+
+#: ../../pep-0290.txt:448
+msgid "Locating: ``grep '== None'`` or ``grep '!= None'``"
+msgstr ""
+
+#: ../../pep-0290.txt:452
+msgid "References"
+msgstr ""
+
+#: ../../pep-0290.txt:454
+msgid ""
+"PEP 4, Deprecation of Standard Modules, von Loewis "
+"(http://www.python.org/dev/peps/pep-0004/)"
+msgstr ""
+
+#: ../../pep-0290.txt:461
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0290.txt:463
+msgid "This document has been placed in the public domain."
+msgstr ""
+

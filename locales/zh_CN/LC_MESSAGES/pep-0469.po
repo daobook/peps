@@ -1,0 +1,668 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0469.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0469.txt:1
+msgid "469"
+msgstr ""
+
+#: ../../pep-0469.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0469.txt:2
+msgid "Migration of dict iteration code to Python 3"
+msgstr ""
+
+#: ../../pep-0469.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0469.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0469.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0469.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0469.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0469.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0469.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0469.txt:9
+msgid "18-Apr-2014"
+msgstr ""
+
+#: ../../pep-0469.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0469.txt:10
+msgid "3.5"
+msgstr ""
+
+#: ../../pep-0469.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0469.txt:11
+msgid "2014-04-18, 2014-04-21"
+msgstr ""
+
+#: ../../pep-0469.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0469.txt:17
+msgid ""
+"For Python 3, PEP 3106 changed the design of the ``dict`` builtin and the"
+" mapping API in general to replace the separate list based and iterator "
+"based APIs in Python 2 with a merged, memory efficient set and multiset "
+"view based API. This new style of dict iteration was also added to the "
+"Python 2.7 ``dict`` type as a new set of iteration methods."
+msgstr ""
+
+#: ../../pep-0469.txt:23
+msgid ""
+"This means that there are now 3 different kinds of dict iteration that "
+"may need to be migrated to Python 3 when an application makes the "
+"transition:"
+msgstr ""
+
+#: ../../pep-0469.txt:26
+msgid "Lists as mutable snapshots: ``d.items()`` -> ``list(d.items())``"
+msgstr ""
+
+#: ../../pep-0469.txt:27
+msgid "Iterator objects: ``d.iteritems()`` -> ``iter(d.items())``"
+msgstr ""
+
+#: ../../pep-0469.txt:28
+msgid "Set based dynamic views: ``d.viewitems()`` -> ``d.items()``"
+msgstr ""
+
+#: ../../pep-0469.txt:30
+msgid ""
+"There is currently no widely agreed best practice on how to reliably "
+"convert all Python 2 dict iteration code to the common subset of Python 2"
+" and 3, especially when test coverage of the ported code is limited. This"
+" PEP reviews the various ways the Python 2 iteration APIs may be "
+"accessed, and looks at the available options for migrating that code to "
+"Python 3 by way of the common subset of Python 2.6+ and Python 3.0+."
+msgstr ""
+
+#: ../../pep-0469.txt:37
+msgid ""
+"The PEP also considers the question of whether or not there are any "
+"additions that may be worth making to Python 3.5 that may ease the "
+"transition process for application code that doesn't need to worry about "
+"supporting earlier versions when eventually making the leap to Python 3."
+msgstr ""
+
+#: ../../pep-0469.txt:44
+msgid "PEP Withdrawal"
+msgstr ""
+
+#: ../../pep-0469.txt:46
+msgid ""
+"In writing the second draft of this PEP, I came to the conclusion that "
+"the readability of hybrid Python 2/3 mapping code can actually be best "
+"enhanced by better helper functions rather than by making changes to "
+"Python 3.5+. The main value I now see in this PEP is as a clear record of"
+" the recommended approaches to migrating mapping iteration code from "
+"Python 2 to Python 3, as well as suggesting ways to keep things readable "
+"and maintainable when writing hybrid code that supports both versions."
+msgstr ""
+
+#: ../../pep-0469.txt:54
+msgid ""
+"Notably, I recommend that hybrid code avoid calling mapping iteration "
+"methods directly, and instead rely on builtin functions where possible, "
+"and some additional helper functions for cases that would be a simple "
+"combination of a builtin and a mapping method in pure Python 3 code, but "
+"need to be handled slightly differently to get the exact same semantics "
+"in Python 2."
+msgstr ""
+
+#: ../../pep-0469.txt:61
+msgid ""
+"Static code checkers like pylint could potentially be extended with an "
+"optional warning regarding direct use of the mapping iteration methods in"
+" a hybrid code base."
+msgstr ""
+
+#: ../../pep-0469.txt:67
+msgid "Mapping iteration models"
+msgstr ""
+
+#: ../../pep-0469.txt:69
+msgid ""
+"Python 2.7 provides three different sets of methods to extract the keys, "
+"values and items from a ``dict`` instance, accounting for 9 out of the 18"
+" public methods of the ``dict`` type."
+msgstr ""
+
+#: ../../pep-0469.txt:73
+msgid ""
+"In Python 3, this has been rationalised to just 3 out of 11 public "
+"methods (as the ``has_key`` method has also been removed)."
+msgstr ""
+
+#: ../../pep-0469.txt:78
+msgid "Lists as mutable snapshots"
+msgstr ""
+
+#: ../../pep-0469.txt:80
+msgid ""
+"This is the oldest of the three styles of dict iteration, and hence the "
+"one implemented by the ``d.keys()``, ``d.values()`` and ``d.items()`` "
+"methods in Python 2."
+msgstr ""
+
+#: ../../pep-0469.txt:84
+msgid ""
+"These methods all return lists that are snapshots of the state of the "
+"mapping at the time the method was called. This has a few consequences:"
+msgstr ""
+
+#: ../../pep-0469.txt:87
+msgid ""
+"the original object can be mutated freely without affecting iteration "
+"over the snapshot"
+msgstr ""
+
+#: ../../pep-0469.txt:89
+msgid "the snapshot can be modified independently of the original object"
+msgstr ""
+
+#: ../../pep-0469.txt:90
+msgid ""
+"the snapshot consumes memory proportional to the size of the original "
+"mapping"
+msgstr ""
+
+#: ../../pep-0469.txt:93
+msgid ""
+"The semantic equivalent of these operations in Python 3 are "
+"``list(d.keys())``, ``list(d.values())`` and ``list(d.iteritems())``."
+msgstr ""
+
+#: ../../pep-0469.txt:98
+msgid "Iterator objects"
+msgstr ""
+
+#: ../../pep-0469.txt:100
+msgid ""
+"In Python 2.2, ``dict`` objects gained support for the then-new iterator "
+"protocol, allowing direct iteration over the keys stored in the "
+"dictionary, thus avoiding the need to build a list just to iterate over "
+"the dictionary contents one entry at a time. ``iter(d)`` provides direct "
+"access to the iterator object for the keys."
+msgstr ""
+
+#: ../../pep-0469.txt:106
+msgid ""
+"Python 2 also provides a ``d.iterkeys()`` method that is essentially "
+"synonymous with ``iter(d)``, along with ``d.itervalues()`` and "
+"``d.iteritems()`` methods."
+msgstr ""
+
+#: ../../pep-0469.txt:110
+msgid ""
+"These iterators provide live views of the underlying object, and hence "
+"may fail if the set of keys in the underlying object is changed during "
+"iteration::"
+msgstr ""
+
+#: ../../pep-0469.txt:122
+msgid ""
+"As iterators, iteration over these objects is also a one-time operation: "
+"once the iterator is exhausted, you have to go back to the original "
+"mapping in order to iterate again."
+msgstr ""
+
+#: ../../pep-0469.txt:126
+msgid ""
+"In Python 3, direct iteration over mappings works the same way as it does"
+" in Python 2. There are no method based equivalents - the semantic "
+"equivalents of ``d.itervalues()`` and ``d.iteritems()`` in Python 3 are "
+"``iter(d.values())`` and ``iter(d.items())``."
+msgstr ""
+
+#: ../../pep-0469.txt:131
+msgid ""
+"The ``six`` and ``future.utils`` compatibility modules also both provide "
+"``iterkeys()``, ``itervalues()`` and ``iteritems()`` helper functions "
+"that provide efficient iterator semantics in both Python 2 and 3."
+msgstr ""
+
+#: ../../pep-0469.txt:137
+msgid "Set based dynamic views"
+msgstr ""
+
+#: ../../pep-0469.txt:139
+msgid ""
+"The model that is provided in Python 3 as a method based API is that of "
+"set based dynamic views (technically multisets in the case of the "
+"``values()`` view)."
+msgstr ""
+
+#: ../../pep-0469.txt:143
+msgid ""
+"In Python 3, the objects returned by ``d.keys()``, ``d.values()`` and "
+"``d. items()`` provide a live view of the current state of the underlying"
+" object, rather than taking a full snapshot of the current state as they "
+"did in Python 2. This change is safe in many circumstances, but does mean"
+" that, as with the direct iteration API, it is necessary to avoid adding "
+"or removing keys during iteration, in order to avoid encountering the "
+"following error::"
+msgstr ""
+
+#: ../../pep-0469.txt:159
+msgid ""
+"Unlike the iteration API, these objects are iterables, rather than "
+"iterators: you can iterate over them multiple times, and each time they "
+"will iterate over the entire underlying mapping."
+msgstr ""
+
+#: ../../pep-0469.txt:163
+msgid ""
+"These semantics are also available in Python 2.7 as the ``d.viewkeys()``,"
+" ``d.viewvalues()`` and ``d.viewitems()`` methods."
+msgstr ""
+
+#: ../../pep-0469.txt:166
+msgid ""
+"The ``future.utils`` compatibility module also provides ``viewkeys()``, "
+"``viewvalues()`` and ``viewitems()`` helper functions when running on "
+"Python 2.7 or Python 3.x."
+msgstr ""
+
+#: ../../pep-0469.txt:172
+msgid "Migrating directly to Python 3"
+msgstr ""
+
+#: ../../pep-0469.txt:174
+msgid ""
+"The ``2to3`` migration tool handles direct migrations to Python 3 in "
+"accordance with the semantic equivalents described above:"
+msgstr ""
+
+#: ../../pep-0469.txt:177
+msgid "``d.keys()`` -> ``list(d.keys())``"
+msgstr ""
+
+#: ../../pep-0469.txt:178 ../../pep-0469.txt:282
+msgid "``d.values()`` -> ``list(d.values())``"
+msgstr ""
+
+#: ../../pep-0469.txt:179 ../../pep-0469.txt:283
+msgid "``d.items()`` -> ``list(d.items())``"
+msgstr ""
+
+#: ../../pep-0469.txt:180
+msgid "``d.iterkeys()`` -> ``iter(d.keys())``"
+msgstr ""
+
+#: ../../pep-0469.txt:181 ../../pep-0469.txt:285
+msgid "``d.itervalues()`` -> ``iter(d.values())``"
+msgstr ""
+
+#: ../../pep-0469.txt:182 ../../pep-0469.txt:286
+msgid "``d.iteritems()`` -> ``iter(d.items())``"
+msgstr ""
+
+#: ../../pep-0469.txt:183
+msgid "``d.viewkeys()`` -> ``d.keys()``"
+msgstr ""
+
+#: ../../pep-0469.txt:184
+msgid "``d.viewvalues()`` -> ``d.values()``"
+msgstr ""
+
+#: ../../pep-0469.txt:185
+msgid "``d.viewitems()`` -> ``d.items()``"
+msgstr ""
+
+#: ../../pep-0469.txt:187
+msgid ""
+"Rather than 9 distinct mapping methods for iteration, there are now only "
+"the 3 view methods, which combine in straightforward ways with the two "
+"relevant builtin functions to cover all of the behaviours that are "
+"available as ``dict`` methods in Python 2.7."
+msgstr ""
+
+#: ../../pep-0469.txt:192
+msgid ""
+"Note that in many cases ``d.keys()`` can be replaced by just ``d``, but "
+"the ``2to3`` migration tool doesn't attempt that replacement."
+msgstr ""
+
+#: ../../pep-0469.txt:195
+msgid ""
+"The ``2to3`` migration tool also *does not* provide any automatic "
+"assistance for migrating references to these objects as bound or unbound "
+"methods - it only automates conversions where the API is called "
+"immediately."
+msgstr ""
+
+#: ../../pep-0469.txt:201
+msgid "Migrating to the common subset of Python 2 and 3"
+msgstr ""
+
+#: ../../pep-0469.txt:203
+msgid ""
+"When migrating to the common subset of Python 2 and 3, the above "
+"transformations are not generally appropriate, as they all either result "
+"in the creation of a redundant list in Python 2, have unexpectedly "
+"different semantics in at least some cases, or both."
+msgstr ""
+
+#: ../../pep-0469.txt:208
+msgid ""
+"Since most code running in the common subset of Python 2 and 3 supports "
+"at least as far back as Python 2.6, the currently recommended approach to"
+" conversion of mapping iteration operation depends on two helper "
+"functions for efficient iteration over mapping values and mapping item "
+"tuples:"
+msgstr ""
+
+#: ../../pep-0469.txt:213 ../../pep-0469.txt:271 ../../pep-0469.txt:281
+#: ../../pep-0469.txt:337
+msgid "``d.keys()`` -> ``list(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:214
+msgid "``d.values()`` -> ``list(itervalues(d))``"
+msgstr ""
+
+#: ../../pep-0469.txt:215
+msgid "``d.items()`` -> ``list(iteritems(d))``"
+msgstr ""
+
+#: ../../pep-0469.txt:216 ../../pep-0469.txt:274 ../../pep-0469.txt:284
+msgid "``d.iterkeys()`` -> ``iter(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:217 ../../pep-0469.txt:275
+msgid "``d.itervalues()`` -> ``itervalues(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:218 ../../pep-0469.txt:276
+msgid "``d.iteritems()`` -> ``iteritems(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:220
+msgid ""
+"Both ``six`` and ``future.utils`` provide appropriate definitions of "
+"``itervalues()`` and ``iteritems()`` (along with essentially redundant "
+"definitions of ``iterkeys()``). Creating your own definitions of these "
+"functions in a custom compatibility module is also relatively "
+"straightforward::"
+msgstr ""
+
+#: ../../pep-0469.txt:241
+msgid ""
+"The greatest loss of readability currently arises when converting code "
+"that actually *needs* the list based snapshots that were the default in "
+"Python 2. This readability loss could likely be mitigated by also "
+"providing ``listvalues`` and ``listitems`` helper functions, allowing the"
+" affected conversions to be simplified to:"
+msgstr ""
+
+#: ../../pep-0469.txt:247 ../../pep-0469.txt:272
+msgid "``d.values()`` -> ``listvalues(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:248 ../../pep-0469.txt:273
+msgid "``d.items()`` -> ``listitems(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:250
+msgid ""
+"The corresponding compatibility function definitions are as "
+"straightforward as their iterator counterparts::"
+msgstr ""
+
+#: ../../pep-0469.txt:268
+msgid ""
+"With that expanded set of compatibility functions, Python 2 code would "
+"then be converted to \"idiomatic\" hybrid 2/3 code as:"
+msgstr ""
+
+#: ../../pep-0469.txt:278
+msgid ""
+"This compares well for readability with the idiomatic pure Python 3 code "
+"that uses the mapping methods and builtins directly:"
+msgstr ""
+
+#: ../../pep-0469.txt:288
+msgid ""
+"It's also notable that when using this approach, hybrid code would "
+"*never* invoke the mapping methods directly: it would always invoke "
+"either a builtin or helper function instead, in order to ensure the exact"
+" same semantics on both Python 2 and 3."
+msgstr ""
+
+#: ../../pep-0469.txt:295
+msgid "Migrating from Python 3 to the common subset with Python 2.7"
+msgstr ""
+
+#: ../../pep-0469.txt:297
+msgid ""
+"While the majority of migrations are currently from Python 2 either "
+"directly to Python 3 or to the common subset of Python 2 and Python 3, "
+"there are also some migrations of newer projects that start in Python 3 "
+"and then later add Python 2 support, either due to user demand, or to "
+"gain access to Python 2 libraries that are not yet available in Python 3 "
+"(and porting them to Python 3 or creating a Python 3 compatible "
+"replacement is not a trivial exercise)."
+msgstr ""
+
+#: ../../pep-0469.txt:305
+msgid ""
+"In these cases, Python 2.7 compatibility is often sufficient, and the "
+"2.7+ only view based helper functions provided by ``future.utils`` allow "
+"the bare accesses to the Python 3 mapping view methods to be replaced "
+"with code that is compatible with both Python 2.7 and Python 3 (note, "
+"this is the only migration chart in the PEP that has Python 3 code on the"
+" left of the conversion):"
+msgstr ""
+
+#: ../../pep-0469.txt:312
+msgid "``d.keys()`` -> ``viewkeys(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:313
+msgid "``d.values()`` -> ``viewvalues(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:314
+msgid "``d.items()`` -> ``viewitems(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:315
+msgid "``list(d.keys())`` -> ``list(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:316
+msgid "``list(d.values())`` -> ``listvalues(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:317
+msgid "``list(d.items())`` -> ``listitems(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:318
+msgid "``iter(d.keys())`` -> ``iter(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:319
+msgid "``iter(d.values())`` -> ``itervalues(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:320
+msgid "``iter(d.items())`` -> ``iteritems(d)``"
+msgstr ""
+
+#: ../../pep-0469.txt:322
+msgid ""
+"As with migrations from Python 2 to the common subset, note that the "
+"hybrid code ends up never invoking the mapping methods directly - it only"
+" calls builtins and helper methods, with the latter addressing the "
+"semantic differences between Python 2 and Python 3."
+msgstr ""
+
+#: ../../pep-0469.txt:329
+msgid "Possible changes to Python 3.5+"
+msgstr ""
+
+#: ../../pep-0469.txt:331
+msgid ""
+"The main proposal put forward to potentially aid migration of existing "
+"Python 2 code to Python 3 is the restoration of some or all of the "
+"alternate iteration APIs to the Python 3 mapping API. In particular, the "
+"initial draft of this PEP proposed making the following conversions "
+"possible when migrating to the common subset of Python 2 and Python 3.5+:"
+msgstr ""
+
+#: ../../pep-0469.txt:338
+msgid "``d.values()`` -> ``list(d.itervalues())``"
+msgstr ""
+
+#: ../../pep-0469.txt:339
+msgid "``d.items()`` -> ``list(d.iteritems())``"
+msgstr ""
+
+#: ../../pep-0469.txt:340
+msgid "``d.iterkeys()`` -> ``d.iterkeys()``"
+msgstr ""
+
+#: ../../pep-0469.txt:341
+msgid "``d.itervalues()`` -> ``d.itervalues()``"
+msgstr ""
+
+#: ../../pep-0469.txt:342
+msgid "``d.iteritems()`` -> ``d.iteritems()``"
+msgstr ""
+
+#: ../../pep-0469.txt:344
+msgid ""
+"Possible mitigations of the additional language complexity in Python 3 "
+"created by restoring these methods included immediately deprecating them,"
+" as well as potentially hiding them from the ``dir()`` function (or "
+"perhaps even defining a way to make ``pydoc`` aware of function "
+"deprecations)."
+msgstr ""
+
+#: ../../pep-0469.txt:349
+msgid ""
+"However, in the case where the list output is actually desired, the end "
+"result of that proposal is actually less readable than an appropriately "
+"defined helper function, and the function and method forms of the "
+"iterator versions are pretty much equivalent from a readability "
+"perspective."
+msgstr ""
+
+#: ../../pep-0469.txt:354
+msgid ""
+"So unless I've missed something critical, readily available "
+"``listvalues()`` and ``listitems()`` helper functions look like they will"
+" improve the readability of hybrid code more than anything we could add "
+"back to the Python 3.5+ mapping API, and won't have any long-term impact "
+"on the complexity of Python 3 itself."
+msgstr ""
+
+#: ../../pep-0469.txt:362
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0469.txt:364
+msgid ""
+"The fact that 5 years in to the Python 3 migration we still have users "
+"considering the dict API changes a significant barrier to migration "
+"suggests that there are problems with previously recommended approaches. "
+"This PEP attempts to explore those issues and tries to isolate those "
+"cases where previous advice (such as it was) could prove problematic."
+msgstr ""
+
+#: ../../pep-0469.txt:370
+msgid ""
+"My assessment (largely based on feedback from Twisted devs) is that "
+"problems are most likely to arise when attempting to use ``d.keys()``, "
+"``d.values()``, and ``d.items()`` in hybrid code. While superficially it "
+"seems as though there should be cases where it is safe to ignore the "
+"semantic differences, in practice, the change from \"mutable snapshot\" "
+"to \"dynamic view\" is significant enough that it is likely better to "
+"just force the use of either list or iterator semantics for hybrid code, "
+"and leave the use of the view semantics to pure Python 3 code."
+msgstr ""
+
+#: ../../pep-0469.txt:379
+msgid ""
+"This approach also creates rules that are simple enough and safe enough "
+"that it should be possible to automate them in code modernisation scripts"
+" that target the common subset of Python 2 and Python 3, just as ``2to3``"
+" converts them automatically when targeting pure Python 3 code."
+msgstr ""
+
+#: ../../pep-0469.txt:386
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0469.txt:388
+msgid ""
+"Thanks to the folks at the Twisted sprint table at PyCon for a very "
+"vigorous discussion of this idea (and several other topics), and "
+"especially to Hynek Schlawack for acting as a moderator when things got a"
+" little too heated :)"
+msgstr ""
+
+#: ../../pep-0469.txt:393
+msgid ""
+"Thanks also to JP Calderone and Itamar Turner-Trauring for their email "
+"feedback, as well to the participants in the `python-dev review "
+"<https://mail.python.org/pipermail/python-dev/2014-April/134168.html>`__ "
+"of the initial version of the PEP."
+msgstr ""
+
+#: ../../pep-0469.txt:400
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0469.txt:402
+msgid "This document has been placed in the public domain."
+msgstr ""
+

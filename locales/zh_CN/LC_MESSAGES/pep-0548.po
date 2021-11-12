@@ -1,0 +1,301 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0548.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0548.rst:1
+msgid "548"
+msgstr ""
+
+#: ../../pep-0548.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0548.rst:2
+msgid "More Flexible Loop Control"
+msgstr ""
+
+#: ../../pep-0548.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0548.rst:5
+msgid "R David Murray"
+msgstr ""
+
+#: ../../pep-0548.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0548.rst:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0548.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0548.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0548.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0548.rst:9
+msgid "05-Sep-2017"
+msgstr ""
+
+#: ../../pep-0548.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0548.rst:10
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0548.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0548.rst:11
+msgid "05-Aug-2017"
+msgstr ""
+
+#: ../../pep-0548.rst:15
+msgid "Rejection Note"
+msgstr ""
+
+#: ../../pep-0548.rst:17
+msgid ""
+"Rejection by Guido: https://mail.python.org/pipermail/python-"
+"dev/2017-September/149232.html"
+msgstr ""
+
+#: ../../pep-0548.rst:22
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0548.rst:24
+msgid ""
+"This PEP proposes enhancing the ``break`` and ``continue`` statements "
+"with an optional boolean expression that controls whether or not they "
+"execute.  This allows the flow of control in loops to be expressed more "
+"clearly and compactly."
+msgstr ""
+
+#: ../../pep-0548.rst:31
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0548.rst:33
+msgid "Quoting from the rejected :pep:`315`:"
+msgstr ""
+
+#: ../../pep-0548.rst:35
+msgid ""
+"It is often necessary for some code to be executed before each evaluation"
+" of the while loop condition.  This code is often duplicated outside the "
+"loop, as setup code that executes once before entering the loop::"
+msgstr ""
+
+#: ../../pep-0548.rst:45
+msgid ""
+"That PEP was rejected because no syntax was found that was superior to "
+"the following form::"
+msgstr ""
+
+#: ../../pep-0548.rst:54
+msgid ""
+"This PEP proposes a superior form, one that also has application to for "
+"loops. It is superior because it makes the flow of control in loops more "
+"explicit, while preserving Python's indentation aesthetic."
+msgstr ""
+
+#: ../../pep-0548.rst:60
+msgid "Syntax"
+msgstr ""
+
+#: ../../pep-0548.rst:62
+msgid "The syntax of the break and continue statements are extended as follows::"
+msgstr ""
+
+#: ../../pep-0548.rst:68
+msgid "In addition, the syntax of the while statement is modified as follows::"
+msgstr ""
+
+#: ../../pep-0548.rst:77
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-0548.rst:79
+msgid ""
+"A ``break if`` or ``continue if`` is executed if and only if "
+"``expression`` evaluates to true."
+msgstr ""
+
+#: ../../pep-0548.rst:82
+msgid ""
+"A ``while`` statement with no expression loops until a break or return is"
+" executed (or an error is raised), as if it were a ``while True`` "
+"statement.  Given that the loop can never terminate except in a way that "
+"would not cause an ``else`` suite to execute, no ``else`` suite is "
+"allowed in the expressionless form.  If practical, it should also be an "
+"error if the body of an expressionless ``while`` does not contain at "
+"least one ``break`` or ``return`` statement."
+msgstr ""
+
+#: ../../pep-0548.rst:92
+msgid "Justification and Examples"
+msgstr ""
+
+#: ../../pep-0548.rst:94
+msgid "The previous \"best possible\" form::"
+msgstr ""
+
+#: ../../pep-0548.rst:102
+msgid "could be formatted as::"
+msgstr ""
+
+#: ../../pep-0548.rst:109
+msgid "This is superficially almost identical to the form proposed by this PEP::"
+msgstr ""
+
+#: ../../pep-0548.rst:117
+msgid ""
+"The significant difference here is that the loop flow control keyword "
+"appears *first* in the line of code.  This makes it easier to comprehend "
+"the flow of control in the loop at a glance, especially when reading "
+"colorized code."
+msgstr ""
+
+#: ../../pep-0548.rst:122
+msgid ""
+"For example, this is a common code pattern, taken in this case from the "
+"tarfile module::"
+msgstr ""
+
+#: ../../pep-0548.rst:131
+msgid ""
+"Reading this, we either see the break and possibly need to think about "
+"where the while is that it applies to, since the break is indented under "
+"the if, and then track backward to read the condition that triggers it; "
+"or, we read the condition and only afterward discover that this condition"
+" changes the flow of the loop."
+msgstr ""
+
+#: ../../pep-0548.rst:137
+msgid "With the new syntax this becomes::"
+msgstr ""
+
+#: ../../pep-0548.rst:144
+msgid ""
+"Reading this we first see the ``break``, which obviously applies to the "
+"while since it is at the same level of indentation as the loop body, and "
+"then we read the condition that causes the flow of control to change."
+msgstr ""
+
+#: ../../pep-0548.rst:149
+msgid "Further, consider a more complex example from sre_parse::"
+msgstr ""
+
+#: ../../pep-0548.rst:166
+msgid ""
+"This is the natural way to write this code given current Python loop "
+"control syntax.  However, given ``break if``, it would be more natural to"
+" write this as follows::"
+msgstr ""
+
+#: ../../pep-0548.rst:182
+msgid ""
+"This form moves the error handling out of the loop body, leaving the loop"
+" logic much more understandable.  While it would certainly be possible to"
+" write the code this way using the current syntax, the proposed syntax "
+"makes it more natural to write it in the clearer form."
+msgstr ""
+
+#: ../../pep-0548.rst:187
+msgid ""
+"The proposed syntax also provides a natural, Pythonic spelling of the "
+"classic  ``repeat ... until <expression>`` construct found in other "
+"languages, and for which no good syntax has previously been found for "
+"Python::"
+msgstr ""
+
+#: ../../pep-0548.rst:196
+msgid ""
+"The tarfile module, for example, has a couple of \"read until\" loops "
+"like the following::"
+msgstr ""
+
+#: ../../pep-0548.rst:204
+msgid "With the new syntax this would read more clearly::"
+msgstr ""
+
+#: ../../pep-0548.rst:210
+msgid ""
+"The case for extending this syntax to ``continue`` is less strong, but "
+"buttressed by the value of consistency."
+msgstr ""
+
+#: ../../pep-0548.rst:213
+msgid ""
+"It is much more common for a ``continue`` statement to be at the end of a"
+" multiline if suite, such as this example from zipfile ::"
+msgstr ""
+
+#: ../../pep-0548.rst:226
+msgid ""
+"The only opportunity for improvement the new syntax would offer for this "
+"loop would be the omission of the ``True`` token."
+msgstr ""
+
+#: ../../pep-0548.rst:229
+msgid "On the other hand, consider this example from uuid.py::"
+msgstr ""
+
+#: ../../pep-0548.rst:250
+msgid "This becomes::"
+msgstr ""
+
+#: ../../pep-0548.rst:268
+msgid ""
+"This example indicates that there are non-trivial use cases where "
+"``continue if`` also improves the readability of the loop code."
+msgstr ""
+
+#: ../../pep-0548.rst:271
+msgid ""
+"It is probably significant to note that all of the examples selected for "
+"this PEP were found by grepping the standard library for ``while True`` "
+"and ``continue``, and the relevant examples were found in the first four "
+"modules inspected."
+msgstr ""
+
+#: ../../pep-0548.rst:278
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0548.rst:280
+msgid "This document is placed in the public domain."
+msgstr ""
+

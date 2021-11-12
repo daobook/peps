@@ -1,0 +1,737 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0520.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0520.txt:1
+msgid "520"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0520.txt:2
+msgid "Preserving Class Attribute Definition Order"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0520.txt:5
+msgid "Eric Snow <ericsnowcurrently@gmail.com>"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0520.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0520.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0520.txt:9
+msgid "07-Jun-2016"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0520.txt:10
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0520.txt:11
+msgid "7-Jun-2016, 11-Jun-2016, 20-Jun-2016, 24-Jun-2016"
+msgstr ""
+
+#: ../../pep-0520.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0520.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2016-June/145442.html"
+msgstr ""
+
+#: ../../pep-0520.txt:15
+msgid ""
+"Since compact dict has landed in 3.6, __definition_order__ has been "
+"removed.  ``cls.__dict__`` now mostly accomplishes the same thing "
+"instead."
+msgstr ""
+
+#: ../../pep-0520.txt:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0520.txt:22
+msgid ""
+"The class definition syntax is ordered by its very nature. Class "
+"attributes defined there are thus ordered.  Aside from helping with "
+"readability, that ordering is sometimes significant.  If it were "
+"automatically available outside the class definition then the attribute "
+"order could be used without the need for extra boilerplate (such as "
+"metaclasses or manually enumerating the attribute order). Given that this"
+" information already exists, access to the definition order of attributes"
+" is a reasonable expectation.  However, currently Python does not "
+"preserve the attribute order from the class definition."
+msgstr ""
+
+#: ../../pep-0520.txt:33
+msgid ""
+"This PEP changes that by preserving the order in which attributes are "
+"introduced in the class definition body.  That order will now be "
+"preserved in the ``__definition_order__`` attribute of the class. This "
+"allows introspection of the original definition order, e.g. by class "
+"decorators."
+msgstr ""
+
+#: ../../pep-0520.txt:39
+msgid ""
+"Additionally, this PEP requires that the default class definition "
+"namespace be ordered (e.g. ``OrderedDict``) by default.  The long- lived "
+"class namespace (``__dict__``) will remain a ``dict``."
+msgstr ""
+
+#: ../../pep-0520.txt:45
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0520.txt:47
+msgid ""
+"The attribute order from a class definition may be useful to tools that "
+"rely on name order.  However, without the automatic availability of the "
+"definition order, those tools must impose extra requirements on users.  "
+"For example, use of such a tool may require that your class use a "
+"particular metaclass.  Such requirements are often enough to discourage "
+"use of the tool."
+msgstr ""
+
+#: ../../pep-0520.txt:54
+msgid "Some tools that could make use of this PEP include:"
+msgstr ""
+
+#: ../../pep-0520.txt:56
+msgid "documentation generators"
+msgstr ""
+
+#: ../../pep-0520.txt:57
+msgid "testing frameworks"
+msgstr ""
+
+#: ../../pep-0520.txt:58
+msgid "CLI frameworks"
+msgstr ""
+
+#: ../../pep-0520.txt:59
+msgid "web frameworks"
+msgstr ""
+
+#: ../../pep-0520.txt:60
+msgid "config generators"
+msgstr ""
+
+#: ../../pep-0520.txt:61
+msgid "data serializers"
+msgstr ""
+
+#: ../../pep-0520.txt:62
+msgid "enum factories (my original motivation)"
+msgstr ""
+
+#: ../../pep-0520.txt:66
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0520.txt:68
+msgid ""
+"When a class is defined using a ``class`` statement, the class body is "
+"executed within a namespace.  Currently that namespace defaults to "
+"``dict``.  If the metaclass defines ``__prepare__()`` then the result of "
+"calling it is used for the class definition namespace."
+msgstr ""
+
+#: ../../pep-0520.txt:73
+msgid ""
+"After the execution completes, the definition namespace is copied into a "
+"new ``dict``.  Then the original definition namespace is discarded.  The "
+"new copy is stored away as the class's namespace and is exposed as "
+"``__dict__`` through a read-only proxy."
+msgstr ""
+
+#: ../../pep-0520.txt:78
+msgid ""
+"The class attribute definition order is represented by the insertion "
+"order of names in the *definition* namespace.  Thus, we can have access "
+"to the definition order by switching the definition namespace to an "
+"ordered mapping, such as ``collections.OrderedDict``.  This is feasible "
+"using a metaclass and ``__prepare__``, as described above. In fact, "
+"exactly this is by far the most common use case for using "
+"``__prepare__``."
+msgstr ""
+
+#: ../../pep-0520.txt:86
+msgid ""
+"At that point, the only missing thing for later access to the definition "
+"order is storing it on the class before the definition namespace is "
+"thrown away.  Again, this may be done using a metaclass. However, this "
+"means that the definition order is preserved only for classes that use "
+"such a metaclass.  There are two practical problems with that:"
+msgstr ""
+
+#: ../../pep-0520.txt:93
+msgid ""
+"First, it requires the use of a metaclass.  Metaclasses introduce an "
+"extra level of complexity to code and in some cases (e.g. conflicts) are "
+"a problem.  So reducing the need for them is worth doing when the "
+"opportunity presents itself.  PEP 422 and PEP 487 discuss this at length."
+"  We have such an opportunity by using an ordered mapping (e.g. "
+"``OrderedDict`` for CPython at least) for the default class definition "
+"namespace, virtually eliminating the need for ``__prepare__()``."
+msgstr ""
+
+#: ../../pep-0520.txt:101
+msgid ""
+"Second, only classes that opt in to using the ``OrderedDict``-based "
+"metaclass will have access to the definition order. This is problematic "
+"for cases where universal access to the definition order is important."
+msgstr ""
+
+#: ../../pep-0520.txt:107
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0520.txt:109
+msgid "Part 1:"
+msgstr ""
+
+#: ../../pep-0520.txt:111
+msgid "all classes have a ``__definition_order__`` attribute"
+msgstr ""
+
+#: ../../pep-0520.txt:112
+msgid "``__definition_order__`` is a ``tuple`` of identifiers (or ``None``)"
+msgstr ""
+
+#: ../../pep-0520.txt:113
+msgid "``__definition_order__`` is always set:"
+msgstr ""
+
+#: ../../pep-0520.txt:115
+msgid ""
+"during execution of the class body, the insertion order of names into the"
+" class *definition* namespace is stored in a tuple"
+msgstr ""
+
+#: ../../pep-0520.txt:117
+msgid ""
+"if ``__definition_order__`` is defined in the class body then it must be "
+"a ``tuple`` of identifiers or ``None``; any other value will result in "
+"``TypeError``"
+msgstr ""
+
+#: ../../pep-0520.txt:120
+msgid ""
+"classes that do not have a class definition (e.g. builtins) have their "
+"``__definition_order__`` set to ``None``"
+msgstr ""
+
+#: ../../pep-0520.txt:122
+msgid ""
+"classes for which ``__prepare__()`` returned something other than "
+"``OrderedDict`` (or a subclass) have their ``__definition_order__`` set "
+"to ``None`` (except where #2 applies)"
+msgstr ""
+
+#: ../../pep-0520.txt:126
+msgid "Not changing:"
+msgstr ""
+
+#: ../../pep-0520.txt:128
+msgid "``dir()`` will not depend on ``__definition_order__``"
+msgstr ""
+
+#: ../../pep-0520.txt:129
+msgid ""
+"descriptors and custom ``__getattribute__`` methods are unconstrained "
+"regarding ``__definition_order__``"
+msgstr ""
+
+#: ../../pep-0520.txt:132
+msgid "Part 2:"
+msgstr ""
+
+#: ../../pep-0520.txt:134
+msgid ""
+"the default class *definition* namespace is now an ordered mapping (e.g. "
+"``OrderdDict``)"
+msgstr ""
+
+#: ../../pep-0520.txt:136
+msgid ""
+"``cls.__dict__`` does not change, remaining a read-only proxy around "
+"``dict``"
+msgstr ""
+
+#: ../../pep-0520.txt:139
+msgid ""
+"Note that Python implementations which have an ordered ``dict`` won't "
+"need to change anything."
+msgstr ""
+
+#: ../../pep-0520.txt:142
+msgid ""
+"The following code demonstrates roughly equivalent semantics for both "
+"parts 1 and 2::"
+msgstr ""
+
+#: ../../pep-0520.txt:156
+msgid "Why a tuple?"
+msgstr ""
+
+#: ../../pep-0520.txt:158
+msgid ""
+"Use of a tuple reflects the fact that we are exposing the order in which "
+"attributes on the class were *defined*.  Since the definition is already "
+"complete by the time ``__definition_order__`` is set, the content and "
+"order of the value won't be changing.  Thus we use a type that "
+"communicates that state of immutability."
+msgstr ""
+
+#: ../../pep-0520.txt:165
+msgid "Why not a read-only attribute?"
+msgstr ""
+
+#: ../../pep-0520.txt:167
+msgid ""
+"There are some valid arguments for making ``__definition_order__`` a "
+"read-only attribute (like ``cls.__dict__`` is).  Most notably, a read-"
+"only attribute conveys the nature of the attribute as \"complete\", which"
+" is exactly correct for ``__definition_order__``.  Since it represents "
+"the state of a particular one-time event (execution of the class "
+"definition body), allowing the value to be replaced would reduce "
+"confidence that the attribute corresponds to the original class body.  "
+"Furthermore, often an immutable-by-default approach helps to make data "
+"easier to reason about."
+msgstr ""
+
+#: ../../pep-0520.txt:177
+msgid ""
+"However, in this case there still isn't a *strong* reason to counter the "
+"well-worn precedent found in Python.  Per Guido::"
+msgstr ""
+
+#: ../../pep-0520.txt:186
+msgid ""
+"Also, note that a writeable ``__definition_order__`` allows dynamically "
+"created classes (e.g. by Cython) to still have ``__definition_order__`` "
+"properly set.  That could certainly be handled through specific class- "
+"creation tools, such as ``type()`` or the C-API, without the need to lose"
+" the semantics of a read-only attribute.  However, with a writeable "
+"attribute it's a moot point."
+msgstr ""
+
+#: ../../pep-0520.txt:195
+msgid "Why not \"__attribute_order__\"?"
+msgstr ""
+
+#: ../../pep-0520.txt:197
+msgid ""
+"``__definition_order__`` is centered on the class definition body.  The "
+"use cases for dealing with the class namespace (``__dict__``) post-"
+"definition are a separate matter.  ``__definition_order__`` would be a "
+"significantly misleading name for a feature focused on more than class "
+"definition."
+msgstr ""
+
+#: ../../pep-0520.txt:204
+msgid "Why not ignore \"dunder\" names?"
+msgstr ""
+
+#: ../../pep-0520.txt:206
+msgid ""
+"Names starting and ending with \"__\" are reserved for use by the "
+"interpreter.  In practice they should not be relevant to the users of "
+"``__definition_order__``.  Instead, for nearly everyone they would only "
+"be clutter, causing the same extra work (filtering out the dunder names) "
+"for the majority.  In cases where a dunder name is significant, the class"
+" definition *could* manually set ``__definition_order__``, making the "
+"common case simpler."
+msgstr ""
+
+#: ../../pep-0520.txt:214
+msgid ""
+"However, leaving dunder names out of ``__definition_order__`` means that "
+"their place in the definition order would be unrecoverably lost. Dropping"
+" dunder names by default may inadvertently cause problems for classes "
+"that use dunder names unconventionally.  In this case it's better to play"
+" it safe and preserve *all* the names from the class definition.  This "
+"isn't a big problem since it is easy to filter out dunder names::"
+msgstr ""
+
+#: ../../pep-0520.txt:225
+msgid ""
+"In fact, in some application contexts there may be other criteria on "
+"which similar filtering would be applied, such as ignoring any name "
+"starting with \"_\", leaving out all methods, or including only "
+"descriptors.  Ultimately dunder names aren't a special enough case to be "
+"treated exceptionally."
+msgstr ""
+
+#: ../../pep-0520.txt:231
+msgid ""
+"Note that a couple of dunder names (``__name__`` and ``__qualname__``) "
+"are injected by default by the compiler.  So they will be included even "
+"though they are not strictly part of the class definition body."
+msgstr ""
+
+#: ../../pep-0520.txt:236
+msgid "Why None instead of an empty tuple?"
+msgstr ""
+
+#: ../../pep-0520.txt:238
+msgid ""
+"A key objective of adding ``__definition_order__`` is to preserve "
+"information in class definitions which was lost prior to this PEP. One "
+"consequence is that ``__definition_order__`` implies an original class "
+"definition.  Using ``None`` allows us to clearly distinguish classes that"
+" do not have a definition order.  An empty tuple clearly indicates a "
+"class that came from a definition statement but did not define any "
+"attributes there."
+msgstr ""
+
+#: ../../pep-0520.txt:247
+msgid "Why None instead of not setting the attribute?"
+msgstr ""
+
+#: ../../pep-0520.txt:249
+msgid ""
+"The absence of an attribute requires more complex handling than ``None`` "
+"does for consumers of ``__definition_order__``."
+msgstr ""
+
+#: ../../pep-0520.txt:253
+msgid "Why constrain manually set values?"
+msgstr ""
+
+#: ../../pep-0520.txt:255
+msgid ""
+"If ``__definition_order__`` is manually set in the class body then it "
+"will be used.  We require it to be a tuple of identifiers (or ``None``) "
+"so that consumers of ``__definition_order__`` may have a consistent "
+"expectation for the value.  That helps maximize the feature's usefulness."
+msgstr ""
+
+#: ../../pep-0520.txt:261
+msgid ""
+"We could also allow an arbitrary iterable for a manually set "
+"``__definition_order__`` and convert it into a tuple.  However, not all "
+"iterables infer a definition order (e.g. ``set``).  So we opt in favor of"
+" requiring a tuple."
+msgstr ""
+
+#: ../../pep-0520.txt:267
+msgid "Why not hide __definition_order__ on non-type objects?"
+msgstr ""
+
+#: ../../pep-0520.txt:269
+msgid ""
+"Python doesn't make much effort to hide class-specific attributes during "
+"lookup on instances of classes.  While it may make sense to consider "
+"``__definition_order__`` a class-only attribute, hidden during lookup on "
+"objects, setting precedent in that regard is beyond the goals of this "
+"PEP."
+msgstr ""
+
+#: ../../pep-0520.txt:276
+msgid "What about __slots__?"
+msgstr ""
+
+#: ../../pep-0520.txt:278
+msgid ""
+"``__slots__`` will be added to ``__definition_order__`` like any other "
+"name in the class definition body.  The actual slot names will not be "
+"added to ``__definition_order__`` since they aren't set as names in the "
+"definition namespace."
+msgstr ""
+
+#: ../../pep-0520.txt:284
+msgid "Why is __definition_order__ even necessary?"
+msgstr ""
+
+#: ../../pep-0520.txt:286
+msgid ""
+"Since the definition order is not preserved in ``__dict__``, it is lost "
+"once class definition execution completes.  Classes *could* explicitly "
+"set the attribute as the last thing in the body.  However, then "
+"independent decorators could only make use of classes that had done so.  "
+"Instead, ``__definition_order__`` preserves this one bit of info from the"
+" class body so that it is universally available."
+msgstr ""
+
+#: ../../pep-0520.txt:295
+msgid "Support for C-API Types"
+msgstr ""
+
+#: ../../pep-0520.txt:297
+msgid ""
+"Arguably, most C-defined Python types (e.g. built-in, extension modules) "
+"have a roughly equivalent concept of a definition order. So conceivably "
+"``__definition_order__`` could be set for such types automatically. This "
+"PEP does not introduce any such support. However, it does not prohibit it"
+" either.  However, since ``__definition_order__`` can be set at any time "
+"through normal attribute assignment, it does not need any special "
+"treatment in the C-API."
+msgstr ""
+
+#: ../../pep-0520.txt:305
+msgid "The specific cases:"
+msgstr ""
+
+#: ../../pep-0520.txt:307
+msgid "builtin types"
+msgstr ""
+
+#: ../../pep-0520.txt:308
+msgid "PyType_Ready"
+msgstr ""
+
+#: ../../pep-0520.txt:309
+msgid "PyType_FromSpec"
+msgstr ""
+
+#: ../../pep-0520.txt:313
+msgid "Compatibility"
+msgstr ""
+
+#: ../../pep-0520.txt:315
+msgid ""
+"This PEP does not break backward compatibility, except in the case that "
+"someone relies *strictly* on ``dict`` as the class definition namespace. "
+"This shouldn't be a problem since ``issubclass(OrderedDict, dict)`` is "
+"true."
+msgstr ""
+
+#: ../../pep-0520.txt:322
+msgid "Changes"
+msgstr ""
+
+#: ../../pep-0520.txt:324
+msgid "In addition to the class syntax, the following expose the new behavior:"
+msgstr ""
+
+#: ../../pep-0520.txt:326
+msgid "builtins.__build_class__"
+msgstr ""
+
+#: ../../pep-0520.txt:327
+msgid "types.prepare_class"
+msgstr ""
+
+#: ../../pep-0520.txt:328
+msgid "types.new_class"
+msgstr ""
+
+#: ../../pep-0520.txt:330
+msgid ""
+"Also, the 3-argument form of ``builtins.type()`` will allow inclusion of "
+"``__definition_order__`` in the namespace that gets passed in.  It will "
+"be subject to the same constraints as when ``__definition_order__`` is "
+"explicitly defined in the class body."
+msgstr ""
+
+#: ../../pep-0520.txt:337
+msgid "Other Python Implementations"
+msgstr ""
+
+#: ../../pep-0520.txt:339
+msgid ""
+"Pending feedback, the impact on Python implementations is expected to be "
+"minimal.  All conforming implementations are expected to set "
+"``__definition_order__`` as described in this PEP."
+msgstr ""
+
+#: ../../pep-0520.txt:345
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0520.txt:347
+msgid "The implementation is found in the tracker. [impl_]"
+msgstr ""
+
+#: ../../pep-0520.txt:351
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0520.txt:354
+msgid "An Order-preserving cls.__dict__"
+msgstr ""
+
+#: ../../pep-0520.txt:356
+msgid ""
+"Instead of storing the definition order in ``__definition_order__``, the "
+"now-ordered definition namespace could be copied into a new "
+"``OrderedDict``.  This would then be used as the mapping proxied as "
+"``__dict__``.  Doing so would mostly provide the same semantics."
+msgstr ""
+
+#: ../../pep-0520.txt:361
+msgid ""
+"However, using ``OrderedDict`` for ``__dict__`` would obscure the "
+"relationship with the definition namespace, making it less useful."
+msgstr ""
+
+#: ../../pep-0520.txt:364
+msgid ""
+"Additionally, (in the case of ``OrderedDict`` specifically) doing this "
+"would require significant changes to the semantics of the concrete "
+"``dict`` C-API."
+msgstr ""
+
+#: ../../pep-0520.txt:368
+msgid ""
+"There has been some discussion about moving to a compact dict "
+"implementation which would (mostly) preserve insertion order.  However "
+"the lack of an explicit ``__definition_order__`` would still remain as a "
+"pain point."
+msgstr ""
+
+#: ../../pep-0520.txt:374
+msgid "A \"namespace\" Keyword Arg for Class Definition"
+msgstr ""
+
+#: ../../pep-0520.txt:376
+msgid ""
+"PEP 422 introduced a new \"namespace\" keyword arg to class definitions "
+"that effectively replaces the need to ``__prepare__()``. [pep422_] "
+"However, the proposal was withdrawn in favor of the simpler PEP 487."
+msgstr ""
+
+#: ../../pep-0520.txt:381
+msgid "A stdlib Metaclass that Implements __prepare__() with OrderedDict"
+msgstr ""
+
+#: ../../pep-0520.txt:383
+msgid ""
+"This has all the same problems as writing your own metaclass.  The only "
+"advantage is that you don't have to actually write this metaclass.  So it"
+" doesn't offer any benefit in the context of this PEP."
+msgstr ""
+
+#: ../../pep-0520.txt:389
+msgid "Set __definition_order__ at Compile-time"
+msgstr ""
+
+#: ../../pep-0520.txt:391
+msgid ""
+"Each class's ``__qualname__`` is determined at compile-time. This same "
+"concept could be applied to ``__definition_order__``. The result of "
+"composing ``__definition_order__`` at compile-time would be nearly the "
+"same as doing so at run-time."
+msgstr ""
+
+#: ../../pep-0520.txt:396
+msgid ""
+"Comparative implementation difficulty aside, the key difference would be "
+"that at compile-time it would not be practical to preserve definition "
+"order for attributes that are set dynamically in the class body (e.g. "
+"``locals()[name] = value``).  However, they should still be reflected in "
+"the definition order.  One possible resolution would be to require class "
+"authors to manually set ``__definition_order__`` if they define any class"
+" attributes dynamically."
+msgstr ""
+
+#: ../../pep-0520.txt:405
+msgid ""
+"Ultimately, the use of ``OrderedDict`` at run-time or compile-time "
+"discovery is almost entirely an implementation detail."
+msgstr ""
+
+#: ../../pep-0520.txt:410
+msgid "References"
+msgstr ""
+
+#: ../../pep-0520.txt:412
+msgid "issue #24254 (https://bugs.python.org/issue24254)"
+msgstr ""
+
+#: ../../pep-0520.txt:415
+msgid ""
+"Nick's concerns about mutability (https://mail.python.org/pipermail"
+"/python-dev/2016-June/144883.html)"
+msgstr ""
+
+#: ../../pep-0520.txt:418
+msgid ""
+"PEP 422 (https://www.python.org/dev/peps/pep-0422/#order-preserving-"
+"classes)"
+msgstr ""
+
+#: ../../pep-0520.txt:421
+msgid ""
+"PEP 487 (https://www.python.org/dev/peps/pep-0487/#defining-arbitrary-"
+"namespaces)"
+msgstr ""
+
+#: ../../pep-0520.txt:424
+msgid ""
+"original discussion (https://mail.python.org/pipermail/python-"
+"ideas/2013-February/019690.html)"
+msgstr ""
+
+#: ../../pep-0520.txt:427
+msgid ""
+"follow-up 1 (https://mail.python.org/pipermail/python-"
+"dev/2013-June/127103.html)"
+msgstr ""
+
+#: ../../pep-0520.txt:430
+msgid ""
+"follow-up 2 (https://mail.python.org/pipermail/python-"
+"dev/2015-May/140137.html)"
+msgstr ""
+
+#: ../../pep-0520.txt:435
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0520.txt:436
+msgid "This document has been placed in the public domain."
+msgstr ""
+

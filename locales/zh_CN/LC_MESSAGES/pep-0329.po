@@ -1,0 +1,339 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0329.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0329.txt:1
+msgid "329"
+msgstr ""
+
+#: ../../pep-0329.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0329.txt:2
+msgid "Treating Builtins as Constants in the Standard Library"
+msgstr ""
+
+#: ../../pep-0329.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0329.txt:5
+msgid "Raymond Hettinger <python@rcn.com>"
+msgstr ""
+
+#: ../../pep-0329.txt ../../pep-0329.txt:22
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0329.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0329.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0329.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0329.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0329.txt:9 ../../pep-0329.txt:11
+msgid "18-Apr-2004"
+msgstr ""
+
+#: ../../pep-0329.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0329.txt:10
+msgid "2.4"
+msgstr ""
+
+#: ../../pep-0329.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0329.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0329.txt:18
+msgid ""
+"The proposal is to add a function for treating builtin references as "
+"constants and to apply that function throughout the standard library."
+msgstr ""
+
+#: ../../pep-0329.txt:24
+msgid ""
+"The PEP is self rejected by the author.  Though the ASPN recipe was well "
+"received, there was less willingness to consider this for inclusion in "
+"the core distribution."
+msgstr ""
+
+#: ../../pep-0329.txt:28
+msgid ""
+"The Jython implementation does not use byte codes, so its performance "
+"would suffer if the current ``_len=len`` optimizations were removed."
+msgstr ""
+
+#: ../../pep-0329.txt:31
+msgid ""
+"Also, altering byte codes is one of the least clean ways to improve "
+"performance and enable cleaner coding.  A more robust solution would "
+"likely involve compiler pragma directives or metavariables indicating "
+"what can be optimized (similar to const/volatile declarations)."
+msgstr ""
+
+#: ../../pep-0329.txt:38
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0329.txt:40
+msgid ""
+"The library contains code such as ``_len=len`` which is intended to "
+"create fast local references instead of slower global lookups.  Though "
+"necessary for performance, these constructs clutter the code and are "
+"usually incomplete (missing many opportunities)."
+msgstr ""
+
+#: ../../pep-0329.txt:45
+msgid ""
+"If the proposal is adopted, those constructs could be eliminated from the"
+" code base and at the same time improve upon their results in terms of "
+"performance."
+msgstr ""
+
+#: ../../pep-0329.txt:49
+msgid ""
+"There are currently over a hundred instances of ``while 1`` in the "
+"library.  They were not replaced with the more readable ``while True`` "
+"because of performance reasons (the compiler cannot eliminate the test "
+"because `True` is not known to always be a constant).  Conversion of True"
+" to a constant will clarify the code while retaining performance."
+msgstr ""
+
+#: ../../pep-0329.txt:55
+msgid ""
+"Many other basic Python operations run much slower because of global "
+"lookups.  In try/except statements, the trapped exceptions are "
+"dynamically looked up before testing whether they match. Similarly, "
+"simple identity tests such as ``while x is not None`` require the `None` "
+"variable to be re-looked up on every pass. Builtin lookups are especially"
+" egregious because the enclosing global scope must be checked first.  "
+"These lookup chains devour cache space that is best used elsewhere."
+msgstr ""
+
+#: ../../pep-0329.txt:64
+msgid ""
+"In short, if the proposal is adopted, the code will become cleaner and "
+"performance will improve across the board."
+msgstr ""
+
+#: ../../pep-0329.txt:69
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0329.txt:71
+msgid ""
+"Add a module called codetweaks.py which contains two functions, "
+"`bind_constants()` and `bind_all()`.  The first function performs "
+"constant binding and the second recursively applies it to every function "
+"and class in a target module."
+msgstr ""
+
+#: ../../pep-0329.txt:76
+msgid ""
+"For most modules in the standard library, add a pair of lines near the "
+"end of the script::"
+msgstr ""
+
+#: ../../pep-0329.txt:82
+msgid ""
+"In addition to binding builtins, there are some modules (like "
+"`sre_compile`) where it also makes sense to bind module variables as well"
+" as builtins into constants."
+msgstr ""
+
+#: ../../pep-0329.txt:88
+msgid "Questions and Answers"
+msgstr ""
+
+#: ../../pep-0329.txt:90
+msgid "Will this make everyone divert their attention to optimization issues?"
+msgstr ""
+
+#: ../../pep-0329.txt:93
+msgid ""
+"Because it is done automatically, it reduces the need to think about "
+"optimizations."
+msgstr ""
+
+#: ../../pep-0329.txt:96
+msgid "In a nutshell, how does it work?"
+msgstr ""
+
+#: ../../pep-0329.txt:98
+msgid ""
+"Every function has attributes with its bytecodes (the language of the "
+"Python virtual machine) and a table of constants.  The bind function "
+"scans the bytecodes for a `LOAD_GLOBAL` instruction and checks to see "
+"whether the value is already known.  If so, it adds that value to the "
+"constants table and replaces the opcode with `LOAD_CONSTANT`."
+msgstr ""
+
+#: ../../pep-0329.txt:105
+msgid "When does it work?"
+msgstr ""
+
+#: ../../pep-0329.txt:107
+msgid ""
+"When a module is imported for the first time, python compiles the "
+"bytecode and runs the binding optimization.  Subsequent imports just re-"
+"use the previous work.  Each session repeats this process (the results "
+"are not saved in `pyc` files)."
+msgstr ""
+
+#: ../../pep-0329.txt:112
+msgid "How do you know this works?"
+msgstr ""
+
+#: ../../pep-0329.txt:114
+msgid ""
+"I implemented it, applied it to every module in library, and the test "
+"suite ran without exception."
+msgstr ""
+
+#: ../../pep-0329.txt:117
+msgid "What if the module defines a variable shadowing a builtin?"
+msgstr ""
+
+#: ../../pep-0329.txt:119
+msgid ""
+"This does happen.  For instance, True can be redefined at the module "
+"level as `True = (1==1)`.  The sample implementation below detects the "
+"shadowing and leaves the global lookup unchanged."
+msgstr ""
+
+#: ../../pep-0329.txt:123
+msgid ""
+"Are you the first person to recognize that most global lookups are for "
+"values that never change?"
+msgstr ""
+
+#: ../../pep-0329.txt:126
+msgid ""
+"No, this has long been known.  Skip Montanaro provides an eloquent "
+"explanation in [1]_."
+msgstr ""
+
+#: ../../pep-0329.txt:129
+msgid ""
+"What if I want to replace the builtins module and supply my own "
+"implementations?"
+msgstr ""
+
+#: ../../pep-0329.txt:132
+msgid ""
+"Either do this before importing a module, or just reload the module, or "
+"disable `codetweaks.py` (it will have a disable flag)."
+msgstr ""
+
+#: ../../pep-0329.txt:135
+msgid "How susceptible is this module to changes in Python's byte coding?"
+msgstr ""
+
+#: ../../pep-0329.txt:137
+msgid ""
+"It imports `opcode.py` to protect against renumbering.  Also, it uses "
+"`LOAD_CONST` and `LOAD_GLOBAL` which are fundamental and have been around"
+" forever.  That notwithstanding, the coding scheme could change and this "
+"implementation would have to change along with modules like `dis` which "
+"also rely on the current coding scheme."
+msgstr ""
+
+#: ../../pep-0329.txt:143
+msgid "What is the effect on startup time?"
+msgstr ""
+
+#: ../../pep-0329.txt:145
+msgid ""
+"I could not measure a difference.  None of the startup modules are bound "
+"except for warnings.py.  Also, the binding function is very fast, making "
+"just a single pass over the code string in search of the `LOAD_GLOBAL` "
+"opcode."
+msgstr ""
+
+#: ../../pep-0329.txt:152
+msgid "Sample Implementation"
+msgstr ""
+
+#: ../../pep-0329.txt:154
+msgid "Here is a sample implementation for codetweaks.py::"
+msgstr ""
+
+#: ../../pep-0329.txt:246
+msgid ""
+"Note the automatic detection of a non-CPython environment that does not "
+"have bytecodes [3]_.  In that situation, the bind functions would simply "
+"return the original function unchanged.  This assures that the two line "
+"additions to library modules do not impact other implementations."
+msgstr ""
+
+#: ../../pep-0329.txt:251
+msgid "The final code should add a flag to make it easy to disable binding."
+msgstr ""
+
+#: ../../pep-0329.txt:256
+msgid "References"
+msgstr ""
+
+#: ../../pep-0329.txt:258
+msgid ""
+"Optimizing Global Variable/Attribute Access "
+"http://www.python.org/dev/peps/pep-0266/"
+msgstr ""
+
+#: ../../pep-0329.txt:261
+msgid ""
+"ASPN Recipe for a non-private implementation "
+"http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/277940"
+msgstr ""
+
+#: ../../pep-0329.txt:264
+msgid ""
+"Differences between CPython and Jython http://www.jython.org/cgi-"
+"bin/faqw.py?req=show&file=faq01.003.htp"
+msgstr ""
+
+#: ../../pep-0329.txt:268
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0329.txt:270
+msgid "This document has been placed in the public domain."
+msgstr ""
+

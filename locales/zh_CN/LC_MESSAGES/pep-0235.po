@@ -1,0 +1,269 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0235.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0235.txt:1
+msgid "235"
+msgstr ""
+
+#: ../../pep-0235.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0235.txt:2
+msgid "Import on Case-Insensitive Platforms"
+msgstr ""
+
+#: ../../pep-0235.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0235.txt:5
+msgid "Tim Peters <tim.peters@gmail.com>"
+msgstr ""
+
+#: ../../pep-0235.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0235.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0235.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0235.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0235.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0235.txt:9
+msgid "21-Feb-2001"
+msgstr ""
+
+#: ../../pep-0235.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0235.txt:10
+msgid "2.1"
+msgstr ""
+
+#: ../../pep-0235.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0235.txt:11
+msgid "16 February 2001"
+msgstr ""
+
+#: ../../pep-0235.txt:15
+msgid "Note"
+msgstr ""
+
+#: ../../pep-0235.txt:17
+msgid ""
+"This is essentially a retroactive PEP: the issue came up too late in the "
+"2.1 release process to solicit wide opinion before deciding what to do, "
+"and can't be put off until 2.2 without also delaying the Cygwin and MacOS"
+" X ports."
+msgstr ""
+
+#: ../../pep-0235.txt:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0235.txt:26
+msgid ""
+"File systems vary across platforms in whether or not they preserve the "
+"case of filenames, and in whether or not the platform C library file-"
+"opening functions do or don't insist on case-sensitive matches::"
+msgstr ""
+
+#: ../../pep-0235.txt:41
+msgid ""
+"In the upper left box, if you create \"fiLe\" it's stored as \"fiLe\", "
+"and only ``open(\"fiLe\")`` will open it (``open(\"file\")`` will not, "
+"nor will the 14 other variations on that theme)."
+msgstr ""
+
+#: ../../pep-0235.txt:45
+msgid ""
+"In the lower right box, if you create \"fiLe\", there's no telling what "
+"it's stored as -- but most likely as \"FILE\" -- and any of the 16 "
+"obvious variations on ``open(\"FilE\")`` will open it."
+msgstr ""
+
+#: ../../pep-0235.txt:49
+msgid ""
+"The lower left box is a mix: creating \"fiLe\" stores \"fiLe\" in the "
+"platform directory, but you don't have to match case when opening it; any"
+" of the 16 obvious variations on ``open(\"FILe\")`` work."
+msgstr ""
+
+#: ../../pep-0235.txt:53
+msgid ""
+"NONE OF THAT IS CHANGING!  Python will continue to follow platform "
+"conventions w.r.t. whether case is preserved when creating a file, and "
+"w.r.t. whether ``open()`` requires a case-sensitive match.  In practice, "
+"you should always code as if matches were case-sensitive, else your "
+"program won't be portable."
+msgstr ""
+
+#: ../../pep-0235.txt:59
+msgid ""
+"What's proposed is to change the semantics of Python \"import\" "
+"statements, and there *only* in the lower left box."
+msgstr ""
+
+#: ../../pep-0235.txt:64
+msgid "Current Lower-Left Semantics"
+msgstr ""
+
+#: ../../pep-0235.txt:66
+msgid ""
+"Support for MacOSX HFS+, and for Cygwin, is new in 2.1, so nothing is "
+"changing there.  What's changing is Windows behavior.  Here are the "
+"current rules for import on Windows:"
+msgstr ""
+
+#: ../../pep-0235.txt:70
+msgid ""
+"Despite that the filesystem is case-insensitive, Python insists on a "
+"case-sensitive match.  But not in the way the upper left box works: if "
+"you have two files, ``FiLe.py`` and ``file.py`` on ``sys.path``, and do "
+"::"
+msgstr ""
+
+#: ../../pep-0235.txt:77
+msgid ""
+"then if Python finds ``FiLe.py`` first, it raises a ``NameError``. It "
+"does *not* go on to find ``file.py``; indeed, it's impossible to import "
+"any but the first case-insensitive match on ``sys.path``, and then only "
+"if case matches exactly in the first case-insensitive match."
+msgstr ""
+
+#: ../../pep-0235.txt:83
+msgid ""
+"An ugly exception: if the first case-insensitive match on ``sys.path`` is"
+" for a file whose name is entirely in upper case (``FILE.PY`` or "
+"``FILE.PYC`` or ``FILE.PYO``), then the import silently grabs that, no "
+"matter what mixture of case was used in the import statement.  This is "
+"apparently to cater to miserable old filesystems that really fit in the "
+"lower right box.  But this exception is unique to Windows, for reasons "
+"that may or may not exist."
+msgstr ""
+
+#: ../../pep-0235.txt:92
+msgid ""
+"And another exception: if the environment variable ``PYTHONCASEOK`` "
+"exists, Python silently grabs the first case-insensitive match of any "
+"kind."
+msgstr ""
+
+#: ../../pep-0235.txt:96
+msgid ""
+"So these Windows rules are pretty complicated, and neither match the Unix"
+" rules nor provide semantics natural for the native filesystem.  That "
+"makes them hard to explain to Unix *or* Windows users.  Nevertheless, "
+"they've worked fine for years, and in isolation there's no compelling "
+"reason to change them."
+msgstr ""
+
+#: ../../pep-0235.txt:102
+msgid ""
+"However, that was before the MacOSX HFS+ and Cygwin ports arrived. They "
+"also have case-preserving case-insensitive filesystems, but the people "
+"doing the ports despised the Windows rules.  Indeed, a patch to make HFS+"
+" act like Unix for imports got past a reviewer and into the code base, "
+"which incidentally made Cygwin also act like Unix (but this met the "
+"unbounded approval of the Cygwin folks, so they sure didn't complain -- "
+"they had patches of their own pending to do this, but the reviewer for "
+"those balked)."
+msgstr ""
+
+#: ../../pep-0235.txt:111
+msgid ""
+"At a higher level, we want to keep Python consistent, by following the "
+"same rules on *all* platforms with case-preserving case-insensitive "
+"filesystems."
+msgstr ""
+
+#: ../../pep-0235.txt:117
+msgid "Proposed Semantics"
+msgstr ""
+
+#: ../../pep-0235.txt:119
+msgid "The proposed new semantics for the lower left box:"
+msgstr ""
+
+#: ../../pep-0235.txt:121
+msgid ""
+"If the ``PYTHONCASEOK`` environment variable exists, same as before: "
+"silently accept the first case-insensitive match of any kind; raise "
+"``ImportError`` if none found."
+msgstr ""
+
+#: ../../pep-0235.txt:125
+msgid ""
+"Else search ``sys.path`` for the first case-sensitive match; raise "
+"``ImportError`` if none found."
+msgstr ""
+
+#: ../../pep-0235.txt:128
+msgid ""
+"#B is the same rule as is used on Unix, so this will improve cross- "
+"platform portability.  That's good.  #B is also the rule the Mac and "
+"Cygwin folks want (and wanted enough to implement themselves, multiple "
+"times, which is a powerful argument in PythonLand).  It can't cause any "
+"existing non-exceptional Windows import to fail, because any existing "
+"non-exceptional Windows import finds a case-sensitive match first in the "
+"path -- and it still will.  An exceptional Windows import currently blows"
+" up with a ``NameError`` or ``ImportError``, in which latter case it "
+"still will, or in which former case will continue searching, and either "
+"succeed or blow up with an ``ImportError``."
+msgstr ""
+
+#: ../../pep-0235.txt:140
+msgid ""
+"#A is needed to cater to case-destroying filesystems mounted on Windows, "
+"and *may* also be used by people so enamored of \"natural\" Windows "
+"behavior that they're willing to set an environment variable to get it.  "
+"I don't intend to implement #A for Unix too, but that's just because I'm "
+"not clear on how I *could* do so efficiently (I'm not going to slow "
+"imports under Unix just for theoretical purity)."
+msgstr ""
+
+#: ../../pep-0235.txt:147
+msgid ""
+"The potential damage is here: #2 (matching on ``ALLCAPS.PY``) is proposed"
+" to be dropped.  Case-destroying filesystems are a vanishing breed, and "
+"support for them is ugly.  We're already supporting (and will continue to"
+" support) ``PYTHONCASEOK`` for their benefit, but they don't deserve "
+"multiple hacks in 2001."
+msgstr ""
+

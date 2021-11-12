@@ -1,0 +1,1857 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0465.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0465.txt:1
+msgid "465"
+msgstr ""
+
+#: ../../pep-0465.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0465.txt:2
+msgid "A dedicated infix operator for matrix multiplication"
+msgstr ""
+
+#: ../../pep-0465.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0465.txt:5
+msgid "Nathaniel J. Smith <njs@pobox.com>"
+msgstr ""
+
+#: ../../pep-0465.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0465.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0465.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0465.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0465.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0465.txt:9
+msgid "20-Feb-2014"
+msgstr ""
+
+#: ../../pep-0465.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0465.txt:10
+msgid "3.5"
+msgstr ""
+
+#: ../../pep-0465.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0465.txt:11
+msgid "13-Mar-2014"
+msgstr ""
+
+#: ../../pep-0465.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0465.txt:16
+msgid ""
+"This PEP proposes a new binary operator to be used for matrix "
+"multiplication, called ``@``.  (Mnemonic: ``@`` is ``*`` for mATrices.)"
+msgstr ""
+
+#: ../../pep-0465.txt:22
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0465.txt:24
+msgid ""
+"A new binary operator is added to the Python language, together with the "
+"corresponding in-place version:"
+msgstr ""
+
+#: ../../pep-0465.txt:28
+msgid "Op"
+msgstr ""
+
+#: ../../pep-0465.txt:28
+msgid "Precedence/associativity"
+msgstr ""
+
+#: ../../pep-0465.txt:28
+msgid "Methods"
+msgstr ""
+
+#: ../../pep-0465.txt:30
+msgid "``@``"
+msgstr ""
+
+#: ../../pep-0465.txt:30
+msgid "Same as ``*``"
+msgstr ""
+
+#: ../../pep-0465.txt:30
+msgid "``__matmul__``, ``__rmatmul__``"
+msgstr ""
+
+#: ../../pep-0465.txt:31
+msgid "``@=``"
+msgstr ""
+
+#: ../../pep-0465.txt:31
+msgid "n/a"
+msgstr ""
+
+#: ../../pep-0465.txt:31
+msgid "``__imatmul__``"
+msgstr ""
+
+#: ../../pep-0465.txt:34
+msgid ""
+"No implementations of these methods are added to the builtin or standard "
+"library types.  However, a number of projects have reached consensus on "
+"the recommended semantics for these operations; see `Intended usage "
+"details`_ below for details."
+msgstr ""
+
+#: ../../pep-0465.txt:39
+msgid ""
+"For details on how this operator will be implemented in CPython, see "
+"`Implementation details`_."
+msgstr ""
+
+#: ../../pep-0465.txt:44
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0465.txt:47
+msgid "Executive summary"
+msgstr ""
+
+#: ../../pep-0465.txt:49
+msgid ""
+"In numerical code, there are two important operations which compete for "
+"use of Python's ``*`` operator: elementwise multiplication, and matrix "
+"multiplication.  In the nearly twenty years since the Numeric library was"
+" first proposed, there have been many attempts to resolve this tension "
+"[#hugunin]_; none have been really satisfactory. Currently, most "
+"numerical Python code uses ``*`` for elementwise multiplication, and "
+"function/method syntax for matrix multiplication; however, this leads to "
+"ugly and unreadable code in common circumstances.  The problem is bad "
+"enough that significant amounts of code continue to use the opposite "
+"convention (which has the virtue of producing ugly and unreadable code in"
+" *different* circumstances), and this API fragmentation across codebases "
+"then creates yet more problems.  There does not seem to be any *good* "
+"solution to the problem of designing a numerical API within current "
+"Python syntax -- only a landscape of options that are bad in different "
+"ways.  The minimal change to Python syntax which is sufficient to resolve"
+" these problems is the addition of a single new infix operator for matrix"
+" multiplication."
+msgstr ""
+
+#: ../../pep-0465.txt:68
+msgid ""
+"Matrix multiplication has a singular combination of features which "
+"distinguish it from other binary operations, which together provide a "
+"uniquely compelling case for the addition of a dedicated infix operator:"
+msgstr ""
+
+#: ../../pep-0465.txt:73
+msgid ""
+"Just as for the existing numerical operators, there exists a vast body of"
+" prior art supporting the use of infix notation for matrix multiplication"
+" across all fields of mathematics, science, and engineering; ``@`` "
+"harmoniously fills a hole in Python's existing operator system."
+msgstr ""
+
+#: ../../pep-0465.txt:79
+msgid "``@`` greatly clarifies real-world code."
+msgstr ""
+
+#: ../../pep-0465.txt:81
+msgid ""
+"``@`` provides a smoother onramp for less experienced users, who are "
+"particularly harmed by hard-to-read code and API fragmentation."
+msgstr ""
+
+#: ../../pep-0465.txt:84
+msgid ""
+"``@`` benefits a substantial and growing portion of the Python user "
+"community."
+msgstr ""
+
+#: ../../pep-0465.txt:87
+msgid ""
+"``@`` will be used frequently -- in fact, evidence suggests it may be "
+"used more frequently than ``//`` or the bitwise operators."
+msgstr ""
+
+#: ../../pep-0465.txt:90
+msgid ""
+"``@`` allows the Python numerical community to reduce fragmentation, and "
+"finally standardize on a single consensus duck type for all numerical "
+"array objects."
+msgstr ""
+
+#: ../../pep-0465.txt:96
+msgid "Background: What's wrong with the status quo?"
+msgstr ""
+
+#: ../../pep-0465.txt:98
+msgid ""
+"When we crunch numbers on a computer, we usually have lots and lots of "
+"numbers to deal with.  Trying to deal with them one at a time is "
+"cumbersome and slow -- especially when using an interpreted language. "
+"Instead, we want the ability to write down simple operations that apply "
+"to large collections of numbers all at once.  The *n-dimensional array* "
+"is the basic object that all popular numeric computing environments use "
+"to make this possible.  Python has several libraries that provide such "
+"arrays, with numpy being at present the most prominent."
+msgstr ""
+
+#: ../../pep-0465.txt:108
+msgid ""
+"When working with n-dimensional arrays, there are two different ways we "
+"might want to define multiplication.  One is elementwise multiplication::"
+msgstr ""
+
+#: ../../pep-0465.txt:115
+msgid "and the other is `matrix multiplication`_:"
+msgstr ""
+
+#: ../../pep-0465.txt:124
+msgid ""
+"Elementwise multiplication is useful because it lets us easily and "
+"quickly perform many multiplications on a large collection of values, "
+"without writing a slow and cumbersome ``for`` loop.  And this works as "
+"part of a very general schema: when using the array objects provided by "
+"numpy or other numerical libraries, all Python operators work elementwise"
+" on arrays of all dimensionalities.  The result is that one can write "
+"functions using straightforward code like ``a * b + c / d``, treating the"
+" variables as if they were simple values, but then immediately use this "
+"function to efficiently perform this calculation on large collections of "
+"values, while keeping them organized using whatever arbitrarily complex "
+"array layout works best for the problem at hand."
+msgstr ""
+
+#: ../../pep-0465.txt:137
+msgid ""
+"Matrix multiplication is more of a special case.  It's only defined on 2d"
+" arrays (also known as \"matrices\"), and multiplication is the only "
+"operation that has an important \"matrix\" version -- \"matrix addition\""
+" is the same as elementwise addition; there is no such thing as \"matrix "
+"bitwise-or\" or \"matrix floordiv\"; \"matrix division\" and \"matrix to-"
+"the-power-of\" can be defined but are not very useful, etc. However, "
+"matrix multiplication is still used very heavily across all numerical "
+"application areas; mathematically, it's one of the most fundamental "
+"operations there is."
+msgstr ""
+
+#: ../../pep-0465.txt:147
+msgid ""
+"Because Python syntax currently allows for only a single multiplication "
+"operator ``*``, libraries providing array-like objects must decide: "
+"either use ``*`` for elementwise multiplication, or use ``*`` for matrix "
+"multiplication.  And, unfortunately, it turns out that when doing "
+"general-purpose number crunching, both operations are used frequently, "
+"and there are major advantages to using infix rather than function call "
+"syntax in both cases.  Thus it is not at all clear which convention is "
+"optimal, or even acceptable; often it varies on a case-by-case basis."
+msgstr ""
+
+#: ../../pep-0465.txt:157
+msgid ""
+"Nonetheless, network effects mean that it is very important that we pick "
+"*just one* convention.  In numpy, for example, it is technically possible"
+" to switch between the conventions, because numpy provides two different "
+"types with different ``__mul__`` methods.  For ``numpy.ndarray`` objects,"
+" ``*`` performs elementwise multiplication, and matrix multiplication "
+"must use a function call (``numpy.dot``). For ``numpy.matrix`` objects, "
+"``*`` performs matrix multiplication, and elementwise multiplication "
+"requires function syntax.  Writing code using ``numpy.ndarray`` works "
+"fine.  Writing code using ``numpy.matrix`` also works fine.  But trouble "
+"begins as soon as we try to integrate these two pieces of code together."
+"  Code that expects an ``ndarray`` and gets a ``matrix``, or vice-versa, "
+"may crash or return incorrect results.  Keeping track of which functions "
+"expect which types as inputs, and return which types as outputs, and then"
+" converting back and forth all the time, is incredibly cumbersome and "
+"impossible to get right at any scale.  Functions that defensively try to "
+"handle both types as input and DTRT, find themselves floundering into a "
+"swamp of ``isinstance`` and ``if`` statements."
+msgstr ""
+
+#: ../../pep-0465.txt:176
+msgid ""
+"PEP 238 split ``/`` into two operators: ``/`` and ``//``.  Imagine the "
+"chaos that would have resulted if it had instead split ``int`` into two "
+"types: ``classic_int``, whose ``__div__`` implemented floor division, and"
+" ``new_int``, whose ``__div__`` implemented true division.  This, in a "
+"more limited way, is the situation that Python number-crunchers currently"
+" find themselves in."
+msgstr ""
+
+#: ../../pep-0465.txt:183
+msgid ""
+"In practice, the vast majority of projects have settled on the convention"
+" of using ``*`` for elementwise multiplication, and function call syntax "
+"for matrix multiplication (e.g., using ``numpy.ndarray`` instead of "
+"``numpy.matrix``).  This reduces the problems caused by API "
+"fragmentation, but it doesn't eliminate them.  The strong desire to use "
+"infix notation for matrix multiplication has caused a number of "
+"specialized array libraries to continue to use the opposing convention "
+"(e.g., scipy.sparse, pyoperators, pyviennacl) despite the problems this "
+"causes, and ``numpy.matrix`` itself still gets used in introductory "
+"programming courses, often appears in StackOverflow answers, and so "
+"forth.  Well-written libraries thus must continue to be prepared to deal "
+"with both types of objects, and, of course, are also stuck using "
+"unpleasant funcall syntax for matrix multiplication. After nearly two "
+"decades of trying, the numerical community has still not found any way to"
+" resolve these problems within the constraints of current Python syntax "
+"(see `Rejected alternatives to adding a new operator`_ below)."
+msgstr ""
+
+#: ../../pep-0465.txt:201
+msgid ""
+"This PEP proposes the minimum effective change to Python syntax that will"
+" allow us to drain this swamp.  It splits ``*`` into two operators, just "
+"as was done for ``/``: ``*`` for elementwise multiplication, and ``@`` "
+"for matrix multiplication.  (Why not the reverse?  Because this way is "
+"compatible with the existing consensus, and because it gives us a "
+"consistent rule that all the built-in numeric operators also apply in an "
+"elementwise manner to arrays; the reverse convention would lead to more "
+"special cases.)"
+msgstr ""
+
+#: ../../pep-0465.txt:210
+msgid ""
+"So that's why matrix multiplication doesn't and can't just use ``*``. "
+"Now, in the rest of this section, we'll explain why it nonetheless meets "
+"the high bar for adding a new operator."
+msgstr ""
+
+#: ../../pep-0465.txt:216
+msgid "Why should matrix multiplication be infix?"
+msgstr ""
+
+#: ../../pep-0465.txt:218
+msgid ""
+"Right now, most numerical code in Python uses syntax like ``numpy.dot(a, "
+"b)`` or ``a.dot(b)`` to perform matrix multiplication. This obviously "
+"works, so why do people make such a fuss about it, even to the point of "
+"creating API fragmentation and compatibility swamps?"
+msgstr ""
+
+#: ../../pep-0465.txt:223
+msgid ""
+"Matrix multiplication shares two features with ordinary arithmetic "
+"operations like addition and multiplication on numbers: (a) it is used "
+"very heavily in numerical programs -- often multiple times per line of "
+"code -- and (b) it has an ancient and universally adopted tradition of "
+"being written using infix syntax.  This is because, for typical formulas,"
+" this notation is dramatically more readable than any function call "
+"syntax.  Here's an example to demonstrate:"
+msgstr ""
+
+#: ../../pep-0465.txt:231
+msgid ""
+"One of the most useful tools for testing a statistical hypothesis is the "
+"linear hypothesis test for OLS regression models.  It doesn't really "
+"matter what all those words I just said mean; if we find ourselves having"
+" to implement this thing, what we'll do is look up some textbook or paper"
+" on it, and encounter many mathematical formulas that look like:"
+msgstr ""
+
+#: ../../pep-0465.txt:238
+msgid "S = (H \\beta - r)^T (H V H^T)^{-1} (H \\beta - r)"
+msgstr ""
+
+#: ../../pep-0465.txt:242
+msgid ""
+"Here the various variables are all vectors or matrices (details for the "
+"curious: [#lht]_)."
+msgstr ""
+
+#: ../../pep-0465.txt:245
+msgid ""
+"Now we need to write code to perform this calculation. In current numpy, "
+"matrix multiplication can be performed using either the function or "
+"method call syntax. Neither provides a particularly readable translation "
+"of the formula::"
+msgstr ""
+
+#: ../../pep-0465.txt:260
+msgid ""
+"With the ``@`` operator, the direct translation of the above formula "
+"becomes::"
+msgstr ""
+
+#: ../../pep-0465.txt:265
+msgid ""
+"Notice that there is now a transparent, 1-to-1 mapping between the "
+"symbols in the original formula and the code that implements it."
+msgstr ""
+
+#: ../../pep-0465.txt:268
+msgid ""
+"Of course, an experienced programmer will probably notice that this is "
+"not the best way to compute this expression.  The repeated computation of"
+" :math:`H \\beta - r` should perhaps be factored out; and, expressions of"
+" the form ``dot(inv(A), B)`` should almost always be replaced by the more"
+" numerically stable ``solve(A, B)``.  When using ``@``, performing these "
+"two refactorings gives us::"
+msgstr ""
+
+#: ../../pep-0465.txt:285
+msgid ""
+"Notice that when comparing between each pair of steps, it's very easy to "
+"see exactly what was changed.  If we apply the equivalent transformations"
+" to the code using the .dot method, then the changes are much harder to "
+"read out or verify for correctness::"
+msgstr ""
+
+#: ../../pep-0465.txt:300
+msgid ""
+"Readability counts!  The statements using ``@`` are shorter, contain more"
+" whitespace, can be directly and easily compared both to each other and "
+"to the textbook formula, and contain only meaningful parentheses.  This "
+"last point is particularly important for readability: when using "
+"function-call syntax, the required parentheses on every operation create "
+"visual clutter that makes it very difficult to parse out the overall "
+"structure of the formula by eye, even for a relatively simple formula "
+"like this one.  Eyes are terrible at parsing non-regular languages.  I "
+"made and caught many errors while trying to write out the 'dot' formulas "
+"above.  I know they still contain at least one error, maybe more.  "
+"(Exercise: find it.  Or them.)  The ``@`` examples, by contrast, are not "
+"only correct, they're obviously correct at a glance."
+msgstr ""
+
+#: ../../pep-0465.txt:314
+msgid ""
+"If we are even more sophisticated programmers, and writing code that we "
+"expect to be reused, then considerations of speed or numerical accuracy "
+"might lead us to prefer some particular order of evaluation. Because "
+"``@`` makes it possible to omit irrelevant parentheses, we can be certain"
+" that if we *do* write something like ``(H @ V) @ H.T``, then our readers"
+" will know that the parentheses must have been added intentionally to "
+"accomplish some meaningful purpose.  In the ``dot`` examples, it's "
+"impossible to know which nesting decisions are important, and which are "
+"arbitrary."
+msgstr ""
+
+#: ../../pep-0465.txt:324
+msgid ""
+"Infix ``@`` dramatically improves matrix code usability at all stages of "
+"programmer interaction."
+msgstr ""
+
+#: ../../pep-0465.txt:329
+msgid "Transparent syntax is especially crucial for non-expert programmers"
+msgstr ""
+
+#: ../../pep-0465.txt:331
+msgid ""
+"A large proportion of scientific code is written by people who are "
+"experts in their domain, but are not experts in programming.  And there "
+"are many university courses run each year with titles like \"Data "
+"analysis for social scientists\" which assume no programming background, "
+"and teach some combination of mathematical techniques, introduction to "
+"programming, and the use of programming to implement these mathematical "
+"techniques, all within a 10-15 week period.  These courses are more and "
+"more often being taught in Python rather than special-purpose languages "
+"like R or Matlab."
+msgstr ""
+
+#: ../../pep-0465.txt:341
+msgid ""
+"For these kinds of users, whose programming knowledge is fragile, the "
+"existence of a transparent mapping between formulas and code often means "
+"the difference between succeeding and failing to write that code at all."
+"  This is so important that such classes often use the ``numpy.matrix`` "
+"type which defines ``*`` to mean matrix multiplication, even though this "
+"type is buggy and heavily disrecommended by the rest of the numpy "
+"community for the fragmentation that it causes.  This pedagogical use "
+"case is, in fact, the *only* reason ``numpy.matrix`` remains a supported "
+"part of numpy. Adding ``@`` will benefit both beginning and advanced "
+"users with better syntax; and furthermore, it will allow both groups to "
+"standardize on the same notation from the start, providing a smoother on-"
+"ramp to expertise."
+msgstr ""
+
+#: ../../pep-0465.txt:357
+msgid "But isn't matrix multiplication a pretty niche requirement?"
+msgstr ""
+
+#: ../../pep-0465.txt:359
+msgid ""
+"The world is full of continuous data, and computers are increasingly "
+"called upon to work with it in sophisticated ways.  Arrays are the lingua"
+" franca of finance, machine learning, 3d graphics, computer vision, "
+"robotics, operations research, econometrics, meteorology, computational "
+"linguistics, recommendation systems, neuroscience, astronomy, "
+"bioinformatics (including genetics, cancer research, drug discovery, "
+"etc.), physics engines, quantum mechanics, geophysics, network analysis, "
+"and many other application areas.  In most or all of these areas, Python "
+"is rapidly becoming a dominant player, in large part because of its "
+"ability to elegantly mix traditional discrete data structures (hash "
+"tables, strings, etc.) on an equal footing with modern numerical data "
+"types and algorithms."
+msgstr ""
+
+#: ../../pep-0465.txt:372
+#, python-format
+msgid ""
+"We all live in our own little sub-communities, so some Python users may "
+"be surprised to realize the sheer extent to which Python is used for "
+"number crunching -- especially since much of this particular sub-"
+"community's activity occurs outside of traditional Python/FOSS channels."
+"  So, to give some rough idea of just how many numerical Python "
+"programmers are actually out there, here are two numbers: In 2013, there "
+"were 7 international conferences organized specifically on numerical "
+"Python [#scipy-conf]_ [#pydata-conf]_.  At PyCon 2014, ~20% of the "
+"tutorials appear to involve the use of matrices [#pycon-tutorials]_."
+msgstr ""
+
+#: ../../pep-0465.txt:383
+msgid ""
+"To quantify this further, we used Github's \"search\" function to look at"
+" what modules are actually imported across a wide range of real-world "
+"code (i.e., all the code on Github).  We checked for imports of several "
+"popular stdlib modules, a variety of numerically oriented modules, and "
+"various other extremely high-profile modules like django and lxml (the "
+"latter of which is the #1 most downloaded package on PyPI).  Starred "
+"lines indicate packages which export array- or matrix-like objects which "
+"will adopt ``@`` if this PEP is approved::"
+msgstr ""
+
+#: ../../pep-0465.txt:424
+msgid ""
+"These numbers should be taken with several grains of salt (see footnote "
+"for discussion: [#github-details]_), but, to the extent they can be "
+"trusted, they suggest that ``numpy`` might be the single most-imported "
+"non-stdlib module in the entire Pythonverse; it's even more-imported than"
+" such stdlib stalwarts as ``subprocess``, ``math``, ``pickle``, and "
+"``threading``.  And numpy users represent only a subset of the broader "
+"numerical community that will benefit from the ``@`` operator.  Matrices "
+"may once have been a niche data type restricted to Fortran programs "
+"running in university labs and military clusters, but those days are long"
+" gone.  Number crunching is a mainstream part of modern Python usage."
+msgstr ""
+
+#: ../../pep-0465.txt:436
+msgid ""
+"In addition, there is some precedence for adding an infix operator to "
+"handle a more-specialized arithmetic operation: the floor division "
+"operator ``//``, like the bitwise operators, is very useful under certain"
+" circumstances when performing exact calculations on discrete values.  "
+"But it seems likely that there are many Python programmers who have never"
+" had reason to use ``//`` (or, for that matter, the bitwise operators).  "
+"``@`` is no more niche than ``//``."
+msgstr ""
+
+#: ../../pep-0465.txt:446
+msgid "So ``@`` is good for matrix formulas, but how common are those really?"
+msgstr ""
+
+#: ../../pep-0465.txt:448
+msgid ""
+"We've seen that ``@`` makes matrix formulas dramatically easier to work "
+"with for both experts and non-experts, that matrix formulas appear in "
+"many important applications, and that numerical libraries like numpy are "
+"used by a substantial proportion of Python's user base. But numerical "
+"libraries aren't just about matrix formulas, and being important doesn't "
+"necessarily mean taking up a lot of code: if matrix formulas only "
+"occurred in one or two places in the average numerically-oriented "
+"project, then it still wouldn't be worth adding a new operator.  So how "
+"common is matrix multiplication, really?"
+msgstr ""
+
+#: ../../pep-0465.txt:458
+msgid ""
+"When the going gets tough, the tough get empirical.  To get a rough "
+"estimate of how useful the ``@`` operator will be, the table below shows "
+"the rate at which different Python operators are actually used in the "
+"stdlib, and also in two high-profile numerical packages -- the scikit-"
+"learn machine learning library, and the nipy neuroimaging library -- "
+"normalized by source lines of code (SLOC).  Rows are sorted by the "
+"'combined' column, which pools all three code bases together. The "
+"combined column is thus strongly weighted towards the stdlib, which is "
+"much larger than both projects put together (stdlib: 411575 SLOC, scikit-"
+"learn: 50924 SLOC, nipy: 37078 SLOC). [#sloc-details]_"
+msgstr ""
+
+#: ../../pep-0465.txt:469
+msgid ""
+"The ``dot`` row (marked ``******``) counts how common matrix multiply "
+"operations are in each codebase."
+msgstr ""
+
+#: ../../pep-0465.txt:512
+#, python-format
+msgid ""
+"These two numerical packages alone contain ~780 uses of matrix "
+"multiplication.  Within these packages, matrix multiplication is used "
+"more heavily than most comparison operators (``<`` ``!=`` ``<=`` ``>=``)."
+"  Even when we dilute these counts by including the stdlib into our "
+"comparisons, matrix multiplication is still used more often in total than"
+" any of the bitwise operators, and 2x as often as ``//``. This is true "
+"even though the stdlib, which contains a fair amount of integer "
+"arithmetic and no matrix operations, makes up more than 80% of the "
+"combined code base."
+msgstr ""
+
+#: ../../pep-0465.txt:522
+msgid ""
+"By coincidence, the numeric libraries make up approximately the same "
+"proportion of the 'combined' codebase as numeric tutorials make up of "
+"PyCon 2014's tutorial schedule, which suggests that the 'combined' column"
+" may not be *wildly* unrepresentative of new Python code in general.  "
+"While it's impossible to know for certain, from this data it seems "
+"entirely possible that across all Python code currently being written, "
+"matrix multiplication is already used more often than ``//`` and the "
+"bitwise operations."
+msgstr ""
+
+#: ../../pep-0465.txt:533
+msgid "But isn't it weird to add an operator with no stdlib uses?"
+msgstr ""
+
+#: ../../pep-0465.txt:535
+msgid ""
+"It's certainly unusual (though extended slicing existed for some time "
+"builtin types gained support for it, ``Ellipsis`` is still unused within "
+"the stdlib, etc.).  But the important thing is whether a change will "
+"benefit users, not where the software is being downloaded from. It's "
+"clear from the above that ``@`` will be used, and used heavily. And this "
+"PEP provides the critical piece that will allow the Python numerical "
+"community to finally reach consensus on a standard duck type for all "
+"array-like objects, which is a necessary precondition to ever adding a "
+"numerical array type to the stdlib."
+msgstr ""
+
+#: ../../pep-0465.txt:547
+msgid "Compatibility considerations"
+msgstr ""
+
+#: ../../pep-0465.txt:549
+msgid ""
+"Currently, the only legal use of the ``@`` token in Python code is at "
+"statement beginning in decorators.  The new operators are both infix; the"
+" one place they can never occur is at statement beginning. Therefore, no "
+"existing code will be broken by the addition of these operators, and "
+"there is no possible parsing ambiguity between decorator-@ and the new "
+"operators."
+msgstr ""
+
+#: ../../pep-0465.txt:556
+msgid ""
+"Another important kind of compatibility is the mental cost paid by users "
+"to update their understanding of the Python language after this change, "
+"particularly for users who do not work with matrices and thus do not "
+"benefit.  Here again, ``@`` has minimal impact: even comprehensive "
+"tutorials and references will only need to add a sentence or two to fully"
+" document this PEP's changes for a non-numerical audience."
+msgstr ""
+
+#: ../../pep-0465.txt:566
+msgid "Intended usage details"
+msgstr ""
+
+#: ../../pep-0465.txt:568
+msgid ""
+"This section is informative, rather than normative -- it documents the "
+"consensus of a number of libraries that provide array- or matrix-like "
+"objects on how ``@`` will be implemented."
+msgstr ""
+
+#: ../../pep-0465.txt:572
+msgid ""
+"This section uses the numpy terminology for describing arbitrary "
+"multidimensional arrays of data, because it is a superset of all other "
+"commonly used models.  In this model, the *shape* of any array is "
+"represented by a tuple of integers.  Because matrices are two-"
+"dimensional, they have len(shape) == 2, while 1d vectors have len(shape) "
+"== 1, and scalars have shape == (), i.e., they are \"0 dimensional\".  "
+"Any array contains prod(shape) total entries.  Notice that `prod(()) == "
+"1`_ (for the same reason that sum(()) == 0); scalars are just an ordinary"
+" kind of array, not a special case.  Notice also that we distinguish "
+"between a single scalar value (shape == (), analogous to ``1``), a vector"
+" containing only a single entry (shape == (1,), analogous to ``[1]``), a "
+"matrix containing only a single entry (shape == (1, 1), analogous to "
+"``[[1]]``), etc., so the dimensionality of any array is always well-"
+"defined.  Other libraries with more restricted representations (e.g., "
+"those that support 2d arrays only) might implement only a subset of the "
+"functionality described here."
+msgstr ""
+
+#: ../../pep-0465.txt:592
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-0465.txt:594
+msgid "The recommended semantics for ``@`` for different inputs are:"
+msgstr ""
+
+#: ../../pep-0465.txt:596
+msgid ""
+"2d inputs are conventional matrices, and so the semantics are obvious: we"
+" apply conventional matrix multiplication.  If we write ``arr(2, 3)`` to "
+"represent an arbitrary 2x3 array, then ``arr(2, 3) @ arr(3, 4)`` returns "
+"an array with shape (2, 4)."
+msgstr ""
+
+#: ../../pep-0465.txt:601
+msgid ""
+"1d vector inputs are promoted to 2d by prepending or appending a '1' to "
+"the shape, the operation is performed, and then the added dimension is "
+"removed from the output.  The 1 is always added on the \"outside\" of the"
+" shape: prepended for left arguments, and appended for right arguments.  "
+"The result is that matrix @ vector and vector @ matrix are both legal "
+"(assuming compatible shapes), and both return 1d vectors; vector @ vector"
+" returns a scalar.  This is clearer with examples."
+msgstr ""
+
+#: ../../pep-0465.txt:610
+msgid ""
+"``arr(2, 3) @ arr(3, 1)`` is a regular matrix product, and returns an "
+"array with shape (2, 1), i.e., a column vector."
+msgstr ""
+
+#: ../../pep-0465.txt:613
+msgid ""
+"``arr(2, 3) @ arr(3)`` performs the same computation as the previous "
+"(i.e., treats the 1d vector as a matrix containing a single *column*, "
+"shape = (3, 1)), but returns the result with shape (2,), i.e., a 1d "
+"vector."
+msgstr ""
+
+#: ../../pep-0465.txt:618
+msgid ""
+"``arr(1, 3) @ arr(3, 2)`` is a regular matrix product, and returns an "
+"array with shape (1, 2), i.e., a row vector."
+msgstr ""
+
+#: ../../pep-0465.txt:621
+msgid ""
+"``arr(3) @ arr(3, 2)`` performs the same computation as the previous "
+"(i.e., treats the 1d vector as a matrix containing a single *row*, shape "
+"= (1, 3)), but returns the result with shape (2,), i.e., a 1d vector."
+msgstr ""
+
+#: ../../pep-0465.txt:626
+msgid ""
+"``arr(1, 3) @ arr(3, 1)`` is a regular matrix product, and returns an "
+"array with shape (1, 1), i.e., a single value in matrix form."
+msgstr ""
+
+#: ../../pep-0465.txt:629
+msgid ""
+"``arr(3) @ arr(3)`` performs the same computation as the previous, but "
+"returns the result with shape (), i.e., a single scalar value, not in "
+"matrix form.  So this is the standard inner product on vectors."
+msgstr ""
+
+#: ../../pep-0465.txt:634
+msgid ""
+"An infelicity of this definition for 1d vectors is that it makes ``@`` "
+"non-associative in some cases (``(Mat1 @ vec) @ Mat2`` != ``Mat1 @ (vec @"
+" Mat2)``).  But this seems to be a case where practicality beats purity: "
+"non-associativity only arises for strange expressions that would never be"
+" written in practice; if they are written anyway then there is a "
+"consistent rule for understanding what will happen (``Mat1 @ vec @ Mat2``"
+" is parsed as ``(Mat1 @ vec) @ Mat2``, just like ``a - b - c``); and, not"
+" supporting 1d vectors would rule out many important use cases that do "
+"arise very commonly in practice.  No-one wants to explain to new users "
+"why to solve the simplest linear system in the obvious way, they have to "
+"type ``(inv(A) @ b[:, np.newaxis]).flatten()`` instead of ``inv(A) @ b``,"
+" or perform an ordinary least-squares regression by typing ``solve(X.T @ "
+"X, X @ y[:, np.newaxis]).flatten()`` instead of ``solve(X.T @ X, X @ "
+"y)``.  No-one wants to type ``(a[np.newaxis, :] @ b[:, np.newaxis])[0, "
+"0]`` instead of ``a @ b`` every time they compute an inner product, or "
+"``(a[np.newaxis, :] @ Mat @ b[:, np.newaxis])[0, 0]`` for general "
+"quadratic forms instead of ``a @ Mat @ b``.  In addition, sage and sympy "
+"(see below) use these non-associative semantics with an infix matrix "
+"multiplication operator (they use ``*``), and they report that they "
+"haven't experienced any problems caused by it."
+msgstr ""
+
+#: ../../pep-0465.txt:657
+msgid ""
+"For inputs with more than 2 dimensions, we treat the last two dimensions "
+"as being the dimensions of the matrices to multiply, and 'broadcast' "
+"across the other dimensions.  This provides a convenient way to quickly "
+"compute many matrix products in a single operation. For example, "
+"``arr(10, 2, 3) @ arr(10, 3, 4)`` performs 10 separate matrix multiplies,"
+" each of which multiplies a 2x3 and a 3x4 matrix to produce a 2x4 matrix,"
+" and then returns the 10 resulting matrices together in an array with "
+"shape (10, 2, 4).  The intuition here is that we treat these 3d arrays of"
+" numbers as if they were 1d arrays *of matrices*, and then apply matrix "
+"multiplication in an elementwise manner, where now each 'element' is a "
+"whole matrix. Note that broadcasting is not limited to perfectly aligned "
+"arrays; in more complicated cases, it allows several simple but powerful "
+"tricks for controlling how arrays are aligned with each other; see "
+"[#broadcasting]_ for details.  (In particular, it turns out that when "
+"broadcasting is taken into account, the standard scalar * matrix product "
+"is a special case of the elementwise multiplication operator ``*``.)"
+msgstr ""
+
+#: ../../pep-0465.txt:676
+msgid ""
+"If one operand is >2d, and another operand is 1d, then the above rules "
+"apply unchanged, with 1d->2d promotion performed before broadcasting.  "
+"E.g., ``arr(10, 2, 3) @ arr(3)`` first promotes to ``arr(10, 2, 3) @ "
+"arr(3, 1)``, then broadcasts the right argument to create the aligned "
+"operation ``arr(10, 2, 3) @ arr(10, 3, 1)``, multiplies to get an array "
+"with shape (10, 2, 1), and finally removes the added dimension, returning"
+" an array with shape (10, 2). Similarly, ``arr(2) @ arr(10, 2, 3)`` "
+"produces an intermediate array with shape (10, 1, 3), and a final array "
+"with shape (10, 3)."
+msgstr ""
+
+#: ../../pep-0465.txt:686
+msgid ""
+"0d (scalar) inputs raise an error.  Scalar * matrix multiplication is a "
+"mathematically and algorithmically distinct operation from matrix @ "
+"matrix multiplication, and is already covered by the elementwise ``*`` "
+"operator.  Allowing scalar @ matrix would thus both require an "
+"unnecessary special case, and violate TOOWTDI."
+msgstr ""
+
+#: ../../pep-0465.txt:694
+msgid "Adoption"
+msgstr ""
+
+#: ../../pep-0465.txt:696
+msgid ""
+"We group existing Python projects which provide array- or matrix-like "
+"types based on what API they currently use for elementwise and matrix "
+"multiplication."
+msgstr ""
+
+#: ../../pep-0465.txt:700
+msgid ""
+"**Projects which currently use * for elementwise multiplication, and "
+"function/method calls for matrix multiplication:**"
+msgstr ""
+
+#: ../../pep-0465.txt:703
+msgid ""
+"The developers of the following projects have expressed an intention to "
+"implement ``@`` on their array-like types using the above semantics:"
+msgstr ""
+
+#: ../../pep-0465.txt:707
+msgid "numpy"
+msgstr ""
+
+#: ../../pep-0465.txt:708
+msgid "pandas"
+msgstr ""
+
+#: ../../pep-0465.txt:709
+msgid "blaze"
+msgstr ""
+
+#: ../../pep-0465.txt:710
+msgid "theano"
+msgstr ""
+
+#: ../../pep-0465.txt:712
+msgid ""
+"The following projects have been alerted to the existence of the PEP, but"
+" it's not yet known what they plan to do if it's accepted.  We don't "
+"anticipate that they'll have any objections, though, since everything "
+"proposed here is consistent with how they already do things:"
+msgstr ""
+
+#: ../../pep-0465.txt:718
+msgid "pycuda"
+msgstr ""
+
+#: ../../pep-0465.txt:719
+msgid "panda3d"
+msgstr ""
+
+#: ../../pep-0465.txt:721
+msgid ""
+"**Projects which currently use * for matrix multiplication, and "
+"function/method calls for elementwise multiplication:**"
+msgstr ""
+
+#: ../../pep-0465.txt:724
+msgid ""
+"The following projects have expressed an intention, if this PEP is "
+"accepted, to migrate from their current API to the elementwise-``*``, "
+"matmul-``@`` convention (i.e., this is a list of projects whose API "
+"fragmentation will probably be eliminated if this PEP is accepted):"
+msgstr ""
+
+#: ../../pep-0465.txt:729
+msgid "numpy (``numpy.matrix``)"
+msgstr ""
+
+#: ../../pep-0465.txt:730
+msgid "scipy.sparse"
+msgstr ""
+
+#: ../../pep-0465.txt:731
+msgid "pyoperators"
+msgstr ""
+
+#: ../../pep-0465.txt:732
+msgid "pyviennacl"
+msgstr ""
+
+#: ../../pep-0465.txt:734
+msgid ""
+"The following projects have been alerted to the existence of the PEP, but"
+" it's not known what they plan to do if it's accepted (i.e., this is a "
+"list of projects whose API fragmentation may or may not be eliminated if "
+"this PEP is accepted):"
+msgstr ""
+
+#: ../../pep-0465.txt:739
+msgid "cvxopt"
+msgstr ""
+
+#: ../../pep-0465.txt:741
+msgid ""
+"**Projects which currently use * for matrix multiplication, and which "
+"don't really care about elementwise multiplication of matrices:**"
+msgstr ""
+
+#: ../../pep-0465.txt:744
+msgid ""
+"There are several projects which implement matrix types, but from a very "
+"different perspective than the numerical libraries discussed above.  "
+"These projects focus on computational methods for analyzing matrices in "
+"the sense of abstract mathematical objects (i.e., linear maps over free "
+"modules over rings), rather than as big bags full of numbers that need "
+"crunching.  And it turns out that from the abstract math point of view, "
+"there isn't much use for elementwise operations in the first place; as "
+"discussed in the Background section above, elementwise operations are "
+"motivated by the bag-of-numbers approach. So these projects don't "
+"encounter the basic problem that this PEP exists to address, making it "
+"mostly irrelevant to them; while they appear superficially similar to "
+"projects like numpy, they're actually doing something quite different.  "
+"They use ``*`` for matrix multiplication (and for group actions, and so "
+"forth), and if this PEP is accepted, their expressed intention is to "
+"continue doing so, while perhaps adding ``@`` as an alias.  These "
+"projects include:"
+msgstr ""
+
+#: ../../pep-0465.txt:761
+msgid "sympy"
+msgstr ""
+
+#: ../../pep-0465.txt:762
+msgid "sage"
+msgstr ""
+
+#: ../../pep-0465.txt:766
+msgid "Implementation details"
+msgstr ""
+
+#: ../../pep-0465.txt:768
+msgid ""
+"New functions ``operator.matmul`` and ``operator.__matmul__`` are added "
+"to the standard library, with the usual semantics."
+msgstr ""
+
+#: ../../pep-0465.txt:771
+msgid ""
+"A corresponding function ``PyObject* PyObject_MatrixMultiply(PyObject "
+"*o1, PyObject *o2)`` is added to the C API."
+msgstr ""
+
+#: ../../pep-0465.txt:774
+msgid ""
+"A new AST node is added named ``MatMult``, along with a new token "
+"``ATEQUAL`` and new bytecode opcodes ``BINARY_MATRIX_MULTIPLY`` and "
+"``INPLACE_MATRIX_MULTIPLY``."
+msgstr ""
+
+#: ../../pep-0465.txt:778
+msgid ""
+"Two new type slots are added; whether this is to ``PyNumberMethods`` or a"
+" new ``PyMatrixMethods`` struct remains to be determined."
+msgstr ""
+
+#: ../../pep-0465.txt:783
+msgid "Rationale for specification details"
+msgstr ""
+
+#: ../../pep-0465.txt:786
+msgid "Choice of operator"
+msgstr ""
+
+#: ../../pep-0465.txt:788
+msgid ""
+"Why ``@`` instead of some other spelling?  There isn't any consensus "
+"across other programming languages about how this operator should be "
+"named [#matmul-other-langs]_; here we discuss the various options."
+msgstr ""
+
+#: ../../pep-0465.txt:792
+msgid ""
+"Restricting ourselves only to symbols present on US English keyboards, "
+"the punctuation characters that don't already have a meaning in Python "
+"expression context are: ``@``, backtick, ``$``, ``!``, and ``?``.  Of "
+"these options, ``@`` is clearly the best; ``!`` and ``?`` are already "
+"heavily freighted with inapplicable meanings in the programming context, "
+"backtick has been banned from Python by BDFL pronouncement (see PEP "
+"3099), and ``$`` is uglier, even more dissimilar to ``*`` and "
+":math:`\\cdot`, and has Perl/PHP baggage.  ``$`` is probably the second-"
+"best option of these, though."
+msgstr ""
+
+#: ../../pep-0465.txt:802
+msgid ""
+"Symbols which are not present on US English keyboards start at a "
+"significant disadvantage (having to spend 5 minutes at the beginning of "
+"every numeric Python tutorial just going over keyboard layouts is not a "
+"hassle anyone really wants).  Plus, even if we somehow overcame the "
+"typing problem, it's not clear there are any that are actually better "
+"than ``@``.  Some options that have been suggested include:"
+msgstr ""
+
+#: ../../pep-0465.txt:809
+msgid "U+00D7 MULTIPLICATION SIGN: ``A × B``"
+msgstr ""
+
+#: ../../pep-0465.txt:810
+msgid "U+22C5 DOT OPERATOR: ``A ⋅ B``"
+msgstr ""
+
+#: ../../pep-0465.txt:811
+msgid "U+2297 CIRCLED TIMES: ``A ⊗ B``"
+msgstr ""
+
+#: ../../pep-0465.txt:812
+msgid "U+00B0 DEGREE: ``A ° B``"
+msgstr ""
+
+#: ../../pep-0465.txt:814
+msgid ""
+"What we need, though, is an operator that means \"matrix multiplication, "
+"as opposed to scalar/elementwise multiplication\". There is no "
+"conventional symbol with this meaning in either programming or "
+"mathematics, where these operations are usually distinguished by context."
+"  (And U+2297 CIRCLED TIMES is actually used conventionally to mean "
+"exactly the wrong things: elementwise multiplication -- the \"Hadamard "
+"product\" -- or outer product, rather than matrix/inner product like our "
+"operator).  ``@`` at least has the virtue that it *looks* like a funny "
+"non-commutative operator; a naive user who knows maths but not "
+"programming couldn't look at ``A * B`` versus ``A × B``, or ``A * B`` "
+"versus ``A ⋅ B``, or ``A * B`` versus ``A ° B`` and guess which one is "
+"the usual multiplication, and which one is the special case."
+msgstr ""
+
+#: ../../pep-0465.txt:828
+msgid ""
+"Finally, there is the option of using multi-character tokens.  Some "
+"options:"
+msgstr ""
+
+#: ../../pep-0465.txt:831
+msgid ""
+"Matlab and Julia use a ``.*`` operator.  Aside from being visually "
+"confusable with ``*``, this would be a terrible choice for us because in "
+"Matlab and Julia, ``*`` means matrix multiplication and ``.*`` means "
+"elementwise multiplication, so using ``.*`` for matrix multiplication "
+"would make us exactly backwards from what Matlab and Julia users expect."
+msgstr ""
+
+#: ../../pep-0465.txt:838
+msgid ""
+"APL apparently used ``+.×``, which by combining a multi-character token, "
+"confusing attribute-access-like . syntax, and a unicode character, ranks "
+"somewhere below U+2603 SNOWMAN on our candidate list.  If we like the "
+"idea of combining addition and multiplication operators as being "
+"evocative of how matrix multiplication actually works, then something "
+"like ``+*`` could be used -- though this may be too easy to confuse with "
+"``*+``, which is just multiplication combined with the unary ``+`` "
+"operator."
+msgstr ""
+
+#: ../../pep-0465.txt:847
+msgid ""
+"PEP 211 suggested ``~*``.  This has the downside that it sort of suggests"
+" that there is a unary ``*`` operator that is being combined with unary "
+"``~``, but it could work."
+msgstr ""
+
+#: ../../pep-0465.txt:851
+#, python-format
+msgid ""
+"R uses ``%*%`` for matrix multiplication.  In R this forms part of a "
+"general extensible infix system in which all tokens of the form ``%foo%``"
+" are user-defined binary operators.  We could steal the token without "
+"stealing the system."
+msgstr ""
+
+#: ../../pep-0465.txt:856
+msgid ""
+"Some other plausible candidates that have been suggested: ``><`` (= ascii"
+" drawing of the multiplication sign ×); the footnote operator ``[*]`` or "
+"``|*|`` (but when used in context, the use of vertical grouping symbols "
+"tends to recreate the nested parentheses visual clutter that was noted as"
+" one of the major downsides of the function syntax we're trying to get "
+"away from); ``^*``."
+msgstr ""
+
+#: ../../pep-0465.txt:863
+msgid ""
+"So, it doesn't matter much, but ``@`` seems as good or better than any of"
+" the alternatives:"
+msgstr ""
+
+#: ../../pep-0465.txt:866
+msgid ""
+"It's a friendly character that Pythoneers are already used to typing in "
+"decorators, but the decorator usage and the math expression usage are "
+"sufficiently dissimilar that it would be hard to confuse them in "
+"practice."
+msgstr ""
+
+#: ../../pep-0465.txt:871
+msgid ""
+"It's widely accessible across keyboard layouts (and thanks to its use in "
+"email addresses, this is true even of weird keyboards like those in "
+"phones)."
+msgstr ""
+
+#: ../../pep-0465.txt:875
+msgid "It's round like ``*`` and :math:`\\cdot`."
+msgstr ""
+
+#: ../../pep-0465.txt:877
+msgid "The mATrices mnemonic is cute."
+msgstr ""
+
+#: ../../pep-0465.txt:879
+msgid ""
+"The swirly shape is reminiscent of the simultaneous sweeps over rows and "
+"columns that define matrix multiplication"
+msgstr ""
+
+#: ../../pep-0465.txt:882
+msgid "Its asymmetry is evocative of its non-commutative nature."
+msgstr ""
+
+#: ../../pep-0465.txt:884
+msgid "Whatever, we have to pick something."
+msgstr ""
+
+#: ../../pep-0465.txt:888
+msgid "Precedence and associativity"
+msgstr ""
+
+#: ../../pep-0465.txt:890
+msgid ""
+"There was a long discussion [#associativity-discussions]_ about whether "
+"``@`` should be right- or left-associative (or even something more exotic"
+" [#group-associativity]_). Almost all Python operators are left-"
+"associative, so following this convention would be the simplest approach,"
+" but there were two arguments that suggested matrix multiplication might "
+"be worth making right-associative as a special case:"
+msgstr ""
+
+#: ../../pep-0465.txt:898
+msgid ""
+"First, matrix multiplication has a tight conceptual association with "
+"function application/composition, so many mathematically sophisticated "
+"users have an intuition that an expression like :math:`R S x` proceeds "
+"from right-to-left, with first :math:`S` transforming the vector "
+":math:`x`, and then :math:`R` transforming the result. This isn't "
+"universally agreed (and not all number-crunchers are steeped in the pure-"
+"math conceptual framework that motivates this intuition [#oil-industry-"
+"versus-right-associativity]_), but at the least this intuition is more "
+"common than for other operations like :math:`2 \\cdot 3 \\cdot 4` which "
+"everyone reads as going from left-to-right."
+msgstr ""
+
+#: ../../pep-0465.txt:909
+msgid ""
+"Second, if expressions like ``Mat @ Mat @ vec`` appear often in code, "
+"then programs will run faster (and efficiency-minded programmers will be "
+"able to use fewer parentheses) if this is evaluated as ``Mat @ (Mat @ "
+"vec)`` then if it is evaluated like ``(Mat @ Mat) @ vec``."
+msgstr ""
+
+#: ../../pep-0465.txt:914
+msgid "However, weighing against these arguments are the following:"
+msgstr ""
+
+#: ../../pep-0465.txt:916
+msgid ""
+"Regarding the efficiency argument, empirically, we were unable to find "
+"any evidence that ``Mat @ Mat @ vec`` type expressions actually dominate "
+"in real-life code. Parsing a number of large projects that use numpy, we "
+"found that when forced by numpy's current funcall syntax to choose an "
+"order of operations for nested calls to ``dot``, people actually use "
+"left-associative nesting slightly *more* often than right-associative "
+"nesting [#numpy-associativity-counts]_.  And anyway, writing parentheses "
+"isn't so bad -- if an efficiency-minded programmer is going to take the "
+"trouble to think through the best way to evaluate some expression, they "
+"probably *should* write down the parentheses regardless of whether "
+"they're needed, just to make it obvious to the next reader that they "
+"order of operations matter."
+msgstr ""
+
+#: ../../pep-0465.txt:929
+msgid ""
+"In addition, it turns out that other languages, including those with much"
+" more of a focus on linear algebra, overwhelmingly make their matmul "
+"operators left-associative. Specifically, the ``@`` equivalent is left-"
+"associative in R, Matlab, Julia, IDL, and Gauss. The only exceptions we "
+"found are Mathematica, in which ``a @ b @ c`` would be parsed non-"
+"associatively as ``dot(a, b, c)``, and APL, in which all operators are "
+"right-associative. There do not seem to exist any languages that make "
+"``@`` right-associative and ``*`` left-associative. And these decisions "
+"don't seem to be controversial -- I've never seen anyone complaining "
+"about this particular aspect of any of these other languages, and the "
+"left-associativity of ``*`` doesn't seem to bother users of the existing "
+"Python libraries that use ``*`` for matrix multiplication. So, at the "
+"least we can conclude from this that making ``@`` left-associative will "
+"certainly not cause any disasters. Making ``@`` right-associative, OTOH, "
+"would be exploring new and uncertain ground."
+msgstr ""
+
+#: ../../pep-0465.txt:946
+msgid ""
+"And another advantage of left-associativity is that it is much easier to "
+"learn and remember that ``@`` acts like ``*``, than it is to remember "
+"first that ``@`` is unlike other Python operators by being right-"
+"associative, and then on top of this, also have to remember whether it is"
+" more tightly or more loosely binding than ``*``. (Right-associativity "
+"forces us to choose a precedence, and intuitions were about equally split"
+" on which precedence made more sense. So this suggests that no matter "
+"which choice we made, no-one would be able to guess or remember it.)"
+msgstr ""
+
+#: ../../pep-0465.txt:956
+msgid ""
+"On net, therefore, the general consensus of the numerical community is "
+"that while matrix multiplication is something of a special case, it's not"
+" special enough to break the rules, and ``@`` should parse like ``*`` "
+"does."
+msgstr ""
+
+#: ../../pep-0465.txt:963
+msgid "(Non)-Definitions for built-in types"
+msgstr ""
+
+#: ../../pep-0465.txt:965
+msgid ""
+"No ``__matmul__`` or ``__matpow__`` are defined for builtin numeric types"
+" (``float``, ``int``, etc.) or for the ``numbers.Number`` hierarchy, "
+"because these types represent scalars, and the consensus semantics for "
+"``@`` are that it should raise an error on scalars."
+msgstr ""
+
+#: ../../pep-0465.txt:970
+msgid ""
+"We do not -- for now -- define a ``__matmul__`` method on the standard "
+"``memoryview`` or ``array.array`` objects, for several reasons.  Of "
+"course this could be added if someone wants it, but these types would "
+"require quite a bit of additional work beyond ``__matmul__`` before they "
+"could be used for numeric work -- e.g., they have no way to do addition "
+"or scalar multiplication either! -- and adding such functionality is "
+"beyond the scope of this PEP.  In addition, providing a quality "
+"implementation of matrix multiplication is highly non-trivial.  Naive "
+"nested loop implementations are very slow and shipping such an "
+"implementation in CPython would just create a trap for users.  But the "
+"alternative -- providing a modern, competitive matrix multiply -- would "
+"require that CPython link to a BLAS library, which brings a set of new "
+"complications.  In particular, several popular BLAS libraries (including "
+"the one that ships by default on OS X) currently break the use of "
+"``multiprocessing`` [#blas-fork]_. Together, these considerations mean "
+"that the cost/benefit of adding ``__matmul__`` to these types just isn't "
+"there, so for now we'll continue to delegate these problems to numpy and "
+"friends, and defer a more systematic solution to a future proposal."
+msgstr ""
+
+#: ../../pep-0465.txt:990
+msgid ""
+"There are also non-numeric Python builtins which define ``__mul__`` "
+"(``str``, ``list``, ...).  We do not define ``__matmul__`` for these "
+"types either, because why would we even do that."
+msgstr ""
+
+#: ../../pep-0465.txt:996
+msgid "Non-definition of matrix power"
+msgstr ""
+
+#: ../../pep-0465.txt:998
+msgid ""
+"Earlier versions of this PEP also proposed a matrix power operator, "
+"``@@``, analogous to ``**``.  But on further consideration, it was "
+"decided that the utility of this was sufficiently unclear that it would "
+"be better to leave it out for now, and only revisit the issue if -- once "
+"we have more experience with ``@`` -- it turns out that ``@@`` is truly "
+"missed. [#atat-discussion]_"
+msgstr ""
+
+#: ../../pep-0465.txt:1007
+msgid "Rejected alternatives to adding a new operator"
+msgstr ""
+
+#: ../../pep-0465.txt:1009
+msgid ""
+"Over the past few decades, the Python numeric community has explored a "
+"variety of ways to resolve the tension between matrix and elementwise "
+"multiplication operations.  PEP 211 and PEP 225, both proposed in 2000 "
+"and last seriously discussed in 2008 [#threads-2008]_, were early "
+"attempts to add new operators to solve this problem, but suffered from "
+"serious flaws; in particular, at that time the Python numerical community"
+" had not yet reached consensus on the proper API for array objects, or on"
+" what operators might be needed or useful (e.g., PEP 225 proposes 6 new "
+"operators with unspecified semantics).  Experience since then has now led"
+" to consensus that the best solution, for both numeric Python and core "
+"Python, is to add a single infix operator for matrix multiply (together "
+"with the other new operators this implies like ``@=``)."
+msgstr ""
+
+#: ../../pep-0465.txt:1023
+msgid "We review some of the rejected alternatives here."
+msgstr ""
+
+#: ../../pep-0465.txt:1025
+msgid ""
+"**Use a second type that defines __mul__ as matrix multiplication:** As "
+"discussed above (`Background: What's wrong with the status quo?`_), this "
+"has been tried this for many years via the ``numpy.matrix`` type (and its"
+" predecessors in Numeric and numarray).  The result is a strong consensus"
+" among both numpy developers and developers of downstream packages that "
+"``numpy.matrix`` should essentially never be used, because of the "
+"problems caused by having conflicting duck types for arrays.  (Of course "
+"one could then argue we should *only* define ``__mul__`` to be matrix "
+"multiplication, but then we'd have the same problem with elementwise "
+"multiplication.)  There have been several pushes to remove "
+"``numpy.matrix`` entirely; the only counter-arguments have come from "
+"educators who find that its problems are outweighed by the need to "
+"provide a simple and clear mapping between mathematical notation and code"
+" for novices (see `Transparent syntax is especially crucial for non-"
+"expert programmers`_).  But, of course, starting out newbies with a "
+"dispreferred syntax and then expecting them to transition later causes "
+"its own problems.  The two-type solution is worse than the disease."
+msgstr ""
+
+#: ../../pep-0465.txt:1044
+msgid ""
+"**Add lots of new operators, or add a new generic syntax for defining "
+"infix operators:** In addition to being generally un-Pythonic and "
+"repeatedly rejected by BDFL fiat, this would be using a sledgehammer to "
+"smash a fly.  The scientific python community has consensus that adding "
+"one operator for matrix multiplication is enough to fix the one otherwise"
+" unfixable pain point. (In retrospect, we all think PEP 225 was a bad "
+"idea too -- or at least far more complex than it needed to be.)"
+msgstr ""
+
+#: ../../pep-0465.txt:1053
+msgid ""
+"**Add a new @ (or whatever) operator that has some other meaning in "
+"general Python, and then overload it in numeric code:** This was the "
+"approach taken by PEP 211, which proposed defining ``@`` to be the "
+"equivalent of ``itertools.product``.  The problem with this is that when "
+"taken on its own terms, it's pretty clear that ``itertools.product`` "
+"doesn't actually need a dedicated operator.  It hasn't even been deemed "
+"worth of a builtin.  (During discussions of this PEP, a similar "
+"suggestion was made to define ``@`` as a general purpose function "
+"composition operator, and this suffers from the same problem; "
+"``functools.compose`` isn't even useful enough to exist.) Matrix "
+"multiplication has a uniquely strong rationale for inclusion as an infix "
+"operator.  There almost certainly don't exist any other binary operations"
+" that will ever justify adding any other infix operators to Python."
+msgstr ""
+
+#: ../../pep-0465.txt:1068
+msgid ""
+"**Add a .dot method to array types so as to allow \"pseudo-infix\" "
+"A.dot(B) syntax:** This has been in numpy for some years, and in many "
+"cases it's better than dot(A, B).  But it's still much less readable than"
+" real infix notation, and in particular still suffers from an extreme "
+"overabundance of parentheses.  See `Why should matrix multiplication be "
+"infix?`_ above."
+msgstr ""
+
+#: ../../pep-0465.txt:1075
+msgid ""
+"**Use a 'with' block to toggle the meaning of * within a single code "
+"block**: E.g., numpy could define a special context object so that we'd "
+"have::"
+msgstr ""
+
+#: ../../pep-0465.txt:1083
+msgid ""
+"However, this has two serious problems: first, it requires that every "
+"array-like type's ``__mul__`` method know how to check some global state "
+"(``numpy.mul_is_currently_dot`` or whatever).  This is fine if ``a`` and "
+"``b`` are numpy objects, but the world contains many non-numpy array-like"
+" objects.  So this either requires non-local coupling -- every numpy "
+"competitor library has to import numpy and then check "
+"``numpy.mul_is_currently_dot`` on every operation -- or else it breaks "
+"duck-typing, with the above code doing radically different things "
+"depending on whether ``a`` and ``b`` are numpy objects or some other sort"
+" of object.  Second, and worse, ``with`` blocks are dynamically scoped, "
+"not lexically scoped; i.e., any function that gets called inside the "
+"``with`` block will suddenly find itself executing inside the mul_as_dot "
+"world, and crash and burn horribly -- if you're lucky.  So this is a "
+"construct that could only be used safely in rather limited cases (no "
+"function calls), and which would make it very easy to shoot yourself in "
+"the foot without warning."
+msgstr ""
+
+#: ../../pep-0465.txt:1100
+msgid ""
+"**Use a language preprocessor that adds extra numerically-oriented "
+"operators and perhaps other syntax:** (As per recent BDFL suggestion: "
+"[#preprocessor]_) This suggestion seems based on the idea that numerical "
+"code needs a wide variety of syntax additions.  In fact, given ``@``, "
+"most numerical users don't need any other operators or syntax; it solves "
+"the one really painful problem that cannot be solved by other means, and "
+"that causes painful reverberations through the larger ecosystem.  "
+"Defining a new language (presumably with its own parser which would have "
+"to be kept in sync with Python's, etc.), just to support a single binary "
+"operator, is neither practical nor desirable.  In the numerical context, "
+"Python's competition is special-purpose numerical languages (Matlab, R, "
+"IDL, etc.).  Compared to these, Python's killer feature is exactly that "
+"one can mix specialized numerical code with code for XML parsing, web "
+"page generation, database access, network programming, GUI libraries, and"
+" so forth, and we also gain major benefits from the huge variety of "
+"tutorials, reference material, introductory classes, etc., which use "
+"Python.  Fragmenting \"numerical Python\" from \"real Python\" would be a"
+" major source of confusion.  A major motivation for this PEP is to "
+"*reduce* fragmentation.  Having to set up a preprocessor would be an "
+"especially prohibitive complication for unsophisticated users.  And we "
+"use Python because we like Python!  We don't want almost-but-not-quite-"
+"Python."
+msgstr ""
+
+#: ../../pep-0465.txt:1124
+msgid ""
+"**Use overloading hacks to define a \"new infix operator\" like *dot*, as"
+" in a well-known Python recipe:** (See: [#infix-hack]_) Beautiful is "
+"better than ugly.  This is... not beautiful.  And not Pythonic.  And "
+"especially unfriendly to beginners, who are just trying to wrap their "
+"heads around the idea that there's a coherent underlying system behind "
+"these magic incantations that they're learning, when along comes an evil "
+"hack like this that violates that system, creates bizarre error messages "
+"when accidentally misused, and whose underlying mechanisms can't be "
+"understood without deep knowledge of how object oriented systems work."
+msgstr ""
+
+#: ../../pep-0465.txt:1135
+msgid ""
+"**Use a special \"facade\" type to support syntax like arr.M * arr:** "
+"This is very similar to the previous proposal, in that the ``.M`` "
+"attribute would basically return the same object as ``arr *dot` would, "
+"and thus suffers the same objections about 'magicalness'.  This approach "
+"also has some non-obvious complexities: for example, while ``arr.M * "
+"arr`` must return an array, ``arr.M * arr.M`` and ``arr * arr.M`` must "
+"return facade objects, or else ``arr.M * arr.M * arr`` and ``arr * arr.M "
+"* arr`` will not work.  But this means that facade objects must be able "
+"to recognize both other array objects and other facade objects (which "
+"creates additional complexity for writing interoperating array types from"
+" different libraries who must now recognize both each other's array types"
+" and their facade types).  It also creates pitfalls for users who may "
+"easily type ``arr * arr.M`` or ``arr.M * arr.M`` and expect to get back "
+"an array object; instead, they will get a mysterious object that throws "
+"errors when they attempt to use it.  Basically with this approach users "
+"must be careful to think of ``.M*`` as an indivisible unit that acts as "
+"an infix operator -- and as infix-operator-like token strings go, at "
+"least ``*dot*`` is prettier looking (look at its cute little ears!)."
+msgstr ""
+
+#: ../../pep-0465.txt:1157
+msgid "Discussions of this PEP"
+msgstr ""
+
+#: ../../pep-0465.txt:1159
+msgid "Collected here for reference:"
+msgstr ""
+
+#: ../../pep-0465.txt:1161
+msgid ""
+"Github pull request containing much of the original discussion and "
+"drafting: https://github.com/numpy/numpy/pull/4351"
+msgstr ""
+
+#: ../../pep-0465.txt:1164
+msgid "sympy mailing list discussions of an early draft:"
+msgstr ""
+
+#: ../../pep-0465.txt:1166
+msgid "https://groups.google.com/forum/#!topic/sympy/22w9ONLa7qo"
+msgstr ""
+
+#: ../../pep-0465.txt:1167
+msgid "https://groups.google.com/forum/#!topic/sympy/4tGlBGTggZY"
+msgstr ""
+
+#: ../../pep-0465.txt:1169
+msgid ""
+"sage-devel mailing list discussions of an early draft: "
+"https://groups.google.com/forum/#!topic/sage-devel/YxEktGu8DeM"
+msgstr ""
+
+#: ../../pep-0465.txt:1172
+msgid ""
+"13-Mar-2014 python-ideas thread: https://mail.python.org/pipermail"
+"/python-ideas/2014-March/027053.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1175
+msgid ""
+"numpy-discussion thread on whether to keep ``@@``: "
+"http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069448.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1178
+msgid ""
+"numpy-discussion threads on precedence/associativity of ``@``: * "
+"http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069444.html *"
+" http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069605.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1184
+msgid "References"
+msgstr ""
+
+#: ../../pep-0465.txt:1186
+msgid ""
+"From a comment by GvR on a G+ post by GvR; the comment itself does not "
+"seem to be directly linkable: "
+"https://plus.google.com/115212051037621986145/posts/hZVVtJ9bK3u"
+msgstr ""
+
+#: ../../pep-0465.txt:1188
+msgid ""
+"http://code.activestate.com/recipes/384122-infix-operators/ "
+"http://www.sagemath.org/doc/reference/misc/sage/misc/decorators.html#sage.misc.decorators.infix_operator"
+msgstr ""
+
+#: ../../pep-0465.txt:1190
+msgid "http://conference.scipy.org/past.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1191
+msgid "http://pydata.org/events/"
+msgstr ""
+
+#: ../../pep-0465.txt:1192
+msgid ""
+"In this formula, :math:`\\beta` is a vector or matrix of regression "
+"coefficients, :math:`V` is the estimated variance/covariance matrix for "
+"these coefficients, and we want to test the null hypothesis that "
+":math:`H\\beta = r`; a large :math:`S` then indicates that this "
+"hypothesis is unlikely to be true. For example, in an analysis of human "
+"height, the vector :math:`\\beta` might contain one value which was the "
+"average height of the measured men, and another value which was the "
+"average height of the measured women, and then setting :math:`H = [1, "
+"-1], r = 0` would let us test whether men and women are the same height "
+"on average. Compare to eq. 2.139 in http://sfb649.wiwi.hu-"
+"berlin.de/fedc_homepage/xplore/tutorials/xegbohtmlnode17.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1205
+msgid ""
+"Example code is adapted from "
+"https://github.com/rerpy/rerpy/blob/0d274f85e14c3b1625acb22aed1efa85d122ecb7/rerpy/incremental_ls.py#L202"
+msgstr ""
+
+#: ../../pep-0465.txt:1207
+msgid ""
+"Out of the 36 tutorials scheduled for PyCon 2014 "
+"(https://us.pycon.org/2014/schedule/tutorials/), we guess that the 8 "
+"below will almost certainly deal with matrices:"
+msgstr ""
+
+#: ../../pep-0465.txt:1211
+msgid "Dynamics and control with Python"
+msgstr ""
+
+#: ../../pep-0465.txt:1213
+msgid "Exploring machine learning with Scikit-learn"
+msgstr ""
+
+#: ../../pep-0465.txt:1215
+msgid "How to formulate a (science) problem and analyze it using Python code"
+msgstr ""
+
+#: ../../pep-0465.txt:1218
+msgid "Diving deeper into Machine Learning with Scikit-learn"
+msgstr ""
+
+#: ../../pep-0465.txt:1220
+msgid "Data Wrangling for Kaggle Data Science Competitions – An etude"
+msgstr ""
+
+#: ../../pep-0465.txt:1222
+msgid "Hands-on with Pydata: how to build a minimal recommendation engine."
+msgstr ""
+
+#: ../../pep-0465.txt:1225
+msgid "Python for Social Scientists"
+msgstr ""
+
+#: ../../pep-0465.txt:1227
+msgid "Bayesian statistics made simple"
+msgstr ""
+
+#: ../../pep-0465.txt:1229
+msgid "In addition, the following tutorials could easily involve matrices:"
+msgstr ""
+
+#: ../../pep-0465.txt:1231
+msgid "Introduction to game programming"
+msgstr ""
+
+#: ../../pep-0465.txt:1233
+msgid ""
+"mrjob: Snakes on a Hadoop *(\"We'll introduce some data science concepts,"
+" such as user-user similarity, and show how to calculate these "
+"metrics...\")*"
+msgstr ""
+
+#: ../../pep-0465.txt:1237
+msgid "Mining Social Web APIs with IPython Notebook"
+msgstr ""
+
+#: ../../pep-0465.txt:1239
+msgid "Beyond Defaults: Creating Polished Visualizations Using Matplotlib"
+msgstr ""
+
+#: ../../pep-0465.txt:1241
+#, python-format
+msgid ""
+"This gives an estimated range of 8 to 12 / 36 = 22% to 33% of tutorials "
+"dealing with matrices; saying ~20% then gives us some wiggle room in case"
+" our estimates are high."
+msgstr ""
+
+#: ../../pep-0465.txt:1245
+msgid ""
+"SLOCs were defined as physical lines which contain at least one token "
+"that is not a COMMENT, NEWLINE, ENCODING, INDENT, or DEDENT.  Counts were"
+" made by using ``tokenize`` module from Python 3.2.3 to examine the "
+"tokens in all files ending ``.py`` underneath some directory.  Only "
+"tokens which occur at least once in the source trees are included in the "
+"table.  The counting script is available `in the PEP repository "
+"<http://hg.python.org/peps/file/tip/pep-0465/scan-ops.py>`_."
+msgstr ""
+
+#: ../../pep-0465.txt:1254
+msgid ""
+"Matrix multiply counts were estimated by counting how often certain "
+"tokens which are used as matrix multiply function names occurred in each "
+"package.  This creates a small number of false positives for scikit-"
+"learn, because we also count instances of the wrappers around ``dot`` "
+"that this package uses, and so there are a few dozen tokens which "
+"actually occur in ``import`` or ``def`` statements."
+msgstr ""
+
+#: ../../pep-0465.txt:1261
+msgid ""
+"All counts were made using the latest development version of each project"
+" as of 21 Feb 2014."
+msgstr ""
+
+#: ../../pep-0465.txt:1264
+msgid ""
+"'stdlib' is the contents of the Lib/ directory in commit d6aa3fa646e2 to "
+"the cpython hg repository, and treats the following tokens as indicating "
+"matrix multiply: n/a."
+msgstr ""
+
+#: ../../pep-0465.txt:1268
+msgid ""
+"'scikit-learn' is the contents of the sklearn/ directory in commit "
+"69b71623273ccfc1181ea83d8fb9e05ae96f57c7 to the scikit-learn repository "
+"(https://github.com/scikit-learn/scikit-learn), and treats the following "
+"tokens as indicating matrix multiply: ``dot``, ``fast_dot``, "
+"``safe_sparse_dot``."
+msgstr ""
+
+#: ../../pep-0465.txt:1274
+msgid ""
+"'nipy' is the contents of the nipy/ directory in commit "
+"5419911e99546401b5a13bd8ccc3ad97f0d31037 to the nipy repository "
+"(https://github.com/nipy/nipy/), and treats the following tokens as "
+"indicating matrix multiply: ``dot``."
+msgstr ""
+
+#: ../../pep-0465.txt:1279
+msgid ""
+"BLAS libraries have a habit of secretly spawning threads, even when used "
+"from single-threaded programs.  And threads play very poorly with "
+"``fork()``; the usual symptom is that attempting to perform linear "
+"algebra in a child process causes an immediate deadlock."
+msgstr ""
+
+#: ../../pep-0465.txt:1285
+msgid "http://fperez.org/py4science/numpy-pep225/numpy-pep225.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1287
+msgid "http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1289
+msgid "http://mail.scipy.org/pipermail/scipy-user/2014-February/035499.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1291
+#, python-format
+msgid ""
+"Counts were produced by manually entering the string ``\"import foo\"`` "
+"or ``\"from foo import\"`` (with quotes) into the Github code search "
+"page, e.g.: "
+"https://github.com/search?q=%22import+numpy%22&ref=simplesearch&type=Code"
+" on 2014-04-10 at ~21:00 UTC.  The reported values are the numbers given "
+"in the \"Languages\" box on the lower-left corner, next to \"Python\".  "
+"This also causes some undercounting (e.g., leaving out Cython code, and "
+"possibly one should also count HTML docs and so forth), but these effects"
+" are negligible (e.g., only ~1% of numpy usage appears to occur in Cython"
+" code, and probably even less for the other modules listed).  The use of "
+"this box is crucial, however, because these counts appear to be stable, "
+"while the \"overall\" counts listed at the top of the page (\"We've found"
+" ___ code results\") are highly variable even for a single search -- "
+"simply reloading the page can cause this number to vary by a factor of 2 "
+"(!!).  (They do seem to settle down if one reloads the page repeatedly, "
+"but nonetheless this is spooky enough that it seemed better to avoid "
+"these numbers.)"
+msgstr ""
+
+#: ../../pep-0465.txt:1310
+msgid ""
+"These numbers should of course be taken with multiple grains of salt; "
+"it's not clear how representative Github is of Python code in general, "
+"and limitations of the search tool make it impossible to get precise "
+"counts.  AFAIK this is the best data set currently available, but it'd be"
+" nice if it were better.  In particular:"
+msgstr ""
+
+#: ../../pep-0465.txt:1316
+msgid "Lines like ``import sys, os`` will only be counted in the ``sys`` row."
+msgstr ""
+
+#: ../../pep-0465.txt:1319
+msgid ""
+"A file containing both ``import X`` and ``from X import`` will be counted"
+" twice"
+msgstr ""
+
+#: ../../pep-0465.txt:1322
+msgid ""
+"Imports of the form ``from X.foo import ...`` are missed.  We could catch"
+" these by instead searching for \"from X\", but this is a common phrase "
+"in English prose, so we'd end up with false positives from comments, "
+"strings, etc.  For many of the modules considered this shouldn't matter "
+"too much -- for example, the stdlib modules have flat namespaces -- but "
+"it might especially lead to undercounting of django, scipy, and twisted."
+msgstr ""
+
+#: ../../pep-0465.txt:1330
+msgid ""
+"Also, it's possible there exist other non-stdlib modules we didn't think "
+"to test that are even more-imported than numpy -- though we tried quite a"
+" few of the obvious suspects.  If you find one, let us know!  The modules"
+" tested here were chosen based on a combination of intuition and the "
+"top-100 list at pypi-ranking.info."
+msgstr ""
+
+#: ../../pep-0465.txt:1336
+msgid ""
+"Fortunately, it doesn't really matter if it turns out that numpy is, say,"
+" merely the *third* most-imported non-stdlib module, since the point is "
+"just that numeric programming is a common and mainstream activity."
+msgstr ""
+
+#: ../../pep-0465.txt:1341
+msgid ""
+"Finally, we should point out the obvious: whether a package is "
+"import**ed** is rather different from whether it's import**ant**. No-"
+"one's claiming numpy is \"the most important package\" or anything like "
+"that.  Certainly more packages depend on distutils, e.g., then depend on "
+"numpy -- and far fewer source files import distutils than import numpy.  "
+"But this is fine for our present purposes.  Most source files don't "
+"import distutils because most source files don't care how they're "
+"distributed, so long as they are; these source files thus don't care "
+"about details of how distutils' API works. This PEP is in some sense "
+"about changing how numpy's and related packages' APIs work, so the "
+"relevant metric is to look at source files that are choosing to directly "
+"interact with that API, which is sort of like what we get by looking at "
+"import statements."
+msgstr ""
+
+#: ../../pep-0465.txt:1355
+msgid ""
+"The first such proposal occurs in Jim Hugunin's very first email to the "
+"matrix SIG in 1995, which lays out the first draft of what became "
+"Numeric. He suggests using ``*`` for elementwise multiplication, and "
+"``%`` for matrix multiplication: https://mail.python.org/pipermail"
+"/matrix-sig/1995-August/000002.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1361
+msgid "http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069502.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1364
+msgid ""
+"http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069444.html "
+"http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069605.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1368
+msgid "http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069610.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1371
+msgid "http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069578.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1374
+msgid "http://mail.scipy.org/pipermail/numpy-discussion/2014-March/069530.html"
+msgstr ""
+
+#: ../../pep-0465.txt:1378
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0465.txt:1380
+msgid "This document has been placed in the public domain."
+msgstr ""
+

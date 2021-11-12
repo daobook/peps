@@ -1,0 +1,651 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0670.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0670.rst:1
+msgid "670"
+msgstr ""
+
+#: ../../pep-0670.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0670.rst:2
+msgid "Convert macros to functions in the Python C API"
+msgstr ""
+
+#: ../../pep-0670.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0670.rst:3
+msgid ""
+"Erlend Egeberg Aasland <erlend.aasland@protonmail.com>, Victor Stinner "
+"<vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0670.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0670.rst:5
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0670.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0670.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0670.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0670.rst:8
+msgid "19-Oct-2021"
+msgstr ""
+
+#: ../../pep-0670.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0670.rst:9
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0670.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0670.rst:15
+msgid "Convert macros to static inline functions or regular functions."
+msgstr ""
+
+#: ../../pep-0670.rst:17
+msgid ""
+"Remove the return value of macros having a return value, whereas they "
+"should not, to aid detecting bugs in C extensions when the C API is "
+"misused."
+msgstr ""
+
+#: ../../pep-0670.rst:21
+msgid ""
+"Some function arguments are still cast to ``PyObject*`` to prevent "
+"emitting new compiler warnings."
+msgstr ""
+
+#: ../../pep-0670.rst:26
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0670.rst:28
+msgid ""
+"The use of macros may have unintended adverse effects that are hard to "
+"avoid, even for experienced C developers. Some issues have been known for"
+" years, while others have been discovered recently in Python. Working "
+"around macro pitfalls makes the macro coder harder to read and to "
+"maintain."
+msgstr ""
+
+#: ../../pep-0670.rst:34
+msgid "Converting macros to functions has multiple advantages:"
+msgstr ""
+
+#: ../../pep-0670.rst:36
+msgid "By design, functions don't have macro pitfalls."
+msgstr ""
+
+#: ../../pep-0670.rst:37
+msgid "Arguments type and return type are well defined."
+msgstr ""
+
+#: ../../pep-0670.rst:38
+msgid "Debuggers and profilers can retrieve the name of inlined functions."
+msgstr ""
+
+#: ../../pep-0670.rst:39
+msgid "Debuggers can put breakpoints on inlined functions."
+msgstr ""
+
+#: ../../pep-0670.rst:40
+msgid "Variables have a well defined scope."
+msgstr ""
+
+#: ../../pep-0670.rst:41
+msgid ""
+"Code is usually easier to read and to maintain than similar macro code.  "
+"Functions don't need the following workarounds for macro pitfalls:"
+msgstr ""
+
+#: ../../pep-0670.rst:45
+msgid "Add parentheses around arguments."
+msgstr ""
+
+#: ../../pep-0670.rst:46
+msgid ""
+"Use line continuation characters if the function is written on multiple "
+"lines."
+msgstr ""
+
+#: ../../pep-0670.rst:48
+msgid "Add commas to execute multiple expressions."
+msgstr ""
+
+#: ../../pep-0670.rst:49
+msgid "Use ``do { ... } while (0)`` to write multiple statements."
+msgstr ""
+
+#: ../../pep-0670.rst:51
+msgid ""
+"Converting macros and static inline functions to regular functions makes "
+"these regular functions accessible to projects which use Python but "
+"cannot use macros and static inline functions."
+msgstr ""
+
+#: ../../pep-0670.rst:57
+msgid "Macro Pitfalls"
+msgstr ""
+
+#: ../../pep-0670.rst:59
+msgid ""
+"The `GCC documentation <https://gcc.gnu.org/onlinedocs/cpp/Macro-"
+"Pitfalls.html>`_ lists several common macro pitfalls:"
+msgstr ""
+
+#: ../../pep-0670.rst:63
+msgid "Misnesting"
+msgstr ""
+
+#: ../../pep-0670.rst:64
+msgid "Operator precedence problems"
+msgstr ""
+
+#: ../../pep-0670.rst:65
+msgid "Swallowing the semicolon"
+msgstr ""
+
+#: ../../pep-0670.rst:66
+msgid "Duplication of side effects"
+msgstr ""
+
+#: ../../pep-0670.rst:67
+msgid "Self-referential macros"
+msgstr ""
+
+#: ../../pep-0670.rst:68
+msgid "Argument prescan"
+msgstr ""
+
+#: ../../pep-0670.rst:69
+msgid "Newlines in arguments"
+msgstr ""
+
+#: ../../pep-0670.rst:73
+msgid "Performance and inlining"
+msgstr ""
+
+#: ../../pep-0670.rst:75
+msgid ""
+"Static inline functions is a feature added to the C99 standard. Modern C "
+"compilers have efficient heuristics to decide if a function should be "
+"inlined or not."
+msgstr ""
+
+#: ../../pep-0670.rst:79
+msgid ""
+"When a C compiler decides to not inline, there is likely a good reason. "
+"For example, inlining would reuse a register which require to "
+"save/restore the register value on the stack and so increase the stack "
+"memory usage or be less efficient."
+msgstr ""
+
+#: ../../pep-0670.rst:86
+msgid "Debug build"
+msgstr ""
+
+#: ../../pep-0670.rst:88
+msgid ""
+"When Python is built in debug mode, most compiler optimizations are "
+"disabled.  For example, Visual Studio disables inlining. Benchmarks must "
+"not be run on a Python debug build, only on release build: using LTO and "
+"PGO is recommended for reliable benchmarks. PGO helps the compiler to "
+"decide if function should be inlined or not."
+msgstr ""
+
+#: ../../pep-0670.rst:96
+msgid "Force inlining"
+msgstr ""
+
+#: ../../pep-0670.rst:98
+msgid ""
+"The ``Py_ALWAYS_INLINE`` macro can be used to force inlining. This macro "
+"uses ``__attribute__((always_inline))`` with GCC and Clang, and "
+"``__forceinline`` with MSC."
+msgstr ""
+
+#: ../../pep-0670.rst:102
+msgid ""
+"So far, previous attempts to use ``Py_ALWAYS_INLINE`` didn't show any "
+"benefit and were abandoned. See for example: `bpo-45094 "
+"<https://bugs.python.org/issue45094>`_: \"Consider using "
+"``__forceinline`` and ``__attribute__((always_inline))`` on static inline"
+" functions (``Py_INCREF``, ``Py_TYPE``) for debug build\"."
+msgstr ""
+
+#: ../../pep-0670.rst:108
+msgid ""
+"When the ``Py_INCREF()`` macro was converted to a static inline functions"
+" in 2018 (`commit "
+"<https://github.com/python/cpython/commit/2aaf0c12041bcaadd7f2cc5a54450eefd7a6ff12>`__),"
+" it was decided not to force inlining. The machine code was analyzed with"
+" multiple C compilers and compiler options: ``Py_INCREF()`` was always "
+"inlined without having to force inlining. The only case where it was not "
+"inlined was the debug build. See discussion in the `bpo-35059 "
+"<https://bugs.python.org/issue35059>`_: \"Convert ``Py_INCREF()`` and "
+"``PyObject_INIT()`` to inlined functions\"."
+msgstr ""
+
+#: ../../pep-0670.rst:120
+msgid "Disable inlining"
+msgstr ""
+
+#: ../../pep-0670.rst:122
+msgid ""
+"On the other side, the ``Py_NO_INLINE`` macro can be used to disable "
+"inlining.  It is useful to reduce the stack memory usage. It is "
+"especially useful on a LTO+PGO build which is more aggressive to inline "
+"code: see `bpo-33720 <https://bugs.python.org/issue33720>`_. The "
+"``Py_NO_INLINE`` macro uses ``__attribute__ ((noinline))`` with GCC and "
+"Clang, and ``__declspec(noinline)`` with MSC."
+msgstr ""
+
+#: ../../pep-0670.rst:131
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0670.rst:134
+msgid "Convert macros to static inline functions"
+msgstr ""
+
+#: ../../pep-0670.rst:136
+msgid ""
+"Most macros should be converted to static inline functions to prevent "
+"`macro pitfalls`_."
+msgstr ""
+
+#: ../../pep-0670.rst:139
+msgid "The following macros should not be converted:"
+msgstr ""
+
+#: ../../pep-0670.rst:141
+msgid "Empty macros. Example: ``#define Py_HAVE_CONDVAR``."
+msgstr ""
+
+#: ../../pep-0670.rst:142
+msgid ""
+"Macros only defining a number, even if a constant with a well defined "
+"type can better. Example: ``#define METH_VARARGS 0x0001``."
+msgstr ""
+
+#: ../../pep-0670.rst:144
+msgid ""
+"Compatibility layer for different C compilers, C language extensions, or "
+"recent C features. Example: ``#define Py_ALWAYS_INLINE "
+"__attribute__((always_inline))``."
+msgstr ""
+
+#: ../../pep-0670.rst:150
+msgid "Convert static inline functions to regular functions"
+msgstr ""
+
+#: ../../pep-0670.rst:152
+msgid ""
+"The performance impact of converting static inline functions to regular "
+"functions should be measured with benchmarks. If there is a significant "
+"slowdown, there should be a good reason to do the conversion. One reason "
+"can be hiding implementation details."
+msgstr ""
+
+#: ../../pep-0670.rst:157
+msgid ""
+"Using static inline functions in the internal C API is fine: the internal"
+" C API exposes implemenation details by design and should not be used "
+"outside Python."
+msgstr ""
+
+#: ../../pep-0670.rst:162
+msgid "Cast to PyObject*"
+msgstr ""
+
+#: ../../pep-0670.rst:164
+msgid ""
+"When a macro is converted to a function and the macro casts its arguments"
+" to ``PyObject*``, the new function comes with a new macro which cast "
+"arguments to ``PyObject*`` to prevent emitting new compiler warnings. So "
+"the converted functions still accept pointers to structures inheriting "
+"from ``PyObject`` (ex: ``PyTupleObject``)."
+msgstr ""
+
+#: ../../pep-0670.rst:170
+msgid ""
+"For example, the ``Py_TYPE(obj)`` macro casts its ``obj`` argument to "
+"``PyObject*``::"
+msgstr ""
+
+#: ../../pep-0670.rst:180
+msgid ""
+"The undocumented private ``_Py_TYPE()`` function must not be called "
+"directly. Only the documented public ``Py_TYPE()`` macro must be used."
+msgstr ""
+
+#: ../../pep-0670.rst:183
+msgid ""
+"Later, the cast can be removed on a case by case basis, but that is out "
+"of scope for this PEP."
+msgstr ""
+
+#: ../../pep-0670.rst:187
+msgid "Remove the return value"
+msgstr ""
+
+#: ../../pep-0670.rst:189
+msgid ""
+"When a macro is implemented as an expression, it has an implicit return "
+"value. In some cases, the macro must not have a return value and can be "
+"misused in third party C extensions. See `bpo-30459 "
+"<https://bugs.python.org/issue30459>`_ for the example of "
+"``PyList_SET_ITEM()`` and ``PyCell_SET()`` macros. It is not easy to "
+"notice this issue while reviewing macro code."
+msgstr ""
+
+#: ../../pep-0670.rst:196
+msgid ""
+"These macros are converted to functions using the ``void`` return type to"
+" remove their return value. Removing the return value aids detecting bugs"
+" in C extensions when the C API is misused."
+msgstr ""
+
+#: ../../pep-0670.rst:202
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0670.rst:204
+msgid ""
+"Removing the return value of macros is an incompatible API change made on"
+" purpose: see the `Remove the return value`_ section."
+msgstr ""
+
+#: ../../pep-0670.rst:209
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0670.rst:212
+msgid "Keep macros, but fix some macro issues"
+msgstr ""
+
+#: ../../pep-0670.rst:214
+msgid ""
+"Converting macros to functions is not needed to `remove the return "
+"value`_: casting a macro return value to ``void`` also fix the issue. For"
+" example, the ``PyList_SET_ITEM()`` macro was already fixed like that."
+msgstr ""
+
+#: ../../pep-0670.rst:219
+msgid "Macros are always \"inlined\" with any C compiler."
+msgstr ""
+
+#: ../../pep-0670.rst:221
+msgid ""
+"The duplication of side effects can be worked around in the caller of the"
+" macro."
+msgstr ""
+
+#: ../../pep-0670.rst:224
+msgid ""
+"People using macros should be considered \"consenting adults\". People "
+"who feel unsafe with macros should simply not use them."
+msgstr ""
+
+#: ../../pep-0670.rst:228
+msgid "Examples of hard to read macros"
+msgstr ""
+
+#: ../../pep-0670.rst:231
+msgid "_Py_NewReference()"
+msgstr ""
+
+#: ../../pep-0670.rst:233
+msgid "Example showing the usage of an ``#ifdef`` inside a macro."
+msgstr ""
+
+#: ../../pep-0670.rst:235
+msgid "Python 3.7 macro (simplified code)::"
+msgstr ""
+
+#: ../../pep-0670.rst:249 ../../pep-0670.rst:267
+msgid "Python 3.8 function (simplified code)::"
+msgstr ""
+
+#: ../../pep-0670.rst:258
+msgid "PyObject_INIT()"
+msgstr ""
+
+#: ../../pep-0670.rst:260
+msgid "Example showing the usage of commas in a macro."
+msgstr ""
+
+#: ../../pep-0670.rst:262
+msgid "Python 3.7 macro::"
+msgstr ""
+
+#: ../../pep-0670.rst:280
+msgid ""
+"The function doesn't need the line continuation character. It has an "
+"explicit ``\"return op;\"`` rather than a surprising ``\", (op)\"`` at "
+"the end of the macro.  It uses one short statement per line, rather than "
+"a single long line. Inside the function, the *op* argument has a well "
+"defined type: ``PyObject*``."
+msgstr ""
+
+#: ../../pep-0670.rst:288
+msgid "Macros converted to functions since Python 3.8"
+msgstr ""
+
+#: ../../pep-0670.rst:291
+msgid "Macros converted to static inline functions"
+msgstr ""
+
+#: ../../pep-0670.rst:293
+msgid "Python 3.8:"
+msgstr ""
+
+#: ../../pep-0670.rst:295
+msgid "``Py_DECREF()``"
+msgstr ""
+
+#: ../../pep-0670.rst:296
+msgid "``Py_INCREF()``"
+msgstr ""
+
+#: ../../pep-0670.rst:297
+msgid "``Py_XDECREF()``"
+msgstr ""
+
+#: ../../pep-0670.rst:298
+msgid "``Py_XINCREF()``"
+msgstr ""
+
+#: ../../pep-0670.rst:299
+msgid "``PyObject_INIT()``"
+msgstr ""
+
+#: ../../pep-0670.rst:300
+msgid "``PyObject_INIT_VAR()``"
+msgstr ""
+
+#: ../../pep-0670.rst:301
+msgid "``_PyObject_GC_UNTRACK()``"
+msgstr ""
+
+#: ../../pep-0670.rst:302
+msgid "``_Py_Dealloc()``"
+msgstr ""
+
+#: ../../pep-0670.rst:304
+msgid "Python 3.10:"
+msgstr ""
+
+#: ../../pep-0670.rst:306
+msgid "``Py_REFCNT()``"
+msgstr ""
+
+#: ../../pep-0670.rst:308 ../../pep-0670.rst:336
+msgid "Python 3.11:"
+msgstr ""
+
+#: ../../pep-0670.rst:310
+msgid "``Py_TYPE()``"
+msgstr ""
+
+#: ../../pep-0670.rst:311
+msgid "``Py_SIZE()``"
+msgstr ""
+
+#: ../../pep-0670.rst:314
+msgid "Macros converted to regular functions"
+msgstr ""
+
+#: ../../pep-0670.rst:316
+msgid "Python 3.9:"
+msgstr ""
+
+#: ../../pep-0670.rst:318
+msgid "``PyIndex_Check()``"
+msgstr ""
+
+#: ../../pep-0670.rst:319
+msgid "``PyObject_CheckBuffer()``"
+msgstr ""
+
+#: ../../pep-0670.rst:320
+msgid "``PyObject_GET_WEAKREFS_LISTPTR()``"
+msgstr ""
+
+#: ../../pep-0670.rst:321
+msgid "``PyObject_IS_GC()``"
+msgstr ""
+
+#: ../../pep-0670.rst:322
+msgid "``PyObject_NEW()``: alias to ``PyObject_New()``"
+msgstr ""
+
+#: ../../pep-0670.rst:323
+msgid "``PyObject_NEW_VAR()``: alias to ``PyObjectVar_New()``"
+msgstr ""
+
+#: ../../pep-0670.rst:325
+msgid ""
+"To avoid any risk of performance slowdown on Python built without LTO, "
+"private static inline functions have been added to the internal C API:"
+msgstr ""
+
+#: ../../pep-0670.rst:328
+msgid "``_PyIndex_Check()``"
+msgstr ""
+
+#: ../../pep-0670.rst:329
+msgid "``_PyObject_IS_GC()``"
+msgstr ""
+
+#: ../../pep-0670.rst:330
+msgid "``_PyType_HasFeature()``"
+msgstr ""
+
+#: ../../pep-0670.rst:331
+msgid "``_PyType_IS_GC()``"
+msgstr ""
+
+#: ../../pep-0670.rst:334
+msgid "Static inline functions converted to regular functions"
+msgstr ""
+
+#: ../../pep-0670.rst:338
+msgid "``PyObject_CallOneArg()``"
+msgstr ""
+
+#: ../../pep-0670.rst:339
+msgid "``PyObject_Vectorcall()``"
+msgstr ""
+
+#: ../../pep-0670.rst:340
+msgid "``PyVectorcall_Function()``"
+msgstr ""
+
+#: ../../pep-0670.rst:341
+msgid "``_PyObject_FastCall()``"
+msgstr ""
+
+#: ../../pep-0670.rst:343
+msgid ""
+"To avoid any risk of performance slowdown on Python built without LTO, a "
+"private static inline function has been added to the internal C API:"
+msgstr ""
+
+#: ../../pep-0670.rst:346
+msgid "``_PyVectorcall_FunctionInline()``"
+msgstr ""
+
+#: ../../pep-0670.rst:350
+msgid "References"
+msgstr ""
+
+#: ../../pep-0670.rst:352
+msgid ""
+"`bpo-45490 <https://bugs.python.org/issue45490>`_: [meta][C API] Avoid C "
+"macro pitfalls and usage of static inline functions (October 2021)."
+msgstr ""
+
+#: ../../pep-0670.rst:355
+msgid ""
+"`What to do with unsafe macros <https://discuss.python.org/t/what-to-do-"
+"with-unsafe-macros/7771>`_ (March 2021)."
+msgstr ""
+
+#: ../../pep-0670.rst:358
+msgid ""
+"`bpo-43502 <https://bugs.python.org/issue43502>`_: [C-API] Convert "
+"obvious unsafe macros to static inline functions (March 2021)."
+msgstr ""
+
+#: ../../pep-0670.rst:364
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0670.rst:366
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

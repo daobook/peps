@@ -1,0 +1,278 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0228.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0228.txt:1
+msgid "228"
+msgstr ""
+
+#: ../../pep-0228.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0228.txt:2
+msgid "Reworking Python's Numeric Model"
+msgstr ""
+
+#: ../../pep-0228.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0228.txt:5
+msgid "moshez@zadka.site.co.il (Moshe Zadka), guido@python.org (Guido van Rossum)"
+msgstr ""
+
+#: ../../pep-0228.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0228.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0228.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0228.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0228.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0228.txt:9
+msgid "04-Nov-2000"
+msgstr ""
+
+#: ../../pep-0228.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0228.txt:14
+msgid "Withdrawal"
+msgstr ""
+
+#: ../../pep-0228.txt:16
+msgid "This PEP has been withdrawn in favor of PEP 3141."
+msgstr ""
+
+#: ../../pep-0228.txt:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0228.txt:22
+msgid ""
+"Today, Python's numerical model is similar to the C numeric model: there "
+"are several unrelated numerical types, and when operations between "
+"numerical types are requested, coercions happen.  While the C rationale "
+"for the numerical model is that it is very similar to what happens at the"
+" hardware level, that rationale does not apply to Python.  So, while it "
+"is acceptable to C programmers that ``2/3 == 0``, it is surprising to "
+"many Python programmers."
+msgstr ""
+
+#: ../../pep-0228.txt:30
+msgid ""
+"NOTE: in the light of recent discussions in the newsgroup, the motivation"
+" in this PEP (and details) need to be extended."
+msgstr ""
+
+#: ../../pep-0228.txt:35
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0228.txt:37
+msgid ""
+"In usability studies, one of the least usable aspect of Python was the "
+"fact that integer division returns the floor of the division. This makes "
+"it hard to program correctly, requiring casts to ``float()`` in various "
+"parts through the code.  Python's numerical model stems from C, while a "
+"model that might be easier to work with can be based on the mathematical "
+"understanding of numbers."
+msgstr ""
+
+#: ../../pep-0228.txt:46
+msgid "Other Numerical Models"
+msgstr ""
+
+#: ../../pep-0228.txt:48
+msgid ""
+"Perl's numerical model is that there is one type of numbers -- floating "
+"point numbers.  While it is consistent and superficially non-surprising, "
+"it tends to have subtle gotchas.  One of these is that printing numbers "
+"is very tricky, and requires correct rounding.  In Perl, there is also a "
+"mode where all numbers are integers.  This mode also has its share of "
+"problems, which arise from the fact that there is not even an approximate"
+" way of dividing numbers and getting meaningful answers."
+msgstr ""
+
+#: ../../pep-0228.txt:59
+msgid "Suggested Interface For Python's Numerical Model"
+msgstr ""
+
+#: ../../pep-0228.txt:61
+msgid ""
+"While coercion rules will remain for add-on types and classes, the built "
+"in type system will have exactly one Python type -- a number.  There are "
+"several things which can be considered \"number methods\":"
+msgstr ""
+
+#: ../../pep-0228.txt:66
+msgid "``isnatural()``"
+msgstr ""
+
+#: ../../pep-0228.txt:67
+msgid "``isintegral()``"
+msgstr ""
+
+#: ../../pep-0228.txt:68
+msgid "``isrational()``"
+msgstr ""
+
+#: ../../pep-0228.txt:69
+msgid "``isreal()``"
+msgstr ""
+
+#: ../../pep-0228.txt:70
+msgid "``iscomplex()``"
+msgstr ""
+
+#: ../../pep-0228.txt:71
+msgid "``isexact()``"
+msgstr ""
+
+#: ../../pep-0228.txt:73
+msgid ""
+"Obviously, a number which answers true to a question from 1 to 5, will "
+"also answer true to any following question. If ``isexact()`` is not true,"
+" then any answer might be wrong. (But not horribly wrong: it's close to "
+"the truth.)"
+msgstr ""
+
+#: ../../pep-0228.txt:78
+msgid ""
+"Now, there is two thing the models promises for the field operations "
+"(``+``, ``-``, ``/``, ``*``):"
+msgstr ""
+
+#: ../../pep-0228.txt:81
+msgid ""
+"If both operands satisfy ``isexact()``, the result satisfies "
+"``isexact()``."
+msgstr ""
+
+#: ../../pep-0228.txt:84
+msgid ""
+"All field rules are true, except that for not-``isexact()`` numbers, they"
+" might be only approximately true."
+msgstr ""
+
+#: ../../pep-0228.txt:87
+msgid ""
+"One consequence of these two rules is that all exact calculations are "
+"done as (complex) rationals: since the field laws must hold, then ::"
+msgstr ""
+
+#: ../../pep-0228.txt:93
+msgid "must hold."
+msgstr ""
+
+#: ../../pep-0228.txt:95
+msgid ""
+"There is built-in function, ``inexact()`` which takes a number and "
+"returns an inexact number which is a good approximation. Inexact numbers "
+"must be as least as accurate as if they were using IEEE-754."
+msgstr ""
+
+#: ../../pep-0228.txt:100
+msgid ""
+"Several of the classical Python functions will return exact numbers even "
+"when given inexact numbers: e.g, ``int()``."
+msgstr ""
+
+#: ../../pep-0228.txt:105
+msgid "Coercion"
+msgstr ""
+
+#: ../../pep-0228.txt:107
+msgid ""
+"The number type does not define ``nb_coerce`` Any numeric operation slot,"
+" when receiving something other then ``PyNumber``, refuses to implement "
+"it."
+msgstr ""
+
+#: ../../pep-0228.txt:113
+msgid "Inexact Operations"
+msgstr ""
+
+#: ../../pep-0228.txt:115
+msgid ""
+"The functions in the ``math`` module will be allowed to return inexact "
+"results for exact values.  However, they will never return a non-real "
+"number.  The functions in the ``cmath`` module are also allowed to return"
+" an inexact result for an exact argument, and are furthermore allowed to "
+"return a complex result for a real argument."
+msgstr ""
+
+#: ../../pep-0228.txt:124
+msgid "Numerical Python Issues"
+msgstr ""
+
+#: ../../pep-0228.txt:126
+msgid ""
+"People who use Numerical Python do so for high-performance vector "
+"operations.  Therefore, NumPy should keep its hardware based numeric "
+"model."
+msgstr ""
+
+#: ../../pep-0228.txt:132
+msgid "Unresolved Issues"
+msgstr ""
+
+#: ../../pep-0228.txt:134
+msgid "Which number literals will be exact, and which inexact?"
+msgstr ""
+
+#: ../../pep-0228.txt:136
+msgid ""
+"How do we deal with IEEE 754 operations? (probably, isnan/isinf should be"
+" methods)"
+msgstr ""
+
+#: ../../pep-0228.txt:139
+msgid ""
+"On 64-bit machines, comparisons between ints and floats may be broken "
+"when the comparison involves conversion to float.  Ditto for comparisons "
+"between longs and floats.  This can be dealt with by avoiding the "
+"conversion to float.  (Due to Andrew Koenig.)"
+msgstr ""
+
+#: ../../pep-0228.txt:146
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0228.txt:148
+msgid "This document has been placed in the public domain."
+msgstr ""
+

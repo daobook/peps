@@ -1,0 +1,1699 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0327.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0327.txt:1
+msgid "327"
+msgstr ""
+
+#: ../../pep-0327.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0327.txt:2
+msgid "Decimal Data Type"
+msgstr ""
+
+#: ../../pep-0327.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0327.txt:5
+msgid "Facundo Batista <facundo@taniquetil.com.ar>"
+msgstr ""
+
+#: ../../pep-0327.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0327.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0327.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0327.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0327.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0327.txt:9
+msgid "17-Oct-2003"
+msgstr ""
+
+#: ../../pep-0327.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0327.txt:10
+msgid "2.4"
+msgstr ""
+
+#: ../../pep-0327.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0327.txt:11
+msgid "30-Nov-2003, 02-Jan-2004, 29-Jan-2004"
+msgstr ""
+
+#: ../../pep-0327.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0327.txt:17
+msgid ""
+"The idea is to have a Decimal data type, for every use where decimals are"
+" needed but binary floating point is too inexact."
+msgstr ""
+
+#: ../../pep-0327.txt:20
+msgid ""
+"The Decimal data type will support the Python standard functions and "
+"operations, and must comply with the decimal arithmetic ANSI standard "
+"X3.274-1996 [1]_."
+msgstr ""
+
+#: ../../pep-0327.txt:24
+msgid ""
+"Decimal will be floating point (as opposed to fixed point) and will have "
+"bounded precision (the precision is the upper limit on the number of "
+"significant digits in a result).  However, precision is user-settable, "
+"and a notion of significant trailing zeroes is supported so that fixed-"
+"point usage is also possible."
+msgstr ""
+
+#: ../../pep-0327.txt:30
+msgid ""
+"This work is based on code and test functions written by Eric Price, Aahz"
+" and Tim Peters.  Just before Python 2.4a1, the decimal.py `reference "
+"implementation`_ was moved into the standard library; along with the "
+"documentation and the test suite, this was the work of Raymond Hettinger."
+"  Much of the explanation in this PEP is taken from Cowlishaw's work "
+"[2]_, comp.lang.python and python-dev."
+msgstr ""
+
+#: ../../pep-0327.txt:39
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0327.txt:41
+msgid ""
+"Here I'll expose the reasons of why I think a Decimal data type is needed"
+" and why other numeric data types are not enough."
+msgstr ""
+
+#: ../../pep-0327.txt:44
+msgid ""
+"I wanted a Money data type, and after proposing a pre-PEP in "
+"comp.lang.python, the community agreed to have a numeric data type with "
+"the needed arithmetic behaviour, and then build Money over it: all the "
+"considerations about quantity of digits after the decimal point, "
+"rounding, etc., will be handled through Money.  It is not the purpose of "
+"this PEP to have a data type that can be used as Money without further "
+"effort."
+msgstr ""
+
+#: ../../pep-0327.txt:52
+msgid ""
+"One of the biggest advantages of implementing a standard is that someone "
+"already thought out all the creepy cases for you.  And to a standard GvR "
+"redirected me: Mike Cowlishaw's General Decimal Arithmetic specification "
+"[2]_.  This document defines a general purpose decimal arithmetic.  A "
+"correct implementation of this specification will conform to the decimal "
+"arithmetic defined in ANSI/IEEE standard 854-1987, except for some minor "
+"restrictions, and will also provide unrounded decimal arithmetic and "
+"integer arithmetic as proper subsets."
+msgstr ""
+
+#: ../../pep-0327.txt:64
+msgid "The problem with binary float"
+msgstr ""
+
+#: ../../pep-0327.txt:66
+msgid ""
+"In decimal math, there are many numbers that can't be represented with a "
+"fixed number of decimal digits, e.g. 1/3 = 0.3333333333......."
+msgstr ""
+
+#: ../../pep-0327.txt:69
+msgid ""
+"In base 2 (the way that standard floating point is calculated), 1/2 = "
+"0.1, 1/4 = 0.01, 1/8 = 0.001, etc.  Decimal 0.2 equals 2/10 equals 1/5, "
+"resulting in the binary fractional number 0.001100110011001...  As you "
+"can see, the problem is that some decimal numbers can't be represented "
+"exactly in binary, resulting in small roundoff errors."
+msgstr ""
+
+#: ../../pep-0327.txt:76
+msgid ""
+"So we need a decimal data type that represents exactly decimal numbers.  "
+"Instead of a binary data type, we need a decimal one."
+msgstr ""
+
+#: ../../pep-0327.txt:81
+msgid "Why floating point?"
+msgstr ""
+
+#: ../../pep-0327.txt:83
+msgid "So we go to decimal, but why *floating point*?"
+msgstr ""
+
+#: ../../pep-0327.txt:85
+msgid ""
+"Floating point numbers use a fixed quantity of digits (precision) to "
+"represent a number, working with an exponent when the number gets too big"
+" or too small.  For example, with a precision of 5::"
+msgstr ""
+
+#: ../../pep-0327.txt:93
+msgid "(note that in the last line the number got rounded to fit in five digits)."
+msgstr ""
+
+#: ../../pep-0327.txt:95
+msgid ""
+"In contrast, we have the example of a ``long`` integer with infinite "
+"precision, meaning that you can have the number as big as you want, and "
+"you'll never lose any information."
+msgstr ""
+
+#: ../../pep-0327.txt:99
+msgid ""
+"In a fixed point number, the position of the decimal point is fixed. For "
+"a fixed point data type, check Tim Peter's FixedPoint at SourceForge "
+"[4]_.  I'll go for floating point because it's easier to implement the "
+"arithmetic behaviour of the standard, and then you can implement a fixed "
+"point data type over Decimal."
+msgstr ""
+
+#: ../../pep-0327.txt:105
+msgid ""
+"But why can't we have a floating point number with infinite precision? "
+"It's not so easy, because of inexact divisions.  E.g.: 1/3 = "
+"0.3333333333333... ad infinitum.  In this case you should store an "
+"infinite amount of 3s, which takes too much memory, ;)."
+msgstr ""
+
+#: ../../pep-0327.txt:110
+msgid ""
+"John Roth proposed to eliminate the division operator and force the user "
+"to use an explicit method, just to avoid this kind of trouble. This "
+"generated adverse reactions in comp.lang.python, as everybody wants to "
+"have support for the ``/`` operator in a numeric data type."
+msgstr ""
+
+#: ../../pep-0327.txt:115
+msgid ""
+"With this exposed maybe you're thinking \"Hey! Can we just store the 1 "
+"and the 3 as numerator and denominator?\", which takes us to the next "
+"point."
+msgstr ""
+
+#: ../../pep-0327.txt:121
+msgid "Why not rational?"
+msgstr ""
+
+#: ../../pep-0327.txt:123
+msgid ""
+"Rational numbers are stored using two integer numbers, the numerator and "
+"the denominator.  This implies that the arithmetic operations can't be "
+"executed directly (e.g. to add two rational numbers you first need to "
+"calculate the common denominator)."
+msgstr ""
+
+#: ../../pep-0327.txt:128
+msgid "Quoting Alex Martelli:"
+msgstr ""
+
+#: ../../pep-0327.txt:130
+msgid ""
+"The performance implications of the fact that summing two rationals "
+"(which take O(M) and O(N) space respectively) gives a rational which "
+"takes O(M+N) memory space is just too troublesome. There are excellent "
+"Rational implementations in both pure Python and as extensions (e.g., "
+"gmpy), but they'll always be a \"niche market\" IMHO.  Probably worth "
+"PEPping, not worth doing without Decimal -- which is the right way to "
+"represent sums of money, a truly major use case in the real world."
+msgstr ""
+
+#: ../../pep-0327.txt:139
+msgid ""
+"Anyway, if you're interested in this data type, you maybe will want to "
+"take a look at PEP 239: Adding a Rational Type to Python."
+msgstr ""
+
+#: ../../pep-0327.txt:144
+msgid "So, what do we have?"
+msgstr ""
+
+#: ../../pep-0327.txt:146
+msgid ""
+"The result is a Decimal data type, with bounded precision and floating "
+"point."
+msgstr ""
+
+#: ../../pep-0327.txt:149
+msgid "Will it be useful?  I can't say it better than Alex Martelli:"
+msgstr ""
+
+#: ../../pep-0327.txt:151
+msgid ""
+"Python (out of the box) doesn't let you have binary floating point "
+"numbers *with whatever precision you specify*: you're limited to what "
+"your hardware supplies.  Decimal, be it used as a fixed or floating point"
+" number, should suffer from no such limitation: whatever bounded "
+"precision you may specify on number creation (your memory permitting) "
+"should work just as well.  Most of the expense of programming simplicity "
+"can be hidden from application programs and placed in a suitable decimal "
+"arithmetic type.  As per http://speleotrove.com/decimal/, *a single data "
+"type can be used for integer, fixed-point, and floating-point decimal "
+"arithmetic* -- and for money arithmetic which doesn't drive the "
+"application programmer crazy."
+msgstr ""
+
+#: ../../pep-0327.txt:164
+msgid ""
+"There are several uses for such a data type.  As I said before, I will "
+"use it as base for Money.  In this case the bounded precision is not an "
+"issue; quoting Tim Peters:"
+msgstr ""
+
+#: ../../pep-0327.txt:168
+msgid ""
+"A precision of 20 would be way more than enough to account for total "
+"world economic output, down to the penny, since the beginning of time."
+msgstr ""
+
+#: ../../pep-0327.txt:174
+msgid "General Decimal Arithmetic Specification"
+msgstr ""
+
+#: ../../pep-0327.txt:176
+msgid ""
+"Here I'll include information and descriptions that are part of the "
+"specification [2]_ (the structure of the number, the context, etc.). All "
+"the requirements included in this section are not for discussion (barring"
+" typos or other mistakes), as they are in the standard, and the PEP is "
+"just for implementing the standard."
+msgstr ""
+
+#: ../../pep-0327.txt:182
+msgid ""
+"Because of copyright restrictions, I can not copy here explanations taken"
+" from the specification, so I'll try to explain it in my own words.  I "
+"firmly encourage you to read the original specification document [2]_ for"
+" details or if you have any doubt."
+msgstr ""
+
+#: ../../pep-0327.txt:189
+msgid "The Arithmetic Model"
+msgstr ""
+
+#: ../../pep-0327.txt:191
+msgid ""
+"The specification is based on a decimal arithmetic model, as defined by "
+"the relevant standards: IEEE 854 [3]_, ANSI X3-274 [1]_, and the proposed"
+" revision [5]_ of IEEE 754 [6]_."
+msgstr ""
+
+#: ../../pep-0327.txt:195
+msgid "The model has three components:"
+msgstr ""
+
+#: ../../pep-0327.txt:197
+msgid "Numbers: just the values that the operation uses as input or output."
+msgstr ""
+
+#: ../../pep-0327.txt:199
+msgid "Operations: addition, multiplication, etc."
+msgstr ""
+
+#: ../../pep-0327.txt:201
+msgid ""
+"Context: a set of parameters and rules that the user can select and which"
+" govern the results of operations (for example, the precision to be "
+"used)."
+msgstr ""
+
+#: ../../pep-0327.txt:207
+msgid "Numbers"
+msgstr ""
+
+#: ../../pep-0327.txt:209
+msgid ""
+"Numbers may be finite or special values.  The former can be represented "
+"exactly.  The latter are infinites and undefined (such as 0/0)."
+msgstr ""
+
+#: ../../pep-0327.txt:213
+msgid "Finite numbers are defined by three parameters:"
+msgstr ""
+
+#: ../../pep-0327.txt:215
+msgid "Sign: 0 (positive) or 1 (negative)."
+msgstr ""
+
+#: ../../pep-0327.txt:217
+msgid "Coefficient: a non-negative integer."
+msgstr ""
+
+#: ../../pep-0327.txt:219
+msgid ""
+"Exponent: a signed integer, the power of ten of the coefficient "
+"multiplier."
+msgstr ""
+
+#: ../../pep-0327.txt:222
+msgid "The numerical value of a finite number is given by::"
+msgstr ""
+
+#: ../../pep-0327.txt:226
+msgid "Special values are named as following:"
+msgstr ""
+
+#: ../../pep-0327.txt:228
+msgid ""
+"Infinity: a value which is infinitely large.  Could be positive or "
+"negative."
+msgstr ""
+
+#: ../../pep-0327.txt:231
+msgid ""
+"Quiet NaN (\"qNaN\"): represent undefined results (*Not a Number*). Does "
+"not cause an Invalid operation condition.  The sign in a NaN has no "
+"meaning."
+msgstr ""
+
+#: ../../pep-0327.txt:235
+msgid ""
+"Signaling NaN (\"sNaN\"): also *Not a Number*, but will cause an Invalid "
+"operation condition if used in any operation."
+msgstr ""
+
+#: ../../pep-0327.txt:240
+msgid "Context"
+msgstr ""
+
+#: ../../pep-0327.txt:242
+msgid ""
+"The context is a set of parameters and rules that the user can select and"
+" which govern the results of operations (for example, the precision to be"
+" used)."
+msgstr ""
+
+#: ../../pep-0327.txt:246
+msgid ""
+"The context gets that name because it surrounds the Decimal numbers, with"
+" parts of context acting as input to, and output of, operations. It's up "
+"to the application to work with one or several contexts, but definitely "
+"the idea is not to get a context per Decimal number. For example, a "
+"typical use would be to set the context's precision to 20 digits at the "
+"start of a program, and never explicitly use context again."
+msgstr ""
+
+#: ../../pep-0327.txt:254
+msgid ""
+"These definitions don't affect the internal storage of the Decimal "
+"numbers, just the way that the arithmetic operations are performed."
+msgstr ""
+
+#: ../../pep-0327.txt:257
+msgid ""
+"The context is mainly defined by the following parameters (see `Context "
+"Attributes`_ for all context attributes):"
+msgstr ""
+
+#: ../../pep-0327.txt:260
+msgid ""
+"Precision: The maximum number of significant digits that can result from "
+"an arithmetic operation (integer > 0). There is no maximum for this "
+"value."
+msgstr ""
+
+#: ../../pep-0327.txt:264
+msgid ""
+"Rounding: The name of the algorithm to be used when rounding is "
+"necessary, one of \"round-down\", \"round-half-up\", \"round-half-even\","
+" \"round-ceiling\", \"round-floor\", \"round-half-down\", and \"round-"
+"up\". See `Rounding Algorithms`_ below."
+msgstr ""
+
+#: ../../pep-0327.txt:269
+msgid ""
+"Flags and trap-enablers: `Exceptional conditions`_ are grouped into "
+"signals, controllable individually, each consisting of a flag (boolean, "
+"set when the signal occurs) and a trap-enabler (a boolean that controls "
+"behavior).  The signals are: \"clamped\", \"division-by-zero\", "
+"\"inexact\", \"invalid-operation\", \"overflow\", \"rounded\", "
+"\"subnormal\" and \"underflow\"."
+msgstr ""
+
+#: ../../pep-0327.txt:278
+msgid "Default Contexts"
+msgstr ""
+
+#: ../../pep-0327.txt:280
+msgid ""
+"The specification defines two default contexts, which should be easily "
+"selectable by the user."
+msgstr ""
+
+#: ../../pep-0327.txt:283
+msgid "Basic Default Context:"
+msgstr ""
+
+#: ../../pep-0327.txt:285 ../../pep-0327.txt:293
+msgid "flags: all set to 0"
+msgstr ""
+
+#: ../../pep-0327.txt:286
+msgid ""
+"trap-enablers: inexact, rounded, and subnormal are set to 0; all others "
+"are set to 1"
+msgstr ""
+
+#: ../../pep-0327.txt:288 ../../pep-0327.txt:295
+msgid "precision: is set to 9"
+msgstr ""
+
+#: ../../pep-0327.txt:289
+msgid "rounding: is set to round-half-up"
+msgstr ""
+
+#: ../../pep-0327.txt:291
+msgid "Extended Default Context:"
+msgstr ""
+
+#: ../../pep-0327.txt:294
+msgid "trap-enablers: all set to 0"
+msgstr ""
+
+#: ../../pep-0327.txt:296
+msgid "rounding: is set to round-half-even"
+msgstr ""
+
+#: ../../pep-0327.txt:300
+msgid "Exceptional Conditions"
+msgstr ""
+
+#: ../../pep-0327.txt:302
+msgid ""
+"The table below lists the exceptional conditions that may arise during "
+"the arithmetic operations, the corresponding signal, and the defined "
+"result.  For details, see the specification [2]_."
+msgstr ""
+
+#: ../../pep-0327.txt:307
+msgid "Condition"
+msgstr ""
+
+#: ../../pep-0327.txt:307
+msgid "Signal"
+msgstr ""
+
+#: ../../pep-0327.txt:307
+msgid "Result"
+msgstr ""
+
+#: ../../pep-0327.txt:309
+msgid "Clamped"
+msgstr ""
+
+#: ../../pep-0327.txt:309
+msgid "clamped"
+msgstr ""
+
+#: ../../pep-0327.txt:309 ../../pep-0327.txt:317
+msgid "see spec [2]_"
+msgstr ""
+
+#: ../../pep-0327.txt:310
+msgid "Division by zero"
+msgstr ""
+
+#: ../../pep-0327.txt:310
+msgid "division-by-zero"
+msgstr ""
+
+#: ../../pep-0327.txt:310
+msgid "[sign,inf]"
+msgstr ""
+
+#: ../../pep-0327.txt:311
+msgid "Inexact"
+msgstr ""
+
+#: ../../pep-0327.txt:311
+msgid "inexact"
+msgstr ""
+
+#: ../../pep-0327.txt:311 ../../pep-0327.txt:315 ../../pep-0327.txt:316
+msgid "unchanged"
+msgstr ""
+
+#: ../../pep-0327.txt:312
+msgid "Invalid operation"
+msgstr ""
+
+#: ../../pep-0327.txt:312
+msgid "invalid-operation"
+msgstr ""
+
+#: ../../pep-0327.txt:312
+msgid "[0,qNaN] (or [s,qNaN] or [s,qNaN,d] when the cause is a signaling NaN)"
+msgstr ""
+
+#: ../../pep-0327.txt:314
+msgid "Overflow"
+msgstr ""
+
+#: ../../pep-0327.txt:314
+msgid "overflow"
+msgstr ""
+
+#: ../../pep-0327.txt:314
+msgid "depends on the rounding mode"
+msgstr ""
+
+#: ../../pep-0327.txt:315
+msgid "Rounded"
+msgstr ""
+
+#: ../../pep-0327.txt:315
+msgid "rounded"
+msgstr ""
+
+#: ../../pep-0327.txt:316
+msgid "Subnormal"
+msgstr ""
+
+#: ../../pep-0327.txt:316
+msgid "subnormal"
+msgstr ""
+
+#: ../../pep-0327.txt:317
+msgid "Underflow"
+msgstr ""
+
+#: ../../pep-0327.txt:317
+msgid "underflow"
+msgstr ""
+
+#: ../../pep-0327.txt:320
+msgid ""
+"Note: when the standard talks about \"Insufficient storage\", as long as "
+"this is implementation-specific behaviour about not having enough storage"
+" to keep the internals of the number, this implementation will raise "
+"MemoryError."
+msgstr ""
+
+#: ../../pep-0327.txt:325
+msgid ""
+"Regarding Overflow and Underflow, there's been a long discussion in "
+"python-dev about artificial limits.  The general consensus is to keep the"
+" artificial limits only if there are important reasons to do that. Tim "
+"Peters gives us three:"
+msgstr ""
+
+#: ../../pep-0327.txt:330
+msgid ""
+"...eliminating bounds on exponents effectively means overflow (and "
+"underflow) can never happen.  But overflow *is* a valuable safety net in "
+"real life fp use, like a canary in a coal mine, giving danger signs early"
+" when a program goes insane."
+msgstr ""
+
+#: ../../pep-0327.txt:335
+msgid ""
+"Virtually all implementations of 854 use (and as IBM's standard even "
+"suggests) \"forbidden\" exponent values to encode non-finite numbers "
+"(infinities and NaNs).  A bounded exponent can do this at virtually no "
+"extra storage cost.  If the exponent is unbounded, then additional bits "
+"have to be used instead.  This cost remains hidden until more time- and "
+"space- efficient implementations are attempted."
+msgstr ""
+
+#: ../../pep-0327.txt:343
+msgid ""
+"Big as it is, the IBM standard is a tiny start at supplying a complete "
+"numeric facility.  Having no bound on exponent size will enormously "
+"complicate the implementations of, e.g., decimal sin() and cos() (there's"
+" then no a priori limit on how many digits of pi effectively need to be "
+"known in order to perform argument reduction)."
+msgstr ""
+
+#: ../../pep-0327.txt:350
+msgid ""
+"Edward Loper give us an example of when the limits are to be crossed: "
+"probabilities."
+msgstr ""
+
+#: ../../pep-0327.txt:353
+msgid ""
+"That said, Robert Brewer and Andrew Lentvorski want the limits to be "
+"easily modifiable by the users.  Actually, this is quite possible::"
+msgstr ""
+
+#: ../../pep-0327.txt:379
+msgid "Rounding Algorithms"
+msgstr ""
+
+#: ../../pep-0327.txt:381
+msgid ""
+"``round-down``: The discarded digits are ignored; the result is unchanged"
+" (round toward 0, truncate)::"
+msgstr ""
+
+#: ../../pep-0327.txt:389
+msgid ""
+"``round-half-up``: If the discarded digits represent greater than or "
+"equal to half (0.5) then the result should be incremented by 1; otherwise"
+" the discarded digits are ignored::"
+msgstr ""
+
+#: ../../pep-0327.txt:398
+msgid ""
+"``round-half-even``: If the discarded digits represent greater than half "
+"(0.5) then the result coefficient is incremented by 1; if they represent "
+"less than half, then the result is not adjusted; otherwise the result is "
+"unaltered if its rightmost digit is even, or incremented by 1 if its "
+"rightmost digit is odd (to make an even digit)::"
+msgstr ""
+
+#: ../../pep-0327.txt:409
+msgid ""
+"``round-ceiling``: If all of the discarded digits are zero or if the sign"
+" is negative the result is unchanged; otherwise, the result is "
+"incremented by 1 (round toward positive infinity)::"
+msgstr ""
+
+#: ../../pep-0327.txt:418
+msgid ""
+"``round-floor``: If all of the discarded digits are zero or if the sign "
+"is positive the result is unchanged; otherwise, the absolute value of the"
+" result is incremented by 1 (round toward negative infinity)::"
+msgstr ""
+
+#: ../../pep-0327.txt:428
+msgid ""
+"``round-half-down``: If the discarded digits represent greater than half "
+"(0.5) then the result is incremented by 1; otherwise the discarded digits"
+" are ignored::"
+msgstr ""
+
+#: ../../pep-0327.txt:437
+msgid ""
+"``round-up``: If all of the discarded digits are zero the result is "
+"unchanged, otherwise the result is incremented by 1 (round away from 0)::"
+msgstr ""
+
+#: ../../pep-0327.txt:448
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0327.txt:450
+msgid ""
+"I must separate the requirements in two sections.  The first is to comply"
+" with the ANSI standard.  All the requirements for this are specified in "
+"the Mike Cowlishaw's work [2]_.  He also provided a **very large** suite "
+"of test cases."
+msgstr ""
+
+#: ../../pep-0327.txt:455
+msgid ""
+"The second section of requirements (standard Python functions support, "
+"usability, etc.) is detailed from here, where I'll include all the "
+"decisions made and why, and all the subjects still being discussed."
+msgstr ""
+
+#: ../../pep-0327.txt:461
+msgid "Explicit construction"
+msgstr ""
+
+#: ../../pep-0327.txt:463
+msgid ""
+"The explicit construction does not get affected by the context (there is "
+"no rounding, no limits by the precision, etc.), because the context "
+"affects just operations' results.  The only exception to this is when "
+"you're `Creating from Context`_."
+msgstr ""
+
+#: ../../pep-0327.txt:470 ../../pep-0327.txt:736
+msgid "From int or long"
+msgstr ""
+
+#: ../../pep-0327.txt:472
+msgid "There's no loss and no need to specify any other information::"
+msgstr ""
+
+#: ../../pep-0327.txt:479 ../../pep-0327.txt:748
+msgid "From string"
+msgstr ""
+
+#: ../../pep-0327.txt:481
+msgid ""
+"Strings containing Python decimal integer literals and Python float "
+"literals will be supported.  In this transformation there is no loss of "
+"information, as the string is directly converted to Decimal (there is not"
+" an intermediate conversion through float)::"
+msgstr ""
+
+#: ../../pep-0327.txt:489
+msgid ""
+"Also, you can construct in this way all special values (Infinity and Not "
+"a Number)::"
+msgstr ""
+
+#: ../../pep-0327.txt:497 ../../pep-0327.txt:754
+msgid "From float"
+msgstr ""
+
+#: ../../pep-0327.txt:499
+msgid ""
+"The initial discussion on this item was what should happen when passing "
+"floating point to the constructor:"
+msgstr ""
+
+#: ../../pep-0327.txt:502
+msgid "``Decimal(1.1) == Decimal('1.1')``"
+msgstr ""
+
+#: ../../pep-0327.txt:504
+msgid "``Decimal(1.1) == Decimal('110000000000000008881784197001252...e-51')``"
+msgstr ""
+
+#: ../../pep-0327.txt:507
+msgid "an exception is raised"
+msgstr ""
+
+#: ../../pep-0327.txt:509
+msgid ""
+"Several people alleged that (1) is the better option here, because it's "
+"what you expect when writing ``Decimal(1.1)``.  And quoting John Roth, "
+"it's easy to implement:"
+msgstr ""
+
+#: ../../pep-0327.txt:513
+msgid ""
+"It's not at all difficult to find where the actual number ends and where "
+"the fuzz begins.  You can do it visually, and the algorithms to do it are"
+" quite well known."
+msgstr ""
+
+#: ../../pep-0327.txt:517
+msgid ""
+"But If I *really* want my number to be "
+"``Decimal('110000000000000008881784197001252...e-51')``, why can't I "
+"write ``Decimal(1.1)``?  Why should I expect Decimal to be \"rounding\" "
+"it?  Remember that ``1.1`` *is* binary floating point, so I can predict "
+"the result.  It's not intuitive to a beginner, but that's the way it is."
+msgstr ""
+
+#: ../../pep-0327.txt:524
+msgid "Anyway, Paul Moore showed that (1) can't work, because::"
+msgstr ""
+
+#: ../../pep-0327.txt:531
+msgid ""
+"which is wrong, because if I write ``Decimal('1.1')`` it is exact, not "
+"``D(1.1000000000000001)``.  He also proposed to have an explicit "
+"conversion to float.  bokr says you need to put the precision in the "
+"constructor and mwilson agreed::"
+msgstr ""
+
+#: ../../pep-0327.txt:539
+msgid "But Alex Martelli says that:"
+msgstr ""
+
+#: ../../pep-0327.txt:541
+msgid ""
+"Constructing with some specified precision would be fine.  Thus, I think "
+"\"construction from float with some default precision\" runs a "
+"substantial risk of tricking naive users."
+msgstr ""
+
+#: ../../pep-0327.txt:545
+msgid ""
+"So, the accepted solution through c.l.p is that you can not call Decimal "
+"with a float. Instead you must use a method: Decimal.from_float(). The "
+"syntax::"
+msgstr ""
+
+#: ../../pep-0327.txt:551
+msgid ""
+"where ``floatNumber`` is the float number origin of the construction and "
+"``decimal_places`` are the number of digits after the decimal point where"
+" you apply a round-half-up rounding, if any.  In this way you can do, for"
+" example::"
+msgstr ""
+
+#: ../../pep-0327.txt:560
+msgid ""
+"Based on later discussions, it was decided to omit from_float() from the "
+"API for Py2.4.  Several ideas contributed to the thought process:"
+msgstr ""
+
+#: ../../pep-0327.txt:563
+msgid ""
+"Interactions between decimal and binary floating point force the user to "
+"deal with tricky issues of representation and round-off.  Avoidance of "
+"those issues is a primary reason for having the module in the first "
+"place."
+msgstr ""
+
+#: ../../pep-0327.txt:567
+msgid ""
+"The first release of the module should focus on that which is safe, "
+"minimal, and essential."
+msgstr ""
+
+#: ../../pep-0327.txt:570
+msgid ""
+"While theoretically nice, real world use cases for interactions between "
+"floats and decimals are lacking.  Java included float/decimal conversions"
+" to handle an obscure case where calculations are best performed in "
+"decimal even though a legacy data structure requires the inputs and "
+"outputs to be stored in binary floating point."
+msgstr ""
+
+#: ../../pep-0327.txt:576
+msgid ""
+"If the need arises, users can use string representations as an "
+"intermediate type.  The advantage of this approach is that it makes "
+"explicit the assumptions about precision and representation (no wondering"
+" what is going on under the hood)."
+msgstr ""
+
+#: ../../pep-0327.txt:581
+msgid ""
+"The Java docs for BigDecimal(double val) reflected their experiences with"
+" the constructor::"
+msgstr ""
+
+#: ../../pep-0327.txt:589
+msgid "From tuples"
+msgstr ""
+
+#: ../../pep-0327.txt:591
+msgid ""
+"Aahz suggested to construct from tuples: it's easier to implement "
+"``eval()``'s round trip and \"someone who has numeric values representing"
+" a Decimal does not need to convert them to a string.\""
+msgstr ""
+
+#: ../../pep-0327.txt:596
+msgid ""
+"The structure will be a tuple of three elements: sign, number and "
+"exponent.  The sign is 1 or 0, the number is a tuple of decimal digits "
+"and the exponent is a signed int or long::"
+msgstr ""
+
+#: ../../pep-0327.txt:602
+msgid "Of course, you can construct in this way all special values::"
+msgstr ""
+
+#: ../../pep-0327.txt:609 ../../pep-0327.txt:781
+msgid "From Decimal"
+msgstr ""
+
+#: ../../pep-0327.txt:611
+msgid "No mystery here, just a copy."
+msgstr ""
+
+#: ../../pep-0327.txt:615
+msgid "Syntax for All Cases"
+msgstr ""
+
+#: ../../pep-0327.txt:622
+msgid ""
+"where ``value1`` can be int, long, string, 3-tuple or Decimal, ``value2``"
+" can only be float, and ``decimal_places`` is an optional non negative "
+"int."
+msgstr ""
+
+#: ../../pep-0327.txt:628
+msgid "Creating from Context"
+msgstr ""
+
+#: ../../pep-0327.txt:630
+msgid ""
+"This item arose in python-dev from two sources in parallel.  Ka-Ping Yee "
+"proposes to pass the context as an argument at instance creation (he "
+"wants the context he passes to be used only in creation time: \"It would "
+"not be persistent\").  Tony Meyer asks from_string to honor the context "
+"if it receives a parameter \"honour_context\" with a True value. (I don't"
+" like it, because the doc specifies that the context be honored and I "
+"don't want the method to comply with the specification regarding the "
+"value of an argument.)"
+msgstr ""
+
+#: ../../pep-0327.txt:639
+msgid "Tim Peters gives us a reason to have a creation that uses context:"
+msgstr ""
+
+#: ../../pep-0327.txt:641
+msgid ""
+"In general number-crunching, literals may be given to high precision, but"
+" that precision isn't free and *usually* isn't needed"
+msgstr ""
+
+#: ../../pep-0327.txt:645
+msgid "Casey Duncan wants to use another method, not a bool arg:"
+msgstr ""
+
+#: ../../pep-0327.txt:647
+msgid ""
+"I find boolean arguments a general anti-pattern, especially given we have"
+" class methods. Why not use an alternate constructor like "
+"Decimal.rounded_to_context(\"3.14159265\")."
+msgstr ""
+
+#: ../../pep-0327.txt:651
+msgid ""
+"In the process of deciding the syntax of that, Tim came up with a better "
+"idea: he proposes not to have a method in Decimal to create with a "
+"different context, but having instead a method in Context to create a "
+"Decimal instance.  Basically, instead of::"
+msgstr ""
+
+#: ../../pep-0327.txt:658
+msgid "it will be::"
+msgstr ""
+
+#: ../../pep-0327.txt:662
+msgid "From Tim:"
+msgstr ""
+
+#: ../../pep-0327.txt:664
+msgid ""
+"While all operations in the spec except for the two to-string operations "
+"use context, no operations in the spec support an optional local context."
+"  That the Decimal() constructor ignores context by default is an "
+"extension to the spec.  We must supply a context-honoring from-string "
+"operation to meet the spec.  I recommend against any concept of \"local "
+"context\" in any operation -- it complicates the model and isn't "
+"necessary."
+msgstr ""
+
+#: ../../pep-0327.txt:672
+msgid ""
+"So, we decided to use a context method to create a Decimal that will use "
+"(only to be created) that context in particular (for further operations "
+"it will use the context of the thread).  But, a method with what name?"
+msgstr ""
+
+#: ../../pep-0327.txt:677
+msgid ""
+"Tim Peters proposes three methods to create from diverse sources "
+"(from_string, from_int, from_float).  I proposed to use one method, "
+"``create_decimal()``,  without caring about the data type.  Michael "
+"Chermside: \"The name just fits my brain. The fact that it uses the "
+"context is obvious from the fact that it's Context method\"."
+msgstr ""
+
+#: ../../pep-0327.txt:683
+msgid ""
+"The community agreed with that.  I think that it's OK because a newbie "
+"will not be using the creation method from Context (the separate method "
+"in Decimal to construct from float is just to prevent newbies from "
+"encountering binary floating point issues)."
+msgstr ""
+
+#: ../../pep-0327.txt:688
+msgid ""
+"So, in short, if you want to create a Decimal instance using a particular"
+" context (that will be used just at creation time and not any further), "
+"you'll have to use a method of that context::"
+msgstr ""
+
+#: ../../pep-0327.txt:695
+msgid "Example::"
+msgstr ""
+
+#: ../../pep-0327.txt:716
+msgid "Implicit construction"
+msgstr ""
+
+#: ../../pep-0327.txt:718
+msgid ""
+"As the implicit construction is the consequence of an operation, it will "
+"be affected by the context as is detailed in each point."
+msgstr ""
+
+#: ../../pep-0327.txt:721
+msgid ""
+"John Roth suggested that \"The other type should be handled in the same "
+"way the decimal() constructor would handle it\".  But Alex Martelli "
+"thinks that"
+msgstr ""
+
+#: ../../pep-0327.txt:725
+msgid ""
+"this total breach with Python tradition would be a terrible mistake.  "
+"23+\"43\" is NOT handled in the same way as 23+int(\"45\"), and a VERY "
+"good thing that is too.  It's a completely different thing for a user to "
+"EXPLICITLY indicate they want construction (conversion) and to just "
+"happen to sum two objects one of which by mistake could be a string."
+msgstr ""
+
+#: ../../pep-0327.txt:732
+msgid "So, here I define the behaviour again for each data type."
+msgstr ""
+
+#: ../../pep-0327.txt:738
+msgid ""
+"An int or long is a treated like a Decimal explicitly constructed from "
+"Decimal(str(x)) in the current context (meaning that the to-string rules "
+"for rounding are applied and the appropriate flags are set).  This "
+"guarantees that expressions like ``Decimal('1234567') + 13579`` match the"
+" mental model of ``Decimal('1234567') + Decimal('13579')``.  That model "
+"works because all integers are representable as strings without "
+"representation error."
+msgstr ""
+
+#: ../../pep-0327.txt:750
+msgid "Everybody agrees to raise an exception here."
+msgstr ""
+
+#: ../../pep-0327.txt:756
+msgid ""
+"Aahz is strongly opposed to interact with float, suggesting an explicit "
+"conversion:"
+msgstr ""
+
+#: ../../pep-0327.txt:759
+msgid ""
+"The problem is that Decimal is capable of greater precision, accuracy, "
+"and range than float."
+msgstr ""
+
+#: ../../pep-0327.txt:762
+msgid ""
+"The example of the valid python expression, ``35 + 1.1``, seems to "
+"suggest that ``Decimal(35) + 1.1`` should also be valid.  However, a "
+"closer look shows that it only demonstrates the feasibility of integer to"
+" floating point conversions.  Hence, the correct analog for decimal "
+"floating point is ``35 + Decimal(1.1)``.  Both coercions, int-to-float "
+"and int-to-Decimal, can be done without incurring representation error."
+msgstr ""
+
+#: ../../pep-0327.txt:769
+msgid ""
+"The question of how to coerce between binary and decimal floating point "
+"is more complex.  I proposed allowing the interaction with float, making "
+"an exact conversion and raising ValueError if exceeds the precision in "
+"the current context (this is maybe too tricky, because for example with a"
+" precision of 9, ``Decimal(35) + 1.2`` is OK but ``Decimal(35) + 1.1`` "
+"raises an error)."
+msgstr ""
+
+#: ../../pep-0327.txt:776
+msgid ""
+"This resulted to be too tricky. So tricky, that c.l.p agreed to raise "
+"TypeError in this case: you could not mix Decimal and float."
+msgstr ""
+
+#: ../../pep-0327.txt:783
+msgid "There isn't any issue here."
+msgstr ""
+
+#: ../../pep-0327.txt:787
+msgid "Use of Context"
+msgstr ""
+
+#: ../../pep-0327.txt:789
+msgid ""
+"In the last pre-PEP I said that \"The Context must be omnipresent, "
+"meaning that changes to it affects all the current and future Decimal "
+"instances\".  I was wrong.  In response, John Roth said:"
+msgstr ""
+
+#: ../../pep-0327.txt:793
+msgid ""
+"The context should be selectable for the particular usage.  That is, it "
+"should be possible to have several different contexts in play at one time"
+" in an application."
+msgstr ""
+
+#: ../../pep-0327.txt:797
+msgid ""
+"In comp.lang.python, Aahz explained that the idea is to have a \"context "
+"per thread\".  So, all the instances of a thread belongs to a context, "
+"and you can change a context in thread A (and the behaviour of the "
+"instances of that thread) without changing nothing in thread B."
+msgstr ""
+
+#: ../../pep-0327.txt:802
+msgid "Also, and again correcting me, he said:"
+msgstr ""
+
+#: ../../pep-0327.txt:804
+msgid ""
+"(the) Context applies only to operations, not to Decimal instances; "
+"changing the Context does not affect existing instances if there are no "
+"operations on them."
+msgstr ""
+
+#: ../../pep-0327.txt:808
+msgid ""
+"Arguing about special cases when there's need to perform operations with "
+"other rules that those of the current context, Tim Peters said that the "
+"context will have the operations as methods.  This way, the user \"can "
+"create whatever private context object(s) it needs, and spell arithmetic "
+"as explicit method calls on its private context object(s), so that the "
+"default thread context object is neither consulted nor modified\"."
+msgstr ""
+
+#: ../../pep-0327.txt:818
+msgid "Python Usability"
+msgstr ""
+
+#: ../../pep-0327.txt:820
+msgid ""
+"Decimal should support the basic arithmetic (``+, -, *, /, //, **, %, "
+"divmod``) and comparison (``==, !=, <, >, <=, >=, cmp``) operators in the"
+" following cases (check `Implicit Construction`_ to see what types could "
+"OtherType be, and what happens in each case):"
+msgstr ""
+
+#: ../../pep-0327.txt:825
+msgid "Decimal op Decimal"
+msgstr ""
+
+#: ../../pep-0327.txt:826
+msgid "Decimal op otherType"
+msgstr ""
+
+#: ../../pep-0327.txt:827
+msgid "otherType op Decimal"
+msgstr ""
+
+#: ../../pep-0327.txt:828
+msgid "Decimal op= Decimal"
+msgstr ""
+
+#: ../../pep-0327.txt:829
+msgid "Decimal op= otherType"
+msgstr ""
+
+#: ../../pep-0327.txt:831
+msgid "Decimal should support unary operators (``-, +, abs``)."
+msgstr ""
+
+#: ../../pep-0327.txt:833
+msgid "repr() should round trip, meaning that::"
+msgstr ""
+
+#: ../../pep-0327.txt:838
+msgid "Decimal should be immutable."
+msgstr ""
+
+#: ../../pep-0327.txt:840
+msgid "Decimal should support the built-in methods:"
+msgstr ""
+
+#: ../../pep-0327.txt:842
+msgid "min, max"
+msgstr ""
+
+#: ../../pep-0327.txt:843
+msgid "float, int, long"
+msgstr ""
+
+#: ../../pep-0327.txt:844
+msgid "str, repr"
+msgstr ""
+
+#: ../../pep-0327.txt:845
+msgid "hash"
+msgstr ""
+
+#: ../../pep-0327.txt:846
+msgid "bool (0 is false, otherwise true)"
+msgstr ""
+
+#: ../../pep-0327.txt:848
+msgid ""
+"There's been some discussion in python-dev about the behaviour of "
+"``hash()``.  The community agrees that if the values are the same, the "
+"hashes of those values should also be the same.  So, while Decimal(25) =="
+" 25 is True, hash(Decimal(25)) should be equal to hash(25)."
+msgstr ""
+
+#: ../../pep-0327.txt:853
+msgid ""
+"The detail is that you can NOT compare Decimal to floats or strings, so "
+"we should not worry about them giving the same hashes.  In short::"
+msgstr ""
+
+#: ../../pep-0327.txt:858
+msgid ""
+"Regarding str() and repr() behaviour, Ka-Ping Yee proposes that repr() "
+"have the same behaviour as str() and Tim Peters proposes that str() "
+"behave like the to-scientific-string operation from the Spec."
+msgstr ""
+
+#: ../../pep-0327.txt:862
+msgid ""
+"This is possible, because (from Aahz): \"The string form already contains"
+" all the necessary information to reconstruct a Decimal object\"."
+msgstr ""
+
+#: ../../pep-0327.txt:866
+msgid "And it also complies with the Spec; Tim Peters:"
+msgstr ""
+
+#: ../../pep-0327.txt:868
+msgid ""
+"There's no requirement to have a method *named* \"to_sci_string\", the "
+"only requirement is that *some* way to spell to-sci-string's "
+"functionality be supplied.  The meaning of to-sci-string is precisely "
+"specified by the standard, and is a good choice for both str(Decimal) and"
+" repr(Decimal)."
+msgstr ""
+
+#: ../../pep-0327.txt:876
+msgid "Documentation"
+msgstr ""
+
+#: ../../pep-0327.txt:878
+msgid ""
+"This section explains all the public methods and attributes of Decimal "
+"and Context."
+msgstr ""
+
+#: ../../pep-0327.txt:883
+msgid "Decimal Attributes"
+msgstr ""
+
+#: ../../pep-0327.txt:885
+msgid ""
+"Decimal has no public attributes.  The internal information is stored in "
+"slots and should not be accessed by end users."
+msgstr ""
+
+#: ../../pep-0327.txt:890
+msgid "Decimal Methods"
+msgstr ""
+
+#: ../../pep-0327.txt:892
+msgid ""
+"Following are the conversion and arithmetic operations defined in the "
+"Spec, and how that functionality can be achieved with the actual "
+"implementation."
+msgstr ""
+
+#: ../../pep-0327.txt:896
+msgid "to-scientific-string: Use builtin function ``str()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:902
+msgid "to-engineering-string: Use method ``to_eng_string()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:908
+msgid ""
+"to-number: Use Context method ``create_decimal()``.  The standard "
+"constructor or ``from_float()`` constructor cannot be used because these "
+"do not use the context (as is specified in the Spec for this conversion)."
+msgstr ""
+
+#: ../../pep-0327.txt:913
+msgid "abs: Use builtin function ``abs()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:919
+msgid "add: Use operator ``+``::"
+msgstr ""
+
+#: ../../pep-0327.txt:925
+msgid "subtract: Use operator ``-``::"
+msgstr ""
+
+#: ../../pep-0327.txt:931
+msgid ""
+"compare: Use method ``compare()``.  This method (and not the built-in "
+"function cmp()) should only be used when dealing with *special values*::"
+msgstr ""
+
+#: ../../pep-0327.txt:946
+msgid "divide: Use operator ``/``::"
+msgstr ""
+
+#: ../../pep-0327.txt:952
+msgid "divide-integer: Use operator ``//``::"
+msgstr ""
+
+#: ../../pep-0327.txt:958
+msgid ""
+"max: Use method ``max()``.  Only use this method (and not the built-in "
+"function max()) when dealing with *special values*::"
+msgstr ""
+
+#: ../../pep-0327.txt:968
+msgid ""
+"min: Use method ``min()``.  Only use this method (and not the built-in "
+"function min()) when dealing with *special values*::"
+msgstr ""
+
+#: ../../pep-0327.txt:978
+msgid "minus: Use unary operator ``-``::"
+msgstr ""
+
+#: ../../pep-0327.txt:984
+msgid "plus: Use unary operator ``+``::"
+msgstr ""
+
+#: ../../pep-0327.txt:990
+msgid "multiply: Use operator ``*``::"
+msgstr ""
+
+#: ../../pep-0327.txt:996
+msgid "normalize: Use method ``normalize()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1005
+msgid "quantize: Use method ``quantize()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1013
+msgid "remainder:  Use operator ``%``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1021
+msgid "remainder-near: Use method ``remainder_near()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1029
+msgid "round-to-integral-value: Use method ``to_integral()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1035
+msgid "same-quantum: Use method ``same_quantum()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1043
+msgid "square-root: Use method ``sqrt()``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1049
+msgid "power: User operator ``**``::"
+msgstr ""
+
+#: ../../pep-0327.txt:1055
+msgid "Following are other methods and why they exist:"
+msgstr ""
+
+#: ../../pep-0327.txt:1057
+msgid ""
+"``adjusted()``: Returns the adjusted exponent.  This concept is defined "
+"in the Spec: the adjusted exponent is the value of the exponent of a "
+"number when that number is expressed as though in scientific notation "
+"with one digit before any decimal point::"
+msgstr ""
+
+#: ../../pep-0327.txt:1066
+msgid "``from_float()``: Class method to create instances from float data types::"
+msgstr ""
+
+#: ../../pep-0327.txt:1073
+msgid ""
+"``as_tuple()``: Show the internal structure of the Decimal, the triple "
+"tuple.  This method is not required by the Spec, but Tim Peters proposed "
+"it and the community agreed to have it (it's useful for developing and "
+"debugging)::"
+msgstr ""
+
+#: ../../pep-0327.txt:1087
+msgid "Context Attributes"
+msgstr ""
+
+#: ../../pep-0327.txt:1089
+msgid "These are the attributes that can be changed to modify the context."
+msgstr ""
+
+#: ../../pep-0327.txt:1091
+msgid "``prec`` (int): the precision::"
+msgstr ""
+
+#: ../../pep-0327.txt:1096
+msgid "``rounding`` (str): rounding type (how to round)::"
+msgstr ""
+
+#: ../../pep-0327.txt:1101
+msgid ""
+"``trap_enablers`` (dict): if trap_enablers[exception] = 1, then an "
+"exception is raised when it is caused::"
+msgstr ""
+
+#: ../../pep-0327.txt:1109
+msgid ""
+"``flags`` (dict): when an exception is caused, flags[exception] is "
+"incremented (whether or not the trap_enabler is set).  Should be reset by"
+" the user of Decimal instance::"
+msgstr ""
+
+#: ../../pep-0327.txt:1118
+msgid "``Emin`` (int): minimum exponent::"
+msgstr ""
+
+#: ../../pep-0327.txt:1123
+msgid "``Emax`` (int): maximum exponent::"
+msgstr ""
+
+#: ../../pep-0327.txt:1128
+msgid ""
+"``capitals`` (int): boolean flag to use 'E' (True/1) or 'e' (False/0) in "
+"the string (for example, '1.32e+2' or '1.32E+2')::"
+msgstr ""
+
+#: ../../pep-0327.txt:1136
+msgid "Context Methods"
+msgstr ""
+
+#: ../../pep-0327.txt:1138
+msgid ""
+"The following methods comply with Decimal functionality from the Spec. Be"
+" aware that the operations that are called through a specific context use"
+" that context and not the thread context."
+msgstr ""
+
+#: ../../pep-0327.txt:1142
+msgid ""
+"To use these methods, take note that the syntax changes when the operator"
+" is binary or unary, for example::"
+msgstr ""
+
+#: ../../pep-0327.txt:1150
+msgid ""
+"So, the following are the Spec operations and conversions and how to "
+"achieve them through a context (where ``d`` is a Decimal instance and "
+"``n`` a number that can be used in an `Implicit construction`_):"
+msgstr ""
+
+#: ../../pep-0327.txt:1154
+msgid "to-scientific-string: ``to_sci_string(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1155
+msgid "to-engineering-string: ``to_eng_string(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1156
+msgid ""
+"to-number: ``create_decimal(number)``, see `Explicit construction`_ for "
+"``number``."
+msgstr ""
+
+#: ../../pep-0327.txt:1158
+msgid "abs: ``abs(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1159
+msgid "add: ``add(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1160
+msgid "subtract: ``subtract(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1161
+msgid "compare: ``compare(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1162
+msgid "divide: ``divide(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1163
+msgid "divide-integer: ``divide_int(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1164
+msgid "max: ``max(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1165
+msgid "min: ``min(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1166
+msgid "minus: ``minus(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1167
+msgid "plus: ``plus(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1168
+msgid "multiply: ``multiply(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1169
+msgid "normalize: ``normalize(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1170
+msgid "quantize: ``quantize(d, d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1171
+msgid "remainder: ``remainder(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1172
+msgid "remainder-near: ``remainder_near(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1173
+msgid "round-to-integral-value: ``to_integral(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1174
+msgid "same-quantum: ``same_quantum(d, d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1175
+msgid "square-root: ``sqrt(d)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1176
+msgid "power: ``power(d, n)``"
+msgstr ""
+
+#: ../../pep-0327.txt:1178
+msgid ""
+"The ``divmod(d, n)`` method supports decimal functionality through "
+"Context."
+msgstr ""
+
+#: ../../pep-0327.txt:1181
+msgid "These are methods that return useful information from the Context:"
+msgstr ""
+
+#: ../../pep-0327.txt:1183
+msgid "``Etiny()``: Minimum exponent considering precision. ::"
+msgstr ""
+
+#: ../../pep-0327.txt:1190
+msgid "``Etop()``: Maximum exponent considering precision. ::"
+msgstr ""
+
+#: ../../pep-0327.txt:1197
+msgid "``copy()``: Returns a copy of the context."
+msgstr ""
+
+#: ../../pep-0327.txt:1201
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0327.txt:1203
+msgid ""
+"As of Python 2.4-alpha, the code has been checked into the standard "
+"library.  The latest version is available from:"
+msgstr ""
+
+#: ../../pep-0327.txt:1206
+msgid "http://svn.python.org/view/python/trunk/Lib/decimal.py"
+msgstr ""
+
+#: ../../pep-0327.txt:1208
+msgid "The test cases are here:"
+msgstr ""
+
+#: ../../pep-0327.txt:1210
+msgid "http://svn.python.org/view/python/trunk/Lib/test/test_decimal.py"
+msgstr ""
+
+#: ../../pep-0327.txt:1214
+msgid "References"
+msgstr ""
+
+#: ../../pep-0327.txt:1216
+msgid ""
+"ANSI standard X3.274-1996 (Programming Language REXX): "
+"http://www.rexxla.org/Standards/ansi.html"
+msgstr ""
+
+#: ../../pep-0327.txt:1219
+msgid ""
+"General Decimal Arithmetic specification (Cowlishaw): "
+"http://speleotrove.com/decimal/decarith.html (related documents and links"
+" at http://speleotrove.com/decimal/)"
+msgstr ""
+
+#: ../../pep-0327.txt:1223
+msgid ""
+"ANSI/IEEE standard 854-1987 (Radix-Independent Floating-Point "
+"Arithmetic): "
+"http://www.cs.berkeley.edu/~ejr/projects/754/private/drafts/854-1987/dir.html"
+" (unofficial text; official copies can be ordered from "
+"http://standards.ieee.org/catalog/ordering.html)"
+msgstr ""
+
+#: ../../pep-0327.txt:1229
+msgid "Tim Peter's FixedPoint at SourceForge: http://fixedpoint.sourceforge.net/"
+msgstr ""
+
+#: ../../pep-0327.txt:1232
+msgid "IEEE 754 revision: http://grouper.ieee.org/groups/754/revision.html"
+msgstr ""
+
+#: ../../pep-0327.txt:1235
+msgid ""
+"IEEE 754 references: http://babbage.cs.qc.edu/courses/cs341/IEEE-"
+"754references.html"
+msgstr ""
+
+#: ../../pep-0327.txt:1240
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0327.txt:1242
+msgid "This document has been placed in the public domain."
+msgstr ""
+

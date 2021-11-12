@@ -1,0 +1,903 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0567.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0567.rst:1
+msgid "567"
+msgstr ""
+
+#: ../../pep-0567.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0567.rst:2
+msgid "Context Variables"
+msgstr ""
+
+#: ../../pep-0567.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0567.rst:5
+msgid "Yury Selivanov <yury@edgedb.com>"
+msgstr ""
+
+#: ../../pep-0567.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0567.rst:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0567.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0567.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0567.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0567.rst:9
+msgid "12-Dec-2017"
+msgstr ""
+
+#: ../../pep-0567.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0567.rst:10
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0567.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0567.rst:11
+msgid "12-Dec-2017, 28-Dec-2017, 16-Jan-2018"
+msgstr ""
+
+#: ../../pep-0567.rst:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0567.rst:17
+msgid ""
+"This PEP proposes a new ``contextvars`` module and a set of new CPython C"
+" APIs to support context variables.  This concept is similar to thread-"
+"local storage (TLS), but, unlike TLS, it also allows correctly keeping "
+"track of values per asynchronous task, e.g. ``asyncio.Task``."
+msgstr ""
+
+#: ../../pep-0567.rst:23
+msgid ""
+"This proposal is a simplified version of :pep:`550`.  The key difference "
+"is that this PEP is concerned only with solving the case for asynchronous"
+" tasks, not for generators.  There are no proposed modifications to any "
+"built-in types or to the interpreter."
+msgstr ""
+
+#: ../../pep-0567.rst:28
+msgid ""
+"This proposal is not strictly related to Python Context Managers. "
+"Although it does provide a mechanism that can be used by Context Managers"
+" to store their state."
+msgstr ""
+
+#: ../../pep-0567.rst:34
+msgid "API Design and Implementation Revisions"
+msgstr ""
+
+#: ../../pep-0567.rst:36
+msgid ""
+"In **Python 3.7.1** the signatures of all context variables C APIs were "
+"**changed** to use ``PyObject *`` pointers instead of ``PyContext *``, "
+"``PyContextVar *``, and ``PyContextToken *``, e.g.::"
+msgstr ""
+
+#: ../../pep-0567.rst:47
+msgid ""
+"See [6]_ for more details.  The `C API`_ section of this PEP was updated "
+"to reflect the change."
+msgstr ""
+
+#: ../../pep-0567.rst:52
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0567.rst:54
+msgid ""
+"Thread-local variables are insufficient for asynchronous tasks that "
+"execute concurrently in the same OS thread.  Any context manager that "
+"saves and restores a context value using ``threading.local()`` will have "
+"its context values bleed to other code unexpectedly when used in "
+"async/await code."
+msgstr ""
+
+#: ../../pep-0567.rst:60
+msgid ""
+"A few examples where having a working context local storage for "
+"asynchronous code is desirable:"
+msgstr ""
+
+#: ../../pep-0567.rst:63
+msgid "Context managers like ``decimal`` contexts and ``numpy.errstate``."
+msgstr ""
+
+#: ../../pep-0567.rst:65
+msgid ""
+"Request-related data, such as security tokens and request data in web "
+"applications, language context for ``gettext``, etc."
+msgstr ""
+
+#: ../../pep-0567.rst:68
+msgid "Profiling, tracing, and logging in large code bases."
+msgstr ""
+
+#: ../../pep-0567.rst:72
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0567.rst:74
+msgid ""
+"The PEP proposes a new mechanism for managing context variables. The key "
+"classes involved in this mechanism are ``contextvars.Context`` and "
+"``contextvars.ContextVar``.  The PEP also proposes some policies for "
+"using the mechanism around asynchronous tasks."
+msgstr ""
+
+#: ../../pep-0567.rst:79
+msgid ""
+"The proposed mechanism for accessing context variables uses the "
+"``ContextVar`` class.  A module (such as ``decimal``) that wishes to use "
+"the new mechanism should:"
+msgstr ""
+
+#: ../../pep-0567.rst:83
+msgid ""
+"declare a module-global variable holding a ``ContextVar`` to serve as a "
+"key;"
+msgstr ""
+
+#: ../../pep-0567.rst:86
+msgid "access the current value via the ``get()`` method on the key variable;"
+msgstr ""
+
+#: ../../pep-0567.rst:89
+msgid "modify the current value via the ``set()`` method on the key variable."
+msgstr ""
+
+#: ../../pep-0567.rst:92
+msgid ""
+"The notion of \"current value\" deserves special consideration: different"
+" asynchronous tasks that exist and execute concurrently may have "
+"different values for the same key.  This idea is well known from thread-"
+"local storage but in this case the locality of the value is not "
+"necessarily bound to a thread.  Instead, there is the notion of the "
+"\"current ``Context``\" which is stored in thread-local storage. "
+"Manipulation of the current context is the responsibility of the task "
+"framework, e.g. asyncio."
+msgstr ""
+
+#: ../../pep-0567.rst:101
+msgid ""
+"A ``Context`` is a mapping of ``ContextVar`` objects to their values. The"
+" ``Context`` itself exposes the ``abc.Mapping`` interface (not "
+"``abc.MutableMapping``!), so it cannot be modified directly. To set a new"
+" value for a context variable in a ``Context`` object, the user needs to:"
+msgstr ""
+
+#: ../../pep-0567.rst:107
+msgid ""
+"make the ``Context`` object \"current\" using the ``Context.run()`` "
+"method;"
+msgstr ""
+
+#: ../../pep-0567.rst:110
+msgid "use ``ContextVar.set()`` to set a new value for the context variable."
+msgstr ""
+
+#: ../../pep-0567.rst:113
+msgid ""
+"The ``ContextVar.get()`` method looks for the variable in the current "
+"``Context`` object using ``self`` as a key."
+msgstr ""
+
+#: ../../pep-0567.rst:116
+msgid ""
+"It is not possible to get a direct reference to the current ``Context`` "
+"object, but it is possible to obtain a shallow copy of it using the "
+"``contextvars.copy_context()`` function.  This ensures that the *caller* "
+"of ``Context.run()`` is the sole owner of its ``Context`` object."
+msgstr ""
+
+#: ../../pep-0567.rst:124
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0567.rst:126
+msgid ""
+"A new standard library module ``contextvars`` is added with the following"
+" APIs:"
+msgstr ""
+
+#: ../../pep-0567.rst:129
+msgid ""
+"The ``copy_context() -> Context`` function is used to get a copy of the "
+"current ``Context`` object for the current OS thread."
+msgstr ""
+
+#: ../../pep-0567.rst:132
+msgid "The ``ContextVar`` class to declare and access context variables."
+msgstr ""
+
+#: ../../pep-0567.rst:134
+msgid ""
+"The ``Context`` class encapsulates context state.  Every OS thread stores"
+" a reference to its current ``Context`` instance. It is not possible to "
+"control that reference directly. Instead, the ``Context.run(callable, "
+"*args, **kwargs)`` method is used to run Python code in another context."
+msgstr ""
+
+#: ../../pep-0567.rst:142
+msgid "contextvars.ContextVar"
+msgstr ""
+
+#: ../../pep-0567.rst:144
+msgid ""
+"The ``ContextVar`` class has the following constructor signature: "
+"``ContextVar(name, *, default=_NO_DEFAULT)``.  The ``name`` parameter is "
+"used for introspection and debug purposes, and is exposed as a read-only "
+"``ContextVar.name`` attribute.  The ``default`` parameter is optional.  "
+"Example::"
+msgstr ""
+
+#: ../../pep-0567.rst:153
+msgid ""
+"(The ``_NO_DEFAULT`` is an internal sentinel object used to detect if the"
+" default value was provided.)"
+msgstr ""
+
+#: ../../pep-0567.rst:156
+msgid ""
+"``ContextVar.get(default=_NO_DEFAULT)`` returns a value for the context "
+"variable for the current ``Context``::"
+msgstr ""
+
+#: ../../pep-0567.rst:162
+msgid ""
+"If there is no value for the variable in the current context, "
+"``ContextVar.get()`` will:"
+msgstr ""
+
+#: ../../pep-0567.rst:165
+msgid ""
+"return the value of the *default* argument of the ``get()`` method, if "
+"provided; or"
+msgstr ""
+
+#: ../../pep-0567.rst:168
+msgid "return the default value for the context variable, if provided; or"
+msgstr ""
+
+#: ../../pep-0567.rst:170
+msgid "raise a ``LookupError``."
+msgstr ""
+
+#: ../../pep-0567.rst:172
+msgid ""
+"``ContextVar.set(value) -> Token`` is used to set a new value for the "
+"context variable in the current ``Context``::"
+msgstr ""
+
+#: ../../pep-0567.rst:178
+msgid ""
+"``ContextVar.reset(token)`` is used to reset the variable in the current "
+"context to the value it had before the ``set()`` operation that created "
+"the ``token`` (or to remove the variable if it was not set)::"
+msgstr ""
+
+#: ../../pep-0567.rst:195
+msgid "The ``ContextVar.reset()`` method raises:"
+msgstr ""
+
+#: ../../pep-0567.rst:197
+msgid ""
+"a ``ValueError`` if it is called with a token object created by another "
+"variable;"
+msgstr ""
+
+#: ../../pep-0567.rst:200
+msgid ""
+"a ``ValueError`` if the current ``Context`` object does not match the one"
+" where the token object was created;"
+msgstr ""
+
+#: ../../pep-0567.rst:203
+msgid ""
+"a ``RuntimeError`` if the token object has already been used once to "
+"reset the variable."
+msgstr ""
+
+#: ../../pep-0567.rst:208
+msgid "contextvars.Token"
+msgstr ""
+
+#: ../../pep-0567.rst:210
+msgid ""
+"``contextvars.Token`` is an opaque object that should be used to restore "
+"the ``ContextVar`` to its previous value, or to remove it from the "
+"context if the variable was not set before.  It can be created only by "
+"calling ``ContextVar.set()``."
+msgstr ""
+
+#: ../../pep-0567.rst:215
+msgid "For debug and introspection purposes it has:"
+msgstr ""
+
+#: ../../pep-0567.rst:217
+msgid ""
+"a read-only attribute ``Token.var`` pointing to the variable that created"
+" the token;"
+msgstr ""
+
+#: ../../pep-0567.rst:220
+msgid ""
+"a read-only attribute ``Token.old_value`` set to the value the variable "
+"had before the ``set()`` call, or to ``Token.MISSING`` if the variable "
+"wasn't set before."
+msgstr ""
+
+#: ../../pep-0567.rst:226
+msgid "contextvars.Context"
+msgstr ""
+
+#: ../../pep-0567.rst:228
+msgid "``Context`` object is a mapping of context variables to values."
+msgstr ""
+
+#: ../../pep-0567.rst:230
+msgid ""
+"``Context()`` creates an empty context.  To get a copy of the current "
+"``Context`` for the current OS thread, use the "
+"``contextvars.copy_context()`` method::"
+msgstr ""
+
+#: ../../pep-0567.rst:236
+msgid "To run Python code in some ``Context``, use ``Context.run()`` method::"
+msgstr ""
+
+#: ../../pep-0567.rst:241
+msgid ""
+"Any changes to any context variables that ``function`` causes will be "
+"contained in the ``ctx`` context::"
+msgstr ""
+
+#: ../../pep-0567.rst:270
+msgid ""
+"``Context.run()`` raises a ``RuntimeError`` when called on the same "
+"context object from more than one OS thread, or when called recursively."
+msgstr ""
+
+#: ../../pep-0567.rst:274
+msgid "``Context.copy()`` returns a shallow copy of the context object."
+msgstr ""
+
+#: ../../pep-0567.rst:276
+msgid ""
+"``Context`` objects implement the ``collections.abc.Mapping`` ABC. This "
+"can be used to introspect contexts::"
+msgstr ""
+
+#: ../../pep-0567.rst:287
+msgid ""
+"Note that all Mapping methods, including ``Context.__getitem__`` and "
+"``Context.get``, ignore default values for context variables (i.e. "
+"``ContextVar.default``).  This means that for a variable *var* that was "
+"created with a default value and was not set in the *context*:"
+msgstr ""
+
+#: ../../pep-0567.rst:293
+msgid "``context[var]`` raises a ``KeyError``,"
+msgstr ""
+
+#: ../../pep-0567.rst:295
+msgid "``var in context`` returns ``False``,"
+msgstr ""
+
+#: ../../pep-0567.rst:297
+msgid "the variable isn't included in ``context.items()``, etc."
+msgstr ""
+
+#: ../../pep-0567.rst:301
+msgid "asyncio"
+msgstr ""
+
+#: ../../pep-0567.rst:303
+msgid ""
+"``asyncio`` uses ``Loop.call_soon()``, ``Loop.call_later()``, and "
+"``Loop.call_at()`` to schedule the asynchronous execution of a function."
+"  ``asyncio.Task`` uses ``call_soon()`` to run the wrapped coroutine."
+msgstr ""
+
+#: ../../pep-0567.rst:308
+msgid ""
+"We modify ``Loop.call_{at,later,soon}`` and "
+"``Future.add_done_callback()`` to accept the new optional *context* "
+"keyword-only argument, which defaults to the current context::"
+msgstr ""
+
+#: ../../pep-0567.rst:319
+msgid ""
+"Tasks in asyncio need to maintain their own context that they inherit "
+"from the point they were created at.  ``asyncio.Task`` is modified as "
+"follows::"
+msgstr ""
+
+#: ../../pep-0567.rst:339
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0567.rst:341
+msgid ""
+"This section explains high-level implementation details in pseudo-code.  "
+"Some optimizations are omitted to keep this section short and clear."
+msgstr ""
+
+#: ../../pep-0567.rst:345
+msgid ""
+"The ``Context`` mapping is implemented using an immutable dictionary. "
+"This allows for a O(1) implementation of the ``copy_context()`` function."
+"  The reference implementation implements the immutable dictionary using "
+"Hash Array Mapped Tries (HAMT); see :pep:`550` for analysis of HAMT "
+"performance [1]_."
+msgstr ""
+
+#: ../../pep-0567.rst:351
+msgid ""
+"For the purposes of this section, we implement an immutable dictionary "
+"using a copy-on-write approach and the built-in dict type::"
+msgstr ""
+
+#: ../../pep-0567.rst:383
+msgid "Every OS thread has a reference to the current ``Context`` object::"
+msgstr ""
+
+#: ../../pep-0567.rst:388
+msgid "``contextvars.Context`` is a wrapper around ``_ContextData``::"
+msgstr ""
+
+#: ../../pep-0567.rst:438
+msgid "``contextvars.copy_context()`` is implemented as follows::"
+msgstr ""
+
+#: ../../pep-0567.rst:444
+msgid ""
+"``contextvars.ContextVar`` interacts with ``PyThreadState.context`` "
+"directly::"
+msgstr ""
+
+#: ../../pep-0567.rst:506
+msgid ""
+"Note that the in the reference implementation, ``ContextVar.get()`` has "
+"an internal cache for the most recent value, which allows to bypass a "
+"hash lookup.  This is similar to the optimization the ``decimal`` module "
+"implements to retrieve its context from ``PyThreadState_GetDict()``.  See"
+" :pep:`550` which explains the implementation of the cache in great "
+"detail."
+msgstr ""
+
+#: ../../pep-0567.rst:513
+msgid "The ``Token`` class is implemented as follows::"
+msgstr ""
+
+#: ../../pep-0567.rst:535
+msgid "Summary of the New APIs"
+msgstr ""
+
+#: ../../pep-0567.rst:538
+msgid "Python API"
+msgstr ""
+
+#: ../../pep-0567.rst:540
+msgid ""
+"A new ``contextvars`` module with ``ContextVar``, ``Context``, and "
+"``Token`` classes, and a ``copy_context()`` function."
+msgstr ""
+
+#: ../../pep-0567.rst:543
+msgid ""
+"``asyncio.Loop.call_at()``, ``asyncio.Loop.call_later()``, "
+"``asyncio.Loop.call_soon()``, and ``asyncio.Future.add_done_callback()`` "
+"run callback functions in the context they were called in.  A new "
+"*context* keyword-only parameter can be used to specify a custom context."
+msgstr ""
+
+#: ../../pep-0567.rst:549
+msgid "``asyncio.Task`` is modified internally to maintain its own context."
+msgstr ""
+
+#: ../../pep-0567.rst:554
+msgid "C API"
+msgstr ""
+
+#: ../../pep-0567.rst:556
+msgid ""
+"``PyObject * PyContextVar_New(char *name, PyObject *default)``: create a "
+"``ContextVar`` object.  The *default* argument can be ``NULL``, which "
+"means that the variable has no default value."
+msgstr ""
+
+#: ../../pep-0567.rst:560
+msgid ""
+"``int PyContextVar_Get(PyObject *, PyObject *default_value, PyObject "
+"**value)``: return ``-1`` if an error occurs during the lookup, ``0`` "
+"otherwise. If a value for the context variable is found, it will be set "
+"to the ``value`` pointer.  Otherwise, ``value`` will be set to "
+"``default_value`` when it is not ``NULL``.  If ``default_value`` is "
+"``NULL``, ``value`` will be set to the default value of the variable, "
+"which can be ``NULL`` too.  ``value`` is always a new reference."
+msgstr ""
+
+#: ../../pep-0567.rst:569
+msgid ""
+"``PyObject * PyContextVar_Set(PyObject *, PyObject *)``: set the value of"
+" the variable in the current context."
+msgstr ""
+
+#: ../../pep-0567.rst:572
+msgid ""
+"``PyContextVar_Reset(PyObject *, PyObject *)``: reset the value of the "
+"context variable."
+msgstr ""
+
+#: ../../pep-0567.rst:575
+msgid "``PyObject * PyContext_New()``: create a new empty context."
+msgstr ""
+
+#: ../../pep-0567.rst:577
+msgid ""
+"``PyObject * PyContext_Copy(PyObject *)``: return a shallow copy of the "
+"passed context object."
+msgstr ""
+
+#: ../../pep-0567.rst:580
+msgid "``PyObject * PyContext_CopyCurrent()``: get a copy of the current context."
+msgstr ""
+
+#: ../../pep-0567.rst:583
+msgid ""
+"``int PyContext_Enter(PyObject *)`` and ``int PyContext_Exit(PyObject "
+"*)`` allow to set and restore the context for the current OS thread.  It "
+"is required to always restore the previous context::"
+msgstr ""
+
+#: ../../pep-0567.rst:599
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0567.rst:602
+msgid "Replicating threading.local() interface"
+msgstr ""
+
+#: ../../pep-0567.rst:604
+msgid "Please refer to :pep:`550` where this topic is covered in detail: [2]_."
+msgstr ""
+
+#: ../../pep-0567.rst:608
+msgid "Replacing Token with ContextVar.unset()"
+msgstr ""
+
+#: ../../pep-0567.rst:610
+msgid ""
+"The Token API allows to get around having a ``ContextVar.unset()`` "
+"method, which is incompatible with chained contexts design of :pep:`550`."
+"  Future compatibility with :pep:`550` is desired in case there is demand"
+" to support context variables in generators and asynchronous generators."
+msgstr ""
+
+#: ../../pep-0567.rst:616
+msgid ""
+"The Token API also offers better usability: the user does not have to "
+"special-case absence of a value. Compare::"
+msgstr ""
+
+#: ../../pep-0567.rst:625
+msgid "with::"
+msgstr ""
+
+#: ../../pep-0567.rst:640
+msgid "Having Token.reset() instead of ContextVar.reset()"
+msgstr ""
+
+#: ../../pep-0567.rst:642
+msgid ""
+"Nathaniel Smith suggested to implement the ``ContextVar.reset()`` method "
+"directly on the ``Token`` class, so instead of::"
+msgstr ""
+
+#: ../../pep-0567.rst:649
+msgid "we would write::"
+msgstr ""
+
+#: ../../pep-0567.rst:655
+msgid ""
+"Having ``Token.reset()`` would make it impossible for a user to attempt "
+"to reset a variable with a token object created by another variable."
+msgstr ""
+
+#: ../../pep-0567.rst:659
+msgid ""
+"This proposal was rejected for the reason of ``ContextVar.reset()`` being"
+" clearer to the human reader of the code which variable is being reset."
+msgstr ""
+
+#: ../../pep-0567.rst:665
+msgid "Making Context objects picklable"
+msgstr ""
+
+#: ../../pep-0567.rst:667
+msgid ""
+"Proposed by Antoine Pitrou, this could enable transparent cross-process "
+"use of ``Context`` objects, so the `Offloading execution to other "
+"threads`_ example would work with a ``ProcessPoolExecutor`` too."
+msgstr ""
+
+#: ../../pep-0567.rst:672
+msgid "Enabling this is problematic because of the following reasons:"
+msgstr ""
+
+#: ../../pep-0567.rst:674
+msgid ""
+"``ContextVar`` objects do not have ``__module__`` and ``__qualname__`` "
+"attributes, making straightforward pickling of ``Context`` objects "
+"impossible.  This is solvable by modifying the API to either auto detect "
+"the module where a context variable is defined, or by adding a new "
+"keyword-only \"module\" parameter to ``ContextVar`` constructor."
+msgstr ""
+
+#: ../../pep-0567.rst:681
+msgid ""
+"Not all context variables refer to picklable objects.  Making a "
+"``ContextVar`` picklable must be an opt-in."
+msgstr ""
+
+#: ../../pep-0567.rst:684
+msgid ""
+"Given the time frame of the Python 3.7 release schedule it was decided to"
+" defer this proposal to Python 3.8."
+msgstr ""
+
+#: ../../pep-0567.rst:689
+msgid "Making Context a MutableMapping"
+msgstr ""
+
+#: ../../pep-0567.rst:691
+msgid ""
+"Making the ``Context`` class implement the ``abc.MutableMapping`` "
+"interface would mean that it is possible to set and unset variables using"
+" ``Context[var] = value`` and ``del Context[var]`` operations."
+msgstr ""
+
+#: ../../pep-0567.rst:695
+msgid "This proposal was deferred to Python 3.8+ because of the following:"
+msgstr ""
+
+#: ../../pep-0567.rst:697
+msgid ""
+"If in Python 3.8 it is decided that generators should support context "
+"variables (see :pep:`550` and :pep:`568`), then ``Context`` would be "
+"transformed into a chain-map of context variables mappings (as every "
+"generator would have its own mapping).  That would make mutation "
+"operations like ``Context.__delitem__`` confusing, as they would operate "
+"only on the topmost mapping of the chain."
+msgstr ""
+
+#: ../../pep-0567.rst:704
+msgid ""
+"Having a single way of mutating the context (``ContextVar.set()`` and "
+"``ContextVar.reset()`` methods) makes the API more straightforward."
+msgstr ""
+
+#: ../../pep-0567.rst:708
+msgid ""
+"For example, it would be non-obvious why the below code fragment does not"
+" work as expected::"
+msgstr ""
+
+#: ../../pep-0567.rst:719
+msgid "While the following code would work::"
+msgstr ""
+
+#: ../../pep-0567.rst:733
+msgid ""
+"If ``Context`` was mutable it would mean that context variables could be "
+"mutated separately (or concurrently) from the code that runs within the "
+"context.  That would be similar to obtaining a reference to a running "
+"Python frame object and modifying its ``f_locals`` from another OS "
+"thread.  Having one single way to assign values to context variables "
+"makes contexts conceptually simpler and more predictable, while keeping "
+"the door open for future performance optimizations."
+msgstr ""
+
+#: ../../pep-0567.rst:744
+msgid "Having initial values for ContextVars"
+msgstr ""
+
+#: ../../pep-0567.rst:746
+msgid ""
+"Nathaniel Smith proposed to have a required ``initial_value`` keyword-"
+"only argument for the ``ContextVar`` constructor."
+msgstr ""
+
+#: ../../pep-0567.rst:749
+msgid ""
+"The main argument against this proposal is that for some types there is "
+"simply no sensible \"initial value\" except ``None``. E.g. consider a web"
+" framework that stores the current HTTP request object in a context "
+"variable.  With the current semantics it is possible to create a context "
+"variable without a default value::"
+msgstr ""
+
+#: ../../pep-0567.rst:766
+msgid ""
+"Note that in the above example there is no need to check if ``request`` "
+"is ``None``.  It is simply expected that the framework always sets the "
+"``current_request`` variable, or it is a bug (in which case "
+"``current_request.get()`` would raise a ``LookupError``)."
+msgstr ""
+
+#: ../../pep-0567.rst:771
+msgid ""
+"If, however, we had a required initial value, we would have to guard "
+"against ``None`` values explicitly::"
+msgstr ""
+
+#: ../../pep-0567.rst:789
+msgid ""
+"Moreover, we can loosely compare context variables to regular Python "
+"variables and to ``threading.local()`` objects.  Both of them raise "
+"errors on failed lookups (``NameError`` and ``AttributeError`` "
+"respectively)."
+msgstr ""
+
+#: ../../pep-0567.rst:796
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0567.rst:798
+msgid "This proposal preserves 100% backwards compatibility."
+msgstr ""
+
+#: ../../pep-0567.rst:800
+msgid ""
+"Libraries that use ``threading.local()`` to store context-related values,"
+" currently work correctly only for synchronous code.  Switching them to "
+"use the proposed API will keep their behavior for synchronous code "
+"unmodified, but will automatically enable support for asynchronous code."
+msgstr ""
+
+#: ../../pep-0567.rst:808
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0567.rst:811
+msgid "Converting code that uses threading.local()"
+msgstr ""
+
+#: ../../pep-0567.rst:813
+msgid ""
+"A typical code fragment that uses ``threading.local()`` usually looks "
+"like the following::"
+msgstr ""
+
+#: ../../pep-0567.rst:829
+msgid "Such code can be converted to use the ``contextvars`` module::"
+msgstr ""
+
+#: ../../pep-0567.rst:841
+msgid "Offloading execution to other threads"
+msgstr ""
+
+#: ../../pep-0567.rst:843
+msgid ""
+"It is possible to run code in a separate OS thread using a copy of the "
+"current thread context::"
+msgstr ""
+
+#: ../../pep-0567.rst:853
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0567.rst:855
+msgid ""
+"The reference implementation can be found here: [3]_. See also issue "
+"32436 [4]_."
+msgstr ""
+
+#: ../../pep-0567.rst:860
+msgid "Acceptance"
+msgstr ""
+
+#: ../../pep-0567.rst:862
+msgid ""
+"PEP 567 was accepted by Guido on Monday, January 22, 2018 [5]_. The "
+"reference implementation was merged on the same day."
+msgstr ""
+
+#: ../../pep-0567.rst:867
+msgid "References"
+msgstr ""
+
+#: ../../pep-0567.rst:869
+msgid ""
+"https://www.python.org/dev/peps/pep-0550/#appendix-hamt-performance-"
+"analysis"
+msgstr ""
+
+#: ../../pep-0567.rst:871
+msgid ""
+"https://www.python.org/dev/peps/pep-0550/#replication-of-threading-local-"
+"interface"
+msgstr ""
+
+#: ../../pep-0567.rst:873
+msgid "https://github.com/python/cpython/pull/5027"
+msgstr ""
+
+#: ../../pep-0567.rst:875
+msgid "https://bugs.python.org/issue32436"
+msgstr ""
+
+#: ../../pep-0567.rst:877
+msgid "https://mail.python.org/pipermail/python-dev/2018-January/151878.html"
+msgstr ""
+
+#: ../../pep-0567.rst:879
+msgid "https://bugs.python.org/issue34762"
+msgstr ""
+
+#: ../../pep-0567.rst:883
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0567.rst:885
+msgid ""
+"I thank Guido van Rossum, Nathaniel Smith, Victor Stinner, Elvis "
+"Pranskevichus, Nick Coghlan, Antoine Pitrou, INADA Naoki, Paul Moore, "
+"Eric Snow, Greg Ewing, and many others for their feedback, ideas, edits, "
+"criticism, code reviews, and discussions around this PEP."
+msgstr ""
+
+#: ../../pep-0567.rst:893
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0567.rst:895
+msgid "This document has been placed in the public domain."
+msgstr ""
+

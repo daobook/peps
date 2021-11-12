@@ -1,0 +1,311 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0671.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0671.rst:1
+msgid "671"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0671.rst:2
+msgid "Syntax for late-bound function argument defaults"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0671.rst:3
+msgid "Chris Angelico <rosuav@gmail.com>"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0671.rst:4
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0671.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0671.rst:7 ../../pep-0671.rst:9
+msgid "24-Oct-2021"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0671.rst:8
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0671.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0671.rst:15
+msgid ""
+"Function parameters can have default values which are calculated during "
+"function definition and saved. This proposal introduces a new form of "
+"argument default, defined by an expression to be evaluated at function "
+"call time."
+msgstr ""
+
+#: ../../pep-0671.rst:22
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0671.rst:24
+msgid ""
+"Optional function arguments, if omitted, often have some sort of logical "
+"default value. When this value depends on other arguments, or needs to be"
+" reevaluated each function call, there is currently no clean way to state"
+" this in the function header."
+msgstr ""
+
+#: ../../pep-0671.rst:29
+msgid "Currently-legal idioms for this include::"
+msgstr ""
+
+#: ../../pep-0671.rst:49
+msgid ""
+"In each form, ``help(function)`` fails to show the true default value. "
+"Each one has additional problems, too; using ``None`` is only valid if "
+"None is not itself a plausible function parameter, the custom sentinel "
+"requires a global constant; and use of star-args implies that more than "
+"one argument could be given."
+msgstr ""
+
+#: ../../pep-0671.rst:56
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0671.rst:58
+msgid "Function default arguments can be defined using the new ``=>`` notation::"
+msgstr ""
+
+#: ../../pep-0671.rst:65
+msgid ""
+"The expression is saved in its source code form for the purpose of "
+"inspection, and bytecode to evaluate it is prepended to the function's "
+"body."
+msgstr ""
+
+#: ../../pep-0671.rst:68
+msgid ""
+"Notably, the expression is evaluated in the function's run-time scope, "
+"NOT the scope in which the function was defined (as are early-bound "
+"defaults). This allows the expression to refer to other arguments."
+msgstr ""
+
+#: ../../pep-0671.rst:72
+msgid ""
+"Multiple late-bound arguments are evaluated from left to right, and can "
+"refer to previously-defined values. Order is defined by the function, "
+"regardless of the order in which keyword arguments may be passed. Using "
+"names of later arguments should not be relied upon, and while this MAY "
+"work in some Python implementations, it should be considered dubious::"
+msgstr ""
+
+#: ../../pep-0671.rst:85
+msgid "Choice of spelling"
+msgstr ""
+
+#: ../../pep-0671.rst:87
+msgid ""
+"Our chief syntax proposal is ``name=>expression`` -- our two syntax "
+"proposals ... ahem. Amongst our potential syntaxes are::"
+msgstr ""
+
+#: ../../pep-0671.rst:103
+msgid ""
+"Since default arguments behave largely the same whether they're early or "
+"late bound, the preferred syntax is very similar to the existing early-"
+"bind syntax. The alternatives offer little advantage over the preferred "
+"one."
+msgstr ""
+
+#: ../../pep-0671.rst:108
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0671.rst:110
+msgid ""
+"Early-bound default arguments should always be taught first, as they are "
+"the simpler and more efficient way to evaluate arguments. Building on "
+"them, late bound arguments are broadly equivalent to code at the top of "
+"the function::"
+msgstr ""
+
+#: ../../pep-0671.rst:122
+msgid "Interaction with other open PEPs"
+msgstr ""
+
+#: ../../pep-0671.rst:124
+msgid ""
+"PEP 661 attempts to solve one of the same problems as this does. It seeks"
+" to improve the documentation of sentinel values in default arguments, "
+"where this proposal seeks to remove the need for sentinels in many common"
+" cases. PEP 661 is able to improve documentation in arbitrarily "
+"complicated functions (it cites ``traceback.print_exception`` as its "
+"primary motivation, which has two arguments which must both-or-neither be"
+" specified); on the other hand, many of the common cases would no longer "
+"need sentinels if the true default could be defined by the function. "
+"Additionally, dedicated sentinel objects can be used as dictionary lookup"
+" keys, where PEP 671 does not apply."
+msgstr ""
+
+#: ../../pep-0671.rst:136
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0671.rst:138
+msgid ""
+"Annotations go before the default, so in all syntax options, it must be "
+"unambiguous (both to the human and the parser) whether this is an "
+"annotation, a default, or both. The worst offender is the ``:=`` "
+"notation, as ``:int=`` would be a valid annotation and early-bound "
+"default."
+msgstr ""
+
+#: ../../pep-0671.rst:145
+msgid "Implementation details"
+msgstr ""
+
+#: ../../pep-0671.rst:147
+msgid ""
+"The following relates to the reference implementation, and is not "
+"necessarily part of the specification."
+msgstr ""
+
+#: ../../pep-0671.rst:150
+msgid ""
+"Argument defaults (positional or keyword) have both their values, as "
+"already retained, and an extra piece of information. For positional "
+"arguments, the extras are stored in a tuple in ``__defaults_extra__``, "
+"and for keyword-only, a dict in ``__kwdefaults_extra__``. If this "
+"attribute is ``None``, it is equivalent to having ``None`` for every "
+"argument default."
+msgstr ""
+
+#: ../../pep-0671.rst:156
+msgid ""
+"For each parameter with a late-bound default, the special value "
+"``Ellipsis`` is stored as the value placeholder, and the corresponding "
+"extra information needs to be queried. If it is ``None``, then the "
+"default is indeed the value ``Ellipsis``; otherwise, it is a descriptive "
+"string and the true value is calculated as the function begins."
+msgstr ""
+
+#: ../../pep-0671.rst:162
+msgid ""
+"When a parameter with a late-bound default is omitted, the function will "
+"begin with the parameter unbound. The function begins by testing for each"
+" parameter with a late-bound default, and if unbound, evaluates the "
+"original expression."
+msgstr ""
+
+#: ../../pep-0671.rst:167
+msgid ""
+"Out-of-order variable references are permitted as long as the referent "
+"has a value from an argument or early-bound default."
+msgstr ""
+
+#: ../../pep-0671.rst:172
+msgid "Costs"
+msgstr ""
+
+#: ../../pep-0671.rst:174
+msgid ""
+"When no late-bound argument defaults are used, the following costs should"
+" be all that are incurred:"
+msgstr ""
+
+#: ../../pep-0671.rst:177
+msgid "Function objects require two additional pointers, which will be NULL"
+msgstr ""
+
+#: ../../pep-0671.rst:178
+msgid "Compiling code and constructing functions have additional flag checks"
+msgstr ""
+
+#: ../../pep-0671.rst:179
+msgid ""
+"Using ``Ellipsis`` as a default value will require run-time verification "
+"to see if late-bound defaults exist."
+msgstr ""
+
+#: ../../pep-0671.rst:182
+msgid ""
+"These costs are expected to be minimal (on 64-bit Linux, this increases "
+"all function objects from 152 bytes to 168), with virtually no run-time "
+"cost when late-bound defaults are not used."
+msgstr ""
+
+#: ../../pep-0671.rst:187
+msgid "Backward incompatibility"
+msgstr ""
+
+#: ../../pep-0671.rst:189
+msgid ""
+"Where late-bound defaults are not used, behaviour should be identical. "
+"Care should be taken if Ellipsis is found, as it may not represent "
+"itself, but beyond that, tools should see existing code unchanged."
+msgstr ""
+
+#: ../../pep-0671.rst:194
+msgid "References"
+msgstr ""
+
+#: ../../pep-0671.rst:196
+msgid "https://github.com/rosuav/cpython/tree/pep-671"
+msgstr ""
+
+#: ../../pep-0671.rst:199
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0671.rst:201
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

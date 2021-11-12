@@ -1,0 +1,369 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0337.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0337.txt:1
+msgid "337"
+msgstr ""
+
+#: ../../pep-0337.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0337.txt:2
+msgid "Logging Usage in the Standard Library"
+msgstr ""
+
+#: ../../pep-0337.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0337.txt:5
+msgid "Michael P. Dubner <dubnerm@mindless.com>"
+msgstr ""
+
+#: ../../pep-0337.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0337.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0337.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0337.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0337.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0337.txt:9
+msgid "02-Oct-2004"
+msgstr ""
+
+#: ../../pep-0337.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0337.txt:10
+msgid "2.5"
+msgstr ""
+
+#: ../../pep-0337.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0337.txt:11
+msgid "10-Nov-2004"
+msgstr ""
+
+#: ../../pep-0337.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0337.txt:17
+msgid ""
+"This PEP defines a standard for using the logging system (PEP 282 [1]_) "
+"in the standard library."
+msgstr ""
+
+#: ../../pep-0337.txt:20
+msgid ""
+"Implementing this PEP will simplify development of daemon applications.  "
+"As a downside this PEP requires slight modifications (however in a back-"
+"portable way) to a large number of standard modules."
+msgstr ""
+
+#: ../../pep-0337.txt:25
+msgid "After implementing this PEP one can use following filtering scheme::"
+msgstr ""
+
+#: ../../pep-0337.txt:32
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0337.txt:34
+msgid ""
+"Further exploration of the concepts covered in this PEP has been deferred"
+" for lack of a current champion interested in promoting the goals of the "
+"PEP and collecting and incorporating feedback, and with sufficient "
+"available time to do so effectively."
+msgstr ""
+
+#: ../../pep-0337.txt:41
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0337.txt:43
+msgid ""
+"There are a couple of situations when output to stdout or stderr is "
+"impractical:"
+msgstr ""
+
+#: ../../pep-0337.txt:46
+msgid ""
+"Daemon applications where the framework doesn't allow the redirection of "
+"standard output to some file, but assumes use of some other form of "
+"logging.  Examples are syslog under \\*nix'es and EventLog under WinNT+."
+msgstr ""
+
+#: ../../pep-0337.txt:51
+msgid ""
+"GUI applications which want to output every new log entry in separate "
+"pop-up window (i.e. fading OSD)."
+msgstr ""
+
+#: ../../pep-0337.txt:54
+msgid ""
+"Also sometimes applications want to filter output entries based on their "
+"source or severity.  This requirement can't be implemented using simple "
+"redirection."
+msgstr ""
+
+#: ../../pep-0337.txt:58
+msgid ""
+"Finally sometimes output needs to be marked with event timestamps, which "
+"can be accomplished with ease using the logging system."
+msgstr ""
+
+#: ../../pep-0337.txt:63
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0337.txt:65
+msgid ""
+"Every module usable for daemon and GUI applications should be rewritten "
+"to use the logging system instead of ``print`` or ``sys.stdout.write``."
+msgstr ""
+
+#: ../../pep-0337.txt:69
+msgid ""
+"There should be code like this included in the beginning of every "
+"modified module::"
+msgstr ""
+
+#: ../../pep-0337.txt:76
+msgid ""
+"A prefix of ``py.`` [2]_ must be used by all modules included in the "
+"standard library distributed along with Python, and only by such modules "
+"(unverifiable).  The use of ``_log`` is intentional as we don't want to "
+"auto-export it.  For modules that use log only in one class a logger can "
+"be created inside the class definition as follows::"
+msgstr ""
+
+#: ../../pep-0337.txt:87
+msgid "Then this class can create access methods to log to this private logger."
+msgstr ""
+
+#: ../../pep-0337.txt:90
+msgid ""
+"So ``print`` and ``sys.std{out|err}.write`` statements should be replaced"
+" with ``_log.{debug|info}``, and ``traceback.print_exception`` with "
+"``_log.exception`` or sometimes ``_log.debug('...', exc_info=1)``."
+msgstr ""
+
+#: ../../pep-0337.txt:96
+msgid "Module List"
+msgstr ""
+
+#: ../../pep-0337.txt:98
+msgid "Here is a (possibly incomplete) list of modules to be reworked:"
+msgstr ""
+
+#: ../../pep-0337.txt:100
+msgid "asyncore (dispatcher.log, dispatcher.log_info)"
+msgstr ""
+
+#: ../../pep-0337.txt:102
+msgid ""
+"BaseHTTPServer (BaseHTTPRequestHandler.log_request, "
+"BaseHTTPRequestHandler.log_error, BaseHTTPRequestHandler.log_message)"
+msgstr ""
+
+#: ../../pep-0337.txt:106
+msgid "cgi (possibly - is cgi.log used by somebody?)"
+msgstr ""
+
+#: ../../pep-0337.txt:108
+msgid "ftplib (if FTP.debugging)"
+msgstr ""
+
+#: ../../pep-0337.txt:110
+msgid "gopherlib (get_directory)"
+msgstr ""
+
+#: ../../pep-0337.txt:112
+msgid "httplib (HTTPResponse, HTTPConnection)"
+msgstr ""
+
+#: ../../pep-0337.txt:114
+msgid "ihooks (_Verbose)"
+msgstr ""
+
+#: ../../pep-0337.txt:116
+msgid "imaplib (IMAP4._mesg)"
+msgstr ""
+
+#: ../../pep-0337.txt:118
+msgid "mhlib (MH.error)"
+msgstr ""
+
+#: ../../pep-0337.txt:120
+msgid "nntplib (NNTP)"
+msgstr ""
+
+#: ../../pep-0337.txt:122
+msgid "pipes (Template.makepipeline)"
+msgstr ""
+
+#: ../../pep-0337.txt:124
+msgid "pkgutil (extend_path)"
+msgstr ""
+
+#: ../../pep-0337.txt:126
+msgid "platform (_syscmd_ver)"
+msgstr ""
+
+#: ../../pep-0337.txt:128
+msgid "poplib (if POP3._debugging)"
+msgstr ""
+
+#: ../../pep-0337.txt:130
+msgid "profile (if Profile.verbose)"
+msgstr ""
+
+#: ../../pep-0337.txt:132
+msgid "robotparser (_debug)"
+msgstr ""
+
+#: ../../pep-0337.txt:134
+msgid "smtplib (if SGMLParser.verbose)"
+msgstr ""
+
+#: ../../pep-0337.txt:136
+msgid "shlex (if shlex.debug)"
+msgstr ""
+
+#: ../../pep-0337.txt:138
+msgid "smtpd (SMTPChannel/PureProxy where print >> DEBUGSTREAM)"
+msgstr ""
+
+#: ../../pep-0337.txt:140
+msgid "smtplib (if SMTP.debuglevel)"
+msgstr ""
+
+#: ../../pep-0337.txt:142
+msgid "SocketServer (BaseServer.handle_error)"
+msgstr ""
+
+#: ../../pep-0337.txt:144
+msgid "telnetlib (if Telnet.debuglevel)"
+msgstr ""
+
+#: ../../pep-0337.txt:146
+msgid "threading? (_Verbose._note, Thread.__bootstrap)"
+msgstr ""
+
+#: ../../pep-0337.txt:148
+msgid "timeit (Timer.print_exc)"
+msgstr ""
+
+#: ../../pep-0337.txt:150
+msgid "trace"
+msgstr ""
+
+#: ../../pep-0337.txt:152
+msgid "uu (decode)"
+msgstr ""
+
+#: ../../pep-0337.txt:154
+msgid ""
+"Additionally there are a couple of modules with commented debug output or"
+" modules where debug output should be added.  For example:"
+msgstr ""
+
+#: ../../pep-0337.txt:158
+msgid "urllib"
+msgstr ""
+
+#: ../../pep-0337.txt:160
+msgid ""
+"Finally possibly some modules should be extended to provide more debug "
+"information."
+msgstr ""
+
+#: ../../pep-0337.txt:165
+msgid "Doubtful Modules"
+msgstr ""
+
+#: ../../pep-0337.txt:167
+msgid ""
+"Listed here are modules that the community will propose for addition to "
+"the module list and modules that the community say should be removed from"
+" the module list."
+msgstr ""
+
+#: ../../pep-0337.txt:171
+msgid "tabnanny (check)"
+msgstr ""
+
+#: ../../pep-0337.txt:175
+msgid "Guidelines for Logging Usage"
+msgstr ""
+
+#: ../../pep-0337.txt:177
+msgid ""
+"Also we can provide some recommendation to authors of library modules so "
+"they all follow the same format of naming loggers.  I propose that non-"
+"standard library modules should use loggers named after their full names,"
+" so a module \"spam\" in sub-package \"junk\" of package \"dummy\" will "
+"be named \"dummy.junk.spam\" and, of course, the ``__init__`` module of "
+"the same sub-package will have the logger name \"dummy.junk\"."
+msgstr ""
+
+#: ../../pep-0337.txt:187
+msgid "References"
+msgstr ""
+
+#: ../../pep-0337.txt:189
+msgid ""
+"PEP 282, A Logging System, Vinay Sajip, Trent Mick "
+"http://www.python.org/dev/peps/pep-0282/"
+msgstr ""
+
+#: ../../pep-0337.txt:192
+msgid "https://mail.python.org/pipermail/python-dev/2004-October/049282.html"
+msgstr ""
+
+#: ../../pep-0337.txt:196
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0337.txt:198
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,1023 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0475.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0475.txt:1
+msgid "475"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0475.txt:2
+msgid "Retry system calls failing with EINTR"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0475.txt:5
+msgid ""
+"Charles-François Natali <cf.natali@gmail.com>, Victor Stinner "
+"<vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0475.txt:6
+msgid "Antoine Pitrou <solipsis@pitrou.net>"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0475.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0475.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0475.txt:10
+msgid "29-Jul-2014"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0475.txt:11
+msgid "3.5"
+msgstr ""
+
+#: ../../pep-0475.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0475.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2015-February/138018.html"
+msgstr ""
+
+#: ../../pep-0475.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0475.txt:18
+msgid ""
+"System call wrappers provided in the standard library should be retried "
+"automatically when they fail with ``EINTR``, to relieve application code "
+"from the burden of doing so."
+msgstr ""
+
+#: ../../pep-0475.txt:22
+msgid ""
+"By system calls, we mean the functions exposed by the standard C library "
+"pertaining to I/O or handling of other system resources."
+msgstr ""
+
+#: ../../pep-0475.txt:27
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0475.txt:30
+msgid "Interrupted system calls"
+msgstr ""
+
+#: ../../pep-0475.txt:32
+msgid ""
+"On POSIX systems, signals are common.  Code calling system calls must be "
+"prepared to handle them.  Examples of signals:"
+msgstr ""
+
+#: ../../pep-0475.txt:35
+msgid ""
+"The most common signal is ``SIGINT``, the signal sent when CTRL+c is "
+"pressed. By default, Python raises a ``KeyboardInterrupt`` exception when"
+" this signal is received."
+msgstr ""
+
+#: ../../pep-0475.txt:38
+msgid ""
+"When running subprocesses, the ``SIGCHLD`` signal is sent when a child "
+"process exits."
+msgstr ""
+
+#: ../../pep-0475.txt:40
+msgid ""
+"Resizing the terminal sends the ``SIGWINCH`` signal to the applications "
+"running in the terminal."
+msgstr ""
+
+#: ../../pep-0475.txt:42
+msgid ""
+"Putting the application in background (ex: press CTRL-z and then type the"
+" ``bg`` command) sends the ``SIGCONT`` signal."
+msgstr ""
+
+#: ../../pep-0475.txt:45
+msgid ""
+"Writing a C signal handler is difficult: only \"async-signal-safe\" "
+"functions can be called (for example, ``printf()`` and ``malloc()`` are "
+"not async-signal safe), and there are issues with reentrancy. Therefore, "
+"when a signal is received by a process during the execution of a system "
+"call, the system call can fail with the ``EINTR`` error to give the "
+"program an opportunity to handle the signal without the restriction on "
+"signal-safe functions."
+msgstr ""
+
+#: ../../pep-0475.txt:53
+msgid ""
+"This behaviour is system-dependent: on certain systems, using the "
+"``SA_RESTART`` flag, some system calls are retried automatically instead "
+"of failing with ``EINTR``.  Regardless, Python's ``signal.signal()`` "
+"function clears the ``SA_RESTART`` flag when setting the signal handler: "
+"all system calls will probably fail with ``EINTR`` in Python."
+msgstr ""
+
+#: ../../pep-0475.txt:59
+msgid ""
+"Since receiving a signal is a non-exceptional occurrence, robust POSIX "
+"code must be prepared to handle ``EINTR`` (which, in most cases, means "
+"retry in a loop in the hope that the call eventually succeeds). Without "
+"special support from Python, this can make application code much more "
+"verbose than it needs to be."
+msgstr ""
+
+#: ../../pep-0475.txt:67
+msgid "Status in Python 3.4"
+msgstr ""
+
+#: ../../pep-0475.txt:69
+msgid ""
+"In Python 3.4, handling the ``InterruptedError`` exception (``EINTR``'s "
+"dedicated exception class) is duplicated at every call site on a case-by-"
+"case basis.  Only a few Python modules actually handle this exception, "
+"and fixes usually took several years to cover a whole module.  Example of"
+" code retrying ``file.read()`` on ``InterruptedError``::"
+msgstr ""
+
+#: ../../pep-0475.txt:82
+msgid ""
+"List of Python modules in the standard library which handle "
+"``InterruptedError``:"
+msgstr ""
+
+#: ../../pep-0475.txt:85
+msgid "``asyncio``"
+msgstr ""
+
+#: ../../pep-0475.txt:86
+msgid "``asyncore``"
+msgstr ""
+
+#: ../../pep-0475.txt:87
+msgid "``io``, ``_pyio``"
+msgstr ""
+
+#: ../../pep-0475.txt:88
+msgid "``multiprocessing``"
+msgstr ""
+
+#: ../../pep-0475.txt:89
+msgid "``selectors``"
+msgstr ""
+
+#: ../../pep-0475.txt:90
+msgid "``socket``"
+msgstr ""
+
+#: ../../pep-0475.txt:91
+msgid "``socketserver``"
+msgstr ""
+
+#: ../../pep-0475.txt:92
+msgid "``subprocess``"
+msgstr ""
+
+#: ../../pep-0475.txt:94
+msgid ""
+"Other programming languages like Perl, Java and Go retry system calls "
+"failing with ``EINTR`` at a lower level, so that libraries and "
+"applications needn't bother."
+msgstr ""
+
+#: ../../pep-0475.txt:100
+msgid "Use Case 1: Don't Bother With Signals"
+msgstr ""
+
+#: ../../pep-0475.txt:102
+msgid ""
+"In most cases, you don't want to be interrupted by signals and you don't "
+"expect to get ``InterruptedError`` exceptions.  For example, do you "
+"really want to write such complex code for a \"Hello World\" example?"
+msgstr ""
+
+#: ../../pep-0475.txt:116
+msgid ""
+"``InterruptedError`` can happen in unexpected places. For example, "
+"``os.close()`` and ``FileIO.close()`` may raise ``InterruptedError``: see"
+" the article `close() and EINTR <http://alobbs.com/post/54503240599"
+"/close-and-eintr>`_."
+msgstr ""
+
+#: ../../pep-0475.txt:121
+msgid ""
+"The `Python issues related to EINTR`_ section below gives examples of "
+"bugs caused by ``EINTR``."
+msgstr ""
+
+#: ../../pep-0475.txt:124
+msgid ""
+"The expectation in this use case is that Python hides the "
+"``InterruptedError`` and retries system calls automatically."
+msgstr ""
+
+#: ../../pep-0475.txt:129
+msgid "Use Case 2: Be notified of signals as soon as possible"
+msgstr ""
+
+#: ../../pep-0475.txt:131
+msgid ""
+"Sometimes yet, you expect some signals and you want to handle them as "
+"soon as possible.  For example, you may want to immediately quit a "
+"program using the ``CTRL+c`` keyboard shortcut."
+msgstr ""
+
+#: ../../pep-0475.txt:135
+msgid ""
+"Besides, some signals are not interesting and should not disrupt the "
+"application.  There are two options to interrupt an application on only "
+"*some* signals:"
+msgstr ""
+
+#: ../../pep-0475.txt:139
+msgid ""
+"Set up a custom signal handler which raises an exception, such as "
+"``KeyboardInterrupt`` for ``SIGINT``."
+msgstr ""
+
+#: ../../pep-0475.txt:141
+msgid ""
+"Use a I/O multiplexing function like ``select()`` together with Python's "
+"signal wakeup file descriptor: see the function "
+"``signal.set_wakeup_fd()``."
+msgstr ""
+
+#: ../../pep-0475.txt:144
+msgid ""
+"The expectation in this use case is for the Python signal handler to be "
+"executed timely, and the system call to fail if the handler raised an "
+"exception -- otherwise restart."
+msgstr ""
+
+#: ../../pep-0475.txt:150
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0475.txt:152
+msgid ""
+"This PEP proposes to handle EINTR and retries at the lowest level, i.e. "
+"in the wrappers provided by the stdlib (as opposed to higher-level "
+"libraries and applications)."
+msgstr ""
+
+#: ../../pep-0475.txt:156
+msgid ""
+"Specifically, when a system call fails with ``EINTR``, its Python wrapper"
+" must call the given signal handler (using ``PyErr_CheckSignals()``). If "
+"the signal handler raises an exception, the Python wrapper bails out and "
+"fails with the exception."
+msgstr ""
+
+#: ../../pep-0475.txt:161
+msgid ""
+"If the signal handler returns successfully, the Python wrapper retries "
+"the system call automatically.  If the system call involves a timeout "
+"parameter, the timeout is recomputed."
+msgstr ""
+
+#: ../../pep-0475.txt:166
+msgid "Modified functions"
+msgstr ""
+
+#: ../../pep-0475.txt:168
+msgid ""
+"Example of standard library functions that need to be modified to comply "
+"with this PEP:"
+msgstr ""
+
+#: ../../pep-0475.txt:171
+msgid "``open()``, ``os.open()``, ``io.open()``"
+msgstr ""
+
+#: ../../pep-0475.txt:172
+msgid "functions of the ``faulthandler`` module"
+msgstr ""
+
+#: ../../pep-0475.txt:173
+msgid "``os`` functions:"
+msgstr ""
+
+#: ../../pep-0475.txt:175
+msgid "``os.fchdir()``"
+msgstr ""
+
+#: ../../pep-0475.txt:176
+msgid "``os.fchmod()``"
+msgstr ""
+
+#: ../../pep-0475.txt:177
+msgid "``os.fchown()``"
+msgstr ""
+
+#: ../../pep-0475.txt:178
+msgid "``os.fdatasync()``"
+msgstr ""
+
+#: ../../pep-0475.txt:179
+msgid "``os.fstat()``"
+msgstr ""
+
+#: ../../pep-0475.txt:180
+msgid "``os.fstatvfs()``"
+msgstr ""
+
+#: ../../pep-0475.txt:181
+msgid "``os.fsync()``"
+msgstr ""
+
+#: ../../pep-0475.txt:182
+msgid "``os.ftruncate()``"
+msgstr ""
+
+#: ../../pep-0475.txt:183
+msgid "``os.mkfifo()``"
+msgstr ""
+
+#: ../../pep-0475.txt:184
+msgid "``os.mknod()``"
+msgstr ""
+
+#: ../../pep-0475.txt:185
+msgid "``os.posix_fadvise()``"
+msgstr ""
+
+#: ../../pep-0475.txt:186
+msgid "``os.posix_fallocate()``"
+msgstr ""
+
+#: ../../pep-0475.txt:187
+msgid "``os.pread()``"
+msgstr ""
+
+#: ../../pep-0475.txt:188
+msgid "``os.pwrite()``"
+msgstr ""
+
+#: ../../pep-0475.txt:189
+msgid "``os.read()``"
+msgstr ""
+
+#: ../../pep-0475.txt:190
+msgid "``os.readv()``"
+msgstr ""
+
+#: ../../pep-0475.txt:191
+msgid "``os.sendfile()``"
+msgstr ""
+
+#: ../../pep-0475.txt:192
+msgid "``os.wait3()``"
+msgstr ""
+
+#: ../../pep-0475.txt:193
+msgid "``os.wait4()``"
+msgstr ""
+
+#: ../../pep-0475.txt:194
+msgid "``os.wait()``"
+msgstr ""
+
+#: ../../pep-0475.txt:195
+msgid "``os.waitid()``"
+msgstr ""
+
+#: ../../pep-0475.txt:196
+msgid "``os.waitpid()``"
+msgstr ""
+
+#: ../../pep-0475.txt:197
+msgid "``os.write()``"
+msgstr ""
+
+#: ../../pep-0475.txt:198
+msgid "``os.writev()``"
+msgstr ""
+
+#: ../../pep-0475.txt:199
+msgid ""
+"special cases: ``os.close()`` and ``os.dup2()`` now ignore ``EINTR`` "
+"error, the syscall is not retried"
+msgstr ""
+
+#: ../../pep-0475.txt:202
+msgid ""
+"``select.select()``, ``select.poll.poll()``, ``select.epoll.poll()``, "
+"``select.kqueue.control()``, ``select.devpoll.poll()``"
+msgstr ""
+
+#: ../../pep-0475.txt:204
+msgid "``socket.socket()`` methods:"
+msgstr ""
+
+#: ../../pep-0475.txt:206
+msgid "``accept()``"
+msgstr ""
+
+#: ../../pep-0475.txt:207
+msgid "``connect()`` (except for non-blocking sockets)"
+msgstr ""
+
+#: ../../pep-0475.txt:208
+msgid "``recv()``"
+msgstr ""
+
+#: ../../pep-0475.txt:209
+msgid "``recvfrom()``"
+msgstr ""
+
+#: ../../pep-0475.txt:210
+msgid "``recvmsg()``"
+msgstr ""
+
+#: ../../pep-0475.txt:211
+msgid "``send()``"
+msgstr ""
+
+#: ../../pep-0475.txt:212
+msgid "``sendall()``"
+msgstr ""
+
+#: ../../pep-0475.txt:213
+msgid "``sendmsg()``"
+msgstr ""
+
+#: ../../pep-0475.txt:214
+msgid "``sendto()``"
+msgstr ""
+
+#: ../../pep-0475.txt:216
+msgid "``signal.sigtimedwait()``, ``signal.sigwaitinfo()``"
+msgstr ""
+
+#: ../../pep-0475.txt:217
+msgid "``time.sleep()``"
+msgstr ""
+
+#: ../../pep-0475.txt:219
+msgid ""
+"(Note: the ``selector`` module already retries on ``InterruptedError``, "
+"but it doesn't recompute the timeout yet)"
+msgstr ""
+
+#: ../../pep-0475.txt:222
+msgid ""
+"``os.close``, ``close()`` methods and ``os.dup2()`` are a special case: "
+"they will ignore ``EINTR`` instead of retrying.  The reason is complex "
+"but involves behaviour under Linux and the fact that the file descriptor "
+"may really be closed even if EINTR is returned. See articles:"
+msgstr ""
+
+#: ../../pep-0475.txt:227
+msgid "`Returning EINTR from close() <http://lwn.net/Articles/576478/>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:228
+msgid ""
+"`(LKML) Re: [patch 7/7] uml: retry host close() on EINTR "
+"<http://linux.derkeiler.com/Mailing-Lists/Kernel/2005-09/3000.html>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:230
+msgid "`close() and EINTR <http://alobbs.com/post/54503240599/close-and-eintr>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:232
+msgid ""
+"The ``socket.socket.connect()`` method does not retry ``connect()`` for "
+"non-blocking sockets if it is interrupted by a signal (fails with "
+"``EINTR``). The connection runs asynchronously in background. The caller "
+"is responsible to wait until the socket becomes writable (ex: using "
+"``select.select()``) and then call "
+"``socket.socket.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)`` to check"
+" if the connection succeeded (``getsockopt()`` returns ``0``) or failed."
+msgstr ""
+
+#: ../../pep-0475.txt:241
+msgid "InterruptedError handling"
+msgstr ""
+
+#: ../../pep-0475.txt:243
+msgid ""
+"Since interrupted system calls are automatically retried, the "
+"``InterruptedError`` exception should not occur anymore when calling "
+"those system calls.  Therefore, manual handling of ``InterruptedError`` "
+"as described in `Status in Python 3.4`_ can be removed, which will "
+"simplify standard library code."
+msgstr ""
+
+#: ../../pep-0475.txt:251
+msgid "Backward compatibility"
+msgstr ""
+
+#: ../../pep-0475.txt:253
+msgid ""
+"Applications relying on the fact that system calls are interrupted with "
+"``InterruptedError`` will hang.  The authors of this PEP don't think that"
+" such applications exist, since they would be exposed to other issues "
+"such as race conditions (there is an opportunity for deadlock if the "
+"signal comes before the system call).  Besides, such code would be non-"
+"portable."
+msgstr ""
+
+#: ../../pep-0475.txt:260
+msgid ""
+"In any case, those applications must be fixed to handle signals "
+"differently, to have a reliable behaviour on all platforms and all Python"
+" versions. A possible strategy is to set up a signal handler raising a "
+"well-defined exception, or use a wakeup file descriptor."
+msgstr ""
+
+#: ../../pep-0475.txt:265
+msgid ""
+"For applications using event loops, ``signal.set_wakeup_fd()`` is the "
+"recommended option to handle signals.  Python's low-level signal handler "
+"will write signal numbers into the file descriptor and the event loop "
+"will be awaken to read them.  The event loop can handle those signals "
+"without the restriction of signal handlers (for example, the loop can be "
+"woken up in any thread, not just the main thread)."
+msgstr ""
+
+#: ../../pep-0475.txt:274
+msgid "Appendix"
+msgstr ""
+
+#: ../../pep-0475.txt:277
+msgid "Wakeup file descriptor"
+msgstr ""
+
+#: ../../pep-0475.txt:279
+msgid ""
+"Since Python 3.3, ``signal.set_wakeup_fd()`` writes the signal number "
+"into the file descriptor, whereas it only wrote a null byte before. It "
+"becomes possible to distinguish between signals using the wakeup file "
+"descriptor."
+msgstr ""
+
+#: ../../pep-0475.txt:284
+msgid ""
+"Linux has a ``signalfd()`` system call which provides more information on"
+" each signal.  For example, it's possible to know the pid and uid who "
+"sent the signal.  This function is not exposed in Python yet (see `issue "
+"12304 <http://bugs.python.org/issue12304>`_)."
+msgstr ""
+
+#: ../../pep-0475.txt:289
+msgid ""
+"On Unix, the ``asyncio`` module uses the wakeup file descriptor to wake "
+"up its event loop."
+msgstr ""
+
+#: ../../pep-0475.txt:294
+msgid "Multithreading"
+msgstr ""
+
+#: ../../pep-0475.txt:296
+msgid ""
+"A C signal handler can be called from any thread, but Python signal "
+"handlers will always be called in the main Python thread."
+msgstr ""
+
+#: ../../pep-0475.txt:299
+msgid ""
+"Python's C API provides the ``PyErr_SetInterrupt()`` function which calls"
+" the ``SIGINT`` signal handler in order to interrupt the main Python "
+"thread."
+msgstr ""
+
+#: ../../pep-0475.txt:304
+msgid "Signals on Windows"
+msgstr ""
+
+#: ../../pep-0475.txt:307
+msgid "Control events"
+msgstr ""
+
+#: ../../pep-0475.txt:309
+msgid "Windows uses \"control events\":"
+msgstr ""
+
+#: ../../pep-0475.txt:311
+msgid "``CTRL_BREAK_EVENT``: Break (``SIGBREAK``)"
+msgstr ""
+
+#: ../../pep-0475.txt:312
+msgid "``CTRL_CLOSE_EVENT``: Close event"
+msgstr ""
+
+#: ../../pep-0475.txt:313
+msgid "``CTRL_C_EVENT``: CTRL+C (``SIGINT``)"
+msgstr ""
+
+#: ../../pep-0475.txt:314
+msgid "``CTRL_LOGOFF_EVENT``: Logoff"
+msgstr ""
+
+#: ../../pep-0475.txt:315
+msgid "``CTRL_SHUTDOWN_EVENT``: Shutdown"
+msgstr ""
+
+#: ../../pep-0475.txt:317
+msgid ""
+"The `SetConsoleCtrlHandler() function <http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms686016%28v=vs.85%29.aspx>`_ can be used to "
+"install a control handler."
+msgstr ""
+
+#: ../../pep-0475.txt:321
+msgid ""
+"The ``CTRL_C_EVENT`` and ``CTRL_BREAK_EVENT`` events can be sent to a "
+"process using the `GenerateConsoleCtrlEvent() function "
+"<http://msdn.microsoft.com/en-"
+"us/library/windows/desktop/ms683155%28v=vs.85%29.aspx>`_. This function "
+"is exposed in Python as ``os.kill()``."
+msgstr ""
+
+#: ../../pep-0475.txt:328
+msgid "Signals"
+msgstr ""
+
+#: ../../pep-0475.txt:330
+msgid "The following signals are supported on Windows:"
+msgstr ""
+
+#: ../../pep-0475.txt:332
+msgid "``SIGABRT``"
+msgstr ""
+
+#: ../../pep-0475.txt:333
+msgid "``SIGBREAK`` (``CTRL_BREAK_EVENT``): signal only available on Windows"
+msgstr ""
+
+#: ../../pep-0475.txt:334
+msgid "``SIGFPE``"
+msgstr ""
+
+#: ../../pep-0475.txt:335
+msgid "``SIGILL``"
+msgstr ""
+
+#: ../../pep-0475.txt:336
+msgid "``SIGINT`` (``CTRL_C_EVENT``)"
+msgstr ""
+
+#: ../../pep-0475.txt:337
+msgid "``SIGSEGV``"
+msgstr ""
+
+#: ../../pep-0475.txt:338
+msgid "``SIGTERM``"
+msgstr ""
+
+#: ../../pep-0475.txt:342
+msgid "SIGINT"
+msgstr ""
+
+#: ../../pep-0475.txt:344
+msgid ""
+"The default Python signal handler for ``SIGINT`` sets a Windows event "
+"object: ``sigint_event``."
+msgstr ""
+
+#: ../../pep-0475.txt:347
+msgid ""
+"``time.sleep()`` is implemented with ``WaitForSingleObjectEx()``, it "
+"waits for the ``sigint_event`` object using ``time.sleep()`` parameter as"
+" the timeout.  So the sleep can be interrupted by ``SIGINT``."
+msgstr ""
+
+#: ../../pep-0475.txt:351
+msgid ""
+"``_winapi.WaitForMultipleObjects()`` automatically adds ``sigint_event`` "
+"to the list of watched handles, so it can also be interrupted."
+msgstr ""
+
+#: ../../pep-0475.txt:355
+msgid ""
+"``PyOS_StdioReadline()`` also used ``sigint_event`` when ``fgets()`` "
+"failed to check if Ctrl-C or Ctrl-Z was pressed."
+msgstr ""
+
+#: ../../pep-0475.txt:360
+msgid "Links"
+msgstr ""
+
+#: ../../pep-0475.txt:363
+msgid "Misc"
+msgstr ""
+
+#: ../../pep-0475.txt:365
+msgid ""
+"`glibc manual: Primitives Interrupted by Signals "
+"<http://www.gnu.org/software/libc/manual/html_node/Interrupted-"
+"Primitives.html>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:367
+msgid ""
+"`Bug #119097 for perl5: print returning EINTR in 5.14 "
+"<https://rt.perl.org/Public/Bug/Display.html?id=119097>`_."
+msgstr ""
+
+#: ../../pep-0475.txt:372
+msgid "Python issues related to EINTR"
+msgstr ""
+
+#: ../../pep-0475.txt:374
+msgid ""
+"The main issue is: `handle EINTR in the stdlib "
+"<http://bugs.python.org/issue18885>`_."
+msgstr ""
+
+#: ../../pep-0475.txt:377 ../../pep-0475.txt:444
+msgid "Open issues:"
+msgstr ""
+
+#: ../../pep-0475.txt:379
+msgid ""
+"`Add a new signal.set_wakeup_socket() function "
+"<http://bugs.python.org/issue22018>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:381
+msgid ""
+"`signal.set_wakeup_fd(fd): set the fd to non-blocking mode "
+"<http://bugs.python.org/issue22042>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:383
+msgid ""
+"`Use a monotonic clock to compute timeouts "
+"<http://bugs.python.org/issue22043>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:385
+msgid ""
+"`sys.stdout.write on OS X is not EINTR safe "
+"<http://bugs.python.org/issue22007>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:387
+msgid "`platform.uname() not EINTR safe <http://bugs.python.org/issue21772>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:389
+msgid ""
+"`asyncore does not handle EINTR in recv, send, connect, accept, "
+"<http://bugs.python.org/issue11266>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:391
+msgid ""
+"`socket.create_connection() doesn't handle EINTR properly "
+"<http://bugs.python.org/issue20611>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:394 ../../pep-0475.txt:459
+msgid "Closed issues:"
+msgstr ""
+
+#: ../../pep-0475.txt:396
+msgid ""
+"`Interrupted system calls are not retried "
+"<http://bugs.python.org/issue9867>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:398
+msgid ""
+"`Solaris: EINTR exception in select/socket calls in telnetlib "
+"<http://bugs.python.org/issue1049450>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:400
+msgid ""
+"`subprocess: Popen.communicate() doesn't handle EINTR in some cases "
+"<http://bugs.python.org/issue12493>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:402
+msgid ""
+"`multiprocessing.util._eintr_retry doesn't recalculate timeouts "
+"<http://bugs.python.org/issue12338>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:404
+msgid ""
+"`file readline, readlines & readall methods can lose data on EINTR "
+"<http://bugs.python.org/issue12268>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:406
+msgid ""
+"`multiprocessing BaseManager serve_client() does not check EINTR on recv "
+"<http://bugs.python.org/issue17097>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:408
+msgid ""
+"`selectors behaviour on EINTR undocumented "
+"<http://bugs.python.org/issue19849>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:410
+msgid ""
+"`asyncio: limit EINTR occurrences with SA_RESTART "
+"<http://bugs.python.org/issue19850>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:412
+msgid ""
+"`smtplib.py socket.create_connection() also doesn't handle EINTR properly"
+" <http://bugs.python.org/issue21602>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:414
+msgid ""
+"`Faulty RESTART/EINTR handling in Parser/myreadline.c "
+"<http://bugs.python.org/issue11650>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:416
+msgid ""
+"`test_httpservers intermittent failure, test_post and EINTR "
+"<http://bugs.python.org/issue3771>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:418
+msgid ""
+"`os.spawnv(P_WAIT, ...) on Linux doesn't handle EINTR "
+"<http://bugs.python.org/issue686667>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:420
+msgid ""
+"`asyncore fails when EINTR happens in pol "
+"<http://bugs.python.org/issue517554>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:422
+msgid ""
+"`file.write and file.read don't handle EINTR "
+"<http://bugs.python.org/issue10956>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:424
+msgid ""
+"`socket.readline() interface doesn't handle EINTR properly "
+"<http://bugs.python.org/issue1628205>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:426
+msgid "`subprocess is not EINTR-safe <http://bugs.python.org/issue1068268>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:428
+msgid ""
+"`SocketServer doesn't handle syscall interruption "
+"<http://bugs.python.org/issue7978>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:430
+msgid ""
+"`subprocess deadlock when read() is interrupted "
+"<http://bugs.python.org/issue17367>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:432
+msgid ""
+"`time.sleep(1): call PyErr_CheckSignals() if the sleep was interrupted "
+"<http://bugs.python.org/issue12462>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:434
+msgid ""
+"`siginterrupt with flag=False is reset when signal received "
+"<http://bugs.python.org/issue8354>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:436
+msgid ""
+"`need siginterrupt()  on Linux - impossible to do timeouts "
+"<http://bugs.python.org/issue1089358>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:438
+msgid ""
+"`[Windows] Can not interrupt time.sleep() "
+"<http://bugs.python.org/issue581232>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:442
+msgid "Python issues related to signals"
+msgstr ""
+
+#: ../../pep-0475.txt:446
+msgid ""
+"`signal.default_int_handler should set signal number on the raised "
+"exception <http://bugs.python.org/issue17182>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:448
+msgid ""
+"`expose signalfd(2) in the signal module "
+"<http://bugs.python.org/issue12304>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:450
+msgid "`missing return in win32_kill? <http://bugs.python.org/issue14484>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:452
+msgid ""
+"`Interrupts are lost during readline PyOS_InputHook processing "
+"<http://bugs.python.org/issue3180>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:454
+msgid ""
+"`cannot catch KeyboardInterrupt when using curses getkey() "
+"<http://bugs.python.org/issue1687125>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:456
+msgid ""
+"`Deferred KeyboardInterrupt in interactive mode "
+"<http://bugs.python.org/issue16151>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:461
+msgid "`sys.interrupt_main() <http://bugs.python.org/issue753733>`_"
+msgstr ""
+
+#: ../../pep-0475.txt:466
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0475.txt:468
+msgid ""
+"The implementation is tracked in `issue 23285 "
+"<http://bugs.python.org/issue23285>`_. It was committed on February 07, "
+"2015."
+msgstr ""
+
+#: ../../pep-0475.txt:474
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0475.txt:476
+msgid "This document has been placed in the public domain."
+msgstr ""
+

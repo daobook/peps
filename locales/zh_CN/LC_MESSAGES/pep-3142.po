@@ -1,0 +1,212 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3142.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3142.txt:1
+msgid "3142"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3142.txt:2
+msgid "Add a \"while\" clause to generator expressions"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3142.txt:5
+msgid "Gerald Britton <gerald.britton@gmail.com>"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3142.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3142.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3142.txt:9
+msgid "12-Jan-2009"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3142.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3142.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-3142.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2013-May/126136.html"
+msgstr ""
+
+#: ../../pep-3142.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3142.txt:18
+msgid ""
+"This PEP proposes an enhancement to generator expressions, adding a "
+"\"while\" clause to complement the existing \"if\" clause."
+msgstr ""
+
+#: ../../pep-3142.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3142.txt:25
+msgid ""
+"A generator expression (PEP 289 [1]_) is a concise method to serve "
+"dynamically-generated objects to list comprehensions (PEP 202 [2]_). "
+"Current generator expressions allow for an \"if\" clause to filter the "
+"objects that are returned to those meeting some set of criteria.  "
+"However, since the \"if\" clause is evaluated for every object that may "
+"be returned, in some cases it is possible that all objects would be "
+"rejected after a certain point.  For example::"
+msgstr ""
+
+#: ../../pep-3142.txt:35
+msgid "which is equivalent to the using a generator function (PEP 255 [3]_)::"
+msgstr ""
+
+#: ../../pep-3142.txt:44
+msgid ""
+"would yield 0, 1, 2, 3, 4, 5, 6 and 7, but would also consider the "
+"numbers from 8 to 99 and reject them all since ``n*n >= 50`` for numbers "
+"in that range.  Allowing for a \"while\" clause would allow the redundant"
+" tests to be short-circuited::"
+msgstr ""
+
+#: ../../pep-3142.txt:51
+msgid ""
+"would also yield 0, 1, 2, 3, 4, 5, 6 and 7, but would stop at 8 since the"
+" condition (``n*n < 50``) is no longer true.  This would be equivalent to"
+" the generator function::"
+msgstr ""
+
+#: ../../pep-3142.txt:63
+msgid ""
+"Currently, in order to achieve the same result, one would need to either "
+"write a generator function such as the one above or use the takewhile "
+"function from itertools::"
+msgstr ""
+
+#: ../../pep-3142.txt:70
+msgid ""
+"The takewhile code achieves the same result as the proposed syntax, "
+"albeit in a longer (some would say \"less-elegant\") fashion.  Also, the "
+"takewhile version requires an extra function call (the lambda in the "
+"example above) with the associated performance penalty. A simple test "
+"shows that::"
+msgstr ""
+
+#: ../../pep-3142.txt:78
+msgid "performs about 10% better than::"
+msgstr ""
+
+#: ../../pep-3142.txt:82
+msgid ""
+"though they achieve similar results.  (The first example uses a "
+"generator; takewhile is an iterator).  If similarly implemented, a "
+"\"while\" clause should perform about the same as the \"if\" clause does "
+"today."
+msgstr ""
+
+#: ../../pep-3142.txt:87
+msgid ""
+"The reader may ask if the \"if\" and \"while\" clauses should be mutually"
+" exclusive.  There are good examples that show that there are times when "
+"both may be used to good advantage. For example::"
+msgstr ""
+
+#: ../../pep-3142.txt:93
+msgid ""
+"should return prime numbers found between 100 and 1000, assuming I have a"
+" ``primes()`` generator that yields prime numbers."
+msgstr ""
+
+#: ../../pep-3142.txt:96
+msgid ""
+"Adding a \"while\" clause to generator expressions maintains the compact "
+"form while adding a useful facility for short-circuiting the expression."
+msgstr ""
+
+#: ../../pep-3142.txt:102
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-3142.txt:104
+msgid ""
+"Raymond Hettinger first proposed the concept of generator expressions in "
+"January 2002."
+msgstr ""
+
+#: ../../pep-3142.txt:109
+msgid "References"
+msgstr ""
+
+#: ../../pep-3142.txt:111
+msgid "PEP 289: Generator Expressions http://www.python.org/dev/peps/pep-0289/"
+msgstr ""
+
+#: ../../pep-3142.txt:114
+msgid "PEP 202: List Comprehensions http://www.python.org/dev/peps/pep-0202/"
+msgstr ""
+
+#: ../../pep-3142.txt:117
+msgid "PEP 255: Simple Generators http://www.python.org/dev/peps/pep-0255/"
+msgstr ""
+
+#: ../../pep-3142.txt:122
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3142.txt:124
+msgid "This document has been placed in the public domain."
+msgstr ""
+

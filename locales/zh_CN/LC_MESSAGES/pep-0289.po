@@ -1,0 +1,445 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0289.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0289.txt:1
+msgid "289"
+msgstr ""
+
+#: ../../pep-0289.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0289.txt:2
+msgid "Generator Expressions"
+msgstr ""
+
+#: ../../pep-0289.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0289.txt:5
+msgid "python@rcn.com (Raymond Hettinger)"
+msgstr ""
+
+#: ../../pep-0289.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0289.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0289.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0289.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0289.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0289.txt:9
+msgid "30-Jan-2002"
+msgstr ""
+
+#: ../../pep-0289.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0289.txt:10
+msgid "2.4"
+msgstr ""
+
+#: ../../pep-0289.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0289.txt:11
+msgid "22-Oct-2003"
+msgstr ""
+
+#: ../../pep-0289.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0289.txt:17
+msgid ""
+"This PEP introduces generator expressions as a high performance, memory "
+"efficient generalization of list comprehensions [1]_ and generators [2]_."
+msgstr ""
+
+#: ../../pep-0289.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0289.txt:25
+msgid ""
+"Experience with list comprehensions has shown their widespread utility "
+"throughout Python.  However, many of the use cases do not need to have a "
+"full list created in memory.  Instead, they only need to iterate over the"
+" elements one at a time."
+msgstr ""
+
+#: ../../pep-0289.txt:30
+msgid ""
+"For instance, the following summation code will build a full list of "
+"squares in memory, iterate over those values, and, when the reference is "
+"no longer needed, delete the list::"
+msgstr ""
+
+#: ../../pep-0289.txt:36
+msgid "Memory is conserved by using a generator expression instead::"
+msgstr ""
+
+#: ../../pep-0289.txt:40
+msgid "Similar benefits are conferred on constructors for container objects::"
+msgstr ""
+
+#: ../../pep-0289.txt:45
+msgid ""
+"Generator expressions are especially useful with functions like sum(), "
+"min(), and max() that reduce an iterable input to a single value::"
+msgstr ""
+
+#: ../../pep-0289.txt:50
+msgid ""
+"Generator expressions also address some examples of functionals coded "
+"with lambda::"
+msgstr ""
+
+#: ../../pep-0289.txt:56
+msgid "These simplify to::"
+msgstr ""
+
+#: ../../pep-0289.txt:61
+msgid ""
+"List comprehensions greatly reduced the need for filter() and map(). "
+"Likewise, generator expressions are expected to minimize the need for "
+"itertools.ifilter() and itertools.imap().  In contrast, the utility of "
+"other itertools will be enhanced by generator expressions::"
+msgstr ""
+
+#: ../../pep-0289.txt:68
+msgid ""
+"Having a syntax similar to list comprehensions also makes it easy to "
+"convert existing code into a generator expression when scaling up "
+"application."
+msgstr ""
+
+#: ../../pep-0289.txt:72
+msgid ""
+"Early timings showed that generators had a significant performance "
+"advantage over list comprehensions.  However, the latter were highly "
+"optimized for Py2.4 and now the performance is roughly comparable for "
+"small to mid-sized data sets.  As the data volumes grow larger, generator"
+" expressions tend to perform better because they do not exhaust cache "
+"memory and they allow Python to re-use objects between iterations."
+msgstr ""
+
+#: ../../pep-0289.txt:81
+msgid "BDFL Pronouncements"
+msgstr ""
+
+#: ../../pep-0289.txt:83
+msgid "This PEP is ACCEPTED for Py2.4."
+msgstr ""
+
+#: ../../pep-0289.txt:87
+msgid "The Details"
+msgstr ""
+
+#: ../../pep-0289.txt:89
+#, python-format
+msgid ""
+"(None of this is exact enough in the eye of a reader from Mars, but I "
+"hope the examples convey the intention well enough for a discussion in "
+"c.l.py.  The Python Reference Manual should contain a 100% exact semantic"
+" and syntactic specification.)"
+msgstr ""
+
+#: ../../pep-0289.txt:94
+msgid ""
+"The semantics of a generator expression are equivalent to creating an "
+"anonymous generator function and calling it.  For example::"
+msgstr ""
+
+#: ../../pep-0289.txt:100 ../../pep-0289.txt:114
+msgid "is equivalent to::"
+msgstr ""
+
+#: ../../pep-0289.txt:108
+msgid ""
+"Only the outermost for-expression is evaluated immediately, the other "
+"expressions are deferred until the generator is run::"
+msgstr ""
+
+#: ../../pep-0289.txt:125
+msgid ""
+"The syntax requires that a generator expression always needs to be "
+"directly inside a set of parentheses and cannot have a comma on either "
+"side.  With reference to the file Grammar/Grammar in CVS, two rules "
+"change:"
+msgstr ""
+
+#: ../../pep-0289.txt:130
+msgid "The rule::"
+msgstr ""
+
+#: ../../pep-0289.txt:134
+msgid "changes to::"
+msgstr ""
+
+#: ../../pep-0289.txt:138
+msgid ""
+"where testlist_gexp is almost the same as listmaker, but only allows a "
+"single test after 'for' ... 'in'::"
+msgstr ""
+
+#: ../../pep-0289.txt:143
+msgid "The rule for arglist needs similar changes."
+msgstr ""
+
+#: ../../pep-0289.txt:145
+msgid "This means that you can write::"
+msgstr ""
+
+#: ../../pep-0289.txt:149
+msgid "but you would have to write::"
+msgstr ""
+
+#: ../../pep-0289.txt:153
+msgid "and also::"
+msgstr ""
+
+#: ../../pep-0289.txt:157
+msgid ""
+"i.e. if a function call has a single positional argument, it can be a "
+"generator expression without extra parentheses, but in all other cases "
+"you have to parenthesize it."
+msgstr ""
+
+#: ../../pep-0289.txt:161
+msgid "The exact details were checked in to Grammar/Grammar version 1.49."
+msgstr ""
+
+#: ../../pep-0289.txt:163
+msgid ""
+"The loop variable (if it is a simple variable or a tuple of simple "
+"variables) is not exposed to the surrounding function.  This facilitates "
+"the implementation and makes typical use cases more reliable.  In some "
+"future version of Python, list comprehensions will also hide the "
+"induction variable from the surrounding code (and, in Py2.4, warnings "
+"will be issued for code accessing the induction variable)."
+msgstr ""
+
+#: ../../pep-0289.txt:171
+msgid "For example::"
+msgstr ""
+
+#: ../../pep-0289.txt:177
+msgid "List comprehensions will remain unchanged.  For example::"
+msgstr ""
+
+#: ../../pep-0289.txt:183
+msgid ""
+"Unfortunately, there is currently a slight syntactic difference. The "
+"expression::"
+msgstr ""
+
+#: ../../pep-0289.txt:188
+msgid "is legal, meaning::"
+msgstr ""
+
+#: ../../pep-0289.txt:192
+msgid "But generator expressions will not allow the former version::"
+msgstr ""
+
+#: ../../pep-0289.txt:196
+msgid "is illegal."
+msgstr ""
+
+#: ../../pep-0289.txt:198
+msgid ""
+"The former list comprehension syntax will become illegal in Python 3.0, "
+"and should be deprecated in Python 2.4 and beyond."
+msgstr ""
+
+#: ../../pep-0289.txt:201
+msgid ""
+"List comprehensions also \"leak\" their loop variable into the "
+"surrounding scope.  This will also change in Python 3.0, so that the "
+"semantic definition of a list comprehension in Python 3.0 will be "
+"equivalent to list(<generator expression>).  Python 2.4 and beyond should"
+" issue a deprecation warning if a list comprehension's loop variable has "
+"the same name as a variable used in the immediately surrounding scope."
+msgstr ""
+
+#: ../../pep-0289.txt:210
+msgid "Early Binding versus Late Binding"
+msgstr ""
+
+#: ../../pep-0289.txt:212
+msgid ""
+"After much discussion, it was decided that the first (outermost) for-"
+"expression should be evaluated immediately and that the remaining "
+"expressions be evaluated when the generator is executed."
+msgstr ""
+
+#: ../../pep-0289.txt:216
+msgid ""
+"Asked to summarize the reasoning for binding the first expression, Guido "
+"offered [5]_::"
+msgstr ""
+
+#: ../../pep-0289.txt:233
+msgid ""
+"Various use cases were proposed for binding all free variables when the "
+"generator is defined.  And some proponents felt that the resulting "
+"expressions would be easier to understand and debug if bound immediately."
+msgstr ""
+
+#: ../../pep-0289.txt:237
+msgid ""
+"However, Python takes a late binding approach to lambda expressions and "
+"has no precedent for automatic, early binding.  It was felt that "
+"introducing a new paradigm would unnecessarily introduce complexity."
+msgstr ""
+
+#: ../../pep-0289.txt:241
+msgid ""
+"After exploring many possibilities, a consensus emerged that binding "
+"issues were hard to understand and that users should be strongly "
+"encouraged to use generator expressions inside functions that consume "
+"their arguments immediately.  For more complex applications, full "
+"generator definitions are always superior in terms of being obvious about"
+" scope, lifetime, and binding [6]_."
+msgstr ""
+
+#: ../../pep-0289.txt:250
+msgid "Reduction Functions"
+msgstr ""
+
+#: ../../pep-0289.txt:252
+msgid ""
+"The utility of generator expressions is greatly enhanced when combined "
+"with reduction functions like sum(), min(), and max().  The heapq module "
+"in Python 2.4 includes two new reduction functions: nlargest() and "
+"nsmallest().  Both work well with generator expressions and keep no more "
+"than n items in memory at one time."
+msgstr ""
+
+#: ../../pep-0289.txt:260
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0289.txt:262
+msgid ""
+"Raymond Hettinger first proposed the idea of \"generator comprehensions\""
+" in January 2002."
+msgstr ""
+
+#: ../../pep-0289.txt:265
+msgid ""
+"Peter Norvig resurrected the discussion in his proposal for Accumulation "
+"Displays."
+msgstr ""
+
+#: ../../pep-0289.txt:268
+msgid ""
+"Alex Martelli provided critical measurements that proved the performance "
+"benefits of generator expressions.  He also provided strong arguments "
+"that they were a desirable thing to have."
+msgstr ""
+
+#: ../../pep-0289.txt:272
+msgid "Phillip Eby suggested \"iterator expressions\" as the name."
+msgstr ""
+
+#: ../../pep-0289.txt:274
+msgid "Subsequently, Tim Peters suggested the name \"generator expressions\"."
+msgstr ""
+
+#: ../../pep-0289.txt:276
+msgid ""
+"Armin Rigo, Tim Peters, Guido van Rossum, Samuele Pedroni, Hye-Shik Chang"
+" and Raymond Hettinger teased out the issues surrounding early versus "
+"late binding [5]_."
+msgstr ""
+
+#: ../../pep-0289.txt:280
+msgid ""
+"Jiwon Seo single-handedly implemented various versions of the proposal "
+"including the final version loaded into CVS.  Along the way, there were "
+"periodic code reviews by Hye-Shik Chang and Raymond Hettinger. Guido van "
+"Rossum made the key design decisions after comments from Armin Rigo and "
+"newsgroup discussions.  Raymond Hettinger provided the test suite, "
+"documentation, tutorial, and examples [6]_."
+msgstr ""
+
+#: ../../pep-0289.txt:288
+msgid "References"
+msgstr ""
+
+#: ../../pep-0289.txt:290
+msgid "PEP 202 List Comprehensions http://www.python.org/dev/peps/pep-0202/"
+msgstr ""
+
+#: ../../pep-0289.txt:293
+msgid "PEP 255 Simple Generators http://www.python.org/dev/peps/pep-0255/"
+msgstr ""
+
+#: ../../pep-0289.txt:296
+msgid ""
+"Peter Norvig's Accumulation Display Proposal "
+"http://www.norvig.com/pyacc.html"
+msgstr ""
+
+#: ../../pep-0289.txt:299
+msgid ""
+"Jeff Epler had worked up a patch demonstrating the previously proposed "
+"bracket and yield syntax https://bugs.python.org/issue795947"
+msgstr ""
+
+#: ../../pep-0289.txt:303
+msgid ""
+"Discussion over the relative merits of early versus late binding "
+"https://mail.python.org/pipermail/python-dev/2004-April/044555.html"
+msgstr ""
+
+#: ../../pep-0289.txt:306
+msgid ""
+"Patch discussion and alternative patches on Source Forge "
+"https://bugs.python.org/issue872326"
+msgstr ""
+
+#: ../../pep-0289.txt:311
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0289.txt:313
+msgid "This document has been placed in the public domain."
+msgstr ""
+

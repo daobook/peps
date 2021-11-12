@@ -1,0 +1,451 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0272.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0272.txt:1
+msgid "272"
+msgstr ""
+
+#: ../../pep-0272.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0272.txt:2
+msgid "API for Block Encryption Algorithms v1.0"
+msgstr ""
+
+#: ../../pep-0272.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0272.txt:5
+msgid "A.M. Kuchling <amk@amk.ca>"
+msgstr ""
+
+#: ../../pep-0272.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0272.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0272.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0272.txt:7
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0272.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0272.txt:9
+msgid "18-Sep-2001"
+msgstr ""
+
+#: ../../pep-0272.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0272.txt:10
+msgid "17-Apr-2002, 29-May-2002"
+msgstr ""
+
+#: ../../pep-0272.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0272.txt:16
+msgid ""
+"This document specifies a standard API for secret-key block encryption "
+"algorithms such as DES or Rijndael, making it easier to switch between "
+"different algorithms and implementations."
+msgstr ""
+
+#: ../../pep-0272.txt:22
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0272.txt:24
+msgid ""
+"Encryption algorithms transform their input data (called plaintext) in "
+"some way that is dependent on a variable key, producing ciphertext.  The "
+"transformation can easily be reversed if and only if one knows the key.  "
+"The key is a sequence of bits chosen from some very large space of "
+"possible keys.  There are two classes of encryption algorithms: block "
+"ciphers and stream ciphers."
+msgstr ""
+
+#: ../../pep-0272.txt:31
+msgid ""
+"Block ciphers encrypt multibyte inputs of a fixed size (frequently 8 or "
+"16 bytes long), and can be operated in various feedback modes.  The "
+"feedback modes supported in this specification are:"
+msgstr ""
+
+#: ../../pep-0272.txt:36
+msgid "Number"
+msgstr ""
+
+#: ../../pep-0272.txt:36
+msgid "Constant"
+msgstr ""
+
+#: ../../pep-0272.txt:36
+msgid "Description"
+msgstr ""
+
+#: ../../pep-0272.txt:38
+msgid "1"
+msgstr ""
+
+#: ../../pep-0272.txt:38
+msgid "MODE_ECB"
+msgstr ""
+
+#: ../../pep-0272.txt:38
+msgid "Electronic Code Book"
+msgstr ""
+
+#: ../../pep-0272.txt:39
+msgid "2"
+msgstr ""
+
+#: ../../pep-0272.txt:39
+msgid "MODE_CBC"
+msgstr ""
+
+#: ../../pep-0272.txt:39
+msgid "Cipher Block Chaining"
+msgstr ""
+
+#: ../../pep-0272.txt:40
+msgid "3"
+msgstr ""
+
+#: ../../pep-0272.txt:40
+msgid "MODE_CFB"
+msgstr ""
+
+#: ../../pep-0272.txt:40
+msgid "Cipher Feedback"
+msgstr ""
+
+#: ../../pep-0272.txt:41
+msgid "5"
+msgstr ""
+
+#: ../../pep-0272.txt:41
+msgid "MODE_OFB"
+msgstr ""
+
+#: ../../pep-0272.txt:41
+msgid "Output Feedback"
+msgstr ""
+
+#: ../../pep-0272.txt:42
+msgid "6"
+msgstr ""
+
+#: ../../pep-0272.txt:42
+msgid "MODE_CTR"
+msgstr ""
+
+#: ../../pep-0272.txt:42
+msgid "Counter"
+msgstr ""
+
+#: ../../pep-0272.txt:45
+msgid ""
+"These modes are to be implemented as described in NIST publication SP "
+"800-38A [1]_.  Descriptions of the first three feedback modes can also be"
+" found in Bruce Schneier's book *Applied Cryptography* [2]_."
+msgstr ""
+
+#: ../../pep-0272.txt:49
+msgid ""
+"(The numeric value 4 is reserved for MODE_PGP, a variant of CFB described"
+" in RFC 2440: \"OpenPGP Message Format\" [3]_. This mode isn't considered"
+" important enough to make it worth requiring it for all block encryption "
+"ciphers, though supporting it is a nice extra feature.)"
+msgstr ""
+
+#: ../../pep-0272.txt:55
+msgid ""
+"In a strict formal sense, stream ciphers encrypt data bit-by-bit; "
+"practically, stream ciphers work on a character-by-character basis.  This"
+" PEP only aims at specifying an interface for block ciphers, though "
+"stream ciphers can support the interface described here by fixing "
+"'block_size' to 1.  Feedback modes also don't make sense for stream "
+"ciphers, so the only reasonable feedback mode would be ECB mode."
+msgstr ""
+
+#: ../../pep-0272.txt:65
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0272.txt:67
+msgid ""
+"Encryption modules can add additional functions, methods, and attributes "
+"beyond those described in this PEP, but all of the features described in "
+"this PEP must be present for a module to claim compliance with it."
+msgstr ""
+
+#: ../../pep-0272.txt:72
+msgid "Secret-key encryption modules should define one function::"
+msgstr ""
+
+#: ../../pep-0272.txt:76
+msgid ""
+"Returns a ciphering object, using the secret key contained in the string "
+"'key', and using the feedback mode 'mode', which must be one of the "
+"constants from the table above."
+msgstr ""
+
+#: ../../pep-0272.txt:80
+msgid ""
+"If 'mode' is MODE_CBC or MODE_CFB, 'IV' must be provided and must be a "
+"string of the same length as the block size.  Not providing a value of "
+"'IV' will result in a ``ValueError`` exception being raised."
+msgstr ""
+
+#: ../../pep-0272.txt:84
+msgid ""
+"Depending on the algorithm, a module may support additional keyword "
+"arguments to this function.  Some keyword arguments are specified by this"
+" PEP, and modules are free to add additional keyword arguments.  If a "
+"value isn't provided for a given keyword, a secure default value should "
+"be used.  For example, if an algorithm has a selectable number of rounds "
+"between 1 and 16, and 1-round encryption is insecure and 8-round "
+"encryption is believed secure, the default value for 'rounds' should be 8"
+" or more. (Module implementors can choose a very slow but secure value, "
+"too, such as 16 in this example.  This decision is left up to the "
+"implementor.)"
+msgstr ""
+
+#: ../../pep-0272.txt:96
+msgid "The following table lists keyword arguments defined by this PEP:"
+msgstr ""
+
+#: ../../pep-0272.txt:99
+msgid "Keyword"
+msgstr ""
+
+#: ../../pep-0272.txt:99
+msgid "Meaning"
+msgstr ""
+
+#: ../../pep-0272.txt:101
+msgid "counter"
+msgstr ""
+
+#: ../../pep-0272.txt:101
+msgid "Callable object that returns counter blocks (see below; CTR mode only)"
+msgstr ""
+
+#: ../../pep-0272.txt:104
+msgid "rounds"
+msgstr ""
+
+#: ../../pep-0272.txt:104
+msgid "Number of rounds of encryption to use"
+msgstr ""
+
+#: ../../pep-0272.txt:106
+msgid "segment_size"
+msgstr ""
+
+#: ../../pep-0272.txt:106
+msgid ""
+"Size of data and ciphertext segments, measured in bits (see below; CFB "
+"mode only)"
+msgstr ""
+
+#: ../../pep-0272.txt:110
+msgid ""
+"The Counter feedback mode requires a sequence of input blocks, called "
+"counters, that are used to produce the output.  When 'mode' is MODE_CTR, "
+"the 'counter' keyword argument must be provided, and its value must be a "
+"callable object, such as a function or method. Successive calls to this "
+"callable object must return a sequence of strings that are of the length "
+"'block_size' and that never repeats.  (Appendix B of the NIST publication"
+" gives a way to generate such a sequence, but that's beyond the scope of "
+"this PEP.)"
+msgstr ""
+
+#: ../../pep-0272.txt:120
+msgid ""
+"The CFB mode operates on segments of the plaintext and ciphertext that "
+"are 'segment_size' bits long.  Therefore, when using this mode, the input"
+" and output strings must be a multiple of 'segment_size' bits in length."
+"  'segment_size' must be an integer between 1 and block_size\\*8, "
+"inclusive.  (The factor of 8 comes from 'block_size' being measured in "
+"bytes and not in bits).  The default value for this parameter should be "
+"block_size\\*8. Implementors are allowed to constrain 'segment_size' to "
+"be a multiple of 8 for simplicity, but they're encouraged to support "
+"arbitrary values for generality."
+msgstr ""
+
+#: ../../pep-0272.txt:131
+msgid "Secret-key encryption modules should define two variables:"
+msgstr ""
+
+#: ../../pep-0272.txt:133 ../../pep-0272.txt:153
+msgid "block_size"
+msgstr ""
+
+#: ../../pep-0272.txt:135
+msgid ""
+"An integer value; the size of the blocks encrypted by this module, "
+"measured in bytes.  For all feedback modes, the length of strings passed "
+"to the encrypt() and decrypt() must be a multiple of the block size."
+msgstr ""
+
+#: ../../pep-0272.txt:140
+msgid "key_size"
+msgstr ""
+
+#: ../../pep-0272.txt:142
+msgid ""
+"An integer value; the size of the keys required by this module, measured "
+"in bytes.  If key_size is None, then the algorithm accepts variable-"
+"length keys.  This may mean the module accepts keys of any random length,"
+" or that there are a few different possible lengths, e.g. 16, 24, or 32 "
+"bytes.  You cannot pass a key of length 0 (that is, the null string '') "
+"as a variable-length key."
+msgstr ""
+
+#: ../../pep-0272.txt:151
+msgid "Cipher objects should have two attributes:"
+msgstr ""
+
+#: ../../pep-0272.txt:155
+msgid ""
+"An integer value equal to the size of the blocks encrypted by this "
+"object.  For algorithms with a variable block size, this value is equal "
+"to the block size selected for this object."
+msgstr ""
+
+#: ../../pep-0272.txt:159
+msgid "IV"
+msgstr ""
+
+#: ../../pep-0272.txt:161
+msgid ""
+"Contains the initial value which will be used to start a cipher feedback "
+"mode; it will always be a string exactly one block in length.  After "
+"encrypting or decrypting a string, this value is updated to reflect the "
+"modified feedback text. It is read-only, and cannot be assigned a new "
+"value."
+msgstr ""
+
+#: ../../pep-0272.txt:168
+msgid "Cipher objects require the following methods:"
+msgstr ""
+
+#: ../../pep-0272.txt:170
+msgid "decrypt(string)"
+msgstr ""
+
+#: ../../pep-0272.txt:172
+msgid ""
+"Decrypts 'string', using the key-dependent data in the object and with "
+"the appropriate feedback mode.  The string's length must be an exact "
+"multiple of the algorithm's block size or, in CFB mode, of the segment "
+"size.  Returns a string containing the plaintext."
+msgstr ""
+
+#: ../../pep-0272.txt:178
+msgid "encrypt(string)"
+msgstr ""
+
+#: ../../pep-0272.txt:180
+msgid ""
+"Encrypts a non-empty string, using the key-dependent data in the object, "
+"and with the appropriate feedback mode.  The string's length must be an "
+"exact multiple of the algorithm's block size or, in CFB mode, of the "
+"segment size.  Returns a string containing the ciphertext."
+msgstr ""
+
+#: ../../pep-0272.txt:186
+msgid "Here's an example, using a module named 'DES'::"
+msgstr ""
+
+#: ../../pep-0272.txt:205
+msgid "References"
+msgstr ""
+
+#: ../../pep-0272.txt:207
+msgid ""
+"NIST publication SP 800-38A, \"Recommendation for Block Cipher Modes of "
+"Operation\" (http://csrc.nist.gov/encryption/modes/)"
+msgstr ""
+
+#: ../../pep-0272.txt:210
+msgid "Applied Cryptography"
+msgstr ""
+
+#: ../../pep-0272.txt:212
+msgid ""
+"RFC2440: \"OpenPGP Message Format\" (http://rfc2440.x42.com, "
+"http://www.faqs.org/rfcs/rfc2440.html)"
+msgstr ""
+
+#: ../../pep-0272.txt:217
+msgid "Changes"
+msgstr ""
+
+#: ../../pep-0272.txt:219
+msgid ""
+"2002-04: Removed references to stream ciphers; retitled PEP; prefixed "
+"feedback mode constants with ``MODE_``; removed PGP feedback mode; added "
+"CTR and OFB feedback modes; clarified where numbers are measured in bytes"
+" and where in bits."
+msgstr ""
+
+#: ../../pep-0272.txt:224
+msgid ""
+"2002-09: Clarified the discussion of key length by using \"variable-"
+"length keys\" instead of \"arbitrary-length\"."
+msgstr ""
+
+#: ../../pep-0272.txt:229
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0272.txt:231
+msgid ""
+"Thanks to the readers of the python-crypto list for their comments on "
+"this PEP."
+msgstr ""
+
+#: ../../pep-0272.txt:236
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0272.txt:238
+msgid "This document has been placed in the public domain."
+msgstr ""
+

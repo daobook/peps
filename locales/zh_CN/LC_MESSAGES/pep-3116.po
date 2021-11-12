@@ -1,0 +1,721 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3116.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3116.txt:1
+msgid "3116"
+msgstr ""
+
+#: ../../pep-3116.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3116.txt:2
+msgid "New I/O"
+msgstr ""
+
+#: ../../pep-3116.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3116.txt:5
+msgid ""
+"Daniel Stutzbach <daniel@stutzbachenterprises.com>, Guido van Rossum "
+"<guido@python.org>, Mike Verdone <mike.verdone@gmail.com>"
+msgstr ""
+
+#: ../../pep-3116.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3116.txt:8
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3116.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3116.txt:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3116.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3116.txt:11 ../../pep-3116.txt:13
+msgid "26-Feb-2007"
+msgstr ""
+
+#: ../../pep-3116.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3116.txt:12
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3116.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3116.txt:16
+msgid "Rationale and Goals"
+msgstr ""
+
+#: ../../pep-3116.txt:18
+msgid ""
+"Python allows for a variety of stream-like (a.k.a. file-like) objects "
+"that can be used via ``read()`` and ``write()`` calls.  Anything that "
+"provides ``read()`` and ``write()`` is stream-like.  However, more exotic"
+" and extremely useful functions like ``readline()`` or ``seek()`` may or "
+"may not be available on every stream-like object. Python needs a "
+"specification for basic byte-based I/O streams to which we can add "
+"buffering and text-handling features."
+msgstr ""
+
+#: ../../pep-3116.txt:26
+msgid ""
+"Once we have a defined raw byte-based I/O interface, we can add buffering"
+" and text handling layers on top of any byte-based I/O class. The same "
+"buffering and text handling logic can be used for files, sockets, byte "
+"arrays, or custom I/O classes developed by Python programmers.  "
+"Developing a standard definition of a stream lets us separate stream-"
+"based operations like ``read()`` and ``write()`` from implementation "
+"specific operations like ``fileno()`` and ``isatty()``. It encourages "
+"programmers to write code that uses streams as streams and not require "
+"that all streams support file-specific or socket-specific operations."
+msgstr ""
+
+#: ../../pep-3116.txt:37
+msgid ""
+"The new I/O spec is intended to be similar to the Java I/O libraries, but"
+" generally less confusing.  Programmers who don't want to muck about in "
+"the new I/O world can expect that the ``open()`` factory method will "
+"produce an object backwards-compatible with old-style file objects."
+msgstr ""
+
+#: ../../pep-3116.txt:45
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3116.txt:47
+msgid ""
+"The Python I/O Library will consist of three layers: a raw I/O layer, a "
+"buffered I/O layer, and a text I/O layer.  Each layer is defined by an "
+"abstract base class, which may have multiple implementations.  The raw "
+"I/O and buffered I/O layers deal with units of bytes, while the text I/O "
+"layer deals with units of characters."
+msgstr ""
+
+#: ../../pep-3116.txt:55
+msgid "Raw I/O"
+msgstr ""
+
+#: ../../pep-3116.txt:57
+msgid ""
+"The abstract base class for raw I/O is RawIOBase.  It has several methods"
+" which are wrappers around the appropriate operating system calls.  If "
+"one of these functions would not make sense on the object, the "
+"implementation must raise an IOError exception.  For example, if a file "
+"is opened read-only, the ``.write()`` method will raise an ``IOError``.  "
+"As another example, if the object represents a socket, then ``.seek()``, "
+"``.tell()``, and ``.truncate()`` will raise an ``IOError``.  Generally, a"
+" call to one of these functions maps to exactly one operating system "
+"call."
+msgstr ""
+
+#: ../../pep-3116.txt:67
+msgid "``.read(n: int) -> bytes``"
+msgstr ""
+
+#: ../../pep-3116.txt:69
+msgid ""
+"Read up to ``n`` bytes from the object and return them.  Fewer than ``n``"
+" bytes may be returned if the operating system call returns fewer than "
+"``n`` bytes.  If 0 bytes are returned, this indicates end of file.  If "
+"the object is in non-blocking mode and no bytes are available, the call "
+"returns ``None``."
+msgstr ""
+
+#: ../../pep-3116.txt:75 ../../pep-3116.txt:165
+msgid "``.readinto(b: bytes) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:77
+msgid ""
+"Read up to ``len(b)`` bytes from the object and stores them in ``b``, "
+"returning the number of bytes read.  Like .read, fewer than ``len(b)`` "
+"bytes may be read, and 0 indicates end of file. ``None`` is returned if a"
+" non-blocking object has no bytes available.  The length of ``b`` is "
+"never changed."
+msgstr ""
+
+#: ../../pep-3116.txt:83 ../../pep-3116.txt:167
+msgid "``.write(b: bytes) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:85
+msgid "Returns number of bytes written, which may be ``< len(b)``."
+msgstr ""
+
+#: ../../pep-3116.txt:87 ../../pep-3116.txt:173
+msgid "``.seek(pos: int, whence: int = 0) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:89 ../../pep-3116.txt:175
+msgid "``.tell() -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:91
+msgid "``.truncate(n: int = None) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:93 ../../pep-3116.txt:181 ../../pep-3116.txt:311
+msgid "``.close() -> None``"
+msgstr ""
+
+#: ../../pep-3116.txt:95
+msgid "Additionally, it defines a few other methods:"
+msgstr ""
+
+#: ../../pep-3116.txt:97 ../../pep-3116.txt:183 ../../pep-3116.txt:313
+msgid "``.readable() -> bool``"
+msgstr ""
+
+#: ../../pep-3116.txt:99
+msgid ""
+"Returns ``True`` if the object was opened for reading, ``False`` "
+"otherwise.  If ``False``, ``.read()`` will raise an ``IOError`` if "
+"called."
+msgstr ""
+
+#: ../../pep-3116.txt:103 ../../pep-3116.txt:185 ../../pep-3116.txt:315
+msgid "``.writable() -> bool``"
+msgstr ""
+
+#: ../../pep-3116.txt:105
+msgid ""
+"Returns ``True`` if the object was opened for writing, ``False`` "
+"otherwise.  If ``False``, ``.write()`` and ``.truncate()`` will raise an "
+"``IOError`` if called."
+msgstr ""
+
+#: ../../pep-3116.txt:109 ../../pep-3116.txt:187 ../../pep-3116.txt:317
+msgid "``.seekable() -> bool``"
+msgstr ""
+
+#: ../../pep-3116.txt:111
+msgid ""
+"Returns ``True`` if the object supports random access (such as disk "
+"files), or ``False`` if the object only supports sequential access (such "
+"as sockets, pipes, and ttys).  If ``False``, ``.seek()``, ``.tell()``, "
+"and ``.truncate()`` will raise an IOError if called."
+msgstr ""
+
+#: ../../pep-3116.txt:117 ../../pep-3116.txt:189
+msgid "``.__enter__() -> ContextManager``"
+msgstr ""
+
+#: ../../pep-3116.txt:119
+msgid "Context management protocol.  Returns ``self``."
+msgstr ""
+
+#: ../../pep-3116.txt:121 ../../pep-3116.txt:191
+msgid "``.__exit__(...) -> None``"
+msgstr ""
+
+#: ../../pep-3116.txt:123
+msgid "Context management protocol.  Same as ``.close()``."
+msgstr ""
+
+#: ../../pep-3116.txt:125
+msgid ""
+"If and only if a ``RawIOBase`` implementation operates on an underlying "
+"file descriptor, it must additionally provide a ``.fileno()`` member "
+"function.  This could be defined specifically by the implementation, or a"
+" mix-in class could be used (need to decide about this)."
+msgstr ""
+
+#: ../../pep-3116.txt:131
+msgid "``.fileno() -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:133
+msgid "Returns the underlying file descriptor (an integer)"
+msgstr ""
+
+#: ../../pep-3116.txt:135
+msgid ""
+"Initially, three implementations will be provided that implement the "
+"``RawIOBase`` interface: ``FileIO``, ``SocketIO`` (in the socket module),"
+" and ``ByteIO``.  Each implementation must determine whether the object "
+"supports random access as the information provided by the user may not be"
+" sufficient (consider ``open(\"/dev/tty\", \"rw\")`` or ``open(\"/tmp"
+"/named-pipe\", \"rw\")``).  As an example, ``FileIO`` can determine this "
+"by calling the ``seek()`` system call; if it returns an error, the object"
+" does not support random access.  Each implementation may provided "
+"additional methods appropriate to its type.  The ``ByteIO`` object is "
+"analogous to Python 2's ``cStringIO`` library, but operating on the new "
+"bytes type instead of strings."
+msgstr ""
+
+#: ../../pep-3116.txt:149
+msgid "Buffered I/O"
+msgstr ""
+
+#: ../../pep-3116.txt:151
+msgid ""
+"The next layer is the Buffered I/O layer which provides more efficient "
+"access to file-like objects.  The abstract base class for all Buffered "
+"I/O implementations is ``BufferedIOBase``, which provides similar methods"
+" to RawIOBase:"
+msgstr ""
+
+#: ../../pep-3116.txt:156
+msgid "``.read(n: int = -1) -> bytes``"
+msgstr ""
+
+#: ../../pep-3116.txt:158
+msgid ""
+"Returns the next ``n`` bytes from the object.  It may return fewer than "
+"``n`` bytes if end-of-file is reached or the object is non-blocking.  0 "
+"bytes indicates end-of-file.  This method may make multiple calls to "
+"``RawIOBase.read()`` to gather the bytes, or may make no calls to "
+"``RawIOBase.read()`` if all of the needed bytes are already buffered."
+msgstr ""
+
+#: ../../pep-3116.txt:169
+msgid ""
+"Write ``b`` bytes to the buffer.  The bytes are not guaranteed to be "
+"written to the Raw I/O object immediately; they may be buffered.  Returns"
+" ``len(b)``."
+msgstr ""
+
+#: ../../pep-3116.txt:177
+msgid "``.truncate(pos: int = None) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:179 ../../pep-3116.txt:309
+msgid "``.flush() -> None``"
+msgstr ""
+
+#: ../../pep-3116.txt:193
+msgid "Additionally, the abstract base class provides one member variable:"
+msgstr ""
+
+#: ../../pep-3116.txt:195
+msgid "``.raw``"
+msgstr ""
+
+#: ../../pep-3116.txt:197
+msgid "A reference to the underlying ``RawIOBase`` object."
+msgstr ""
+
+#: ../../pep-3116.txt:199
+msgid ""
+"The ``BufferedIOBase`` methods signatures are mostly identical to that of"
+" ``RawIOBase`` (exceptions: ``write()`` returns ``None``, ``read()``'s "
+"argument is optional), but may have different semantics. In particular, "
+"``BufferedIOBase`` implementations may read more data than requested or "
+"delay writing data using buffers.  For the most part, this will be "
+"transparent to the user (unless, for example, they open the same file "
+"through a different descriptor).  Also, raw reads may return a short read"
+" without any particular reason; buffered reads will only return a short "
+"read if EOF is reached; and raw writes may return a short count (even "
+"when non-blocking I/O is not enabled!), while buffered writes will raise "
+"``IOError`` when not all bytes could be written or buffered."
+msgstr ""
+
+#: ../../pep-3116.txt:212
+msgid ""
+"There are four implementations of the ``BufferedIOBase`` abstract base "
+"class, described below."
+msgstr ""
+
+#: ../../pep-3116.txt:217
+msgid "``BufferedReader``"
+msgstr ""
+
+#: ../../pep-3116.txt:219
+msgid ""
+"The ``BufferedReader`` implementation is for sequential-access read-only "
+"objects.  Its ``.flush()`` method is a no-op."
+msgstr ""
+
+#: ../../pep-3116.txt:224
+msgid "``BufferedWriter``"
+msgstr ""
+
+#: ../../pep-3116.txt:226
+msgid ""
+"The ``BufferedWriter`` implementation is for sequential-access write-only"
+" objects.  Its ``.flush()`` method forces all cached data to be written "
+"to the underlying RawIOBase object."
+msgstr ""
+
+#: ../../pep-3116.txt:232
+msgid "``BufferedRWPair``"
+msgstr ""
+
+#: ../../pep-3116.txt:234
+msgid ""
+"The ``BufferedRWPair`` implementation is for sequential-access read-write"
+" objects such as sockets and ttys.  As the read and write streams of "
+"these objects are completely independent, it could be implemented by "
+"simply incorporating a ``BufferedReader`` and ``BufferedWriter`` "
+"instance.  It provides a ``.flush()`` method that has the same semantics "
+"as a ``BufferedWriter``'s ``.flush()`` method."
+msgstr ""
+
+#: ../../pep-3116.txt:243
+msgid "``BufferedRandom``"
+msgstr ""
+
+#: ../../pep-3116.txt:245
+msgid ""
+"The ``BufferedRandom`` implementation is for all random-access objects, "
+"whether they are read-only, write-only, or read-write. Compared to the "
+"previous classes that operate on sequential-access objects, the "
+"``BufferedRandom`` class must contend with the user calling ``.seek()`` "
+"to reposition the stream.  Therefore, an instance of ``BufferedRandom`` "
+"must keep track of both the logical and true position within the object."
+"  It provides a ``.flush()`` method that forces all cached write data to "
+"be written to the underlying ``RawIOBase`` object and all cached read "
+"data to be forgotten (so that future reads are forced to go back to the "
+"disk)."
+msgstr ""
+
+#: ../../pep-3116.txt:256
+msgid ""
+"*Q: Do we want to mandate in the specification that switching between "
+"reading and writing on a read-write object implies a .flush()?  Or is "
+"that an implementation convenience that users should not rely on?*"
+msgstr ""
+
+#: ../../pep-3116.txt:260
+msgid ""
+"For a read-only ``BufferedRandom`` object, ``.writable()`` returns "
+"``False`` and the ``.write()`` and ``.truncate()`` methods throw "
+"``IOError``."
+msgstr ""
+
+#: ../../pep-3116.txt:264
+msgid ""
+"For a write-only ``BufferedRandom`` object, ``.readable()`` returns "
+"``False`` and the ``.read()`` method throws ``IOError``."
+msgstr ""
+
+#: ../../pep-3116.txt:269
+msgid "Text I/O"
+msgstr ""
+
+#: ../../pep-3116.txt:271
+msgid ""
+"The text I/O layer provides functions to read and write strings from "
+"streams.  Some new features include universal newlines and character set "
+"encoding and decoding.  The Text I/O layer is defined by a ``TextIOBase``"
+" abstract base class.  It provides several methods that are similar to "
+"the ``BufferedIOBase`` methods, but operate on a per-character basis "
+"instead of a per-byte basis.  These methods are:"
+msgstr ""
+
+#: ../../pep-3116.txt:278
+msgid "``.read(n: int = -1) -> str``"
+msgstr ""
+
+#: ../../pep-3116.txt:280
+msgid "``.write(s: str) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:282
+msgid "``.tell() -> object``"
+msgstr ""
+
+#: ../../pep-3116.txt:284
+msgid ""
+"Return a cookie describing the current file position. The only supported "
+"use for the cookie is with .seek() with whence set to 0 (i.e. absolute "
+"seek)."
+msgstr ""
+
+#: ../../pep-3116.txt:288
+msgid "``.seek(pos: object, whence: int = 0) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:290
+msgid ""
+"Seek to position ``pos``.  If ``pos`` is non-zero, it must be a cookie "
+"returned from ``.tell()`` and ``whence`` must be zero."
+msgstr ""
+
+#: ../../pep-3116.txt:293
+msgid "``.truncate(pos: object = None) -> int``"
+msgstr ""
+
+#: ../../pep-3116.txt:295
+msgid ""
+"Like ``BufferedIOBase.truncate()``, except that ``pos`` (if not ``None``)"
+" must be a cookie previously returned by ``.tell()``."
+msgstr ""
+
+#: ../../pep-3116.txt:298
+msgid ""
+"Unlike with raw I/O, the units for .seek() are not specified - some "
+"implementations (e.g. ``StringIO``) use characters and others (e.g. "
+"``TextIOWrapper``) use bytes.  The special case for zero is to allow "
+"going to the start or end of a stream without a prior ``.tell()``.  An "
+"implementation could include stream encoder state in the cookie returned "
+"from ``.tell()``."
+msgstr ""
+
+#: ../../pep-3116.txt:306
+msgid ""
+"``TextIOBase`` implementations also provide several methods that are "
+"pass-throughs to the underlying ``BufferedIOBase`` objects:"
+msgstr ""
+
+#: ../../pep-3116.txt:319
+msgid ""
+"``TextIOBase`` class implementations additionally provide the following "
+"methods:"
+msgstr ""
+
+#: ../../pep-3116.txt:322
+msgid "``.readline() -> str``"
+msgstr ""
+
+#: ../../pep-3116.txt:324
+msgid ""
+"Read until newline or EOF and return the line, or ``\"\"`` if EOF hit "
+"immediately."
+msgstr ""
+
+#: ../../pep-3116.txt:327
+msgid "``.__iter__() -> Iterator``"
+msgstr ""
+
+#: ../../pep-3116.txt:329
+msgid ""
+"Returns an iterator that returns lines from the file (which happens to be"
+" ``self``)."
+msgstr ""
+
+#: ../../pep-3116.txt:332
+msgid "``.next() -> str``"
+msgstr ""
+
+#: ../../pep-3116.txt:334
+msgid ""
+"Same as ``readline()`` except raises ``StopIteration`` if EOF hit "
+"immediately."
+msgstr ""
+
+#: ../../pep-3116.txt:337
+msgid ""
+"Two implementations will be provided by the Python library.  The primary "
+"implementation, ``TextIOWrapper``, wraps a Buffered I/O object.  Each "
+"``TextIOWrapper`` object has a property named \"``.buffer``\" that "
+"provides a reference to the underlying ``BufferedIOBase`` object.  Its "
+"initializer has the following signature:"
+msgstr ""
+
+#: ../../pep-3116.txt:344
+msgid ""
+"``.__init__(self, buffer, encoding=None, errors=None, newline=None, "
+"line_buffering=False)``"
+msgstr ""
+
+#: ../../pep-3116.txt:346
+msgid ""
+"``buffer`` is a reference to the ``BufferedIOBase`` object to be wrapped "
+"with the ``TextIOWrapper``."
+msgstr ""
+
+#: ../../pep-3116.txt:349
+msgid ""
+"``encoding`` refers to an encoding to be used for translating between the"
+" byte-representation and character-representation. If it is ``None``, "
+"then the system's locale setting will be used as the default."
+msgstr ""
+
+#: ../../pep-3116.txt:354
+msgid ""
+"``errors`` is an optional string indicating error handling. It may be set"
+" whenever ``encoding`` may be set.  It defaults to ``'strict'``."
+msgstr ""
+
+#: ../../pep-3116.txt:358
+msgid ""
+"``newline`` can be ``None``, ``''``, ``'\\n'``, ``'\\r'``, or "
+"``'\\r\\n'``; all other values are illegal.  It controls the handling of "
+"line endings.  It works as follows:"
+msgstr ""
+
+#: ../../pep-3116.txt:362
+msgid ""
+"On input, if ``newline`` is ``None``, universal newlines mode is enabled."
+"  Lines in the input can end in ``'\\n'``, ``'\\r'``, or ``'\\r\\n'``, "
+"and these are translated into ``'\\n'`` before being returned to the "
+"caller.  If it is ``''``, universal newline mode is enabled, but line "
+"endings are returned to the caller untranslated.  If it has any of the "
+"other legal values, input lines are only terminated by the given string, "
+"and the line ending is returned to the caller untranslated.  (In other "
+"words, translation to ``'\\n'`` only occurs if ``newline`` is ``None``.)"
+msgstr ""
+
+#: ../../pep-3116.txt:373
+msgid ""
+"On output, if ``newline`` is ``None``, any ``'\\n'`` characters written "
+"are translated to the system default line separator, ``os.linesep``.  If "
+"``newline`` is ``''``, no translation takes place.  If ``newline`` is any"
+" of the other legal values, any ``'\\n'`` characters written are "
+"translated to the given string.  (Note that the rules guiding translation"
+" are different for output than for input.)"
+msgstr ""
+
+#: ../../pep-3116.txt:382
+msgid ""
+"``line_buffering``, if True, causes ``write()`` calls to imply a "
+"``flush()`` if the string written contains at least one ``'\\n'`` or "
+"``'\\r'`` character.  This is set by ``open()`` when it detects that the "
+"underlying stream is a TTY device, or when a ``buffering`` argument of "
+"``1`` is passed."
+msgstr ""
+
+#: ../../pep-3116.txt:388
+msgid "Further notes on the ``newline`` parameter:"
+msgstr ""
+
+#: ../../pep-3116.txt:390
+msgid ""
+"``'\\r'`` support is still needed for some OSX applications that produce "
+"files using ``'\\r'`` line endings; Excel (when exporting to text) and "
+"Adobe Illustrator EPS files are the most common examples."
+msgstr ""
+
+#: ../../pep-3116.txt:395
+msgid ""
+"If translation is enabled, it happens regardless of which method is "
+"called for reading or writing.  For example, ``f.read()`` will always "
+"produce the same result as ``''.join(f.readlines())``."
+msgstr ""
+
+#: ../../pep-3116.txt:400
+msgid ""
+"If universal newlines without translation are requested on input (i.e. "
+"``newline=''``), if a system read operation returns a buffer ending in "
+"``'\\r'``, another system read operation is done to determine whether it "
+"is followed by ``'\\n'`` or not.  In universal newlines mode with "
+"translation, the second system read operation may be postponed until the "
+"next read request, and if the following system read operation returns a "
+"buffer starting with ``'\\n'``, that character is simply discarded."
+msgstr ""
+
+#: ../../pep-3116.txt:410
+msgid ""
+"Another implementation, ``StringIO``, creates a file-like ``TextIO`` "
+"implementation without an underlying Buffered I/O object.  While similar "
+"functionality could be provided by wrapping a ``BytesIO`` object in a "
+"``TextIOWrapper``, the ``StringIO`` object allows for much greater "
+"efficiency as it does not need to actually performing encoding and "
+"decoding.  A String I/O object can just store the encoded string as-is.  "
+"The ``StringIO`` object's ``__init__`` signature takes an optional string"
+" specifying the initial value; the initial position is always 0.  It does"
+" not support encodings or newline translations; you always read back "
+"exactly the characters you wrote."
+msgstr ""
+
+#: ../../pep-3116.txt:423
+msgid "Unicode encoding/decoding Issues"
+msgstr ""
+
+#: ../../pep-3116.txt:425
+msgid ""
+"We should allow changing the encoding and error-handling setting later.  "
+"The behavior of Text I/O operations in the face of Unicode problems and "
+"ambiguities (e.g. diacritics, surrogates, invalid bytes in an encoding) "
+"should be the same as that of the unicode ``encode()``/``decode()`` "
+"methods.  ``UnicodeError`` may be raised."
+msgstr ""
+
+#: ../../pep-3116.txt:431
+msgid ""
+"Implementation note: we should be able to reuse much of the "
+"infrastructure provided by the ``codecs`` module.  If it doesn't provide "
+"the exact APIs we need, we should refactor it to avoid reinventing the "
+"wheel."
+msgstr ""
+
+#: ../../pep-3116.txt:438
+msgid "Non-blocking I/O"
+msgstr ""
+
+#: ../../pep-3116.txt:440
+msgid ""
+"Non-blocking I/O is fully supported on the Raw I/O level only.  If a raw "
+"object is in non-blocking mode and an operation would block, then "
+"``.read()`` and ``.readinto()`` return ``None``, while ``.write()`` "
+"returns 0.  In order to put an object in non-blocking mode, the user must"
+" extract the fileno and do it by hand."
+msgstr ""
+
+#: ../../pep-3116.txt:446
+msgid ""
+"At the Buffered I/O and Text I/O layers, if a read or write fails due a "
+"non-blocking condition, they raise an ``IOError`` with ``errno`` set to "
+"``EAGAIN``."
+msgstr ""
+
+#: ../../pep-3116.txt:450
+msgid ""
+"Originally, we considered propagating up the Raw I/O behavior, but many "
+"corner cases and problems were raised.  To address these issues, "
+"significant changes would need to have been made to the Buffered I/O and "
+"Text I/O layers.  For example, what should ``.flush()`` do on a Buffered "
+"non-blocking object?  How would the user instruct the object to \"Write "
+"as much as you can from your buffer, but don't block\"?  A non-blocking "
+"``.flush()`` that doesn't necessarily flush all available data is "
+"counter-intuitive.  Since non-blocking and blocking objects would have "
+"such different semantics at these layers, it was agreed to abandon "
+"efforts to combine them into a single type."
+msgstr ""
+
+#: ../../pep-3116.txt:463
+msgid "The ``open()`` Built-in Function"
+msgstr ""
+
+#: ../../pep-3116.txt:465
+msgid ""
+"The ``open()`` built-in function is specified by the following pseudo-"
+"code::"
+msgstr ""
+
+#: ../../pep-3116.txt:522
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3116.txt:524
+msgid "This document has been placed in the public domain."
+msgstr ""
+

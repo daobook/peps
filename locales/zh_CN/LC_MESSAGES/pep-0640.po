@@ -1,0 +1,357 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0640.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0640.rst:1
+msgid "640"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0640.rst:2
+msgid "Unused variable syntax"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0640.rst:3
+msgid "Thomas Wouters <thomas@python.org>"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0640.rst:4
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0640.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0640.rst:7
+msgid "04-Oct-2020"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0640.rst:8
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0640.rst:9
+msgid "19-Oct-2020"
+msgstr ""
+
+#: ../../pep-0640.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0640.rst:10
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/message/SQC2FTLFV5A7DV7RCEAR2I2IKJKGK7W3/"
+msgstr ""
+
+#: ../../pep-0640.rst:13
+msgid "Rejection Note"
+msgstr ""
+
+#: ../../pep-0640.rst:15
+msgid ""
+"Rejected by the Steering Council: https://mail.python.org/archives/list"
+"/python-dev@python.org/message/SQC2FTLFV5A7DV7RCEAR2I2IKJKGK7W3/"
+msgstr ""
+
+#: ../../pep-0640.rst:19
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0640.rst:21
+msgid ""
+"This PEP proposes new syntax for *unused variables*, providing a pseudo-"
+"name that can be assigned to but not otherwise used. The assignment "
+"doesn't actually happen, and the value is discarded instead."
+msgstr ""
+
+#: ../../pep-0640.rst:26
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0640.rst:28
+msgid ""
+"In Python it is somewhat common to need to do an assignment without "
+"actually needing the result. Conventionally, people use either ``\"_\"`` "
+"or a name such as ``\"unused\"`` (or with ``\"unused\"`` as a prefix) for"
+" this. It's most common in *unpacking assignments*::"
+msgstr ""
+
+#: ../../pep-0640.rst:36
+msgid "It's also used in ``for`` loops and comprehensions::"
+msgstr ""
+
+#: ../../pep-0640.rst:41
+msgid ""
+"The use of ``\"_\"`` in these cases is probably the most common, but it "
+"potentially conflicts with the use of ``\"_\"`` in internationalization, "
+"where a call like gettext.gettext() is bound to ``\"_\"`` and used to "
+"mark strings for translation."
+msgstr ""
+
+#: ../../pep-0640.rst:46
+msgid ""
+"In the proposal to add Pattern Matching to Python (originally PEP 622, "
+"now split into PEP 634, PEP 635 and PEP 636), ``\"_\"`` has an "
+"*additional* special meaning. It is a wildcard pattern, used in places "
+"where variables could be assigned to, to indicate anything should be "
+"matched but not assigned to anything. The choice of ``\"_\"`` there "
+"matches the use of ``\"_\"`` in other languages, but the semantic "
+"difference with ``\"_\"`` elsewhere in Python is significant."
+msgstr ""
+
+#: ../../pep-0640.rst:54
+msgid ""
+"This PEP proposes to allow a special token, ``\"?\"``, to be used instead"
+" of any valid name in assignment. This has most of the benefits of "
+"``\"_\"`` without affecting other uses of that otherwise regular "
+"variable. Allowing the use of the same wildcard pattern would make "
+"pattern matching and unpacking assignment more consistent with each "
+"other."
+msgstr ""
+
+#: ../../pep-0640.rst:61
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0640.rst:63
+msgid ""
+"Marking certain variables as unused is a useful tool, as it helps clarity"
+" of purpose of the code. It makes it obvious to readers of the code as "
+"well as automated linters, that a particular variable is *intentionally* "
+"unused."
+msgstr ""
+
+#: ../../pep-0640.rst:67
+msgid ""
+"However, despite the convention, ``\"_\"`` is not a special variable. The"
+" value is still assigned to, the object it refers to is still kept alive "
+"until the end of the scope, and it can still be used. Nor is the use of "
+"``\"_\"`` for unused variables entirely ubiquitous, since it conflicts "
+"with conventional internationalization, it isn't obvious that it is a "
+"regular variable, and it isn't as obviously unused like a variable named "
+"``\"unused\"``."
+msgstr ""
+
+#: ../../pep-0640.rst:75
+msgid ""
+"In the Pattern Matching proposal, the use of ``\"_\"`` for wildcard "
+"patterns side-steps the problems of ``\"_\"`` for unused variables by "
+"virtue of it being in a separate scope. The only conflict it has with "
+"internationalization is one of potential confusion, it will not actually "
+"interact with uses of a global variable called ``\"_\"``. However, the "
+"special-casing of ``\"_\"`` for this wildcard pattern purpose is still "
+"problematic: the different semantics *and meaning* of ``\"_\"`` inside "
+"pattern matching and outside of it means a break in consistency in "
+"Python."
+msgstr ""
+
+#: ../../pep-0640.rst:84
+msgid ""
+"Introducing ``\"?\"`` as special syntax for unused variables *both inside"
+" and outside pattern matching* allows us to retain that consistency. It "
+"avoids the conflict with internationalization *or any other uses of _ as "
+"a variable*. It makes unpacking assignment align more closely with "
+"pattern matching, making it easier to explain pattern matching as an "
+"extension of unpacking assignment."
+msgstr ""
+
+#: ../../pep-0640.rst:91
+msgid ""
+"In terms of code readability, using a special token makes it easier to "
+"find out what it means (``\"what does question mark in Python do\"`` "
+"versus ``\"why is my _ variable not getting assigned to\"``), and makes "
+"it more obvious that the actual intent is for the value to be unused -- "
+"since it is entirely impossible to use it."
+msgstr ""
+
+#: ../../pep-0640.rst:98
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0640.rst:100
+msgid "A new token is introduced, ``\"?\"``, or ``token.QMARK``."
+msgstr ""
+
+#: ../../pep-0640.rst:102
+msgid ""
+"The grammar is modified to allow ``\"?\"`` in assignment contexts "
+"(``star_atom`` and ``t_atom`` in the current grammar), creating a "
+"``Name`` AST node with identifier set to NULL."
+msgstr ""
+
+#: ../../pep-0640.rst:106
+msgid ""
+"The AST is modified to allow the ``Name`` expression's identifier to be "
+"optional (it is currently required). The identifier being empty would "
+"only be allowed in a ``STORE`` context."
+msgstr ""
+
+#: ../../pep-0640.rst:110
+msgid ""
+"In CPython, the bytecode compiler is modified to emit ``POP_TOP`` instead"
+" of ``STORE_NAME`` for ``Name`` nodes with no identifier. Other uses of "
+"the ``Name`` node are updated to handle the identifier being empty, as "
+"appropriate."
+msgstr ""
+
+#: ../../pep-0640.rst:115
+msgid ""
+"The uses of the modified grammar nodes encompass at least the following "
+"forms of assignment::"
+msgstr ""
+
+#: ../../pep-0640.rst:126
+msgid ""
+"The use of a single ``\"?\"``, not in an unpacking context, is allowed in"
+" normal assignment and the ``with`` statement. It doesn't really make "
+"sense on its own, and it is possible to disallow those specific cases. "
+"However, ``for ? in range(3)`` clearly has its uses, so for consistency "
+"reasons if nothing else it seems more sensible to allow the use of the "
+"single ``\"?\"`` in other cases."
+msgstr ""
+
+#: ../../pep-0640.rst:133
+msgid ""
+"Using ``\"?\"`` in augmented assignment (``? *= 2``) is not allowed, "
+"since ``\"?\"`` can only be used for assignment. Having multiple "
+"occurrences of ``\"?\"`` is valid, just like when assigning to names, and"
+" the assignments do not interfere with each other."
+msgstr ""
+
+#: ../../pep-0640.rst:139
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0640.rst:141
+msgid ""
+"Introducing a new token means there are no backward compatibility "
+"concerns. No valid syntax changes meaning."
+msgstr ""
+
+#: ../../pep-0640.rst:144
+msgid ""
+"``\"?\"`` is not considered an identifier, so ``str.isidentifier()`` does"
+" not change."
+msgstr ""
+
+#: ../../pep-0640.rst:147
+msgid ""
+"The AST does change in an incompatible way, as the identifier of a Name "
+"token can now be empty. Code using the AST will have to be adjusted "
+"accordingly."
+msgstr ""
+
+#: ../../pep-0640.rst:152
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0640.rst:154
+msgid ""
+"``\"?\"`` can be introduced along with unpacking assignment, explaining "
+"it is special syntax for 'unused' and mentioning that it can also be used"
+" in other places. Alternatively, it could be introduced as part of an "
+"explanation on assignment in ``for`` loops, showing an example where the "
+"loop variable is unused."
+msgstr ""
+
+#: ../../pep-0640.rst:160
+msgid ""
+"PEP 636 discusses how to teach ``\"_\"``, and can simply replace "
+"``\"_\"`` with ``\"?\"``, perhaps noting that ``\"?\"`` is similarly "
+"usable in other contexts."
+msgstr ""
+
+#: ../../pep-0640.rst:164
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0640.rst:166
+msgid ""
+"A prototype implementation exists at "
+"<https://github.com/Yhg1s/cpython/tree/nonassign>."
+msgstr ""
+
+#: ../../pep-0640.rst:170
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0640.rst:174
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0640.rst:176
+msgid "Should ``\"?\"`` be allowed in the following contexts::"
+msgstr ""
+
+#: ../../pep-0640.rst:203
+msgid ""
+"Some of these may seem to make sense from a consistency point of view, "
+"but practical uses are limited and dubious. Type annotations on ``\"?\"``"
+" and using it with ``except`` and ``with`` do not seem to make any sense."
+" In the reference implementation, ``except`` is not supported (the "
+"existing syntax only allows a name) but ``with`` is (by virtue of the "
+"existing syntax supporting unpacking assignment)."
+msgstr ""
+
+#: ../../pep-0640.rst:210
+msgid "Should this PEP be accepted even if pattern matching is rejected?"
+msgstr ""
+
+#: ../../pep-0640.rst:213
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0640.rst:215
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

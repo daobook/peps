@@ -1,0 +1,347 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0378.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0378.txt:1
+msgid "378"
+msgstr ""
+
+#: ../../pep-0378.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0378.txt:2
+msgid "Format Specifier for Thousands Separator"
+msgstr ""
+
+#: ../../pep-0378.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0378.txt:5
+msgid "Raymond Hettinger <python@rcn.com>"
+msgstr ""
+
+#: ../../pep-0378.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0378.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0378.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0378.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0378.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0378.txt:9 ../../pep-0378.txt:11
+msgid "12-Mar-2009"
+msgstr ""
+
+#: ../../pep-0378.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0378.txt:10
+msgid "2.7, 3.1"
+msgstr ""
+
+#: ../../pep-0378.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0378.txt:15
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0378.txt:17
+msgid ""
+"Provide a simple, non-locale aware way to format a number with a "
+"thousands separator."
+msgstr ""
+
+#: ../../pep-0378.txt:20
+msgid ""
+"Adding thousands separators is one of the simplest ways to humanize a "
+"program's output, improving its professional appearance and readability."
+msgstr ""
+
+#: ../../pep-0378.txt:24
+msgid ""
+"In the finance world, output with thousands separators is the norm. "
+"Finance users and non-professional programmers find the locale approach "
+"to be frustrating, arcane and non-obvious."
+msgstr ""
+
+#: ../../pep-0378.txt:28
+msgid ""
+"The locale module presents two other challenges.  First, it is a global "
+"setting and not suitable for multi-threaded apps that need to serve-up "
+"requests in multiple locales.  Second, the name of a relevant locale "
+"(such as \"de_DE\") can vary from platform to platform or may not be "
+"defined at all.  The docs for the locale module describe these and `many "
+"other challenges`_ in detail."
+msgstr ""
+
+#: ../../pep-0378.txt:38
+msgid ""
+"It is not the goal to replace the locale module, to perform "
+"internationalization tasks, or accommodate every possible convention.  "
+"Such tasks are better suited to robust tools like `Babel`_. Instead, the "
+"goal is to make a common, everyday task easier for many users."
+msgstr ""
+
+#: ../../pep-0378.txt:48
+msgid "Main Proposal (from Nick Coghlan, originally called Proposal I)"
+msgstr ""
+
+#: ../../pep-0378.txt:50
+msgid "A comma will be added to the format() specifier mini-language::"
+msgstr ""
+
+#: ../../pep-0378.txt:54
+msgid ""
+"The ',' option indicates that commas should be included in the output as "
+"a thousands separator. As with locales which do not use a period as the "
+"decimal point, locales which use a different convention for digit "
+"separation will need to use the locale module to obtain appropriate "
+"formatting."
+msgstr ""
+
+#: ../../pep-0378.txt:60
+msgid ""
+"The proposal works well with floats, ints, and decimals. It also allows "
+"easy substitution for other separators. For example::"
+msgstr ""
+
+#: ../../pep-0378.txt:66
+msgid ""
+"This technique is completely general but it is awkward in the one case "
+"where the commas and periods need to be swapped::"
+msgstr ""
+
+#: ../../pep-0378.txt:71
+msgid ""
+"The *width* argument means the total length including the commas and "
+"decimal point::"
+msgstr ""
+
+#: ../../pep-0378.txt:77
+msgid ""
+"The ',' option is defined as shown above for types 'd', 'e', 'f', 'g', "
+"'E', 'G', '%', 'F' and ''. To allow future extensions, it is undefined "
+"for other types: binary, octal, hex, character, etc."
+msgstr ""
+
+#: ../../pep-0378.txt:82
+msgid ""
+"This proposal has the virtue of being simpler than the alternative "
+"proposal but is much less flexible and meets the needs of fewer users "
+"right out of the box.  It is expected that some other solution will arise"
+" for specifying alternative separators."
+msgstr ""
+
+#: ../../pep-0378.txt:89
+msgid "Current Version of the Mini-Language"
+msgstr ""
+
+#: ../../pep-0378.txt:91
+msgid "`Python 2.6 docs`_"
+msgstr ""
+
+#: ../../pep-0378.txt:95
+msgid "PEP 3101 Advanced String Formatting"
+msgstr ""
+
+#: ../../pep-0378.txt:99
+msgid "Research into what Other Languages Do"
+msgstr ""
+
+#: ../../pep-0378.txt:101
+msgid ""
+"Scanning the web, I've found that thousands separators are usually one of"
+" COMMA, DOT, SPACE, APOSTROPHE or UNDERSCORE."
+msgstr ""
+
+#: ../../pep-0378.txt:104
+msgid ""
+"`C-Sharp`_ provides both styles (picture formatting and type specifiers)."
+" The type specifier approach is locale aware.  The picture formatting "
+"only offers a COMMA as a thousands separator::"
+msgstr ""
+
+#: ../../pep-0378.txt:113
+msgid ""
+"`Common Lisp`_ uses a COLON before the ``~D`` decimal type specifier to "
+"emit a COMMA as a thousands separator.  The  general form of ``~D`` is "
+"``~mincol,padchar,commachar,commaintervalD``.  The *padchar* defaults to "
+"SPACE.  The *commachar* defaults to COMMA.  The *commainterval* defaults "
+"to three."
+msgstr ""
+
+#: ../../pep-0378.txt:126
+msgid "The `ADA language`_ allows UNDERSCORES in its numeric literals."
+msgstr ""
+
+#: ../../pep-0378.txt:130
+msgid ""
+"Visual Basic and its brethren (like `MS Excel`_) use a completely "
+"different style and have ultra-flexible custom format specifiers like::"
+msgstr ""
+
+#: ../../pep-0378.txt:138
+msgid "`COBOL`_ uses picture clauses like::"
+msgstr ""
+
+#: ../../pep-0378.txt:144
+msgid ""
+"Java offers a `Decimal.Format Class`_ that uses picture patterns (one for"
+" positive numbers and an optional one for negatives) such as: "
+"``\"#,##0.00;(#,##0.00)\"``. It allows arbitrary groupings including "
+"hundreds and ten-thousands and uneven groupings.  The special pattern "
+"characters are non-localized (using a DOT for a decimal separator and a "
+"COMMA for a grouping separator).  The user can supply an alternate set of"
+" symbols using the formatter's *DecimalFormatSymbols* object."
+msgstr ""
+
+#: ../../pep-0378.txt:156
+msgid "Alternative Proposal (from Eric Smith, originally called Proposal II)"
+msgstr ""
+
+#: ../../pep-0378.txt:158
+msgid ""
+"Make both the thousands separator and decimal separator user specifiable "
+"but not locale aware.  For simplicity, limit the choices to a COMMA, DOT,"
+" SPACE, APOSTROPHE or UNDERSCORE. The SPACE can be either U+0020 or "
+"U+00A0."
+msgstr ""
+
+#: ../../pep-0378.txt:163
+msgid ""
+"Whenever a separator is followed by a precision, it is a decimal "
+"separator and an optional separator preceding it is a thousands "
+"separator.  When the precision is absent, a lone specifier means a "
+"thousands separator::"
+msgstr ""
+
+#: ../../pep-0378.txt:170
+msgid "Examples::"
+msgstr ""
+
+#: ../../pep-0378.txt:180
+msgid ""
+"This proposal meets mosts needs, but it comes at the expense of taking a "
+"bit more effort to parse.  Not every possible convention is covered, but "
+"at least one of the options (spaces or underscores) should be readable, "
+"understandable, and useful to folks from many diverse backgrounds."
+msgstr ""
+
+#: ../../pep-0378.txt:186
+msgid ""
+"As shown in the examples, the *width* argument means the total length "
+"including the thousands separators and decimal separators."
+msgstr ""
+
+#: ../../pep-0378.txt:189
+msgid "No change is proposed for the locale module."
+msgstr ""
+
+#: ../../pep-0378.txt:191
+msgid ""
+"The thousands separator is defined as shown above for types 'd', 'e', "
+"'f', 'g', '%', 'E', 'G' and 'F'. To allow future extensions, it is "
+"undefined for other types: binary, octal, hex, character, etc."
+msgstr ""
+
+#: ../../pep-0378.txt:196
+msgid ""
+"The drawback to this alternative proposal is the difficulty of mentally "
+"parsing whether a single separator is a thousands separator or decimal "
+"separator.  Perhaps it is too arcane to link the decimal separator with "
+"the precision specifier."
+msgstr ""
+
+#: ../../pep-0378.txt:203
+msgid "Commentary"
+msgstr ""
+
+#: ../../pep-0378.txt:205
+msgid ""
+"Some commenters do not like the idea of format strings at all and find "
+"them to be unreadable.  Suggested alternatives include the COBOL style "
+"PICTURE approach or a convenience function with keyword arguments for "
+"every possible combination."
+msgstr ""
+
+#: ../../pep-0378.txt:210
+msgid ""
+"Some newsgroup respondants think there is no place for any scripts that "
+"are not internationalized and that it is a step backwards to provide a "
+"simple way to hardwire a particular choice (thus reducing incentive to "
+"use a locale sensitive approach)."
+msgstr ""
+
+#: ../../pep-0378.txt:215
+msgid ""
+"Another thought is that embedding some particular convention in "
+"individual format strings makes it hard to change that convention later."
+"  No workable alternative was suggested but the general idea is to set "
+"the convention once and have it apply everywhere (others commented that "
+"locale already provides a way to do this)."
+msgstr ""
+
+#: ../../pep-0378.txt:221
+msgid ""
+"There are some precedents for grouping digits in the fractional part of a"
+" floating point number, but this PEP does not venture into that "
+"territory.  Only digits to the left of the decimal point are grouped.  "
+"This does not preclude future extensions; it just focuses on a single, "
+"generally useful extension to the formatting language."
+msgstr ""
+
+#: ../../pep-0378.txt:227
+msgid ""
+"James Knight observed that Indian/Pakistani numbering systems group by "
+"hundreds.   Ben Finney noted that Chinese group by ten-thousands.  Eric "
+"Smith pointed-out that these are already handled by the \"n\" specifier "
+"in the locale module (albeit only for integers).  This PEP does not "
+"attempt to support all of those possibilities.  It focuses on a single, "
+"relatively common grouping convention that offers a quick way to improve "
+"readability in many (though not all) contexts."
+msgstr ""
+
+#: ../../pep-0378.txt:238
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0378.txt:240
+msgid "This document has been placed in the public domain."
+msgstr ""
+

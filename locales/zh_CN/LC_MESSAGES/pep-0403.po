@@ -1,0 +1,644 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0403.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0403.txt:1
+msgid "403"
+msgstr ""
+
+#: ../../pep-0403.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0403.txt:2
+msgid "General purpose decorator clause (aka \"@in\" clause)"
+msgstr ""
+
+#: ../../pep-0403.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0403.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0403.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0403.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0403.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0403.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0403.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0403.txt:9
+msgid "13-Oct-2011"
+msgstr ""
+
+#: ../../pep-0403.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0403.txt:10
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0403.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0403.txt:11
+msgid "2011-10-13"
+msgstr ""
+
+#: ../../pep-0403.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0403.txt:17
+msgid ""
+"This PEP proposes the addition of a new ``@in`` decorator clause that "
+"makes it possible to override the name binding step of a function or "
+"class definition."
+msgstr ""
+
+#: ../../pep-0403.txt:21
+msgid ""
+"The new clause accepts a single simple statement that can make a forward "
+"reference to decorated function or class definition."
+msgstr ""
+
+#: ../../pep-0403.txt:24
+msgid ""
+"This new clause is designed to be used whenever a \"one-shot\" function "
+"or class is needed, and placing the function or class definition before "
+"the statement that uses it actually makes the code harder to read. It "
+"also avoids any name shadowing concerns by making sure the new name is "
+"visible only to the statement in the ``@in`` clause."
+msgstr ""
+
+#: ../../pep-0403.txt:30
+msgid ""
+"This PEP is based heavily on many of the ideas in PEP 3150 (Statement "
+"Local Namespaces) so some elements of the rationale will be familiar to "
+"readers of that PEP. Both PEPs remain deferred for the time being, "
+"primarily due to the lack of compelling real world use cases in either "
+"PEP."
+msgstr ""
+
+#: ../../pep-0403.txt:37
+msgid "Basic Examples"
+msgstr ""
+
+#: ../../pep-0403.txt:39
+msgid ""
+"Before diving into the long history of this problem and the detailed "
+"rationale for this specific proposed solution, here are a few simple "
+"examples of the kind of code it is designed to simplify."
+msgstr ""
+
+#: ../../pep-0403.txt:43
+msgid "As a trivial example, a weakref callback could be defined as follows::"
+msgstr ""
+
+#: ../../pep-0403.txt:49
+msgid ""
+"This contrasts with the current (conceptually) \"out of order\" syntax "
+"for this operation::"
+msgstr ""
+
+#: ../../pep-0403.txt:57
+msgid ""
+"That structure is OK when you're using the callable multiple times, but "
+"it's irritating to be forced into it for one-off operations."
+msgstr ""
+
+#: ../../pep-0403.txt:60
+msgid ""
+"If the repetition of the name seems especially annoying, then a throwaway"
+" name like ``f`` can be used instead::"
+msgstr ""
+
+#: ../../pep-0403.txt:68
+msgid ""
+"Similarly, a sorted operation on a particularly poorly defined type could"
+" now be defined as::"
+msgstr ""
+
+#: ../../pep-0403.txt:78
+msgid "Rather than::"
+msgstr ""
+
+#: ../../pep-0403.txt:88
+msgid ""
+"And early binding semantics in a list comprehension could be attained "
+"via::"
+msgstr ""
+
+#: ../../pep-0403.txt:96
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0403.txt:98
+msgid ""
+"This PEP proposes the addition of a new ``@in`` clause that is a variant "
+"of the existing class and function decorator syntax."
+msgstr ""
+
+#: ../../pep-0403.txt:101
+msgid ""
+"The new ``@in`` clause precedes the decorator lines, and allows forward "
+"references to the trailing function or class definition."
+msgstr ""
+
+#: ../../pep-0403.txt:104
+msgid ""
+"The trailing function or class definition is always named - the name of "
+"the trailing definition is then used to make the forward reference from "
+"the ``@in`` clause."
+msgstr ""
+
+#: ../../pep-0403.txt:108
+msgid ""
+"The ``@in`` clause is allowed to contain any simple statement (including "
+"those that don't make any sense in that context, such as ``pass`` - while"
+" such code would be legal, there wouldn't be any point in writing it). "
+"This permissive structure is easier to define and easier to explain, but "
+"a more restrictive approach that only permits operations that \"make "
+"sense\" would also be possible (see PEP 3150 for a list of possible "
+"candidates)."
+msgstr ""
+
+#: ../../pep-0403.txt:115
+msgid ""
+"The ``@in`` clause will not create a new scope - all name binding "
+"operations aside from the trailing function or class definition will "
+"affect the containing scope."
+msgstr ""
+
+#: ../../pep-0403.txt:119
+msgid ""
+"The name used in the trailing function or class definition is only "
+"visible from the associated ``@in`` clause, and behaves as if it was an "
+"ordinary variable defined in that scope. If any nested scopes are created"
+" in either the ``@in`` clause or the trailing function or class "
+"definition, those scopes will see the trailing function or class "
+"definition rather than any other bindings for that name in the containing"
+" scope."
+msgstr ""
+
+#: ../../pep-0403.txt:126
+msgid ""
+"In a very real sense, this proposal is about making it possible to "
+"override the implicit \"name = <defined function or class>\" name binding"
+" operation that is part of every function or class definition, "
+"specifically in those cases where the local name binding isn't actually "
+"needed."
+msgstr ""
+
+#: ../../pep-0403.txt:131
+msgid "Under this PEP, an ordinary class or function definition::"
+msgstr ""
+
+#: ../../pep-0403.txt:138
+msgid "can be explained as being roughly equivalent to::"
+msgstr ""
+
+#: ../../pep-0403.txt:145
+msgid "Syntax Change"
+msgstr ""
+
+#: ../../pep-0403.txt:147
+msgid "Syntactically, only one new grammar rule is needed::"
+msgstr ""
+
+#: ../../pep-0403.txt:151
+msgid "Grammar: http://hg.python.org/cpython/file/default/Grammar/Grammar"
+msgstr ""
+
+#: ../../pep-0403.txt:155
+msgid "Design Discussion"
+msgstr ""
+
+#: ../../pep-0403.txt:158
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0403.txt:160
+msgid ""
+"The question of \"multi-line lambdas\" has been a vexing one for many "
+"Python users for a very long time, and it took an exploration of Ruby's "
+"block functionality for me to finally understand why this bugs people so "
+"much: Python's demand that the function be named and introduced before "
+"the operation that needs it breaks the developer's flow of thought. They "
+"get to a point where they go \"I need a one-shot operation that does "
+"<X>\", and instead of being able to just *say* that directly, they "
+"instead have to back up, name a function to do <X>, then call that "
+"function from the operation they actually wanted to do in the first "
+"place. Lambda expressions can help sometimes, but they're no substitute "
+"for being able to use a full suite."
+msgstr ""
+
+#: ../../pep-0403.txt:172
+msgid ""
+"Ruby's block syntax also heavily inspired the style of the solution in "
+"this PEP, by making it clear that even when limited to *one* anonymous "
+"function per statement, anonymous functions could still be incredibly "
+"useful. Consider how many constructs Python has where one expression is "
+"responsible for the bulk of the heavy lifting:"
+msgstr ""
+
+#: ../../pep-0403.txt:178
+msgid "comprehensions, generator expressions, map(), filter()"
+msgstr ""
+
+#: ../../pep-0403.txt:179
+msgid "key arguments to sorted(), min(), max()"
+msgstr ""
+
+#: ../../pep-0403.txt:180
+msgid "partial function application"
+msgstr ""
+
+#: ../../pep-0403.txt:181
+msgid "provision of callbacks (e.g. for weak references or asynchronous IO)"
+msgstr ""
+
+#: ../../pep-0403.txt:182
+msgid "array broadcast operations in NumPy"
+msgstr ""
+
+#: ../../pep-0403.txt:184
+msgid ""
+"However, adopting Ruby's block syntax directly won't work for Python, "
+"since the effectiveness of Ruby's blocks relies heavily on various "
+"conventions in the way functions are *defined* (specifically, using "
+"Ruby's ``yield`` syntax to call blocks directly and the ``&arg`` "
+"mechanism to accept a block as a function's final argument)."
+msgstr ""
+
+#: ../../pep-0403.txt:190
+msgid ""
+"Since Python has relied on named functions for so long, the signatures of"
+" APIs that accept callbacks are far more diverse, thus requiring a "
+"solution that allows one-shot functions to be slotted in at the "
+"appropriate location."
+msgstr ""
+
+#: ../../pep-0403.txt:194
+msgid ""
+"The approach taken in this PEP is to retain the requirement to name the "
+"function explicitly, but allow the relative order of the definition and "
+"the statement that references it to be changed to match the developer's "
+"flow of thought. The rationale is essentially the same as that used when "
+"introducing decorators, but covering a broader set of applications."
+msgstr ""
+
+#: ../../pep-0403.txt:202
+msgid "Relation to PEP 3150"
+msgstr ""
+
+#: ../../pep-0403.txt:204
+msgid ""
+"PEP 3150 (Statement Local Namespaces) describes its primary motivation as"
+" being to elevate ordinary assignment statements to be on par with "
+"``class`` and ``def`` statements where the name of the item to be defined"
+" is presented to the reader in advance of the details of how the value of"
+" that item is calculated. This PEP achieves the same goal in a different "
+"way, by allowing the simple name binding of a standard function "
+"definition to be replaced with something else (like assigning the result "
+"of the function to a value)."
+msgstr ""
+
+#: ../../pep-0403.txt:212
+msgid ""
+"Despite having the same author, the two PEPs are in direct competition "
+"with each other. PEP 403 represents a minimalist approach that attempts "
+"to achieve useful functionality with a minimum of change from the status "
+"quo. This PEP instead aims for a more flexible standalone statement "
+"design, which requires a larger degree of change to the language."
+msgstr ""
+
+#: ../../pep-0403.txt:218
+msgid ""
+"Note that where PEP 403 is better suited to explaining the behaviour of "
+"generator expressions correctly, this PEP is better able to explain the "
+"behaviour of decorator clauses in general. Both PEPs support adequate "
+"explanations for the semantics of container comprehensions."
+msgstr ""
+
+#: ../../pep-0403.txt:225
+msgid "Keyword Choice"
+msgstr ""
+
+#: ../../pep-0403.txt:227
+msgid ""
+"The proposal definitely requires *some* kind of prefix to avoid parsing "
+"ambiguity and backwards compatibility problems with existing constructs. "
+"It also needs to be clearly highlighted to readers, since it declares "
+"that the following piece of code is going to be executed only after the "
+"trailing function or class definition has been executed."
+msgstr ""
+
+#: ../../pep-0403.txt:233
+msgid ""
+"The ``in`` keyword was chosen as an existing keyword that can be used to "
+"denote the concept of a forward reference."
+msgstr ""
+
+#: ../../pep-0403.txt:236
+msgid ""
+"The ``@`` prefix was included in order to exploit the fact that Python "
+"programmers are already used to decorator syntax as an indication of out "
+"of order execution, where the function or class is actually defined "
+"*first* and then decorators are applied in reverse order."
+msgstr ""
+
+#: ../../pep-0403.txt:241
+msgid ""
+"For functions, the construct is intended to be read as \"in <this "
+"statement that references NAME> define NAME as a function that does "
+"<operation>\"."
+msgstr ""
+
+#: ../../pep-0403.txt:244
+msgid ""
+"The mapping to English prose isn't as obvious for the class definition "
+"case, but the concept remains the same."
+msgstr ""
+
+#: ../../pep-0403.txt:249
+msgid "Better Debugging Support for Functions and Classes with Short Names"
+msgstr ""
+
+#: ../../pep-0403.txt:251
+msgid ""
+"One of the objections to widespread use of lambda expressions is that "
+"they have a negative effect on traceback intelligibility and other "
+"aspects of introspection. Similar objections are raised regarding "
+"constructs that promote short, cryptic function names (including this "
+"one, which requires that the name of the trailing definition be supplied "
+"at least twice, encouraging the use of shorthand placeholder names like "
+"``f``)."
+msgstr ""
+
+#: ../../pep-0403.txt:258
+msgid ""
+"However, the introduction of qualified names in PEP 3155 means that even "
+"anonymous classes and functions will now have different representations "
+"if they occur in different scopes. For example::"
+msgstr ""
+
+#: ../../pep-0403.txt:268
+msgid ""
+"Anonymous functions (or functions that share a name) within the *same* "
+"scope will still share representations (aside from the object ID), but "
+"this is still a major improvement over the historical situation where "
+"everything *except* the object ID was identical."
+msgstr ""
+
+#: ../../pep-0403.txt:274
+msgid "Possible Implementation Strategy"
+msgstr ""
+
+#: ../../pep-0403.txt:276
+msgid ""
+"This proposal has at least one titanic advantage over PEP 3150: "
+"implementation should be relatively straightforward."
+msgstr ""
+
+#: ../../pep-0403.txt:279
+msgid ""
+"The ``@in`` clause will be included in the AST for the associated "
+"function or class definition and the statement that references it. When "
+"the ``@in`` clause is present, it will be emitted in place of the local "
+"name binding operation normally implied by a function or class "
+"definition."
+msgstr ""
+
+#: ../../pep-0403.txt:284
+msgid ""
+"The one potentially tricky part is changing the meaning of the references"
+" to the statement local function or namespace while within the scope of "
+"the ``in`` statement, but that shouldn't be too hard to address by "
+"maintaining some additional state within the compiler (it's much easier "
+"to handle this for a single name than it is for an unknown number of "
+"names in a full nested suite)."
+msgstr ""
+
+#: ../../pep-0403.txt:293
+msgid "Explaining Container Comprehensions and Generator Expressions"
+msgstr ""
+
+#: ../../pep-0403.txt:295
+msgid ""
+"One interesting feature of the proposed construct is that it can be used "
+"as a primitive to explain the scoping and execution order semantics of "
+"both generator expressions and container comprehensions::"
+msgstr ""
+
+#: ../../pep-0403.txt:313
+msgid ""
+"The important point in this expansion is that it explains why "
+"comprehensions appear to misbehave at class scope: only the outermost "
+"iterator is evaluated at class scope, while all predicates, nested "
+"iterators and value expressions are evaluated inside a nested scope."
+msgstr ""
+
+#: ../../pep-0403.txt:318
+msgid "An equivalent expansion is possible for generator expressions::"
+msgstr ""
+
+#: ../../pep-0403.txt:334
+msgid "More Examples"
+msgstr ""
+
+#: ../../pep-0403.txt:336
+msgid ""
+"Calculating attributes without polluting the local namespace (from "
+"os.py)::"
+msgstr ""
+
+#: ../../pep-0403.txt:350
+msgid "Loop early binding::"
+msgstr ""
+
+#: ../../pep-0403.txt:367
+msgid "A trailing class can be used as a statement local namespace::"
+msgstr ""
+
+#: ../../pep-0403.txt:375
+msgid ""
+"A function can be bound directly to a location which isn't a valid "
+"identifier::"
+msgstr ""
+
+#: ../../pep-0403.txt:382
+msgid "Constructs that verge on decorator abuse can be eliminated::"
+msgstr ""
+
+#: ../../pep-0403.txt:396
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0403.txt:398
+msgid "None as yet."
+msgstr ""
+
+#: ../../pep-0403.txt:402
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0403.txt:404
+msgid ""
+"Huge thanks to Gary Bernhardt for being blunt in pointing out that I had "
+"no idea what I was talking about in criticising Ruby's blocks, kicking "
+"off a rather enlightening process of investigation."
+msgstr ""
+
+#: ../../pep-0403.txt:410
+msgid "Rejected Concepts"
+msgstr ""
+
+#: ../../pep-0403.txt:412
+msgid ""
+"To avoid retreading previously covered ground, some rejected alternatives"
+" are documented in this section."
+msgstr ""
+
+#: ../../pep-0403.txt:417
+msgid "Omitting the decorator prefix character"
+msgstr ""
+
+#: ../../pep-0403.txt:419
+msgid ""
+"Earlier versions of this proposal omitted the ``@`` prefix. However, "
+"without that prefix, the bare ``in`` keyword didn't associate the clause "
+"strongly enough with the subsequent function or class definition. Reusing"
+" the decorator prefix and explicitly characterising the new construct as "
+"a kind of decorator clause is intended to help users link the two "
+"concepts and see them as two variants of the same idea."
+msgstr ""
+
+#: ../../pep-0403.txt:428
+msgid "Anonymous Forward References"
+msgstr ""
+
+#: ../../pep-0403.txt:430
+msgid ""
+"A previous incarnation of this PEP (see [1]_) proposed a syntax where the"
+" new clause was introduced with ``:`` and the forward reference was "
+"written using ``@``. Feedback on this variant was almost universally "
+"negative, as it was considered both ugly and excessively magical::"
+msgstr ""
+
+#: ../../pep-0403.txt:439
+msgid ""
+"A more recent variant always used ``...`` for forward references, along "
+"with genuinely anonymous function and class definitions. However, this "
+"degenerated quickly into a mass of unintelligible dots in more complex "
+"cases::"
+msgstr ""
+
+#: ../../pep-0403.txt:457
+msgid "Using a nested suite"
+msgstr ""
+
+#: ../../pep-0403.txt:459
+msgid ""
+"The problems with using a full nested suite are best described in PEP "
+"3150. It's comparatively difficult to implement properly, the scoping "
+"semantics are harder to explain and it creates quite a few situations "
+"where there are two ways to do it without clear guidelines for choosing "
+"between them (as almost any construct that can be expressed with ordinary"
+" imperative code could instead be expressed using a given statement). "
+"While the PEP does propose some new PEP 8 guidelines to help address that"
+" last problem, the difficulties in implementation are not so easily dealt"
+" with."
+msgstr ""
+
+#: ../../pep-0403.txt:468
+msgid ""
+"By contrast, the decorator inspired syntax in this PEP explicitly limits "
+"the new feature to cases where it should actually improve readability, "
+"rather than harming it. As in the case of the original introduction of "
+"decorators, the idea of this new syntax is that if it *can* be used (i.e."
+" the local name binding of the function is completely unnecessary) then "
+"it probably *should* be used."
+msgstr ""
+
+#: ../../pep-0403.txt:475
+msgid ""
+"Another possible variant of this idea is to keep the decorator based "
+"*semantics* of this PEP, while adopting the prettier syntax from PEP "
+"3150::"
+msgstr ""
+
+#: ../../pep-0403.txt:482
+msgid ""
+"There are a couple of problems with this approach. The main issue is that"
+" this syntax variant uses something that looks like a suite, but really "
+"isn't one. A secondary concern is that it's not clear how the compiler "
+"will know which name(s) in the leading expression are forward references "
+"(although that could potentially be addressed through a suitable "
+"definition of the suite-that-is-not-a-suite in the language grammar)."
+msgstr ""
+
+#: ../../pep-0403.txt:489
+msgid ""
+"However, a nested suite has not yet been ruled out completely. The latest"
+" version of PEP 3150 uses explicit forward reference and name binding "
+"schemes that greatly simplify the semantics of the statement, and it does"
+" offer the advantage of allowing the definition of arbitrary "
+"subexpressions rather than being restricted to a single function or class"
+" definition."
+msgstr ""
+
+#: ../../pep-0403.txt:498
+msgid "References"
+msgstr ""
+
+#: ../../pep-0403.txt:500
+msgid ""
+"Start of python-ideas thread: https://mail.python.org/pipermail/python-"
+"ideas/2011-October/012276.html"
+msgstr ""
+
+#: ../../pep-0403.txt:505
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0403.txt:507
+msgid "This document has been placed in the public domain."
+msgstr ""
+

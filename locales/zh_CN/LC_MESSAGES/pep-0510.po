@@ -1,0 +1,635 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0510.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0510.txt:1
+msgid "510"
+msgstr ""
+
+#: ../../pep-0510.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0510.txt:2
+msgid "Specialize functions with guards"
+msgstr ""
+
+#: ../../pep-0510.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0510.txt:5
+msgid "Victor Stinner <vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0510.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0510.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0510.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0510.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0510.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0510.txt:9
+msgid "04-Jan-2016"
+msgstr ""
+
+#: ../../pep-0510.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0510.txt:10
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0510.txt:14
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0510.txt:16
+msgid ""
+"This PEP was rejected by its author since the design didn't show any "
+"significant speedup, but also because of the lack of time to implement "
+"the most advanced and complex optimizations."
+msgstr ""
+
+#: ../../pep-0510.txt:22
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0510.txt:24
+msgid ""
+"Add functions to the Python C API to specialize pure Python functions: "
+"add specialized codes with guards. It allows to implement static "
+"optimizers respecting the Python semantics."
+msgstr ""
+
+#: ../../pep-0510.txt:30
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0510.txt:33
+msgid "Python semantics"
+msgstr ""
+
+#: ../../pep-0510.txt:35
+msgid ""
+"Python is hard to optimize because almost everything is mutable: builtin "
+"functions, function code, global variables, local variables, ... can be "
+"modified at runtime. Implement optimizations respecting the Python "
+"semantics requires to detect when \"something changes\", we will call "
+"these checks \"guards\"."
+msgstr ""
+
+#: ../../pep-0510.txt:41
+msgid ""
+"This PEP proposes to add a public API to the Python C API to add "
+"specialized codes with guards to a function. When the function is called,"
+" a specialized code is used if nothing changed, otherwise use the "
+"original bytecode."
+msgstr ""
+
+#: ../../pep-0510.txt:46
+msgid ""
+"Even if guards help to respect most parts of the Python semantics, it's "
+"hard to optimize Python without making subtle changes on the exact "
+"behaviour. CPython has a long history and many applications rely on "
+"implementation details. A compromise must be found between \"everything "
+"is mutable\" and performance."
+msgstr ""
+
+#: ../../pep-0510.txt:52
+msgid "Writing an optimizer is out of the scope of this PEP."
+msgstr ""
+
+#: ../../pep-0510.txt:56
+msgid "Why not a JIT compiler?"
+msgstr ""
+
+#: ../../pep-0510.txt:58
+msgid "There are multiple JIT compilers for Python actively developed:"
+msgstr ""
+
+#: ../../pep-0510.txt:60
+msgid "`PyPy <http://pypy.org/>`_"
+msgstr ""
+
+#: ../../pep-0510.txt:61
+msgid "`Pyston <https://github.com/dropbox/pyston>`_"
+msgstr ""
+
+#: ../../pep-0510.txt:62
+msgid "`Numba <http://numba.pydata.org/>`_"
+msgstr ""
+
+#: ../../pep-0510.txt:63
+msgid "`Pyjion <https://github.com/microsoft/pyjion>`_"
+msgstr ""
+
+#: ../../pep-0510.txt:65
+msgid ""
+"Numba is specific to numerical computation.  Pyston and Pyjion are still "
+"young.  PyPy is the most complete Python interpreter, it is generally "
+"faster than CPython in micro- and many macro-benchmarks and has a very "
+"good compatibility with CPython (it respects the Python semantics). There"
+" are still issues with Python JIT compilers which avoid them to be widely"
+" used instead of CPython."
+msgstr ""
+
+#: ../../pep-0510.txt:72
+msgid ""
+"Many popular libraries like numpy, PyGTK, PyQt, PySide and wxPython are "
+"implemented in C or C++ and use the Python C API. To have a small memory "
+"footprint and better performances, Python JIT compilers do not use "
+"reference counting to use a faster garbage collector, do not use C "
+"structures of CPython objects and manage memory allocations differently. "
+"PyPy has a ``cpyext`` module which emulates the Python C API but it has "
+"worse performances than CPython and does not support the full Python C "
+"API."
+msgstr ""
+
+#: ../../pep-0510.txt:81
+msgid ""
+"New features are first developed in CPython. In January 2016, the latest "
+"CPython stable version is 3.5, whereas PyPy only supports Python 2.7 and "
+"3.2, and Pyston only supports Python 2.7."
+msgstr ""
+
+#: ../../pep-0510.txt:85
+msgid ""
+"Even if PyPy has a very good compatibility with Python, some modules are "
+"still not compatible with PyPy: see `PyPy Compatibility Wiki "
+"<https://bitbucket.org/pypy/compatibility/wiki/Home>`_. The incomplete "
+"support of the Python C API is part of this problem. There are also "
+"subtle differences between PyPy and CPython like reference counting: "
+"object destructors are always called in PyPy, but can be called \"later\""
+" than in CPython. Using context managers helps to control when resources "
+"are released."
+msgstr ""
+
+#: ../../pep-0510.txt:94
+msgid ""
+"Even if PyPy is much faster than CPython in a wide range of benchmarks, "
+"some users still report worse performances than CPython on some specific "
+"use cases or unstable performances."
+msgstr ""
+
+#: ../../pep-0510.txt:98
+msgid ""
+"When Python is used as a scripting program for programs running less than"
+" 1 minute, JIT compilers can be slower because their startup time is "
+"higher and the JIT compiler takes time to optimize the code. For example,"
+" most Mercurial commands take a few seconds."
+msgstr ""
+
+#: ../../pep-0510.txt:103
+msgid ""
+"Numba now supports ahead of time compilation, but it requires decorator "
+"to specify arguments types and it only supports numerical types."
+msgstr ""
+
+#: ../../pep-0510.txt:106
+msgid ""
+"CPython 3.5 has almost no optimization: the peephole optimizer only "
+"implements basic optimizations. A static compiler is a compromise between"
+" CPython 3.5 and PyPy."
+msgstr ""
+
+#: ../../pep-0510.txt:111
+msgid "There was also the Unladen Swallow project, but it was abandoned in 2011."
+msgstr ""
+
+#: ../../pep-0510.txt:116
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0510.txt:118
+msgid ""
+"Following examples are not written to show powerful optimizations "
+"promising important speedup, but to be short and easy to understand, just"
+" to explain the principle."
+msgstr ""
+
+#: ../../pep-0510.txt:123
+msgid "Hypothetical myoptimizer module"
+msgstr ""
+
+#: ../../pep-0510.txt:125
+msgid ""
+"Examples in this PEP uses a hypothetical ``myoptimizer`` module which "
+"provides the following functions and types:"
+msgstr ""
+
+#: ../../pep-0510.txt:128
+msgid ""
+"``specialize(func, code, guards)``: add the specialized code `code` with "
+"guards `guards` to the function `func`"
+msgstr ""
+
+#: ../../pep-0510.txt:130
+msgid ""
+"``get_specialized(func)``: get the list of specialized codes as a list of"
+" ``(code, guards)`` tuples where `code` is a callable or code object and "
+"`guards` is a list of a guards"
+msgstr ""
+
+#: ../../pep-0510.txt:133
+msgid ""
+"``GuardBuiltins(name)``: guard watching for ``builtins.__dict__[name]`` "
+"and ``globals()[name]``. The guard fails if ``builtins.__dict__[name]`` "
+"is replaced, or if ``globals()[name]`` is set."
+msgstr ""
+
+#: ../../pep-0510.txt:140
+msgid "Using bytecode"
+msgstr ""
+
+#: ../../pep-0510.txt:142
+msgid ""
+"Add specialized bytecode where the call to the pure builtin function "
+"``chr(65)`` is replaced with its result ``\"A\"``::"
+msgstr ""
+
+#: ../../pep-0510.txt:157 ../../pep-0510.txt:200
+msgid "Example showing the behaviour of the guard::"
+msgstr ""
+
+#: ../../pep-0510.txt:169 ../../pep-0510.txt:212
+msgid "Output::"
+msgstr ""
+
+#: ../../pep-0510.txt:177
+msgid ""
+"The first call uses the specialized bytecode which returns the string "
+"``\"A\"``. The second call removes the specialized code because the "
+"builtin ``chr()`` function was replaced, and executes the original "
+"bytecode calling ``chr(65)``."
+msgstr ""
+
+#: ../../pep-0510.txt:182
+msgid ""
+"On a microbenchmark, calling the specialized bytecode takes 88 ns, "
+"whereas the original function takes 145 ns (+57 ns): 1.6 times as fast."
+msgstr ""
+
+#: ../../pep-0510.txt:187
+msgid "Using builtin function"
+msgstr ""
+
+#: ../../pep-0510.txt:189
+msgid ""
+"Add the C builtin ``chr()`` function as the specialized code instead of a"
+" bytecode calling ``chr(obj)``::"
+msgstr ""
+
+#: ../../pep-0510.txt:220
+msgid ""
+"The first call calls the C builtin ``chr()`` function (without creating a"
+" Python frame). The second call removes the specialized code because the "
+"builtin ``chr()`` function was replaced, and executes the original "
+"bytecode."
+msgstr ""
+
+#: ../../pep-0510.txt:225
+msgid ""
+"On a microbenchmark, calling the C builtin takes 95 ns, whereas the "
+"original bytecode takes 155 ns (+60 ns): 1.6 times as fast. Calling "
+"directly ``chr(65)`` takes 76 ns."
+msgstr ""
+
+#: ../../pep-0510.txt:231
+msgid "Choose the specialized code"
+msgstr ""
+
+#: ../../pep-0510.txt:233
+msgid ""
+"Pseudo-code to choose the specialized code to call a pure Python "
+"function::"
+msgstr ""
+
+#: ../../pep-0510.txt:269
+msgid "Changes"
+msgstr ""
+
+#: ../../pep-0510.txt:271
+msgid "Changes to the Python C API:"
+msgstr ""
+
+#: ../../pep-0510.txt:273
+msgid "Add a ``PyFuncGuardObject`` object and a ``PyFuncGuard_Type`` type"
+msgstr ""
+
+#: ../../pep-0510.txt:274
+msgid "Add a ``PySpecializedCode`` structure"
+msgstr ""
+
+#: ../../pep-0510.txt:275
+msgid "Add the following fields to the ``PyFunctionObject`` structure::"
+msgstr ""
+
+#: ../../pep-0510.txt:280
+msgid "Add function methods:"
+msgstr ""
+
+#: ../../pep-0510.txt:282
+msgid "``PyFunction_Specialize()``"
+msgstr ""
+
+#: ../../pep-0510.txt:283
+msgid "``PyFunction_GetSpecializedCodes()``"
+msgstr ""
+
+#: ../../pep-0510.txt:284
+msgid "``PyFunction_GetSpecializedCode()``"
+msgstr ""
+
+#: ../../pep-0510.txt:285
+msgid "``PyFunction_RemoveSpecialized()``"
+msgstr ""
+
+#: ../../pep-0510.txt:286
+msgid "``PyFunction_RemoveAllSpecialized()``"
+msgstr ""
+
+#: ../../pep-0510.txt:288
+msgid "None of these function and types are exposed at the Python level."
+msgstr ""
+
+#: ../../pep-0510.txt:290
+msgid "All these additions are explicitly excluded of the stable ABI."
+msgstr ""
+
+#: ../../pep-0510.txt:292
+msgid ""
+"When a function code is replaced (``func.__code__ = new_code``), all "
+"specialized codes and guards are removed."
+msgstr ""
+
+#: ../../pep-0510.txt:297
+msgid "Function guard"
+msgstr ""
+
+#: ../../pep-0510.txt:299
+msgid "Add a function guard object::"
+msgstr ""
+
+#: ../../pep-0510.txt:307
+msgid "The ``init()`` function initializes a guard:"
+msgstr ""
+
+#: ../../pep-0510.txt:309 ../../pep-0510.txt:317 ../../pep-0510.txt:365
+msgid "Return ``0`` on success"
+msgstr ""
+
+#: ../../pep-0510.txt:310
+msgid ""
+"Return ``1`` if the guard will always fail: ``PyFunction_Specialize()`` "
+"must ignore the specialized code"
+msgstr ""
+
+#: ../../pep-0510.txt:312 ../../pep-0510.txt:321 ../../pep-0510.txt:367
+msgid "Raise an exception and return ``-1`` on error"
+msgstr ""
+
+#: ../../pep-0510.txt:315
+msgid "The ``check()`` function checks a guard:"
+msgstr ""
+
+#: ../../pep-0510.txt:318
+msgid "Return ``1`` if the guard failed temporarily"
+msgstr ""
+
+#: ../../pep-0510.txt:319
+msgid ""
+"Return ``2`` if the guard will always fail: the specialized code must be "
+"removed"
+msgstr ""
+
+#: ../../pep-0510.txt:323
+msgid ""
+"*stack* is an array of arguments: indexed arguments followed by (*key*, "
+"*value*) pairs of keyword arguments. *na* is the number of indexed "
+"arguments. *nk* is the number of keyword arguments: the number of (*key*,"
+" *value*) pairs. `stack` contains ``na + nk * 2`` objects."
+msgstr ""
+
+#: ../../pep-0510.txt:330
+msgid "Specialized code"
+msgstr ""
+
+#: ../../pep-0510.txt:332
+msgid "Add a specialized code structure::"
+msgstr ""
+
+#: ../../pep-0510.txt:342
+msgid "Function methods"
+msgstr ""
+
+#: ../../pep-0510.txt:345
+msgid "PyFunction_Specialize"
+msgstr ""
+
+#: ../../pep-0510.txt:347
+msgid ""
+"Add a function method to specialize the function, add a specialized code "
+"with guards::"
+msgstr ""
+
+#: ../../pep-0510.txt:353
+msgid ""
+"If *code* is a Python function, the code object of the *code* function is"
+" used as the specialized code. The specialized Python function must have "
+"the same parameter defaults, the same keyword parameter defaults, and "
+"must not have specialized code."
+msgstr ""
+
+#: ../../pep-0510.txt:358
+msgid ""
+"If *code* is a Python function or a code object, a new code object is "
+"created and the code name and first line number of the code object of "
+"*func* are copied. The specialized code must have the same cell variables"
+" and the same free variables."
+msgstr ""
+
+#: ../../pep-0510.txt:363
+msgid "Result:"
+msgstr ""
+
+#: ../../pep-0510.txt:366
+msgid "Return ``1`` if the specialization has been ignored"
+msgstr ""
+
+#: ../../pep-0510.txt:371
+msgid "PyFunction_GetSpecializedCodes"
+msgstr ""
+
+#: ../../pep-0510.txt:373
+msgid "Add a function method to get the list of specialized codes::"
+msgstr ""
+
+#: ../../pep-0510.txt:377
+msgid ""
+"Return a list of (*code*, *guards*) tuples where *code* is a callable or "
+"code object and *guards* is a list of ``PyFuncGuard`` objects. Raise an "
+"exception and return ``NULL`` on error."
+msgstr ""
+
+#: ../../pep-0510.txt:383
+msgid "PyFunction_GetSpecializedCode"
+msgstr ""
+
+#: ../../pep-0510.txt:385
+msgid "Add a function method checking guards to choose a specialized code::"
+msgstr ""
+
+#: ../../pep-0510.txt:391
+msgid ""
+"See ``check()`` function of guards for *stack*, *na* and *nk* arguments. "
+"Return a callable or a code object on success. Raise an exception and "
+"return ``NULL`` on error."
+msgstr ""
+
+#: ../../pep-0510.txt:397
+msgid "PyFunction_RemoveSpecialized"
+msgstr ""
+
+#: ../../pep-0510.txt:399
+msgid ""
+"Add a function method to remove a specialized code with its guards by its"
+" index::"
+msgstr ""
+
+#: ../../pep-0510.txt:404
+msgid ""
+"Return ``0`` on success or if the index does not exist. Raise an "
+"exception and return ``-1`` on error."
+msgstr ""
+
+#: ../../pep-0510.txt:409
+msgid "PyFunction_RemoveAllSpecialized"
+msgstr ""
+
+#: ../../pep-0510.txt:411
+msgid ""
+"Add a function method to remove all specialized codes and guards of a "
+"function::"
+msgstr ""
+
+#: ../../pep-0510.txt:416
+msgid ""
+"Return ``0`` on success. Raise an exception and return ``-1`` if *func* "
+"is not a function."
+msgstr ""
+
+#: ../../pep-0510.txt:421
+msgid "Benchmark"
+msgstr ""
+
+#: ../../pep-0510.txt:423
+msgid ""
+"Microbenchmark on ``python3.6 -m timeit -s 'def f(): pass' 'f()'`` (best "
+"of 3 runs):"
+msgstr ""
+
+#: ../../pep-0510.txt:426
+msgid "Original Python: 79 ns"
+msgstr ""
+
+#: ../../pep-0510.txt:427
+msgid "Patched Python: 79 ns"
+msgstr ""
+
+#: ../../pep-0510.txt:429
+msgid ""
+"According to this microbenchmark, the changes has no overhead on calling "
+"a Python function without specialization."
+msgstr ""
+
+#: ../../pep-0510.txt:434
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0510.txt:436
+msgid ""
+"The `issue #26098: PEP 510: Specialize functions with guards "
+"<http://bugs.python.org/issue26098>`_ contains a patch which implements "
+"this PEP."
+msgstr ""
+
+#: ../../pep-0510.txt:442
+msgid "Other implementations of Python"
+msgstr ""
+
+#: ../../pep-0510.txt:444
+msgid ""
+"This PEP only contains changes to the Python C API, the Python API is "
+"unchanged. Other implementations of Python are free to not implement new "
+"additions, or implement added functions as no-op:"
+msgstr ""
+
+#: ../../pep-0510.txt:448
+msgid ""
+"``PyFunction_Specialize()``: always return ``1`` (the specialization has "
+"been ignored)"
+msgstr ""
+
+#: ../../pep-0510.txt:450
+msgid "``PyFunction_GetSpecializedCodes()``: always return an empty list"
+msgstr ""
+
+#: ../../pep-0510.txt:451
+msgid ""
+"``PyFunction_GetSpecializedCode()``: return the function code object, as "
+"the existing ``PyFunction_GET_CODE()`` macro"
+msgstr ""
+
+#: ../../pep-0510.txt:456
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0510.txt:458
+msgid ""
+"Thread on the python-ideas mailing list: `RFC: PEP: Specialized functions"
+" with guards <https://mail.python.org/pipermail/python-"
+"ideas/2016-January/037703.html>`_."
+msgstr ""
+
+#: ../../pep-0510.txt:464
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0510.txt:466
+msgid "This document has been placed in the public domain."
+msgstr ""
+

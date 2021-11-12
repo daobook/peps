@@ -1,0 +1,907 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0634.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0634.rst:1
+msgid "634"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0634.rst:2
+msgid "Structural Pattern Matching: Specification"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0634.rst:5
+msgid "Brandt Bucher <brandt@python.org>, Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0634.rst:8
+msgid "Python-Dev <python-dev@python.org>"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0634.rst:9
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0634.rst:10
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0634.rst:12
+msgid "12-Sep-2020"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0634.rst:13
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0634.rst:14
+msgid "22-Oct-2020, 08-Feb-2021"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Replaces"
+msgstr ""
+
+#: ../../pep-0634.rst:15
+msgid "622"
+msgstr ""
+
+#: ../../pep-0634.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0634.rst:16
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"committers@python.org/message/SQC2FTLFV5A7DV7RCEAR2I2IKJKGK7W3"
+msgstr ""
+
+#: ../../pep-0634.rst:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0634.rst:22
+msgid ""
+"This PEP provides the technical specification for the match statement.  "
+"It replaces PEP 622, which is hereby split in three parts:"
+msgstr ""
+
+#: ../../pep-0634.rst:25
+msgid "PEP 634: Specification"
+msgstr ""
+
+#: ../../pep-0634.rst:26
+msgid "PEP 635: Motivation and Rationale"
+msgstr ""
+
+#: ../../pep-0634.rst:27
+msgid "PEP 636: Tutorial"
+msgstr ""
+
+#: ../../pep-0634.rst:29
+msgid ""
+"This PEP is intentionally devoid of commentary; the motivation and all "
+"explanations of our design choices are in PEP 635.  First-time readers "
+"are encouraged to start with PEP 636, which provides a gentler "
+"introduction to the concepts, syntax and semantics of patterns."
+msgstr ""
+
+#: ../../pep-0634.rst:36
+msgid "Syntax and Semantics"
+msgstr ""
+
+#: ../../pep-0634.rst:38
+msgid "See `Appendix A`_ for the complete grammar."
+msgstr ""
+
+#: ../../pep-0634.rst:41
+msgid "Overview and Terminology"
+msgstr ""
+
+#: ../../pep-0634.rst:43
+msgid ""
+"The pattern matching process takes as input a pattern (following "
+"``case``) and a subject value (following ``match``).  Phrases to describe"
+" the process include \"the pattern is matched with (or against) the "
+"subject value\" and \"we match the pattern against (or with) the subject "
+"value\"."
+msgstr ""
+
+#: ../../pep-0634.rst:49
+msgid ""
+"The primary outcome of pattern matching is success or failure.  In case "
+"of success we may say \"the pattern succeeds\", \"the match succeeds\", "
+"or \"the pattern matches the subject value\"."
+msgstr ""
+
+#: ../../pep-0634.rst:53
+msgid ""
+"In many cases a pattern contains subpatterns, and success or failure is "
+"determined by the success or failure of matching those subpatterns "
+"against the value (e.g., for OR patterns) or against parts of the value "
+"(e.g., for sequence patterns).  This process typically processes the "
+"subpatterns from left to right until the overall outcome is determined.  "
+"E.g., an OR pattern succeeds at the first succeeding subpattern, while a "
+"sequence patterns fails at the first failing subpattern."
+msgstr ""
+
+#: ../../pep-0634.rst:62
+msgid ""
+"A secondary outcome of pattern matching may be one or more name bindings."
+"  We may say \"the pattern binds a value to a name\".  When subpatterns "
+"tried until the first success, only the bindings due to the successful "
+"subpattern are valid; when trying until the first failure, the bindings "
+"are merged.  Several more rules, explained below, apply to these cases."
+msgstr ""
+
+#: ../../pep-0634.rst:71
+msgid "The Match Statement"
+msgstr ""
+
+#: ../../pep-0634.rst:73 ../../pep-0634.rst:197 ../../pep-0634.rst:212
+#: ../../pep-0634.rst:233 ../../pep-0634.rst:269 ../../pep-0634.rst:292
+#: ../../pep-0634.rst:302 ../../pep-0634.rst:322 ../../pep-0634.rst:339
+#: ../../pep-0634.rst:419 ../../pep-0634.rst:474
+msgid "Syntax::"
+msgstr ""
+
+#: ../../pep-0634.rst:82
+msgid ""
+"The rules ``star_named_expression``, ``star_named_expressions``, "
+"``named_expression`` and ``block`` are part of the `standard Python "
+"grammar <https://docs.python.org/3.10/reference/grammar.html>`_."
+msgstr ""
+
+#: ../../pep-0634.rst:86
+msgid "The rule ``patterns`` is specified below."
+msgstr ""
+
+#: ../../pep-0634.rst:88
+msgid ""
+"For context, ``match_stmt`` is a new alternative for "
+"``compound_statement``::"
+msgstr ""
+
+#: ../../pep-0634.rst:97
+msgid ""
+"The ``match`` and ``case`` keywords are soft keywords, i.e. they are not "
+"reserved words in other grammatical contexts (including at the start of a"
+" line if there is no colon where expected).  This implies that they are "
+"recognized as keywords when part of a match statement or case block only,"
+" and are allowed to be used in all other contexts as variable or argument"
+" names."
+msgstr ""
+
+#: ../../pep-0634.rst:106
+msgid "Match Semantics"
+msgstr ""
+
+#: ../../pep-0634.rst:108
+msgid ""
+"The match statement first evaluates the subject expression.  If a comma "
+"is present a tuple is constructed using the standard rules."
+msgstr ""
+
+#: ../../pep-0634.rst:111
+msgid ""
+"The resulting subject value is then used to select the first case block "
+"whose patterns succeeds matching it *and* whose guard condition (if "
+"present) is \"truthy\".  If no case blocks qualify the match statement is"
+" complete; otherwise, the block of the selected case block is executed.  "
+"The usual rules for executing a block nested inside a compound statement "
+"apply (e.g. an ``if`` statement)."
+msgstr ""
+
+#: ../../pep-0634.rst:118
+msgid ""
+"Name bindings made during a successful pattern match outlive the executed"
+" block and can be used after the match statement."
+msgstr ""
+
+#: ../../pep-0634.rst:121
+msgid ""
+"During failed pattern matches, some subpatterns may succeed. For example,"
+" while matching the pattern ``(0, x, 1)`` with the value ``[0, 1, 2]``, "
+"the subpattern ``x`` may succeed if the list elements are matched from "
+"left to right.  The implementation may choose to either make persistent "
+"bindings for those partial matches or not. User code including a match "
+"statement should not rely on the bindings being made for a failed match, "
+"but also shouldn't assume that variables are unchanged by a failed match."
+"  This part of the behavior is left intentionally unspecified so "
+"different implementations can add optimizations, and to prevent "
+"introducing semantic restrictions that could limit the extensibility of "
+"this feature."
+msgstr ""
+
+#: ../../pep-0634.rst:133
+msgid ""
+"The precise pattern binding rules vary per pattern type and are specified"
+" below."
+msgstr ""
+
+#: ../../pep-0634.rst:140
+msgid "Guards"
+msgstr ""
+
+#: ../../pep-0634.rst:142
+msgid ""
+"If a guard is present on a case block, once the pattern or patterns in "
+"the case block succeed, the expression in the guard is evaluated.  If "
+"this raises an exception, the exception bubbles up.  Otherwise, if the "
+"condition is \"truthy\" the case block is selected; if it is \"falsy\" "
+"the case block is not selected."
+msgstr ""
+
+#: ../../pep-0634.rst:148
+msgid ""
+"Since guards are expressions they are allowed to have side effects. Guard"
+" evaluation must proceed from the first to the last case block, one at a "
+"time, skipping case blocks whose pattern(s) don't all succeed.  (I.e., "
+"even if determining whether those patterns succeed may happen out of "
+"order, guard evaluation must happen in order.) Guard evaluation must stop"
+" once a case block is selected."
+msgstr ""
+
+#: ../../pep-0634.rst:157
+msgid "Irrefutable case blocks"
+msgstr ""
+
+#: ../../pep-0634.rst:159
+msgid ""
+"A pattern is considered irrefutable if we can prove from its syntax alone"
+" that it will always succeed.  In particular, capture patterns and "
+"wildcard patterns are irrefutable, and so are AS patterns whose left-hand"
+" side is irrefutable, OR patterns containing at least one irrefutable "
+"pattern, and parenthesized irrefutable patterns."
+msgstr ""
+
+#: ../../pep-0634.rst:165
+msgid ""
+"A case block is considered irrefutable if it has no guard and its pattern"
+" is irrefutable."
+msgstr ""
+
+#: ../../pep-0634.rst:168
+msgid ""
+"A match statement may have at most one irrefutable case block, and it "
+"must be last."
+msgstr ""
+
+#: ../../pep-0634.rst:175
+msgid "Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:177
+msgid "The top-level syntax for patterns is as follows::"
+msgstr ""
+
+#: ../../pep-0634.rst:195
+msgid "AS Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:201
+msgid "(Note: the name on the right may not be ``_``.)"
+msgstr ""
+
+#: ../../pep-0634.rst:203
+msgid ""
+"An AS pattern matches the OR pattern on the left of the ``as`` keyword "
+"against the subject.  If this fails, the AS pattern fails. Otherwise, the"
+" AS pattern binds the subject to the name on the right of the ``as`` "
+"keyword and succeeds."
+msgstr ""
+
+#: ../../pep-0634.rst:210
+msgid "OR Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:216
+msgid ""
+"When two or more patterns are separated by vertical bars (``|``), this is"
+" called an OR pattern.  (A single closed pattern is just that.)"
+msgstr ""
+
+#: ../../pep-0634.rst:219
+msgid "Only the final subpattern may be irrefutable."
+msgstr ""
+
+#: ../../pep-0634.rst:221
+msgid "Each subpattern must bind the same set of names."
+msgstr ""
+
+#: ../../pep-0634.rst:223
+msgid ""
+"An OR pattern matches each of its subpatterns in turn to the subject, "
+"until one succeeds.  The OR pattern is then deemed to succeed. If none of"
+" the subpatterns succeed the OR pattern fails."
+msgstr ""
+
+#: ../../pep-0634.rst:231
+msgid "Literal Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:245
+msgid ""
+"The rule ``strings`` and the token ``NUMBER`` are defined in the standard"
+" Python grammar."
+msgstr ""
+
+#: ../../pep-0634.rst:248
+msgid ""
+"Triple-quoted strings are supported.  Raw strings and byte strings are "
+"supported.  F-strings are not supported."
+msgstr ""
+
+#: ../../pep-0634.rst:251
+msgid ""
+"The forms ``signed_number '+' NUMBER`` and ``signed_number '-' NUMBER`` "
+"are only permitted to express complex numbers; they require a real number"
+" on the left and an imaginary number on the right."
+msgstr ""
+
+#: ../../pep-0634.rst:255
+msgid ""
+"A literal pattern succeeds if the subject value compares equal to the "
+"value expressed by the literal, using the following comparisons rules:"
+msgstr ""
+
+#: ../../pep-0634.rst:258
+msgid "Numbers and strings are compared using the ``==`` operator."
+msgstr ""
+
+#: ../../pep-0634.rst:260
+msgid ""
+"The singleton literals ``None``, ``True`` and ``False`` are compared "
+"using the ``is`` operator."
+msgstr ""
+
+#: ../../pep-0634.rst:267
+msgid "Capture Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:273
+msgid ""
+"The single underscore (``_``) is not a capture pattern (this is what "
+"``!\"_\"`` expresses).  It is treated as a `wildcard pattern`_."
+msgstr ""
+
+#: ../../pep-0634.rst:276
+msgid ""
+"A capture pattern always succeeds.  It binds the subject value to the "
+"name using the scoping rules for name binding established for the walrus "
+"operator in PEP 572.  (Summary: the name becomes a local variable in the "
+"closest containing function scope unless there's an applicable "
+"``nonlocal`` or ``global`` statement.)"
+msgstr ""
+
+#: ../../pep-0634.rst:282
+msgid ""
+"In a given pattern, a given name may be bound only once.  This disallows "
+"for example ``case x, x: ...`` but allows ``case [x] | x: ...``."
+msgstr ""
+
+#: ../../pep-0634.rst:290
+msgid "Wildcard Pattern"
+msgstr ""
+
+#: ../../pep-0634.rst:296
+msgid "A wildcard pattern always succeeds.  It binds no name."
+msgstr ""
+
+#: ../../pep-0634.rst:300
+msgid "Value Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:308
+msgid ""
+"The dotted name in the pattern is looked up using the standard Python "
+"name resolution rules.  However, when the same value pattern occurs "
+"multiple times in the same match statement, the interpreter may cache the"
+" first value found and reuse it, rather than repeat the same lookup.  (To"
+" clarify, this cache is strictly tied to a given execution of a given "
+"match statement.)"
+msgstr ""
+
+#: ../../pep-0634.rst:315
+msgid ""
+"The pattern succeeds if the value found thus compares equal to the "
+"subject value (using the ``==`` operator)."
+msgstr ""
+
+#: ../../pep-0634.rst:320
+msgid "Group Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:326
+msgid ""
+"(For the syntax of ``pattern``, see Patterns above.  Note that it "
+"contains no comma -- a parenthesized series of items with at least one "
+"comma is a sequence pattern, as is ``()``.)"
+msgstr ""
+
+#: ../../pep-0634.rst:330
+msgid ""
+"A parenthesized pattern has no additional syntax.  It allows users to add"
+" parentheses around patterns to emphasize the intended grouping."
+msgstr ""
+
+#: ../../pep-0634.rst:337
+msgid "Sequence Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:349
+msgid ""
+"(Note that a single parenthesized pattern without a trailing comma is a "
+"group pattern, not a sequence pattern.  However a single pattern enclosed"
+" in ``[...]`` is still a sequence pattern.)"
+msgstr ""
+
+#: ../../pep-0634.rst:353
+msgid ""
+"There is no semantic difference between a sequence pattern using "
+"``[...]``, a sequence pattern using ``(...)``, and an open sequence "
+"pattern."
+msgstr ""
+
+#: ../../pep-0634.rst:357
+msgid ""
+"A sequence pattern may contain at most one star subpattern.  The star "
+"subpattern may occur in any position.  If no star subpattern is present, "
+"the sequence pattern is a fixed-length sequence pattern; otherwise it is "
+"a variable-length sequence pattern."
+msgstr ""
+
+#: ../../pep-0634.rst:362
+msgid ""
+"For a sequence pattern to succeed the subject must be a sequence, where "
+"being a sequence is defined as its class being one of the following:"
+msgstr ""
+
+#: ../../pep-0634.rst:365
+msgid "a class that inherits from ``collections.abc.Sequence``"
+msgstr ""
+
+#: ../../pep-0634.rst:366
+msgid "a Python class that has been registered as a ``collections.abc.Sequence``"
+msgstr ""
+
+#: ../../pep-0634.rst:367
+msgid "a builtin class that has its ``Py_TPFLAGS_SEQUENCE`` bit set"
+msgstr ""
+
+#: ../../pep-0634.rst:368
+msgid ""
+"a class that inherits from any of the above (including classes defined "
+"*before* a parent's ``Sequence`` registration)"
+msgstr ""
+
+#: ../../pep-0634.rst:371
+msgid ""
+"The following standard library classes will have their "
+"``Py_TPFLAGS_SEQUENCE`` bit set:"
+msgstr ""
+
+#: ../../pep-0634.rst:374
+msgid "``array.array``"
+msgstr ""
+
+#: ../../pep-0634.rst:375
+msgid "``collections.deque``"
+msgstr ""
+
+#: ../../pep-0634.rst:376
+msgid "``list``"
+msgstr ""
+
+#: ../../pep-0634.rst:377
+msgid "``memoryview``"
+msgstr ""
+
+#: ../../pep-0634.rst:378
+msgid "``range``"
+msgstr ""
+
+#: ../../pep-0634.rst:379
+msgid "``tuple``"
+msgstr ""
+
+#: ../../pep-0634.rst:383
+msgid ""
+"Although ``str``, ``bytes``, and ``bytearray`` are usually considered "
+"sequences, they are not included in the above list and do not match "
+"sequence patterns."
+msgstr ""
+
+#: ../../pep-0634.rst:387
+msgid ""
+"A fixed-length sequence pattern fails if the length of the subject "
+"sequence is not equal to the number of subpatterns."
+msgstr ""
+
+#: ../../pep-0634.rst:390
+msgid ""
+"A variable-length sequence pattern fails if the length of the subject "
+"sequence is less than the number of non-star subpatterns."
+msgstr ""
+
+#: ../../pep-0634.rst:393
+msgid ""
+"The length of the subject sequence is obtained using the builtin "
+"``len()`` function (i.e., via the ``__len__`` protocol).  However, the "
+"interpreter may cache this value in a similar manner as described for "
+"value patterns."
+msgstr ""
+
+#: ../../pep-0634.rst:398
+msgid ""
+"A fixed-length sequence pattern matches the subpatterns to corresponding "
+"items of the subject sequence, from left to right. Matching stops (with a"
+" failure) as soon as a subpattern fails.  If all subpatterns succeed in "
+"matching their corresponding item, the sequence pattern succeeds."
+msgstr ""
+
+#: ../../pep-0634.rst:404
+msgid ""
+"A variable-length sequence pattern first matches the leading non-star "
+"subpatterns to the corresponding items of the subject sequence, as for a "
+"fixed-length sequence.  If this succeeds, the star subpattern matches a "
+"list formed of the remaining subject items, with items removed from the "
+"end corresponding to the non-star subpatterns following the star "
+"subpattern.  The remaining non-star subpatterns are then matched to the "
+"corresponding subject items, as for a fixed-length sequence."
+msgstr ""
+
+#: ../../pep-0634.rst:417
+msgid "Mapping Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:428
+msgid "(Note that ``**_`` is disallowed by this syntax.)"
+msgstr ""
+
+#: ../../pep-0634.rst:430
+msgid ""
+"A mapping pattern may contain at most one double star pattern, and it "
+"must be last."
+msgstr ""
+
+#: ../../pep-0634.rst:433
+msgid ""
+"A mapping pattern may not contain duplicate key values. (If all key "
+"patterns are literal patterns this is considered a syntax error; "
+"otherwise this is a runtime error and will raise ``ValueError``.)"
+msgstr ""
+
+#: ../../pep-0634.rst:438
+msgid ""
+"For a mapping pattern to succeed the subject must be a mapping, where "
+"being a mapping is defined as its class being one of the following:"
+msgstr ""
+
+#: ../../pep-0634.rst:441
+msgid "a class that inherits from ``collections.abc.Mapping``"
+msgstr ""
+
+#: ../../pep-0634.rst:442
+msgid "a Python class that has been registered as a ``collections.abc.Mapping``"
+msgstr ""
+
+#: ../../pep-0634.rst:443
+msgid "a builtin class that has its ``Py_TPFLAGS_MAPPING`` bit set"
+msgstr ""
+
+#: ../../pep-0634.rst:444
+msgid ""
+"a class that inherits from any of the above  (including classes defined "
+"*before* a parent's ``Mapping`` registration)"
+msgstr ""
+
+#: ../../pep-0634.rst:447
+msgid ""
+"The standard library classes ``dict`` and ``mappingproxy`` will have "
+"their ``Py_TPFLAGS_MAPPING`` bit set."
+msgstr ""
+
+#: ../../pep-0634.rst:450
+msgid ""
+"A mapping pattern succeeds if every key given in the mapping pattern is "
+"present in the subject mapping, and the pattern for each key matches the "
+"corresponding item of the subject mapping. Keys are always compared with "
+"the ``==`` operator.  If a ``'**' NAME`` form is present, that name is "
+"bound to a ``dict`` containing remaining key-value pairs from the subject"
+" mapping."
+msgstr ""
+
+#: ../../pep-0634.rst:457
+msgid ""
+"If duplicate keys are detected in the mapping pattern, the pattern is "
+"considered invalid, and a ``ValueError`` is raised."
+msgstr ""
+
+#: ../../pep-0634.rst:460
+msgid ""
+"Key-value pairs are matched using the two-argument form of the subject's "
+"``get()`` method.  As a consequence, matched key-value pairs must already"
+" be present in the mapping, and not created on-the-fly by ``__missing__``"
+" or ``__getitem__``.  For example, ``collections.defaultdict`` instances "
+"will only be matched by patterns with keys that were already present when"
+" the match statement was entered."
+msgstr ""
+
+#: ../../pep-0634.rst:472
+msgid "Class Patterns"
+msgstr ""
+
+#: ../../pep-0634.rst:485
+msgid "A class pattern may not repeat the same keyword multiple times."
+msgstr ""
+
+#: ../../pep-0634.rst:487
+msgid ""
+"If ``name_or_attr`` is not an instance of the builtin ``type``, "
+"``TypeError`` is raised."
+msgstr ""
+
+#: ../../pep-0634.rst:490
+msgid ""
+"A class pattern fails if the subject is not an instance of "
+"``name_or_attr``. This is tested using ``isinstance()``."
+msgstr ""
+
+#: ../../pep-0634.rst:493
+msgid ""
+"If no arguments are present, the pattern succeeds if the ``isinstance()``"
+" check succeeds.  Otherwise:"
+msgstr ""
+
+#: ../../pep-0634.rst:496
+msgid ""
+"If only keyword patterns are present, they are processed as follows, one "
+"by one:"
+msgstr ""
+
+#: ../../pep-0634.rst:499
+msgid "The keyword is looked up as an attribute on the subject."
+msgstr ""
+
+#: ../../pep-0634.rst:501
+msgid ""
+"If this raises an exception other than ``AttributeError``, the exception "
+"bubbles up."
+msgstr ""
+
+#: ../../pep-0634.rst:504
+msgid "If this raises ``AttributeError`` the class pattern fails."
+msgstr ""
+
+#: ../../pep-0634.rst:506
+msgid ""
+"Otherwise, the subpattern associated with the keyword is matched against "
+"the attribute value.  If this fails, the class pattern fails. If it "
+"succeeds, the match proceeds to the next keyword."
+msgstr ""
+
+#: ../../pep-0634.rst:510
+msgid "If all keyword patterns succeed, the class pattern as a whole succeeds."
+msgstr ""
+
+#: ../../pep-0634.rst:512
+msgid ""
+"If any positional patterns are present, they are converted to keyword "
+"patterns (see below) and treated as additional keyword patterns, "
+"preceding the syntactic keyword patterns (if any)."
+msgstr ""
+
+#: ../../pep-0634.rst:516
+msgid ""
+"Positional patterns are converted to keyword patterns using the "
+"``__match_args__`` attribute on the class designated by ``name_or_attr``,"
+" as follows:"
+msgstr ""
+
+#: ../../pep-0634.rst:520
+msgid ""
+"For a number of built-in types (specified below), a single positional "
+"subpattern is accepted which will match the entire subject. (Keyword "
+"patterns work as for other types here.)"
+msgstr ""
+
+#: ../../pep-0634.rst:523
+msgid "The equivalent of ``getattr(cls, \"__match_args__\", ()))`` is called."
+msgstr ""
+
+#: ../../pep-0634.rst:524
+msgid "If this raises an exception the exception bubbles up."
+msgstr ""
+
+#: ../../pep-0634.rst:525
+msgid ""
+"If the returned value is not a tuple, the conversion fails and "
+"``TypeError`` is raised."
+msgstr ""
+
+#: ../../pep-0634.rst:527
+msgid ""
+"If there are more positional patterns than the length of "
+"``__match_args__`` (as obtained using ``len()``), ``TypeError`` is "
+"raised."
+msgstr ""
+
+#: ../../pep-0634.rst:529
+msgid ""
+"Otherwise, positional pattern ``i`` is converted to a keyword pattern "
+"using ``__match_args__[i]`` as the keyword, provided it the latter is a "
+"string; if it is not, ``TypeError`` is raised."
+msgstr ""
+
+#: ../../pep-0634.rst:533
+msgid "For duplicate keywords, ``TypeError`` is raised."
+msgstr ""
+
+#: ../../pep-0634.rst:535
+msgid ""
+"Once the positional patterns have been converted to keyword patterns, the"
+" match proceeds as if there were only keyword patterns."
+msgstr ""
+
+#: ../../pep-0634.rst:538
+msgid ""
+"As mentioned above, for the following built-in types the handling of "
+"positional subpatterns is different: ``bool``, ``bytearray``, ``bytes``, "
+"``dict``, ``float``, ``frozenset``, ``int``, ``list``, ``set``, ``str``, "
+"and ``tuple``."
+msgstr ""
+
+#: ../../pep-0634.rst:543
+msgid "This behavior is roughly equivalent to the following::"
+msgstr ""
+
+#: ../../pep-0634.rst:553
+msgid "Side Effects and Undefined Behavior"
+msgstr ""
+
+#: ../../pep-0634.rst:555
+msgid ""
+"The only side-effect produced explicitly by the matching process is the "
+"binding of names.  However, the process relies on attribute access, "
+"instance checks, ``len()``, equality and item access on the subject and "
+"some of its components.  It also evaluates value patterns and the class "
+"name of class patterns.  While none of those typically create any side-"
+"effects, in theory they could.  This proposal intentionally leaves out "
+"any specification of what methods are called or how many times.  This "
+"behavior is therefore undefined and user code should not rely on it."
+msgstr ""
+
+#: ../../pep-0634.rst:565
+msgid ""
+"Another undefined behavior is the binding of variables by capture "
+"patterns that are followed (in the same case block) by another pattern "
+"that fails.  These may happen earlier or later depending on the "
+"implementation strategy, the only constraint being that capture variables"
+" must be set before guards that use them explicitly are evaluated.  If a "
+"guard consists of an ``and`` clause, evaluation of the operands may even "
+"be interspersed with pattern matching, as long as left-to-right "
+"evaluation order is maintained."
+msgstr ""
+
+#: ../../pep-0634.rst:576
+msgid "The Standard Library"
+msgstr ""
+
+#: ../../pep-0634.rst:578
+msgid ""
+"To facilitate the use of pattern matching, several changes will be made "
+"to the standard library:"
+msgstr ""
+
+#: ../../pep-0634.rst:581
+msgid "Namedtuples and dataclasses will have auto-generated ``__match_args__``."
+msgstr ""
+
+#: ../../pep-0634.rst:584
+msgid ""
+"For dataclasses the order of attributes in the generated "
+"``__match_args__`` will be the same as the order of corresponding "
+"arguments in the generated ``__init__()`` method.  This includes the "
+"situations where attributes are inherited from a superclass.  Fields with"
+" ``init=False`` are excluded from ``__match_args__``."
+msgstr ""
+
+#: ../../pep-0634.rst:590
+msgid ""
+"In addition, a systematic effort will be put into going through existing "
+"standard library classes and adding ``__match_args__`` where it looks "
+"beneficial."
+msgstr ""
+
+#: ../../pep-0634.rst:598
+msgid "Appendix A -- Full Grammar"
+msgstr ""
+
+#: ../../pep-0634.rst:600
+msgid ""
+"Here is the full grammar for ``match_stmt``.  This is an additional "
+"alternative for ``compound_stmt``.  Remember that ``match`` and ``case`` "
+"are soft keywords, i.e. they are not reserved words in other grammatical "
+"contexts (including at the start of a line if there is no colon where "
+"expected).  By convention, hard keywords use single quotes while soft "
+"keywords use double quotes."
+msgstr ""
+
+#: ../../pep-0634.rst:607
+msgid "Other notation used beyond standard EBNF:"
+msgstr ""
+
+#: ../../pep-0634.rst:609
+msgid "``SEP.RULE+`` is shorthand for ``RULE (SEP RULE)*``"
+msgstr ""
+
+#: ../../pep-0634.rst:610
+msgid "``!RULE`` is a negative lookahead assertion"
+msgstr ""
+
+#: ../../pep-0634.rst:681
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0634.rst:683
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -1,0 +1,199 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0221.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0221.txt:1
+msgid "221"
+msgstr ""
+
+#: ../../pep-0221.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0221.txt:2
+msgid "Import As"
+msgstr ""
+
+#: ../../pep-0221.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0221.txt:5
+msgid "thomas@python.org (Thomas Wouters)"
+msgstr ""
+
+#: ../../pep-0221.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0221.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0221.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0221.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0221.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0221.txt:9
+msgid "15-Aug-2000"
+msgstr ""
+
+#: ../../pep-0221.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0221.txt:10
+msgid "2.0"
+msgstr ""
+
+#: ../../pep-0221.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0221.txt:15
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0221.txt:17
+msgid ""
+"This PEP describes the ``import as`` proposal for Python 2.0.  This PEP "
+"tracks the status and ownership of this feature.  It contains a "
+"description of the feature and outlines changes necessary to support the "
+"feature.  The CVS revision history of this file contains the definitive "
+"historical record."
+msgstr ""
+
+#: ../../pep-0221.txt:25
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0221.txt:27
+msgid ""
+"This PEP proposes an extension of Python syntax regarding the ``import`` "
+"and ``from <module> import`` statements.  These statements load in a "
+"module, and either bind that module to a local name, or binds objects "
+"from that module to a local name.  However, it is sometimes desirable to "
+"bind those objects to a different name, for instance to avoid name "
+"clashes.  This can currently be achieved using the following idiom::"
+msgstr ""
+
+#: ../../pep-0221.txt:39
+msgid "And similarly for the ``from ... import`` statement::"
+msgstr ""
+
+#: ../../pep-0221.txt:46
+msgid ""
+"The proposed syntax change would add an optional ``as`` clause to both "
+"these statements, as follows::"
+msgstr ""
+
+#: ../../pep-0221.txt:52
+msgid ""
+"The ``as`` name is not intended to be a keyword, and some trickery has to"
+" be used to convince the CPython parser it isn't one.  For more advanced "
+"parsers/tokenizers, however, this should not be a problem."
+msgstr ""
+
+#: ../../pep-0221.txt:57
+msgid ""
+"A slightly special case exists for importing sub-modules.  The statement "
+"::"
+msgstr ""
+
+#: ../../pep-0221.txt:62
+msgid ""
+"stores the module ``os`` locally as ``os``, so that the imported "
+"submodule ``path`` is accessible as ``os.path``.  As a result, ::"
+msgstr ""
+
+#: ../../pep-0221.txt:67
+msgid ""
+"stores ``os.path``, not ``os``, in ``p``.  This makes it effectively the "
+"same as ::"
+msgstr ""
+
+#: ../../pep-0221.txt:74
+msgid "Implementation details"
+msgstr ""
+
+#: ../../pep-0221.txt:76
+msgid ""
+"This PEP has been accepted, and the suggested code change has been "
+"checked in.  The patch can still be found in the SourceForge patch "
+"manager [1]_.  Currently, a ``NAME`` field is used in the grammar rather "
+"than a bare string, to avoid the keyword issue.  It introduces a new "
+"bytecode, ``IMPORT_STAR``, which performs the ``from module import *`` "
+"behaviour, and changes the behaviour of the ``IMPORT_FROM`` bytecode so "
+"that it loads the requested name (which is always a single name) onto the"
+" stack, to be subsequently stored by a ``STORE`` opcode. As a result, all"
+" names explicitly imported now follow the ``global`` directives."
+msgstr ""
+
+#: ../../pep-0221.txt:87
+msgid ""
+"The special case of ``from module import *`` remains a special case, in "
+"that it cannot accommodate an ``as`` clause, and that no ``STORE`` "
+"opcodes are generated; the objects imported are loaded directly into the "
+"local namespace. This also means that names imported in this fashion are "
+"always local, and do not follow the ``global`` directive."
+msgstr ""
+
+#: ../../pep-0221.txt:94
+msgid ""
+"An additional change to this syntax has also been suggested, to "
+"generalize the expression given after the ``as`` clause.  Rather than a "
+"single name, it could be allowed to be any expression that yields a valid"
+" l-value; anything that can be assigned to.  The change to accommodate "
+"this is minimal, as the patch [2]_ proves, and the resulting "
+"generalization allows a number of new constructs that run completely "
+"parallel with other Python assignment constructs. However, this idea has "
+"been rejected by Guido, as \"hypergeneralization\"."
+msgstr ""
+
+#: ../../pep-0221.txt:106
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0221.txt:108
+msgid "This document has been placed in the Public Domain."
+msgstr ""
+
+#: ../../pep-0221.txt:112
+msgid "References"
+msgstr ""
+
+#: ../../pep-0221.txt:114
+msgid "https://hg.python.org/cpython/rev/18385172fac0"
+msgstr ""
+
+#: ../../pep-0221.txt:116
+msgid "http://sourceforge.net/patch/?func=detailpatch&patch_id=101234&group_id=5470"
+msgstr ""
+

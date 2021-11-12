@@ -1,0 +1,637 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0618.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0618.rst:1
+msgid "618"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0618.rst:2
+msgid "Add Optional Length-Checking To zip"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0618.rst:5
+msgid "Brandt Bucher <brandt@python.org>"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0618.rst:6
+msgid "Antoine Pitrou <antoine@python.org>"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0618.rst:7
+msgid "Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0618.rst:8
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0618.rst:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0618.rst:11
+msgid "01-May-2020"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0618.rst:12
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0618.rst:13
+msgid "01-May-2020, 10-May-2020, 16-Jun-2020"
+msgstr ""
+
+#: ../../pep-0618.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0618.rst:14
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/message/NLWB7FVJGMBBMCF4P3ZKUIE53JPDOWJ3"
+msgstr ""
+
+#: ../../pep-0618.rst:18
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0618.rst:20
+msgid ""
+"This PEP proposes adding an optional ``strict`` boolean keyword parameter"
+" to the built-in ``zip``.  When enabled, a ``ValueError`` is raised if "
+"one of the arguments is exhausted before the others."
+msgstr ""
+
+#: ../../pep-0618.rst:26
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0618.rst:28
+msgid ""
+"It is clear from the author's personal experience and a `survey of the "
+"standard library <examples_>`_ that much (if not most) ``zip`` usage "
+"involves iterables that *must* be of equal length.  Sometimes this "
+"invariant is proven true from the context of the surrounding code, but "
+"often the data being zipped is passed from the caller, sourced "
+"separately, or generated in some fashion.  In any of these cases, the "
+"default behavior of ``zip`` means that faulty refactoring or logic errors"
+" could easily result in silently losing data.  These bugs are not only "
+"difficult to diagnose, but difficult to even detect at all."
+msgstr ""
+
+#: ../../pep-0618.rst:38
+msgid ""
+"It is easy to come up with simple cases where this could be a problem. "
+"For example, the following code may work fine when ``items`` is a "
+"sequence, but silently start producing shortened, mismatched results if "
+"``items`` is refactored by the caller to be a consumable iterator::"
+msgstr ""
+
+#: ../../pep-0618.rst:48
+msgid ""
+"There are several other ways in which ``zip`` is commonly used. Idiomatic"
+" tricks are especially susceptible, because they are often employed by "
+"users who lack a complete understanding of how the code works.  One "
+"example is unpacking into ``zip`` to lazily \"unzip\" or \"transpose\" "
+"nested iterables::"
+msgstr ""
+
+#: ../../pep-0618.rst:57
+msgid "Another is \"chunking\" data into equal-sized groups::"
+msgstr ""
+
+#: ../../pep-0618.rst:63
+msgid ""
+"In the first case, non-rectangular data is usually a logic error.  In the"
+" second case, data with a length that is not a multiple of ``n`` is often"
+" an error as well.  However, both of these idioms will silently omit the "
+"tail-end items of malformed input."
+msgstr ""
+
+#: ../../pep-0618.rst:68
+msgid ""
+"Perhaps most convincingly, the use of ``zip`` in the standard-library "
+"``ast`` module created a bug in ``literal_eval`` which `silently dropped "
+"parts of malformed nodes <https://bugs.python.org/issue40355>`_::"
+msgstr ""
+
+#: ../../pep-0618.rst:78
+msgid ""
+"In fact, the author has `counted dozens of other call sites <examples_>`_"
+" in Python's standard library and tooling where it would be appropriate "
+"to enable this new feature immediately."
+msgstr ""
+
+#: ../../pep-0618.rst:84
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0618.rst:86
+msgid ""
+"Some critics assert that constant boolean switches are a \"code-smell\", "
+"or go against Python's design philosophy.  However, Python currently "
+"contains several examples of boolean keyword parameters on built-in "
+"functions which are typically called with compile-time constants:"
+msgstr ""
+
+#: ../../pep-0618.rst:91
+msgid "``compile(..., dont_inherit=True)``"
+msgstr ""
+
+#: ../../pep-0618.rst:92
+msgid "``open(..., closefd=False)``"
+msgstr ""
+
+#: ../../pep-0618.rst:93
+msgid "``print(..., flush=True)``"
+msgstr ""
+
+#: ../../pep-0618.rst:94
+msgid "``sorted(..., reverse=True)``"
+msgstr ""
+
+#: ../../pep-0618.rst:96
+msgid "Many more exist in the standard library."
+msgstr ""
+
+#: ../../pep-0618.rst:98
+msgid ""
+"The idea and name for this new parameter were `originally proposed "
+"<https://mail.python.org/archives/list/python-"
+"ideas@python.org/message/6GFUADSQ5JTF7W7OGWF7XF2NH2XUTUQM>`_ by Ram "
+"Rachum.  The thread received over 100 replies, with the alternative "
+"\"equal\" receiving a similar amount of support."
+msgstr ""
+
+#: ../../pep-0618.rst:103
+msgid ""
+"The author does not have a strong preference between the two choices, "
+"though \"equal equals\" *is* a bit awkward in prose.  It may also "
+"(wrongly) imply some notion of \"equality\" between the zipped items::"
+msgstr ""
+
+#: ../../pep-0618.rst:111
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0618.rst:113
+msgid ""
+"When the built-in ``zip`` is called with the keyword-only argument "
+"``strict=True``, the resulting iterator will raise a ``ValueError`` if "
+"the arguments are exhausted at differing lengths.  This error will occur "
+"at the point when iteration would normally stop today."
+msgstr ""
+
+#: ../../pep-0618.rst:120
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-0618.rst:122
+msgid ""
+"This change is fully backward-compatible.  ``zip`` currently takes no "
+"keyword arguments, and the \"non-strict\" default behavior when "
+"``strict`` is omitted remains unchanged."
+msgstr ""
+
+#: ../../pep-0618.rst:128
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0618.rst:130
+msgid ""
+"The author has drafted a `C implementation "
+"<https://github.com/python/cpython/pull/20921>`_."
+msgstr ""
+
+#: ../../pep-0618.rst:133
+msgid "An approximate Python translation is::"
+msgstr ""
+
+#: ../../pep-0618.rst:161
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0618.rst:164
+msgid "Add ``itertools.zip_strict``"
+msgstr ""
+
+#: ../../pep-0618.rst:166
+msgid ""
+"This is the alternative with the most support on the Python-Ideas mailing"
+" list, so it deserves to be discussed in some detail here.  It does not "
+"have any disqualifying flaws, and could work well enough as a substitute "
+"if this PEP is rejected."
+msgstr ""
+
+#: ../../pep-0618.rst:171
+msgid ""
+"With that in mind, this section aims to outline why adding an optional "
+"parameter to ``zip`` is a smaller change that ultimately does a better "
+"job of solving the problems motivating this PEP."
+msgstr ""
+
+#: ../../pep-0618.rst:177
+msgid "Precedent"
+msgstr ""
+
+#: ../../pep-0618.rst:179
+msgid ""
+"It seems that a great deal of the motivation driving this alternative is "
+"that ``zip_longest`` already exists in ``itertools``.  However, "
+"``zip_longest`` is in many ways a much more complicated, specialized "
+"utility: it takes on the responsibility of filling in missing values, a "
+"job neither of the other variants needs to concern themselves with."
+msgstr ""
+
+#: ../../pep-0618.rst:185
+msgid ""
+"If both ``zip`` and ``zip_longest`` lived alongside each other in "
+"``itertools`` or as builtins, then adding ``zip_strict`` in the same "
+"location would indeed be a much stronger argument.  However, the new "
+"\"strict\" variant is conceptually *much* closer to ``zip`` in interface "
+"and behavior than ``zip_longest``, while still not meeting the high bar "
+"of being its own builtin.  Given this situation, it seems most natural "
+"for ``zip`` to grow this new option in-place."
+msgstr ""
+
+#: ../../pep-0618.rst:195
+msgid "Usability"
+msgstr ""
+
+#: ../../pep-0618.rst:197
+msgid ""
+"If ``zip`` is capable of preventing this class of bug, it becomes much "
+"simpler for users to enable the check at call sites with this property.  "
+"Compare this with importing a drop-in replacement for a built-in utility,"
+" which feels somewhat heavy just to check a tricky condition that should "
+"\"always\" be true."
+msgstr ""
+
+#: ../../pep-0618.rst:203
+msgid ""
+"Some have also argued that a new function buried in the standard library "
+"is somehow more \"discoverable\" than a keyword parameter on the built-in"
+" itself.  The author does not agree with this assessment."
+msgstr ""
+
+#: ../../pep-0618.rst:209
+msgid "Maintenance Cost"
+msgstr ""
+
+#: ../../pep-0618.rst:211
+msgid ""
+"While implementation should only be a secondary concern when making "
+"usability improvements, it is important to recognize that adding a new "
+"utility is significantly more complicated than modifying an existing one."
+"  The CPython implementation accompanying this PEP is simple and has no "
+"measurable performance impact on default ``zip`` behavior, while adding "
+"an entirely new utility to ``itertools`` would require either:"
+msgstr ""
+
+#: ../../pep-0618.rst:219
+msgid ""
+"Duplicating much of the existing ``zip`` logic, as ``zip_longest`` "
+"already does."
+msgstr ""
+
+#: ../../pep-0618.rst:221
+msgid ""
+"Significantly refactoring either ``zip``, ``zip_longest``, or both to "
+"share a common or inherited implementation (which may impact "
+"performance)."
+msgstr ""
+
+#: ../../pep-0618.rst:227
+msgid "Add Several \"Modes\" To Switch Between"
+msgstr ""
+
+#: ../../pep-0618.rst:229
+msgid ""
+"This option only makes more sense than a binary flag if we anticipate "
+"having three or more modes. The \"obvious\" three choices for these "
+"enumerated or constant modes would be \"shortest\" (the current ``zip`` "
+"behavior), \"strict\" (the proposed behavior), and \"longest\" (the "
+"``itertools.zip_longest`` behavior)."
+msgstr ""
+
+#: ../../pep-0618.rst:235
+msgid ""
+"However, it doesn't seem like adding behaviors other than the current "
+"default and the proposed \"strict\" mode is worth the additional "
+"complexity.  The clearest candidate, \"longest\", would require a new "
+"``fillvalue`` parameter (which is meaningless for both other modes). This"
+" mode is also already handled perfectly by ``itertools.zip_longest``, and"
+" adding it would create two ways of doing the same thing.  It's not clear"
+" which would be the \"obvious\" choice: the ``mode`` parameter on the "
+"built-in ``zip``, or the long-lived namesake utility in ``itertools``."
+msgstr ""
+
+#: ../../pep-0618.rst:247
+msgid "Add A Method Or Alternate Constructor To The ``zip`` Type"
+msgstr ""
+
+#: ../../pep-0618.rst:249
+msgid "Consider the following two options, which have both been proposed::"
+msgstr ""
+
+#: ../../pep-0618.rst:254
+msgid ""
+"It's not obvious which one will succeed, or how the other will fail. If "
+"``zip.strict`` is implemented as a method, ``zm`` will succeed, but "
+"``zd`` will fail in one of several confusing ways:"
+msgstr ""
+
+#: ../../pep-0618.rst:258
+msgid ""
+"Yield results that aren't wrapped in a tuple (if ``iters`` contains just "
+"one item, a ``zip`` iterator)."
+msgstr ""
+
+#: ../../pep-0618.rst:260
+msgid ""
+"Raise a ``TypeError`` for an incorrect argument type (if ``iters`` "
+"contains just one item, not a ``zip`` iterator)."
+msgstr ""
+
+#: ../../pep-0618.rst:262
+msgid "Raise a ``TypeError`` for an incorrect number of arguments (otherwise)."
+msgstr ""
+
+#: ../../pep-0618.rst:265
+msgid ""
+"If ``zip.strict`` is implemented as a ``classmethod`` or "
+"``staticmethod``, ``zd`` will succeed, and ``zm`` will silently yield "
+"nothing (which is the problem we are trying to avoid in the first place)."
+msgstr ""
+
+#: ../../pep-0618.rst:270
+msgid ""
+"This proposal is further complicated by the fact that CPython's actual "
+"``zip`` type is currently an undocumented implementation detail.  This "
+"means that choosing one of the above behaviors will effectively \"lock "
+"in\" the current implementation (or at least require it to be emulated) "
+"going forward."
+msgstr ""
+
+#: ../../pep-0618.rst:278
+msgid "Change The Default Behavior Of ``zip``"
+msgstr ""
+
+#: ../../pep-0618.rst:280
+msgid ""
+"There is nothing \"wrong\" with the default behavior of ``zip``, since "
+"there are many cases where it is indeed the correct way to handle "
+"unequally-sized inputs. It's extremely useful, for example, when dealing "
+"with infinite iterators."
+msgstr ""
+
+#: ../../pep-0618.rst:285
+msgid ""
+"``itertools.zip_longest`` already exists to service those cases where the"
+" \"extra\" tail-end data is still needed."
+msgstr ""
+
+#: ../../pep-0618.rst:290
+msgid "Accept A Callback To Handle Remaining Items"
+msgstr ""
+
+#: ../../pep-0618.rst:292
+msgid ""
+"While able to do basically anything a user could need, this solution "
+"makes handling the more common cases (like rejecting mismatched lengths) "
+"unnecessarily complicated and non-obvious."
+msgstr ""
+
+#: ../../pep-0618.rst:298
+msgid "Raise An ``AssertionError``"
+msgstr ""
+
+#: ../../pep-0618.rst:300
+msgid ""
+"There are no built-in functions or types that raise an ``AssertionError``"
+" as part of their API.  Further, the `official documentation "
+"<https://docs.python.org/3.9/library/exceptions.html?highlight=assertionerror#AssertionError>`_"
+" simply reads (in its entirety):"
+msgstr ""
+
+#: ../../pep-0618.rst:306
+msgid "Raised when an ``assert`` statement fails."
+msgstr ""
+
+#: ../../pep-0618.rst:308
+msgid ""
+"Since this feature has nothing to do with Python's ``assert`` statement, "
+"raising an ``AssertionError`` here would be inappropriate. Users desiring"
+" a check that is disabled in optimized mode (like an ``assert`` "
+"statement) can use ``strict=__debug__`` instead."
+msgstr ""
+
+#: ../../pep-0618.rst:315
+msgid "Add A Similar Feature to ``map``"
+msgstr ""
+
+#: ../../pep-0618.rst:317
+msgid ""
+"This PEP does not propose any changes to ``map``, since the use of "
+"``map`` with multiple iterable arguments is quite rare. However, this "
+"PEP's ruling shall serve as precedent such a future discussion (should it"
+" occur)."
+msgstr ""
+
+#: ../../pep-0618.rst:322
+msgid ""
+"If rejected, the feature is realistically not worth pursuing. If "
+"accepted, such a change to ``map`` should not require its own PEP "
+"(though, like all enhancements, its usefulness should be carefully "
+"considered).  For consistency, it should follow same API and semantics "
+"debated here for ``zip``."
+msgstr ""
+
+#: ../../pep-0618.rst:330
+msgid "Do Nothing"
+msgstr ""
+
+#: ../../pep-0618.rst:332
+msgid "This option is perhaps the least attractive."
+msgstr ""
+
+#: ../../pep-0618.rst:334
+msgid ""
+"Silently truncated data is a particularly nasty class of bug, and hand-"
+"writing a robust solution that gets this right `isn't trivial "
+"<https://stackoverflow.com/questions/32954486/zip-iterators-asserting-"
+"for-equal-length-in-python>`_. The real-world motivating examples from "
+"Python's own standard library are evidence that it's *very* easy to fall "
+"into the sort of trap that this feature aims to avoid."
+msgstr ""
+
+#: ../../pep-0618.rst:343
+msgid "References"
+msgstr ""
+
+#: ../../pep-0618.rst:346
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0618.rst:348
+msgid "This listing is not exhaustive."
+msgstr ""
+
+#: ../../pep-0618.rst:350
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/_pydecimal.py#L3394"
+msgstr ""
+
+#: ../../pep-0618.rst:351
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/_pydecimal.py#L3418"
+msgstr ""
+
+#: ../../pep-0618.rst:352
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/_pydecimal.py#L3435"
+msgstr ""
+
+#: ../../pep-0618.rst:353
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/ast.py#L94-L95"
+msgstr ""
+
+#: ../../pep-0618.rst:354
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/ast.py#L1184"
+msgstr ""
+
+#: ../../pep-0618.rst:355
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/ast.py#L1275"
+msgstr ""
+
+#: ../../pep-0618.rst:356
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/ast.py#L1363"
+msgstr ""
+
+#: ../../pep-0618.rst:357
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/ast.py#L1391"
+msgstr ""
+
+#: ../../pep-0618.rst:358
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/copy.py#L217"
+msgstr ""
+
+#: ../../pep-0618.rst:359
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/csv.py#L142"
+msgstr ""
+
+#: ../../pep-0618.rst:360
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/dis.py#L462"
+msgstr ""
+
+#: ../../pep-0618.rst:361
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/filecmp.py#L142"
+msgstr ""
+
+#: ../../pep-0618.rst:362
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/filecmp.py#L143"
+msgstr ""
+
+#: ../../pep-0618.rst:363
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/inspect.py#L1440"
+msgstr ""
+
+#: ../../pep-0618.rst:364
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/inspect.py#L2095"
+msgstr ""
+
+#: ../../pep-0618.rst:365
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/os.py#L510"
+msgstr ""
+
+#: ../../pep-0618.rst:366
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/plistlib.py#L577"
+msgstr ""
+
+#: ../../pep-0618.rst:367
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/tarfile.py#L1317"
+msgstr ""
+
+#: ../../pep-0618.rst:368
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/tarfile.py#L1323"
+msgstr ""
+
+#: ../../pep-0618.rst:369
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/tarfile.py#L1339"
+msgstr ""
+
+#: ../../pep-0618.rst:370
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/turtle.py#L3015"
+msgstr ""
+
+#: ../../pep-0618.rst:371
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/turtle.py#L3071"
+msgstr ""
+
+#: ../../pep-0618.rst:372
+msgid "https://github.com/python/cpython/blob/27c0d9b54abaa4112d5a317b8aa78b39ad60a808/Lib/turtle.py#L3901"
+msgstr ""
+
+#: ../../pep-0618.rst:376
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0618.rst:378
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

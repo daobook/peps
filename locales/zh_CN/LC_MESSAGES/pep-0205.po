@@ -1,0 +1,681 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0205.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0205.txt:1
+msgid "205"
+msgstr ""
+
+#: ../../pep-0205.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0205.txt:2
+msgid "Weak References"
+msgstr ""
+
+#: ../../pep-0205.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0205.txt:5
+msgid "Fred L. Drake, Jr. <fred@fdrake.net>"
+msgstr ""
+
+#: ../../pep-0205.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0205.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0205.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0205.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0205.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0205.txt:9
+msgid "14-Jul-2000"
+msgstr ""
+
+#: ../../pep-0205.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0205.txt:10
+msgid "2.1"
+msgstr ""
+
+#: ../../pep-0205.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0205.txt:11
+msgid "11-Jan-2001"
+msgstr ""
+
+#: ../../pep-0205.txt:14
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0205.txt:16
+msgid ""
+"There are two basic applications for weak references which have been "
+"noted by Python programmers: object caches and reduction of pain from "
+"circular references."
+msgstr ""
+
+#: ../../pep-0205.txt:21
+msgid "Caches (weak dictionaries)"
+msgstr ""
+
+#: ../../pep-0205.txt:23
+msgid ""
+"There is a need to allow objects to be maintained that represent external"
+" state, mapping a single instance to the external reality, where allowing"
+" multiple instances to be mapped to the same external resource would "
+"create unnecessary difficulty maintaining synchronization among "
+"instances.  In these cases, a common idiom is to support a cache of "
+"instances; a factory function is used to return either a new or existing "
+"instance."
+msgstr ""
+
+#: ../../pep-0205.txt:31
+msgid ""
+"The difficulty in this approach is that one of two things must be "
+"tolerated: either the cache grows without bound, or there needs to be "
+"explicit management of the cache elsewhere in the application.  The later"
+" can be very tedious and leads to more code than is really necessary to "
+"solve the problem at hand, and the former can be unacceptable for long-"
+"running processes or even relatively short processes with substantial "
+"memory requirements."
+msgstr ""
+
+#: ../../pep-0205.txt:40
+msgid ""
+"External objects that need to be represented by a single instance, no "
+"matter how many internal users there are.  This can be useful for "
+"representing files that need to be written back to disk in whole rather "
+"than locked & modified for every use."
+msgstr ""
+
+#: ../../pep-0205.txt:46
+msgid ""
+"Objects that are expensive to create, but may be needed by multiple "
+"internal consumers.  Similar to the first case, but not necessarily bound"
+" to external resources, and possibly not an issue for shared state.  Weak"
+" references are only useful in this case if there is some flavor of "
+"\"soft\" references or if there is a high likelihood that users of "
+"individual objects will overlap in lifespan."
+msgstr ""
+
+#: ../../pep-0205.txt:55
+msgid "Circular references"
+msgstr ""
+
+#: ../../pep-0205.txt:57
+msgid ""
+"DOMs require a huge amount of circular (to parent & document nodes) "
+"references, but these could be eliminated using a weak dictionary mapping"
+" from each node to its parent.  This might be especially useful in the "
+"context of something like ``xml.dom.pulldom``, allowing the ``.unlink()``"
+" operation to become a no-op."
+msgstr ""
+
+#: ../../pep-0205.txt:64
+msgid "This proposal is divided into the following sections:"
+msgstr ""
+
+#: ../../pep-0205.txt:66 ../../pep-0205.txt:138
+msgid "Proposed Solution"
+msgstr ""
+
+#: ../../pep-0205.txt:67 ../../pep-0205.txt:185
+msgid "Implementation Strategy"
+msgstr ""
+
+#: ../../pep-0205.txt:68 ../../pep-0205.txt:219
+msgid "Possible Applications"
+msgstr ""
+
+#: ../../pep-0205.txt:69 ../../pep-0205.txt:234
+msgid "Previous Weak Reference Work in Python"
+msgstr ""
+
+#: ../../pep-0205.txt:70 ../../pep-0205.txt:265
+msgid "Weak References in Java"
+msgstr ""
+
+#: ../../pep-0205.txt:72
+msgid ""
+"The full text of one early proposal is included as an appendix since it "
+"does not appear to be available on the net."
+msgstr ""
+
+#: ../../pep-0205.txt:77
+msgid "Aspects of the Solution Space"
+msgstr ""
+
+#: ../../pep-0205.txt:79
+msgid "There are two distinct aspects to the weak references problem:"
+msgstr ""
+
+#: ../../pep-0205.txt:81
+msgid "Invalidation of weak references"
+msgstr ""
+
+#: ../../pep-0205.txt:82
+msgid "Presentation of weak references to Python code"
+msgstr ""
+
+#: ../../pep-0205.txt:85
+msgid "Invalidation"
+msgstr ""
+
+#: ../../pep-0205.txt:87
+msgid ""
+"Past approaches to weak reference invalidation have often hinged on "
+"storing a strong reference and being able to examine all the instances of"
+" weak reference objects, and invalidating them when the reference count "
+"of their referent goes to one (indicating that the reference stored by "
+"the weak reference is the last remaining reference).  This has the "
+"advantage that the memory management machinery in Python need not change,"
+" and that any type can be weakly referenced."
+msgstr ""
+
+#: ../../pep-0205.txt:96
+msgid ""
+"The disadvantage of this approach to invalidation is that it assumes that"
+" the management of the weak references is called sufficiently frequently "
+"that weakly-referenced objects are noticed within a reasonably short time"
+" frame; since this means a scan over some data structure to invalidate "
+"references, an operation which is O(N) on the number of weakly referenced"
+" objects, this is not effectively amortized for any single object which "
+"is weakly referenced.  This also assumes that the application is calling "
+"into code which handles weakly-referenced objects with some frequency, "
+"which makes weak-references less attractive for library code."
+msgstr ""
+
+#: ../../pep-0205.txt:108
+msgid ""
+"An alternate approach to invalidation is that the de-allocation code to "
+"be aware of the possibility of weak references and make a specific call "
+"into the weak-reference management code to all invalidation whenever an "
+"object is deallocated.  This requires a change in the tp_dealloc handler "
+"for weakly-referencable objects; an additional call is needed at the "
+"\"top\" of the handler for objects which support weak-referencing, and an"
+" efficient way to map from an object to a chain of weak references for "
+"that object is needed as well."
+msgstr ""
+
+#: ../../pep-0205.txt:119
+msgid "Presentation"
+msgstr ""
+
+#: ../../pep-0205.txt:121
+msgid ""
+"Two ways that weak references are presented to the Python layer have been"
+" as explicit reference objects upon which some operation is required in "
+"order to retrieve a usable reference to the underlying object, and proxy "
+"objects which masquerade as the original objects as much as possible."
+msgstr ""
+
+#: ../../pep-0205.txt:127
+msgid ""
+"Reference objects are easy to work with when some additional layer of "
+"object management is being added in Python; references can be checked for"
+" liveness explicitly, without having to invoke operations on the "
+"referents and catching some special exception raised when an invalid weak"
+" reference is used."
+msgstr ""
+
+#: ../../pep-0205.txt:133
+msgid ""
+"However, a number of users favor the proxy approach simply because the "
+"weak reference looks so much like the original object."
+msgstr ""
+
+#: ../../pep-0205.txt:140
+msgid ""
+"Weak references should be able to point to any Python object that may "
+"have substantial memory size (directly or indirectly), or hold references"
+" to external resources (database connections, open files, etc.)."
+msgstr ""
+
+#: ../../pep-0205.txt:145
+msgid ""
+"A new module, weakref, will contain new functions used to create weak "
+"references.  ``weakref.ref()`` will create a \"weak reference object\" "
+"and optionally attach a callback which will be called when the object is "
+"about to be finalized.  ``weakref.mapping()`` will create a \"weak "
+"dictionary\".  A third function, ``weakref.proxy()``, will create a proxy"
+" object that behaves somewhat like the original object."
+msgstr ""
+
+#: ../../pep-0205.txt:153
+msgid ""
+"A weak reference object will allow access to the referenced object if it "
+"hasn't been collected and to determine if the object still exists in "
+"memory.  Retrieving the referent is done by calling the reference object."
+"  If the referent is no longer alive, this will return None instead."
+msgstr ""
+
+#: ../../pep-0205.txt:159
+msgid ""
+"A weak dictionary maps arbitrary keys to values, but does not own a "
+"reference to the values.  When the values are finalized, the (key, value)"
+" pairs for which it is a value are removed from all the mappings "
+"containing such pairs.  Like dictionaries, weak dictionaries are not "
+"hashable."
+msgstr ""
+
+#: ../../pep-0205.txt:165
+msgid ""
+"Proxy objects are weak references that attempt to behave like the object "
+"they proxy, as much as they can.  Regardless of the underlying type, "
+"proxies are not hashable since their ability to act as a weak reference "
+"relies on a fundamental mutability that will cause failures when used as "
+"dictionary keys -- even if the proper hash value is computed before the "
+"referent dies, the resulting proxy cannot be used as a dictionary key "
+"since it cannot be compared once the referent has expired, and "
+"comparability is necessary for dictionary keys.  Operations on proxy "
+"objects after the referent dies cause weakref.ReferenceError to be raised"
+" in most cases.  \"is\" comparisons, ``type()``, and ``id()`` will "
+"continue to work, but always refer to the proxy and not the referent."
+msgstr ""
+
+#: ../../pep-0205.txt:178
+msgid ""
+"The callbacks registered with weak references must accept a single "
+"parameter, which will be the weak reference or proxy object itself.  The "
+"object cannot be accessed or resurrected in the callback."
+msgstr ""
+
+#: ../../pep-0205.txt:187
+msgid ""
+"The implementation of weak references will include a list of reference "
+"containers that must be cleared for each weakly- referencable object.  If"
+" the reference is from a weak dictionary, the dictionary entry is cleared"
+" first.  Then, any associated callback is called with the object passed "
+"as a parameter.  Once all callbacks have been called, the object is "
+"finalized and deallocated."
+msgstr ""
+
+#: ../../pep-0205.txt:195
+msgid ""
+"Many built-in types will participate in the weak-reference management, "
+"and any extension type can elect to do so.  The type structure will "
+"contain an additional field which provides an offset into the instance "
+"structure which contains a list of weak reference structures.  If the "
+"value of the field is <= 0, the object does not participate.  In this "
+"case, ``weakref.ref()``, ``<weakdict>.__setitem__()`` and "
+"``.setdefault()``, and item assignment will raise ``TypeError``.  If the "
+"value of the field is > 0, a new weak reference can be generated and "
+"added to the list."
+msgstr ""
+
+#: ../../pep-0205.txt:205
+msgid ""
+"This approach is taken to allow arbitrary extension types to participate,"
+" without taking a memory hit for numbers or other small types."
+msgstr ""
+
+#: ../../pep-0205.txt:209
+msgid ""
+"Standard types which support weak references include instances, "
+"functions, and bound & unbound methods.  With the addition of class types"
+" (\"new-style classes\") in Python 2.2, types grew support for weak "
+"references.  Instances of class types are weakly referencable if they "
+"have a base type which is weakly referencable, the class not specify "
+"``__slots__``, or a slot is named ``__weakref__``. Generators also "
+"support weak references."
+msgstr ""
+
+#: ../../pep-0205.txt:221
+msgid "PyGTK+ bindings?"
+msgstr ""
+
+#: ../../pep-0205.txt:223
+msgid ""
+"Tkinter -- could avoid circular references by using weak references from "
+"widgets to their parents.  Objects won't be discarded any sooner in the "
+"typical case, but there won't be so much dependence on the programmer "
+"calling ``.destroy()`` before releasing a reference.  This would mostly "
+"benefit long-running applications."
+msgstr ""
+
+#: ../../pep-0205.txt:230
+msgid "DOM trees."
+msgstr ""
+
+#: ../../pep-0205.txt:236
+msgid ""
+"Dianne Hackborn has proposed something called \"virtual references\". "
+"'vref' objects are very similar to java.lang.ref.WeakReference objects, "
+"except there is no equivalent to the invalidation queues.  Implementing a"
+" \"weak dictionary\" would be just as difficult as using only weak "
+"references (without the invalidation queue) in Java.  Information on this"
+" has disappeared from the Web, but is included below as an Appendix."
+msgstr ""
+
+#: ../../pep-0205.txt:244
+msgid "Marc-André Lemburg's mx.Proxy package:"
+msgstr ""
+
+#: ../../pep-0205.txt:246
+msgid "http://www.lemburg.com/files/python/mxProxy.html"
+msgstr ""
+
+#: ../../pep-0205.txt:248
+msgid ""
+"The weakdict module by Dieter Maurer is implemented in C and Python.  It "
+"appears that the Web pages have not been updated since Python 1.5.2a, so "
+"I'm not yet sure if the implementation is compatible with Python 2.0."
+msgstr ""
+
+#: ../../pep-0205.txt:253
+msgid "http://www.handshake.de/~dieter/weakdict.html"
+msgstr ""
+
+#: ../../pep-0205.txt:255
+msgid "PyWeakReference by Alex Shindich:"
+msgstr ""
+
+#: ../../pep-0205.txt:257
+msgid "http://sourceforge.net/projects/pyweakreference/"
+msgstr ""
+
+#: ../../pep-0205.txt:259
+msgid "Eric Tiedemann has a weak dictionary implementation:"
+msgstr ""
+
+#: ../../pep-0205.txt:261
+msgid "http://www.hyperreal.org/~est/python/weak/"
+msgstr ""
+
+#: ../../pep-0205.txt:267
+msgid "http://java.sun.com/j2se/1.3/docs/api/java/lang/ref/package-summary.html"
+msgstr ""
+
+#: ../../pep-0205.txt:269
+msgid ""
+"Java provides three forms of weak references, and one interesting helper "
+"class.  The three forms are called \"weak\", \"soft\", and \"phantom\" "
+"references.  The relevant classes are defined in the java.lang.ref "
+"package."
+msgstr ""
+
+#: ../../pep-0205.txt:274
+msgid ""
+"For each of the reference types, there is an option to add the reference "
+"to a queue when it is invalidated by the memory allocator.  The primary "
+"purpose of this facility seems to be that it allows larger structures to "
+"be composed to incorporate weak-reference semantics without having to "
+"impose substantial additional locking requirements.  For instance, it "
+"would not be difficult to use this facility to create a \"weak\" hash "
+"table which removes keys and referents when a reference is no longer used"
+" elsewhere.  Using weak references for the objects without some sort of "
+"notification queue for invalidations leads to much more tedious "
+"implementation of the various operations required on hash tables.  This "
+"can be a performance bottleneck if deallocations of the stored objects "
+"are infrequent."
+msgstr ""
+
+#: ../../pep-0205.txt:288
+msgid ""
+"Java's \"weak\" references are most like Dianne Hackborn's old vref "
+"proposal: a reference object refers to a single Python object, but does "
+"not own a reference to that object.  When that object is deallocated, the"
+" reference object is invalidated.  Users of the reference object can "
+"easily determine that the reference has been invalidated, or a "
+"NullObjectDereferenceError can be raised when an attempt is made to use "
+"the referred-to object."
+msgstr ""
+
+#: ../../pep-0205.txt:296
+msgid ""
+"The \"soft\" references are similar, but are not invalidated as soon as "
+"all other references to the referred-to object have been released.  The "
+"\"soft\" reference does own a reference, but allows the memory allocator "
+"to free the referent if the memory is needed elsewhere.  It is not clear "
+"whether this means soft references are released before the ``malloc()`` "
+"implementation calls ``sbrk()`` or its equivalent, or if soft references "
+"are only cleared when ``malloc()`` returns ``NULL``."
+msgstr ""
+
+#: ../../pep-0205.txt:305
+msgid ""
+"\"Phantom\" references are a little different; unlike weak and soft "
+"references, the referent is not cleared when the reference is added to "
+"its queue.  When all phantom references for an object are dequeued, the "
+"object is cleared.  This can be used to keep an object alive until some "
+"additional cleanup is performed which needs to happen before the objects "
+"``.finalize()`` method is called."
+msgstr ""
+
+#: ../../pep-0205.txt:312
+msgid ""
+"Unlike the other two reference types, \"phantom\" references must be "
+"associated with an invalidation queue."
+msgstr ""
+
+#: ../../pep-0205.txt:317
+msgid "Appendix -- Dianne Hackborn's vref proposal (1995)"
+msgstr ""
+
+#: ../../pep-0205.txt:319
+msgid ""
+"[This has been indented and paragraphs reflowed, but there have be no "
+"content changes.  --Fred]"
+msgstr ""
+
+#: ../../pep-0205.txt:323
+msgid "Proposal: Virtual References"
+msgstr ""
+
+#: ../../pep-0205.txt:325
+msgid ""
+"In an attempt to partly address the recurring discussion concerning "
+"reference counting vs. garbage collection, I would like to propose an "
+"extension to Python which should help in the creation of \"well "
+"structured\" cyclic graphs.  In particular, it should allow at least "
+"trees with parent back-pointers and doubly-linked lists to be created "
+"without worry about cycles."
+msgstr ""
+
+#: ../../pep-0205.txt:332
+msgid ""
+"The basic mechanism I'd like to propose is that of a \"virtual "
+"reference,\" or a \"vref\" from here on out.  A vref is essentially a "
+"handle on an object that does not increment the object's reference count."
+"  This means that holding a vref on an object will not keep the object "
+"from being destroyed.  This would allow the Python programmer, for "
+"example, to create the aforementioned tree structure tree structure, "
+"which is automatically destroyed when it is no longer in use -- by making"
+" all of the parent back-references into vrefs, they no longer create "
+"reference cycles which keep the tree from being destroyed."
+msgstr ""
+
+#: ../../pep-0205.txt:343
+msgid ""
+"In order to implement this mechanism, the Python core must ensure that no"
+" -real- pointers are ever left referencing objects that no longer exist."
+"  The implementation I would like to propose involves two basic additions"
+" to the current Python system:"
+msgstr ""
+
+#: ../../pep-0205.txt:348
+msgid ""
+"A new \"vref\" type, through which the Python programmer creates and "
+"manipulates virtual references.  Internally, it is basically a C-level "
+"Python object with a pointer to the Python object it is a reference to.  "
+"Unlike all other Python code, however, it does not change the reference "
+"count of this object. In addition, it includes two pointers to implement "
+"a doubly-linked list, which is used below."
+msgstr ""
+
+#: ../../pep-0205.txt:356
+msgid ""
+"The addition of a new field to the basic Python object [``PyObject_Head``"
+" in object.h], which is either ``NULL``, or points to the head of a list "
+"of all vref objects that reference it.  When a vref object attaches "
+"itself to another object, it adds itself to this linked list.  Then, if "
+"an object with any vrefs on it is deallocated, it may walk this list and "
+"ensure that all of the vrefs on it point to some safe value, e.g. "
+"Nothing."
+msgstr ""
+
+#: ../../pep-0205.txt:365
+msgid ""
+"This implementation should hopefully have a minimal impact on the current"
+" Python core -- when no vrefs exist, it should only add one pointer to "
+"all objects, and a check for a ``NULL`` pointer every time an object is "
+"deallocated."
+msgstr ""
+
+#: ../../pep-0205.txt:370
+msgid ""
+"Back at the Python language level, I have considered two possible "
+"semantics for the vref object --"
+msgstr ""
+
+#: ../../pep-0205.txt:374
+msgid "Pointer semantics"
+msgstr ""
+
+#: ../../pep-0205.txt:376
+msgid ""
+"In this model, a vref behaves essentially like a Python-level pointer; "
+"the Python program must explicitly dereference the vref to manipulate the"
+" actual object it references."
+msgstr ""
+
+#: ../../pep-0205.txt:380
+msgid ""
+"An example vref module using this model could include the function "
+"\"new\"; When used as 'MyVref = vref.new(MyObject)', it returns a new "
+"vref object such that ``MyVref.object == MyObject``. ``MyVref.object`` "
+"would then change to Nothing if ``MyObject`` is ever deallocated."
+msgstr ""
+
+#: ../../pep-0205.txt:386
+msgid "For a concrete example, we may introduce some new C-style syntax:"
+msgstr ""
+
+#: ../../pep-0205.txt:388
+msgid ""
+"``&`` -- unary operator, creates a vref on an object, same as "
+"``vref.new()``."
+msgstr ""
+
+#: ../../pep-0205.txt:389
+msgid ""
+"``*`` -- unary operator, dereference a vref, same as "
+"``VrefObject.object``."
+msgstr ""
+
+#: ../../pep-0205.txt:391
+msgid "We can then define::"
+msgstr ""
+
+#: ../../pep-0205.txt:399
+msgid ""
+"Rule #4 is subtle, but comes about because we have made a vref to (a vref"
+" with no real references).  Thus the outer vref is cleared to Nothing "
+"when the inner one inevitably disappears."
+msgstr ""
+
+#: ../../pep-0205.txt:404
+msgid "Proxy semantics"
+msgstr ""
+
+#: ../../pep-0205.txt:406
+msgid ""
+"In this model, the Python programmer manipulates vref objects just as if "
+"she were manipulating the object it is a reference of.  This is "
+"accomplished by implementing the vref so that all operations on it are "
+"redirected to its referenced object.  With this model, the dereference "
+"operator (*) no longer makes sense; instead, we have only the reference "
+"operator (&), and define::"
+msgstr ""
+
+#: ../../pep-0205.txt:418
+msgid ""
+"Again, rule #4 is important -- here, the outer vref is in fact a "
+"reference to the original object, and -not- the inner vref. This is "
+"because all operations applied to a vref actually apply to its object, so"
+" that creating a vref of a vref actually results in creating a vref of "
+"the latter's object."
+msgstr ""
+
+#: ../../pep-0205.txt:424
+msgid ""
+"The first, pointer semantics, has the advantage that it would be very "
+"easy to implement; the vref type is extremely simple, requiring at "
+"minimum a single attribute, object, and a function to create a reference."
+msgstr ""
+
+#: ../../pep-0205.txt:429
+msgid ""
+"However, I really like the proxy semantics.  Not only does it put less of"
+" a burden on the Python programmer, but it allows you to do nice things "
+"like use a vref anywhere you would use the actual object.  Unfortunately,"
+" it would probably an extreme pain, if not practically impossible, to "
+"implement in the current Python implementation.  I do have some thoughts,"
+" though, on how to do this, if it seems interesting; one possibility is "
+"to introduce new type-checking functions which handle the vref.  This "
+"would hopefully older C modules which don't expect vrefs to simply return"
+" a type error, until they can be fixed."
+msgstr ""
+
+#: ../../pep-0205.txt:440
+msgid ""
+"Finally, there are some other additional capabilities that this system "
+"could provide.  One that seems particularly interesting to me involves "
+"allowing the Python programmer to add \"destructor\" function to a vref "
+"-- this Python function would be called immediately prior to the "
+"referenced object being deallocated, allowing a Python program to "
+"invisibly attach itself to another object and watch for it to disappear."
+"  This seems neat, though I haven't actually come up with any practical "
+"uses for it, yet... :)"
+msgstr ""
+
+#: ../../pep-0205.txt:449
+msgid "-- Dianne"
+msgstr ""
+
+#: ../../pep-0205.txt:453
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0205.txt:455
+msgid "This document has been placed in the public domain."
+msgstr ""
+

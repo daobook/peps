@@ -1,0 +1,324 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0614.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0614.rst:1
+msgid "614"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0614.rst:2
+msgid "Relaxing Grammar Restrictions On Decorators"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0614.rst:5
+msgid "Brandt Bucher <brandt@python.org>"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0614.rst:6
+msgid "Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0614.rst:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0614.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0614.rst:10
+msgid "10-Feb-2020"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0614.rst:11
+msgid "3.9"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0614.rst:12
+msgid "11-Feb-2020, 18-Feb-2020, 03-Mar-2020"
+msgstr ""
+
+#: ../../pep-0614.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0614.rst:13
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/VSR66MOTCDCY7ZFH4IG7QVFI2JXQQZQ5"
+msgstr ""
+
+#: ../../pep-0614.rst:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0614.rst:19
+msgid ""
+"Python currently requires that all decorators consist of a dotted name, "
+"optionally followed by a single call. This PEP proposes removing these "
+"limitations and allowing decorators to be any valid expression."
+msgstr ""
+
+#: ../../pep-0614.rst:25
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0614.rst:27
+msgid ""
+"When decorators were first being introduced, `Guido described "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/message/P3JD24UFFPZUUDANOAI6GZAPIGY4CVK7>`_ the motivation"
+" to limit their syntax as a preference, not a technical requirement:"
+msgstr ""
+
+#: ../../pep-0614.rst:32
+msgid ""
+"I have a gut feeling about this one.  I'm not sure where it comes from, "
+"but I have it...  So while it would be quite easy to change the syntax to"
+" ``@test`` in the future, I'd like to stick to with the more restricted "
+"form unless a real use case is presented where allowing ``@test`` would "
+"increase readability."
+msgstr ""
+
+#: ../../pep-0614.rst:38
+msgid ""
+"While these limitations were rarely encountered in practice, `BPO issues "
+"<https://bugs.python.org/issue19660>`_ and `mailing list posts "
+"<https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/UQOCJH3KOPBP7P3AVNS3OYBGZPR3V2WO/#CAOXYF4GV76AFJNCYSYMQTBM7CIPPH5M>`_"
+" have consistently surfaced over the years requesting that they be "
+"removed. The `most recent one <https://mail.python.org/archives/list"
+"/python-ideas@python.org/thread/WOWD4P323DYDIGUQVWMESDWUG6QOW4MP>`_ "
+"(which `prompted this proposal <https://mail.python.org/archives/list"
+"/python-ideas@python.org/message/FKE7ZFGUDCU5WVOE2QTD5XGMCNCOMETV>`_) "
+"contained a good example of code using the ``PyQt5`` library that would "
+"become more readable, idiomatic, and maintainable if the existing "
+"restrictions were relaxed.  Slightly modified::"
+msgstr ""
+
+#: ../../pep-0614.rst:64
+msgid "Currently, these decorations must be rewritten as something like::"
+msgstr ""
+
+#: ../../pep-0614.rst:78
+msgid ""
+"Further, the current grammar is already loose enough that it's trivial to"
+" hack more complicated decorator expressions together. So rather than "
+"disallow arbitrarily complex expressions, as intended, the current "
+"restrictions only make them uglier and less efficient::"
+msgstr ""
+
+#: ../../pep-0614.rst:100
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0614.rst:103
+msgid "Allowing Any Expression"
+msgstr ""
+
+#: ../../pep-0614.rst:105
+msgid ""
+"The decision to allow *any* valid expression (and not just relaxing the "
+"current restrictions to allow, for example, subscripting) has been "
+"considered as the next logical step in the evolution of decorator grammar"
+" for quite some time.  As `Guido noted "
+"<https://mail.python.org/archives/list/python-"
+"ideas@python.org/message/CAOXYF4GV76AFJNCYSYMQTBM7CIPPH5M>`_, during yet "
+"another mailing list thread:"
+msgstr ""
+
+#: ../../pep-0614.rst:112
+msgid ""
+"I don't think it's reasonable to constrain it less than it currently is "
+"but more than a general expression."
+msgstr ""
+
+#: ../../pep-0614.rst:115
+msgid ""
+"Special-casing the grammar to allow *some* useful cases would only "
+"complicate the current situation, and all but guarantee that the process "
+"would repeat itself sometime in the future.  Further, one purpose of this"
+" grammatical change is to discourage the temptation to use hacks like the"
+" ``eval`` and identity-function anti-patterns shown above."
+msgstr ""
+
+#: ../../pep-0614.rst:122
+msgid ""
+"In short: if we're removing somewhat arbitrary restrictions, we should "
+"remove *all* of them."
+msgstr ""
+
+#: ../../pep-0614.rst:127
+msgid "What Counts As An \"Expression\""
+msgstr ""
+
+#: ../../pep-0614.rst:129
+msgid ""
+"Throughout this document, the word \"expression\" is used as defined in "
+"the `Python Language Reference "
+"<https://docs.python.org/3.9/reference/expressions.html#grammar-token-"
+"expression>`_. This can be summarized as \"anything that's valid as a "
+"test in ``if``, ``elif``, and ``while`` blocks\".  This differs subtly "
+"from a perhaps more popular `definition "
+"<https://docs.python.org/3/glossary.html#term-expression>`_, which can be"
+" summarized as \"anything that's valid as string input to ``eval``\"."
+msgstr ""
+
+#: ../../pep-0614.rst:138
+msgid ""
+"This definition of \"expression\" is convenient in that it fits our needs"
+" well, and reuses the allowed grammar of existing language constructs.  "
+"It has two subtle differences from the other definition:"
+msgstr ""
+
+#: ../../pep-0614.rst:144
+msgid "Tuple Displays *Must* Be Parenthesized"
+msgstr ""
+
+#: ../../pep-0614.rst:146
+msgid ""
+"This is based on an observation Guido made in the same email. Continued "
+"immediately from above:"
+msgstr ""
+
+#: ../../pep-0614.rst:149
+msgid "Though I wouldn't allow commas-- there's no way that"
+msgstr ""
+
+#: ../../pep-0614.rst:156
+msgid "can make sense."
+msgstr ""
+
+#: ../../pep-0614.rst:158
+msgid ""
+"Indeed, it may even lead inexperienced readers to conclude that several "
+"decorators are being applied, as if they were stacked. Requiring "
+"parentheses here makes the (admittedly nonsensical) intent clear without "
+"imposing further restrictions and grammar complications."
+msgstr ""
+
+#: ../../pep-0614.rst:165
+msgid "Named Expressions *Need Not* Be Parenthesized"
+msgstr ""
+
+#: ../../pep-0614.rst:167
+msgid ""
+"Here, the choice of syntax is unambiguous.  :pep:`572` explains why it "
+"requires parentheses around top-level expression statements:"
+msgstr ""
+
+#: ../../pep-0614.rst:170
+msgid ""
+"This rule is included to simplify the choice for the user between an "
+"assignment statement and an assignment expression -- there is no "
+"syntactic position where both are valid."
+msgstr ""
+
+#: ../../pep-0614.rst:174
+msgid ""
+"Since an assignment statement is not valid here, assignment expressions "
+"should not be unnecessarily burdened with parentheses."
+msgstr ""
+
+#: ../../pep-0614.rst:179
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0614.rst:181
+msgid "The grammar for decorators is currently::"
+msgstr ""
+
+#: ../../pep-0614.rst:185
+msgid "This PEP proposes that it be simplified to::"
+msgstr ""
+
+#: ../../pep-0614.rst:191
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0614.rst:193
+msgid "This new grammar is fully backward-compatible with the existing grammar."
+msgstr ""
+
+#: ../../pep-0614.rst:198
+msgid "How To Teach This"
+msgstr ""
+
+#: ../../pep-0614.rst:200
+msgid ""
+"Decorators can continue to be taught as they always have; the average "
+"Python programmer is likely unaware that the current restriction even "
+"exists."
+msgstr ""
+
+#: ../../pep-0614.rst:206
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0614.rst:208
+msgid ""
+"The author has written a `CPython implementation "
+"<https://github.com/python/cpython/pull/18570>`_."
+msgstr ""
+
+#: ../../pep-0614.rst:213
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0614.rst:215
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

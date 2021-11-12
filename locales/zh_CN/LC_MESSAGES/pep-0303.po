@@ -1,0 +1,327 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0303.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0303.txt:1
+msgid "303"
+msgstr ""
+
+#: ../../pep-0303.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0303.txt:2
+msgid "Extend divmod() for Multiple Divisors"
+msgstr ""
+
+#: ../../pep-0303.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0303.txt:5
+msgid "Thomas Bellman <bellman+pep-divmod@lysator.liu.se>"
+msgstr ""
+
+#: ../../pep-0303.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0303.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0303.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0303.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0303.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0303.txt:9
+msgid "31-Dec-2002"
+msgstr ""
+
+#: ../../pep-0303.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0303.txt:10
+msgid "2.3"
+msgstr ""
+
+#: ../../pep-0303.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0303.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0303.txt:17
+msgid ""
+"This PEP describes an extension to the built-in ``divmod()`` function, "
+"allowing it to take multiple divisors, chaining several calls to "
+"``divmod()`` into one."
+msgstr ""
+
+#: ../../pep-0303.txt:23
+msgid "Pronouncement"
+msgstr ""
+
+#: ../../pep-0303.txt:25
+msgid ""
+"This PEP is rejected.  Most uses for chained ``divmod()`` involve a "
+"constant modulus (in radix conversions for example) and are more properly"
+" coded as a loop.  The example of splitting seconds into "
+"days/hours/minutes/seconds does not generalize to months and years; "
+"rather, the whole use case is handled more flexibly and robustly by date "
+"and time modules.  The other use cases mentioned in the PEP are somewhat "
+"rare in real code.  The proposal is also problematic in terms of clarity "
+"and obviousness.  In the examples, it is not immediately clear that the "
+"argument order is correct or that the target tuple is of the right "
+"length.  Users from other languages are more likely to understand the "
+"standard two argument form without having to re-read the documentation.  "
+"See python-dev discussion on 17 June 2005 [1]_."
+msgstr ""
+
+#: ../../pep-0303.txt:41
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0303.txt:43
+msgid ""
+"The built-in ``divmod()`` function would be changed to accept multiple "
+"divisors, changing its signature from ``divmod(dividend, divisor)`` to "
+"``divmod(dividend, *divisors)``.  The dividend is divided by the last "
+"divisor, giving a quotient and a remainder.  The quotient is then divided"
+" by the second to last divisor, giving a new quotient and remainder.  "
+"This is repeated until all divisors have been used, and ``divmod()`` then"
+" returns a tuple consisting of the quotient from the last step, and the "
+"remainders from all the steps."
+msgstr ""
+
+#: ../../pep-0303.txt:52
+msgid ""
+"A Python implementation of the new ``divmod()`` behaviour could look "
+"like::"
+msgstr ""
+
+#: ../../pep-0303.txt:66
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0303.txt:68
+msgid ""
+"Occasionally one wants to perform a chain of ``divmod()`` operations, "
+"calling ``divmod()`` on the quotient from the previous step, with varying"
+" divisors.  The most common case is probably converting a number of "
+"seconds into weeks, days, hours, minutes and seconds. This would today be"
+" written as::"
+msgstr ""
+
+#: ../../pep-0303.txt:81
+msgid "This is tedious and easy to get wrong each time you need it."
+msgstr ""
+
+#: ../../pep-0303.txt:83
+msgid ""
+"If instead the ``divmod()`` built-in is changed according the proposal, "
+"the code for converting seconds to weeks, days, hours, minutes and "
+"seconds then become ::"
+msgstr ""
+
+#: ../../pep-0303.txt:91
+msgid "which is easier to type, easier to type correctly, and easier to read."
+msgstr ""
+
+#: ../../pep-0303.txt:94
+msgid "Other applications are:"
+msgstr ""
+
+#: ../../pep-0303.txt:96
+msgid ""
+"Astronomical angles (declination is measured in degrees, minutes and "
+"seconds, right ascension is measured in hours, minutes and seconds)."
+msgstr ""
+
+#: ../../pep-0303.txt:99
+msgid "Old British currency (1 pound = 20 shilling, 1 shilling = 12 pence)."
+msgstr ""
+
+#: ../../pep-0303.txt:100
+msgid ""
+"Anglo-Saxon length units: 1 mile = 1760 yards, 1 yard = 3 feet, 1 foot = "
+"12 inches."
+msgstr ""
+
+#: ../../pep-0303.txt:102
+msgid ""
+"Anglo-Saxon weight units: 1 long ton = 160 stone, 1 stone = 14 pounds, 1 "
+"pound = 16 ounce, 1 ounce = 16 dram."
+msgstr ""
+
+#: ../../pep-0303.txt:104
+msgid ""
+"British volumes: 1 gallon = 4 quart, 1 quart = 2 pint, 1 pint = 20 fluid "
+"ounces."
+msgstr ""
+
+#: ../../pep-0303.txt:109
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0303.txt:111
+msgid ""
+"The idea comes from APL, which has an operator that does this.  (I don't "
+"remember what the operator looks like, and it would probably be "
+"impossible to render in ASCII anyway.)"
+msgstr ""
+
+#: ../../pep-0303.txt:115
+msgid ""
+"The APL operator takes a list as its second operand, while this PEP "
+"proposes that each divisor should be a separate argument to the "
+"``divmod()`` function.  This is mainly because it is expected that the "
+"most common uses will have the divisors as constants right in the call "
+"(as the 7, 24, 60, 60 above), and adding a set of parentheses or brackets"
+" would just clutter the call."
+msgstr ""
+
+#: ../../pep-0303.txt:122
+msgid ""
+"Requiring an explicit sequence as the second argument to ``divmod()`` "
+"would seriously break backwards compatibility.  Making ``divmod()`` check"
+" its second argument for being a sequence is deemed to be too ugly to "
+"contemplate.  And in the case where one *does* have a sequence that is "
+"computed other-where, it is easy enough to write ``divmod(x, *divs)`` "
+"instead."
+msgstr ""
+
+#: ../../pep-0303.txt:129
+msgid ""
+"Requiring at least one divisor, i.e rejecting ``divmod(x)``, has been "
+"considered, but no good reason to do so has come to mind, and is thus "
+"allowed in the name of generality."
+msgstr ""
+
+#: ../../pep-0303.txt:133
+msgid ""
+"Calling ``divmod()`` with no divisors should still return a tuple (of one"
+" element).  Code that calls ``divmod()`` with a varying number of "
+"divisors, and thus gets a return value with an \"unknown\" number of "
+"elements, would otherwise have to special case that case.  Code that "
+"*knows* it is calling ``divmod()`` with no divisors is considered to be "
+"too silly to warrant a special case."
+msgstr ""
+
+#: ../../pep-0303.txt:140
+msgid ""
+"Processing the divisors in the other direction, i.e dividing with the "
+"first divisor first, instead of dividing with the last divisor first, has"
+" been considered.  However, the result comes with the most significant "
+"part first and the least significant part last (think of the chained "
+"divmod as a way of splitting a number into \"digits\", with varying "
+"weights), and it is reasonable to specify the divisors (weights) in the "
+"same order as the result."
+msgstr ""
+
+#: ../../pep-0303.txt:148
+msgid "The inverse operation::"
+msgstr ""
+
+#: ../../pep-0303.txt:156
+msgid "could also be useful.  However, writing ::"
+msgstr ""
+
+#: ../../pep-0303.txt:160
+msgid ""
+"is less cumbersome both to write and to read than the chained divmods.  "
+"It is therefore deemed to be less important, and its introduction can be "
+"deferred to its own PEP.  Also, such a function needs a good name, and "
+"the PEP author has not managed to come up with one yet."
+msgstr ""
+
+#: ../../pep-0303.txt:166
+msgid ""
+"Calling ``divmod(\"spam\")`` does not raise an error, despite strings "
+"supporting neither division nor modulo.  However, unless we know the "
+"other object too, we can't determine whether ``divmod()`` would work or "
+"not, and thus it seems silly to forbid it."
+msgstr ""
+
+#: ../../pep-0303.txt:173
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0303.txt:175
+msgid ""
+"Any module that replaces the ``divmod()`` function in the ``__builtin__``"
+" module, may cause other modules using the new syntax to break.  It is "
+"expected that this is very uncommon."
+msgstr ""
+
+#: ../../pep-0303.txt:179
+msgid ""
+"Code that expects a ``TypeError`` exception when calling ``divmod()`` "
+"with anything but two arguments will break.  This is also expected to be "
+"very uncommon."
+msgstr ""
+
+#: ../../pep-0303.txt:183
+msgid "No other issues regarding backwards compatibility are known."
+msgstr ""
+
+#: ../../pep-0303.txt:187
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0303.txt:189
+msgid ""
+"Not finished yet, but it seems a rather straightforward new "
+"implementation of the function ``builtin_divmod()`` in "
+"``Python/bltinmodule.c``."
+msgstr ""
+
+#: ../../pep-0303.txt:195
+msgid "References"
+msgstr ""
+
+#: ../../pep-0303.txt:197
+msgid ""
+"Raymond Hettinger, \"Propose rejection of PEP 303 -- Extend divmod() for "
+"Multiple Divisors\" https://mail.python.org/pipermail/python-"
+"dev/2005-June/054283.html"
+msgstr ""
+
+#: ../../pep-0303.txt:202
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0303.txt:204
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,213 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0277.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0277.txt:1
+msgid "277"
+msgstr ""
+
+#: ../../pep-0277.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0277.txt:2
+msgid "Unicode file name support for Windows NT"
+msgstr ""
+
+#: ../../pep-0277.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0277.txt:5
+msgid "neilh@scintilla.org (Neil Hodgson)"
+msgstr ""
+
+#: ../../pep-0277.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0277.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0277.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0277.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0277.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0277.txt:9
+msgid "11-Jan-2002"
+msgstr ""
+
+#: ../../pep-0277.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0277.txt:10
+msgid "2.3"
+msgstr ""
+
+#: ../../pep-0277.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0277.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0277.txt:17
+msgid ""
+"This PEP discusses supporting access to all files possible on Windows NT "
+"by passing Unicode file names directly to the system's wide-character "
+"functions."
+msgstr ""
+
+#: ../../pep-0277.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0277.txt:25
+msgid ""
+"Python 2.2 on Win32 platforms converts Unicode file names passed to open "
+"and to functions in the ``os`` module into the 'mbcs' encoding before "
+"passing the result to the operating system.  This is often successful in "
+"the common case where the script is operating with the locale set to the "
+"same value as when the file was created. Most machines are set up as one "
+"locale and rarely if ever changed from this locale.  For some users, "
+"locale is changed more often and on servers there are often files saved "
+"by users using different locales."
+msgstr ""
+
+#: ../../pep-0277.txt:35
+msgid ""
+"On Windows NT and descendent operating systems, including Windows 2000 "
+"and Windows XP, wide-character APIs are available that provide direct "
+"access to all file names, including those that are not representable "
+"using the current locale.  The purpose of this proposal is to provide "
+"access to these wide-character APIs through the standard Python file "
+"object and posix module and so provide access to all files on Windows NT."
+msgstr ""
+
+#: ../../pep-0277.txt:45
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0277.txt:47
+msgid ""
+"On Windows platforms which provide wide-character file APIs, when Unicode"
+" arguments are provided to file APIs, wide-character calls are made "
+"instead of the standard C library and posix calls."
+msgstr ""
+
+#: ../../pep-0277.txt:51
+msgid ""
+"The Python file object is extended to use a Unicode file name argument "
+"directly rather than converting it.  This affects the file object "
+"constructor ``file(filename[, mode[, bufsize]])`` and also the ``open`` "
+"function which is an alias of this constructor.  When a Unicode filename "
+"argument is used here then the ``name`` attribute of the file object will"
+" be Unicode.  The representation of a file object, ``repr(f)`` will "
+"display Unicode file names as an escaped string in a similar manner to "
+"the representation of Unicode strings."
+msgstr ""
+
+#: ../../pep-0277.txt:61
+msgid ""
+"The ``posix`` module contains functions that take file or directory "
+"names: ``chdir``, ``listdir``, ``mkdir``, ``open``, ``remove``, "
+"``rename``, ``rmdir``, ``stat``, and ``_getfullpathname``.  These will "
+"use Unicode arguments directly rather than converting them.  For the "
+"``rename`` function, this behaviour is triggered when either of the "
+"arguments is Unicode and the other argument converted to Unicode using "
+"the default encoding."
+msgstr ""
+
+#: ../../pep-0277.txt:69
+msgid ""
+"The ``listdir`` function currently returns a list of strings.  Under this"
+" proposal, it will return a list of Unicode strings when its path "
+"argument is Unicode."
+msgstr ""
+
+#: ../../pep-0277.txt:75
+msgid "Restrictions"
+msgstr ""
+
+#: ../../pep-0277.txt:77
+msgid ""
+"On the consumer Windows operating systems, Windows 95, Windows 98, and "
+"Windows ME, there are no wide-character file APIs so behaviour is "
+"unchanged under this proposal.  It may be possible in the future to "
+"extend this proposal to cover these operating systems as the VFAT-32 file"
+" system used by them does support Unicode file names but access is "
+"difficult and so implementing this would require much work.  The "
+"\"Microsoft Layer for Unicode\" could be a starting point for "
+"implementing this."
+msgstr ""
+
+#: ../../pep-0277.txt:86
+msgid ""
+"Python can be compiled with the size of Unicode characters set to 4 bytes"
+" rather than 2 by defining ``PY_UNICODE_TYPE`` to be a 4 byte type and "
+"``Py_UNICODE_SIZE`` to be 4.  As the Windows API does not accept 4 byte "
+"characters, the features described in this proposal will not work in this"
+" mode so the implementation falls back to the current 'mbcs' encoding "
+"technique. This restriction could be lifted in the future by performing "
+"extra conversions using ``PyUnicode_AsWideChar`` but for now that would "
+"add too much complexity for a very rarely used feature."
+msgstr ""
+
+#: ../../pep-0277.txt:98
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0277.txt:100
+msgid "The implementation is available at [2]_."
+msgstr ""
+
+#: ../../pep-0277.txt:104
+msgid "References"
+msgstr ""
+
+#: ../../pep-0277.txt:106
+msgid "Microsoft Windows APIs http://msdn.microsoft.com/"
+msgstr ""
+
+#: ../../pep-0277.txt:109
+msgid "https://bugs.python.org/issue594001"
+msgstr ""
+
+#: ../../pep-0277.txt:113
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0277.txt:115
+msgid "This document has been placed in the public domain."
+msgstr ""
+

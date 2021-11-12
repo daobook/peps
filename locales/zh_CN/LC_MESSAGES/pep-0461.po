@@ -1,0 +1,424 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0461.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0461.txt:1
+msgid "461"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0461.txt:2
+#, python-format
+msgid "Adding % formatting to bytes and bytearray"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0461.txt:5
+msgid "Ethan Furman <ethan@stoneleaf.us>"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0461.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0461.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0461.txt:9
+msgid "13-Jan-2014"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0461.txt:10
+msgid "3.5"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0461.txt:11
+msgid "2014-01-14, 2014-01-15, 2014-01-17, 2014-02-22, 2014-03-25, 2014-03-27"
+msgstr ""
+
+#: ../../pep-0461.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0461.txt:13
+msgid "https://mail.python.org/pipermail/python-dev/2014-March/133621.html"
+msgstr ""
+
+#: ../../pep-0461.txt:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0461.txt:19
+#, python-format
+msgid ""
+"This PEP proposes adding % formatting operations similar to Python 2's "
+"``str`` type to ``bytes`` and ``bytearray`` [1]_ [2]_."
+msgstr ""
+
+#: ../../pep-0461.txt:24
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0461.txt:26
+msgid ""
+"While interpolation is usually thought of as a string operation, there "
+"are cases where interpolation on ``bytes`` or ``bytearrays`` make sense, "
+"and the work needed to make up for this missing functionality detracts "
+"from the overall readability of the code."
+msgstr ""
+
+#: ../../pep-0461.txt:33
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0461.txt:35
+msgid ""
+"With Python 3 and the split between ``str`` and ``bytes``, one small but "
+"important area of programming became slightly more difficult, and much "
+"more painful -- wire format protocols [3]_."
+msgstr ""
+
+#: ../../pep-0461.txt:39
+#, python-format
+msgid ""
+"This area of programming is characterized by a mixture of binary data and"
+" ASCII compatible segments of text (aka ASCII-encoded text).  Bringing "
+"back a restricted %-interpolation for ``bytes`` and ``bytearray`` will "
+"aid both in writing new wire format code, and in porting Python 2 wire "
+"format code."
+msgstr ""
+
+#: ../../pep-0461.txt:44
+msgid ""
+"Common use-cases include ``dbf`` and ``pdf`` file formats, ``email`` "
+"formats, and ``FTP`` and ``HTTP`` communications, among many others."
+msgstr ""
+
+#: ../../pep-0461.txt:49
+msgid "Proposed semantics for ``bytes`` and ``bytearray`` formatting"
+msgstr ""
+
+#: ../../pep-0461.txt:52
+#, python-format
+msgid "%-interpolation"
+msgstr ""
+
+#: ../../pep-0461.txt:54
+msgid ""
+"All the numeric formatting codes (``d``, ``i``, ``o``, ``u``, ``x``, "
+"``X``, ``e``, ``E``, ``f``, ``F``, ``g``, ``G``, and any that are "
+"subsequently added to Python 3) will be supported, and will work as they "
+"do for str, including the padding, justification and other related "
+"modifiers (currently ``#``, ``0``, ``-``, `` `` (space), and ``+`` (plus "
+"any added to Python 3)).  The only non-numeric codes allowed are ``c``, "
+"``b``, ``a``, and ``s`` (which is a synonym for b)."
+msgstr ""
+
+#: ../../pep-0461.txt:62
+#, python-format
+msgid ""
+"For the numeric codes, the only difference between ``str`` and ``bytes`` "
+"(or ``bytearray``) interpolation is that the results from these codes "
+"will be ASCII-encoded text, not unicode.  In other words, for any numeric"
+" formatting code `%x`::"
+msgstr ""
+
+#: ../../pep-0461.txt:69
+msgid "is equivalent to::"
+msgstr ""
+
+#: ../../pep-0461.txt:73 ../../pep-0461.txt:87 ../../pep-0461.txt:118
+#: ../../pep-0461.txt:148
+msgid "Examples::"
+msgstr ""
+
+#: ../../pep-0461.txt:84
+#, python-format
+msgid ""
+"``%c`` will insert a single byte, either from an ``int`` in range(256), "
+"or from a ``bytes`` argument of length 1, not from a ``str``."
+msgstr ""
+
+#: ../../pep-0461.txt:95
+msgid ""
+"``%b`` will insert a series of bytes.  These bytes are collected in one "
+"of two ways:"
+msgstr ""
+
+#: ../../pep-0461.txt:98
+msgid ""
+"input type supports ``Py_buffer`` [4]_? use it to collect the necessary "
+"bytes"
+msgstr ""
+
+#: ../../pep-0461.txt:101
+msgid ""
+"input type is something else? use its ``__bytes__`` method [5]_ ; if "
+"there isn't one, raise a ``TypeError``"
+msgstr ""
+
+#: ../../pep-0461.txt:104
+msgid ""
+"In particular, ``%b`` will not accept numbers nor ``str``.  ``str`` is "
+"rejected as the string to bytes conversion requires an encoding, and we "
+"are refusing to guess; numbers are rejected because:"
+msgstr ""
+
+#: ../../pep-0461.txt:108
+msgid "what makes a number is fuzzy (float? Decimal? Fraction? some user type?)"
+msgstr ""
+
+#: ../../pep-0461.txt:110
+msgid ""
+"allowing numbers would lead to ambiguity between numbers and textual "
+"representations of numbers (3.14 vs '3.14')"
+msgstr ""
+
+#: ../../pep-0461.txt:113
+msgid ""
+"given the nature of wire formats, explicit is definitely better than "
+"implicit"
+msgstr ""
+
+#: ../../pep-0461.txt:115
+#, python-format
+msgid ""
+"``%s`` is included as a synonym for ``%b`` for the sole purpose of making"
+" 2/3 code bases easier to maintain.  Python 3 only code should use "
+"``%b``."
+msgstr ""
+
+#: ../../pep-0461.txt:137
+msgid ""
+"``%a`` will give the equivalent of ``repr(some_obj).encode('ascii', "
+"'backslashreplace')`` on the interpolated value.  Use cases include "
+"developing a new protocol and writing landmarks into the stream; "
+"debugging data going into an existing protocol to see if the problem is "
+"the protocol itself or bad data; a fall-back for a serialization format; "
+"or any situation where defining ``__bytes__`` would not be appropriate "
+"but a readable/informative representation is needed [6]_."
+msgstr ""
+
+#: ../../pep-0461.txt:145
+#, python-format
+msgid ""
+"``%r`` is included as a synonym for ``%a`` for the sole purpose of making"
+" 2/3 code bases easier to maintain.  Python 3 only code use ``%a`` [7]_."
+msgstr ""
+
+#: ../../pep-0461.txt:162
+msgid "Compatibility with Python 2"
+msgstr ""
+
+#: ../../pep-0461.txt:164
+#, python-format
+msgid ""
+"As noted above, ``%s`` and ``%r`` are being included solely to help ease "
+"migration from, and/or have a single code base with, Python 2.  This is "
+"important as there are modules both in the wild and behind closed doors "
+"that currently use the Python 2 ``str`` type as a ``bytes`` container, "
+"and hence are using ``%s`` as a bytes interpolator."
+msgstr ""
+
+#: ../../pep-0461.txt:170
+#, python-format
+msgid ""
+"However, ``%b`` and ``%a`` should be used in new, Python 3 only code, so "
+"``%s`` and ``%r`` will immediately be deprecated, but not removed from "
+"the 3.x series [7]_."
+msgstr ""
+
+#: ../../pep-0461.txt:175
+msgid "Proposed variations"
+msgstr ""
+
+#: ../../pep-0461.txt:177
+msgid ""
+"It has been proposed to automatically use ``.encode('ascii','strict')`` "
+"for ``str`` arguments to ``%b``."
+msgstr ""
+
+#: ../../pep-0461.txt:180
+msgid ""
+"Rejected as this would lead to intermittent failures.  Better to have the"
+" operation always fail so the trouble-spot can be correctly fixed."
+msgstr ""
+
+#: ../../pep-0461.txt:183
+msgid ""
+"It has been proposed to have ``%b`` return the ascii-encoded repr when "
+"the value is a ``str`` (b'%b' % 'abc'  --> b\"'abc'\")."
+msgstr ""
+
+#: ../../pep-0461.txt:186
+msgid ""
+"Rejected as this would lead to hard to debug failures far from the "
+"problem site.  Better to have the operation always fail so the trouble-"
+"spot can be easily fixed."
+msgstr ""
+
+#: ../../pep-0461.txt:190
+msgid ""
+"Originally this PEP also proposed adding format-style formatting, but it "
+"was decided that format and its related machinery were all strictly text "
+"(aka ``str``) based, and it was dropped."
+msgstr ""
+
+#: ../../pep-0461.txt:194
+msgid ""
+"Various new special methods were proposed, such as ``__ascii__``, "
+"``__format_bytes__``, etc.; such methods are not needed at this time, but"
+" can be visited again later if real-world use shows deficiencies with "
+"this solution."
+msgstr ""
+
+#: ../../pep-0461.txt:198
+msgid ""
+"A competing PEP, ``PEP 460 Add binary interpolation and formatting`` "
+"[8]_, also exists."
+msgstr ""
+
+#: ../../pep-0461.txt:203
+msgid "Objections"
+msgstr ""
+
+#: ../../pep-0461.txt:205
+msgid ""
+"The objections raised against this PEP were mainly variations on two "
+"themes:"
+msgstr ""
+
+#: ../../pep-0461.txt:207
+msgid ""
+"the ``bytes`` and ``bytearray`` types are for pure binary data, with no "
+"assumptions about encodings"
+msgstr ""
+
+#: ../../pep-0461.txt:210
+#, python-format
+msgid ""
+"offering %-interpolation that assumes an ASCII encoding will be an "
+"attractive nuisance and lead us back to the problems of the Python 2 "
+"``str``/``unicode`` text model"
+msgstr ""
+
+#: ../../pep-0461.txt:214
+msgid ""
+"As was seen during the discussion, ``bytes`` and ``bytearray`` are also "
+"used for mixed binary data and ASCII-compatible segments: file formats "
+"such as ``dbf`` and ``pdf``, network protocols such as ``ftp`` and "
+"``email``, etc."
+msgstr ""
+
+#: ../../pep-0461.txt:218
+#, python-format
+msgid ""
+"``bytes`` and ``bytearray`` already have several methods which assume an "
+"ASCII compatible encoding.  ``upper()``, ``isalpha()``, and "
+"``expandtabs()`` to name just a few.  %-interpolation, with its very "
+"restricted mini-language, will not be any more of a nuisance than the "
+"already existing methods."
+msgstr ""
+
+#: ../../pep-0461.txt:223
+msgid ""
+"Some have objected to allowing the full range of numeric formatting codes"
+" with the claim that decimal alone would be sufficient.  However, at "
+"least two formats (dbf and pdf) make use of non-decimal numbers."
+msgstr ""
+
+#: ../../pep-0461.txt:229
+msgid "Footnotes"
+msgstr ""
+
+#: ../../pep-0461.txt:231
+msgid "http://docs.python.org/2/library/stdtypes.html#string-formatting"
+msgstr ""
+
+#: ../../pep-0461.txt:232
+msgid "neither string.Template, format, nor str.format are under consideration"
+msgstr ""
+
+#: ../../pep-0461.txt:233
+msgid "https://mail.python.org/pipermail/python-dev/2014-January/131518.html"
+msgstr ""
+
+#: ../../pep-0461.txt:234
+msgid ""
+"http://docs.python.org/3/c-api/buffer.html examples:  ``memoryview``, "
+"``array.array``, ``bytearray``, ``bytes``"
+msgstr ""
+
+#: ../../pep-0461.txt:236
+msgid "http://docs.python.org/3/reference/datamodel.html#object.__bytes__"
+msgstr ""
+
+#: ../../pep-0461.txt:237
+msgid "https://mail.python.org/pipermail/python-dev/2014-February/132750.html"
+msgstr ""
+
+#: ../../pep-0461.txt:238
+#, python-format
+msgid ""
+"http://bugs.python.org/issue23467 -- originally ``%r`` was not allowed, "
+"but was added for consistency during the 3.5 alpha stage."
+msgstr ""
+
+#: ../../pep-0461.txt:240
+msgid "http://python.org/dev/peps/pep-0460/"
+msgstr ""
+
+#: ../../pep-0461.txt:244
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0461.txt:246
+msgid "This document has been placed in the public domain."
+msgstr ""
+

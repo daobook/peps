@@ -1,0 +1,487 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0256.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0256.txt:1
+msgid "256"
+msgstr ""
+
+#: ../../pep-0256.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0256.txt:2
+msgid "Docstring Processing System Framework"
+msgstr ""
+
+#: ../../pep-0256.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0256.txt:5
+msgid "David Goodger <goodger@python.org>"
+msgstr ""
+
+#: ../../pep-0256.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0256.txt:6
+msgid "<doc-sig@python.org>"
+msgstr ""
+
+#: ../../pep-0256.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0256.txt:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0256.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0256.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0256.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0256.txt:10
+msgid "01-Jun-2001"
+msgstr ""
+
+#: ../../pep-0256.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0256.txt:11
+msgid "13-Jun-2001"
+msgstr ""
+
+#: ../../pep-0256.txt:15
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0256.txt:17
+msgid "This proposal seems to have run out of steam."
+msgstr ""
+
+#: ../../pep-0256.txt:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0256.txt:23
+msgid ""
+"Python lends itself to inline documentation.  With its built-in docstring"
+" syntax, a limited form of `Literate Programming`_ is easy to do in "
+"Python.  However, there are no satisfactory standard tools for extracting"
+" and processing Python docstrings.  The lack of a standard toolset is a "
+"significant gap in Python's infrastructure; this PEP aims to fill the "
+"gap."
+msgstr ""
+
+#: ../../pep-0256.txt:30
+msgid ""
+"The issues surrounding docstring processing have been contentious and "
+"difficult to resolve.  This PEP proposes a generic Docstring Processing "
+"System (DPS) framework, which separates out the components (program and "
+"conceptual), enabling the resolution of individual issues either through "
+"consensus (one solution) or through divergence (many). It promotes "
+"standard interfaces which will allow a variety of plug-in components "
+"(input context readers, markup parsers, and output format writers) to be "
+"used."
+msgstr ""
+
+#: ../../pep-0256.txt:39
+msgid ""
+"The concepts of a DPS framework are presented independently of "
+"implementation details."
+msgstr ""
+
+#: ../../pep-0256.txt:44
+msgid "Road Map to the Docstring PEPs"
+msgstr ""
+
+#: ../../pep-0256.txt:46
+msgid ""
+"There are many aspects to docstring processing.  The \"Docstring PEPs\" "
+"have broken up the issues in order to deal with each of them in "
+"isolation, or as close as possible.  The individual aspects and "
+"associated PEPs are as follows:"
+msgstr ""
+
+#: ../../pep-0256.txt:51
+msgid ""
+"Docstring syntax.  PEP 287, \"reStructuredText Docstring Format\" "
+"[#PEP-287]_, proposes a syntax for Python docstrings, PEPs, and other "
+"uses."
+msgstr ""
+
+#: ../../pep-0256.txt:55
+msgid "Docstring semantics consist of at least two aspects:"
+msgstr ""
+
+#: ../../pep-0256.txt:57
+msgid ""
+"Conventions: the high-level structure of docstrings.  Dealt with in PEP "
+"257, \"Docstring Conventions\" [#PEP-257]_."
+msgstr ""
+
+#: ../../pep-0256.txt:60
+msgid ""
+"Methodology: rules for the informational content of docstrings. Not "
+"addressed."
+msgstr ""
+
+#: ../../pep-0256.txt:63
+msgid ""
+"Processing mechanisms.  This PEP (PEP 256) outlines the high-level issues"
+" and specification of an abstract docstring processing system (DPS).  PEP"
+" 258, \"Docutils Design Specification\" [#PEP-258]_, is an overview of "
+"the design and implementation of one DPS under development."
+msgstr ""
+
+#: ../../pep-0256.txt:69
+msgid ""
+"Output styles: developers want the documentation generated from their "
+"source code to look good, and there are many different ideas about what "
+"that means.  PEP 258 touches on \"Stylist Transforms\". This aspect of "
+"docstring processing has yet to be fully explored."
+msgstr ""
+
+#: ../../pep-0256.txt:74
+msgid ""
+"By separating out the issues, we can form consensus more easily (smaller "
+"fights ;-), and accept divergence more readily."
+msgstr ""
+
+#: ../../pep-0256.txt:79
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0256.txt:81
+msgid ""
+"There are standard inline documentation systems for some other languages."
+"  For example, Perl has POD_ (\"Plain Old Documentation\") and Java has "
+"Javadoc_, but neither of these mesh with the Pythonic way. POD syntax is "
+"very explicit, but takes after Perl in terms of readability.  Javadoc is "
+"HTML-centric; except for \"``@field``\" tags, raw HTML is used for "
+"markup.  There are also general tools such as Autoduck_ and Web_ (Tangle "
+"& Weave), useful for multiple languages."
+msgstr ""
+
+#: ../../pep-0256.txt:89
+msgid ""
+"There have been many attempts to write auto-documentation systems for "
+"Python (not an exhaustive list):"
+msgstr ""
+
+#: ../../pep-0256.txt:92
+msgid "Marc-Andre Lemburg's doc.py_"
+msgstr ""
+
+#: ../../pep-0256.txt:94
+msgid "Daniel Larsson's pythondoc_ & gendoc_"
+msgstr ""
+
+#: ../../pep-0256.txt:96
+msgid "Doug Hellmann's HappyDoc_"
+msgstr ""
+
+#: ../../pep-0256.txt:98
+msgid "Laurence Tratt's Crystal (no longer available on the web)"
+msgstr ""
+
+#: ../../pep-0256.txt:100
+msgid ""
+"Ka-Ping Yee's pydoc_ (pydoc.py is now part of the Python standard "
+"library; see below)"
+msgstr ""
+
+#: ../../pep-0256.txt:103
+msgid ""
+"Tony Ibbs' docutils_ (Tony has donated this name to the `Docutils "
+"project`_)"
+msgstr ""
+
+#: ../../pep-0256.txt:106
+msgid "Edward Loper's STminus_ formalization and related efforts"
+msgstr ""
+
+#: ../../pep-0256.txt:108
+msgid ""
+"These systems, each with different goals, have had varying degrees of "
+"success.  A problem with many of the above systems was over-ambition "
+"combined with inflexibility.  They provided a self-contained set of "
+"components: a docstring extraction system, a markup parser, an internal "
+"processing system and one or more output format writers with a fixed "
+"style.  Inevitably, one or more aspects of each system had serious "
+"shortcomings, and they were not easily extended or modified, preventing "
+"them from being adopted as standard tools."
+msgstr ""
+
+#: ../../pep-0256.txt:117
+msgid ""
+"It has become clear (to this author, at least) that the \"all or "
+"nothing\" approach cannot succeed, since no monolithic self-contained "
+"system could possibly be agreed upon by all interested parties.  A "
+"modular component approach designed for extension, where components may "
+"be multiply implemented, may be the only chance for success. Standard "
+"inter-component APIs will make the DPS components comprehensible without "
+"requiring detailed knowledge of the whole, lowering the barrier for "
+"contributions, and ultimately resulting in a rich and varied system."
+msgstr ""
+
+#: ../../pep-0256.txt:127
+msgid ""
+"Each of the components of a docstring processing system should be "
+"developed independently.  A \"best of breed\" system should be chosen, "
+"either merged from existing systems, and/or developed anew.  This system "
+"should be included in Python's standard library."
+msgstr ""
+
+#: ../../pep-0256.txt:134
+msgid "PyDoc & Other Existing Systems"
+msgstr ""
+
+#: ../../pep-0256.txt:136
+msgid ""
+"PyDoc became part of the Python standard library as of release 2.1. It "
+"extracts and displays docstrings from within the Python interactive "
+"interpreter, from the shell command line, and from a GUI window into a "
+"web browser (HTML).  Although a very useful tool, PyDoc has several "
+"deficiencies, including:"
+msgstr ""
+
+#: ../../pep-0256.txt:142
+msgid ""
+"In the case of the GUI/HTML, except for some heuristic hyperlinking of "
+"identifier names, no formatting of the docstrings is done.  They are "
+"presented within ``<p><small><tt>`` tags to avoid unwanted line wrapping."
+"  Unfortunately, the result is not attractive."
+msgstr ""
+
+#: ../../pep-0256.txt:147
+msgid ""
+"PyDoc extracts docstrings and structural information (class identifiers, "
+"method signatures, etc.) from imported module objects. There are security"
+" issues involved with importing untrusted code. Also, information from "
+"the source is lost when importing, such as comments, \"additional "
+"docstrings\" (string literals in non-docstring contexts; see PEP 258 "
+"[#PEP-258]_), and the order of definitions."
+msgstr ""
+
+#: ../../pep-0256.txt:154
+msgid ""
+"The functionality proposed in this PEP could be added to or used by PyDoc"
+" when serving HTML pages.  The proposed docstring processing system's "
+"functionality is much more than PyDoc needs in its current form.  Either "
+"an independent tool will be developed (which PyDoc may or may not use), "
+"or PyDoc could be expanded to encompass this functionality and *become* "
+"the docstring processing system (or one such system).  That decision is "
+"beyond the scope of this PEP."
+msgstr ""
+
+#: ../../pep-0256.txt:162
+msgid ""
+"Similarly for other existing docstring processing systems, their authors "
+"may or may not choose compatibility with this framework. However, if this"
+" framework is accepted and adopted as the Python standard, compatibility "
+"will become an important consideration in these systems' future."
+msgstr ""
+
+#: ../../pep-0256.txt:170
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0256.txt:172
+msgid "The docstring processing system framework is broken up as follows:"
+msgstr ""
+
+#: ../../pep-0256.txt:174
+msgid "Docstring conventions.  Documents issues such as:"
+msgstr ""
+
+#: ../../pep-0256.txt:176
+msgid "What should be documented where."
+msgstr ""
+
+#: ../../pep-0256.txt:178
+msgid "First line is a one-line synopsis."
+msgstr ""
+
+#: ../../pep-0256.txt:180
+msgid "PEP 257 [#PEP-257]_ documents some of these issues."
+msgstr ""
+
+#: ../../pep-0256.txt:182
+msgid ""
+"Docstring processing system design specification.  Documents issues such "
+"as:"
+msgstr ""
+
+#: ../../pep-0256.txt:185
+msgid "High-level spec: what a DPS does."
+msgstr ""
+
+#: ../../pep-0256.txt:187
+msgid "Command-line interface for executable script."
+msgstr ""
+
+#: ../../pep-0256.txt:189
+msgid "System Python API."
+msgstr ""
+
+#: ../../pep-0256.txt:191
+msgid "Docstring extraction rules."
+msgstr ""
+
+#: ../../pep-0256.txt:193
+msgid "Readers, which encapsulate the input context."
+msgstr ""
+
+#: ../../pep-0256.txt:195
+msgid "Parsers."
+msgstr ""
+
+#: ../../pep-0256.txt:197
+msgid ""
+"Document tree: the intermediate internal data structure.  The output of "
+"the Parser and Reader, and the input to the Writer all share the same "
+"data structure."
+msgstr ""
+
+#: ../../pep-0256.txt:201
+msgid "Transforms, which modify the document tree."
+msgstr ""
+
+#: ../../pep-0256.txt:203
+msgid "Writers for output formats."
+msgstr ""
+
+#: ../../pep-0256.txt:205
+msgid ""
+"Distributors, which handle output management (one file, many files, or "
+"objects in memory)."
+msgstr ""
+
+#: ../../pep-0256.txt:208
+msgid ""
+"These issues are applicable to any docstring processing system "
+"implementation.  PEP 258 [#PEP-258]_ documents these issues."
+msgstr ""
+
+#: ../../pep-0256.txt:211
+msgid "Docstring processing system implementation."
+msgstr ""
+
+#: ../../pep-0256.txt:213
+msgid ""
+"Input markup specifications: docstring syntax.  PEP 287 [#PEP-287]_ "
+"proposes a standard syntax."
+msgstr ""
+
+#: ../../pep-0256.txt:216
+msgid "Input parser implementations."
+msgstr ""
+
+#: ../../pep-0256.txt:218
+msgid ""
+"Input context readers (\"modes\": Python source code, PEP, standalone "
+"text file, email, etc.) and implementations."
+msgstr ""
+
+#: ../../pep-0256.txt:221
+msgid ""
+"Stylists: certain input context readers may have associated stylists "
+"which allow for a variety of output document styles."
+msgstr ""
+
+#: ../../pep-0256.txt:224
+msgid ""
+"Output formats (HTML, XML, TeX, DocBook, info, etc.) and writer "
+"implementations."
+msgstr ""
+
+#: ../../pep-0256.txt:227
+msgid ""
+"Components 1, 2/3/5, and 4 are the subject of individual companion PEPs."
+"  If there is another implementation of the framework or syntax/parser, "
+"additional PEPs may be required.  Multiple implementations of each of "
+"components 6 and 7 will be required; the PEP mechanism may be overkill "
+"for these components."
+msgstr ""
+
+#: ../../pep-0256.txt:235
+msgid "Project Web Site"
+msgstr ""
+
+#: ../../pep-0256.txt:237
+msgid ""
+"A SourceForge project has been set up for this work at "
+"http://docutils.sourceforge.net/."
+msgstr ""
+
+#: ../../pep-0256.txt:242
+msgid "References and Footnotes"
+msgstr ""
+
+#: ../../pep-0256.txt:244
+msgid ""
+"PEP 287, reStructuredText Docstring Format, Goodger "
+"(http://www.python.org/dev/peps/pep-0287/)"
+msgstr ""
+
+#: ../../pep-0256.txt:247
+msgid ""
+"PEP 257, Docstring Conventions, Goodger, Van Rossum "
+"(http://www.python.org/dev/peps/pep-0257/)"
+msgstr ""
+
+#: ../../pep-0256.txt:250
+msgid ""
+"PEP 258, Docutils Design Specification, Goodger "
+"(http://www.python.org/dev/peps/pep-0258/)"
+msgstr ""
+
+#: ../../pep-0256.txt:284
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0256.txt:286
+msgid "This document has been placed in the public domain."
+msgstr ""
+
+#: ../../pep-0256.txt:290
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0256.txt:292
+msgid ""
+"This document borrows ideas from the archives of the `Python Doc-SIG`_.  "
+"Thanks to all members past & present."
+msgstr ""
+

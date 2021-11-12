@@ -1,0 +1,494 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0406.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0406.txt:1
+msgid "406"
+msgstr ""
+
+#: ../../pep-0406.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0406.txt:2
+msgid "Improved Encapsulation of Import State"
+msgstr ""
+
+#: ../../pep-0406.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0406.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>, Greg Slodkowicz <jergosh@gmail.com>"
+msgstr ""
+
+#: ../../pep-0406.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0406.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0406.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0406.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0406.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0406.txt:9
+msgid "04-Jul-2011"
+msgstr ""
+
+#: ../../pep-0406.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0406.txt:10
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0406.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0406.txt:11
+msgid "31-Jul-2011, 13-Nov-2011, 4-Dec-2011"
+msgstr ""
+
+#: ../../pep-0406.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0406.txt:16
+msgid ""
+"This PEP proposes the introduction of a new 'ImportEngine' class as part "
+"of ``importlib`` which would encapsulate all state related to importing "
+"modules into a single object. Creating new instances of this object would"
+" then provide an alternative to completely replacing the built-in "
+"implementation of the import statement, by overriding the "
+"``__import__()`` function. To work with the builtin import functionality "
+"and importing via import engine objects, this PEP proposes a context "
+"management based approach to temporarily replacing the global import "
+"state."
+msgstr ""
+
+#: ../../pep-0406.txt:25
+msgid ""
+"The PEP also proposes inclusion of a ``GlobalImportEngine`` subclass and "
+"a globally accessible instance of that class, which \"writes through\" to"
+" the process global state. This provides a backwards compatible bridge "
+"between the proposed encapsulated API and the legacy process global "
+"state, and allows straightforward support for related state updates (e.g."
+" selectively invalidating path cache entries when ``sys.path`` is "
+"modified)."
+msgstr ""
+
+#: ../../pep-0406.txt:34
+msgid "PEP Withdrawal"
+msgstr ""
+
+#: ../../pep-0406.txt:36
+msgid ""
+"The import system has seen substantial changes since this PEP was "
+"originally written, as part of :pep:`420` in Python 3.3 and :pep:`451` in"
+" Python 3.4."
+msgstr ""
+
+#: ../../pep-0406.txt:39
+msgid ""
+"While providing an encapsulation of the import state is still highly "
+"desirable, it is better tackled in a new PEP using PEP 451 as a "
+"foundation, and permitting only the use of PEP 451 compatible finders and"
+" loaders (as those avoid many of the issues of direct manipulation of "
+"global state associated with the previous loader API)."
+msgstr ""
+
+#: ../../pep-0406.txt:47
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0406.txt:49
+msgid ""
+"Currently, most state related to the import system is stored as module "
+"level attributes in the ``sys`` module. The one exception is the import "
+"lock, which is not accessible directly, but only via the related "
+"functions in the ``imp`` module. The current process global import state "
+"comprises:"
+msgstr ""
+
+#: ../../pep-0406.txt:54
+msgid "sys.modules"
+msgstr ""
+
+#: ../../pep-0406.txt:55
+msgid "sys.path"
+msgstr ""
+
+#: ../../pep-0406.txt:56
+msgid "sys.path_hooks"
+msgstr ""
+
+#: ../../pep-0406.txt:57
+msgid "sys.meta_path"
+msgstr ""
+
+#: ../../pep-0406.txt:58
+msgid "sys.path_importer_cache"
+msgstr ""
+
+#: ../../pep-0406.txt:59
+msgid "the import lock (imp.lock_held()/acquire_lock()/release_lock())"
+msgstr ""
+
+#: ../../pep-0406.txt:61
+msgid ""
+"Isolating this state would allow multiple import states to be "
+"conveniently stored within a process. Placing the import functionality in"
+" a self-contained object would also allow subclassing to add additional "
+"features (e.g. module import notifications or fine-grained control over "
+"which modules can be imported). The engine would also be subclassed to "
+"make it possible to use the import engine API to interact with the "
+"existing process-global state."
+msgstr ""
+
+#: ../../pep-0406.txt:69
+msgid ""
+"The namespace PEPs (especially PEP 402) raise a potential need for "
+"*additional* process global state, in order to correctly update package "
+"paths as ``sys.path`` is modified."
+msgstr ""
+
+#: ../../pep-0406.txt:73
+msgid ""
+"Finally, providing a coherent object for all this state makes it feasible"
+" to also provide context management features that allow the import state "
+"to be temporarily substituted."
+msgstr ""
+
+#: ../../pep-0406.txt:79
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0406.txt:81
+msgid ""
+"We propose introducing an ImportEngine class to encapsulate import "
+"functionality. This includes an ``__import__()`` method which can be used"
+" as an alternative to the built-in ``__import__()`` when desired and also"
+" an ``import_module()`` method, equivalent to "
+"``importlib.import_module()`` [3]_."
+msgstr ""
+
+#: ../../pep-0406.txt:87
+msgid ""
+"Since there are global import state invariants that are assumed and "
+"should be maintained, we introduce a ``GlobalImportState`` class with an "
+"interface identical to ``ImportEngine`` but directly accessing the "
+"current global import state. This can be easily implemented using class "
+"properties."
+msgstr ""
+
+#: ../../pep-0406.txt:94
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0406.txt:97
+msgid "ImportEngine API"
+msgstr ""
+
+#: ../../pep-0406.txt:99
+msgid "The proposed extension consists of the following objects:"
+msgstr ""
+
+#: ../../pep-0406.txt:101
+msgid "``importlib.engine.ImportEngine``"
+msgstr ""
+
+#: ../../pep-0406.txt:103
+msgid "``from_engine(self, other)``"
+msgstr ""
+
+#: ../../pep-0406.txt:105
+msgid ""
+"Create a new import object from another ImportEngine instance. The new "
+"object is initialised with a copy of the state in ``other``. When called "
+"on ``importlib engine.sysengine``, ``from_engine()`` can be used to "
+"create an ``ImportEngine`` object with a **copy** of the global import "
+"state."
+msgstr ""
+
+#: ../../pep-0406.txt:111
+msgid "``__import__(self, name, globals={}, locals={}, fromlist=[], level=0)``"
+msgstr ""
+
+#: ../../pep-0406.txt:113
+msgid ""
+"Reimplementation of the builtin ``__import__()`` function. The import of "
+"a module will proceed using the state stored in the ImportEngine instance"
+" rather than the global import state. For full documentation of "
+"``__import__`` functionality, see [2]_ . ``__import__()`` from "
+"``ImportEngine`` and its subclasses can be used to customise the "
+"behaviour of the ``import`` statement by replacing "
+"``__builtin__.__import__`` with ``ImportEngine().__import__``."
+msgstr ""
+
+#: ../../pep-0406.txt:121
+msgid "``import_module(name, package=None)``"
+msgstr ""
+
+#: ../../pep-0406.txt:123
+msgid ""
+"A reimplementation of ``importlib.import_module()`` which uses the import"
+" state stored in the ImportEngine instance. See [3]_ for a full "
+"reference."
+msgstr ""
+
+#: ../../pep-0406.txt:127
+msgid "``modules, path, path_hooks, meta_path, path_importer_cache``"
+msgstr ""
+
+#: ../../pep-0406.txt:129
+msgid "Instance-specific versions of their process global ``sys`` equivalents"
+msgstr ""
+
+#: ../../pep-0406.txt:132
+msgid "``importlib.engine.GlobalImportEngine(ImportEngine)``"
+msgstr ""
+
+#: ../../pep-0406.txt:134
+msgid ""
+"Convenience class to provide engine-like access to the global state. "
+"Provides ``__import__()``, ``import_module()`` and ``from_engine()`` "
+"methods like ``ImportEngine`` but writes through to the global state in "
+"``sys``."
+msgstr ""
+
+#: ../../pep-0406.txt:139
+msgid ""
+"To support various namespace package mechanisms, when ``sys.path`` is "
+"altered, tools like ``pkgutil.extend_path`` should be used to also modify"
+" other parts of the import state (in this case, package ``__path__`` "
+"attributes). The path importer cache should also be invalidated when a "
+"variety of changes are made."
+msgstr ""
+
+#: ../../pep-0406.txt:144
+msgid ""
+"The ``ImportEngine`` API will provide convenience methods that "
+"automatically make related import state updates as part of a single "
+"operation."
+msgstr ""
+
+#: ../../pep-0406.txt:149
+msgid "Global variables"
+msgstr ""
+
+#: ../../pep-0406.txt:151
+msgid "``importlib.engine.sysengine``"
+msgstr ""
+
+#: ../../pep-0406.txt:153
+msgid ""
+"A precreated instance of ``GlobalImportEngine``. Intended for use by "
+"importers and loaders that have been updated to accept optional "
+"``engine`` parameters and with ``ImportEngine.from_engine(sysengine)`` to"
+" start with a copy of the process global import state."
+msgstr ""
+
+#: ../../pep-0406.txt:160
+msgid "No changes to finder/loader interfaces"
+msgstr ""
+
+#: ../../pep-0406.txt:162
+msgid ""
+"Rather than attempting to update the PEP 302 APIs to accept additional "
+"state, this PEP proposes that ``ImportEngine`` support the content "
+"management protocol (similar to the context substitution mechanisms in "
+"the ``decimal`` module)."
+msgstr ""
+
+#: ../../pep-0406.txt:167
+msgid "The context management mechanism for ``ImportEngine`` would:"
+msgstr ""
+
+#: ../../pep-0406.txt:169
+msgid ""
+"On entry: * Acquire the import lock * Substitute the global import state "
+"with the import engine's own state"
+msgstr ""
+
+#: ../../pep-0406.txt:172
+msgid ""
+"On exit: * Restore the previous global import state * Release the import "
+"lock"
+msgstr ""
+
+#: ../../pep-0406.txt:176
+msgid ""
+"The precise API for this is TBD (but will probably use a distinct context"
+" management object, along the lines of that created by "
+"``decimal.localcontext``)."
+msgstr ""
+
+#: ../../pep-0406.txt:182
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0406.txt:186
+msgid "API design for falling back to global import state"
+msgstr ""
+
+#: ../../pep-0406.txt:188
+msgid ""
+"The current proposal relies on the ``from_engine()`` API to fall back to "
+"the global import state. It may be desirable to offer a variant that "
+"instead falls back to the global import state dynamically."
+msgstr ""
+
+#: ../../pep-0406.txt:192
+msgid ""
+"However, one big advantage of starting with an \"as isolated as "
+"possible\" design is that it becomes possible to experiment with "
+"subclasses that blur the boundaries between the engine instance state and"
+" the process global state in various ways."
+msgstr ""
+
+#: ../../pep-0406.txt:199
+msgid "Builtin and extension modules must be process global"
+msgstr ""
+
+#: ../../pep-0406.txt:201
+msgid ""
+"Due to platform limitations, only one copy of each builtin and extension "
+"module can readily exist in each process. Accordingly, it is impossible "
+"for each ``ImportEngine`` instance to load such modules independently."
+msgstr ""
+
+#: ../../pep-0406.txt:205
+msgid ""
+"The simplest solution is for ``ImportEngine`` to refuse to load such "
+"modules, raising ``ImportError``. ``GlobalImportEngine`` would be able to"
+" load them normally."
+msgstr ""
+
+#: ../../pep-0406.txt:209
+msgid ""
+"``ImportEngine`` will still return such modules from a prepopulated "
+"module cache - it's only loading them directly which causes problems."
+msgstr ""
+
+#: ../../pep-0406.txt:214
+msgid "Scope of substitution"
+msgstr ""
+
+#: ../../pep-0406.txt:216
+msgid ""
+"Related to the previous open issue is the question of what state to "
+"substitute when using the context management API. It is currently the "
+"case that replacing ``sys.modules`` can be unreliable due to cached "
+"references and there's the underlying fact that having independent copies"
+" of some modules is simply impossible due to platform limitations."
+msgstr ""
+
+#: ../../pep-0406.txt:222
+msgid "As part of this PEP, it will be necessary to document explicitly:"
+msgstr ""
+
+#: ../../pep-0406.txt:224
+msgid ""
+"Which parts of the global import state can be substituted (and declare "
+"code which caches references to that state without dealing with the "
+"substitution case buggy)"
+msgstr ""
+
+#: ../../pep-0406.txt:227
+msgid ""
+"Which parts must be modified in-place (and hence are not substituted by "
+"the ``ImportEngine`` context management API, or otherwise scoped to "
+"``ImportEngine`` instances)"
+msgstr ""
+
+#: ../../pep-0406.txt:233
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0406.txt:235
+msgid ""
+"A reference implementation [4]_ for an earlier draft of this PEP, based "
+"on Brett Cannon's importlib has been developed by Greg Slodkowicz as part"
+" of the 2011 Google Summer of Code. Note that the current implementation "
+"avoids modifying existing code, and hence duplicates a lot of things "
+"unnecessarily. An actual implementation would just modify any such "
+"affected code in place."
+msgstr ""
+
+#: ../../pep-0406.txt:241
+msgid ""
+"That earlier draft of the PEP proposed change the PEP 302 APIs to support"
+" passing in an optional engine instance. This had the (serious) downside "
+"of not correctly affecting further imports from the imported module, "
+"hence the change to the context management based proposal for "
+"substituting the global state."
+msgstr ""
+
+#: ../../pep-0406.txt:248
+msgid "References"
+msgstr ""
+
+#: ../../pep-0406.txt:250
+msgid ""
+"PEP 302, New Import Hooks, J van Rossum, Moore "
+"(http://www.python.org/dev/peps/pep-0302)"
+msgstr ""
+
+#: ../../pep-0406.txt:253
+msgid ""
+"__import__() builtin function, The Python Standard Library documentation "
+"(http://docs.python.org/library/functions.html#__import__)"
+msgstr ""
+
+#: ../../pep-0406.txt:256
+msgid ""
+"Importlib documentation, Cannon "
+"(http://docs.python.org/dev/library/importlib)"
+msgstr ""
+
+#: ../../pep-0406.txt:259
+msgid ""
+"Reference implementation "
+"(https://bitbucket.org/jergosh/gsoc_import_engine/src/default/Lib/importlib/engine.py)"
+msgstr ""
+
+#: ../../pep-0406.txt:264
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0406.txt:266
+msgid "This document has been placed in the public domain."
+msgstr ""
+

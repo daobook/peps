@@ -1,0 +1,306 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0243.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0243.txt:1
+msgid "243"
+msgstr ""
+
+#: ../../pep-0243.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0243.txt:2
+msgid "Module Repository Upload Mechanism"
+msgstr ""
+
+#: ../../pep-0243.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0243.txt:5
+msgid "jafo-pep@tummy.com (Sean Reifschneider)"
+msgstr ""
+
+#: ../../pep-0243.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0243.txt:6
+msgid "distutils-sig@python.org"
+msgstr ""
+
+#: ../../pep-0243.txt ../../pep-0243.txt:160
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0243.txt:7
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0243.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0243.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0243.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0243.txt:10
+msgid "18-Mar-2001"
+msgstr ""
+
+#: ../../pep-0243.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0243.txt:11
+msgid "2.1"
+msgstr ""
+
+#: ../../pep-0243.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0243.txt:12
+msgid "20-Mar-2001, 24-Mar-2001"
+msgstr ""
+
+#: ../../pep-0243.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0243.txt:18
+msgid ""
+"For a module repository system (such as Perl's CPAN) to be successful, it"
+" must be as easy as possible for module authors to submit their work.  An"
+" obvious place for this submit to happen is in the Distutils tools after "
+"the distribution archive has been successfully created.  For example, "
+"after a module author has tested their software (verifying the results of"
+" ``setup.py sdist``), they might type ``setup.py sdist --submit``.  This "
+"would flag Distutils to submit the source distribution to the archive "
+"server for inclusion and distribution to the mirrors."
+msgstr ""
+
+#: ../../pep-0243.txt:28
+msgid ""
+"This PEP only deals with the mechanism for submitting the software "
+"distributions to the archive, and does not deal with the actual "
+"archive/catalog server."
+msgstr ""
+
+#: ../../pep-0243.txt:34
+msgid "Upload Process"
+msgstr ""
+
+#: ../../pep-0243.txt:36
+msgid ""
+"The upload will include the Distutils ``PKG-INFO`` meta-data information "
+"(as specified in PEP 241 [1]_), the actual software distribution, and "
+"other optional information.  This information will be uploaded as a "
+"multi-part form encoded the same as a regular HTML file upload request.  "
+"This form is posted using ``ENCTYPE=\"multipart/form-data\"`` encoding "
+"[2]_."
+msgstr ""
+
+#: ../../pep-0243.txt:43
+msgid ""
+"The upload will be made to the host \"www.python.org\" on port 80/tcp "
+"(``POST http://www.python.org:80/pypi``).  The form will consist of the "
+"following fields:"
+msgstr ""
+
+#: ../../pep-0243.txt:47
+msgid ""
+"``distribution`` -- The file containing the module software (for example,"
+" a ``.tar.gz`` or ``.zip`` file)."
+msgstr ""
+
+#: ../../pep-0243.txt:50
+#, python-format
+msgid ""
+"``distmd5sum`` -- The MD5 hash of the uploaded distribution, encoded in "
+"ASCII representing the hexadecimal representation of the digest (``for "
+"byte in digest: s = s + ('%02x' % ord(byte))``)."
+msgstr ""
+
+#: ../../pep-0243.txt:55
+msgid ""
+"``pkginfo`` (optional) -- The file containing the distribution meta-data "
+"(as specified in PEP 241 [1]_).  Note that if this is not included, the "
+"distribution file is expected to be in ``.tar`` format (gzipped and "
+"bzipped compressed are allowed) or ``.zip`` format, with a ``PKG-INFO`` "
+"file in the top-level directory it extracts (``package-1.00/PKG-INFO``)."
+msgstr ""
+
+#: ../../pep-0243.txt:62
+#, python-format
+msgid ""
+"``infomd5sum`` (required if pkginfo field is present) -- The MD5 hash of "
+"the uploaded meta-data, encoded in ASCII representing the hexadecimal "
+"representation of the digest (``for byte in digest: s = s + ('%02x' % "
+"ord(byte))``)."
+msgstr ""
+
+#: ../../pep-0243.txt:67
+msgid ""
+"``platform`` (optional) -- A string representing the target platform for "
+"this distribution.  This is only for binary distributions.  It is encoded"
+" as ``<os_name>-<os_version>-<platform architecture>-<python version>``."
+msgstr ""
+
+#: ../../pep-0243.txt:73
+msgid ""
+"``signature`` (optional) -- A OpenPGP-compatible signature [3]_ of the "
+"uploaded distribution as signed by the author.  This may be used by the "
+"cataloging system to automate acceptance of uploads."
+msgstr ""
+
+#: ../../pep-0243.txt:78
+msgid ""
+"``protocol_version`` -- A string indicating the protocol version that the"
+" client supports.  This document describes protocol version \"1\"."
+msgstr ""
+
+#: ../../pep-0243.txt:83
+msgid "Return Data"
+msgstr ""
+
+#: ../../pep-0243.txt:85
+msgid ""
+"The status of the upload will be reported using HTTP non-standard "
+"(``X-*``) headers.  The ``X-Swalow-Status`` header may have the following"
+" values:"
+msgstr ""
+
+#: ../../pep-0243.txt:89
+msgid "``SUCCESS`` -- Indicates that the upload has succeeded."
+msgstr ""
+
+#: ../../pep-0243.txt:91
+msgid "``FAILURE`` -- The upload is, for some reason, unable to be processed."
+msgstr ""
+
+#: ../../pep-0243.txt:94
+msgid ""
+"``TRYAGAIN`` -- The server is unable to accept the upload at this time, "
+"but the client should try again at a later time. Potential causes of this"
+" are resource shortages on the server, administrative down-time, etc..."
+msgstr ""
+
+#: ../../pep-0243.txt:99
+msgid ""
+"Optionally, there may be a ``X-Swalow-Reason`` header which includes a "
+"human-readable string which provides more detailed information about the "
+"``X-Swalow-Status``."
+msgstr ""
+
+#: ../../pep-0243.txt:103
+msgid ""
+"If there is no ``X-Swalow-Status`` header, or it does not contain one of "
+"the three strings above, it should be treated as a temporary failure."
+msgstr ""
+
+#: ../../pep-0243.txt:106
+msgid "Example::"
+msgstr ""
+
+#: ../../pep-0243.txt:116
+msgid "Sample Form"
+msgstr ""
+
+#: ../../pep-0243.txt:118
+msgid ""
+"The upload client must submit the page in the same form as Netscape "
+"Navigator version 4.76 for Linux produces when presented with the "
+"following form::"
+msgstr ""
+
+#: ../../pep-0243.txt:137
+msgid "Platforms"
+msgstr ""
+
+#: ../../pep-0243.txt:139
+msgid "The following are valid os names::"
+msgstr ""
+
+#: ../../pep-0243.txt:144
+msgid ""
+"The above include a number of different types of distributions of Linux."
+"  Because of versioning issues these must be split out, and it is "
+"expected that when it makes sense for one system to use distributions "
+"made on other similar systems, the download client will make the "
+"distinction."
+msgstr ""
+
+#: ../../pep-0243.txt:150
+msgid ""
+"Version is the official version string specified by the vendor for the "
+"particular release.  For example, \"2000\" and \"nt\" (Windows), \"9.04\""
+" (HP-UX), \"7.0\" (RedHat, Mandrake)."
+msgstr ""
+
+#: ../../pep-0243.txt:154
+msgid "The following are valid architectures::"
+msgstr ""
+
+#: ../../pep-0243.txt:162
+msgid ""
+"I currently have a proof-of-concept client and server implemented. I plan"
+" to have the Distutils patches ready for the 2.1 release. Combined with "
+"Andrew's PEP 241 [1]_ for specifying distribution meta-data, I hope to "
+"have a platform which will allow us to gather real-world data for "
+"finalizing the catalog system for the 2.2 release."
+msgstr ""
+
+#: ../../pep-0243.txt:171
+msgid "References"
+msgstr ""
+
+#: ../../pep-0243.txt:173
+msgid ""
+"Metadata for Python Software Package, Kuchling, "
+"http://www.python.org/dev/peps/pep-0241/"
+msgstr ""
+
+#: ../../pep-0243.txt:176
+msgid ""
+"RFC 1867, Form-based File Upload in HTML "
+"http://www.faqs.org/rfcs/rfc1867.html"
+msgstr ""
+
+#: ../../pep-0243.txt:179
+msgid "RFC 2440, OpenPGP Message Format http://www.faqs.org/rfcs/rfc2440.html"
+msgstr ""
+
+#: ../../pep-0243.txt:184
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0243.txt:186
+msgid "This document has been placed in the public domain."
+msgstr ""
+

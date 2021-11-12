@@ -1,0 +1,457 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0328.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0328.txt:1
+msgid "328"
+msgstr ""
+
+#: ../../pep-0328.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0328.txt:2
+msgid "Imports: Multi-Line and Absolute/Relative"
+msgstr ""
+
+#: ../../pep-0328.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0328.txt:5
+msgid "Aahz <aahz@pythoncraft.com>"
+msgstr ""
+
+#: ../../pep-0328.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0328.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0328.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0328.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0328.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0328.txt:9
+msgid "21-Dec-2003"
+msgstr ""
+
+#: ../../pep-0328.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0328.txt:10
+msgid "2.4, 2.5, 2.6"
+msgstr ""
+
+#: ../../pep-0328.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0328.txt:11
+msgid "8-Mar-2004"
+msgstr ""
+
+#: ../../pep-0328.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0328.txt:17
+msgid "The ``import`` statement has two problems:"
+msgstr ""
+
+#: ../../pep-0328.txt:19
+msgid ""
+"Long ``import`` statements can be difficult to write, requiring various "
+"contortions to fit Pythonic style guidelines."
+msgstr ""
+
+#: ../../pep-0328.txt:22
+msgid ""
+"Imports can be ambiguous in the face of packages; within a package, it's "
+"not clear whether ``import foo`` refers to a module within the package or"
+" some module outside the package.  (More precisely, a local module or "
+"package can shadow another hanging directly off ``sys.path``.)"
+msgstr ""
+
+#: ../../pep-0328.txt:28
+msgid ""
+"For the first problem, it is proposed that parentheses be permitted to "
+"enclose multiple names, thus allowing Python's standard mechanisms for "
+"multi-line values to apply.  For the second problem, it is proposed that "
+"all ``import`` statements be absolute by default (searching ``sys.path`` "
+"only) with special syntax (leading dots) for accessing package-relative "
+"imports."
+msgstr ""
+
+#: ../../pep-0328.txt:37
+msgid "Timeline"
+msgstr ""
+
+#: ../../pep-0328.txt:39
+msgid "In Python 2.5, you must enable the new absolute import behavior with ::"
+msgstr ""
+
+#: ../../pep-0328.txt:43
+msgid ""
+"You may use relative imports freely.  In Python 2.6, any ``import`` "
+"statement that results in an intra-package import will raise "
+"``DeprecationWarning`` (this also applies to ``from <> import`` that "
+"fails to use the relative import syntax)."
+msgstr ""
+
+#: ../../pep-0328.txt:50
+msgid "Rationale for Parentheses"
+msgstr ""
+
+#: ../../pep-0328.txt:52
+msgid ""
+"Currently, if you want to import a lot of names from a module or package,"
+" you have to choose one of several unpalatable options:"
+msgstr ""
+
+#: ../../pep-0328.txt:55
+msgid "Write a long line with backslash continuations::"
+msgstr ""
+
+#: ../../pep-0328.txt:60
+msgid "Write multiple ``import`` statements::"
+msgstr ""
+
+#: ../../pep-0328.txt:65
+msgid "(``import *`` is *not* an option ;-)"
+msgstr ""
+
+#: ../../pep-0328.txt:67
+msgid ""
+"Instead, it should be possible to use Python's standard grouping "
+"mechanism (parentheses) to write the ``import`` statement::"
+msgstr ""
+
+#: ../../pep-0328.txt:73 ../../pep-0328.txt:105
+msgid "This part of the proposal had BDFL approval from the beginning."
+msgstr ""
+
+#: ../../pep-0328.txt:75
+msgid "Parentheses support was added to Python 2.4."
+msgstr ""
+
+#: ../../pep-0328.txt:79
+msgid "Rationale for Absolute Imports"
+msgstr ""
+
+#: ../../pep-0328.txt:81
+msgid ""
+"In Python 2.4 and earlier, if you're reading a module located inside a "
+"package, it is not clear whether ::"
+msgstr ""
+
+#: ../../pep-0328.txt:86
+msgid ""
+"refers to a top-level module or to another module inside the package. As "
+"Python's library expands, more and more existing package internal modules"
+" suddenly shadow standard library modules by accident.  It's a "
+"particularly difficult problem inside packages because there's no way to "
+"specify which module is meant.  To resolve the ambiguity, it is proposed "
+"that ``foo`` will always be a module or package reachable from "
+"``sys.path``.  This is called an absolute import."
+msgstr ""
+
+#: ../../pep-0328.txt:94
+msgid ""
+"The python-dev community chose absolute imports as the default because "
+"they're the more common use case and because absolute imports can provide"
+" all the functionality of relative (intra-package) imports  -- albeit at "
+"the cost of difficulty when renaming package pieces higher up in the "
+"hierarchy or when moving one package inside another."
+msgstr ""
+
+#: ../../pep-0328.txt:100
+msgid ""
+"Because this represents a change in semantics, absolute imports will be "
+"optional in Python 2.5 and 2.6 through the use of ::"
+msgstr ""
+
+#: ../../pep-0328.txt:109
+msgid "Rationale for Relative Imports"
+msgstr ""
+
+#: ../../pep-0328.txt:111
+msgid ""
+"With the shift to absolute imports, the question arose whether relative "
+"imports should be allowed at all.  Several use cases were presented, the "
+"most important of which is being able to rearrange the structure of large"
+" packages without having to edit sub-packages.  In addition, a module "
+"inside a package can't easily import itself without relative imports."
+msgstr ""
+
+#: ../../pep-0328.txt:118
+msgid ""
+"Guido approved of the idea of relative imports, but there has been a lot "
+"of disagreement on the spelling (syntax).  There does seem to be "
+"agreement that relative imports will require listing specific names to "
+"import (that is, ``import foo`` as a bare term will always be an absolute"
+" import)."
+msgstr ""
+
+#: ../../pep-0328.txt:124
+msgid "Here are the contenders:"
+msgstr ""
+
+#: ../../pep-0328.txt:126
+msgid "One from Guido::"
+msgstr ""
+
+#: ../../pep-0328.txt:130 ../../pep-0328.txt:156
+msgid "and ::"
+msgstr ""
+
+#: ../../pep-0328.txt:134
+msgid ""
+"These two forms have a couple of different suggested semantics.  One "
+"semantic is to make each dot represent one level.  There have been many "
+"complaints about the difficulty of counting dots.  Another option is to "
+"only allow one level of relative import.  That misses a lot of "
+"functionality, and people still complained about missing the dot in the "
+"one-dot form.  The final option is to define an algorithm for finding "
+"relative modules and packages; the objection here is \"Explicit is better"
+" than implicit\".  (The algorithm proposed is \"search up from current "
+"package directory until the ultimate package parent gets hit\".)"
+msgstr ""
+
+#: ../../pep-0328.txt:145
+msgid ""
+"Some people have suggested other punctuation as the separator, such as "
+"\"-\" or \"^\"."
+msgstr ""
+
+#: ../../pep-0328.txt:148
+msgid "Some people have suggested using \"*\"::"
+msgstr ""
+
+#: ../../pep-0328.txt:152
+msgid "The next set of options is conflated from several posters::"
+msgstr ""
+
+#: ../../pep-0328.txt:160
+msgid ""
+"Many people (Guido included) think these look ugly, but they *are* clear "
+"and explicit.  Overall, more people prefer ``__pkg__`` as the shorter "
+"option."
+msgstr ""
+
+#: ../../pep-0328.txt:164
+msgid ""
+"One suggestion was to allow only sibling references.  In other words, you"
+" would not be able to use relative imports to refer to modules higher in "
+"the package tree.  You would then be able to do either ::"
+msgstr ""
+
+#: ../../pep-0328.txt:170 ../../pep-0328.txt:190
+msgid "or ::"
+msgstr ""
+
+#: ../../pep-0328.txt:174
+msgid "Some people favor allowing indexed parents::"
+msgstr ""
+
+#: ../../pep-0328.txt:178
+msgid ""
+"In this scenario, importing from the current directory would be a simple "
+"::"
+msgstr ""
+
+#: ../../pep-0328.txt:184
+msgid ""
+"Finally, some people dislike the way you have to change ``import`` to "
+"``from ... import`` when you want to dig inside a package.  They suggest "
+"completely rewriting the ``import`` syntax::"
+msgstr ""
+
+#: ../../pep-0328.txt:195
+msgid ""
+"However, this most likely could not be implemented for Python 2.5 (too "
+"big a change), and allowing relative imports is sufficiently critical "
+"that we need something now (given that the standard ``import`` will "
+"change to absolute import).  More than that, this proposed syntax has "
+"several open questions:"
+msgstr ""
+
+#: ../../pep-0328.txt:201
+msgid ""
+"What is the precise proposed syntax?  (Which clauses are optional under "
+"which circumstances?)"
+msgstr ""
+
+#: ../../pep-0328.txt:204
+msgid ""
+"How strongly does the ``searching`` clause bind?  In other words, do you "
+"write::"
+msgstr ""
+
+#: ../../pep-0328.txt:209
+msgid "or::"
+msgstr ""
+
+#: ../../pep-0328.txt:215
+msgid "Guido's Decision"
+msgstr ""
+
+#: ../../pep-0328.txt:217
+msgid ""
+"Guido has Pronounced [1]_ that relative imports will use leading dots. A "
+"single leading dot indicates a relative import, starting with the current"
+" package.  Two or more leading dots give a relative import to the "
+"parent(s) of the current package, one level per dot after the first. "
+"Here's a sample package layout::"
+msgstr ""
+
+#: ../../pep-0328.txt:234
+msgid ""
+"Assuming that the current file is either ``moduleX.py`` or "
+"``subpackage1/__init__.py``, following are correct usages of the new "
+"syntax::"
+msgstr ""
+
+#: ../../pep-0328.txt:247
+msgid ""
+"Note that while that last case is legal, it is certainly discouraged "
+"(\"insane\" was the word Guido used)."
+msgstr ""
+
+#: ../../pep-0328.txt:250
+msgid ""
+"Relative imports must always use ``from <> import``; ``import <>`` is "
+"always absolute.  Of course, absolute imports can use ``from <> import`` "
+"by omitting the leading dots.  The reason ``import .foo`` is prohibited "
+"is because after ::"
+msgstr ""
+
+#: ../../pep-0328.txt:257
+msgid "then ::"
+msgstr ""
+
+#: ../../pep-0328.txt:261
+msgid "is usable in an expression.  But ::"
+msgstr ""
+
+#: ../../pep-0328.txt:265
+msgid "is not usable in an expression."
+msgstr ""
+
+#: ../../pep-0328.txt:269
+msgid "Relative Imports and __name__"
+msgstr ""
+
+#: ../../pep-0328.txt:271
+msgid ""
+"Relative imports use a module's __name__ attribute to determine that "
+"module's position in the package hierarchy. If the module's name does not"
+" contain any package information (e.g. it is set to '__main__') then "
+"relative imports are resolved as if the module were a top level module, "
+"regardless of where the module is actually located on the file system."
+msgstr ""
+
+#: ../../pep-0328.txt:280
+msgid "Relative Imports and Indirection Entries in sys.modules"
+msgstr ""
+
+#: ../../pep-0328.txt:282
+msgid ""
+"When packages were introduced, the concept of an indirection entry in "
+"sys.modules came into existence [2]_.  When an entry in sys.modules for a"
+" module within a package had a value of None, it represented that the "
+"module actually referenced the top-level module.  For instance, "
+"'Sound.Effects.string' might have a value of None in sys.modules. That "
+"meant any import that resolved to that name actually was to import the "
+"top-level 'string' module."
+msgstr ""
+
+#: ../../pep-0328.txt:290
+msgid ""
+"This introduced an optimization for when a relative import was meant to "
+"resolve to an absolute import.  But since this PEP makes a very clear "
+"delineation between absolute and relative imports, this optimization is "
+"no longer needed.  When absolute/relative imports become the only import "
+"semantics available then indirection entries in sys.modules will no "
+"longer be supported."
+msgstr ""
+
+#: ../../pep-0328.txt:300
+msgid "References"
+msgstr ""
+
+#: ../../pep-0328.txt:302
+msgid "For more background, see the following python-dev threads:"
+msgstr ""
+
+#: ../../pep-0328.txt:304
+msgid ""
+"`Re: Christmas Wishlist <https://mail.python.org/pipermail/python-"
+"dev/2003-December/040973.html>`__"
+msgstr ""
+
+#: ../../pep-0328.txt:307
+msgid ""
+"`Re: Python-Dev Digest, Vol 5, Issue 57 "
+"<https://mail.python.org/pipermail/python-"
+"dev/2003-December/041078.html>`__"
+msgstr ""
+
+#: ../../pep-0328.txt:310
+msgid ""
+"`Relative import <https://mail.python.org/pipermail/python-"
+"dev/2003-December/041065.html>`__"
+msgstr ""
+
+#: ../../pep-0328.txt:313
+msgid ""
+"`Another Strategy for Relative Import <https://mail.python.org/pipermail"
+"/python-dev/2003-December/041418.html>`__"
+msgstr ""
+
+#: ../../pep-0328.txt:316
+msgid "https://mail.python.org/pipermail/python-dev/2004-March/043739.html"
+msgstr ""
+
+#: ../../pep-0328.txt:318
+msgid "https://www.python.org/doc/essays/packages/"
+msgstr ""
+
+#: ../../pep-0328.txt:322
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0328.txt:324
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,506 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0367.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0367.txt:1
+msgid "367"
+msgstr ""
+
+#: ../../pep-0367.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0367.txt:2
+msgid "New Super"
+msgstr ""
+
+#: ../../pep-0367.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0367.txt:5
+msgid ""
+"Calvin Spealman <ironfroggy@gmail.com>, Tim Delaney "
+"<timothy.c.delaney@gmail.com>"
+msgstr ""
+
+#: ../../pep-0367.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0367.txt:7
+msgid "Superseded"
+msgstr ""
+
+#: ../../pep-0367.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0367.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0367.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0367.txt:10
+msgid "28-Apr-2007"
+msgstr ""
+
+#: ../../pep-0367.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0367.txt:11
+msgid "2.6"
+msgstr ""
+
+#: ../../pep-0367.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0367.txt:12
+msgid "28-Apr-2007, 29-Apr-2007 (1), 29-Apr-2007 (2), 14-May-2007"
+msgstr ""
+
+#: ../../pep-0367.txt:15
+msgid "Numbering Note"
+msgstr ""
+
+#: ../../pep-0367.txt:17
+msgid ""
+"This PEP has been renumbered to PEP 3135.  The text below is the last "
+"version submitted under the old number."
+msgstr ""
+
+#: ../../pep-0367.txt:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0367.txt:23
+msgid ""
+"This PEP proposes syntactic sugar for use of the ``super`` type to "
+"automatically construct instances of the super type binding to the class "
+"that a method was defined in, and the instance (or class object for "
+"classmethods) that the method is currently acting upon."
+msgstr ""
+
+#: ../../pep-0367.txt:28
+msgid "The premise of the new super usage suggested is as follows::"
+msgstr ""
+
+#: ../../pep-0367.txt:32
+msgid "to replace the old::"
+msgstr ""
+
+#: ../../pep-0367.txt:36
+msgid ""
+"and the current ``__builtin__.super`` be aliased to "
+"``__builtin__.__super__`` (with ``__builtin__.super`` to be removed in "
+"Python 3.0)."
+msgstr ""
+
+#: ../../pep-0367.txt:39
+msgid ""
+"It is further proposed that assignment to ``super`` become a "
+"``SyntaxError``, similar to the behaviour of ``None``."
+msgstr ""
+
+#: ../../pep-0367.txt:44
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0367.txt:46
+msgid ""
+"The current usage of super requires an explicit passing of both the class"
+" and instance it must operate from, requiring a breaking of the DRY "
+"(Don't Repeat Yourself) rule. This hinders any change in class name, and "
+"is often considered a wart by many."
+msgstr ""
+
+#: ../../pep-0367.txt:53
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0367.txt:55
+msgid ""
+"Within the specification section, some special terminology will be used "
+"to distinguish similar and closely related concepts. \"super type\" will "
+"refer to the actual builtin type named \"super\". A \"super instance\" is"
+" simply an instance of the super type, which is associated with a class "
+"and possibly with an instance of that class."
+msgstr ""
+
+#: ../../pep-0367.txt:61
+msgid ""
+"Because the new ``super`` semantics are not backwards compatible with "
+"Python 2.5, the new semantics will require a ``__future__`` import::"
+msgstr ""
+
+#: ../../pep-0367.txt:66
+msgid ""
+"The current ``__builtin__.super`` will be aliased to "
+"``__builtin__.__super__``. This will occur regardless of whether the new "
+"``super`` semantics are active. It is not possible to simply rename "
+"``__builtin__.super``, as that would affect modules that do not use the "
+"new ``super`` semantics. In Python 3.0 it is proposed that the name "
+"``__builtin__.super`` will be removed."
+msgstr ""
+
+#: ../../pep-0367.txt:72
+msgid ""
+"Replacing the old usage of super, calls to the next class in the MRO "
+"(method resolution order) can be made without explicitly creating a "
+"``super`` instance (although doing so will still be supported via "
+"``__super__``). Every function will have an implicit local named "
+"``super``. This name behaves identically to a normal local, including use"
+" by inner functions via a cell, with the following exceptions:"
+msgstr ""
+
+#: ../../pep-0367.txt:79
+msgid ""
+"Assigning to the name ``super`` will raise a ``SyntaxError`` at compile "
+"time;"
+msgstr ""
+
+#: ../../pep-0367.txt:81
+msgid ""
+"Calling a static method or normal function that accesses the name "
+"``super`` will raise a ``TypeError`` at runtime."
+msgstr ""
+
+#: ../../pep-0367.txt:84
+msgid ""
+"Every function that uses the name ``super``, or has an inner function "
+"that uses the name ``super``, will include a preamble that performs the "
+"equivalent of::"
+msgstr ""
+
+#: ../../pep-0367.txt:90
+msgid ""
+"where ``<class>`` is the class that the method was defined in, and "
+"``<instance>`` is the first parameter of the method (normally ``self`` "
+"for instance methods, and ``cls`` for class methods). For static methods "
+"and normal functions, ``<class>`` will be ``None``, resulting in a "
+"``TypeError`` being raised during the preamble."
+msgstr ""
+
+#: ../../pep-0367.txt:96
+msgid ""
+"Note: The relationship between ``super`` and ``__super__`` is similar to "
+"that between ``import`` and ``__import__``."
+msgstr ""
+
+#: ../../pep-0367.txt:99
+msgid ""
+"Much of this was discussed in the thread of the python-dev list, \"Fixing"
+" super anyone?\" [1]_."
+msgstr ""
+
+#: ../../pep-0367.txt:104
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0367.txt:108
+msgid "Determining the class object to use"
+msgstr ""
+
+#: ../../pep-0367.txt:110
+msgid ""
+"The exact mechanism for associating the method with the defining class is"
+" not specified in this PEP, and should be chosen for maximum performance."
+" For CPython, it is suggested that the class instance be held in a "
+"C-level variable on the function object which is bound to one of ``NULL``"
+" (not part of a class), ``Py_None`` (static method) or a class object "
+"(instance or class method)."
+msgstr ""
+
+#: ../../pep-0367.txt:118
+msgid "Should ``super`` actually become a keyword?"
+msgstr ""
+
+#: ../../pep-0367.txt:120
+msgid ""
+"With this proposal, ``super`` would become a keyword to the same extent "
+"that ``None`` is a keyword. It is possible that further restricting the "
+"``super`` name may simplify implementation, however some are against the "
+"actual keyword- ization of super. The simplest solution is often the "
+"correct solution and the simplest solution may well not be adding "
+"additional keywords to the language when they are not needed. Still, it "
+"may solve other open issues."
+msgstr ""
+
+#: ../../pep-0367.txt:129
+msgid "Closed Issues"
+msgstr ""
+
+#: ../../pep-0367.txt:132
+msgid "super used with __call__ attributes"
+msgstr ""
+
+#: ../../pep-0367.txt:134
+msgid ""
+"It was considered that it might be a problem that instantiating super "
+"instances the classic way, because calling it would lookup the __call__ "
+"attribute and thus try to perform an automatic super lookup to the next "
+"class in the MRO. However, this was found to be false, because calling an"
+" object only looks up the __call__ method directly on the object's type. "
+"The following example shows this in action."
+msgstr ""
+
+#: ../../pep-0367.txt:153
+msgid ""
+"In any case, with the renaming of ``__builtin__.super`` to "
+"``__builtin__.__super__`` this issue goes away entirely."
+msgstr ""
+
+#: ../../pep-0367.txt:158
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0367.txt:160
+msgid ""
+"It is impossible to implement the above specification entirely in Python."
+" This reference implementation has the following differences to the "
+"specification:"
+msgstr ""
+
+#: ../../pep-0367.txt:163
+msgid "New ``super`` semantics are implemented using bytecode hacking."
+msgstr ""
+
+#: ../../pep-0367.txt:165
+msgid "Assignment to ``super`` is not a ``SyntaxError``. Also see point #4."
+msgstr ""
+
+#: ../../pep-0367.txt:167
+msgid ""
+"Classes must either use the metaclass ``autosuper_meta`` or inherit from "
+"the base class ``autosuper`` to acquire the new ``super`` semantics."
+msgstr ""
+
+#: ../../pep-0367.txt:170
+msgid ""
+"``super`` is not an implicit local variable. In particular, for inner "
+"functions to be able to use the super instance, there must be an "
+"assignment of the form ``super = super`` in the method."
+msgstr ""
+
+#: ../../pep-0367.txt:174
+msgid "The reference implementation assumes that it is being run on Python 2.5+."
+msgstr ""
+
+#: ../../pep-0367.txt:414
+msgid ""
+"Disassembly of B.f and C.f reveals the different preambles used when "
+"``super`` is simply a local variable compared to when it is used by an "
+"inner function."
+msgstr ""
+
+#: ../../pep-0367.txt:458
+msgid ""
+"Note that in the final implementation, the preamble would not be part of "
+"the bytecode of the method, but would occur immediately following "
+"unpacking of parameters."
+msgstr ""
+
+#: ../../pep-0367.txt:464
+msgid "Alternative Proposals"
+msgstr ""
+
+#: ../../pep-0367.txt:467
+msgid "No Changes"
+msgstr ""
+
+#: ../../pep-0367.txt:469
+msgid ""
+"Although its always attractive to just keep things how they are, people "
+"have sought a change in the usage of super calling for some time, and for"
+" good reason, all mentioned previously."
+msgstr ""
+
+#: ../../pep-0367.txt:473
+msgid ""
+"Decoupling from the class name (which might not even be bound to the "
+"right class anymore!)"
+msgstr ""
+
+#: ../../pep-0367.txt:475
+msgid "Simpler looking, cleaner super calls would be better"
+msgstr ""
+
+#: ../../pep-0367.txt:478
+msgid "Dynamic attribute on super type"
+msgstr ""
+
+#: ../../pep-0367.txt:480
+msgid ""
+"The proposal adds a dynamic attribute lookup to the super type, which "
+"will automatically determine the proper class and instance parameters. "
+"Each super attribute lookup identifies these parameters and performs the "
+"super lookup on the instance, as the current super implementation does "
+"with the explicit invocation of a super instance upon a class and "
+"instance."
+msgstr ""
+
+#: ../../pep-0367.txt:486
+msgid ""
+"This proposal relies on sys._getframe(), which is not appropriate for "
+"anything except a prototype implementation."
+msgstr ""
+
+#: ../../pep-0367.txt:491
+msgid "super(__this_class__, self)"
+msgstr ""
+
+#: ../../pep-0367.txt:493
+msgid ""
+"This is nearly an anti-proposal, as it basically relies on the acceptance"
+" of the __this_class__ PEP, which proposes a special name that would "
+"always be bound to the class within which it is used. If that is "
+"accepted, __this_class__ could simply be used instead of the class' name "
+"explicitly, solving the name binding issues [2]_."
+msgstr ""
+
+#: ../../pep-0367.txt:500
+msgid "self.__super__.foo(\\*args)"
+msgstr ""
+
+#: ../../pep-0367.txt:502
+msgid ""
+"The __super__ attribute is mentioned in this PEP in several places, and "
+"could be a candidate for the complete solution, actually using it "
+"explicitly instead of any super usage directly. However, double-"
+"underscore names are usually an internal detail, and attempted to be kept"
+" out of everyday code."
+msgstr ""
+
+#: ../../pep-0367.txt:508
+msgid "super(self, \\*args) or __super__(self, \\*args)"
+msgstr ""
+
+#: ../../pep-0367.txt:510
+msgid ""
+"This solution only solves the problem of the type indication, does not "
+"handle differently named super methods, and is explicit about the name of"
+" the instance. It is less flexible without being able to enacted on other"
+" method names, in cases where that is needed. One use case this fails is "
+"where a base- class has a factory classmethod and a subclass has two "
+"factory classmethods, both of which needing to properly make super calls "
+"to the one in the base- class."
+msgstr ""
+
+#: ../../pep-0367.txt:519
+msgid "super.foo(self, \\*args)"
+msgstr ""
+
+#: ../../pep-0367.txt:521
+msgid ""
+"This variation actually eliminates the problems with locating the proper "
+"instance, and if any of the alternatives were pushed into the spotlight, "
+"I would want it to be this one."
+msgstr ""
+
+#: ../../pep-0367.txt:526
+msgid "super or super()"
+msgstr ""
+
+#: ../../pep-0367.txt:528
+msgid ""
+"This proposal leaves no room for different names, signatures, or "
+"application to other classes, or instances. A way to allow some similar "
+"use alongside the normal proposal would be favorable, encouraging good "
+"design of multiple inheritance trees and compatible methods."
+msgstr ""
+
+#: ../../pep-0367.txt:534
+msgid "super(\\*p, \\*\\*kw)"
+msgstr ""
+
+#: ../../pep-0367.txt:536
+msgid ""
+"There has been the proposal that directly calling ``super(*p, **kw)`` "
+"would be equivalent to calling the method on the ``super`` object with "
+"the same name as the method currently being executed i.e. the following "
+"two methods would be equivalent:"
+msgstr ""
+
+#: ../../pep-0367.txt:551
+msgid ""
+"There is strong sentiment for and against this, but implementation and "
+"style concerns are obvious. Guido has suggested that this should be "
+"excluded from this PEP on the principle of KISS (Keep It Simple Stupid)."
+msgstr ""
+
+#: ../../pep-0367.txt:558
+msgid "History"
+msgstr ""
+
+#: ../../pep-0367.txt:562
+msgid "29-Apr-2007 - Changed title from \"Super As A Keyword\" to \"New Super\""
+msgstr ""
+
+#: ../../pep-0367.txt:560
+msgid ""
+"Updated much of the language and added a terminology section for "
+"clarification in confusing places."
+msgstr ""
+
+#: ../../pep-0367.txt:562
+msgid "Added reference implementation and history sections."
+msgstr ""
+
+#: ../../pep-0367.txt:565
+msgid ""
+"06-May-2007 - Updated by Tim Delaney to reflect discussions on the "
+"python-3000"
+msgstr ""
+
+#: ../../pep-0367.txt:565
+msgid "and python-dev mailing lists."
+msgstr ""
+
+#: ../../pep-0367.txt:568
+msgid "References"
+msgstr ""
+
+#: ../../pep-0367.txt:570
+msgid ""
+"Fixing super anyone? "
+"(https://mail.python.org/pipermail/python-3000/2007-April/006667.html)"
+msgstr ""
+
+#: ../../pep-0367.txt:573
+msgid ""
+"PEP 3130: Access to Module/Class/Function Currently Being Defined (this) "
+"(https://mail.python.org/pipermail/python-ideas/2007-April/000542.html)"
+msgstr ""
+
+#: ../../pep-0367.txt:578
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0367.txt:580
+msgid "This document has been placed in the public domain."
+msgstr ""
+

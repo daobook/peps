@@ -1,0 +1,411 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3110.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3110.txt:1
+msgid "3110"
+msgstr ""
+
+#: ../../pep-3110.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3110.txt:2
+msgid "Catching Exceptions in Python 3000"
+msgstr ""
+
+#: ../../pep-3110.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3110.txt:5
+msgid "Collin Winter <collinwinter@google.com>"
+msgstr ""
+
+#: ../../pep-3110.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3110.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3110.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3110.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3110.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3110.txt:9
+msgid "16-Jan-2006"
+msgstr ""
+
+#: ../../pep-3110.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3110.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3110.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3110.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3110.txt:17
+msgid ""
+"This PEP introduces changes intended to help eliminate ambiguities in "
+"Python's grammar, simplify exception classes, simplify garbage collection"
+" for exceptions and reduce the size of the language in Python 3.0."
+msgstr ""
+
+#: ../../pep-3110.txt:24
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3110.txt:26
+msgid ""
+"``except`` clauses in Python 2.x present a syntactic ambiguity where the "
+"parser cannot differentiate whether ::"
+msgstr ""
+
+#: ../../pep-3110.txt:31
+msgid "should be interpreted as ::"
+msgstr ""
+
+#: ../../pep-3110.txt:35
+msgid "or ::"
+msgstr ""
+
+#: ../../pep-3110.txt:39
+msgid ""
+"Python 2 opts for the latter semantic, at the cost of requiring the "
+"former to be parenthesized, like so ::"
+msgstr ""
+
+#: ../../pep-3110.txt:44
+msgid ""
+"As specified in PEP 352 [#pep352]_, the ability to treat exceptions as "
+"tuples will be removed, meaning this code will no longer work ::"
+msgstr ""
+
+#: ../../pep-3110.txt:49
+msgid ""
+"Because the automatic unpacking will no longer be possible, it is "
+"desirable to remove the ability to use tuples as ``except`` targets."
+msgstr ""
+
+#: ../../pep-3110.txt:52
+msgid ""
+"As specified in PEP 344 [#pep344]_, exception instances in Python 3 will "
+"possess a ``__traceback__`` attribute. The Open Issues section of that "
+"PEP includes a paragraph on garbage collection difficulties caused by "
+"this attribute, namely a \"exception -> traceback -> stack frame -> "
+"exception\" reference cycle, whereby all locals are kept in scope until "
+"the next GC run. This PEP intends to resolve this issue by adding a "
+"cleanup semantic to ``except`` clauses in Python 3 whereby the target "
+"name is deleted at the end of the ``except`` suite."
+msgstr ""
+
+#: ../../pep-3110.txt:62
+msgid ""
+"In the spirit of \"there should be one -- and preferably only one -- "
+"obvious way to do it\" [#zen]_, it is desirable to consolidate duplicate "
+"functionality. To this end, the ``exc_value``, ``exc_type`` and "
+"``exc_traceback`` attributes of the ``sys`` module [#sys-module]_ will be"
+" removed in favor of ``sys.exc_info()``, which provides the same "
+"information. These attributes are already listed in PEP 3100 [#pep3100]_ "
+"as targeted for removal."
+msgstr ""
+
+#: ../../pep-3110.txt:73
+msgid "Grammar Changes"
+msgstr ""
+
+#: ../../pep-3110.txt:75
+msgid ""
+"In Python 3, the grammar for ``except`` statements will change from "
+"[#grammar]_ ::"
+msgstr ""
+
+#: ../../pep-3110.txt:80 ../../pep-3110.txt:144 ../../pep-3110.txt:153
+msgid "to ::"
+msgstr ""
+
+#: ../../pep-3110.txt:84
+msgid "The use of ``as`` in place of the comma token means that ::"
+msgstr ""
+
+#: ../../pep-3110.txt:88
+msgid ""
+"can be clearly understood as a tuple of exception classes. This new "
+"syntax was first proposed by Greg Ewing [#firstproposal]_ and endorsed "
+"([#firstproposal]_, [#renaming]_) by the BDFL."
+msgstr ""
+
+#: ../../pep-3110.txt:92
+msgid ""
+"Further, the restriction of the token following ``as`` from ``test`` to "
+"``NAME`` means that only valid identifiers can be used as ``except`` "
+"targets."
+msgstr ""
+
+#: ../../pep-3110.txt:96
+msgid ""
+"Note that the grammar above always requires parenthesized tuples as "
+"exception classes. That way, the ambiguous ::"
+msgstr ""
+
+#: ../../pep-3110.txt:101
+msgid ""
+"which would mean different things in Python 2.x and 3.x -- leading to "
+"hard-to-catch bugs -- cannot legally occur in 3.x code."
+msgstr ""
+
+#: ../../pep-3110.txt:106
+msgid "Semantic Changes"
+msgstr ""
+
+#: ../../pep-3110.txt:108
+msgid ""
+"In order to resolve the garbage collection issue related to PEP 344, "
+"``except`` statements in Python 3 will generate additional bytecode to "
+"delete the target, thus eliminating the reference cycle. The source-to-"
+"source translation, as suggested by Phillip J. Eby [#except-"
+"translation]_, is ::"
+msgstr ""
+
+#: ../../pep-3110.txt:120
+msgid "gets translated to (in Python 2.5 terms) ::"
+msgstr ""
+
+#: ../../pep-3110.txt:132
+msgid ""
+"An implementation has already been checked into the py3k (formerly "
+"\"p3yk\") branch [#translation-checkin]_."
+msgstr ""
+
+#: ../../pep-3110.txt:137
+msgid "Compatibility Issues"
+msgstr ""
+
+#: ../../pep-3110.txt:139
+msgid ""
+"Nearly all ``except`` clauses will need to be changed. ``except`` clauses"
+" with identifier targets will be converted from ::"
+msgstr ""
+
+#: ../../pep-3110.txt:148
+msgid ""
+"``except`` clauses with non-tuple, non-identifier targets (e.g., "
+"``a.b.c[d]``) will need to be converted from ::"
+msgstr ""
+
+#: ../../pep-3110.txt:158
+msgid ""
+"Both of these cases can be handled by Guido van Rossum's ``2to3`` utility"
+" [#2to3]_ using the ``except`` fixer [#exceptfixer]_."
+msgstr ""
+
+#: ../../pep-3110.txt:161
+msgid ""
+"``except`` clauses with tuple targets will need to be converted manually,"
+" on a case-by-case basis. These changes will usually need to be "
+"accompanied by changes to the exception classes themselves. While these "
+"changes generally cannot be automated, the ``2to3`` utility is able to "
+"point out cases where the target of an ``except`` clause is a tuple, "
+"simplifying conversion."
+msgstr ""
+
+#: ../../pep-3110.txt:168
+msgid ""
+"Situations where it is necessary to keep an exception instance around "
+"past the end of the ``except`` suite can be easily translated like so ::"
+msgstr ""
+
+#: ../../pep-3110.txt:178
+msgid "becomes ::"
+msgstr ""
+
+#: ../../pep-3110.txt:187
+msgid ""
+"This way, when ``N`` is deleted at the end of the block, ``n`` will "
+"persist and can be used as normal."
+msgstr ""
+
+#: ../../pep-3110.txt:190
+msgid ""
+"Lastly, all uses of the ``sys`` module's ``exc_type``, ``exc_value`` and "
+"``exc_traceback`` attributes will need to be removed. They can be "
+"replaced with ``sys.exc_info()[0]``, ``sys.exc_info()[1]`` and "
+"``sys.exc_info()[2]`` respectively, a transformation that can be "
+"performed by ``2to3``'s ``sysexcattrs`` fixer."
+msgstr ""
+
+#: ../../pep-3110.txt:197
+msgid "2.6 - 3.0 Compatibility"
+msgstr ""
+
+#: ../../pep-3110.txt:199
+msgid ""
+"In order to facilitate forwards compatibility between Python 2.6 and 3.0,"
+" the ``except ... as ...:`` syntax will be backported to the 2.x series. "
+"The grammar will thus change from::"
+msgstr ""
+
+#: ../../pep-3110.txt:205
+msgid "to::"
+msgstr ""
+
+#: ../../pep-3110.txt:209
+msgid ""
+"The end-of-suite cleanup semantic for ``except`` statements will not be "
+"included in the 2.x series of releases."
+msgstr ""
+
+#: ../../pep-3110.txt:214
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-3110.txt:217
+msgid "Replacing or Dropping \"sys.exc_info()\""
+msgstr ""
+
+#: ../../pep-3110.txt:219
+msgid ""
+"The idea of dropping ``sys.exc_info()`` or replacing it with a "
+"``sys.exception`` attribute or a ``sys.get_exception()`` function has "
+"been raised several times on python-3000 ([#drop-excinfo]_, [#replace-"
+"excinfo]_) and mentioned in PEP 344's \"Open Issues\" section."
+msgstr ""
+
+#: ../../pep-3110.txt:224
+msgid ""
+"While a ``2to3`` fixer to replace calls to ``sys.exc_info()`` and some "
+"attribute accesses would be trivial, it would be far more difficult for "
+"static analysis to find and fix functions that expect the values from "
+"``sys.exc_info()`` as arguments. Similarly, this does not address the "
+"need to rewrite the documentation for all APIs that are defined in terms "
+"of ``sys.exc_info()``."
+msgstr ""
+
+#: ../../pep-3110.txt:233
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-3110.txt:235
+msgid ""
+"This PEP was implemented in revisions 53342 [#r53342]_ and 53349 "
+"[#r53349]_.  Support for the new ``except`` syntax in 2.6 was implemented"
+" in revision 55446 [#r55446]_."
+msgstr ""
+
+#: ../../pep-3110.txt:241
+msgid "References"
+msgstr ""
+
+#: ../../pep-3110.txt:244
+msgid "http://www.python.org/dev/peps/pep-0352/"
+msgstr ""
+
+#: ../../pep-3110.txt:247
+msgid "http://www.python.org/dev/peps/pep-0020/"
+msgstr ""
+
+#: ../../pep-3110.txt:250
+msgid "http://docs.python.org/library/sys.html"
+msgstr ""
+
+#: ../../pep-3110.txt:253
+msgid "http://www.python.org/dev/peps/pep-3100/"
+msgstr ""
+
+#: ../../pep-3110.txt:256
+msgid "http://www.python.org/dev/peps/pep-0344/"
+msgstr ""
+
+#: ../../pep-3110.txt:259
+msgid "https://mail.python.org/pipermail/python-dev/2006-March/062449.html"
+msgstr ""
+
+#: ../../pep-3110.txt:262
+msgid "https://mail.python.org/pipermail/python-dev/2006-March/062640.html"
+msgstr ""
+
+#: ../../pep-3110.txt:265
+msgid "http://docs.python.org/reference/compound_stmts.html#try"
+msgstr ""
+
+#: ../../pep-3110.txt:268
+msgid "https://mail.python.org/pipermail/python-3000/2007-January/005395.html"
+msgstr ""
+
+#: ../../pep-3110.txt:271
+msgid "http://svn.python.org/view?rev=53342&view=rev"
+msgstr ""
+
+#: ../../pep-3110.txt:274
+msgid "https://hg.python.org/sandbox/guido/file/2.7/Lib/lib2to3/"
+msgstr ""
+
+#: ../../pep-3110.txt:277
+msgid "https://hg.python.org/sandbox/guido/file/2.7/Lib/lib2to3/fixes/fix_except.py"
+msgstr ""
+
+#: ../../pep-3110.txt:280
+msgid "https://mail.python.org/pipermail/python-3000/2007-January/005385.html"
+msgstr ""
+
+#: ../../pep-3110.txt:283
+msgid "https://mail.python.org/pipermail/python-3000/2007-January/005604.html"
+msgstr ""
+
+#: ../../pep-3110.txt:286
+msgid "http://svn.python.org/view?view=revision&revision=53342"
+msgstr ""
+
+#: ../../pep-3110.txt:289
+msgid "http://svn.python.org/view?view=revision&revision=53349"
+msgstr ""
+
+#: ../../pep-3110.txt:292
+msgid "http://svn.python.org/view/python/trunk/?view=rev&rev=55446"
+msgstr ""
+
+#: ../../pep-3110.txt:296
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3110.txt:298
+msgid "This document has been placed in the public domain."
+msgstr ""
+

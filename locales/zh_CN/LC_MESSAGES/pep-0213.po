@@ -1,0 +1,338 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0213.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0213.txt:1
+msgid "213"
+msgstr ""
+
+#: ../../pep-0213.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0213.txt:2
+msgid "Attribute Access Handlers"
+msgstr ""
+
+#: ../../pep-0213.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0213.txt:5
+msgid "paul@prescod.net (Paul Prescod)"
+msgstr ""
+
+#: ../../pep-0213.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0213.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0213.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0213.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0213.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0213.txt:9
+msgid "21-Jul-2000"
+msgstr ""
+
+#: ../../pep-0213.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0213.txt:10
+msgid "2.1"
+msgstr ""
+
+#: ../../pep-0213.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0213.txt:15
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0213.txt:17
+msgid ""
+"It is possible (and even relatively common) in Python code and in "
+"extension modules to \"trap\" when an instance's client code attempts to "
+"set an attribute and execute code instead. In other words, it is possible"
+" to allow users to use attribute assignment/ retrieval/deletion syntax "
+"even though the underlying implementation is doing some computation "
+"rather than directly modifying a binding."
+msgstr ""
+
+#: ../../pep-0213.txt:25
+msgid ""
+"This PEP describes a feature that makes it easier, more efficient and "
+"safer to implement these handlers for Python instances."
+msgstr ""
+
+#: ../../pep-0213.txt:30
+msgid "Justification"
+msgstr ""
+
+#: ../../pep-0213.txt:33
+msgid "Scenario 1"
+msgstr ""
+
+#: ../../pep-0213.txt:35
+msgid ""
+"You have a deployed class that works on an attribute named \"stdout\". "
+"After a while, you think it would be better to check that stdout is "
+"really an object with a \"write\" method at the moment of assignment. "
+"Rather than change to a setstdout method (which would be incompatible "
+"with deployed code) you would rather trap the assignment and check the "
+"object's type."
+msgstr ""
+
+#: ../../pep-0213.txt:44
+msgid "Scenario 2"
+msgstr ""
+
+#: ../../pep-0213.txt:46
+msgid ""
+"You want to be as compatible as possible with an object model that has a "
+"concept of attribute assignment. It could be the W3C Document Object "
+"Model or a particular COM interface (e.g. the PowerPoint interface). In "
+"that case you may well want attributes in the model to show up as "
+"attributes in the Python interface, even though the underlying "
+"implementation may not use attributes at all."
+msgstr ""
+
+#: ../../pep-0213.txt:55
+msgid "Scenario 3"
+msgstr ""
+
+#: ../../pep-0213.txt:57
+msgid "A user wants to make an attribute read-only."
+msgstr ""
+
+#: ../../pep-0213.txt:59
+msgid ""
+"In short, this feature allows programmers to separate the interface of "
+"their module from the underlying implementation for whatever purpose. "
+"Again, this is not a new feature but merely a new syntax for an existing "
+"convention."
+msgstr ""
+
+#: ../../pep-0213.txt:66
+msgid "Current Solution"
+msgstr ""
+
+#: ../../pep-0213.txt:68
+msgid "To make some attributes read-only::"
+msgstr ""
+
+#: ../../pep-0213.txt:80
+msgid "This has the following problems:"
+msgstr ""
+
+#: ../../pep-0213.txt:82
+msgid ""
+"The creator of the method must be intimately aware of whether somewhere "
+"else in the class hierarchy ``__setattr__`` has also been trapped for any"
+" particular purpose. If so, she must specifically call that method rather"
+" than assigning to the dictionary. There are many different reasons to "
+"overload ``__setattr__`` so there is a decent potential for clashes. For "
+"instance object database implementations often overload setattr for an "
+"entirely unrelated purpose."
+msgstr ""
+
+#: ../../pep-0213.txt:91
+msgid ""
+"The string-based switch statement forces all attribute handlers to be "
+"specified in one place in the code. They may then dispatch to task-"
+"specific methods (for modularity) but this could cause performance "
+"problems."
+msgstr ""
+
+#: ../../pep-0213.txt:96
+msgid ""
+"Logic for the setting, getting and deleting must live in ``__getattr__``,"
+" ``__setattr__`` and ``__delattr__``. Once again, this can be mitigated "
+"through an extra level of method call but this is inefficient."
+msgstr ""
+
+#: ../../pep-0213.txt:103
+msgid "Proposed Syntax"
+msgstr ""
+
+#: ../../pep-0213.txt:105
+msgid ""
+"Special methods should declare themselves with declarations of the "
+"following form::"
+msgstr ""
+
+#: ../../pep-0213.txt:118
+msgid "Client code looks like this::"
+msgstr ""
+
+#: ../../pep-0213.txt:126
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-0213.txt:128
+msgid ""
+"Attribute references of all three kinds should call the method. The op "
+"parameter can be \"get\"/\"set\"/\"del\". Of course this string will be "
+"interned so the actual checks for the string will be very fast."
+msgstr ""
+
+#: ../../pep-0213.txt:133
+msgid ""
+"It is disallowed to actually have an attribute named XXX in the same "
+"instance as a method named __attr_XXX__."
+msgstr ""
+
+#: ../../pep-0213.txt:136
+msgid ""
+"An implementation of __attr_XXX__ takes precedence over an implementation"
+" of ``__getattr__`` based on the principle that ``__getattr__`` is "
+"supposed to be invoked only after finding an appropriate attribute has "
+"failed."
+msgstr ""
+
+#: ../../pep-0213.txt:141
+msgid ""
+"An implementation of __attr_XXX__ takes precedence over an implementation"
+" of ``__setattr__`` in order to be consistent. The opposite choice seems "
+"fairly feasible also, however. The same goes for __del_y__."
+msgstr ""
+
+#: ../../pep-0213.txt:148
+msgid "Proposed Implementation"
+msgstr ""
+
+#: ../../pep-0213.txt:150
+msgid ""
+"There is a new object type called an attribute access handler. Objects of"
+" this type have the following attributes::"
+msgstr ""
+
+#: ../../pep-0213.txt:156
+msgid ""
+"In PyClass_New, methods of the appropriate form will be detected and "
+"converted into objects (just like unbound method objects). These are "
+"stored in the class ``__dict__`` under the name XXX. The original method "
+"is stored as an unbound method under its original name."
+msgstr ""
+
+#: ../../pep-0213.txt:161
+msgid ""
+"If there are any attribute access handlers in an instance at all, a flag "
+"is set. Let's call it \"I_have_computed_attributes\" for now. Derived "
+"classes inherit the flag from base classes. Instances inherit the flag "
+"from classes."
+msgstr ""
+
+#: ../../pep-0213.txt:166
+msgid ""
+"A get proceeds as usual until just before the object is returned. In "
+"addition to the current check whether the returned object is a method it "
+"would also check whether a returned object is an access handler. If so, "
+"it would invoke the getter method and return the value. To remove an "
+"attribute access handler you could directly fiddle with the dictionary."
+msgstr ""
+
+#: ../../pep-0213.txt:173
+msgid ""
+"A set proceeds by checking the \"I_have_computed_attributes\" flag. If it"
+" is not set, everything proceeds as it does today. If it is set then we "
+"must do a dictionary get on the requested object name. If it returns an "
+"attribute access handler then we call the setter function with the value."
+" If it returns any other object then we discard the result and continue "
+"as we do today. Note that having an attribute access handler will mildly "
+"affect attribute \"setting\" performance for all sets on a particular "
+"instance, but no more so than today, using ``__setattr__``. Gets are more"
+" efficient than they are today with ``__getattr__``."
+msgstr ""
+
+#: ../../pep-0213.txt:184
+msgid ""
+"The I_have_computed_attributes flag is intended to eliminate the "
+"performance degradation of an extra \"get\" per \"set\" for objects not "
+"using this feature. Checking this flag should have minuscule performance "
+"implications for all objects."
+msgstr ""
+
+#: ../../pep-0213.txt:189
+msgid "The implementation of delete is analogous to the implementation of set."
+msgstr ""
+
+#: ../../pep-0213.txt:194
+msgid "Caveats"
+msgstr ""
+
+#: ../../pep-0213.txt:196
+msgid ""
+"You might note that I have not proposed any logic to keep the "
+"I_have_computed_attributes flag up to date as attributes are added and "
+"removed from the instance's dictionary. This is consistent with current "
+"Python. If you add a ``__setattr__`` method to an object after it is in "
+"use, that method will not behave as it would if it were available at "
+"\"compile\" time. The dynamism is arguably not worth the extra "
+"implementation effort. This snippet demonstrates the current behavior::"
+msgstr ""
+
+#: ../../pep-0213.txt:218
+msgid ""
+"Assignment to __dict__[\"XXX\"] can overwrite the attribute access "
+"handler for __attr_XXX__. Typically the access handlers will store "
+"information away in private __XXX variables"
+msgstr ""
+
+#: ../../pep-0213.txt:223
+msgid ""
+"An attribute access handler that attempts to call setattr or getattr on "
+"the object itself can cause an infinite loop (as with ``__getattr__``) "
+"Once again, the solution is to use a special (typically private) variable"
+" such as __XXX."
+msgstr ""
+
+#: ../../pep-0213.txt:230
+msgid "Note"
+msgstr ""
+
+#: ../../pep-0213.txt:232
+msgid ""
+"The descriptor mechanism described in PEP 252 is powerful enough to "
+"support this more directly.  A 'getset' constructor may be added to the "
+"language making this possible::"
+msgstr ""
+
+#: ../../pep-0213.txt:243
+msgid ""
+"Additional syntactic sugar might be added, or a naming convention could "
+"be recognized."
+msgstr ""
+

@@ -1,0 +1,347 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0547.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0547.rst:1
+msgid "547"
+msgstr ""
+
+#: ../../pep-0547.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0547.rst:2
+msgid "Running extension modules using the -m option"
+msgstr ""
+
+#: ../../pep-0547.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0547.rst:5
+msgid "Marcel Plch <gmarcel.plch@gmail.com>, Petr Viktorin <encukou@gmail.com>"
+msgstr ""
+
+#: ../../pep-0547.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0547.rst:7
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0547.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0547.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0547.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0547.rst:10
+msgid "25-May-2017"
+msgstr ""
+
+#: ../../pep-0547.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0547.rst:11
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0547.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0547.rst:16
+msgid "Deferral Notice"
+msgstr ""
+
+#: ../../pep-0547.rst:18
+msgid ""
+"Cython -- the most important use case for this PEP and the only explicit "
+"one -- is not ready for multi-phase initialization yet. It keeps global "
+"state in C-level static variables. See discussion at `Cython issue "
+"1923`_."
+msgstr ""
+
+#: ../../pep-0547.rst:23
+msgid "The PEP is deferred until the situation changes."
+msgstr ""
+
+#: ../../pep-0547.rst:27
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0547.rst:29
+msgid ""
+"This PEP proposes implementation that allows built-in and extension "
+"modules to be executed in the ``__main__`` namespace using the PEP 489 "
+"multi-phase initialization."
+msgstr ""
+
+#: ../../pep-0547.rst:33
+msgid ""
+"With this, a multi-phase initialization enabled module can be run using "
+"following command::"
+msgstr ""
+
+#: ../../pep-0547.rst:41
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0547.rst:43
+msgid ""
+"Currently, extension modules do not support all functionality of Python "
+"source modules. Specifically, it is not possible to run extension modules"
+" as scripts using Python's ``-m`` option."
+msgstr ""
+
+#: ../../pep-0547.rst:48
+msgid ""
+"The technical groundwork to make this possible has been done for PEP 489,"
+" and enabling the ``-m`` option is listed in that PEP's “Possible Future "
+"Extensions” section. Technically, the additional changes proposed here "
+"are relatively small."
+msgstr ""
+
+#: ../../pep-0547.rst:55
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0547.rst:57
+msgid ""
+"Extension modules' lack of support for the ``-m`` option has "
+"traditionally been worked around by providing a Python wrapper. For "
+"example, the ``_pickle`` module's command line interface is in the pure-"
+"Python ``pickle`` module (along with a pure-Python reimplementation)."
+msgstr ""
+
+#: ../../pep-0547.rst:62
+msgid ""
+"This works well for standard library modules, as building command line "
+"interfaces using the C API is cumbersome. However, other users may want "
+"to create executable extension modules directly."
+msgstr ""
+
+#: ../../pep-0547.rst:66
+msgid ""
+"An important use case is Cython, a Python-like language that compiles to "
+"C extension modules. Cython is a (near) superset of Python, meaning that "
+"compiling a Python module with Cython will typically not change the "
+"module's functionality, allowing Cython-specific features to be added "
+"gradually. This PEP will allow Cython extension modules to behave the "
+"same as their Python counterparts when run using the ``-m`` option. "
+"Cython developers consider the feature worth implementing (see `Cython "
+"issue 1715`_)."
+msgstr ""
+
+#: ../../pep-0547.rst:78
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0547.rst:80
+msgid ""
+"Python's ``-m`` option is handled by the function "
+"``runpy._run_module_as_main``."
+msgstr ""
+
+#: ../../pep-0547.rst:83
+msgid ""
+"The module specified by ``-m`` is not imported normally. Instead, it is "
+"executed in the namespace of the ``__main__`` module, which is created "
+"quite early in interpreter initialization."
+msgstr ""
+
+#: ../../pep-0547.rst:87
+msgid ""
+"For Python source modules, running in another module's namespace is not a"
+" problem: the code is executed with ``locals`` and ``globals`` set to the"
+" existing module's ``__dict__``. This is not the case for extension "
+"modules, whose ``PyInit_*`` entry point traditionally both created a new "
+"module object (using ``PyModule_Create``), and initialized it."
+msgstr ""
+
+#: ../../pep-0547.rst:94
+msgid ""
+"Since Python 3.5, extension modules can use PEP 489 multi-phase "
+"initialization. In this scenario, the ``PyInit_*`` entry point returns a "
+"``PyModuleDef`` structure: a description of how the module should be "
+"created and initialized. The extension can choose to customize creation "
+"of the module object using the ``Py_mod_create`` callback, or opt to use "
+"a normal module object by not specifying ``Py_mod_create``. Another "
+"callback, ``Py_mod_exec``, is then called to initialize the module "
+"object, e.g. by populating it with methods and classes."
+msgstr ""
+
+#: ../../pep-0547.rst:105
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0547.rst:107
+msgid ""
+"Multi-phase initialization makes it possible to execute an extension "
+"module in another module's namespace: if a ``Py_mod_create`` callback is "
+"not specified, the ``__main__`` module can be passed to the "
+"``Py_mod_exec`` callback to be initialized, as if ``__main__`` was a "
+"freshly constructed module object."
+msgstr ""
+
+#: ../../pep-0547.rst:112
+msgid ""
+"One complication in this scheme is C-level module state. Each module has "
+"a ``md_state`` pointer that points to a region of memory allocated when "
+"an extension module is created. The ``PyModuleDef`` specifies how much "
+"memory is to be allocated."
+msgstr ""
+
+#: ../../pep-0547.rst:117
+msgid ""
+"The implementation must take care that ``md_state`` memory is allocated "
+"at most once. Also, the ``Py_mod_exec`` callback should only be called "
+"once per module. The implications of multiply-initialized modules are too"
+" subtle to require expecting extension authors to reason about them. The "
+"``md_state`` pointer itself will serve as a guard: allocating the memory "
+"and calling ``Py_mod_exec`` will always be done together, and "
+"initializing an extension module will fail if ``md_state`` is already "
+"non-NULL."
+msgstr ""
+
+#: ../../pep-0547.rst:126
+msgid ""
+"Since the ``__main__`` module is not created as an extension module, its "
+"``md_state`` is normally ``NULL``. Before initializing an extension "
+"module in ``__main__``'s context, its module state will be allocated "
+"according to the ``PyModuleDef`` of that module."
+msgstr ""
+
+#: ../../pep-0547.rst:131
+msgid ""
+"While PEP 489 was designed to make these changes generally possible, it's"
+" necessary to decouple module discovery, creation, and initialization "
+"steps for extension modules, so that another module can be used instead "
+"of a newly initialized one, and the functionality needs to be added to "
+"``runpy`` and ``importlib``."
+msgstr ""
+
+#: ../../pep-0547.rst:139
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0547.rst:141
+msgid ""
+"A new optional method for importlib loaders will be added. This method "
+"will be called ``exec_in_module`` and will take two positional arguments:"
+" module spec and an already existing module. Any import-related "
+"attributes, such as ``__spec__`` or ``__name__``, already set on the "
+"module will be ignored."
+msgstr ""
+
+#: ../../pep-0547.rst:147
+msgid ""
+"The ``runpy._run_module_as_main`` function will look for this new loader "
+"method. If it is present, ``runpy`` will execute it instead of trying to "
+"load and run the module's Python code. Otherwise, ``runpy`` will act as "
+"before."
+msgstr ""
+
+#: ../../pep-0547.rst:155
+msgid "ExtensionFileLoader Changes"
+msgstr ""
+
+#: ../../pep-0547.rst:157
+msgid ""
+"importlib's ``ExtensionFileLoader`` will get an implementation of "
+"``exec_in_module`` that will call a new function, "
+"``_imp.exec_in_module``."
+msgstr ""
+
+#: ../../pep-0547.rst:160
+msgid ""
+"``_imp.exec_in_module`` will use existing machinery to find and call an "
+"extension module's ``PyInit_*`` function."
+msgstr ""
+
+#: ../../pep-0547.rst:163
+msgid ""
+"The ``PyInit_*`` function can return either a fully initialized module "
+"(single-phase initialization) or a ``PyModuleDef`` (for PEP 489 multi-"
+"phase initialization)."
+msgstr ""
+
+#: ../../pep-0547.rst:167
+msgid ""
+"In the single-phase initialization case, ``_imp.exec_in_module`` will "
+"raise ``ImportError``."
+msgstr ""
+
+#: ../../pep-0547.rst:170
+msgid ""
+"In the multi-phase initialization case, the ``PyModuleDef`` and the "
+"module to be initialized will be passed to a new function, "
+"``PyModule_ExecInModule``."
+msgstr ""
+
+#: ../../pep-0547.rst:173
+msgid ""
+"This function raises ``ImportError`` if the ``PyModuleDef`` specifies a "
+"``Py_mod_create`` slot, or if the module has already been initialized "
+"(i.e. its ``md_state`` pointer is not ``NULL``). Otherwise, the function "
+"will initialize the module according to the ``PyModuleDef``."
+msgstr ""
+
+#: ../../pep-0547.rst:181
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0547.rst:183
+msgid ""
+"This PEP maintains backwards compatibility. It only adds new functions, "
+"and a new loader method that is added for a loader that previously did "
+"not support running modules as ``__main__``."
+msgstr ""
+
+#: ../../pep-0547.rst:189
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0547.rst:191
+msgid "The reference implementation of this PEP is available at GitHub_."
+msgstr ""
+
+#: ../../pep-0547.rst:195
+msgid "References"
+msgstr ""
+
+#: ../../pep-0547.rst:204
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0547.rst:206
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,810 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0573.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0573.rst:1
+msgid "573"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0573.rst:2
+msgid "Module State Access from C Extension Methods"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0573.rst:5
+msgid ""
+"Petr Viktorin <encukou@gmail.com>, Nick Coghlan <ncoghlan@gmail.com>, "
+"Eric Snow <ericsnowcurrently@gmail.com> Marcel Plch "
+"<gmarcel.plch@gmail.com>"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0573.rst:9
+msgid "Stefan Behnel"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0573.rst:10
+msgid "import-sig@python.org"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0573.rst:11
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0573.rst:12
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0573.rst:14
+msgid "02-Jun-2016"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0573.rst:15
+msgid "3.9"
+msgstr ""
+
+#: ../../pep-0573.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0573.rst:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0573.rst:22
+msgid ""
+"This PEP proposes to add a way for CPython extension methods to access "
+"context, such as the state of the modules they are defined in."
+msgstr ""
+
+#: ../../pep-0573.rst:25
+msgid ""
+"This will allow extension methods to use direct pointer dereferences "
+"rather than PyState_FindModule for looking up module state, reducing or "
+"eliminating the performance cost of using module-scoped state over "
+"process global state."
+msgstr ""
+
+#: ../../pep-0573.rst:30
+msgid ""
+"This fixes one of the remaining roadblocks for adoption of PEP 3121 "
+"(Extension module initialization and finalization) and PEP 489 (Multi-"
+"phase extension module initialization)."
+msgstr ""
+
+#: ../../pep-0573.rst:34
+msgid ""
+"While this PEP takes an additional step towards fully solving the "
+"problems that PEP 3121 and PEP 489 started tackling, it does not attempt "
+"to resolve *all* remaining concerns. In particular, access to the module "
+"state from slot methods (``nb_add``, etc) is not solved."
+msgstr ""
+
+#: ../../pep-0573.rst:41
+msgid "Terminology"
+msgstr ""
+
+#: ../../pep-0573.rst:44
+msgid "Process-Global State"
+msgstr ""
+
+#: ../../pep-0573.rst:46
+msgid ""
+"C-level static variables. Since this is very low-level memory storage, it"
+" must be managed carefully."
+msgstr ""
+
+#: ../../pep-0573.rst:52
+msgid "Per-module State"
+msgstr ""
+
+#: ../../pep-0573.rst:54
+msgid ""
+"State local to a module object, allocated dynamically as part of a module"
+" object's initialization. This isolates the state from other instances of"
+" the module (including those in other subinterpreters)."
+msgstr ""
+
+#: ../../pep-0573.rst:58
+msgid "Accessed by ``PyModule_GetState()``."
+msgstr ""
+
+#: ../../pep-0573.rst:62
+msgid "Static Type"
+msgstr ""
+
+#: ../../pep-0573.rst:64
+msgid ""
+"A type object defined as a C-level static variable, i.e. a compiled-in "
+"type object."
+msgstr ""
+
+#: ../../pep-0573.rst:67
+msgid ""
+"A static type needs to be shared between module instances and has no "
+"information of what module it belongs to. Static types do not have "
+"``__dict__`` (although their instances might)."
+msgstr ""
+
+#: ../../pep-0573.rst:73
+msgid "Heap Type"
+msgstr ""
+
+#: ../../pep-0573.rst:75
+msgid "A type object created at run time."
+msgstr ""
+
+#: ../../pep-0573.rst:79
+msgid "Defining Class"
+msgstr ""
+
+#: ../../pep-0573.rst:81
+msgid ""
+"The defining class of a method (either bound or unbound) is the class on "
+"which the method was defined. A class that merely inherits the method "
+"from its base is not the defining class."
+msgstr ""
+
+#: ../../pep-0573.rst:85
+msgid ""
+"For example, ``int`` is the defining class of ``True.to_bytes``, "
+"``True.__floor__`` and ``int.__repr__``."
+msgstr ""
+
+#: ../../pep-0573.rst:88
+msgid ""
+"In C, the defining class is the one defined with the corresponding "
+"``tp_methods`` or \"tp slots\" [#tp-slots]_ entry. For methods defined in"
+" Python, the defining class is saved in the ``__class__`` closure cell."
+msgstr ""
+
+#: ../../pep-0573.rst:95
+msgid "C-API"
+msgstr ""
+
+#: ../../pep-0573.rst:97
+msgid ""
+"The \"Python/C API\" as described in Python documentation. CPython "
+"implements the C-API, but other implementations exist."
+msgstr ""
+
+#: ../../pep-0573.rst:102
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0573.rst:104
+msgid ""
+"PEP 489 introduced a new way to initialize extension modules, which "
+"brings several advantages to extensions that implement it:"
+msgstr ""
+
+#: ../../pep-0573.rst:107
+msgid "The extension modules behave more like their Python counterparts."
+msgstr ""
+
+#: ../../pep-0573.rst:108
+msgid ""
+"The extension modules can easily support loading into pre-existing module"
+" objects, which paves the way for extension module support for ``runpy`` "
+"or for systems that enable extension module reloading."
+msgstr ""
+
+#: ../../pep-0573.rst:111
+msgid ""
+"Loading multiple modules from the same extension is possible, which makes"
+" it possible to test module isolation (a key feature for proper sub-"
+"interpreter support) from a single interpreter."
+msgstr ""
+
+#: ../../pep-0573.rst:115
+msgid ""
+"The biggest hurdle for adoption of PEP 489 is allowing access to module "
+"state from methods of extension types. Currently, the way to access this "
+"state from extension methods is by looking up the module via "
+"``PyState_FindModule`` (in contrast to module level functions in "
+"extension modules, which receive a module reference as an argument). "
+"However, ``PyState_FindModule`` queries the thread-local state, making it"
+" relatively costly compared to C level process global access and "
+"consequently deterring module authors from using it."
+msgstr ""
+
+#: ../../pep-0573.rst:124
+msgid ""
+"Also, ``PyState_FindModule`` relies on the assumption that in each "
+"subinterpreter, there is at most one module corresponding to a given "
+"``PyModuleDef``.  This assumption does not hold for modules that use PEP "
+"489's multi-phase initialization, so ``PyState_FindModule`` is "
+"unavailable for these modules."
+msgstr ""
+
+#: ../../pep-0573.rst:130
+msgid ""
+"A faster, safer way of accessing module-level state from extension "
+"methods is needed."
+msgstr ""
+
+#: ../../pep-0573.rst:135
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0573.rst:137
+msgid ""
+"The implementation of a Python method may need access to one or more of "
+"the following pieces of information:"
+msgstr ""
+
+#: ../../pep-0573.rst:140
+msgid "The instance it is called on (``self``)"
+msgstr ""
+
+#: ../../pep-0573.rst:141
+msgid "The underlying function"
+msgstr ""
+
+#: ../../pep-0573.rst:142
+msgid "The *defining class*, i. e. the class the method was defined in"
+msgstr ""
+
+#: ../../pep-0573.rst:143
+msgid "The corresponding module"
+msgstr ""
+
+#: ../../pep-0573.rst:144
+msgid "The module state"
+msgstr ""
+
+#: ../../pep-0573.rst:146
+msgid "In Python code, the Python-level equivalents may be retrieved as::"
+msgstr ""
+
+#: ../../pep-0573.rst:161
+msgid ""
+"The defining class is not ``type(self)``, since ``type(self)`` might be a"
+" subclass of ``Foo``."
+msgstr ""
+
+#: ../../pep-0573.rst:164
+msgid ""
+"The statements marked (1) implicitly rely on name-based lookup via the "
+"function's ``__globals__``: either the ``Foo`` attribute to access the "
+"defining class and Python function object, or ``__name__`` to find the "
+"module object in ``sys.modules``."
+msgstr ""
+
+#: ../../pep-0573.rst:169
+msgid ""
+"In Python code, this is feasible, as ``__globals__`` is set appropriately"
+" when the function definition is executed, and even if the namespace has "
+"been manipulated to return a different object, at worst an exception will"
+" be raised."
+msgstr ""
+
+#: ../../pep-0573.rst:173
+msgid ""
+"The ``__class__`` closure, (2), is a safer way to get the defining class,"
+" but it still relies on ``__closure__`` being set appropriately."
+msgstr ""
+
+#: ../../pep-0573.rst:176
+msgid ""
+"By contrast, extension methods are typically implemented as normal C "
+"functions. This means that they only have access to their arguments and C"
+" level thread-local and process-global states. Traditionally, many "
+"extension modules have stored their shared state in C-level process "
+"globals, causing problems when:"
+msgstr ""
+
+#: ../../pep-0573.rst:181
+msgid "running multiple initialize/finalize cycles in the same process"
+msgstr ""
+
+#: ../../pep-0573.rst:182
+msgid "reloading modules (e.g. to test conditional imports)"
+msgstr ""
+
+#: ../../pep-0573.rst:183
+msgid "loading extension modules in subinterpreters"
+msgstr ""
+
+#: ../../pep-0573.rst:185
+msgid ""
+"PEP 3121 attempted to resolve this by offering the ``PyState_FindModule``"
+" API, but this still has significant problems when it comes to extension "
+"methods (rather than module level functions):"
+msgstr ""
+
+#: ../../pep-0573.rst:189
+msgid "it is markedly slower than directly accessing C-level process-global state"
+msgstr ""
+
+#: ../../pep-0573.rst:190
+msgid ""
+"there is still some inherent reliance on process global state that means "
+"it still doesn't reliably handle module reloading"
+msgstr ""
+
+#: ../../pep-0573.rst:193
+msgid ""
+"It's also the case that when looking up a C-level struct such as module "
+"state, supplying an unexpected object layout can crash the interpreter, "
+"so it's significantly more important to ensure that extension methods "
+"receive the kind of object they expect."
+msgstr ""
+
+#: ../../pep-0573.rst:200
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0573.rst:202
+msgid ""
+"Currently, a bound extension method (``PyCFunction`` or "
+"``PyCFunctionWithKeywords``) receives only ``self``, and (if applicable) "
+"the supplied positional and keyword arguments."
+msgstr ""
+
+#: ../../pep-0573.rst:206
+msgid ""
+"While module-level extension functions already receive access to the "
+"defining module object via their ``self`` argument, methods of extension "
+"types don't have that luxury: they receive the bound instance via "
+"``self``, and hence have no direct access to the defining class or the "
+"module level state."
+msgstr ""
+
+#: ../../pep-0573.rst:211
+msgid ""
+"The additional module level context described above can be made available"
+" with two changes. Both additions are optional; extension authors need to"
+" opt in to start using them:"
+msgstr ""
+
+#: ../../pep-0573.rst:216
+msgid "Add a pointer to the module to heap type objects."
+msgstr ""
+
+#: ../../pep-0573.rst:218
+msgid "Pass the defining class to the underlying C function."
+msgstr ""
+
+#: ../../pep-0573.rst:220
+msgid ""
+"In CPython, the defining class is readily available at the time the "
+"built-in method object (``PyCFunctionObject``) is created, so it can be "
+"stored in a new struct that extends ``PyCFunctionObject``."
+msgstr ""
+
+#: ../../pep-0573.rst:224
+msgid ""
+"The module state can then be retrieved from the module object via "
+"``PyModule_GetState``."
+msgstr ""
+
+#: ../../pep-0573.rst:227
+msgid ""
+"Note that this proposal implies that any type whose methods need to "
+"access `per-module state`_ must be a heap type, rather than a static "
+"type. This is necessary to support loading multiple module objects from a"
+" single extension: a static type, as a C-level global, has no information"
+" about which module object it belongs to."
+msgstr ""
+
+#: ../../pep-0573.rst:235 ../../pep-0573.rst:423
+msgid "Slot methods"
+msgstr ""
+
+#: ../../pep-0573.rst:237
+msgid ""
+"The above changes don't cover slot methods, such as ``tp_iter`` or "
+"``nb_add``."
+msgstr ""
+
+#: ../../pep-0573.rst:239
+msgid ""
+"The problem with slot methods is that their C API is fixed, so we can't "
+"simply add a new argument to pass in the defining class. Two possible "
+"solutions have been proposed to this problem:"
+msgstr ""
+
+#: ../../pep-0573.rst:243
+msgid ""
+"Look up the class through walking the MRO. This is potentially expensive,"
+" but will be usable if performance is not a problem (such as when raising"
+" a module-level exception)."
+msgstr ""
+
+#: ../../pep-0573.rst:246
+msgid ""
+"Storing a pointer to the defining class of each slot in a separate table,"
+" ``__typeslots__`` [#typeslots-mail]_.  This is technically feasible and "
+"fast, but quite invasive."
+msgstr ""
+
+#: ../../pep-0573.rst:250
+msgid ""
+"Modules affected by this concern also have the option of using `thread-"
+"local state`_ or `PEP 567 context variables`_ as a caching mechanism, or "
+"else defining their own reload-friendly lookup caching scheme."
+msgstr ""
+
+#: ../../pep-0573.rst:254
+msgid "Solving the issue generally is deferred to a future PEP."
+msgstr ""
+
+#: ../../pep-0573.rst:261
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0573.rst:264
+msgid "Adding module references to heap types"
+msgstr ""
+
+#: ../../pep-0573.rst:266
+msgid "A new factory method will be added to the C-API for creating modules::"
+msgstr ""
+
+#: ../../pep-0573.rst:272
+msgid ""
+"This acts the same as ``PyType_FromSpecWithBases``, and additionally "
+"associates the provided module object with the new type. (In CPython, "
+"this will set ``ht_module`` described below.)"
+msgstr ""
+
+#: ../../pep-0573.rst:276
+msgid ""
+"Additionally, an accessor, ``PyObject * PyType_GetModule(PyTypeObject "
+"*)`` will be provided. It will return the type's associated module if one"
+" is set, otherwise it will set ``TypeError`` and return NULL. When given "
+"a static type, it will always set ``TypeError`` and return NULL."
+msgstr ""
+
+#: ../../pep-0573.rst:282
+msgid ""
+"To implement this in CPython, the ``PyHeapTypeObject`` struct will get a "
+"new member, ``PyObject *ht_module``, that will store a pointer to the "
+"associated module. It will be ``NULL`` by default and should not be "
+"modified after the type object is created."
+msgstr ""
+
+#: ../../pep-0573.rst:288
+msgid ""
+"The ``ht_module`` member will not be inherited by subclasses; it needs to"
+" be set using ``PyType_FromSpecWithBases`` for each individual type that "
+"needs it."
+msgstr ""
+
+#: ../../pep-0573.rst:291
+msgid ""
+"Usually, creating a class with ``ht_module`` set will create a reference "
+"cycle involving the class and the module. This is not a problem, as "
+"tearing down modules is not a performance-sensitive operation, and "
+"module-level functions typically also create reference cycles. The "
+"existing \"set all module globals to None\" code that breaks function "
+"cycles through ``f_globals`` will also break the new cycles through "
+"``ht_module``."
+msgstr ""
+
+#: ../../pep-0573.rst:300
+msgid "Passing the defining class to extension methods"
+msgstr ""
+
+#: ../../pep-0573.rst:302
+msgid ""
+"A new signature flag, ``METH_METHOD``, will be added for use in "
+"``PyMethodDef.ml_flags``. Conceptually, it adds ``defining_class`` to the"
+" function signature. To make the initial implementation easier, the flag "
+"can only be used as ``(METH_FASTCALL | METH_KEYWORDS | METH_METHOD)``. "
+"(It can't be used with other flags like ``METH_O`` or bare "
+"``METH_FASTCALL``, though it may be combined with ``METH_CLASS`` or "
+"``METH_STATIC``)."
+msgstr ""
+
+#: ../../pep-0573.rst:310
+msgid ""
+"C functions for methods defined using this flag combination will be "
+"called using a new C signature called ``PyCMethod``::"
+msgstr ""
+
+#: ../../pep-0573.rst:319
+msgid ""
+"Additional combinations like ``(METH_VARARGS | METH_METHOD)`` may be "
+"added in the future (or even in the initial implementation of this PEP). "
+"However, ``METH_METHOD`` should always be an *additional* flag, i.e., the"
+" defining class should only be passed in if needed."
+msgstr ""
+
+#: ../../pep-0573.rst:324
+msgid ""
+"In CPython, a new structure extending ``PyCFunctionObject`` will be added"
+" to hold the extra information::"
+msgstr ""
+
+#: ../../pep-0573.rst:332
+msgid ""
+"The ``PyCFunction`` implementation will pass ``mm_class`` into a "
+"``PyCMethod`` C function when it finds the ``METH_METHOD`` flag being "
+"set. A new macro ``PyCFunction_GET_CLASS(cls)`` will be added for easier "
+"access to ``mm_class``."
+msgstr ""
+
+#: ../../pep-0573.rst:337
+msgid ""
+"C methods may continue to use the other ``METH_*`` signatures if they do "
+"not require access to their defining class/module. If ``METH_METHOD`` is "
+"not set, casting to ``PyCMethodObject`` is invalid."
+msgstr ""
+
+#: ../../pep-0573.rst:343
+msgid "Argument Clinic"
+msgstr ""
+
+#: ../../pep-0573.rst:345
+msgid ""
+"To support passing the defining class to methods using Argument Clinic, a"
+" new converter called ``defining_class`` will be added to CPython's "
+"Argument Clinic tool."
+msgstr ""
+
+#: ../../pep-0573.rst:349
+msgid ""
+"Each method may only have one argument using this converter, and it must "
+"appear after ``self``, or, if ``self`` is not used, as the first "
+"argument. The argument will be of type ``PyTypeObject *``."
+msgstr ""
+
+#: ../../pep-0573.rst:353
+msgid ""
+"When used, Argument Clinic will select ``METH_FASTCALL | METH_KEYWORDS | "
+"METH_METHOD`` as the calling convention. The argument will not appear in "
+"``__text_signature__``."
+msgstr ""
+
+#: ../../pep-0573.rst:357
+msgid ""
+"The new converter will initially not be compatible with ``__init__`` and "
+"``__new__`` methods, which cannot use the ``METH_METHOD`` convention."
+msgstr ""
+
+#: ../../pep-0573.rst:362
+msgid "Helpers"
+msgstr ""
+
+#: ../../pep-0573.rst:364
+msgid ""
+"Getting to `per-module state`_ from a heap type is a very common task. To"
+" make this easier, a helper will be added::"
+msgstr ""
+
+#: ../../pep-0573.rst:369
+msgid ""
+"This function takes a heap type and on success, it returns pointer to the"
+" state of the module that the heap type belongs to."
+msgstr ""
+
+#: ../../pep-0573.rst:372
+msgid ""
+"On failure, two scenarios may occur. When a non-type object, or a type "
+"without a module is passed in, ``TypeError`` is set and ``NULL`` "
+"returned. If the module is found, the pointer to the state, which may be "
+"``NULL``, is returned without setting any exception."
+msgstr ""
+
+#: ../../pep-0573.rst:379
+msgid "Modules Converted in the Initial Implementation"
+msgstr ""
+
+#: ../../pep-0573.rst:381
+msgid ""
+"To validate the approach, the ``_elementtree`` module will be modified "
+"during the initial implementation."
+msgstr ""
+
+#: ../../pep-0573.rst:386
+msgid "Summary of API Changes and Additions"
+msgstr ""
+
+#: ../../pep-0573.rst:388
+msgid "The following will be added to Python C-API:"
+msgstr ""
+
+#: ../../pep-0573.rst:390
+msgid "``PyType_FromModuleAndSpec`` function"
+msgstr ""
+
+#: ../../pep-0573.rst:391
+msgid "``PyType_GetModule`` function"
+msgstr ""
+
+#: ../../pep-0573.rst:392
+msgid "``PyType_GetModuleState`` function"
+msgstr ""
+
+#: ../../pep-0573.rst:393
+msgid "``METH_METHOD`` call flag"
+msgstr ""
+
+#: ../../pep-0573.rst:394
+msgid "``PyCMethod`` function signature"
+msgstr ""
+
+#: ../../pep-0573.rst:396
+msgid ""
+"The following additions will be added as CPython implementation details, "
+"and won't be documented:"
+msgstr ""
+
+#: ../../pep-0573.rst:399
+msgid "``PyCFunction_GET_CLASS`` macro"
+msgstr ""
+
+#: ../../pep-0573.rst:400
+msgid "``PyCMethodObject`` struct"
+msgstr ""
+
+#: ../../pep-0573.rst:401
+msgid "``ht_module`` member of ``_heaptypeobject``"
+msgstr ""
+
+#: ../../pep-0573.rst:402
+msgid "``defining_class`` converter in Argument Clinic"
+msgstr ""
+
+#: ../../pep-0573.rst:406
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0573.rst:408
+msgid ""
+"One new pointer is added to all heap types. All other changes are adding "
+"new functions and structures, or changes to private implementation "
+"details."
+msgstr ""
+
+#: ../../pep-0573.rst:413
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0573.rst:415
+msgid ""
+"An initial implementation is available in a Github repository [#gh-"
+"repo]_; a patchset is at [#gh-patch]_."
+msgstr ""
+
+#: ../../pep-0573.rst:420
+msgid "Possible Future Extensions"
+msgstr ""
+
+#: ../../pep-0573.rst:425
+msgid ""
+"A way of passing defining class (or module state) to slot methods may be "
+"added in the future."
+msgstr ""
+
+#: ../../pep-0573.rst:428
+msgid ""
+"A previous version of this PEP proposed a helper function that would "
+"determine a defining class by searching the MRO for a class that defines "
+"a slot to a particular function. However, this approach would fail if a "
+"class is mutated (which is, for heap types, possible from Python code). "
+"Solving this problem is left to future discussions."
+msgstr ""
+
+#: ../../pep-0573.rst:436
+msgid "Easy creation of types with module references"
+msgstr ""
+
+#: ../../pep-0573.rst:438
+msgid ""
+"It would be possible to add a PEP 489 execution slot type to make "
+"creating heap types significantly easier than calling "
+"``PyType_FromModuleAndSpec``. This is left to a future PEP."
+msgstr ""
+
+#: ../../pep-0573.rst:443
+msgid ""
+"It may be good to add a good way to create static exception types from "
+"the limited API. Such exception types could be shared between "
+"subinterpreters, but instantiated without needing specific module state. "
+"This is also left to possible future discussions."
+msgstr ""
+
+#: ../../pep-0573.rst:450
+msgid "Optimization"
+msgstr ""
+
+#: ../../pep-0573.rst:452
+msgid ""
+"As proposed here, methods defined with the ``METH_METHOD`` flag only "
+"support one specific signature."
+msgstr ""
+
+#: ../../pep-0573.rst:455
+msgid ""
+"If it turns out that other signatures are needed for performance reasons,"
+" they may be added."
+msgstr ""
+
+#: ../../pep-0573.rst:460
+msgid "References"
+msgstr ""
+
+#: ../../pep-0573.rst:462
+msgid "https://docs.python.org/3/c-api/typeobj.html#tp-slots"
+msgstr ""
+
+#: ../../pep-0573.rst:464
+msgid ""
+"[Import-SIG] On singleton modules, heap types, and subinterpreters "
+"(https://mail.python.org/pipermail/import-sig/2015-July/001035.html)"
+msgstr ""
+
+#: ../../pep-0573.rst:468
+msgid "https://github.com/Dormouse759/cpython/tree/pep-c-rebase_newer"
+msgstr ""
+
+#: ../../pep-0573.rst:471
+msgid "https://github.com/Dormouse759/cpython/compare/master...Dormouse759:pep-c-rebase_newer"
+msgstr ""
+
+#: ../../pep-0573.rst:474
+msgid "https://www.python.org/dev/peps/pep-0590/"
+msgstr ""
+
+#: ../../pep-0573.rst:478
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0573.rst:480
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

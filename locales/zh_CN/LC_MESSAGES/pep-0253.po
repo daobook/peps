@@ -1,0 +1,1305 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0253.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0253.txt:1
+msgid "253"
+msgstr ""
+
+#: ../../pep-0253.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0253.txt:2
+msgid "Subtyping Built-in Types"
+msgstr ""
+
+#: ../../pep-0253.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0253.txt:5
+msgid "guido@python.org (Guido van Rossum)"
+msgstr ""
+
+#: ../../pep-0253.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0253.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0253.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0253.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0253.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0253.txt:9
+msgid "14-May-2001"
+msgstr ""
+
+#: ../../pep-0253.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0253.txt:10
+msgid "2.2"
+msgstr ""
+
+#: ../../pep-0253.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0253.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0253.txt:16
+msgid ""
+"This PEP proposes additions to the type object API that will allow the "
+"creation of subtypes of built-in types, in C and in Python."
+msgstr ""
+
+#: ../../pep-0253.txt:19
+msgid ""
+"[Editor's note: the ideas described in this PEP have been incorporated "
+"into Python.  The PEP no longer accurately describes the implementation.]"
+msgstr ""
+
+#: ../../pep-0253.txt:24
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0253.txt:26
+msgid ""
+"Traditionally, types in Python have been created statically, by declaring"
+" a global variable of type PyTypeObject and initializing it with a static"
+" initializer.  The slots in the type object describe all aspects of a "
+"Python type that are relevant to the Python interpreter.  A few slots "
+"contain dimensional information (like the basic allocation size of "
+"instances), others contain various flags, but most slots are pointers to "
+"functions to implement various kinds of behaviors.  A NULL pointer means "
+"that the type does not implement the specific behavior; in that case the "
+"system may provide a default behavior or raise an exception when the "
+"behavior is invoked for an instance of the type.  Some collections of "
+"function pointers that are usually defined together are obtained "
+"indirectly via a pointer to an additional structure containing more "
+"function pointers."
+msgstr ""
+
+#: ../../pep-0253.txt:41
+msgid ""
+"While the details of initializing a PyTypeObject structure haven't been "
+"documented as such, they are easily gleaned from the examples in the "
+"source code, and I am assuming that the reader is sufficiently familiar "
+"with the traditional way of creating new Python types in C."
+msgstr ""
+
+#: ../../pep-0253.txt:47
+msgid "This PEP will introduce the following features:"
+msgstr ""
+
+#: ../../pep-0253.txt:49
+msgid "a type can be a factory function for its instances"
+msgstr ""
+
+#: ../../pep-0253.txt:51
+msgid "types can be subtyped in C"
+msgstr ""
+
+#: ../../pep-0253.txt:53
+msgid "types can be subtyped in Python with the class statement"
+msgstr ""
+
+#: ../../pep-0253.txt:55
+msgid ""
+"multiple inheritance from types is supported (insofar as practical -- you"
+" still can't multiply inherit from list and dictionary)"
+msgstr ""
+
+#: ../../pep-0253.txt:59
+msgid ""
+"the standard coercion functions (int, tuple, str etc.) will be redefined "
+"to be the corresponding type objects, which serve as their own factory "
+"functions"
+msgstr ""
+
+#: ../../pep-0253.txt:63
+msgid ""
+"a class statement can contain a ``__metaclass__`` declaration, specifying"
+" the metaclass to be used to create the new class"
+msgstr ""
+
+#: ../../pep-0253.txt:66
+msgid ""
+"a class statement can contain a ``__slots__`` declaration, specifying the"
+" specific names of the instance variables supported"
+msgstr ""
+
+#: ../../pep-0253.txt:70
+msgid ""
+"This PEP builds on PEP 252, which adds standard introspection to types; "
+"for example, when a particular type object initializes the ``tp_hash`` "
+"slot, that type object has a ``__hash__`` method when introspected.  PEP "
+"252 also adds a dictionary to type objects which contains all methods.  "
+"At the Python level, this dictionary is read-only for built-in types; at "
+"the C level, it is accessible directly (but it should not be modified "
+"except as part of initialization)."
+msgstr ""
+
+#: ../../pep-0253.txt:79
+msgid ""
+"For binary compatibility, a flag bit in the tp_flags slot indicates the "
+"existence of the various new slots in the type object introduced below.  "
+"Types that don't have the ``Py_TPFLAGS_HAVE_CLASS`` bit set in their "
+"``tp_flags`` slot are assumed to have NULL values for all the subtyping "
+"slots.  (Warning: the current implementation prototype is not yet "
+"consistent in its checking of this flag bit.  This should be fixed before"
+" the final release.)"
+msgstr ""
+
+#: ../../pep-0253.txt:88
+msgid ""
+"In current Python, a distinction is made between types and classes.  This"
+" PEP together with PEP 254 will remove that distinction.  However, for "
+"backwards compatibility the distinction will probably remain for years to"
+" come, and without PEP 254, the distinction is still large: types "
+"ultimately have a built-in type as a base class, while classes ultimately"
+" derive from a user-defined class.  Therefore, in the rest of this PEP, I"
+" will use the word type whenever I can -- including base type or "
+"supertype, derived type or subtype, and metatype.  However, sometimes the"
+" terminology necessarily blends, for example an object's type is given by"
+" its ``__class__`` attribute, and subtyping in Python is spelled with a "
+"class statement.  If further distinction is necessary, user-defined "
+"classes can be referred to as \"classic\" classes."
+msgstr ""
+
+#: ../../pep-0253.txt:105
+msgid "About metatypes"
+msgstr ""
+
+#: ../../pep-0253.txt:107
+msgid ""
+"Inevitably the discussion comes to metatypes (or metaclasses). Metatypes "
+"are nothing new in Python: Python has always been able to talk about the "
+"type of a type::"
+msgstr ""
+
+#: ../../pep-0253.txt:120
+msgid ""
+"In this example, ``type(a)`` is a \"regular\" type, and ``type(type(a))``"
+" is a metatype.  While as distributed all types have the same metatype "
+"(``PyType_Type``, which is also its own metatype), this is not a "
+"requirement, and in fact a useful and relevant 3rd party extension "
+"(ExtensionClasses by Jim Fulton) creates an additional metatype. The type"
+" of classic classes, known as ``types.ClassType``, can also be considered"
+" a distinct metatype."
+msgstr ""
+
+#: ../../pep-0253.txt:128
+msgid ""
+"A feature closely connected to metatypes is the \"Don Beaudry hook\", "
+"which says that if a metatype is callable, its instances (which are "
+"regular types) can be subclassed (really subtyped) using a Python class "
+"statement.  I will use this rule to support subtyping of built-in types, "
+"and in fact it greatly simplifies the logic of class creation to always "
+"simply call the metatype.  When no base class is specified, a default "
+"metatype is called -- the default metatype is the \"ClassType\" object, "
+"so the class statement will behave as before in the normal case.  (This "
+"default can be changed per module by setting the global variable "
+"``__metaclass__``.)"
+msgstr ""
+
+#: ../../pep-0253.txt:139
+msgid ""
+"Python uses the concept of metatypes or metaclasses in a different way "
+"than Smalltalk.  In Smalltalk-80, there is a hierarchy of metaclasses "
+"that mirrors the hierarchy of regular classes, metaclasses map 1-1 to "
+"classes (except for some funny business at the root of the hierarchy), "
+"and each class statement creates both a regular class and its metaclass, "
+"putting class methods in the metaclass and instance methods in the "
+"regular class."
+msgstr ""
+
+#: ../../pep-0253.txt:147
+msgid ""
+"Nice though this may be in the context of Smalltalk, it's not compatible "
+"with the traditional use of metatypes in Python, and I prefer to continue"
+" in the Python way.  This means that Python metatypes are typically "
+"written in C, and may be shared between many regular types. (It will be "
+"possible to subtype metatypes in Python, so it won't be absolutely "
+"necessary to write C to use metatypes; but the power of Python metatypes "
+"will be limited.  For example, Python code will never be allowed to "
+"allocate raw memory and initialize it at will.)"
+msgstr ""
+
+#: ../../pep-0253.txt:157
+msgid ""
+"Metatypes determine various **policies** for types, such as what happens "
+"when a type is called, how dynamic types are (whether a type's "
+"``__dict__`` can be modified after it is created), what the method "
+"resolution order is, how instance attributes are looked up, and so on."
+msgstr ""
+
+#: ../../pep-0253.txt:163
+msgid ""
+"I'll argue that left-to-right depth-first is not the best solution when "
+"you want to get the most use from multiple inheritance."
+msgstr ""
+
+#: ../../pep-0253.txt:167
+msgid ""
+"I'll argue that with multiple inheritance, the metatype of the subtype "
+"must be a descendant of the metatypes of all base types."
+msgstr ""
+
+#: ../../pep-0253.txt:170
+msgid "I'll come back to metatypes later."
+msgstr ""
+
+#: ../../pep-0253.txt:174
+msgid "Making a type a factory for its instances"
+msgstr ""
+
+#: ../../pep-0253.txt:176
+msgid ""
+"Traditionally, for each type there is at least one C factory function "
+"that creates instances of the type (``PyTuple_New()``, "
+"``PyInt_FromLong()`` and so on).  These factory functions take care of "
+"both allocating memory for the object and initializing that memory.  As "
+"of Python 2.0, they also have to interface with the garbage collection "
+"subsystem, if the type chooses to participate in garbage collection "
+"(which is optional, but strongly recommended for so-called \"container\" "
+"types: types that may contain references to other objects, and hence may "
+"participate in reference cycles)."
+msgstr ""
+
+#: ../../pep-0253.txt:186
+msgid ""
+"In this proposal, type objects can be factory functions for their "
+"instances, making the types directly callable from Python.  This mimics "
+"the way classes are instantiated.  The C APIs for creating instances of "
+"various built-in types will remain valid and in some cases more "
+"efficient.  Not all types will become their own factory functions."
+msgstr ""
+
+#: ../../pep-0253.txt:193
+msgid ""
+"The type object has a new slot, tp_new, which can act as a factory for "
+"instances of the type.  Types are now callable, because the tp_call slot "
+"is set in ``PyType_Type`` (the metatype); the function looks for the "
+"tp_new slot of the type that is being called."
+msgstr ""
+
+#: ../../pep-0253.txt:198
+msgid ""
+"Explanation: the ``tp_call`` slot of a regular type object (such as "
+"``PyInt_Type`` or ``PyList_Type``) defines what happens when "
+"**instances** of that type are called; in particular, the ``tp_call`` "
+"slot in the function type, ``PyFunction_Type``, is the key to making "
+"functions callable.  As another example, ``PyInt_Type.tp_call`` is "
+"``NULL``, because integers are not callable.  The new paradigm makes "
+"**type objects** callable.  Since type objects are instances of their "
+"metatype (``PyType_Type``), the metatype's ``tp_call`` slot "
+"(``PyType_Type.tp_call``) points to a function that is invoked when any "
+"type object is called.  Now, since each type has to do something "
+"different to create an instance of itself, ``PyType_Type.tp_call`` "
+"immediately defers to the ``tp_new`` slot of the type that is being "
+"called. ``PyType_Type`` itself is also callable: its ``tp_new`` slot "
+"creates a new type.  This is used by the class statement (formalizing the"
+" Don Beaudry hook, see above).  And what makes ``PyType_Type`` callable? "
+"The ``tp_call`` slot of **its** metatype -- but since it is its own "
+"metatype, that is its own ``tp_call`` slot!"
+msgstr ""
+
+#: ../../pep-0253.txt:216
+msgid ""
+"If the type's ``tp_new`` slot is NULL, an exception is raised. Otherwise,"
+" the tp_new slot is called.  The signature for the ``tp_new`` slot is"
+msgstr ""
+
+#: ../../pep-0253.txt:226
+msgid ""
+"where 'type' is the type whose ``tp_new`` slot is called, and 'args' and "
+"'kwds' are the sequential and keyword arguments to the call, passed "
+"unchanged from tp_call.  (The 'type' argument is used in combination with"
+" inheritance, see below.)"
+msgstr ""
+
+#: ../../pep-0253.txt:231
+msgid ""
+"There are no constraints on the object type that is returned, although by"
+" convention it should be an instance of the given type.  It is not "
+"necessary that a new object is returned; a reference to an existing "
+"object is fine too.  The return value should always be a new reference, "
+"owned by the caller."
+msgstr ""
+
+#: ../../pep-0253.txt:237
+msgid ""
+"Once the ``tp_new`` slot has returned an object, further initialization "
+"is attempted by calling the ``tp_init()`` slot of the resulting object's "
+"type, if not NULL.  This has the following signature::"
+msgstr ""
+
+#: ../../pep-0253.txt:245
+msgid ""
+"It corresponds more closely to the ``__init__()`` method of classic "
+"classes, and in fact is mapped to that by the slot/special-method "
+"correspondence rules.  The difference in responsibilities between the "
+"``tp_new()`` slot and the ``tp_init()`` slot lies in the invariants they "
+"ensure.  The ``tp_new()`` slot should ensure only the most essential "
+"invariants, without which the C code that implements the objects would "
+"break.  The ``tp_init()`` slot should be used for overridable user-"
+"specific initializations.  Take for example the dictionary type.  The "
+"implementation has an internal pointer to a hash table which should never"
+" be NULL.  This invariant is taken care of by the ``tp_new()`` slot for "
+"dictionaries.  The dictionary ``tp_init()`` slot, on the other hand, "
+"could be used to give the dictionary an initial set of keys and values "
+"based on the arguments passed in."
+msgstr ""
+
+#: ../../pep-0253.txt:260
+msgid ""
+"Note that for immutable object types, the initialization cannot be done "
+"by the ``tp_init()`` slot: this would provide the Python user with a way "
+"to change the initialization.  Therefore, immutable objects typically "
+"have an empty ``tp_init()`` implementation and do all their "
+"initialization in their ``tp_new()`` slot."
+msgstr ""
+
+#: ../../pep-0253.txt:266
+msgid ""
+"You may wonder why the ``tp_new()`` slot shouldn't call the ``tp_init()``"
+" slot itself.  The reason is that in certain circumstances (like support "
+"for persistent objects), it is important to be able to create an object "
+"of a particular type without initializing it any further than necessary."
+"  This may conveniently be done by calling the ``tp_new()`` slot without "
+"calling ``tp_init()``.  It is also possible that ``tp_init()`` is not "
+"called, or called more than once -- its operation should be robust even "
+"in these anomalous cases."
+msgstr ""
+
+#: ../../pep-0253.txt:275
+msgid ""
+"For some objects, ``tp_new()`` may return an existing object.  For "
+"example, the factory function for integers caches the integers -1 through"
+" 99.  This is permissible only when the type argument to ``tp_new()`` is "
+"the type that defined the ``tp_new()`` function (in the example, if "
+"``type == &PyInt_Type``), and when the ``tp_init()`` slot for this type "
+"does nothing.  If the type argument differs, the ``tp_new()`` call is "
+"initiated by a derived type's ``tp_new()`` to create the object and "
+"initialize the base type portion of the object; in this case ``tp_new()``"
+" should always return a new object (or raise an exception)."
+msgstr ""
+
+#: ../../pep-0253.txt:286
+msgid ""
+"Both ``tp_new()`` and ``tp_init()`` should receive exactly the same "
+"'args' and 'kwds' arguments, and both should check that the arguments are"
+" acceptable, because they may be called independently."
+msgstr ""
+
+#: ../../pep-0253.txt:290
+msgid ""
+"There's a third slot related to object creation: ``tp_alloc()``.  Its "
+"responsibility is to allocate the memory for the object, initialize the "
+"reference count (``ob_refcnt``) and the type pointer (``ob_type``), and "
+"initialize the rest of the object to all zeros.  It should also register "
+"the object with the garbage collection subsystem if the type supports "
+"garbage collection.  This slot exists so that derived types can override "
+"the memory allocation policy (like which heap is being used) separately "
+"from the initialization code.  The signature is::"
+msgstr ""
+
+#: ../../pep-0253.txt:302
+msgid ""
+"The type argument is the type of the new object.  The nitems argument is "
+"normally zero, except for objects with a variable allocation size "
+"(basically strings, tuples, and longs).  The allocation size is given by "
+"the following expression::"
+msgstr ""
+
+#: ../../pep-0253.txt:309
+msgid ""
+"The ``tp_alloc`` slot is only used for subclassable types.  The "
+"``tp_new()`` function of the base class must call the ``tp_alloc()`` slot"
+" of the type passed in as its first argument.  It is the ``tp_new()`` "
+"function's responsibility to calculate the number of items.  The "
+"``tp_alloc()`` slot will set the ob_size member of the new object if the "
+"``type->tp_itemsize`` member is nonzero."
+msgstr ""
+
+#: ../../pep-0253.txt:316
+msgid ""
+"(Note: in certain debugging compilation modes, the type structure used to"
+" have members named ``tp_alloc`` and a ``tp_free`` slot already, counters"
+" for the number of allocations and deallocations.  These are renamed to "
+"``tp_allocs`` and ``tp_deallocs``.)"
+msgstr ""
+
+#: ../../pep-0253.txt:321
+msgid ""
+"Standard implementations for ``tp_alloc()`` and ``tp_new()`` are "
+"available.  ``PyType_GenericAlloc()`` allocates an object from the "
+"standard heap and initializes it properly.  It uses the above formula to "
+"determine the amount of memory to allocate, and takes care of GC "
+"registration.  The only reason not to use this implementation would be to"
+" allocate objects from a different heap (as is done by some very small "
+"frequently used objects like ints and tuples).  ``PyType_GenericNew()`` "
+"adds very little: it just calls the type's ``tp_alloc()`` slot with zero "
+"for nitems.  But for mutable types that do all their initialization in "
+"their ``tp_init()`` slot, this may be just the ticket."
+msgstr ""
+
+#: ../../pep-0253.txt:335
+msgid "Preparing a type for subtyping"
+msgstr ""
+
+#: ../../pep-0253.txt:337
+msgid ""
+"The idea behind subtyping is very similar to that of single inheritance "
+"in C++.  A base type is described by a structure declaration (similar to "
+"the C++ class declaration) plus a type object (similar to the C++ "
+"vtable).  A derived type can extend the structure (but must leave the "
+"names, order and type of the members of the base structure unchanged) and"
+" can override certain slots in the type object, leaving others the same."
+"  (Unlike C++ vtables, all Python type objects have the same memory "
+"layout.)"
+msgstr ""
+
+#: ../../pep-0253.txt:346
+msgid "The base type must do the following:"
+msgstr ""
+
+#: ../../pep-0253.txt:348
+msgid "Add the flag value ``Py_TPFLAGS_BASETYPE`` to ``tp_flags``."
+msgstr ""
+
+#: ../../pep-0253.txt:350
+msgid ""
+"Declare and use ``tp_new()``, ``tp_alloc()`` and optional ``tp_init()`` "
+"slots."
+msgstr ""
+
+#: ../../pep-0253.txt:353
+msgid "Declare and use ``tp_dealloc()`` and ``tp_free()``."
+msgstr ""
+
+#: ../../pep-0253.txt:355
+msgid "Export its object structure declaration."
+msgstr ""
+
+#: ../../pep-0253.txt:357
+msgid "Export a subtyping-aware type-checking macro."
+msgstr ""
+
+#: ../../pep-0253.txt:359
+msgid ""
+"The requirements and signatures for ``tp_new()``, ``tp_alloc()`` and "
+"``tp_init()`` have already been discussed above: ``tp_alloc()`` should "
+"allocate the memory and initialize it to mostly zeros; ``tp_new()`` "
+"should call the ``tp_alloc()`` slot and then proceed to do the minimally "
+"required initialization; ``tp_init()`` should be used for more extensive "
+"initialization of mutable objects."
+msgstr ""
+
+#: ../../pep-0253.txt:366
+msgid ""
+"It should come as no surprise that there are similar conventions at the "
+"end of an object's lifetime.  The slots involved are ``tp_dealloc()`` "
+"(familiar to all who have ever implemented a Python extension type) and "
+"``tp_free()``, the new kid on the block.  (The names aren't quite "
+"symmetric; ``tp_free()`` corresponds to ``tp_alloc()``, which is fine, "
+"but ``tp_dealloc()`` corresponds to ``tp_new()``.  Maybe the tp_dealloc "
+"slot should be renamed?)"
+msgstr ""
+
+#: ../../pep-0253.txt:374
+msgid ""
+"The ``tp_free()`` slot should be used to free the memory and unregister "
+"the object with the garbage collection subsystem, and can be overridden "
+"by a derived class; ``tp_dealloc()`` should deinitialize the object "
+"(usually by calling ``Py_XDECREF()`` for various sub-objects) and then "
+"call ``tp_free()`` to deallocate the memory.  The signature for "
+"``tp_dealloc()`` is the same as it always was::"
+msgstr ""
+
+#: ../../pep-0253.txt:384
+msgid "The signature for tp_free() is the same::"
+msgstr ""
+
+#: ../../pep-0253.txt:388
+msgid ""
+"(In a previous version of this PEP, there was also a role reserved for "
+"the ``tp_clear()`` slot.  This turned out to be a bad idea.)"
+msgstr ""
+
+#: ../../pep-0253.txt:391
+msgid ""
+"To be usefully subtyped in C, a type must export the structure "
+"declaration for its instances through a header file, as it is needed to "
+"derive a subtype.  The type object for the base type must also be "
+"exported."
+msgstr ""
+
+#: ../../pep-0253.txt:396
+msgid ""
+"If the base type has a type-checking macro (like ``PyDict_Check()``), "
+"this macro should be made to recognize subtypes.  This can be done by "
+"using the new ``PyObject_TypeCheck(object, type)`` macro, which calls a "
+"function that follows the base class links."
+msgstr ""
+
+#: ../../pep-0253.txt:401
+msgid ""
+"The ``PyObject_TypeCheck()`` macro contains a slight optimization: it "
+"first compares ``object->ob_type`` directly to the type argument, and if "
+"this is a match, bypasses the function call.  This should make it fast "
+"enough for most situations."
+msgstr ""
+
+#: ../../pep-0253.txt:406
+msgid ""
+"Note that this change in the type-checking macro means that C functions "
+"that require an instance of the base type may be invoked with instances "
+"of the derived type.  Before enabling subtyping of a particular type, its"
+" code should be checked to make sure that this won't break anything.  It "
+"has proved useful in the prototype to add another type-checking macro for"
+" the built-in Python object types, to check for exact type match too (for"
+" example, ``PyDict_Check(x)`` is true if x is an instance of dictionary "
+"or of a dictionary subclass, while ``PyDict_CheckExact(x)`` is true only "
+"if x is a dictionary)."
+msgstr ""
+
+#: ../../pep-0253.txt:419
+msgid "Creating a subtype of a built-in type in C"
+msgstr ""
+
+#: ../../pep-0253.txt:421
+msgid ""
+"The simplest form of subtyping is subtyping in C.  It is the simplest "
+"form because we can require the C code to be aware of some of the "
+"problems, and it's acceptable for C code that doesn't follow the rules to"
+" dump core.  For added simplicity, it is limited to single inheritance."
+msgstr ""
+
+#: ../../pep-0253.txt:427
+msgid ""
+"Let's assume we're deriving from a mutable base type whose tp_itemsize is"
+" zero.  The subtype code is not GC-aware, although it may inherit GC-"
+"awareness from the base type (this is automatic).  The base type's "
+"allocation uses the standard heap."
+msgstr ""
+
+#: ../../pep-0253.txt:432
+msgid ""
+"The derived type begins by declaring a type structure which contains the "
+"base type's structure.  For example, here's the type structure for a "
+"subtype of the built-in list type::"
+msgstr ""
+
+#: ../../pep-0253.txt:441
+msgid ""
+"Note that the base type structure member (here ``PyListObject``) must be "
+"the first member of the structure; any following members are additions.  "
+"Also note that the base type is not referenced via a pointer; the actual "
+"contents of its structure must be included! (The goal is for the memory "
+"layout of the beginning of the subtype instance to be the same as that of"
+" the base type instance.)"
+msgstr ""
+
+#: ../../pep-0253.txt:449
+msgid ""
+"Next, the derived type must declare a type object and initialize it.  "
+"Most of the slots in the type object may be initialized to zero, which is"
+" a signal that the base type slot must be copied into it.  Some slots "
+"that must be initialized properly:"
+msgstr ""
+
+#: ../../pep-0253.txt:454
+msgid ""
+"The object header must be filled in as usual; the type should be "
+"``&PyType_Type``."
+msgstr ""
+
+#: ../../pep-0253.txt:457
+msgid ""
+"The tp_basicsize slot must be set to the size of the subtype instance "
+"struct (in the above example: ``sizeof(spamlistobject)``)."
+msgstr ""
+
+#: ../../pep-0253.txt:460
+msgid ""
+"The tp_base slot must be set to the address of the base type's type "
+"object."
+msgstr ""
+
+#: ../../pep-0253.txt:463
+msgid ""
+"If the derived slot defines any pointer members, the ``tp_dealloc`` slot "
+"function requires special attention, see below; otherwise, it can be set "
+"to zero, to inherit the base type's deallocation function."
+msgstr ""
+
+#: ../../pep-0253.txt:468
+msgid ""
+"The ``tp_flags`` slot must be set to the usual ``Py_TPFLAGS_DEFAULT`` "
+"value."
+msgstr ""
+
+#: ../../pep-0253.txt:471
+msgid ""
+"The ``tp_name`` slot must be set; it is recommended to set ``tp_doc`` as "
+"well (these are not inherited)."
+msgstr ""
+
+#: ../../pep-0253.txt:474
+msgid ""
+"If the subtype defines no additional structure members (it only defines "
+"new behavior, no new data), the ``tp_basicsize`` and the ``tp_dealloc`` "
+"slots may be left set to zero."
+msgstr ""
+
+#: ../../pep-0253.txt:478
+msgid ""
+"The subtype's ``tp_dealloc`` slot deserves special attention.  If the "
+"derived type defines no additional pointer members that need to be "
+"DECREF'ed or freed when the object is deallocated, it can be set to zero."
+"  Otherwise, the subtype's ``tp_dealloc()`` function must call "
+"``Py_XDECREF()`` for any ``PyObject *`` members and the correct memory "
+"freeing function for any other pointers it owns, and then call the base "
+"class's ``tp_dealloc()`` slot.  This call has to be made via the base "
+"type's type structure, for example, when deriving from the standard list "
+"type::"
+msgstr ""
+
+#: ../../pep-0253.txt:490
+msgid ""
+"If the subtype wants to use a different allocation heap than the base "
+"type, the subtype must override both the ``tp_alloc()`` and the "
+"``tp_free()`` slots.  These will be called by the base class's "
+"``tp_new()`` and ``tp_dealloc()`` slots, respectively."
+msgstr ""
+
+#: ../../pep-0253.txt:495
+msgid ""
+"To complete the initialization of the type, ``PyType_InitDict()`` must be"
+" called.  This replaces slots initialized to zero in the subtype with the"
+" value of the corresponding base type slots.  (It also fills in "
+"``tp_dict``, the type's dictionary, and does various other "
+"initializations necessary for type objects.)"
+msgstr ""
+
+#: ../../pep-0253.txt:501
+msgid ""
+"A subtype is not usable until ``PyType_InitDict()`` is called for it; "
+"this is best done during module initialization, assuming the subtype "
+"belongs to a module.  An alternative for subtypes added to the Python "
+"core (which don't live in a particular module) would be to initialize the"
+" subtype in their constructor function.  It is allowed to call "
+"``PyType_InitDict()`` more than once; the second and further calls have "
+"no effect.  To avoid unnecessary calls, a test for ``tp_dict==NULL`` can "
+"be made."
+msgstr ""
+
+#: ../../pep-0253.txt:510
+msgid ""
+"(During initialization of the Python interpreter, some types are actually"
+" used before they are initialized.  As long as the slots that are "
+"actually needed are initialized, especially ``tp_dealloc``, this works, "
+"but it is fragile and not recommended as a general practice.)"
+msgstr ""
+
+#: ../../pep-0253.txt:516
+msgid ""
+"To create a subtype instance, the subtype's ``tp_new()`` slot is called."
+"  This should first call the base type's ``tp_new()`` slot and then "
+"initialize the subtype's additional data members.  To further initialize "
+"the instance, the ``tp_init()`` slot is typically called. Note that the "
+"``tp_new()`` slot should **not** call the ``tp_init()`` slot; this is up "
+"to ``tp_new()``'s caller (typically a factory function). There are "
+"circumstances where it is appropriate not to call ``tp_init()``."
+msgstr ""
+
+#: ../../pep-0253.txt:525
+msgid ""
+"If a subtype defines a ``tp_init()`` slot, the ``tp_init()`` slot should "
+"normally first call the base type's ``tp_init()`` slot."
+msgstr ""
+
+#: ../../pep-0253.txt:528
+msgid "(XXX There should be a paragraph or two about argument passing here.)"
+msgstr ""
+
+#: ../../pep-0253.txt:533
+msgid "Subtyping in Python"
+msgstr ""
+
+#: ../../pep-0253.txt:535
+msgid ""
+"The next step is to allow subtyping of selected built-in types through a "
+"class statement in Python.  Limiting ourselves to single inheritance for "
+"now, here is what happens for a simple class statement::"
+msgstr ""
+
+#: ../../pep-0253.txt:545
+msgid ""
+"The body of the class statement is executed in a fresh environment "
+"(basically, a new dictionary used as local namespace), and then C is "
+"created.  The following explains how C is created."
+msgstr ""
+
+#: ../../pep-0253.txt:549
+msgid ""
+"Assume B is a type object.  Since type objects are objects, and every "
+"object has a type, B has a type.  Since B is itself a type, we also call "
+"its type its metatype.  B's metatype is accessible via ``type(B)`` or "
+"``B.__class__`` (the latter notation is new for types; it is introduced "
+"in PEP 252).  Let's say this metatype is M (for Metatype).  The class "
+"statement will create a new type, C.  Since C will be a type object just "
+"like B, we view the creation of C as an instantiation of the metatype, M."
+"  The information that needs to be provided for the creation of a "
+"subclass is:"
+msgstr ""
+
+#: ../../pep-0253.txt:559
+msgid "its name (in this example the string \"C\");"
+msgstr ""
+
+#: ../../pep-0253.txt:561
+msgid "its bases (a singleton tuple containing B);"
+msgstr ""
+
+#: ../../pep-0253.txt:563
+msgid ""
+"the results of executing the class body, in the form of a dictionary (for"
+" example ``{\"var1\": 1, \"method1\": <functionmethod1 at ...>, ...}``)."
+msgstr ""
+
+#: ../../pep-0253.txt:567
+msgid "The class statement will result in the following call::"
+msgstr ""
+
+#: ../../pep-0253.txt:571
+msgid ""
+"where dict is the dictionary resulting from execution of the class body."
+"  In other words, the metatype (M) is called."
+msgstr ""
+
+#: ../../pep-0253.txt:574
+msgid ""
+"Note that even though the example has only one base, we still pass in a "
+"(singleton) sequence of bases; this makes the interface uniform with the "
+"multiple-inheritance case."
+msgstr ""
+
+#: ../../pep-0253.txt:578
+msgid ""
+"In current Python, this is called the \"Don Beaudry hook\" after its "
+"inventor; it is an exceptional case that is only invoked when a base "
+"class is not a regular class.  For a regular base class (or when no base "
+"class is specified), current Python calls ``PyClass_New()``, the C level "
+"factory function for classes, directly."
+msgstr ""
+
+#: ../../pep-0253.txt:584
+msgid ""
+"Under the new system this is changed so that Python **always** determines"
+" a metatype and calls it as given above.  When one or more bases are "
+"given, the type of the first base is used as the metatype; when no base "
+"is given, a default metatype is chosen.  By setting the default metatype "
+"to ``PyClass_Type``, the metatype of \"classic\" classes, the classic "
+"behavior of the class statement is retained.  This default can be changed"
+" per module by setting the global variable ``__metaclass__``."
+msgstr ""
+
+#: ../../pep-0253.txt:593
+msgid ""
+"There are two further refinements here.  First, a useful feature is to be"
+" able to specify a metatype directly.  If the class suite defines a "
+"variable ``__metaclass__``, that is the metatype to call.  (Note that "
+"setting ``__metaclass__`` at the module level only affects class "
+"statements without a base class and without an explicit ``__metaclass__``"
+" declaration; but setting ``__metaclass__`` in a class suite overrides "
+"the default metatype unconditionally.)"
+msgstr ""
+
+#: ../../pep-0253.txt:601
+msgid ""
+"Second, with multiple bases, not all bases need to have the same "
+"metatype.  This is called a metaclass conflict [1]_.  Some metaclass "
+"conflicts can be resolved by searching through the set of bases for a "
+"metatype that derives from all other given metatypes.  If such a metatype"
+" cannot be found, an exception is raised and the class statement fails."
+msgstr ""
+
+#: ../../pep-0253.txt:608
+msgid ""
+"This conflict resolution can be implemented by the metatype constructors:"
+" the class statement just calls the metatype of the first base (or that "
+"specified by the ``__metaclass__`` variable), and this metatype's "
+"constructor looks for the most derived metatype.  If that is itself, it "
+"proceeds; otherwise, it calls that metatype's constructor.  (Ultimate "
+"flexibility: another metatype might choose to require that all bases have"
+" the same metatype, or that there's only one base class, or whatever.)"
+msgstr ""
+
+#: ../../pep-0253.txt:617
+msgid ""
+"(In [1]_, a new metaclass is automatically derived that is a subclass of "
+"all given metaclasses.  But since it is questionable in Python how "
+"conflicting method definitions of the various metaclasses should be "
+"merged, I don't think this is feasible. Should the need arise, the user "
+"can derive such a metaclass manually and specify it using the "
+"``__metaclass__`` variable.  It is also possible to have a new metaclass "
+"that does this.)"
+msgstr ""
+
+#: ../../pep-0253.txt:625
+msgid ""
+"Note that calling M requires that M itself has a type: the meta-metatype."
+"  And the meta-metatype has a type, the meta-meta-metatype.  And so on.  "
+"This is normally cut short at some level by making a metatype be its own "
+"metatype.  This is indeed what happens in Python: the ``ob_type`` "
+"reference in ``PyType_Type`` is set to ``&PyType_Type``.  In the absence "
+"of third party metatypes, ``PyType_Type`` is the only metatype in the "
+"Python interpreter."
+msgstr ""
+
+#: ../../pep-0253.txt:634
+msgid ""
+"(In a previous version of this PEP, there was one additional meta-level, "
+"and there was a meta-metatype called \"turtle\".  This turned out to be "
+"unnecessary.)"
+msgstr ""
+
+#: ../../pep-0253.txt:638
+msgid ""
+"In any case, the work for creating C is done by M's ``tp_new()`` slot. It"
+" allocates space for an \"extended\" type structure, containing: the type"
+" object; the auxiliary structures (as_sequence etc.); the string object "
+"containing the type name (to ensure that this object isn't deallocated "
+"while the type object is still referencing it); and some auxiliary "
+"storage (to be described later).  It initializes this storage to zeros "
+"except for a few crucial slots (for example, tp_name is set to point to "
+"the type name) and then sets the tp_base slot to point to B.  Then "
+"``PyType_InitDict()`` is called to inherit B's slots. Finally, C's "
+"``tp_dict`` slot is updated with the contents of the namespace dictionary"
+" (the third argument to the call to M)."
+msgstr ""
+
+#: ../../pep-0253.txt:652
+msgid "Multiple inheritance"
+msgstr ""
+
+#: ../../pep-0253.txt:654
+msgid ""
+"The Python class statement supports multiple inheritance, and we will "
+"also support multiple inheritance involving built-in types."
+msgstr ""
+
+#: ../../pep-0253.txt:657
+msgid ""
+"However, there are some restrictions.  The C runtime architecture doesn't"
+" make it feasible to have a meaningful subtype of two different built-in "
+"types except in a few degenerate cases. Changing the C runtime to support"
+" fully general multiple inheritance would be too much of an upheaval of "
+"the code base."
+msgstr ""
+
+#: ../../pep-0253.txt:663
+msgid ""
+"The main problem with multiple inheritance from different built-in types "
+"stems from the fact that the C implementation of built-in types accesses "
+"structure members directly; the C compiler generates an offset relative "
+"to the object pointer and that's that.  For example, the list and "
+"dictionary type structures each declare a number of different but "
+"overlapping structure members. A C function accessing an object expecting"
+" a list won't work when passed a dictionary, and vice versa, and there's "
+"not much we could do about this without rewriting all code that accesses "
+"lists and dictionaries.  This would be too much work, so we won't do "
+"this."
+msgstr ""
+
+#: ../../pep-0253.txt:674
+msgid ""
+"The problem with multiple inheritance is caused by conflicting structure "
+"member allocations.  Classes defined in Python normally don't store their"
+" instance variables in structure members: they are stored in an instance "
+"dictionary.  This is the key to a partial solution.  Suppose we have the "
+"following two classes::"
+msgstr ""
+
+#: ../../pep-0253.txt:688
+msgid ""
+"(Here, 'dictionary' is the type of built-in dictionary objects, a.k.a. "
+"``type({})`` or ``{}.__class__`` or ``types.DictType``.)  If we look at "
+"the structure layout, we find that an A instance has the layout of a "
+"dictionary followed by the ``__dict__`` pointer, and a B instance has the"
+" same layout; since there are no structure member layout conflicts, this "
+"is okay."
+msgstr ""
+
+#: ../../pep-0253.txt:695
+msgid "Here's another example::"
+msgstr ""
+
+#: ../../pep-0253.txt:705
+msgid ""
+"(Here, 'object' is the base for all built-in types; its structure layout "
+"only contains the ``ob_refcnt`` and ``ob_type`` members.)  This example "
+"is more complicated, because the ``__dict__`` pointer for X instances has"
+" a different offset than that for Y instances.  Where is the ``__dict__``"
+" pointer for Z instances?  The answer is that the offset for the "
+"``__dict__`` pointer is not hardcoded, it is stored in the type object."
+msgstr ""
+
+#: ../../pep-0253.txt:713
+msgid ""
+"Suppose on a particular machine an 'object' structure is 8 bytes long, "
+"and a 'dictionary' struct is 60 bytes, and an object pointer is 4 bytes."
+"  Then an X structure is 12 bytes (an object structure followed by a "
+"``__dict__`` pointer), and a Y structure is 64 bytes (a dictionary "
+"structure followed by a ``__dict__`` pointer).  The Z structure has the "
+"same layout as the Y structure in this example. Each type object (X, Y "
+"and Z) has a \"__dict__ offset\" which is used to find the ``__dict__`` "
+"pointer.  Thus, the recipe for looking up an instance variable is:"
+msgstr ""
+
+#: ../../pep-0253.txt:723
+msgid "get the type of the instance"
+msgstr ""
+
+#: ../../pep-0253.txt:724
+msgid "get the ``__dict__`` offset from the type object"
+msgstr ""
+
+#: ../../pep-0253.txt:725
+msgid "add the ``__dict__`` offset to the instance pointer"
+msgstr ""
+
+#: ../../pep-0253.txt:726
+msgid "look in the resulting address to find a dictionary reference"
+msgstr ""
+
+#: ../../pep-0253.txt:727
+msgid "look up the instance variable name in that dictionary"
+msgstr ""
+
+#: ../../pep-0253.txt:729
+msgid ""
+"Of course, this recipe can only be implemented in C, and I have left out "
+"some details.  But this allows us to use multiple inheritance patterns "
+"similar to the ones we can use with classic classes."
+msgstr ""
+
+#: ../../pep-0253.txt:734
+msgid ""
+"XXX I should write up the complete algorithm here to determine base class"
+" compatibility, but I can't be bothered right now.  Look at "
+"``best_base()`` in typeobject.c in the implementation mentioned below."
+msgstr ""
+
+#: ../../pep-0253.txt:741
+msgid "MRO:  Method resolution order (the lookup rule)"
+msgstr ""
+
+#: ../../pep-0253.txt:743
+msgid ""
+"With multiple inheritance comes the question of method resolution order: "
+"the order in which a class or type and its bases are searched looking for"
+" a method of a given name."
+msgstr ""
+
+#: ../../pep-0253.txt:747
+msgid ""
+"In classic Python, the rule is given by the following recursive function,"
+" also known as the left-to-right depth-first rule::"
+msgstr ""
+
+#: ../../pep-0253.txt:760
+msgid ""
+"The problem with this becomes apparent when we consider a \"diamond "
+"diagram\"::"
+msgstr ""
+
+#: ../../pep-0253.txt:777
+msgid ""
+"Arrows point from a subtype to its base ``type(s)``.  This particular "
+"diagram means B and C derive from A, and D derives from B and C (and "
+"hence also, indirectly, from A)."
+msgstr ""
+
+#: ../../pep-0253.txt:781
+msgid ""
+"Assume that C overrides the method ``save()``, which is defined in the "
+"base A.  (``C.save()`` probably calls ``A.save()`` and then saves some of"
+" its own state.)  B and D don't override ``save()``.  When we invoke "
+"``save()`` on a D instance, which method is called?  According to the "
+"classic lookup rule, ``A.save()`` is called, ignoring ``C.save()``!"
+msgstr ""
+
+#: ../../pep-0253.txt:787
+msgid ""
+"This is not good.  It probably breaks C (its state doesn't get saved), "
+"defeating the whole purpose of inheriting from C in the first place."
+msgstr ""
+
+#: ../../pep-0253.txt:791
+msgid ""
+"Why was this not a problem in classic Python?  Diamond diagrams are "
+"rarely found in classic Python class hierarchies.  Most class hierarchies"
+" use single inheritance, and multiple inheritance is usually confined to "
+"mix-in classes.  In fact, the problem shown here is probably the reason "
+"why multiple inheritance is unpopular in classic Python."
+msgstr ""
+
+#: ../../pep-0253.txt:798
+msgid ""
+"Why will this be a problem in the new system?  The 'object' type at the "
+"top of the type hierarchy defines a number of methods that can usefully "
+"be extended by subtypes, for example ``__getattr__()``."
+msgstr ""
+
+#: ../../pep-0253.txt:802
+msgid ""
+"(Aside: in classic Python, the ``__getattr__()`` method is not really the"
+" implementation for the get-attribute operation; it is a hook that only "
+"gets invoked when an attribute cannot be found by normal means.  This has"
+" often been cited as a shortcoming -- some class designs have a "
+"legitimate need for a ``__getattr__()`` method that gets called for "
+"**all** attribute references.  But then of course this method has to be "
+"able to invoke the default implementation directly.  The most natural way"
+" is to make the default implementation available as "
+"``object.__getattr__(self, name)``.)"
+msgstr ""
+
+#: ../../pep-0253.txt:812
+msgid "Thus, a classic class hierarchy like this::"
+msgstr ""
+
+#: ../../pep-0253.txt:822
+msgid "will change into a diamond diagram under the new system::"
+msgstr ""
+
+#: ../../pep-0253.txt:838
+msgid ""
+"and while in the original diagram ``C.__getattr__()`` is invoked, under "
+"the new system with the classic lookup rule, ``object.__getattr__()`` "
+"would be invoked!"
+msgstr ""
+
+#: ../../pep-0253.txt:842
+msgid ""
+"Fortunately, there's a lookup rule that's better.  It's a bit difficult "
+"to explain, but it does the right thing in the diamond diagram, and it is"
+" the same as the classic lookup rule when there are no diamonds in the "
+"inheritance graph (when it is a tree)."
+msgstr ""
+
+#: ../../pep-0253.txt:847
+msgid ""
+"The new lookup rule constructs a list of all classes in the inheritance "
+"diagram in the order in which they will be searched. This construction is"
+" done at class definition time to save time. To explain the new lookup "
+"rule, let's first consider what such a list would look like for the "
+"classic lookup rule.  Note that in the presence of diamonds the classic "
+"lookup visits some classes multiple times.  For example, in the ABCD "
+"diamond diagram above, the classic lookup rule visits the classes in this"
+" order::"
+msgstr ""
+
+#: ../../pep-0253.txt:858
+msgid ""
+"Note how A occurs twice in the list.  The second occurrence is redundant,"
+" since anything that could be found there would already have been found "
+"when searching the first occurrence."
+msgstr ""
+
+#: ../../pep-0253.txt:862
+msgid ""
+"We use this observation to explain our new lookup rule.  Using the "
+"classic lookup rule, construct the list of classes that would be "
+"searched, including duplicates.  Now for each class that occurs in the "
+"list multiple times, remove all occurrences except for the last.  The "
+"resulting list contains each ancestor class exactly once (including the "
+"most derived class, D in the example)."
+msgstr ""
+
+#: ../../pep-0253.txt:869
+msgid ""
+"Searching for methods in this order will do the right thing for the "
+"diamond diagram.  Because of the way the list is constructed, it does not"
+" change the search order in situations where no diamond is involved."
+msgstr ""
+
+#: ../../pep-0253.txt:874
+msgid ""
+"Isn't this backwards incompatible?  Won't it break existing code? It "
+"would, if we changed the method resolution order for all classes.  "
+"However, in Python 2.2, the new lookup rule will only be applied to types"
+" derived from built-in types, which is a new feature.  Class statements "
+"without a base class create \"classic classes\", and so do class "
+"statements whose base classes are themselves classic classes.  For "
+"classic classes the classic lookup rule will be used. (To experiment with"
+" the new lookup rule for classic classes, you will be able to specify a "
+"different metaclass explicitly.)  We'll also provide a tool that analyzes"
+" a class hierarchy looking for methods that would be affected by a change"
+" in method resolution order."
+msgstr ""
+
+#: ../../pep-0253.txt:887
+msgid ""
+"XXX Another way to explain the motivation for the new MRO, due to Damian "
+"Conway: you never use the method defined in a base class if it is defined"
+" in a derived class that you haven't explored yet (using the old search "
+"order)."
+msgstr ""
+
+#: ../../pep-0253.txt:894
+msgid "XXX To be done"
+msgstr ""
+
+#: ../../pep-0253.txt:896
+msgid "Additional topics to be discussed in this PEP:"
+msgstr ""
+
+#: ../../pep-0253.txt:898
+msgid "backwards compatibility issues!!!"
+msgstr ""
+
+#: ../../pep-0253.txt:900
+msgid "class methods and static methods"
+msgstr ""
+
+#: ../../pep-0253.txt:902
+msgid "cooperative methods and ``super()``"
+msgstr ""
+
+#: ../../pep-0253.txt:904
+msgid ""
+"mapping between type object slots (tp_foo) and special methods "
+"(``__foo__``) (actually, this may belong in PEP 252)"
+msgstr ""
+
+#: ../../pep-0253.txt:907
+msgid "built-in names for built-in types (object, int, str, list etc.)"
+msgstr ""
+
+#: ../../pep-0253.txt:909
+msgid "``__dict__`` and ``__dictoffset__``"
+msgstr ""
+
+#: ../../pep-0253.txt:911
+msgid "``__slots__``"
+msgstr ""
+
+#: ../../pep-0253.txt:913
+msgid "the ``HEAPTYPE`` flag bit"
+msgstr ""
+
+#: ../../pep-0253.txt:915
+msgid "GC support"
+msgstr ""
+
+#: ../../pep-0253.txt:917
+msgid "API docs for all the new functions"
+msgstr ""
+
+#: ../../pep-0253.txt:919
+msgid "how to use ``__new__``"
+msgstr ""
+
+#: ../../pep-0253.txt:921
+msgid "writing metaclasses (using ``mro()`` etc.)"
+msgstr ""
+
+#: ../../pep-0253.txt:923
+msgid "high level user overview"
+msgstr ""
+
+#: ../../pep-0253.txt:926
+msgid "open issues"
+msgstr ""
+
+#: ../../pep-0253.txt:928
+msgid "do we need ``__del__``?"
+msgstr ""
+
+#: ../../pep-0253.txt:930
+msgid "assignment to ``__dict__``, ``__bases__``"
+msgstr ""
+
+#: ../../pep-0253.txt:932
+msgid "inconsistent naming (e.g. tp_dealloc/tp_new/tp_init/tp_alloc/tp_free)"
+msgstr ""
+
+#: ../../pep-0253.txt:935
+msgid "add builtin alias 'dict' for 'dictionary'?"
+msgstr ""
+
+#: ../../pep-0253.txt:937
+msgid ""
+"when subclasses of dict/list etc. are passed to system functions, the "
+"``__getitem__`` overrides (etc.) aren't always used"
+msgstr ""
+
+#: ../../pep-0253.txt:943
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0253.txt:945
+msgid ""
+"A prototype implementation of this PEP (and for PEP 252) is available "
+"from CVS, and in the series of Python 2.2 alpha and beta releases.  For "
+"some examples of the features described here, see the file "
+"Lib/test/test_descr.py and the extension module Modules/xxsubtype.c."
+msgstr ""
+
+#: ../../pep-0253.txt:953
+msgid "References"
+msgstr ""
+
+#: ../../pep-0253.txt:955
+msgid ""
+"\"Putting Metaclasses to Work\", by Ira R. Forman and Scott H. Danforth, "
+"Addison-Wesley 1999. "
+"(http://www.aw.com/product/0,2627,0201433052,00.html)"
+msgstr ""
+
+#: ../../pep-0253.txt:961
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0253.txt:963
+msgid "This document has been placed in the public domain."
+msgstr ""
+

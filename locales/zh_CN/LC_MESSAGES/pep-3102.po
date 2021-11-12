@@ -1,0 +1,327 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3102.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3102.txt:1
+msgid "3102"
+msgstr ""
+
+#: ../../pep-3102.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3102.txt:2
+msgid "Keyword-Only Arguments"
+msgstr ""
+
+#: ../../pep-3102.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3102.txt:5
+msgid "Talin <viridia@gmail.com>"
+msgstr ""
+
+#: ../../pep-3102.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3102.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3102.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3102.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3102.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3102.txt:9
+msgid "22-Apr-2006"
+msgstr ""
+
+#: ../../pep-3102.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3102.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3102.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3102.txt:11
+msgid "28-Apr-2006, May-19-2006"
+msgstr ""
+
+#: ../../pep-3102.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3102.txt:17
+msgid ""
+"This PEP proposes a change to the way that function arguments are "
+"assigned to named parameter slots.  In particular, it enables the "
+"declaration of \"keyword-only\" arguments: arguments that can only be "
+"supplied by keyword and which will never be automatically filled in by a "
+"positional argument."
+msgstr ""
+
+#: ../../pep-3102.txt:25
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3102.txt:27
+msgid ""
+"The current Python function-calling paradigm allows arguments to be "
+"specified either by position or by keyword.  An argument can be filled in"
+" either explicitly by name, or implicitly by position."
+msgstr ""
+
+#: ../../pep-3102.txt:31
+msgid ""
+"There are often cases where it is desirable for a function to take a "
+"variable number of arguments.  The Python language supports this using "
+"the 'varargs' syntax (``*name``), which specifies that any 'left over' "
+"arguments be passed into the varargs parameter as a tuple."
+msgstr ""
+
+#: ../../pep-3102.txt:37
+msgid ""
+"One limitation on this is that currently, all of the regular argument "
+"slots must be filled before the vararg slot can be."
+msgstr ""
+
+#: ../../pep-3102.txt:40
+msgid ""
+"This is not always desirable.  One can easily envision a function which "
+"takes a variable number of arguments, but also takes one or more "
+"'options' in the form of keyword arguments.  Currently, the only way to "
+"do this is to define both a varargs argument, and a 'keywords' argument "
+"(``**kwargs``), and then manually extract the desired keywords from the "
+"dictionary."
+msgstr ""
+
+#: ../../pep-3102.txt:49
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3102.txt:51
+msgid ""
+"Syntactically, the proposed changes are fairly simple.  The first change "
+"is to allow regular arguments to appear after a varargs argument::"
+msgstr ""
+
+#: ../../pep-3102.txt:58
+msgid ""
+"This function accepts any number of positional arguments, and it also "
+"accepts a keyword option called 'case_sensitive'.  This option will never"
+" be filled in by a positional argument, but must be explicitly specified "
+"by name."
+msgstr ""
+
+#: ../../pep-3102.txt:63
+msgid ""
+"Keyword-only arguments are not required to have a default value. Since "
+"Python requires that all arguments be bound to a value, and since the "
+"only way to bind a value to a keyword-only argument is via keyword, such "
+"arguments are therefore 'required keyword' arguments.  Such arguments "
+"must be supplied by the caller, and they must be supplied via keyword."
+msgstr ""
+
+#: ../../pep-3102.txt:70
+msgid ""
+"The second syntactical change is to allow the argument name to be omitted"
+" for a varargs argument. The meaning of this is to allow for keyword-only"
+" arguments for functions that would not otherwise take a varargs "
+"argument::"
+msgstr ""
+
+#: ../../pep-3102.txt:78
+msgid ""
+"The reasoning behind this change is as follows.  Imagine for a moment a "
+"function which takes several positional arguments, as well as a keyword "
+"argument::"
+msgstr ""
+
+#: ../../pep-3102.txt:85
+msgid ""
+"Now, suppose you wanted to have 'key' be a keyword-only argument. Under "
+"the above syntax, you could accomplish this by adding a varargs argument "
+"immediately before the keyword argument::"
+msgstr ""
+
+#: ../../pep-3102.txt:92
+msgid ""
+"Unfortunately, the 'ignore' argument will also suck up any erroneous "
+"positional arguments that may have been supplied by the caller.  Given "
+"that we'd prefer any unwanted arguments to raise an error, we could do "
+"this::"
+msgstr ""
+
+#: ../../pep-3102.txt:101
+msgid ""
+"As a convenient shortcut, we can simply omit the 'ignore' name, meaning "
+"'don't allow any positional arguments beyond this point'."
+msgstr ""
+
+#: ../../pep-3102.txt:104
+msgid ""
+"(Note: After much discussion of alternative syntax proposals, the BDFL "
+"has pronounced in favor of this 'single star' syntax for indicating the "
+"end of positional parameters.)"
+msgstr ""
+
+#: ../../pep-3102.txt:110
+msgid "Function Calling Behavior"
+msgstr ""
+
+#: ../../pep-3102.txt:112
+msgid ""
+"The previous section describes the difference between the old behavior "
+"and the new.  However, it is also useful to have a description of the new"
+" behavior that stands by itself, without reference to the previous model."
+"  So this next section will attempt to provide such a description."
+msgstr ""
+
+#: ../../pep-3102.txt:118
+msgid ""
+"When a function is called, the input arguments are assigned to formal "
+"parameters as follows:"
+msgstr ""
+
+#: ../../pep-3102.txt:121
+msgid ""
+"For each formal parameter, there is a slot which will be used to contain "
+"the value of the argument assigned to that parameter."
+msgstr ""
+
+#: ../../pep-3102.txt:125
+msgid ""
+"Slots which have had values assigned to them are marked as 'filled'.  "
+"Slots which have no value assigned to them yet are considered 'empty'."
+msgstr ""
+
+#: ../../pep-3102.txt:129
+msgid "Initially, all slots are marked as empty."
+msgstr ""
+
+#: ../../pep-3102.txt:131
+msgid "Positional arguments are assigned first, followed by keyword arguments."
+msgstr ""
+
+#: ../../pep-3102.txt:134
+msgid "For each positional argument:"
+msgstr ""
+
+#: ../../pep-3102.txt:136
+msgid ""
+"Attempt to bind the argument to the first unfilled parameter slot.  If "
+"the slot is not a vararg slot, then mark the slot as 'filled'."
+msgstr ""
+
+#: ../../pep-3102.txt:140
+msgid ""
+"If the next unfilled slot is a vararg slot, and it does not have a name, "
+"then it is an error."
+msgstr ""
+
+#: ../../pep-3102.txt:143
+msgid ""
+"Otherwise, if the next unfilled slot is a vararg slot then all remaining "
+"non-keyword arguments are placed into the vararg slot."
+msgstr ""
+
+#: ../../pep-3102.txt:147
+msgid "For each keyword argument:"
+msgstr ""
+
+#: ../../pep-3102.txt:149
+msgid ""
+"If there is a parameter with the same name as the keyword, then the "
+"argument value is assigned to that parameter slot. However, if the "
+"parameter slot is already filled, then that is an error."
+msgstr ""
+
+#: ../../pep-3102.txt:154
+msgid ""
+"Otherwise, if there is a 'keyword dictionary' argument, the argument is "
+"added to the dictionary using the keyword name as the dictionary key, "
+"unless there is already an entry with that key, in which case it is an "
+"error."
+msgstr ""
+
+#: ../../pep-3102.txt:159
+msgid ""
+"Otherwise, if there is no keyword dictionary, and no matching named "
+"parameter, then it is an error."
+msgstr ""
+
+#: ../../pep-3102.txt:162
+msgid "Finally:"
+msgstr ""
+
+#: ../../pep-3102.txt:164
+msgid "If the vararg slot is not yet filled, assign an empty tuple as its value."
+msgstr ""
+
+#: ../../pep-3102.txt:167
+msgid ""
+"For each remaining empty slot: if there is a default value for that slot,"
+" then fill the slot with the default value. If there is no default value,"
+" then it is an error."
+msgstr ""
+
+#: ../../pep-3102.txt:171
+msgid ""
+"In accordance with the current Python implementation, any errors "
+"encountered will be signaled by raising ``TypeError``.  (If you want "
+"something different, that's a subject for a different PEP.)"
+msgstr ""
+
+#: ../../pep-3102.txt:177
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-3102.txt:179
+msgid ""
+"The function calling behavior specified in this PEP is a superset of the "
+"existing behavior - that is, it is expected that any existing programs "
+"will continue to work."
+msgstr ""
+
+#: ../../pep-3102.txt:185
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3102.txt:187
+msgid "This document has been placed in the public domain."
+msgstr ""
+

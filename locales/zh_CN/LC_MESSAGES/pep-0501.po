@@ -1,0 +1,900 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0501.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0501.txt:1
+msgid "501"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0501.txt:2
+msgid "General purpose string interpolation"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0501.txt:5
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0501.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0501.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Requires"
+msgstr ""
+
+#: ../../pep-0501.txt:9
+msgid "498"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0501.txt:10
+msgid "08-Aug-2015"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0501.txt:11
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0501.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0501.txt:12
+msgid "08-Aug-2015, 23-Aug-2015, 30-Aug-2015"
+msgstr ""
+
+#: ../../pep-0501.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0501.txt:17
+msgid ""
+"PEP 498 proposes new syntactic support for string interpolation that is "
+"transparent to the compiler, allow name references from the interpolation"
+" operation full access to containing namespaces (as with any other "
+"expression), rather than being limited to explicit name references. These"
+" are referred to in the PEP as \"f-strings\" (a mnemonic for \"formatted "
+"strings\")."
+msgstr ""
+
+#: ../../pep-0501.txt:23
+msgid ""
+"However, it only offers this capability for string formatting, making it "
+"likely we will see code like the following::"
+msgstr ""
+
+#: ../../pep-0501.txt:28
+msgid ""
+"This kind of code is superficially elegant, but poses a significant "
+"problem if the interpolated value ``message_from_user`` is in fact "
+"provided by an untrusted user: it's an opening for a form of code "
+"injection attack, where the supplied user data has not been properly "
+"escaped before being passed to the ``os.system`` call."
+msgstr ""
+
+#: ../../pep-0501.txt:34
+msgid ""
+"To address that problem (and a number of other concerns), this PEP "
+"proposes the complementary introduction of \"i-strings\" (a mnemonic for "
+"\"interpolation template strings\"), where ``f\"Message with {data}\"`` "
+"would produce the same result as ``format(i\"Message with {data}\")``."
+msgstr ""
+
+#: ../../pep-0501.txt:39
+msgid "Some possible examples of the proposed syntax::"
+msgstr ""
+
+#: ../../pep-0501.txt:48
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0501.txt:50
+msgid ""
+"This PEP is currently deferred pending further experience with PEP 498's "
+"simpler approach of only supporting eager rendering without the "
+"additional complexity of also supporting deferred rendering."
+msgstr ""
+
+#: ../../pep-0501.txt:56
+msgid "Summary of differences from PEP 498"
+msgstr ""
+
+#: ../../pep-0501.txt:58
+msgid "The key additions this proposal makes relative to PEP 498:"
+msgstr ""
+
+#: ../../pep-0501.txt:60
+msgid ""
+"the \"i\" (interpolation template) prefix indicates delayed rendering, "
+"but otherwise uses the same syntax and semantics as formatted strings"
+msgstr ""
+
+#: ../../pep-0501.txt:62
+msgid ""
+"interpolation templates are available at runtime as a new kind of object "
+"(``types.InterpolationTemplate``)"
+msgstr ""
+
+#: ../../pep-0501.txt:64
+msgid ""
+"the default rendering used by formatted strings is invoked on an "
+"interpolation template object by calling ``format(template)`` rather than"
+" implicitly"
+msgstr ""
+
+#: ../../pep-0501.txt:67
+msgid ""
+"while  f-string ``f\"Message {here}\"`` would be *semantically* "
+"equivalent to ``format(i\"Message {here}\")``, it is expected that the "
+"explicit syntax would avoid the runtime overhead of using the delayed "
+"rendering machinery"
+msgstr ""
+
+#: ../../pep-0501.txt:71
+msgid ""
+"NOTE: This proposal spells out a draft API for "
+"``types.InterpolationTemplate``. The precise details of the structures "
+"and methods exposed by this type would be informed by the reference "
+"implementation of PEP 498, so it makes sense to gain experience with that"
+" as an internal API before locking down a public API (if this extension "
+"proposal is accepted)."
+msgstr ""
+
+#: ../../pep-0501.txt:78
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0501.txt:80
+msgid ""
+"This PEP proposes the introduction of a new string prefix that declares "
+"the string to be an interpolation template rather than an ordinary "
+"string::"
+msgstr ""
+
+#: ../../pep-0501.txt:85
+msgid "This would be effectively interpreted as::"
+msgstr ""
+
+#: ../../pep-0501.txt:100
+msgid ""
+"The ``__format__`` method on ``types.InterpolationTemplate`` would then "
+"implement the following ``str.format`` inspired semantics::"
+msgstr ""
+
+#: ../../pep-0501.txt:112
+msgid ""
+"As with formatted strings, the interpolation template prefix can be "
+"combined with single-quoted, double-quoted and triple quoted strings, "
+"including raw strings. It does not support combination with bytes "
+"literals."
+msgstr ""
+
+#: ../../pep-0501.txt:115
+msgid ""
+"Similarly, this PEP does not propose to remove or deprecate any of the "
+"existing string formatting mechanisms, as those will remain valuable when"
+" formatting strings that are not present directly in the source code of "
+"the application."
+msgstr ""
+
+#: ../../pep-0501.txt:121
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0501.txt:123
+msgid ""
+"PEP 498 makes interpolating values into strings with full access to "
+"Python's lexical namespace semantics simpler, but it does so at the cost "
+"of creating a situation where interpolating values into sensitive targets"
+" like SQL queries, shell commands and HTML templates will enjoy a much "
+"cleaner syntax when handled without regard for code injection attacks "
+"than when they are handled correctly."
+msgstr ""
+
+#: ../../pep-0501.txt:129
+msgid ""
+"This PEP proposes to provide the option of delaying the actual rendering "
+"of an interpolation template to its ``__format__`` method, allowing the "
+"use of other template renderers by passing the template around as a first"
+" class object."
+msgstr ""
+
+#: ../../pep-0501.txt:133
+msgid ""
+"While very different in the technical details, the "
+"``types.InterpolationTemplate`` interface proposed in this PEP is "
+"conceptually quite similar to the ``FormattableString`` type underlying "
+"the `native interpolation <https://msdn.microsoft.com/en-"
+"us/library/dn961160.aspx>`__ support introduced in C# 6.0."
+msgstr ""
+
+#: ../../pep-0501.txt:140
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0501.txt:142
+msgid ""
+"This PEP proposes the introduction of ``i`` as a new string prefix that "
+"results in the creation of an instance of a new type, "
+"``types.InterpolationTemplate``."
+msgstr ""
+
+#: ../../pep-0501.txt:146
+msgid ""
+"Interpolation template literals are Unicode strings (bytes literals are "
+"not permitted), and string literal concatenation operates as normal, with"
+" the entire combined literal forming the interpolation template."
+msgstr ""
+
+#: ../../pep-0501.txt:150
+msgid ""
+"The template string is parsed into literals, expressions and format "
+"specifiers as described for f-strings in PEP 498. Conversion specifiers "
+"are handled by the compiler, and appear as part of the field text in "
+"interpolation templates."
+msgstr ""
+
+#: ../../pep-0501.txt:155
+msgid ""
+"However, rather than being rendered directly into a formatted strings, "
+"these components are instead organised into an instance of a new type "
+"with the following semantics::"
+msgstr ""
+
+#: ../../pep-0501.txt:184
+msgid ""
+"The result of an interpolation template expression is an instance of this"
+" type, rather than an already rendered string - rendering only takes "
+"place when the instance's ``render`` method is called (either directly, "
+"or indirectly via ``__format__``)."
+msgstr ""
+
+#: ../../pep-0501.txt:189
+msgid ""
+"The compiler will pass the following details to the interpolation "
+"template for later use:"
+msgstr ""
+
+#: ../../pep-0501.txt:192
+msgid "a string containing the raw template as written in the source code"
+msgstr ""
+
+#: ../../pep-0501.txt:193
+msgid ""
+"a parsed template tuple that allows the renderer to render the template "
+"without needing to reparse the raw string template for substitution "
+"fields"
+msgstr ""
+
+#: ../../pep-0501.txt:196
+msgid "a tuple containing the evaluated field values, in field substitution order"
+msgstr ""
+
+#: ../../pep-0501.txt:197
+msgid ""
+"a tuple containing the field format specifiers, in field substitution "
+"order"
+msgstr ""
+
+#: ../../pep-0501.txt:199
+msgid ""
+"This structure is designed to take full advantage of compile time "
+"constant folding by ensuring the parsed template is always constant, even"
+" when the field values and format specifiers include variable "
+"substitution expressions."
+msgstr ""
+
+#: ../../pep-0501.txt:203
+msgid ""
+"The raw template is just the interpolation template as a string. By "
+"default, it is used to provide a human readable representation for the "
+"interpolation template."
+msgstr ""
+
+#: ../../pep-0501.txt:207
+msgid ""
+"The parsed template consists of a tuple of 2-tuples, with each 2-tuple "
+"containing the following fields:"
+msgstr ""
+
+#: ../../pep-0501.txt:210
+msgid ""
+"``leading_text``:  a leading string literal. This will be the empty "
+"string if the current field is at the start of the string, or immediately"
+" follows the preceding field."
+msgstr ""
+
+#: ../../pep-0501.txt:213
+msgid ""
+"``field_expr``: the text of the expression element in the substitution "
+"field. This will be None for a final trailing text segment."
+msgstr ""
+
+#: ../../pep-0501.txt:216
+msgid ""
+"The tuple of evaluated field values holds the *results* of evaluating the"
+" substitution expressions in the scope where the interpolation template "
+"appears."
+msgstr ""
+
+#: ../../pep-0501.txt:219
+msgid ""
+"The tuple of field specifiers holds the *results* of evaluating the field"
+" specifiers as f-strings in the scope where the interpolation template "
+"appears."
+msgstr ""
+
+#: ../../pep-0501.txt:222
+msgid ""
+"The ``InterpolationTemplate.render`` implementation then defines the "
+"rendering process in terms of the following renderers:"
+msgstr ""
+
+#: ../../pep-0501.txt:225
+msgid ""
+"an overall ``render_template`` operation that defines how the sequence of"
+" literal template sections and rendered fields are composed into a fully "
+"rendered result. The default template renderer is string concatenation "
+"using ``''.join``."
+msgstr ""
+
+#: ../../pep-0501.txt:229
+msgid ""
+"a per field ``render_field`` operation that receives the field value and "
+"format specifier for substitution fields within the template. The default"
+" field renderer is the ``format`` builtin."
+msgstr ""
+
+#: ../../pep-0501.txt:233
+msgid ""
+"Given an appropriate parsed template representation and internal methods "
+"of iterating over it, the semantics of template rendering would then be "
+"equivalent to the following::"
+msgstr ""
+
+#: ../../pep-0501.txt:253
+msgid "Conversion specifiers"
+msgstr ""
+
+#: ../../pep-0501.txt:255
+msgid "NOTE:"
+msgstr ""
+
+#: ../../pep-0501.txt:257
+msgid ""
+"Appropriate handling of conversion specifiers is currently an open "
+"question. Exposing them more directly to custom renderers would increase "
+"the complexity of the ``InterpolationTemplate`` definition without "
+"providing an increase in expressiveness (since they're redundant with "
+"calling the builtins directly). At the same time, they *are* made "
+"available as arbitrary strings when writing custom ``string.Formatter`` "
+"implementations, so it may be desirable to offer similar levels of "
+"flexibility of interpretation in interpolation templates."
+msgstr ""
+
+#: ../../pep-0501.txt:266
+msgid ""
+"The ``!a``, ``!r`` and ``!s`` conversion specifiers supported by "
+"``str.format`` and hence PEP 498 are handled in interpolation templates "
+"as follows:"
+msgstr ""
+
+#: ../../pep-0501.txt:269
+msgid ""
+"they're included unmodified in the raw template to ensure no information "
+"is lost"
+msgstr ""
+
+#: ../../pep-0501.txt:271
+msgid ""
+"they're *replaced* in the parsed template with the corresponding builtin "
+"calls, in order to ensure that ``field_expr`` always contains a valid "
+"Python expression"
+msgstr ""
+
+#: ../../pep-0501.txt:274
+msgid ""
+"the corresponding field value placed in the field values tuple is "
+"converted appropriately *before* being passed to the interpolation "
+"template"
+msgstr ""
+
+#: ../../pep-0501.txt:278
+msgid ""
+"This means that, for most purposes, the difference between the use of "
+"conversion specifiers and calling the corresponding builtins in the "
+"original interpolation template will be transparent to custom renderers. "
+"The difference will only be apparent if reparsing the raw template, or "
+"attempting to reconstruct the original template from the parsed template."
+msgstr ""
+
+#: ../../pep-0501.txt:285
+msgid "Writing custom renderers"
+msgstr ""
+
+#: ../../pep-0501.txt:287
+msgid ""
+"Writing a custom renderer doesn't requiring any special syntax. Instead, "
+"custom renderers are ordinary callables that process an interpolation "
+"template directly either by calling the ``render()`` method with "
+"alternate ``render_template`` or ``render_field`` implementations, or by "
+"accessing the template's data attributes directly."
+msgstr ""
+
+#: ../../pep-0501.txt:292
+msgid ""
+"For example, the following function would render a template using "
+"objects' ``repr`` implementations rather than their native formatting "
+"support::"
+msgstr ""
+
+#: ../../pep-0501.txt:300
+msgid ""
+"When writing custom renderers, note that the return type of the overall "
+"rendering operation is determined by the return type of the passed in "
+"``render_template`` callable. While this is expected to be a string in "
+"most cases, producing non-string objects *is* permitted. For example, a "
+"custom template renderer could involve an ``sqlalchemy.sql.text`` call "
+"that produces an `SQL Alchemy query object "
+"<http://docs.sqlalchemy.org/en/rel_1_0/core/tutorial.html#using-textual-"
+"sql>`__."
+msgstr ""
+
+#: ../../pep-0501.txt:306
+msgid ""
+"Non-strings may also be returned from ``render_field``, as long as it is "
+"paired with a ``render_template`` implementation that expects that "
+"behaviour."
+msgstr ""
+
+#: ../../pep-0501.txt:310
+msgid "Expression evaluation"
+msgstr ""
+
+#: ../../pep-0501.txt:312
+msgid ""
+"As with f-strings, the subexpressions that are extracted from the "
+"interpolation template are evaluated in the context where the "
+"interpolation template appears. This means the expression has full access"
+" to local, nonlocal and global variables. Any valid Python expression can"
+" be used inside ``{}``, including function and method calls."
+msgstr ""
+
+#: ../../pep-0501.txt:317
+msgid ""
+"Because the substitution expressions are evaluated where the string "
+"appears in the source code, there are no additional security concerns "
+"related to the contents of the expression itself, as you could have also "
+"just written the same expression and used runtime field parsing::"
+msgstr ""
+
+#: ../../pep-0501.txt:329
+msgid "Is essentially equivalent to::"
+msgstr ""
+
+#: ../../pep-0501.txt:335
+msgid "Handling code injection attacks"
+msgstr ""
+
+#: ../../pep-0501.txt:337
+msgid ""
+"The PEP 498 formatted string syntax makes it potentially attractive to "
+"write code like the following::"
+msgstr ""
+
+#: ../../pep-0501.txt:344
+msgid ""
+"These all represent potential vectors for code injection attacks, if any "
+"of the variables being interpolated happen to come from an untrusted "
+"source. The specific proposal in this PEP is designed to make it "
+"straightforward to write use case specific renderers that take care of "
+"quoting interpolated values appropriately for the relevant security "
+"context::"
+msgstr ""
+
+#: ../../pep-0501.txt:354
+msgid ""
+"This PEP does not cover adding such renderers to the standard library "
+"immediately, but rather proposes to ensure that they can be readily "
+"provided by third party libraries, and potentially incorporated into the "
+"standard library at a later date."
+msgstr ""
+
+#: ../../pep-0501.txt:359
+msgid ""
+"For example, a renderer that aimed to offer a POSIX shell style "
+"experience for accessing external programs, without the significant risks"
+" posed by running ``os.system`` or enabling the system shell when using "
+"the ``subprocess`` module APIs, might provide an interface for running "
+"external programs similar to that offered by the `Julia programming "
+"language <http://julia.readthedocs.org/en/latest/manual/running-external-"
+"programs/>`__, only with the backtick based ``\\`cat $filename\\``` "
+"syntax replaced by ``i\"cat {filename}\"`` style interpolation templates."
+msgstr ""
+
+#: ../../pep-0501.txt:369
+msgid "Format specifiers"
+msgstr ""
+
+#: ../../pep-0501.txt:371
+msgid ""
+"Aside from separating them out from the substitution expression during "
+"parsing, format specifiers are otherwise treated as opaque strings by the"
+" interpolation template parser - assigning semantics to those (or, "
+"alternatively, prohibiting their use) is handled at runtime by the field "
+"renderer."
+msgstr ""
+
+#: ../../pep-0501.txt:377
+msgid "Error handling"
+msgstr ""
+
+#: ../../pep-0501.txt:379
+msgid ""
+"Either compile time or run time errors can occur when processing "
+"interpolation expressions. Compile time errors are limited to those "
+"errors that can be detected when parsing a template string into its "
+"component tuples. These errors all raise SyntaxError."
+msgstr ""
+
+#: ../../pep-0501.txt:384
+msgid "Unmatched braces::"
+msgstr ""
+
+#: ../../pep-0501.txt:390
+msgid "Invalid expressions::"
+msgstr ""
+
+#: ../../pep-0501.txt:398
+msgid ""
+"Run time errors occur when evaluating the expressions inside a template "
+"string before creating the interpolation template object. See PEP 498 for"
+" some examples."
+msgstr ""
+
+#: ../../pep-0501.txt:402
+msgid ""
+"Different renderers may also impose additional runtime constraints on "
+"acceptable interpolated expressions and other formatting details, which "
+"will be reported as runtime exceptions."
+msgstr ""
+
+#: ../../pep-0501.txt:408
+msgid "Possible integration with the logging module"
+msgstr ""
+
+#: ../../pep-0501.txt:410
+msgid ""
+"One of the challenges with the logging module has been that we have "
+"previously been unable to devise a reasonable migration strategy away "
+"from the use of printf-style formatting. The runtime parsing and "
+"interpolation overhead for logging messages also poses a problem for "
+"extensive logging of runtime events for monitoring purposes."
+msgstr ""
+
+#: ../../pep-0501.txt:416
+msgid ""
+"While beyond the scope of this initial PEP, interpolation template "
+"support could potentially be added to the logging module's event "
+"reporting APIs, permitting relevant details to be captured using forms "
+"like::"
+msgstr ""
+
+#: ../../pep-0501.txt:423
+msgid "Rather than the current mod-formatting style::"
+msgstr ""
+
+#: ../../pep-0501.txt:428
+msgid ""
+"As the interpolation template is passed in as an ordinary argument, other"
+" keyword arguments would also remain available::"
+msgstr ""
+
+#: ../../pep-0501.txt:433
+msgid ""
+"As part of any such integration, a recommended approach would need to be "
+"defined for \"lazy evaluation\" of interpolated fields, as the "
+"``logging`` module's existing delayed interpolation support provides "
+"access to `various attributes "
+"<https://docs.python.org/3/library/logging.html#logrecord-attributes>`__ "
+"of the event ``LogRecord`` instance."
+msgstr ""
+
+#: ../../pep-0501.txt:438
+msgid ""
+"For example, since interpolation expressions are arbitrary Python "
+"expressions, string literals could be used to indicate cases where "
+"evaluation itself is being deferred, not just rendering::"
+msgstr ""
+
+#: ../../pep-0501.txt:444
+msgid ""
+"This could be further extended with idioms like using inline tuples to "
+"indicate deferred function calls to be made only if the log message is "
+"actually going to be rendered at current logging levels::"
+msgstr ""
+
+#: ../../pep-0501.txt:450
+msgid ""
+"This kind of approach would be possible as having access to the actual "
+"*text* of the field expression would allow the logging renderer to "
+"distinguish between inline tuples that appear in the field expression "
+"itself, and tuples that happen to be passed in as data values in a normal"
+" field."
+msgstr ""
+
+#: ../../pep-0501.txt:457
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0501.txt:459
+msgid ""
+"Refer to PEP 498 for additional discussion, as several of the points "
+"there also apply to this PEP."
+msgstr ""
+
+#: ../../pep-0501.txt:463
+msgid "Deferring support for binary interpolation"
+msgstr ""
+
+#: ../../pep-0501.txt:465
+msgid ""
+"Supporting binary interpolation with this syntax would be relatively "
+"straightforward (the elements in the parsed fields tuple would just be "
+"byte strings rather than text strings, and the default renderer would be "
+"markedly less useful), but poses a significant likelihood of producing "
+"confusing type errors when a text renderer was presented with binary "
+"input."
+msgstr ""
+
+#: ../../pep-0501.txt:472
+msgid ""
+"Since the proposed syntax is useful without binary interpolation support,"
+" and such support can be readily added later, further consideration of "
+"binary interpolation is considered out of scope for the current PEP."
+msgstr ""
+
+#: ../../pep-0501.txt:477
+msgid "Interoperability with str-only interfaces"
+msgstr ""
+
+#: ../../pep-0501.txt:479
+msgid ""
+"For interoperability with interfaces that only accept strings, "
+"interpolation templates can still be prerendered with ``format``, rather "
+"than delegating the rendering to the called function."
+msgstr ""
+
+#: ../../pep-0501.txt:483
+msgid ""
+"This reflects the key difference from PEP 498, which *always* eagerly "
+"applies the default rendering, without any way to delegate the choice of "
+"renderer to another section of the code."
+msgstr ""
+
+#: ../../pep-0501.txt:488
+msgid "Preserving the raw template string"
+msgstr ""
+
+#: ../../pep-0501.txt:490
+msgid ""
+"Earlier versions of this PEP failed to make the raw template string "
+"available on the interpolation template. Retaining it makes it possible "
+"to provide a more attractive template representation, as well as "
+"providing the ability to precisely reconstruct the original string, "
+"including both the expression text and the details of any eagerly "
+"rendered substitution fields in format specifiers."
+msgstr ""
+
+#: ../../pep-0501.txt:497
+msgid "Creating a rich object rather than a global name lookup"
+msgstr ""
+
+#: ../../pep-0501.txt:499
+msgid ""
+"Earlier versions of this PEP used an ``__interpolate__`` builtin, rather "
+"than a creating a new kind of object for later consumption by "
+"interpolation functions. Creating a rich descriptive object with a useful"
+" default renderer made it much easier to support customisation of the "
+"semantics of interpolation."
+msgstr ""
+
+#: ../../pep-0501.txt:505
+msgid "Building atop PEP 498, rather than competing with it"
+msgstr ""
+
+#: ../../pep-0501.txt:507
+msgid ""
+"Earlier versions of this PEP attempted to serve as a complete substitute "
+"for PEP 498, rather than building a more flexible delayed rendering "
+"capability on top of PEP 498's eager rendering."
+msgstr ""
+
+#: ../../pep-0501.txt:511
+msgid ""
+"Assuming the presence of f-strings as a supporting capability simplified "
+"a number of aspects of the proposal in this PEP (such as how to handle "
+"substitution fields in format specifiers)"
+msgstr ""
+
+#: ../../pep-0501.txt:516
+msgid "Deferring consideration of possible use in i18n use cases"
+msgstr ""
+
+#: ../../pep-0501.txt:518
+msgid ""
+"The initial motivating use case for this PEP was providing a cleaner "
+"syntax for i18n translation, as that requires access to the original "
+"unmodified template. As such, it focused on compatibility with the "
+"substitution syntax used in Python's ``string.Template`` formatting and "
+"Mozilla's l20n project."
+msgstr ""
+
+#: ../../pep-0501.txt:523
+msgid ""
+"However, subsequent discussion revealed there are significant additional "
+"considerations to be taken into account in the i18n use case, which don't"
+" impact the simpler cases of handling interpolation into security "
+"sensitive contexts (like HTML, system shells, and database queries), or "
+"producing application debugging messages in the preferred language of the"
+" development team (rather than the native language of end users)."
+msgstr ""
+
+#: ../../pep-0501.txt:530
+msgid ""
+"Due to the original design of the ``str.format`` substitution syntax in "
+"PEP 3101 being inspired by C#'s string formatting syntax, the specific "
+"field substitution syntax used in PEP 498 is consistent not only with "
+"Python's own ``str.format`` syntax, but also with string formatting in "
+"C#, including the native \"$-string\" interpolation syntax introduced in "
+"C# 6.0 (released in July 2015).  The related ``IFormattable`` interface "
+"in C# forms the basis of a `number of elements "
+"<https://msdn.microsoft.com/en-us/library/system.iformattable.aspx>`__ of"
+" C#'s internationalization and localization support."
+msgstr ""
+
+#: ../../pep-0501.txt:538
+#, python-format
+msgid ""
+"This means that while this particular substitution syntax may not "
+"currently be widely used for translation of *Python* applications (losing"
+" out to traditional %-formatting and the designed-specifically-for-i18n "
+"``string.Template`` formatting), it *is* a popular translation format in "
+"the wider software development ecosystem (since it is already the "
+"preferred format for translating C# applications)."
+msgstr ""
+
+#: ../../pep-0501.txt:546
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0501.txt:548
+msgid ""
+"Eric V. Smith for creating PEP 498 and demonstrating the feasibility of "
+"arbitrary expression substitution in string interpolation"
+msgstr ""
+
+#: ../../pep-0501.txt:550
+msgid ""
+"Barry Warsaw, Armin Ronacher, and Mike Miller for their contributions to "
+"exploring the feasibility of using this model of delayed rendering in "
+"i18n use cases (even though the ultimate conclusion was that it was a "
+"poor fit, at least for current approaches to i18n in Python)"
+msgstr ""
+
+#: ../../pep-0501.txt:556
+msgid "References"
+msgstr ""
+
+#: ../../pep-0501.txt:558
+#, python-format
+msgid ""
+"%-formatting (https://docs.python.org/3/library/stdtypes.html#printf-"
+"style-string-formatting)"
+msgstr ""
+
+#: ../../pep-0501.txt:561
+msgid "str.format (https://docs.python.org/3/library/string.html#formatstrings)"
+msgstr ""
+
+#: ../../pep-0501.txt:564
+msgid ""
+"string.Template documentation "
+"(https://docs.python.org/3/library/string.html#template-strings)"
+msgstr ""
+
+#: ../../pep-0501.txt:567
+msgid "PEP 215: String Interpolation (https://www.python.org/dev/peps/pep-0215/)"
+msgstr ""
+
+#: ../../pep-0501.txt:570
+msgid ""
+"PEP 292: Simpler String Substitutions "
+"(https://www.python.org/dev/peps/pep-0292/)"
+msgstr ""
+
+#: ../../pep-0501.txt:573
+msgid ""
+"PEP 3101: Advanced String Formatting "
+"(https://www.python.org/dev/peps/pep-3101/)"
+msgstr ""
+
+#: ../../pep-0501.txt:576
+msgid ""
+"PEP 498: Literal string formatting "
+"(https://www.python.org/dev/peps/pep-0498/)"
+msgstr ""
+
+#: ../../pep-0501.txt:579
+msgid ""
+"FormattableString and C# native string interpolation "
+"(https://msdn.microsoft.com/en-us/library/dn961160.aspx)"
+msgstr ""
+
+#: ../../pep-0501.txt:582
+msgid ""
+"IFormattable interface in C# (see remarks for globalization notes) "
+"(https://msdn.microsoft.com/en-us/library/system.iformattable.aspx)"
+msgstr ""
+
+#: ../../pep-0501.txt:585
+msgid ""
+"Running external commands in Julia "
+"(http://julia.readthedocs.org/en/latest/manual/running-external-"
+"programs/)"
+msgstr ""
+
+#: ../../pep-0501.txt:589
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0501.txt:591
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,1230 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0665.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0665.rst:1
+msgid "665"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0665.rst:2
+msgid ""
+"A file format to list Python dependencies for reproducibility of an "
+"application"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0665.rst:3
+msgid ""
+"Brett Cannon <brett@python.org>, Pradyun Gedam <pradyunsg@gmail.com>, "
+"Tzu-ping Chung <uranusjr@gmail.com>"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "PEP-Delegate"
+msgstr ""
+
+#: ../../pep-0665.rst:6
+msgid "Paul Moore <p.f.moore@gmail.com>"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0665.rst:7
+msgid "https://discuss.python.org/t/9911"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0665.rst:8
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0665.rst:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0665.rst:11
+msgid "29-Jul-2021"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0665.rst:12
+msgid "29-Jul-2021, 03-Nov-2021"
+msgstr ""
+
+#: ../../pep-0665.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0665.rst:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0665.rst:19
+msgid ""
+"This PEP specifies a file format to specify the list of Python package "
+"installation requirements for an application, and the relation between "
+"the specified requirements. The list of requirements is considered "
+"exhaustive for the installation target, and thus not requiring any "
+"information beyond the platform being installed for, and the file itself."
+" The file format is flexible enough to allow installing the requirements "
+"across different platforms, which guarantees reproducibility on multiple "
+"platforms from the same file."
+msgstr ""
+
+#: ../../pep-0665.rst:30
+msgid "Terminology"
+msgstr ""
+
+#: ../../pep-0665.rst:32
+msgid ""
+"There are several terms whose definition must be agreed upon in order to "
+"facilitate a discussion on the topic of this PEP."
+msgstr ""
+
+#: ../../pep-0665.rst:35
+msgid ""
+"A *package* is something you install as a dependency and use via the "
+"import system. The packages on PyPI are an example of this."
+msgstr ""
+
+#: ../../pep-0665.rst:38
+msgid ""
+"An *application* or *app* is an end product that other external code does"
+" not directly rely on via the import system (i.e. they are standalone). "
+"Desktop applications, command-line tools, etc. are examples."
+msgstr ""
+
+#: ../../pep-0665.rst:43
+msgid ""
+"A *lock file* records the packages that are to be installed for an app. "
+"Traditionally, the exact version of the package to be installed is "
+"specified by a lock file, but all specified packages are not always "
+"installed on a given platform (according a filtering logic described in a"
+" later section), which enables the lock file to describe reproducibility "
+"across multiple platforms. Examples of this are ``package-lock.json`` "
+"from npm_, ``Poetry.lock`` from Poetry, etc."
+msgstr ""
+
+#: ../../pep-0665.rst:51
+msgid ""
+"*Locking* is the act of taking the input of the packages an app depends "
+"on and producting a lock file from that."
+msgstr ""
+
+#: ../../pep-0665.rst:54
+msgid "A *locker* is a tool which produces a lock file."
+msgstr ""
+
+#: ../../pep-0665.rst:56
+msgid ""
+"An *installer* consumes a lock file to install what the lock file "
+"specifies."
+msgstr ""
+
+#: ../../pep-0665.rst:62
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0665.rst:64
+msgid ""
+"Applications want reproducible installs for a few reasons (we are not "
+"worrying about package development, integration into larger systems that "
+"would handle locking dependencies external to the Python application, or "
+"other situations where *flexible* installation requirements are desired "
+"over strict, reproducible installations)."
+msgstr ""
+
+#: ../../pep-0665.rst:70
+msgid ""
+"One, reproducibility eases development. When you and your fellow "
+"developers all end up with the same files on a specific platform, you "
+"make sure you are all developing towards the same experience for the "
+"application. You also want your users to install the same files as you "
+"expect to guarantee the experience is the same as you developed for them."
+msgstr ""
+
+#: ../../pep-0665.rst:77
+msgid ""
+"Two, you want to be able to reproduce what gets installed across multiple"
+" platforms. Thanks to Python's portability across operating systems, "
+"CPUs, etc., it is very easy and often desirable to create applications "
+"that are not restricted to a single platform. Thus, you want to be "
+"flexible enough to allow for differences in your package dependencies "
+"between platforms, while still having consistency and reproducibility on "
+"any one specific platform."
+msgstr ""
+
+#: ../../pep-0665.rst:85
+msgid ""
+"Three, reproducibility is more secure. When you control exactly what "
+"files are installed, you can make sure no malicious actor is attempting "
+"to slip nefarious code into your application (i.e. some supply chain "
+"attacks). By making a lock file which always leads to reproducible "
+"installs, we can avoid certain risks entirely."
+msgstr ""
+
+#: ../../pep-0665.rst:91
+msgid ""
+"This PEP proposes a standard for a lock file, as the current solutions "
+"don't meet the outlined goals. Today, the closest we come to a lock file "
+"standard is the `requirements file format`_ from pip. Unfortunately, that"
+" format does not lead to inherently reproducible installs (it requires "
+"optional features both in the requirements file and the installer itself,"
+" to be discussed later)."
+msgstr ""
+
+#: ../../pep-0665.rst:98
+msgid ""
+"The community itself has also shown a need for lock files based on the "
+"fact that multiple tools have independently created their own lock file "
+"formats:"
+msgstr ""
+
+#: ../../pep-0665.rst:102
+msgid "PDM_"
+msgstr ""
+
+#: ../../pep-0665.rst:103
+msgid "`pip-tools`_"
+msgstr ""
+
+#: ../../pep-0665.rst:104
+msgid "Pipenv_"
+msgstr ""
+
+#: ../../pep-0665.rst:105
+msgid "Poetry_"
+msgstr ""
+
+#: ../../pep-0665.rst:106
+msgid "Pyflow_"
+msgstr ""
+
+#: ../../pep-0665.rst:108
+msgid ""
+"Unfortunately, those tools all use differing lock file formats. This "
+"means tooling around these tools much be unique. This impacts tooling "
+"such as code editors and hosting providers, which want to be as flexible "
+"as possible when it comes to accepting a user's application code, but "
+"also have a limit as to how much development resource they can spend to "
+"add support for yet another lock file format. A standardized format would"
+" allow tools to focus their work on a single target, and make sure that "
+"workflow decisions made by developers outside of the lock file format are"
+" of no concern to e.g. hosting providers."
+msgstr ""
+
+#: ../../pep-0665.rst:119
+msgid ""
+"Other programming language communities have also shown the usefulness of "
+"lock files by developing their own solution to this problem. Some of "
+"those communities include:"
+msgstr ""
+
+#: ../../pep-0665.rst:123
+msgid "Dart_"
+msgstr ""
+
+#: ../../pep-0665.rst:124
+msgid "npm_/Node"
+msgstr ""
+
+#: ../../pep-0665.rst:125
+msgid "Go"
+msgstr ""
+
+#: ../../pep-0665.rst:126
+msgid "Rust_"
+msgstr ""
+
+#: ../../pep-0665.rst:128
+msgid ""
+"The trend in programming languages in the past decade seems to have been "
+"toward providing a lock file solution."
+msgstr ""
+
+#: ../../pep-0665.rst:134
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0665.rst:138
+msgid "File Format"
+msgstr ""
+
+#: ../../pep-0665.rst:140
+msgid ""
+"We wanted the file format to be easy to read as a diff when auditing a "
+"change to the lock file. As such, and thanks to PEP 518 and "
+"``pyproject.toml``, we decided to go with the TOML_ file format."
+msgstr ""
+
+#: ../../pep-0665.rst:147
+msgid "Secure by Design"
+msgstr ""
+
+#: ../../pep-0665.rst:149
+msgid ""
+"Viewing the `requirements file format`_ as the closest we have to a lock "
+"file standard, there are a few issues with the file format when it comes "
+"to security. First is that the file format simply does not require you "
+"specify the exact version of a package. This is why tools like `pip-"
+"tools`_ exist to help manage that for the user."
+msgstr ""
+
+#: ../../pep-0665.rst:155
+msgid ""
+"Second, you must opt into specifying what files may be installed by using"
+" the ``--hash`` argument for a specific dependency. This is also optional"
+" with pip-tools as it requires specifying the ``--generate-hashes`` CLI "
+"argument."
+msgstr ""
+
+#: ../../pep-0665.rst:160
+msgid ""
+"Third, even when you control what files may be installed, it does not "
+"prevent other packages from being installed. If a dependency is not "
+"listed in the requirements file, pip will happily go searching for a file"
+" to meet that need, unless you specify ``--no-deps`` as an argument."
+msgstr ""
+
+#: ../../pep-0665.rst:166
+msgid ""
+"Fourth, the format allows for installing a `source distribution file`_ "
+"(aka \"sdist\"). By its very nature, installing an sdist may imply "
+"executing arbitrary Python code, meaning that there is no control over "
+"what files may be installed. Only by specifying ``--only-binary :all:`` "
+"can you guarantee pip to only use a `wheel file`_ for each package."
+msgstr ""
+
+#: ../../pep-0665.rst:173
+msgid ""
+"To recap, in order for a requirements file to be as secure as what is "
+"being proposed, a user should always do the following steps:"
+msgstr ""
+
+#: ../../pep-0665.rst:176
+msgid "Use pip-tools and its command ``pip-compile --generate-hashes``"
+msgstr ""
+
+#: ../../pep-0665.rst:177
+msgid ""
+"Install the requirements file using ``pip install --no-deps --only-binary"
+" :all:``"
+msgstr ""
+
+#: ../../pep-0665.rst:180
+msgid ""
+"Critically, all of those flags, and both specificity and exhaustion of "
+"what to install that pip-tools provides, are optional."
+msgstr ""
+
+#: ../../pep-0665.rst:183
+msgid ""
+"As such, the proposal raised in this PEP is secure by design to combat "
+"some supply chain attacks. Hashes for files which would be used to "
+"install from are **required**. You can **only** install from wheels to "
+"unambiguously define what files will be placed in the file system. "
+"Installers **must** have an unambiguous installation from a lock file for"
+" a given platform."
+msgstr ""
+
+#: ../../pep-0665.rst:193
+msgid "Cross-Platform"
+msgstr ""
+
+#: ../../pep-0665.rst:195
+msgid ""
+"Various projects which already have a lock file, like PDM_ and Poetry_, "
+"provide a lock file which is *cross-platform*. This allows for a single "
+"lock file to work on multiple platforms while still leading to exact same"
+" top-level requirements to be installed everywhere while the installation"
+" being consistent/unambiguous on each platform."
+msgstr ""
+
+#: ../../pep-0665.rst:202
+msgid ""
+"As to why this is useful, let's use an example involving PyWeek_ (a week-"
+"long game development competition). We assume you are developing on "
+"Linux, while someone you choose to partner with is using macOS. Now "
+"assume the judges are using Windows. How do you make sure everyone is "
+"using the same top-level dependencies, while allowing for any platform-"
+"specific requirements (e.g. a package requires a helper package under "
+"Windows)?"
+msgstr ""
+
+#: ../../pep-0665.rst:210
+msgid ""
+"With a cross-platform lock file, you can make sure that the key "
+"requirements are met consistently across all platforms. You can then also"
+" make sure that all users on the same platform get the same reproducible "
+"installation."
+msgstr ""
+
+#: ../../pep-0665.rst:218
+msgid "Simple Installer"
+msgstr ""
+
+#: ../../pep-0665.rst:220
+msgid ""
+"The separation of concerns between a locker and an installer allows for "
+"an installer to have a much simpler operation to perform. As such, it not"
+" only allows for installers to be easier to write, but facilitates in "
+"making sure installers create unambiguous, reproducible installations."
+msgstr ""
+
+#: ../../pep-0665.rst:226
+msgid ""
+"The installer can also expend less computation/energy in creating the "
+"installation. This is beneficial not only for faster installs, but also "
+"from an energy consumption perspective, as installers are expected to be "
+"run more often than lockers."
+msgstr ""
+
+#: ../../pep-0665.rst:231
+msgid ""
+"This has led to a design where the locker must do more work upfront to "
+"benefit installers. It also means the complexity of package dependencies "
+"is simpler and easier to comprehend to avoid ambiguity."
+msgstr ""
+
+#: ../../pep-0665.rst:238
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0665.rst:242
+msgid "Details"
+msgstr ""
+
+#: ../../pep-0665.rst:244
+msgid ""
+"Lock files MUST use the TOML_ file format. This not only prevents the "
+"need to have another file format in the Python packaging ecosystem, "
+"thanks to its adoption by PEP 518 for ``pyproject.toml``, but also "
+"assists in making lock files more human-readable."
+msgstr ""
+
+#: ../../pep-0665.rst:249
+msgid ""
+"Lock files MUST end their file names with ``.pylock.toml``. The ``.toml``"
+" part unambiguously distinguishes the format of the file, and helps tools"
+" like code editors support the file appropriately. The ``.pylock`` part "
+"distinguishes the file from other TOML files the user has, to make logic "
+"easier for tools to create functionalities specific to Python lock files,"
+" instead of TOML files in general."
+msgstr ""
+
+#: ../../pep-0665.rst:256
+msgid ""
+"The following sections are the top-level keys of the TOML file data "
+"format. Any field not listed as required is considered optional."
+msgstr ""
+
+#: ../../pep-0665.rst:261
+msgid "``version``"
+msgstr ""
+
+#: ../../pep-0665.rst:263 ../../pep-0665.rst:287 ../../pep-0665.rst:347
+#: ../../pep-0665.rst:404
+msgid "This field is **required**."
+msgstr ""
+
+#: ../../pep-0665.rst:265
+msgid ""
+"The version of the lock file being used. The key MUST be a string "
+"consisting of a number that follows the same formatting as the "
+"``Metadata-Version`` key in the `core metadata spec`_. The value MUST be "
+"set to ``\"1.0\"`` until a future PEP allows for a different value. The "
+"introduction of a new *optional* key SHOULD increase the minor version. "
+"The introduction of a new required key or changing the format MUST "
+"increase the major version. How to handle other scenarios is left as a "
+"per-PEP decision."
+msgstr ""
+
+#: ../../pep-0665.rst:274
+msgid ""
+"Installers MUST warn the user if the lock file specifies a version whose "
+"major version is support but whose minor version is "
+"unsupported/unrecognized (e.g. the installer supports ``\"1.0\"``, but "
+"the lock file specifies ``\"1.1\"``)."
+msgstr ""
+
+#: ../../pep-0665.rst:279
+msgid ""
+"Installers MUST raise an error if the lock file specifies a major version"
+" which is unsupported (e.g. the installer supports ``\"1.9\"`` but the "
+"lock file specifies ``\"2.0\"``)."
+msgstr ""
+
+#: ../../pep-0665.rst:285
+msgid "``created-at``"
+msgstr ""
+
+#: ../../pep-0665.rst:289
+msgid ""
+"The timestamp for when the lock file was generated (using TOML's native "
+"timestamp type). It MUST be recorded using the UTC time zone to avoid "
+"ambiguity."
+msgstr ""
+
+#: ../../pep-0665.rst:293
+msgid ""
+"If the SOURCE_DATE_EPOCH_ environment variable is set, it MUST be used as"
+" the timestamp by the locker. This faciliates reproducibility of the lock"
+" file itself."
+msgstr ""
+
+#: ../../pep-0665.rst:300
+msgid "``[tool]``"
+msgstr ""
+
+#: ../../pep-0665.rst:302
+msgid ""
+"Tools may create their own sub-tables under the ``tool`` table. The rules"
+" for this table match those for ``pyproject.toml`` and its ``[tool]`` "
+"table from the `build system declaration spec`_."
+msgstr ""
+
+#: ../../pep-0665.rst:308
+msgid "``[metadata]``"
+msgstr ""
+
+#: ../../pep-0665.rst:310 ../../pep-0665.rst:427
+msgid "This table is **required**."
+msgstr ""
+
+#: ../../pep-0665.rst:312
+msgid "A table containing data applying to the overall lock file."
+msgstr ""
+
+#: ../../pep-0665.rst:316
+msgid "``metadata.marker``"
+msgstr ""
+
+#: ../../pep-0665.rst:318
+msgid ""
+"A key storing a string containing an environment marker as specified in "
+"the `dependency specifier spec`_."
+msgstr ""
+
+#: ../../pep-0665.rst:322
+msgid ""
+"The locker MAY specify an environment marker which specifies any "
+"restrictions the lock file was generated under."
+msgstr ""
+
+#: ../../pep-0665.rst:325
+msgid ""
+"If the installer is installing for an environment which does not satisfy "
+"the specified environment marker, the installer MUST raise an error as "
+"the lock file does not support the environment."
+msgstr ""
+
+#: ../../pep-0665.rst:331
+msgid "``metadata.tag``"
+msgstr ""
+
+#: ../../pep-0665.rst:333
+msgid ""
+"A key storing a string specifying `platform compatibility tags`_ (i.e. "
+"wheel tags). The tag MAY be a compressed tag set."
+msgstr ""
+
+#: ../../pep-0665.rst:336
+msgid ""
+"The locker MAY specify a tag (set) which specify which platform(s) the "
+"lock file supports."
+msgstr ""
+
+#: ../../pep-0665.rst:339
+msgid ""
+"If the installer is installing for an environment which does not satisfy "
+"the specified tag (set), the installer MUST raise an error as the lock "
+"file does not support the environment."
+msgstr ""
+
+#: ../../pep-0665.rst:345
+msgid "``metadata.requires``"
+msgstr ""
+
+#: ../../pep-0665.rst:349
+msgid ""
+"An array of strings following the `dependency specifier spec`_. This "
+"array represents the top-level package dependencies of the lock file and "
+"thus the root of the dependency graph."
+msgstr ""
+
+#: ../../pep-0665.rst:355
+msgid "``metadata.requires-python``"
+msgstr ""
+
+#: ../../pep-0665.rst:357
+msgid ""
+"A string specifying the support version(s) of Python for this lock file. "
+"It follows the same format as that specified for the ``Requires-Python`` "
+"field in the `core metadata spec`_."
+msgstr ""
+
+#: ../../pep-0665.rst:363
+msgid "``[[package._name_._version_]]``"
+msgstr ""
+
+#: ../../pep-0665.rst:365
+msgid "This array is **required**."
+msgstr ""
+
+#: ../../pep-0665.rst:367
+msgid ""
+"An array per package and version containing details for the potential "
+"(wheel) files to install (as represented by ``_name_`` and ``_version_``,"
+" respectively)."
+msgstr ""
+
+#: ../../pep-0665.rst:371
+msgid ""
+"Lockers must MUST normalize a project's name according to the `simple "
+"repository API`_. If extras are specified as part of the project to "
+"install, the extras are to be included in the key name and are to be "
+"sorted in lexicographic order."
+msgstr ""
+
+#: ../../pep-0665.rst:376
+msgid "Within the file, the tables for the projects SHOULD be sorted by:"
+msgstr ""
+
+#: ../../pep-0665.rst:378
+msgid "Project/key name in lexicographic order"
+msgstr ""
+
+#: ../../pep-0665.rst:379
+msgid ""
+"Package version, newest/highest to older/lowest according to the `version"
+" specifiers spec`_"
+msgstr ""
+
+#: ../../pep-0665.rst:381
+msgid "Optional dependencies (extras) via lexicographic order"
+msgstr ""
+
+#: ../../pep-0665.rst:382
+msgid "File name based on the ``filename`` or ``url`` field (discussed below)"
+msgstr ""
+
+#: ../../pep-0665.rst:385
+msgid "All of this is to help minimize diff changes between tool executions."
+msgstr ""
+
+#: ../../pep-0665.rst:389
+msgid "``package._name_._version_.url``"
+msgstr ""
+
+#: ../../pep-0665.rst:391
+msgid "A string representing a URL where to get the file."
+msgstr ""
+
+#: ../../pep-0665.rst:393
+msgid ""
+"The installer MAY support any schemes it wants for URLs (e.g. ``file:`` "
+"as well as ``https:``)."
+msgstr ""
+
+#: ../../pep-0665.rst:396
+msgid ""
+"An installer MAY choose to not use the URL to retrieve a file if a file "
+"matching the specified hash can be found using some alternative means "
+"(e.g. on the file system in a cache directory)."
+msgstr ""
+
+#: ../../pep-0665.rst:402
+msgid "``package._name_._version_.filename``"
+msgstr ""
+
+#: ../../pep-0665.rst:406
+msgid ""
+"A string representing the name of the file as represented by an entry in "
+"the array. This field is required to simplify installers as the file name"
+" is required to resolve wheel tags derived from the file name. It also "
+"guarantees that the association of the array entry to the file it is "
+"meant for is always clear."
+msgstr ""
+
+#: ../../pep-0665.rst:413
+msgid "``package._name_._version_.direct``"
+msgstr ""
+
+#: ../../pep-0665.rst:415
+msgid ""
+"A boolean representing whether an installer should consider the project "
+"installed \"directly\" as specified by the `direct URL origin of "
+"installed distributions spec`_."
+msgstr ""
+
+#: ../../pep-0665.rst:419
+msgid ""
+"If the key is true, then the installer MUST follow the `direct URL origin"
+" of installed distributions spec`_ for recording the installation as "
+"\"direct\"."
+msgstr ""
+
+#: ../../pep-0665.rst:425
+msgid "``[package._name_._version_.hashes]``"
+msgstr ""
+
+#: ../../pep-0665.rst:429
+msgid ""
+"A table with keys specifying hash algorithms and values as the hash for "
+"the file represented by this entry in the ``package._name_._version_`` "
+"table."
+msgstr ""
+
+#: ../../pep-0665.rst:433
+msgid ""
+"Lockers SHOULD list hashes in lexicographic order. This is to help "
+"minimize diff sizes and the potential to overlook hash value changes."
+msgstr ""
+
+#: ../../pep-0665.rst:436
+msgid ""
+"An installer MUST only install a file which matches one of the specified "
+"hashes."
+msgstr ""
+
+#: ../../pep-0665.rst:441
+msgid "``package._name_._version_.requires``"
+msgstr ""
+
+#: ../../pep-0665.rst:443
+msgid ""
+"An array of strings following the `dependency specifier spec`_ which "
+"represent the dependencies of this file."
+msgstr ""
+
+#: ../../pep-0665.rst:448
+msgid "``package._name_._version_.requires-python``"
+msgstr ""
+
+#: ../../pep-0665.rst:450
+msgid ""
+"A string specifying the support version(s) of Python for this file. It "
+"follows the same format as that specified for the ``Requires-Python`` "
+"field in the `core metadata spec`_."
+msgstr ""
+
+#: ../../pep-0665.rst:457
+msgid "Example"
+msgstr ""
+
+#: ../../pep-0665.rst:498
+msgid "Expectations for Lockers"
+msgstr ""
+
+#: ../../pep-0665.rst:500
+msgid ""
+"Lockers MUST create lock files for which a topological sort of the "
+"packages which qualify for installation on the specified platform results"
+" in a graph for which only a single version of any package is possible "
+"and there is at least one compatible file to install for those packages. "
+"This equates to a lock file that which is acceptable based on "
+"``metadata.marker``, ``metadata.tag``, and ``metadata.requires-python`` "
+"will have a list of package versions after evaluating environment markers"
+" and eliminating unsupported files for which the only decision the "
+"installer will need to make is which file to use for the package (which "
+"is outlined below)."
+msgstr ""
+
+#: ../../pep-0665.rst:511
+msgid ""
+"This means that lockers are expected to utilize ``metadata.marker``, "
+"``metadata.tag``, and ``metadata.requires-python`` as appropriate as well"
+" as environment markers specified via ``requires`` and Python version "
+"requirements via ``requires-python`` to enforce this result for "
+"installers. Put another way, the information used in the lock file is not"
+" expected to be pristine/raw from the locker's input and instead is to be"
+" changed as necessary to the benefit of the locker's goals."
+msgstr ""
+
+#: ../../pep-0665.rst:523
+msgid "Expectations for Installers"
+msgstr ""
+
+#: ../../pep-0665.rst:525
+msgid "The expected algorithm for resolving what to install is:"
+msgstr ""
+
+#: ../../pep-0665.rst:527
+msgid ""
+"Construct a dependency graph based on the data in the lock file with "
+"``metadata.requires`` as the starting/root point."
+msgstr ""
+
+#: ../../pep-0665.rst:529
+msgid ""
+"Eliminate all (wheel) files that are unsupported by the specified "
+"platform."
+msgstr ""
+
+#: ../../pep-0665.rst:531
+msgid ""
+"Eliminate all irrelevant edges between packages based on marker "
+"evaluation."
+msgstr ""
+
+#: ../../pep-0665.rst:533
+msgid ""
+"Raise an error if a package version is still reachable from the root of "
+"the dependency graph but lacks any compatible (wheel) file."
+msgstr ""
+
+#: ../../pep-0665.rst:536
+msgid ""
+"Verify that all packages left only have one version to install, raising "
+"an error otherwise."
+msgstr ""
+
+#: ../../pep-0665.rst:538
+msgid "Install the best-fitting wheel file for each package which remains."
+msgstr ""
+
+#: ../../pep-0665.rst:541
+msgid "What constitues the \"best-fitting wheel file\" is an open issue."
+msgstr ""
+
+#: ../../pep-0665.rst:543
+msgid ""
+"Installers MUST support installing into an empty environment. Installers "
+"MAY support installing into an environment that already conatins "
+"installed packages (and whatever that would entail)."
+msgstr ""
+
+#: ../../pep-0665.rst:550
+msgid "(Potential) Tool Support"
+msgstr ""
+
+#: ../../pep-0665.rst:552
+msgid ""
+"The pip_ team has `said <https://github.com/pypa/pip/issues/10636>`__ "
+"they are interested in supporting this PEP if accepted. The current "
+"proposal for pip may even `supplant the need <https://github.com/jazzband"
+"/pip-tools/issues/1526#issuecomment-961883367>`__ for `pip-tools`_."
+msgstr ""
+
+#: ../../pep-0665.rst:558
+msgid ""
+"PDM_ has also said they would `support the PEP <https://github.com/pdm-"
+"project/pdm/issues/718>`__ if accepted."
+msgstr ""
+
+#: ../../pep-0665.rst:562
+msgid ""
+"Pyflow_ has said they `\"like the idea\" <https://github.com/David-"
+"OConnor/pyflow/issues/153#issuecomment-962482058>`__ of the PEP."
+msgstr ""
+
+#: ../../pep-0665.rst:569
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0665.rst:571
+msgid ""
+"As there is no pre-existing specification regarding lock files, there are"
+" no explicit backwards compatibility concerns."
+msgstr ""
+
+#: ../../pep-0665.rst:574
+msgid ""
+"As for pre-existing tools that have their own lock file, some updating "
+"will be required. Most document the lock file name, but not its contents."
+" For projects which do not commit their lock file to version control, "
+"they will need to update the equivalent of their ``.gitignore`` file. For"
+" projects that do commit their lock file to version control, what file(s)"
+" get committed will need an update."
+msgstr ""
+
+#: ../../pep-0665.rst:581
+msgid ""
+"For projects which do document their lock file format like pipenv_, they "
+"will very likely need a major version release which changes the lock file"
+" format."
+msgstr ""
+
+#: ../../pep-0665.rst:585
+msgid ""
+"Specifically for Poetry_, it has an `export command <https://python-"
+"poetry.org/docs/cli/#export>`_ which should allow Poetry to support this "
+"lock file format even if the project chooses not to adopt this PEP as "
+"Poetry's primary lock file format."
+msgstr ""
+
+#: ../../pep-0665.rst:594
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0665.rst:596
+msgid ""
+"A lock file should not introduce security issues but instead help solve "
+"them. By requiring the recording of hashes for files, a lock file is able"
+" to help prevent tampering with code since the hash details were "
+"recorded. A lock file also helps prevent unexpected package updates being"
+" installed which may be malicious."
+msgstr ""
+
+#: ../../pep-0665.rst:605
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0665.rst:607
+msgid ""
+"Teaching of this PEP will very much be dependent on the lockers and "
+"installers being used for day-to-day use. Conceptually, though, users "
+"could be taught that a lock file specifies what should be installed for a"
+" project to work. The benefits of consistency and security should be "
+"emphasized to help users realize why they should care about lock files."
+msgstr ""
+
+#: ../../pep-0665.rst:617
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0665.rst:619
+msgid ""
+"No proof-of-concept or reference implementation currently exists. An "
+"example locker and installer will be provided before this PEP is fully "
+"accepted (although this is not a necessarily a requirement for "
+"conditional acceptance)."
+msgstr ""
+
+#: ../../pep-0665.rst:627
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0665.rst:631
+msgid "File Formats Other Than TOML"
+msgstr ""
+
+#: ../../pep-0665.rst:633
+msgid "JSON_ was briefly considered, but due to:"
+msgstr ""
+
+#: ../../pep-0665.rst:635
+msgid "TOML already being used for ``pyproject.toml``"
+msgstr ""
+
+#: ../../pep-0665.rst:636
+msgid "TOML being more human-readable"
+msgstr ""
+
+#: ../../pep-0665.rst:637
+msgid "TOML leading to better diffs"
+msgstr ""
+
+#: ../../pep-0665.rst:639
+msgid ""
+"the decision was made to go with TOML. There was some concern over "
+"Python's standard library lacking a TOML parser, but most packaging tools"
+" already use a TOML parser thanks to ``pyproject.toml`` so this issue did"
+" not seem to be a showstopper. Some have also argued against this concern"
+" in the past by the fact that if packaging tools abhor installing "
+"dependencies and feel they can't vendor a package then the packaging "
+"ecosystem has much bigger issues to rectify than needing to depend on a "
+"third-party TOML parser."
+msgstr ""
+
+#: ../../pep-0665.rst:651
+msgid "Alternative Naming Schemes"
+msgstr ""
+
+#: ../../pep-0665.rst:653
+msgid ""
+"Specifying a directory to install file to was considered, but ultimately "
+"rejected due to people's distaste for the idea."
+msgstr ""
+
+#: ../../pep-0665.rst:656
+msgid ""
+"It was also suggested to not have a special file name suffix, but it was "
+"decided that hurt discoverability by tools too much."
+msgstr ""
+
+#: ../../pep-0665.rst:662
+msgid "Supporting a Single Lock File"
+msgstr ""
+
+#: ../../pep-0665.rst:664
+msgid ""
+"At one point the idea of only supporting single lock file which contained"
+" all possible lock information was considered. But it quickly became "
+"apparent that trying to devise a data format which could encompass both a"
+" lock file format which could support multiple environments as well as "
+"strict lock outcomes for reproducible builds would become quite complex "
+"and cumbersome."
+msgstr ""
+
+#: ../../pep-0665.rst:671
+msgid ""
+"The idea of supporting a directory of lock files as well as a single lock"
+" file named ``pyproject-lock.toml`` was also considered. But any possible"
+" simplicity from skipping the directory in the case of a single lock file"
+" seemed unnecessary. Trying to define appropriate logic for what should "
+"be the ``pyproject-lock.toml`` file and what should go into ``pyproject-"
+"lock.d`` seemed unnecessarily complicated."
+msgstr ""
+
+#: ../../pep-0665.rst:681
+msgid "Using a Flat List Instead of a Dependency Graph"
+msgstr ""
+
+#: ../../pep-0665.rst:683
+msgid ""
+"The first version of this PEP proposed that the lock file have no concept"
+" of a dependency graph. Instead, the lock file would list exactly what "
+"should be installed for a specific platform such that installers did not "
+"have to make any decisions about *what* to install, only validating that "
+"the lock file would work for the target platform."
+msgstr ""
+
+#: ../../pep-0665.rst:689
+msgid ""
+"This idea was eventually rejected due to the number of combinations of "
+"potential PEP 508 environment markers. The decision was made that trying "
+"to have lockers generate all possible combinations as individual lock "
+"files when a project wants to be cross-platform would be too much."
+msgstr ""
+
+#: ../../pep-0665.rst:698
+msgid "Use Wheel Tags in the File Name"
+msgstr ""
+
+#: ../../pep-0665.rst:700
+msgid ""
+"Instead of having the ``metadata.tag`` field there was a suggestion of "
+"encoding the tags into the file name. But due to the addition of the "
+"``metadata.marker`` field and what to do when no tags were needed, the "
+"idea was dropped."
+msgstr ""
+
+#: ../../pep-0665.rst:708
+msgid "Alternative Names for ``requires``"
+msgstr ""
+
+#: ../../pep-0665.rst:710
+msgid ""
+"Some other names for what became ``requires`` were ``installs``, "
+"``needs``, and ``dependencies``. Initially this PEP chose ``needs`` after"
+" asking a Python beginner which term they preferred. But based on "
+"feedback on an earlier draft of this PEP, ``requires`` was chosen as the "
+"term."
+msgstr ""
+
+#: ../../pep-0665.rst:719
+msgid "Accepting PEP 650"
+msgstr ""
+
+#: ../../pep-0665.rst:721
+msgid ""
+"PEP 650 was an earlier attempt at trying to tackle this problem by "
+"specifying an API for installers instead of standardizing on a lock file "
+"format (ala PEP 517). The `initial response "
+"<https://discuss.python.org/t/pep-650-specifying-installer-requirements-"
+"for-python-projects/6657/>`__ to PEP 650 could be considered "
+"mild/lukewarm. People seemed to be consistently confused over which tools"
+" should provide what functionality to implement the PEP. It also "
+"potentially incurred more overhead as it would require executing Python "
+"APIs to perform any actions involving packaging."
+msgstr ""
+
+#: ../../pep-0665.rst:731
+msgid ""
+"This PEP chooses to standardize around an artifact instead of an API (ala"
+" PEP 621). This would allow for more tool integrations as it removes the "
+"need to specifically use Python to do things such as create a lock file, "
+"update it, or even install packages listed in a lock file. It also allows"
+" for easier introspection by forcing dependency graph details to be "
+"written in a human-readable format. It also allows for easier sharing of "
+"knowledge by standardizing what people need to know more (e.g. tutorials "
+"become more portable between tools when it comes to understanding the "
+"artifact they produce). It's also simply the approach other language "
+"communities have taken and seem to be happy with."
+msgstr ""
+
+#: ../../pep-0665.rst:746
+msgid "Specifying Requirements per Package Instead of per File"
+msgstr ""
+
+#: ../../pep-0665.rst:748
+msgid ""
+"An earlier draft of this PEP specified dependencies at the package level "
+"instead of per (wheel) file. While this has traditionally been how "
+"packaging systems work, it actually did not reflect accurately how things"
+" are specified. As such, this PEP was subsequently updated to reflect the"
+" granularity that dependencies can truly be specified at."
+msgstr ""
+
+#: ../../pep-0665.rst:758
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0665.rst:763
+msgid ""
+"Allowing Source Distributions and Source Trees to be an Opt-In, Supported"
+" File Format"
+msgstr ""
+
+#: ../../pep-0665.rst:765
+msgid ""
+"For security reproducibility reasons this PEP only considers supporting "
+"installation from wheel files. Installing from either an sdist or source "
+"tree requires arbitrary code execution during installation, unknown files"
+" to be installed, and an unknown set of dependencies. Those issues all "
+"run counter to guaranteeing users get the same files for the same "
+"platform as well as making sure they are receiving the expected files."
+msgstr ""
+
+#: ../../pep-0665.rst:773
+msgid ""
+"To deal with this issue, people would need to build their own wheels from"
+" sdists and cache them. Then the lockers would record the hashes of those"
+" wheels and the installers would then be expected to use those wheels."
+msgstr ""
+
+#: ../../pep-0665.rst:778
+msgid ""
+"Another option is to allow sdists (and potentially source trees) be "
+"listed as support file formats, but have them marked as insecure in the "
+"lock file and require the installer force the user to opt into using "
+"insecure file formats. Unfortunately because sdists which don't "
+"necessarily follow version 2.2 of the `core metadata spec`_ for their "
+"``PKG-INFO`` file will have unknown dependencies, breaking the guarantee "
+"that results will be reproducible thanks to potential arbitrary "
+"calculations of those dependencies. And even if an sdist did follow the "
+"latest spec, they could still list their requirements as dynamic, still "
+"making it impossible to statically know what should be installed. As "
+"such, installers would either have to have a full resolver to handle "
+"these dynamic cases or only sdists which follow version 2.2 of the core "
+"metadata spec **and** statically specify their dependencies could be "
+"listed. But at that point the project is probably capable of providing "
+"wheels, making support for sdists that much less important/useful."
+msgstr ""
+
+#: ../../pep-0665.rst:798
+msgid "Specify Where Lockers Gather Input"
+msgstr ""
+
+#: ../../pep-0665.rst:800
+msgid ""
+"This PEP currently does not specify how a locker gets its input. It could"
+" be possible to support a subset of PEP 621 such that ``project.requires-"
+"python`` and ``project.dependencies`` are read from ``pyproject.toml`` "
+"and automatically used as input if provided. But this or some other "
+"practice could also be left as something to grow organically in the "
+"community and making that the standard at a later date."
+msgstr ""
+
+#: ../../pep-0665.rst:811
+msgid "What is a \"best-fitting wheel file\"?"
+msgstr ""
+
+#: ../../pep-0665.rst:813
+msgid ""
+"The expected steps of installing a package much include decided which "
+"wheel file to install as a package may have a universal wheel on top of "
+"very specific wheels. But as `platform compatibility tags`_ do not "
+"specify how to determine priority and there is no way to use environment "
+"markers to specify an exact wheel, there's no defined way for an "
+"installer to deterministically determine what wheel file to select."
+msgstr ""
+
+#: ../../pep-0665.rst:821
+msgid ""
+"There are two possible solutions. One is for the locker to specify a "
+"ranking/priority order to the wheel files. That way the installer simply "
+"sorts to the supported wheel files by that order and installs the the top"
+" rated/ranked wheel file. This puts the priority order under the control "
+"of the locker."
+msgstr ""
+
+#: ../../pep-0665.rst:827
+msgid ""
+"The other option is to specify in this PEP how to calculate the "
+"priority/ranking of wheel files. This is currently tool-based and seems "
+"to have been acceptable overall by the community, but having a "
+"specification for this would probably still be welcome. It may be "
+"somewhat disruptive, though, as it could change what files get installed "
+"by tools which implement the ordering outside of the context of this PEP."
+" And if this PEP gains traction, it is reasonable to assume that users "
+"will expect the ordering to be consistent across tools."
+msgstr ""
+
+#: ../../pep-0665.rst:840
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0665.rst:842
+msgid ""
+"Thanks to Frost Ming of PDM_ and Sébastien Eustace of Poetry_ for "
+"providing input around dynamic install-time resolution of PEP 508 "
+"requirements."
+msgstr ""
+
+#: ../../pep-0665.rst:846
+msgid ""
+"Thanks to Kushal Das for making sure reproducible builds stayed a concern"
+" for this PEP."
+msgstr ""
+
+#: ../../pep-0665.rst:849
+msgid ""
+"Thanks to Andrea McInnes for initially settling the bikeshedding and "
+"choosing the paint colour of ``needs`` (at which point that caused people"
+" to rally around the ``requires`` colour)."
+msgstr ""
+
+#: ../../pep-0665.rst:856
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0665.rst:858
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -1,0 +1,515 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0655.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0655.rst:1
+msgid "655"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0655.rst:2
+msgid "Marking individual TypedDict items as required or potentially-missing"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0655.rst:3
+msgid "David Foster <david at dafoster.net>"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0655.rst:4
+msgid "Guido van Rossum <guido at python.org>"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0655.rst:5
+msgid "typing-sig at python.org"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0655.rst:6
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0655.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Requires"
+msgstr ""
+
+#: ../../pep-0655.rst:9
+msgid "604"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0655.rst:10
+msgid "30-Jan-2021"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0655.rst:11
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0655.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0655.rst:12
+msgid "31-Jan-2021, 11-Feb-2021, 20-Feb-2021, 26-Feb-2021"
+msgstr ""
+
+#: ../../pep-0655.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0655.rst:18
+msgid ""
+"`PEP 589 <https://www.python.org/dev/peps/pep-0589/>`__ defines syntax "
+"for declaring a TypedDict with all required keys and syntax for defining "
+"a TypedDict with `all potentially-missing keys "
+"<https://www.python.org/dev/peps/pep-0589/#totality>`__ however it does "
+"not provide any syntax to declare some keys as required and others as "
+"potentially-missing. This PEP introduces two new syntaxes: "
+"``Required[...]`` which can be used on individual items of a TypedDict to"
+" mark them as required, and ``NotRequired[...]`` which can be used on "
+"individual items to mark them as potentially-missing."
+msgstr ""
+
+#: ../../pep-0655.rst:31
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0655.rst:33
+msgid ""
+"It is not uncommon to want to define a TypedDict with some keys that are "
+"required and others that are potentially-missing. Currently the only way "
+"to define such a TypedDict is to declare one TypedDict with one value for"
+" ``total`` and then inherit it from another TypedDict with a different "
+"value for ``total``:"
+msgstr ""
+
+#: ../../pep-0655.rst:47
+msgid ""
+"Having to declare two different TypedDict types for this purpose is "
+"cumbersome."
+msgstr ""
+
+#: ../../pep-0655.rst:52
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0655.rst:54
+msgid ""
+"One might think it unusual to propose syntax that prioritizes marking "
+"*required* keys rather than syntax for *potentially-missing* keys, as is "
+"customary in other languages like TypeScript:"
+msgstr ""
+
+#: ../../pep-0655.rst:65
+msgid ""
+"The difficulty is that the best word for marking a potentially-missing "
+"key, ``Optional[...]``, is already used in Python for a completely "
+"different purpose: marking values that could be either of a particular "
+"type or ``None``. In particular the following does not work:"
+msgstr ""
+
+#: ../../pep-0655.rst:76
+msgid ""
+"Attempting to use any synonym of “optional” to mark potentially-missing "
+"keys (like ``Missing[...]``) would be too similar to ``Optional[...]`` "
+"and be easy to confuse with it."
+msgstr ""
+
+#: ../../pep-0655.rst:80
+msgid ""
+"Thus it was decided to focus on positive-form phrasing for required keys "
+"instead, which is straightforward to spell as ``Required[...]``."
+msgstr ""
+
+#: ../../pep-0655.rst:83
+msgid ""
+"Nevertheless it is common for folks wanting to extend a regular "
+"(``total=True``) TypedDict to only want to add a small number of "
+"potentially-missing keys, which necessitates a way to mark keys that are "
+"*not* required and potentially-missing, and so we also allow the "
+"``NotRequired[...]`` form for that case."
+msgstr ""
+
+#: ../../pep-0655.rst:91
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0655.rst:93
+msgid ""
+"The ``typing.Required`` type qualifier is used to indicate that a "
+"variable declared in a TypedDict definition is a required key:"
+msgstr ""
+
+#: ../../pep-0655.rst:102
+msgid ""
+"Additionally the ``typing.NotRequired`` type qualifier is used to "
+"indicate that a variable declared in a TypedDict definition is a "
+"potentially-missing key:"
+msgstr ""
+
+#: ../../pep-0655.rst:112
+msgid ""
+"It is an error to use ``Required[...]`` or ``NotRequired[...]`` in any "
+"location that is not an item of a TypedDict."
+msgstr ""
+
+#: ../../pep-0655.rst:115
+msgid ""
+"It is valid to use ``Required[...]`` and ``NotRequired[...]`` even for "
+"items where it is redundant, to enable additional explicitness if "
+"desired:"
+msgstr ""
+
+#: ../../pep-0655.rst:126
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0655.rst:128
+msgid "No backward incompatible changes are made by this PEP."
+msgstr ""
+
+#: ../../pep-0655.rst:132
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0655.rst:134
+msgid ""
+"To define a TypedDict where most keys are required and some are "
+"potentially-missing, define a single TypedDict as normal and mark those "
+"few keys that are potentially-missing with ``NotRequired[...]``."
+msgstr ""
+
+#: ../../pep-0655.rst:138
+msgid ""
+"To define a TypedDict where most keys are potentially-missing and a few "
+"are required, define a ``total=False`` TypedDict and mark those few keys "
+"that are required with ``Required[...]``."
+msgstr ""
+
+#: ../../pep-0655.rst:142
+msgid ""
+"If some items accept ``None`` in addition to a regular value, it is "
+"recommended that the ``TYPE|None`` syntax be preferred over "
+"``Optional[TYPE]`` for marking such item values, to avoid using "
+"``Required[...]`` or ``NotRequired[...]`` alongside ``Optional[...]`` "
+"within the same TypedDict definition:"
+msgstr ""
+
+#: ../../pep-0655.rst:148
+msgid "Yes:"
+msgstr ""
+
+#: ../../pep-0655.rst:158
+msgid "Avoid (unless Python 3.5-3.6):"
+msgstr ""
+
+#: ../../pep-0655.rst:169
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0655.rst:171
+msgid "The goal is to be able to make the following statement:"
+msgstr ""
+
+#: ../../pep-0655.rst:173
+msgid ""
+"The `mypy <http://www.mypy-lang.org/>`__ type checker supports "
+"``Required`` and ``NotRequired``. A reference implementation of the "
+"runtime component is provided in the `typing_extensions "
+"<https://github.com/python/typing/tree/master/typing_extensions>`__ "
+"module."
+msgstr ""
+
+#: ../../pep-0655.rst:179
+msgid "The mypy implementation is currently still being worked on."
+msgstr ""
+
+#: ../../pep-0655.rst:183
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0655.rst:186
+msgid "Special syntax around the *key* of a TypedDict item"
+msgstr ""
+
+#: ../../pep-0655.rst:194 ../../pep-0655.rst:400
+msgid "or:"
+msgstr ""
+
+#: ../../pep-0655.rst:202
+msgid ""
+"These syntaxes would require Python grammar changes and it is not "
+"believed that marking TypedDict items as required or potentially-missing "
+"would meet the high bar required to make such grammar changes."
+msgstr ""
+
+#: ../../pep-0655.rst:206
+msgid "Also, “let’s just not put funny syntax before the colon.” [1]_"
+msgstr ""
+
+#: ../../pep-0655.rst:210
+msgid "Marking required or potentially-missing keys with an operator"
+msgstr ""
+
+#: ../../pep-0655.rst:212
+msgid ""
+"We could use unary ``+`` as shorthand to mark a required key, unary ``-``"
+" to mark a potentially-missing key, or unary ``~`` to mark a key with "
+"opposite-of-normal totality:"
+msgstr ""
+
+#: ../../pep-0655.rst:233
+msgid ""
+"Such operators could be implemented on ``type`` via the ``__pos__``, "
+"``__neg__`` and ``__invert__`` special methods without modifying the "
+"grammar."
+msgstr ""
+
+#: ../../pep-0655.rst:237
+msgid ""
+"It was decided that it would be prudent to introduce longform syntax "
+"(i.e. ``Required[...]`` and ``NotRequired[...]``) before introducing any "
+"shortform syntax. Future PEPs may reconsider introducing this or other "
+"shortform syntax options."
+msgstr ""
+
+#: ../../pep-0655.rst:244
+msgid "Marking absence of a value with a special constant"
+msgstr ""
+
+#: ../../pep-0655.rst:246
+msgid ""
+"We could introduce a new type-level constant which signals the absence of"
+" a value when used as a union member, similar to JavaScript’s "
+"``undefined`` type, perhaps called ``Missing``:"
+msgstr ""
+
+#: ../../pep-0655.rst:257
+msgid ""
+"Such a ``Missing`` constant could also be used for other scenarios such "
+"as the type of a variable which is only conditionally defined:"
+msgstr ""
+
+#: ../../pep-0655.rst:277
+msgid "Misalignment with how unions apply to values"
+msgstr ""
+
+#: ../../pep-0655.rst:279
+msgid ""
+"However this use of ``...|Missing``, equivalent to ``Union[..., "
+"Missing]``, doesn’t align well with what a union normally means: "
+"``Union[...]`` always describes the type of a *value* that is present. By"
+" contrast missingness or non-totality is a property of a *variable* "
+"instead. Current precedent for marking properties of a variable include "
+"``Final[...]`` and ``ClassVar[...]``, which the proposal for "
+"``Required[...]`` is aligned with."
+msgstr ""
+
+#: ../../pep-0655.rst:288
+msgid "Misalignment with how unions are subdivided"
+msgstr ""
+
+#: ../../pep-0655.rst:290
+msgid ""
+"Furthermore the use of ``Union[..., Missing]`` doesn’t align with the "
+"usual ways that union values are broken down: Normally you can eliminate "
+"components of a union type using ``isinstance`` checks:"
+msgstr ""
+
+#: ../../pep-0655.rst:308
+msgid ""
+"However if we were to allow ``Union[..., Missing]`` you’d either have to "
+"eliminate the ``Missing`` case with ``hasattr`` for object attributes:"
+msgstr ""
+
+#: ../../pep-0655.rst:325
+msgid "or a check against ``locals()`` for local variables:"
+msgstr ""
+
+#: ../../pep-0655.rst:340
+msgid ""
+"or a check via other means, such as against ``globals()`` for global "
+"variables:"
+msgstr ""
+
+#: ../../pep-0655.rst:356
+msgid ""
+"Weird and inconsistent. ``Missing`` is not really a value at all; it’s an"
+" absence of definition and such an absence should be treated specially."
+msgstr ""
+
+#: ../../pep-0655.rst:361
+msgid "Difficult to implement"
+msgstr ""
+
+#: ../../pep-0655.rst:363
+msgid ""
+"Eric Traut from the Pyright type checker team has stated that "
+"implementing a ``Union[..., Missing]``-style syntax would be difficult. "
+"[2]_"
+msgstr ""
+
+#: ../../pep-0655.rst:368
+msgid "Introduces a second null-like value into Python"
+msgstr ""
+
+#: ../../pep-0655.rst:370
+msgid ""
+"Defining a new ``Missing`` type-level constant would be very close to "
+"introducing a new ``Missing`` value-level constant at runtime, creating a"
+" second null-like runtime value in addition to ``None``. Having two "
+"different null-like constants in Python (``None`` and ``Missing``) would "
+"be confusing. Many newcomers to JavaScript already have difficulty "
+"distinguishing between its analogous constants ``null`` and "
+"``undefined``."
+msgstr ""
+
+#: ../../pep-0655.rst:380
+msgid ""
+"Replace Optional with Nullable. Repurpose Optional to mean “optional "
+"item”."
+msgstr ""
+
+#: ../../pep-0655.rst:382
+msgid ""
+"``Optional[...]`` is too ubiquitous to deprecate. Although use of it "
+"*may* fade over time in favor of the ``T|None`` syntax specified by `PEP "
+"604 <https://www.python.org/dev/peps/pep-0604/>`__."
+msgstr ""
+
+#: ../../pep-0655.rst:388
+msgid ""
+"Change Optional to mean “optional item” in certain contexts instead of "
+"“nullable”"
+msgstr ""
+
+#: ../../pep-0655.rst:390
+msgid ""
+"Consider the use of a special flag on a TypedDict definition to alter the"
+" interpretation of ``Optional`` inside the TypedDict to mean “optional "
+"item” rather than its usual meaning of “nullable”:"
+msgstr ""
+
+#: ../../pep-0655.rst:408
+msgid ""
+"This would add more confusion for users because it would mean that in "
+"*some* contexts the meaning of ``Optional[...]`` is different than in "
+"other contexts, and it would be easy to overlook the flag."
+msgstr ""
+
+#: ../../pep-0655.rst:414
+msgid "Various synonyms for “potentially-missing item”"
+msgstr ""
+
+#: ../../pep-0655.rst:416
+msgid "Omittable – too easy to confuse with optional"
+msgstr ""
+
+#: ../../pep-0655.rst:417
+msgid "OptionalItem, OptionalKey – two words; too easy to confuse with optional"
+msgstr ""
+
+#: ../../pep-0655.rst:419
+msgid "MayExist, MissingOk – two words"
+msgstr ""
+
+#: ../../pep-0655.rst:420
+msgid ""
+"Droppable – too similar to Rust’s ``Drop``, which means something "
+"different"
+msgstr ""
+
+#: ../../pep-0655.rst:422
+msgid "Potential – too vague"
+msgstr ""
+
+#: ../../pep-0655.rst:423
+msgid "Open – sounds like applies to an entire structure rather then to an item"
+msgstr ""
+
+#: ../../pep-0655.rst:425
+msgid "Excludable"
+msgstr ""
+
+#: ../../pep-0655.rst:426
+msgid "Checked"
+msgstr ""
+
+#: ../../pep-0655.rst:430
+msgid "References"
+msgstr ""
+
+#: ../../pep-0655.rst:432
+msgid ""
+"https://mail.python.org/archives/list/typing-"
+"sig@python.org/message/4I3GPIWDUKV6GUCHDMORGUGRE4F4SXGR/"
+msgstr ""
+
+#: ../../pep-0655.rst:434
+msgid ""
+"https://mail.python.org/archives/list/typing-"
+"sig@python.org/message/S2VJSVG6WCIWPBZ54BOJPG56KXVSLZK6/"
+msgstr ""
+
+#: ../../pep-0655.rst:438
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0655.rst:440
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

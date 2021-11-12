@@ -1,0 +1,315 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3140.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3140.txt:1
+msgid "3140"
+msgstr ""
+
+#: ../../pep-3140.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3140.txt:2
+msgid "str(container) should call str(item), not repr(item)"
+msgstr ""
+
+#: ../../pep-3140.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3140.txt:5
+msgid "Oleg Broytman <phd@phdru.name>, Jim J. Jewett <jimjjewett@gmail.com>"
+msgstr ""
+
+#: ../../pep-3140.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-3140.txt:7
+msgid "python-3000@python.org"
+msgstr ""
+
+#: ../../pep-3140.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3140.txt:8
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-3140.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3140.txt:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3140.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3140.txt:11
+msgid "27-May-2008"
+msgstr ""
+
+#: ../../pep-3140.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3140.txt:12
+msgid "28-May-2008"
+msgstr ""
+
+#: ../../pep-3140.txt:16
+msgid "Rejection"
+msgstr ""
+
+#: ../../pep-3140.txt:18
+msgid ""
+"Guido said this would cause too much disturbance too close to beta. See "
+"[1]_."
+msgstr ""
+
+#: ../../pep-3140.txt:22
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3140.txt:24
+msgid ""
+"This document discusses the advantages and disadvantages of the current "
+"implementation of ``str(container)``.  It also discusses the pros and "
+"cons of a different approach - to call ``str(item)`` instead of "
+"``repr(item)``."
+msgstr ""
+
+#: ../../pep-3140.txt:31
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-3140.txt:33
+msgid "Currently ``str(container)`` calls ``repr`` on items.  Arguments for it:"
+msgstr ""
+
+#: ../../pep-3140.txt:35
+msgid ""
+"containers refuse to guess what the user wants to see on "
+"``str(container)`` - surroundings, delimiters, and so on;"
+msgstr ""
+
+#: ../../pep-3140.txt:37
+msgid ""
+"``repr(item)`` usually displays type information - apostrophes around "
+"strings, class names, etc."
+msgstr ""
+
+#: ../../pep-3140.txt:40
+msgid "Arguments against:"
+msgstr ""
+
+#: ../../pep-3140.txt:42
+msgid ""
+"it's illogical; ``str()`` is expected to call ``__str__`` if it exists, "
+"not ``__repr__``;"
+msgstr ""
+
+#: ../../pep-3140.txt:44
+msgid ""
+"there is no standard way to print a container's content calling items' "
+"``__str__``, that's inconvenient in cases where ``__str__`` and "
+"``__repr__`` return different results;"
+msgstr ""
+
+#: ../../pep-3140.txt:47
+msgid ""
+"``repr(item)`` sometimes do wrong things (hex-escapes non-ASCII strings, "
+"e.g.)"
+msgstr ""
+
+#: ../../pep-3140.txt:50
+msgid ""
+"This PEP proposes to change how ``str(container)`` works.  It is proposed"
+" to mimic how ``repr(container)`` works except one detail - call ``str`` "
+"on items instead of ``repr``.  This allows a user to choose what results "
+"she want to get - from ``item.__repr__`` or ``item.__str__``."
+msgstr ""
+
+#: ../../pep-3140.txt:57
+msgid "Current situation"
+msgstr ""
+
+#: ../../pep-3140.txt:59
+msgid ""
+"Most container types (tuples, lists, dicts, sets, etc.) do not implement "
+"``__str__`` method, so ``str(container)`` calls ``container.__repr__``, "
+"and ``container.__repr__``, once called, forgets it is called from "
+"``str`` and always calls ``repr`` on the container's items."
+msgstr ""
+
+#: ../../pep-3140.txt:65
+msgid ""
+"This behaviour has advantages and disadvantages.  One advantage is that "
+"most items are represented with type information - strings are surrounded"
+" by apostrophes, instances may have both class name and instance data::"
+msgstr ""
+
+#: ../../pep-3140.txt:75
+msgid ""
+"The disadvantage is that ``__repr__`` often returns technical data (like "
+"'``<object at address>``') or unreadable string (hex-encoded string if "
+"the input is non-ASCII string)::"
+msgstr ""
+
+#: ../../pep-3140.txt:82
+msgid ""
+"One of the motivations for PEP 3138 is that neither ``repr`` nor ``str`` "
+"will allow the sensible printing of dicts whose keys are non-ASCII text "
+"strings.  Now that Unicode identifiers are allowed, it includes Python's "
+"own attribute dicts.  This also includes JSON serialization (and caused "
+"some hoops for the json lib)."
+msgstr ""
+
+#: ../../pep-3140.txt:88
+msgid ""
+"PEP 3138 proposes to fix this by breaking the \"repr is safe ASCII\" "
+"invariant, and changing the way ``repr`` (which is used for persistence) "
+"outputs some objects, with system-dependent failures."
+msgstr ""
+
+#: ../../pep-3140.txt:92
+msgid ""
+"Changing how ``str(container)`` works would allow easy debugging in the "
+"normal case, and retain the safety of ASCII-only for the machine-readable"
+"  case.  The only downside is that ``str(x)`` and ``repr(x)`` would more "
+"often be different -- but only in those cases where the current almost-"
+"the-same version is insufficient."
+msgstr ""
+
+#: ../../pep-3140.txt:98
+msgid ""
+"It also seems illogical that ``str(container)`` calls ``repr`` on items "
+"instead of ``str``.  It's only logical to expect following code::"
+msgstr ""
+
+#: ../../pep-3140.txt:115
+msgid "to print::"
+msgstr ""
+
+#: ../../pep-3140.txt:122
+msgid "where it actually prints::"
+msgstr ""
+
+#: ../../pep-3140.txt:129
+msgid ""
+"Especially it is illogical to see that print in Python 2 uses ``str`` if "
+"it is called on what seems to be a tuple::"
+msgstr ""
+
+#: ../../pep-3140.txt:135
+msgid "where on an actual tuple it prints::"
+msgstr ""
+
+#: ../../pep-3140.txt:142
+msgid "A different approach - call ``str(item)``"
+msgstr ""
+
+#: ../../pep-3140.txt:144
+msgid ""
+"For example, with numbers it is often only the value that people care "
+"about."
+msgstr ""
+
+#: ../../pep-3140.txt:152
+msgid ""
+"But putting the value in a list forces users to read the type "
+"information, exactly as if ``repr`` had been called for the benefit of a "
+"machine::"
+msgstr ""
+
+#: ../../pep-3140.txt:159
+msgid ""
+"After this change, the type information would not clutter the ``str`` "
+"output::"
+msgstr ""
+
+#: ../../pep-3140.txt:167
+msgid "But it would still be available if desired::"
+msgstr ""
+
+#: ../../pep-3140.txt:174
+msgid ""
+"There is a number of strategies to fix the problem.  The most radical is "
+"to change ``__repr__`` so it accepts a new parameter (flag) \"called from"
+" ``str``, so call ``str`` on items, not ``repr``\".  The drawback of the "
+"proposal is that every ``__repr__`` implementation must be changed.  "
+"Introspection could help a bit (inspect ``__repr__`` before calling if it"
+" accepts 2 or 3 parameters), but introspection doesn't work on classes "
+"written in C, like all built-in containers."
+msgstr ""
+
+#: ../../pep-3140.txt:182
+msgid ""
+"Less radical proposal is to implement ``__str__`` methods for built-in "
+"container types.  The obvious drawback is a duplication of effort - all "
+"those ``__str__`` and ``__repr__`` implementations are only differ in one"
+" small detail - if they call ``str`` or ``repr`` on items."
+msgstr ""
+
+#: ../../pep-3140.txt:187
+msgid ""
+"The most conservative proposal is not to change str at all but to allow "
+"developers to implement their own application- or library-specific "
+"pretty-printers.  The drawback is again a multiplication of effort and "
+"proliferation of many small specific container-traversal algorithms."
+msgstr ""
+
+#: ../../pep-3140.txt:195
+msgid "Backward compatibility"
+msgstr ""
+
+#: ../../pep-3140.txt:197
+msgid ""
+"In those cases where type information is more important than usual, it "
+"will still be possible to get the current results by calling ``repr`` "
+"explicitly."
+msgstr ""
+
+#: ../../pep-3140.txt:203
+msgid "References"
+msgstr ""
+
+#: ../../pep-3140.txt:205
+msgid ""
+"Guido van Rossum, PEP: str(container) should call str(item), not "
+"repr(item) "
+"https://mail.python.org/pipermail/python-3000/2008-May/013876.html"
+msgstr ""
+
+#: ../../pep-3140.txt:210
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3140.txt:212
+msgid "This document has been placed in the public domain."
+msgstr ""
+

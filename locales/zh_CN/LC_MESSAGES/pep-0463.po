@@ -1,0 +1,969 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0463.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0463.txt:1
+msgid "463"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0463.txt:2
+msgid "Exception-catching expressions"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0463.txt:5
+msgid "Chris Angelico <rosuav@gmail.com>"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0463.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0463.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0463.txt:9
+msgid "15-Feb-2014"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0463.txt:10
+msgid "3.5"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0463.txt:11
+msgid "20-Feb-2014, 16-Feb-2014"
+msgstr ""
+
+#: ../../pep-0463.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0463.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2014-March/133118.html"
+msgstr ""
+
+#: ../../pep-0463.txt:16
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0463.txt:18
+msgid "From https://mail.python.org/pipermail/python-dev/2014-March/133118.html:"
+msgstr ""
+
+#: ../../pep-0463.txt:20
+msgid ""
+"\"\"\" I want to reject this PEP. I think the proposed syntax is "
+"acceptable given the desired semantics, although it's still a bit "
+"jarring. It's probably no worse than the colon used with lambda (which "
+"echoes the colon used in a def just like the colon here echoes the one in"
+" a try/except) and definitely better than the alternatives listed."
+msgstr ""
+
+#: ../../pep-0463.txt:27
+msgid ""
+"But the thing I can't get behind are the motivation and rationale. I "
+"don't think that e.g. dict.get() would be unnecessary once we have except"
+" expressions, and I disagree with the position that EAFP is better than "
+"LBYL, or \"generally recommended\" by Python. (Where do you get that? "
+"From the same sources that are so obsessed with DRY they'd rather "
+"introduce a higher-order-function than repeat one line of code? :-)"
+msgstr ""
+
+#: ../../pep-0463.txt:34
+msgid ""
+"This is probably the most you can get out of me as far as a "
+"pronouncement. Given that the language summit is coming up I'd be happy "
+"to dive deeper in my reasons for rejecting it there (if there's demand)."
+msgstr ""
+
+#: ../../pep-0463.txt:38
+msgid ""
+"I do think that (apart from never explaining those dreadful acronyms :-) "
+"this was a well-written and well-researched PEP, and I think you've done "
+"a great job moderating the discussion, collecting objections, reviewing "
+"alternatives, and everything else that is required to turn a heated "
+"debate into a PEP. Well done Chris (and everyone who helped), and good "
+"luck with your next PEP! \"\"\""
+msgstr ""
+
+#: ../../pep-0463.txt:47
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0463.txt:49
+msgid ""
+"Just as PEP 308 introduced a means of value-based conditions in an "
+"expression, this system allows exception-based conditions to be used as "
+"part of an expression."
+msgstr ""
+
+#: ../../pep-0463.txt:55
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0463.txt:57
+msgid ""
+"A number of functions and methods have parameters which will cause them "
+"to return a specified value instead of raising an exception.  The current"
+" system is ad-hoc and inconsistent, and requires that each function be "
+"individually written to have this functionality; not all support this."
+msgstr ""
+
+#: ../../pep-0463.txt:63
+msgid "dict.get(key, default) - second positional argument in place of KeyError"
+msgstr ""
+
+#: ../../pep-0463.txt:66
+msgid "next(iter, default) - second positional argument in place of StopIteration"
+msgstr ""
+
+#: ../../pep-0463.txt:69
+msgid "list.pop() - no way to return a default"
+msgstr ""
+
+#: ../../pep-0463.txt:71
+msgid "seq[index] - no way to handle a bounds error"
+msgstr ""
+
+#: ../../pep-0463.txt:73
+msgid "min(sequence, default=default) - keyword argument in place of ValueError"
+msgstr ""
+
+#: ../../pep-0463.txt:76
+msgid "statistics.mean(data) - no way to handle an empty iterator"
+msgstr ""
+
+#: ../../pep-0463.txt:78
+msgid ""
+"Had this facility existed early in Python's history, there would have "
+"been no need to create dict.get() and related methods; the one obvious "
+"way to handle an absent key would be to respond to the exception.  One "
+"method is written which signals the absence in one way, and one "
+"consistent technique is used to respond to the absence.  Instead, we have"
+" dict.get(), and as of Python 3.4, we also have min(... default=default),"
+" and myriad others.  We have a LBYL syntax for testing inside an "
+"expression, but there is currently no EAFP notation; compare the "
+"following::"
+msgstr ""
+
+#: ../../pep-0463.txt:103
+msgid ""
+"Python generally recommends the EAFP policy, but must then proliferate "
+"utility functions like dic.get(key,None) to enable this."
+msgstr ""
+
+#: ../../pep-0463.txt:108
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0463.txt:110
+msgid ""
+"The current system requires that a function author predict the need for a"
+" default, and implement support for it.  If this is not done, a full "
+"try/except block is needed."
+msgstr ""
+
+#: ../../pep-0463.txt:114
+msgid ""
+"Since try/except is a statement, it is impossible to catch exceptions in "
+"the middle of an expression.  Just as if/else does for conditionals and "
+"lambda does for function definitions, so does this allow exception "
+"catching in an expression context."
+msgstr ""
+
+#: ../../pep-0463.txt:119
+msgid ""
+"This provides a clean and consistent way for a function to provide a "
+"default: it simply raises an appropriate exception, and the caller "
+"catches it."
+msgstr ""
+
+#: ../../pep-0463.txt:123
+msgid ""
+"With some situations, an LBYL technique can be used (checking if some "
+"sequence has enough length before indexing into it, for instance). This "
+"is not safe in all cases, but as it is often convenient, programmers will"
+" be tempted to sacrifice the safety of EAFP in favour of the notational "
+"brevity of LBYL. Additionally, some LBYL techniques (eg involving getattr"
+" with three arguments) warp the code into looking like literal strings "
+"rather than attribute lookup, which can impact readability. A convenient "
+"EAFP notation solves all of this."
+msgstr ""
+
+#: ../../pep-0463.txt:132
+msgid ""
+"There's no convenient way to write a helper function to do this; the "
+"nearest is something ugly using either lambda::"
+msgstr ""
+
+#: ../../pep-0463.txt:142
+msgid ""
+"which is clunky, and unable to handle multiple exception clauses; or "
+"eval::"
+msgstr ""
+
+#: ../../pep-0463.txt:161
+msgid ""
+"which is even clunkier, and relies on implementation-dependent hacks. "
+"(Writing globals_of_caller() and locals_of_caller() for interpreters "
+"other than CPython is left as an exercise for the reader.)"
+msgstr ""
+
+#: ../../pep-0463.txt:165
+msgid ""
+"Raymond Hettinger `expresses`__ a desire for such a consistent API. "
+"Something similar has been `requested`__ `multiple`__ `times`__ in the "
+"past."
+msgstr ""
+
+#: ../../pep-0463.txt:176
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0463.txt:178
+msgid ""
+"Just as the 'or' operator and the three part 'if-else' expression give "
+"short circuiting methods of catching a falsy value and replacing it, this"
+" syntax gives a short-circuiting method of catching an exception and "
+"replacing it."
+msgstr ""
+
+#: ../../pep-0463.txt:183
+msgid "This currently works::"
+msgstr ""
+
+#: ../../pep-0463.txt:188
+msgid "The proposal adds this::"
+msgstr ""
+
+#: ../../pep-0463.txt:193
+msgid "Specifically, the syntax proposed is::"
+msgstr ""
+
+#: ../../pep-0463.txt:197
+msgid ""
+"where expr, exception_list, and default are all expressions.  First, expr"
+" is evaluated.  If no exception is raised, its value is the value of the "
+"overall expression.  If any exception is raised, exception_list is "
+"evaluated, and should result in either a type or a tuple, just as with "
+"the statement form of try/except.  Any matching exception will result in "
+"the corresponding default expression being evaluated and becoming the "
+"value of the expression.  As with the statement form of try/except, non-"
+"matching exceptions will propagate upward."
+msgstr ""
+
+#: ../../pep-0463.txt:206
+msgid ""
+"Parentheses are required around the entire expression, unless they would "
+"be completely redundant, according to the same rules as generator "
+"expressions follow. This guarantees correct interpretation of nested "
+"except-expressions, and allows for future expansion of the syntax - see "
+"below on multiple except clauses."
+msgstr ""
+
+#: ../../pep-0463.txt:212
+msgid ""
+"Note that the current proposal does not allow the exception object to be "
+"captured. Where this is needed, the statement form must be used. (See "
+"below for discussion and elaboration on this.)"
+msgstr ""
+
+#: ../../pep-0463.txt:216
+msgid "This ternary operator would be between lambda and if/else in precedence."
+msgstr ""
+
+#: ../../pep-0463.txt:219
+msgid "Consider this example of a two-level cache::"
+msgstr ""
+
+#: ../../pep-0463.txt:225
+msgid "This cannot be rewritten as::"
+msgstr ""
+
+#: ../../pep-0463.txt:229
+msgid ""
+"which, despite being shorter, defeats the purpose of the cache, as it "
+"must calculate a default value to pass to get(). The .get() version "
+"calculates backwards; the exception-testing version calculates forwards, "
+"as would be expected. The nearest useful equivalent would be::"
+msgstr ""
+
+#: ../../pep-0463.txt:236
+msgid ""
+"which depends on the values being nonzero, as well as depending on the "
+"cache object supporting this functionality."
+msgstr ""
+
+#: ../../pep-0463.txt:241
+msgid "Alternative Proposals"
+msgstr ""
+
+#: ../../pep-0463.txt:243
+msgid "Discussion on python-ideas brought up the following syntax suggestions::"
+msgstr ""
+
+#: ../../pep-0463.txt:261
+msgid ""
+"It has also been suggested that a new keyword be created, rather than "
+"reusing an existing one.  Such proposals fall into the same structure as "
+"the last form, but with a different keyword in place of 'pass'. "
+"Suggestions include 'then', 'when', and 'use'. Also, in the context of "
+"the \"default if expr raise Exception\" proposal, it was suggested that a"
+" new keyword \"raises\" be used."
+msgstr ""
+
+#: ../../pep-0463.txt:268
+msgid ""
+"All forms involving the 'as' capturing clause have been deferred from "
+"this proposal in the interests of simplicity, but are preserved in the "
+"table above as an accurate record of suggestions."
+msgstr ""
+
+#: ../../pep-0463.txt:272
+msgid "The four forms most supported by this proposal are, in order::"
+msgstr ""
+
+#: ../../pep-0463.txt:279
+msgid ""
+"All four maintain left-to-right evaluation order: first the base "
+"expression, then the exception list, and lastly the default.  This is "
+"important, as the expressions are evaluated lazily.  By comparison, "
+"several of the ad-hoc alternatives listed above must (by the nature of "
+"functions) evaluate their default values eagerly.  The preferred form, "
+"using the colon, parallels try/except by using \"except "
+"exception_list:\", and parallels lambda by having \"keyword name_list: "
+"subexpression\"; it also can be read as mapping Exception to the default "
+"value, dict-style.  Using the arrow introduces a token many programmers "
+"will not be familiar with, and which currently has no similar meaning, "
+"but is otherwise quite readable.  The English word \"pass\" has a vaguely"
+" similar meaning (consider the common usage \"pass by value/reference\" "
+"for function arguments), and \"pass\" is already a keyword, but as its "
+"meaning is distinctly unrelated, this may cause confusion.  Using "
+"\"then\" makes sense in English, but this introduces a new keyword to the"
+" language - albeit one not in common use, but a new keyword all the same."
+msgstr ""
+
+#: ../../pep-0463.txt:295
+msgid ""
+"Left to right evaluation order is extremely important to readability, as "
+"it parallels the order most expressions are evaluated.  Alternatives such"
+" as::"
+msgstr ""
+
+#: ../../pep-0463.txt:300
+msgid ""
+"break this, by first evaluating the two ends, and then coming to the "
+"middle; while this may not seem terrible (as the exception list will "
+"usually be a constant), it does add to the confusion when multiple "
+"clauses meet, either with multiple except/if or with the existing "
+"if/else, or a combination. Using the preferred order, subexpressions will"
+" always be evaluated from left to right, no matter how the syntax is "
+"nested."
+msgstr ""
+
+#: ../../pep-0463.txt:307
+msgid ""
+"Keeping the existing notation, but shifting the mandatory parentheses, we"
+" have the following suggestion::"
+msgstr ""
+
+#: ../../pep-0463.txt:313
+msgid ""
+"This is reminiscent of a function call, or a dict initializer.  The colon"
+" cannot be confused with introducing a suite, but on the other hand, the "
+"new syntax guarantees lazy evaluation, which a dict does not.  The "
+"potential to reduce confusion is considered unjustified by the "
+"corresponding potential to increase it."
+msgstr ""
+
+#: ../../pep-0463.txt:321
+msgid "Example usage"
+msgstr ""
+
+#: ../../pep-0463.txt:323
+msgid ""
+"For each example, an approximately-equivalent statement form is given, to"
+" show how the expression will be parsed.  These are not always strictly "
+"equivalent, but will accomplish the same purpose.  It is NOT safe for the"
+" interpreter to translate one into the other."
+msgstr ""
+
+#: ../../pep-0463.txt:328
+msgid ""
+"A number of these examples are taken directly from the Python standard "
+"library, with file names and line numbers correct as of early Feb 2014. "
+"Many of these patterns are extremely common."
+msgstr ""
+
+#: ../../pep-0463.txt:332
+msgid "Retrieve an argument, defaulting to None::"
+msgstr ""
+
+#: ../../pep-0463.txt:342
+msgid "Fetch information from the system if available::"
+msgstr ""
+
+#: ../../pep-0463.txt:352
+msgid "Attempt a translation, falling back on the original::"
+msgstr ""
+
+#: ../../pep-0463.txt:362
+msgid "Read from an iterator, continuing with blank lines once it's exhausted::"
+msgstr ""
+
+#: ../../pep-0463.txt:373
+msgid ""
+"Retrieve platform-specific information (note the DRY improvement); this "
+"particular example could be taken further, turning a series of separate "
+"assignments into a single large dict initialization::"
+msgstr ""
+
+#: ../../pep-0463.txt:387
+msgid "Retrieve an indexed item, defaulting to None (similar to dict.get)::"
+msgstr ""
+
+#: ../../pep-0463.txt:399
+msgid "Translate numbers to names, falling back on the numbers::"
+msgstr ""
+
+#: ../../pep-0463.txt:414
+msgid "Look up an attribute, falling back on a default::"
+msgstr ""
+
+#: ../../pep-0463.txt:428
+msgid ""
+"Perform some lengthy calculations in EAFP mode, handling division by zero"
+" as a sort of sticky NaN::"
+msgstr ""
+
+#: ../../pep-0463.txt:438
+msgid "Calculate the mean of a series of numbers, falling back on zero::"
+msgstr ""
+
+#: ../../pep-0463.txt:447
+msgid "Looking up objects in a sparse list of overrides::"
+msgstr ""
+
+#: ../../pep-0463.txt:458
+msgid "Narrowing of exception-catching scope"
+msgstr ""
+
+#: ../../pep-0463.txt:460
+msgid ""
+"The following examples, taken directly from Python's standard library, "
+"demonstrate how the scope of the try/except can be conveniently narrowed."
+" To do this with the statement form of try/except would require a "
+"temporary variable, but it's far cleaner as an expression."
+msgstr ""
+
+#: ../../pep-0463.txt:465
+msgid "Lib/ipaddress.py:343::"
+msgstr ""
+
+#: ../../pep-0463.txt:472 ../../pep-0463.txt:491 ../../pep-0463.txt:502
+msgid "Becomes::"
+msgstr ""
+
+#: ../../pep-0463.txt:476
+msgid "The expression form is nearly equivalent to this::"
+msgstr ""
+
+#: ../../pep-0463.txt:484
+msgid "Lib/tempfile.py:130::"
+msgstr ""
+
+#: ../../pep-0463.txt:495
+msgid "Lib/asyncore.py:264::"
+msgstr ""
+
+#: ../../pep-0463.txt:506
+msgid ""
+"In each case, the narrowed scope of the try/except ensures that an "
+"unexpected exception (for instance, AttributeError if \"append\" were "
+"misspelled) does not get caught by the same handler.  This is "
+"sufficiently unlikely to be reason to break the call out into a separate "
+"line (as per the five line example above), but it is a small benefit "
+"gained as a side-effect of the conversion."
+msgstr ""
+
+#: ../../pep-0463.txt:514
+msgid "Comparisons with other languages"
+msgstr ""
+
+#: ../../pep-0463.txt:516
+msgid ""
+"(With thanks to Andrew Barnert for compiling this section. Note that the "
+"examples given here do not reflect the current version of the proposal, "
+"and need to be edited.)"
+msgstr ""
+
+#: ../../pep-0463.txt:520
+msgid ""
+"`Ruby's`__ \"begin…rescue…rescue…else…ensure…end\" is an expression "
+"(potentially with statements inside it).  It has the equivalent of an "
+"\"as\" clause, and the equivalent of bare except.  And it uses no "
+"punctuation or keyword between the bare except/exception class/exception "
+"class with as clause and the value.  (And yes, it's ambiguous unless you "
+"understand Ruby's statement/expression rules.)"
+msgstr ""
+
+#: ../../pep-0463.txt:536
+msgid "In terms of this PEP::"
+msgstr ""
+
+#: ../../pep-0463.txt:543
+msgid "`Erlang`__ has a try expression that looks like this"
+msgstr ""
+
+#: ../../pep-0463.txt:552
+msgid ""
+"The class and \"as\" name are mandatory, but you can use \"_\" for "
+"either. There's also an optional \"when\" guard on each, and a \"throw\" "
+"clause that you can catch, which I won't get into.  To handle multiple "
+"exceptions, you just separate the clauses with semicolons, which I guess "
+"would map to commas in Python.  So::"
+msgstr ""
+
+#: ../../pep-0463.txt:561
+msgid ""
+"Erlang also has a \"catch\" expression, which, despite using the same "
+"keyword, is completely different, and you don't want to know about it."
+msgstr ""
+
+#: ../../pep-0463.txt:565
+msgid ""
+"The ML family has two different ways of dealing with this, \"handle\" and"
+" \"try\"; the difference between the two is that \"try\" pattern-matches "
+"the exception, which gives you the effect of multiple except clauses and "
+"as clauses.  In either form, the handler clause is punctuated by \"=>\" "
+"in some dialects, \"->\" in others."
+msgstr ""
+
+#: ../../pep-0463.txt:571
+msgid "To avoid confusion, I'll write the function calls in Python style."
+msgstr ""
+
+#: ../../pep-0463.txt:573
+msgid "Here's `SML's`__ \"handle\""
+msgstr ""
+
+#: ../../pep-0463.txt:581
+msgid "Here's `OCaml's`__ \"try\""
+msgstr ""
+
+#: ../../pep-0463.txt:595
+msgid "In terms of this PEP, these would be something like::"
+msgstr ""
+
+#: ../../pep-0463.txt:604
+msgid ""
+"Many ML-inspired but not-directly-related languages from academia mix "
+"things up, usually using more keywords and fewer symbols. So, the `Oz`__ "
+"would map to Python as"
+msgstr ""
+
+#: ../../pep-0463.txt:615
+msgid ""
+"Many Lisp-derived languages, like `Clojure,`__ implement try/catch as "
+"special forms (if you don't know what that means, think function-like "
+"macros), so you write, effectively"
+msgstr ""
+
+#: ../../pep-0463.txt:629
+msgid ""
+"In Common Lisp, this is done with a slightly clunkier `\"handler-case\" "
+"macro,`__ but the basic idea is the same."
+msgstr ""
+
+#: ../../pep-0463.txt:635
+msgid ""
+"The Lisp style is, surprisingly, used by some languages that don't have "
+"macros, like Lua, where `xpcall`__ takes functions. Writing lambdas "
+"Python-style instead of Lua-style"
+msgstr ""
+
+#: ../../pep-0463.txt:645
+msgid ""
+"This actually returns (true, expression()) or (false, default(e)), but I "
+"think we can ignore that part."
+msgstr ""
+
+#: ../../pep-0463.txt:648
+msgid ""
+"Haskell is actually similar to Lua here (except that it's all done with "
+"monads, of course)::"
+msgstr ""
+
+#: ../../pep-0463.txt:653
+msgid ""
+"You can write a pattern matching expression within the function to decide"
+" what to do with it; catching and re-raising exceptions you don't want is"
+" cheap enough to be idiomatic."
+msgstr ""
+
+#: ../../pep-0463.txt:657
+msgid "But Haskell infixing makes this nicer::"
+msgstr ""
+
+#: ../../pep-0463.txt:662
+msgid ""
+"And that makes the parallel between the lambda colon and the except colon"
+" in the proposal much more obvious::"
+msgstr ""
+
+#: ../../pep-0463.txt:670
+msgid ""
+"`Tcl`__ has the other half of Lua's xpcall; catch is a function which "
+"returns true if an exception was caught, false otherwise, and you get the"
+" value out in other ways.  And it's all built around the implicit quote-"
+"and-exec that everything in Tcl is based on, making it even harder to "
+"describe in Python terms than Lisp macros, but something like"
+msgstr ""
+
+#: ../../pep-0463.txt:683
+msgid ""
+"`Smalltalk`__ is also somewhat hard to map to Python. The basic version "
+"would be"
+msgstr ""
+
+#: ../../pep-0463.txt:692
+msgid ""
+"... but that's basically Smalltalk's passing-arguments-with-colons "
+"syntax, not its exception-handling syntax."
+msgstr ""
+
+#: ../../pep-0463.txt:697
+msgid "Deferred sub-proposals"
+msgstr ""
+
+#: ../../pep-0463.txt:700
+msgid "Multiple except clauses"
+msgstr ""
+
+#: ../../pep-0463.txt:702
+msgid ""
+"An examination of use-cases shows that this is not needed as often as it "
+"would be with the statement form, and as its syntax is a point on which "
+"consensus has not been reached, the entire feature is deferred."
+msgstr ""
+
+#: ../../pep-0463.txt:706
+msgid ""
+"Multiple 'except' keywords could be used, and they will all catch "
+"exceptions raised in the original expression (only)::"
+msgstr ""
+
+#: ../../pep-0463.txt:717
+msgid "Currently, one of the following forms must be used::"
+msgstr ""
+
+#: ../../pep-0463.txt:729
+msgid ""
+"Listing multiple exception clauses without parentheses is a syntax error "
+"(see above), and so a future version of Python is free to add this "
+"feature without breaking any existing code."
+msgstr ""
+
+#: ../../pep-0463.txt:735
+msgid "Capturing the exception object"
+msgstr ""
+
+#: ../../pep-0463.txt:737
+msgid ""
+"In a try/except block, the use of 'as' to capture the exception object "
+"creates a local name binding, and implicitly deletes that binding (to "
+"avoid creating a reference loop) in a finally clause.  In an expression "
+"context, this makes little sense, and a proper sub-scope would be "
+"required to safely capture the exception object - something akin to the "
+"way a list comprehension is handled.  However, CPython currently "
+"implements a comprehension's subscope with a nested function call, which "
+"has consequences in some contexts such as class definitions, and is "
+"therefore unsuitable for this proposal.  Should there be, in future, a "
+"way to create a true subscope (which could simplify comprehensions, "
+"except expressions, with blocks, and possibly more), then this proposal "
+"could be revived; until then, its loss is not a great one, as the simple "
+"exception handling that is well suited to the expression notation used "
+"here is generally concerned only with the type of the exception, and not "
+"its value - further analysis below."
+msgstr ""
+
+#: ../../pep-0463.txt:753
+msgid ""
+"This syntax would, admittedly, allow a convenient way to capture "
+"exceptions in interactive Python; returned values are captured by \"_\", "
+"but exceptions currently are not. This could be spelled::"
+msgstr ""
+
+#: ../../pep-0463.txt:759
+msgid ""
+"An examination of the Python standard library shows that, while the use "
+"of 'as' is fairly common (occurring in roughly one except clause in "
+"five), it is extremely *uncommon* in the cases which could logically be "
+"converted into the expression form.  Its few uses can simply be left "
+"unchanged. Consequently, in the interests of simplicity, the 'as' clause "
+"is not included in this proposal.  A subsequent Python version can add "
+"this without breaking any existing code, as 'as' is already a keyword."
+msgstr ""
+
+#: ../../pep-0463.txt:767
+msgid "One example where this could possibly be useful is Lib/imaplib.py:568::"
+msgstr ""
+
+#: ../../pep-0463.txt:772
+msgid "This could become::"
+msgstr ""
+
+#: ../../pep-0463.txt:777
+msgid ""
+"Or perhaps some other variation. This is hardly the most compelling use-"
+"case, but an intelligent look at this code could tidy it up "
+"significantly.  In the absence of further examples showing any need of "
+"the exception object, I have opted to defer indefinitely the "
+"recommendation."
+msgstr ""
+
+#: ../../pep-0463.txt:784
+msgid "Rejected sub-proposals"
+msgstr ""
+
+#: ../../pep-0463.txt:787
+msgid "finally clause"
+msgstr ""
+
+#: ../../pep-0463.txt:789
+msgid ""
+"The statement form try... finally or try... except... finally has no "
+"logical corresponding expression form.  Therefore, the finally keyword is"
+" not a part of this proposal, in any way."
+msgstr ""
+
+#: ../../pep-0463.txt:795
+msgid "Bare except having different meaning"
+msgstr ""
+
+#: ../../pep-0463.txt:797
+msgid ""
+"With several of the proposed syntaxes, omitting the exception type name "
+"would be easy and concise, and would be tempting. For convenience's sake,"
+" it might be advantageous to have a bare 'except' clause mean something "
+"more useful than \"except BaseException\". Proposals included having it "
+"catch Exception, or some specific set of \"common exceptions\" "
+"(subclasses of a new type called ExpressionError), or have it look for a "
+"tuple named ExpressionError in the current scope, with a built-in default"
+" such as (ValueError, UnicodeError, AttributeError, EOFError, IOError, "
+"OSError, LookupError, NameError, ZeroDivisionError). All of these were "
+"rejected, for several reasons."
+msgstr ""
+
+#: ../../pep-0463.txt:808
+msgid ""
+"First and foremost, consistency with the statement form of try/except "
+"would be broken. Just as a list comprehension or ternary if expression "
+"can be explained by \"breaking it out\" into its vertical statement form,"
+" an expression-except should be able to be explained by a relatively "
+"mechanical translation into a near-equivalent statement. Any form of "
+"syntax common to both should therefore have the same semantics in each, "
+"and above all should not have the subtle difference of catching more in "
+"one than the other, as it will tend to attract unnoticed bugs."
+msgstr ""
+
+#: ../../pep-0463.txt:817
+msgid ""
+"Secondly, the set of appropriate exceptions to catch would itself be a "
+"huge point of contention. It would be impossible to predict exactly which"
+" exceptions would \"make sense\" to be caught; why bless some of them "
+"with convenient syntax and not others?"
+msgstr ""
+
+#: ../../pep-0463.txt:822
+msgid ""
+"And finally (this partly because the recommendation was that a bare "
+"except should be actively encouraged, once it was reduced to a "
+"\"reasonable\" set of exceptions), any situation where you catch an "
+"exception you don't expect to catch is an unnecessary bug magnet."
+msgstr ""
+
+#: ../../pep-0463.txt:827
+msgid ""
+"Consequently, the use of a bare 'except' is down to two possibilities: "
+"either it is syntactically forbidden in the expression form, or it is "
+"permitted with the exact same semantics as in the statement form (namely,"
+" that it catch BaseException and be unable to capture it with 'as')."
+msgstr ""
+
+#: ../../pep-0463.txt:834
+msgid "Bare except clauses"
+msgstr ""
+
+#: ../../pep-0463.txt:836
+msgid ""
+"PEP 8 rightly advises against the use of a bare 'except'. While it is "
+"syntactically legal in a statement, and for backward compatibility must "
+"remain so, there is little value in encouraging its use. In an expression"
+" except clause, \"except:\" is a SyntaxError; use the equivalent long-"
+"hand form \"except BaseException:\" instead. A future version of Python "
+"MAY choose to reinstate this, which can be done without breaking "
+"compatibility."
+msgstr ""
+
+#: ../../pep-0463.txt:845
+msgid "Parentheses around the except clauses"
+msgstr ""
+
+#: ../../pep-0463.txt:847
+msgid ""
+"Should it be legal to parenthesize the except clauses, separately from "
+"the expression that could raise? Example::"
+msgstr ""
+
+#: ../../pep-0463.txt:856
+msgid ""
+"This is more compelling when one or both of the deferred sub-proposals of"
+" multiple except clauses and/or exception capturing is included.  In "
+"their absence, the parentheses would be thus::"
+msgstr ""
+
+#: ../../pep-0463.txt:863
+msgid ""
+"The advantage is minimal, and the potential to confuse a reader into "
+"thinking the except clause is separate from the expression, or into "
+"thinking this is a function call, makes this non-compelling.  The "
+"expression can, of course, be parenthesized if desired, as can the "
+"default::"
+msgstr ""
+
+#: ../../pep-0463.txt:870
+msgid ""
+"As the entire expression is now required to be in parentheses (which had "
+"not been decided at the time when this was debated), there is less need "
+"to delineate this section, and in many cases it would be redundant."
+msgstr ""
+
+#: ../../pep-0463.txt:876
+msgid "Short-hand for \"except: pass\""
+msgstr ""
+
+#: ../../pep-0463.txt:878
+msgid ""
+"The following was been suggested as a similar short-hand, though not "
+"technically an expression::"
+msgstr ""
+
+#: ../../pep-0463.txt:888
+msgid "For instance, a common use-case is attempting the removal of a file::"
+msgstr ""
+
+#: ../../pep-0463.txt:892
+msgid "There is an equivalent already in Python 3.4, however, in contextlib::"
+msgstr ""
+
+#: ../../pep-0463.txt:897
+msgid ""
+"As this is already a single line (or two with a break after the colon), "
+"there is little need of new syntax and a confusion of statement vs "
+"expression to achieve this."
+msgstr ""
+
+#: ../../pep-0463.txt:903
+msgid "Common objections"
+msgstr ""
+
+#: ../../pep-0463.txt:906
+msgid "Colons always introduce suites"
+msgstr ""
+
+#: ../../pep-0463.txt:908
+msgid ""
+"While it is true that many of Python's syntactic elements use the colon "
+"to introduce a statement suite (if, while, with, for, etcetera), this is "
+"not by any means the sole use of the colon. Currently, Python syntax "
+"includes four cases where a colon introduces a subexpression:"
+msgstr ""
+
+#: ../../pep-0463.txt:913
+msgid "dict display - { ... key:value ... }"
+msgstr ""
+
+#: ../../pep-0463.txt:914
+msgid "slice notation - [start:stop:step]"
+msgstr ""
+
+#: ../../pep-0463.txt:915
+msgid "function definition - parameter : annotation"
+msgstr ""
+
+#: ../../pep-0463.txt:916
+msgid "lambda - arg list: return value"
+msgstr ""
+
+#: ../../pep-0463.txt:918
+msgid "This proposal simply adds a fifth:"
+msgstr ""
+
+#: ../../pep-0463.txt:920
+msgid "except-expression - exception list: result"
+msgstr ""
+
+#: ../../pep-0463.txt:922
+msgid ""
+"Style guides and PEP 8 should recommend not having the colon at the end "
+"of a wrapped line, which could potentially look like the introduction of "
+"a suite, but instead advocate wrapping before the exception list, keeping"
+" the colon clearly between two expressions."
+msgstr ""
+
+#: ../../pep-0463.txt:929
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0463.txt:931
+msgid "This document has been placed in the public domain."
+msgstr ""
+

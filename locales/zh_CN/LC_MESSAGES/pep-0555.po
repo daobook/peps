@@ -1,0 +1,579 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0555.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0555.rst:1
+msgid "555"
+msgstr ""
+
+#: ../../pep-0555.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0555.rst:2
+msgid "Context-local variables (contextvars)"
+msgstr ""
+
+#: ../../pep-0555.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0555.rst:5
+msgid "Koos Zevenhoven"
+msgstr ""
+
+#: ../../pep-0555.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0555.rst:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0555.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0555.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0555.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0555.rst:9 ../../pep-0555.rst:11
+msgid "06-Sep-2017"
+msgstr ""
+
+#: ../../pep-0555.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0555.rst:10
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0555.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0555.rst:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0555.rst:17
+msgid ""
+"Sometimes, in special cases, it is desired that code can pass information"
+" down the function call chain to the callees without having to explicitly"
+" pass the information as arguments to each function in the call chain. "
+"This proposal describes a construct which allows code to explicitly "
+"switch in and out of a context where a certain context variable has a "
+"given value assigned to it. This is a modern alternative to some uses of "
+"things like global variables in traditional single-threaded (or thread-"
+"unsafe) code and of thread-local storage in traditional *concurrency-"
+"unsafe* code (single- or multi-threaded). In particular, the proposed "
+"mechanism can also be used with more modern concurrent execution "
+"mechanisms such as asynchronously executed coroutines, without the "
+"concurrently executed call chains interfering with each other's contexts."
+msgstr ""
+
+#: ../../pep-0555.rst:19
+msgid ""
+"The \"call chain\" can consist of normal functions, awaited coroutines, "
+"or generators. The semantics of context variable scope are equivalent in "
+"all cases, allowing code to be refactored freely into *subroutines* "
+"(which here refers to functions, sub-generators or sub-coroutines) "
+"without affecting the semantics of context variables. Regarding "
+"implementation, this proposal aims at simplicity and minimum changes to "
+"the CPython interpreter and to other Python interpreters."
+msgstr ""
+
+#: ../../pep-0555.rst:22
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0555.rst:24
+msgid ""
+"Consider a modern Python *call chain* (or call tree), which in this "
+"proposal refers to any chained (nested) execution of *subroutines*, using"
+" any possible combinations of normal function calls, or expressions using"
+" ``await`` or ``yield from``. In some cases, passing necessary "
+"*information* down the call chain as arguments can substantially "
+"complicate the required function signatures, or it can even be impossible"
+" to achieve in practice. In these cases, one may search for another place"
+" to store this information. Let us look at some historical examples."
+msgstr ""
+
+#: ../../pep-0555.rst:26
+msgid ""
+"The most naive option is to assign the value to a global variable or "
+"similar, where the code down the call chain can access it. However, this "
+"immediately makes the code thread-unsafe, because with multiple threads, "
+"all threads assign to the same global variable, and another thread can "
+"interfere at any point in the call chain. Sooner or later, someone will "
+"probably find a reason to run the same code in parallel threads."
+msgstr ""
+
+#: ../../pep-0555.rst:28
+msgid ""
+"A somewhat less naive option is to store the information as per-thread "
+"information in thread-local storage, where each thread has its own "
+"\"copy\" of the variable which other threads cannot interfere with. "
+"Although non-ideal, this has been the best solution in many cases. "
+"However, thanks to generators and coroutines, the execution of the call "
+"chain can be suspended and resumed, allowing code in other contexts to "
+"run concurrently. Therefore, using thread-local storage is *concurrency-"
+"unsafe*, because other call chains in other contexts may interfere with "
+"the thread-local variable."
+msgstr ""
+
+#: ../../pep-0555.rst:30
+msgid ""
+"Note that in the above two historical approaches, the stored information "
+"has the *widest* available scope without causing problems. For a third "
+"solution along the same path, one would first define an equivalent of a "
+"\"thread\" for asynchronous execution and concurrency. This could be seen"
+" as the largest amount of code and nested calls that is guaranteed to be "
+"executed sequentially without ambiguity in execution order. This might be"
+" referred to as concurrency-local or task-local storage. In this meaning "
+"of \"task\", there is no ambiguity in the order of execution of the code "
+"within one task. (This concept of a task is close to equivalent to a "
+"``Task`` in ``asyncio``, but not exactly.) In such concurrency-locals, it"
+" is possible to pass information down the call chain to callees without "
+"another code path interfering with the value in the background."
+msgstr ""
+
+#: ../../pep-0555.rst:32
+msgid ""
+"Common to the above approaches is that they indeed use variables with a "
+"wide but just-narrow-enough scope. Thread-locals could also be called "
+"thread-wide globals---in single-threaded code, they are indeed truly "
+"global. And task-locals could be called task-wide globals, because tasks "
+"can be very big."
+msgstr ""
+
+#: ../../pep-0555.rst:34
+msgid ""
+"The issue here is that neither global variables, thread-locals nor task-"
+"locals are really meant to be used for this purpose of passing "
+"information of the execution context down the call chain. Instead of the "
+"widest possible variable scope, the scope of the variables should be "
+"controlled by the programmer, typically of a library, to have the desired"
+" scope---not wider. In other words, task-local variables (and globals and"
+" thread-locals) have nothing to do with the kind of context-bound "
+"information passing that this proposal intends to enable, even if task-"
+"locals can be used to emulate the desired semantics. Therefore, in the "
+"following, this proposal describes the semantics and the outlines of an "
+"implementation for *context-local variables* (or context variables, "
+"contextvars). In fact, as a side effect of this PEP, an async framework "
+"can use the proposed feature to implement task-local variables."
+msgstr ""
+
+#: ../../pep-0555.rst:37
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0555.rst:39
+msgid ""
+"Because the proposed semantics are not a direct extension to anything "
+"already available in Python, this proposal is first described in terms of"
+" semantics and API at a fairly high level. In particular, Python ``with``"
+" statements are heavily used in the description, as they are a good match"
+" with the proposed semantics. However, the underlying ``__enter__`` and "
+"``__exit__`` methods correspond to functions in the lower-level speed-"
+"optimized (C) API. For clarity of this document, the lower-level "
+"functions are not explicitly named in the definition of the semantics. "
+"After describing the semantics and high-level API, the implementation is "
+"described, going to a lower level."
+msgstr ""
+
+#: ../../pep-0555.rst:42
+msgid "Semantics and higher-level API"
+msgstr ""
+
+#: ../../pep-0555.rst:45
+msgid "Core concept"
+msgstr ""
+
+#: ../../pep-0555.rst:47
+msgid ""
+"A context-local variable is represented by a single instance of "
+"``contextvars.Var``, say ``cvar``. Any code that has access to the "
+"``cvar`` object can ask for its value with respect to the current "
+"context. In the high-level API, this value is given by the ``cvar.value``"
+" property::"
+msgstr ""
+
+#: ../../pep-0555.rst:58
+msgid ""
+"No assignments to ``cvar`` have been applied for this context, so "
+"``cvar.value`` gives the default value. Assigning new values to "
+"contextvars is done in a highly scope-aware manner::"
+msgstr ""
+
+#: ../../pep-0555.rst:71
+msgid ""
+"Here, ``cvar.assign(value)`` returns another object, namely "
+"``contextvars.Assignment(cvar, new_value)``. The essential part here is "
+"that applying a context variable assignment (``Assignment.__enter__``) is"
+" paired with a de-assignment (``Assignment.__exit__``). These operations "
+"set the bounds for the scope of the assigned value."
+msgstr ""
+
+#: ../../pep-0555.rst:73
+msgid ""
+"Assignments to the same context variable can be nested to override the "
+"outer assignment in a narrower context::"
+msgstr ""
+
+#: ../../pep-0555.rst:84
+msgid ""
+"Also multiple variables can be assigned to in a nested manner without "
+"affecting each other::"
+msgstr ""
+
+#: ../../pep-0555.rst:104
+msgid "Or with more convenient Python syntax::"
+msgstr ""
+
+#: ../../pep-0555.rst:111
+msgid ""
+"In another *context*, in another thread or otherwise concurrently "
+"executed task or code path, the context variables can have a completely "
+"different state. The programmer thus only needs to worry about the "
+"context at hand."
+msgstr ""
+
+#: ../../pep-0555.rst:114
+msgid "Refactoring into subroutines"
+msgstr ""
+
+#: ../../pep-0555.rst:116
+msgid ""
+"Code using contextvars can be refactored into subroutines without "
+"affecting the semantics.  For instance::"
+msgstr ""
+
+#: ../../pep-0555.rst:128
+msgid ""
+"Or similarly in an asynchronous context where ``await`` expressions are "
+"used. The subroutine can now be a coroutine::"
+msgstr ""
+
+#: ../../pep-0555.rst:140
+msgid "Or when the subroutine is a generator::"
+msgstr ""
+
+#: ../../pep-0555.rst:147
+msgid ""
+"which is called using ``yield from apply()`` or with calls to ``next`` or"
+" ``.send``. This is discussed further in later sections."
+msgstr ""
+
+#: ../../pep-0555.rst:150
+msgid "Semantics for generators and generator-based coroutines"
+msgstr ""
+
+#: ../../pep-0555.rst:152
+msgid ""
+"Generators, coroutines and async generators act as subroutines in much "
+"the same way that normal functions do. However, they have the additional "
+"possibility of being suspended by ``yield`` expressions. Assignment "
+"contexts entered inside a generator are normally preserved across "
+"yields::"
+msgstr ""
+
+#: ../../pep-0555.rst:166
+msgid ""
+"However, the outer context visible to the generator may change state "
+"across yields::"
+msgstr ""
+
+#: ../../pep-0555.rst:185
+msgid ""
+"Similar semantics apply to async generators defined by ``async def ... "
+"yield ...`` )."
+msgstr ""
+
+#: ../../pep-0555.rst:187
+msgid ""
+"By default, values assigned inside a generator do not leak through yields"
+" to the code that drives the generator. However, the assignment contexts "
+"entered and left open inside the generator *do* become visible outside "
+"the generator after the generator has finished with a ``StopIteration`` "
+"or another exception::"
+msgstr ""
+
+#: ../../pep-0555.rst:208
+msgid "Special functionality for framework authors"
+msgstr ""
+
+#: ../../pep-0555.rst:210
+msgid ""
+"Frameworks, such as ``asyncio`` or third-party libraries, can use "
+"additional functionality in ``contextvars`` to achieve the desired "
+"semantics in cases which are not determined by the Python interpreter. "
+"Some of the semantics described in this section are also afterwards used "
+"to describe the internal implementation."
+msgstr ""
+
+#: ../../pep-0555.rst:213
+msgid "Leaking yields"
+msgstr ""
+
+#: ../../pep-0555.rst:215
+msgid ""
+"Using the ``contextvars.leaking_yields`` decorator, one can choose to "
+"leak the context through ``yield`` expressions into the outer context "
+"that drives the generator::"
+msgstr ""
+
+#: ../../pep-0555.rst:235
+msgid "Capturing contextvar assignments"
+msgstr ""
+
+#: ../../pep-0555.rst:237
+msgid ""
+"Using ``contextvars.capture()``, one can capture the assignment contexts "
+"that are entered by a block of code. The changes applied by the block of "
+"code can then be reverted and subsequently reapplied, even in another "
+"context::"
+msgstr ""
+
+#: ../../pep-0555.rst:259
+msgid ""
+"However, reapplying the \"delta\" if its net contents include "
+"deassignments may not be possible (see also Implementation and Open "
+"Issues)."
+msgstr ""
+
+#: ../../pep-0555.rst:263
+msgid "Getting a snapshot of context state"
+msgstr ""
+
+#: ../../pep-0555.rst:265
+msgid ""
+"The function ``contextvars.get_local_state()`` returns an object "
+"representing the applied assignments to all context-local variables in "
+"the context where the function is called. This can be seen as equivalent "
+"to using ``contextvars.capture()`` to capture all context changes from "
+"the beginning of execution. The returned object supports methods "
+"``.revert()`` and ``reapply()`` as above."
+msgstr ""
+
+#: ../../pep-0555.rst:269
+msgid "Running code in a clean state"
+msgstr ""
+
+#: ../../pep-0555.rst:271
+msgid ""
+"Although it is possible to revert all applied context changes using the "
+"above primitives, a more convenient way to run a block of code in a clean"
+" context is provided::"
+msgstr ""
+
+#: ../../pep-0555.rst:279
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0555.rst:281
+msgid ""
+"This section describes to a variable level of detail how the described "
+"semantics can be implemented. At present, an implementation aimed at "
+"simplicity but sufficient features is described. More details will be "
+"added later."
+msgstr ""
+
+#: ../../pep-0555.rst:283
+msgid ""
+"Alternatively, a somewhat more complicated implementation offers minor "
+"additional features while adding some performance overhead and requiring "
+"more code in the implementation."
+msgstr ""
+
+#: ../../pep-0555.rst:286
+msgid "Data structures and implementation of the core concept"
+msgstr ""
+
+#: ../../pep-0555.rst:288
+msgid ""
+"Each thread of the Python interpreter keeps its own stack of "
+"``contextvars.Assignment`` objects, each having a pointer to the previous"
+" (outer) assignment like in a linked list. The local state (also returned"
+" by ``contextvars.get_local_state()``) then consists of a reference to "
+"the top of the stack and a pointer/weak reference to the bottom of the "
+"stack. This allows efficient stack manipulations. An object produced by "
+"``contextvars.capture()`` is similar, but refers to only a part of the "
+"stack with the bottom reference pointing to the top of the stack as it "
+"was in the beginning of the capture block."
+msgstr ""
+
+#: ../../pep-0555.rst:290
+msgid ""
+"Now, the stack evolves according to the assignment ``__enter__`` and "
+"``__exit__`` methods. For example::"
+msgstr ""
+
+#: ../../pep-0555.rst:326
+msgid ""
+"Getting a value from the context using ``cvar1.value`` can be implemented"
+" as finding the topmost occurrence of a ``cvar1`` assignment on the stack"
+" and returning the value there, or the default value if no assignment is "
+"found on the stack. However, this can be optimized to instead be an O(1) "
+"operation in most cases. Still, even searching through the stack may be "
+"reasonably fast since these stacks are not intended to grow very large."
+msgstr ""
+
+#: ../../pep-0555.rst:328
+msgid ""
+"The above description is already sufficient for implementing the core "
+"concept. Suspendable frames require some additional attention, as "
+"explained in the following."
+msgstr ""
+
+#: ../../pep-0555.rst:331
+msgid "Implementation of generator and coroutine semantics"
+msgstr ""
+
+#: ../../pep-0555.rst:333
+msgid ""
+"Within generators, coroutines and async generators, assignments and "
+"deassignments are handled in exactly the same way as anywhere else. "
+"However, some changes are needed in the builtin generator methods "
+"``send``, ``__next__``, ``throw`` and ``close``. Here is the Python "
+"equivalent of the changes needed in ``send`` for a generator (here "
+"``_old_send`` refers to the behavior in Python 3.6)::"
+msgstr ""
+
+#: ../../pep-0555.rst:355
+msgid ""
+"The corresponding modifications to the other methods is essentially "
+"identical. The same applies to coroutines and async generators."
+msgstr ""
+
+#: ../../pep-0555.rst:357
+msgid ""
+"For code that does not use ``contextvars``, the additions are O(1) and "
+"essentially reduce to a couple of pointer comparisons. For code that does"
+" use ``contextvars``, the additions are still O(1) in most cases."
+msgstr ""
+
+#: ../../pep-0555.rst:360
+msgid "More on implementation"
+msgstr ""
+
+#: ../../pep-0555.rst:362
+msgid ""
+"The rest of the functionality, including ``contextvars.leaking_yields``, "
+"contextvars.capture()``, ``contextvars.get_local_state()`` and "
+"``contextvars.clean_context()`` are in fact quite straightforward to "
+"implement, but their implementation will be discussed further in later "
+"versions of this proposal. Caching of assigned values is somewhat more "
+"complicated, and will be discussed later, but it seems that most cases "
+"should achieve O(1) complexity."
+msgstr ""
+
+#: ../../pep-0555.rst:365
+msgid "Backwards compatibility"
+msgstr ""
+
+#: ../../pep-0555.rst:367
+msgid ""
+"There are no *direct* backwards-compatibility concerns, since a "
+"completely new feature is proposed."
+msgstr ""
+
+#: ../../pep-0555.rst:369
+msgid ""
+"However, various traditional uses of thread-local storage may need a "
+"smooth transition to ``contextvars`` so they can be concurrency-safe. "
+"There are several approaches to this, including emulating task-local "
+"storage with a little bit of help from async frameworks. A fully general "
+"implementation cannot be provided, because the desired semantics may "
+"depend on the design of the framework."
+msgstr ""
+
+#: ../../pep-0555.rst:371
+msgid ""
+"Another way to deal with the transition is for code to first look for a "
+"context created using ``contextvars``. If that fails because a new-style "
+"context has not been set or because the code runs on an older Python "
+"version, a fallback to thread-local storage is used."
+msgstr ""
+
+#: ../../pep-0555.rst:375
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0555.rst:378
+msgid "Out-of-order de-assignments"
+msgstr ""
+
+#: ../../pep-0555.rst:380
+msgid ""
+"In this proposal, all variable deassignments are made in the opposite "
+"order compared to the preceding assignments. This has two useful "
+"properties: it encourages using ``with`` statements to define assignment "
+"scope and has a tendency to catch errors early (forgetting a "
+"``.__exit__()`` call often results in a meaningful error. To have this as"
+" a requirement is beneficial also in terms of implementation simplicity "
+"and performance. Nevertheless, allowing out-of-order context exits is not"
+" completely out of the question, and reasonable implementation strategies"
+" for that do exist."
+msgstr ""
+
+#: ../../pep-0555.rst:383
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0555.rst:386
+msgid "Dynamic scoping linked to subroutine scopes"
+msgstr ""
+
+#: ../../pep-0555.rst:388
+msgid ""
+"The scope of value visibility should not be determined by the way the "
+"code is refactored into subroutines. It is necessary to have per-variable"
+" control of the assignment scope."
+msgstr ""
+
+#: ../../pep-0555.rst:391
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0555.rst:393 ../../pep-0555.rst:399
+msgid "To be added."
+msgstr ""
+
+#: ../../pep-0555.rst:397
+msgid "References"
+msgstr ""
+
+#: ../../pep-0555.rst:403
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0555.rst:405
+msgid "This document has been placed in the public domain."
+msgstr ""
+

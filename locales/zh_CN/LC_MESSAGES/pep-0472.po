@@ -1,0 +1,932 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0472.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0472.txt:1
+msgid "472"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0472.txt:2
+msgid "Support for indexing with keyword arguments"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0472.txt:5
+msgid "Stefano Borini, Joseph Martinot-Lagarde"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0472.txt:6
+msgid "python-ideas@python.org"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0472.txt:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0472.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0472.txt:10
+msgid "24-Jun-2014"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0472.txt:11
+msgid "3.6"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0472.txt:12
+msgid "02-Jul-2014"
+msgstr ""
+
+#: ../../pep-0472.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0472.txt:13
+msgid "https://mail.python.org/pipermail/python-dev/2019-March/156693.html"
+msgstr ""
+
+#: ../../pep-0472.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0472.txt:18
+msgid ""
+"This PEP proposes an extension of the indexing operation to support "
+"keyword arguments. Notations in the form ``a[K=3,R=2]`` would become "
+"legal syntax. For future-proofing considerations, ``a[1:2, K=3, R=4]`` "
+"are considered and may be allowed as well, depending on the choice for "
+"implementation. In addition to a change in the parser, the index protocol"
+" (``__getitem__``, ``__setitem__`` and ``__delitem__``) will also "
+"potentially require adaptation."
+msgstr ""
+
+#: ../../pep-0472.txt:26
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0472.txt:28
+msgid ""
+"The indexing syntax carries a strong semantic content, differentiating it"
+" from a method call: it implies referring to a subset of data. We believe"
+" this semantic association to be important, and wish to expand the "
+"strategies allowed to refer to this data."
+msgstr ""
+
+#: ../../pep-0472.txt:33
+msgid ""
+"As a general observation, the number of indices needed by an indexing "
+"operation depends on the dimensionality of the data: one-dimensional data"
+" (e.g. a list) requires one index (e.g. ``a[3]``), two-dimensional data "
+"(e.g. a matrix) requires two indices (e.g. ``a[2,3]``) and so on. Each "
+"index is a selector along one of the axes of the dimensionality, and the "
+"position in the index tuple is the metainformation needed to associate "
+"each index to the corresponding axis."
+msgstr ""
+
+#: ../../pep-0472.txt:40
+msgid ""
+"The current python syntax focuses exclusively on position to express the "
+"association to the axes, and also contains syntactic sugar to refer to "
+"non-punctiform selection (slices)"
+msgstr ""
+
+#: ../../pep-0472.txt:50
+msgid ""
+"The additional notation proposed in this PEP would allow notations "
+"involving keyword arguments in the indexing operation, e.g."
+msgstr ""
+
+#: ../../pep-0472.txt:57
+msgid "which would allow to refer to axes by conventional names."
+msgstr ""
+
+#: ../../pep-0472.txt:59
+msgid ""
+"One must additionally consider the extended form that allows both "
+"positional and keyword specification"
+msgstr ""
+
+#: ../../pep-0472.txt:66
+msgid ""
+"This PEP will explore different strategies to enable the use of these "
+"notations."
+msgstr ""
+
+#: ../../pep-0472.txt:69
+msgid "Use cases"
+msgstr ""
+
+#: ../../pep-0472.txt:71
+msgid ""
+"The following practical use cases present two broad categories of usage "
+"of a keyworded specification: Indexing and contextual option. For "
+"indexing:"
+msgstr ""
+
+#: ../../pep-0472.txt:74
+msgid ""
+"To provide a more communicative meaning to the index, preventing e.g. "
+"accidental inversion of indexes"
+msgstr ""
+
+#: ../../pep-0472.txt:82
+msgid ""
+"In some domain, such as computational physics and chemistry, the use of a"
+" notation such as ``Basis[Z=5]`` is a Domain Specific Language notation "
+"to represent a level of accuracy"
+msgstr ""
+
+#: ../../pep-0472.txt:90
+msgid ""
+"In this case, the index operation would return a basis set at the chosen "
+"level of accuracy (represented by the parameter Z). The reason behind an "
+"indexing is that the BasisSet object could be internally represented as a"
+" numeric table, where rows (the \"coefficient\" axis, hidden to the user "
+"in this example) are associated to individual elements (e.g. row 0:5 "
+"contains coefficients for element 1, row 5:8 coefficients for element 2) "
+"and each column is associated to a given degree of accuracy (\"accuracy\""
+" or \"Z\" axis) so that first column is low accuracy, second column is "
+"medium accuracy and so on. With that indexing, the user would obtain "
+"another object representing the contents of the column of the internal "
+"table for accuracy level 3."
+msgstr ""
+
+#: ../../pep-0472.txt:101
+msgid ""
+"Additionally, the keyword specification can be used as an option "
+"contextual to the indexing. Specifically:"
+msgstr ""
+
+#: ../../pep-0472.txt:104
+msgid ""
+"A \"default\" option allows to specify a default return value when the "
+"index is not present"
+msgstr ""
+
+#: ../../pep-0472.txt:112
+msgid ""
+"For a sparse dataset, to specify an interpolation strategy to infer a "
+"missing point from e.g. its surrounding data."
+msgstr ""
+
+#: ../../pep-0472.txt:119
+msgid "A unit could be specified with the same mechanism"
+msgstr ""
+
+#: ../../pep-0472.txt:125
+msgid "How the notation is interpreted is up to the implementing class."
+msgstr ""
+
+#: ../../pep-0472.txt:128
+msgid "Current implementation"
+msgstr ""
+
+#: ../../pep-0472.txt:130
+msgid ""
+"Currently, the indexing operation is handled by methods ``__getitem__``, "
+"``__setitem__`` and ``__delitem__``. These methods' signature accept one "
+"argument for the index (with ``__setitem__`` accepting an additional "
+"argument for the set value). In the following, we will analyze "
+"``__getitem__(self, idx)`` exclusively, with the same considerations "
+"implied for the remaining two methods."
+msgstr ""
+
+#: ../../pep-0472.txt:136
+msgid ""
+"When an indexing operation is performed, ``__getitem__(self, idx)`` is "
+"called. Traditionally, the full content between square brackets is turned"
+" into a single object passed to argument ``idx``:"
+msgstr ""
+
+#: ../../pep-0472.txt:140
+msgid "When a single element is passed, e.g. ``a[2]``, ``idx`` will be ``2``."
+msgstr ""
+
+#: ../../pep-0472.txt:141
+msgid ""
+"When multiple elements are passed, they must be separated by commas: "
+"``a[2, 3]``. In this case, ``idx`` will be a tuple ``(2, 3)``. With "
+"``a[2, 3, \"hello\", {}]`` ``idx`` will be ``(2, 3, \"hello\", {})``."
+msgstr ""
+
+#: ../../pep-0472.txt:144
+msgid ""
+"A slicing notation e.g. ``a[2:10]`` will produce a slice object, or a "
+"tuple containing slice objects if multiple values were passed."
+msgstr ""
+
+#: ../../pep-0472.txt:147
+msgid ""
+"Except for its unique ability to handle slice notation, the indexing "
+"operation has similarities to a plain method call: it acts like one when "
+"invoked with only one element; If the number of elements is greater than "
+"one, the ``idx`` argument behaves like a ``*args``. However, as stated in"
+" the Motivation section, an indexing operation has the strong semantic "
+"implication of extraction of a subset out of a larger set, which is not "
+"automatically associated to a regular method call unless appropriate "
+"naming is chosen. Moreover, its different visual style is important for "
+"readability."
+msgstr ""
+
+#: ../../pep-0472.txt:157
+msgid "Specifications"
+msgstr ""
+
+#: ../../pep-0472.txt:159
+msgid ""
+"The implementation should try to preserve the current signature for "
+"``__getitem__``, or modify it in a backward-compatible way. We will "
+"present different alternatives, taking into account the possible cases "
+"that need to be addressed"
+msgstr ""
+
+#: ../../pep-0472.txt:176
+msgid "Strategy \"Strict dictionary\""
+msgstr ""
+
+#: ../../pep-0472.txt:178
+msgid ""
+"This strategy acknowledges that ``__getitem__`` is special in accepting "
+"only one object, and the nature of that object must be non-ambiguous in "
+"its specification of the axes: it can be either by order, or by name. As "
+"a result of this assumption, in presence of keyword arguments, the passed"
+" entity is a dictionary and all labels must be specified."
+msgstr ""
+
+#: ../../pep-0472.txt:196 ../../pep-0472.txt:241 ../../pep-0472.txt:278
+#: ../../pep-0472.txt:393 ../../pep-0472.txt:446
+msgid "Pros"
+msgstr ""
+
+#: ../../pep-0472.txt:198
+msgid ""
+"Strong conceptual similarity between the tuple case and the dictionary "
+"case. In the first case, we are specifying a tuple, so we are naturally "
+"defining a plain set of values separated by commas. In the second, we are"
+" specifying a dictionary, so we are specifying a homogeneous set of "
+"key/value pairs, as in ``dict(Z=3, R=4)``;"
+msgstr ""
+
+#: ../../pep-0472.txt:203
+msgid ""
+"Simple and easy to parse on the ``__getitem__`` side: if it gets a tuple,"
+" determine the axes using positioning. If it gets a dictionary, use the "
+"keywords."
+msgstr ""
+
+#: ../../pep-0472.txt:206
+msgid "C interface does not need changes."
+msgstr ""
+
+#: ../../pep-0472.txt:209
+msgid "Neutral"
+msgstr ""
+
+#: ../../pep-0472.txt:211
+msgid ""
+"Degeneracy of ``a[{\"Z\": 3, \"R\": 4}]`` with ``a[Z=3, R=4]`` means the "
+"notation is syntactic sugar."
+msgstr ""
+
+#: ../../pep-0472.txt:215 ../../pep-0472.txt:245 ../../pep-0472.txt:284
+#: ../../pep-0472.txt:403 ../../pep-0472.txt:453
+msgid "Cons"
+msgstr ""
+
+#: ../../pep-0472.txt:217
+msgid "Very strict."
+msgstr ""
+
+#: ../../pep-0472.txt:218
+msgid ""
+"Destroys ordering of the passed arguments. Preserving the order would be "
+"possible with an OrderedDict as drafted by PEP-468 [#PEP-468]_."
+msgstr ""
+
+#: ../../pep-0472.txt:220
+msgid ""
+"Does not allow use cases with mixed positional/keyword arguments such as "
+"``a[1, 2, default=5]``."
+msgstr ""
+
+#: ../../pep-0472.txt:224
+msgid "Strategy \"mixed dictionary\""
+msgstr ""
+
+#: ../../pep-0472.txt:226
+msgid ""
+"This strategy relaxes the above constraint to return a dictionary "
+"containing both numbers and strings as keys."
+msgstr ""
+
+#: ../../pep-0472.txt:242
+msgid "Opens for mixed cases."
+msgstr ""
+
+#: ../../pep-0472.txt:246
+msgid ""
+"Destroys ordering information for string keys. We have no way of saying "
+"if ``\"Z\"`` in C7 was in position 1 or 3."
+msgstr ""
+
+#: ../../pep-0472.txt:248
+msgid ""
+"Implies switching from a tuple to a dict as soon as one specified index "
+"has a keyword argument. May be confusing to parse."
+msgstr ""
+
+#: ../../pep-0472.txt:252
+msgid "Strategy \"named tuple\""
+msgstr ""
+
+#: ../../pep-0472.txt:254
+msgid ""
+"Return a named tuple for ``idx`` instead of a tuple.  Keyword arguments "
+"would obviously have their stated name as key, and positional argument "
+"would have an underscore followed by their order:"
+msgstr ""
+
+#: ../../pep-0472.txt:271
+msgid ""
+"The required typename of the namedtuple could be ``Index`` or the name of"
+" the argument in the function definition, it keeps the ordering and is "
+"easy to analyse by using the ``_fields`` attribute. It is backward "
+"compatible, provided that C0 with more than one entry now passes a "
+"namedtuple instead of a plain tuple."
+msgstr ""
+
+#: ../../pep-0472.txt:279
+msgid ""
+"Looks nice. namedtuple transparently replaces tuple and gracefully "
+"degrades to the old behavior."
+msgstr ""
+
+#: ../../pep-0472.txt:281
+msgid "Does not require a change in the C interface"
+msgstr ""
+
+#: ../../pep-0472.txt:285
+msgid ""
+"According to some sources [#namedtuple]_ namedtuple is not well "
+"developed. To include it as such important object would probably require "
+"rework and improvement;"
+msgstr ""
+
+#: ../../pep-0472.txt:288
+msgid ""
+"The namedtuple fields, and thus the type, will have to change according "
+"to the passed arguments. This can be a performance bottleneck, and makes "
+"it impossible to guarantee that two subsequent index accesses get the "
+"same Index class;"
+msgstr ""
+
+#: ../../pep-0472.txt:292
+msgid ""
+"the ``_n`` \"magic\" fields are a bit unusual, but ipython already uses "
+"them for result history."
+msgstr ""
+
+#: ../../pep-0472.txt:294
+msgid ""
+"Python currently has no builtin namedtuple. The current one is available "
+"in the \"collections\" module in the standard library."
+msgstr ""
+
+#: ../../pep-0472.txt:296
+msgid ""
+"Differently from a function, the two notations ``gridValues[x=3, y=5, "
+"z=8]`` and ``gridValues[3,5,8]`` would not gracefully match if the order "
+"is modified at call time (e.g. we ask for ``gridValues[y=5, z=8, x=3])``."
+" In a function, we can pre-define argument names so that keyword "
+"arguments are properly matched. Not so in ``__getitem__``, leaving the "
+"task for interpreting and matching to ``__getitem__`` itself."
+msgstr ""
+
+#: ../../pep-0472.txt:305
+msgid "Strategy \"New argument contents\""
+msgstr ""
+
+#: ../../pep-0472.txt:307
+msgid ""
+"In the current implementation, when many arguments are passed to "
+"``__getitem__``, they are grouped in a tuple and this tuple is passed to "
+"``__getitem__`` as the single argument ``idx``. This strategy keeps the "
+"current signature, but expands the range of variability in type and "
+"contents of ``idx`` to more complex representations."
+msgstr ""
+
+#: ../../pep-0472.txt:312
+msgid "We identify four possible ways to implement this strategy:"
+msgstr ""
+
+#: ../../pep-0472.txt:314
+msgid "**P1**: uses a single dictionary for the keyword arguments."
+msgstr ""
+
+#: ../../pep-0472.txt:315
+msgid "**P2**: uses individual single-item dictionaries."
+msgstr ""
+
+#: ../../pep-0472.txt:316
+msgid ""
+"**P3**: similar to **P2**, but replaces single-item dictionaries with a "
+"``(key, value)`` tuple."
+msgstr ""
+
+#: ../../pep-0472.txt:317
+msgid ""
+"**P4**: similar to **P2**, but uses a special and additional new object: "
+"``keyword()``"
+msgstr ""
+
+#: ../../pep-0472.txt:319
+msgid ""
+"Some of these possibilities lead to degenerate notations, i.e. "
+"indistinguishable from an already possible representation. Once again, "
+"the proposed notation becomes syntactic sugar for these representations."
+msgstr ""
+
+#: ../../pep-0472.txt:323
+msgid "Under this strategy, the old behavior for C0 is unchanged."
+msgstr ""
+
+#: ../../pep-0472.txt:330
+msgid ""
+"In C1, we can use either a dictionary or a tuple to represent key and "
+"value pair for the specific indexing entry. We need to have a tuple with "
+"a tuple in C1 because otherwise we cannot differentiate ``a[\"Z\", 3]`` "
+"from ``a[Z=3]``."
+msgstr ""
+
+#: ../../pep-0472.txt:340
+msgid ""
+"As you can see, notation P1/P2 implies that ``a[Z=3]`` and ``a[{\"Z\": "
+"3}]`` will call ``__getitem__`` passing the exact same value, and is "
+"therefore syntactic sugar for the latter. Same situation occurs, although"
+" with different index, for P3. Using a keyword object as in P4 would "
+"remove this degeneracy."
+msgstr ""
+
+#: ../../pep-0472.txt:345
+msgid "For the C2 case:"
+msgstr ""
+
+#: ../../pep-0472.txt:356
+msgid ""
+"P1 naturally maps to the traditional ``**kwargs`` behavior, however it "
+"breaks the convention that two or more entries for the index produce a "
+"tuple.  P2 preserves this behavior, and additionally preserves the order."
+"  Preserving the order would also be possible with an OrderedDict as "
+"drafted by PEP-468 [#PEP-468]_."
+msgstr ""
+
+#: ../../pep-0472.txt:361
+msgid "The remaining cases are here shown:"
+msgstr ""
+
+#: ../../pep-0472.txt:394
+msgid "Signature is unchanged;"
+msgstr ""
+
+#: ../../pep-0472.txt:395
+msgid "P2/P3 can preserve ordering of keyword arguments as specified at indexing,"
+msgstr ""
+
+#: ../../pep-0472.txt:396
+msgid ""
+"P1 needs an OrderedDict, but would destroy interposed ordering if "
+"allowed: all keyword indexes would be dumped into the dictionary;"
+msgstr ""
+
+#: ../../pep-0472.txt:398
+msgid "Stays within traditional types: tuples and dicts. Evt. OrderedDict;"
+msgstr ""
+
+#: ../../pep-0472.txt:399
+msgid ""
+"Some proposed strategies are similar in behavior to a traditional "
+"function call;"
+msgstr ""
+
+#: ../../pep-0472.txt:400
+msgid ""
+"The C interface for ``PyObject_GetItem`` and family would remain "
+"unchanged."
+msgstr ""
+
+#: ../../pep-0472.txt:404
+msgid "Apparently complex and wasteful;"
+msgstr ""
+
+#: ../../pep-0472.txt:405
+msgid ""
+"Degeneracy in notation (e.g. ``a[Z=3]`` and ``a[{\"Z\":3}]`` are "
+"equivalent and indistinguishable notations at the "
+"``__[get|set|del]item__`` level). This behavior may or may not be "
+"acceptable."
+msgstr ""
+
+#: ../../pep-0472.txt:408
+msgid ""
+"for P4, an additional object similar in nature to slice() is needed, but "
+"only to disambiguate the above degeneracy."
+msgstr ""
+
+#: ../../pep-0472.txt:410
+msgid ""
+"``idx`` type and layout seems to change depending on the whims of the "
+"caller;"
+msgstr ""
+
+#: ../../pep-0472.txt:411
+msgid ""
+"May be complex to parse what is passed, especially in the case of tuple "
+"of tuples;"
+msgstr ""
+
+#: ../../pep-0472.txt:412
+msgid ""
+"P2 Creates a lot of single keys dictionary as members of a tuple. Looks "
+"ugly. P3 would be lighter and easier to use than the tuple of dicts, and "
+"still preserves order (unlike the regular dict), but would result in "
+"clumsy extraction of keywords."
+msgstr ""
+
+#: ../../pep-0472.txt:418
+msgid "Strategy \"kwargs argument\""
+msgstr ""
+
+#: ../../pep-0472.txt:420
+msgid ""
+"``__getitem__`` accepts an optional ``**kwargs`` argument which should be"
+" keyword only. ``idx`` also becomes optional to support a case where no "
+"non-keyword arguments are allowed. The signature would then be either"
+msgstr ""
+
+#: ../../pep-0472.txt:430
+msgid "Applied to our cases would produce:"
+msgstr ""
+
+#: ../../pep-0472.txt:443
+msgid "Empty indexing ``a[]`` of course remains invalid syntax."
+msgstr ""
+
+#: ../../pep-0472.txt:447
+msgid "Similar to function call, evolves naturally from it;"
+msgstr ""
+
+#: ../../pep-0472.txt:448
+msgid ""
+"Use of keyword indexing with an object whose ``__getitem__`` doesn't have"
+" a kwargs will fail in an obvious way. That's not the case for the other "
+"strategies."
+msgstr ""
+
+#: ../../pep-0472.txt:454
+msgid "It doesn't preserve order, unless an OrderedDict is used;"
+msgstr ""
+
+#: ../../pep-0472.txt:455
+msgid "Forbids C7, but is it really needed?"
+msgstr ""
+
+#: ../../pep-0472.txt:456
+msgid ""
+"Requires a change in the C interface to pass an additional PyObject for "
+"the keyword arguments."
+msgstr ""
+
+#: ../../pep-0472.txt:461
+msgid "C interface"
+msgstr ""
+
+#: ../../pep-0472.txt:463
+msgid ""
+"As briefly introduced in the previous analysis, the C interface would "
+"potentially have to change to allow the new feature. Specifically, "
+"``PyObject_GetItem`` and related routines would have to accept an "
+"additional ``PyObject *kw`` argument for Strategy \"kwargs argument\". "
+"The remaining strategies would not require a change in the C function "
+"signatures, but the different nature of the passed object would "
+"potentially require adaptation."
+msgstr ""
+
+#: ../../pep-0472.txt:470
+msgid ""
+"Strategy \"named tuple\" would behave correctly without any change: the "
+"class returned by the factory method in collections returns a subclass of"
+" tuple, meaning that ``PyTuple_*`` functions can handle the resulting "
+"object."
+msgstr ""
+
+#: ../../pep-0472.txt:475
+msgid "Alternative Solutions"
+msgstr ""
+
+#: ../../pep-0472.txt:477
+msgid ""
+"In this section, we present alternative solutions that would workaround "
+"the missing feature and make the proposed enhancement not worth of "
+"implementation."
+msgstr ""
+
+#: ../../pep-0472.txt:481
+msgid "Use a method"
+msgstr ""
+
+#: ../../pep-0472.txt:483
+msgid ""
+"One could keep the indexing as is, and use a traditional ``get()`` method"
+" for those cases where basic indexing is not enough. This is a good "
+"point, but as already reported in the introduction, methods have a "
+"different semantic weight from indexing, and you can't use slices "
+"directly in methods. Compare e.g. ``a[1:3, Z=2]`` with "
+"``a.get(slice(1,3), Z=2)``."
+msgstr ""
+
+#: ../../pep-0472.txt:489
+msgid ""
+"The authors however recognize this argument as compelling, and the "
+"advantage in semantic expressivity of a keyword-based indexing may be "
+"offset by a rarely used feature that does not bring enough benefit and "
+"may have limited adoption."
+msgstr ""
+
+#: ../../pep-0472.txt:494
+msgid "Emulate requested behavior by abusing the slice object"
+msgstr ""
+
+#: ../../pep-0472.txt:496
+msgid ""
+"This extremely creative method exploits the slice objects' behavior, "
+"provided that one accepts to use strings (or instantiate properly named "
+"placeholder objects for the keys), and accept to use \":\" instead of "
+"\"=\"."
+msgstr ""
+
+#: ../../pep-0472.txt:508
+msgid ""
+"While clearly smart, this approach does not allow easy inquire of the "
+"key/value pair, it's too clever and esotheric, and does not allow to pass"
+" a slice as in ``a[K=1:10:2]``."
+msgstr ""
+
+#: ../../pep-0472.txt:512
+msgid "However, Tim Delaney comments"
+msgstr ""
+
+#: ../../pep-0472.txt:514
+msgid ""
+"\"I really do think that ``a[b=c, d=e]`` should just be syntax sugar for "
+"``a['b':c, 'd':e]``. It's simple to explain, and gives the greatest "
+"backwards compatibility. In particular, libraries that already abused "
+"slices in this way will just continue to work with the new syntax.\""
+msgstr ""
+
+#: ../../pep-0472.txt:519
+msgid ""
+"We think this behavior would produce inconvenient results. The library "
+"Pandas uses strings as labels, allowing notation such as"
+msgstr ""
+
+#: ../../pep-0472.txt:526
+msgid ""
+"to extract data from column \"A\" to column \"F\". Under the above "
+"comment, this notation would be equally obtained with"
+msgstr ""
+
+#: ../../pep-0472.txt:533
+msgid ""
+"which is weird and collides with the intended meaning of keyword in "
+"indexing, that is, specifying the axis through conventional names rather "
+"than positioning."
+msgstr ""
+
+#: ../../pep-0472.txt:537
+msgid "Pass a dictionary as an additional index"
+msgstr ""
+
+#: ../../pep-0472.txt:543
+msgid ""
+"this notation, although less elegant, can already be used and achieves "
+"similar results. It's evident that the proposed Strategy \"New argument "
+"contents\" can be interpreted as syntactic sugar for this notation."
+msgstr ""
+
+#: ../../pep-0472.txt:548
+msgid "Additional Comments"
+msgstr ""
+
+#: ../../pep-0472.txt:550
+msgid "Commenters also expressed the following relevant points:"
+msgstr ""
+
+#: ../../pep-0472.txt:553
+msgid "Relevance of ordering of keyword arguments"
+msgstr ""
+
+#: ../../pep-0472.txt:555
+msgid ""
+"As part of the discussion of this PEP, it's important to decide if the "
+"ordering information of the keyword arguments is important, and if "
+"indexes and keys can be ordered in an arbitrary way (e.g. "
+"``a[1,Z=3,2,R=4]``). PEP-468 [#PEP-468]_ tries to address the first point"
+" by proposing the use of an ordereddict, however one would be inclined to"
+" accept that keyword arguments in indexing are equivalent to kwargs in "
+"function calls, and therefore as of today equally unordered, and with the"
+" same restrictions."
+msgstr ""
+
+#: ../../pep-0472.txt:564
+msgid "Need for homogeneity of behavior"
+msgstr ""
+
+#: ../../pep-0472.txt:566
+msgid ""
+"Relative to Strategy \"New argument contents\", a comment from Ian "
+"Cordasco points out that"
+msgstr ""
+
+#: ../../pep-0472.txt:569
+msgid ""
+"\"it would be unreasonable for just one method to behave totally "
+"differently from the standard behaviour in Python.  It would be confusing"
+" for only ``__getitem__`` (and ostensibly, ``__setitem__``) to take "
+"keyword arguments but instead of turning them into a dictionary, turn "
+"them into individual single-item dictionaries.\" We agree with his point,"
+" however it must be pointed out that ``__getitem__`` is already special "
+"in some regards when it comes to passed arguments."
+msgstr ""
+
+#: ../../pep-0472.txt:577
+msgid "Chris Angelico also states:"
+msgstr ""
+
+#: ../../pep-0472.txt:579
+msgid ""
+"\"it seems very odd to start out by saying \"here, let's give indexing "
+"the option to carry keyword args, just like with function calls\", and "
+"then come back and say \"oh, but unlike function calls, they're "
+"inherently ordered and carried very differently\".\" Again, we agree on "
+"this point.  The most straightforward strategy to keep homogeneity would "
+"be Strategy \"kwargs argument\", opening to a ``**kwargs`` argument on "
+"``__getitem__``."
+msgstr ""
+
+#: ../../pep-0472.txt:586
+msgid ""
+"One of the authors (Stefano Borini) thinks that only the \"strict "
+"dictionary\" strategy is worth of implementation. It is non-ambiguous, "
+"simple, does not force complex parsing, and addresses the problem of "
+"referring to axes either by position or by name. The \"options\" use case"
+" is probably best handled with a different approach, and may be "
+"irrelevant for this PEP. The alternative \"named tuple\" is another valid"
+" choice."
+msgstr ""
+
+#: ../../pep-0472.txt:594
+msgid "Having .get() become obsolete for indexing with default fallback"
+msgstr ""
+
+#: ../../pep-0472.txt:596
+msgid ""
+"Introducing a \"default\" keyword could make ``dict.get()`` obsolete, "
+"which would be replaced by ``d[\"key\", default=3]``. Chris Angelico "
+"however states:"
+msgstr ""
+
+#: ../../pep-0472.txt:599
+msgid ""
+"\"Currently, you need to write ``__getitem__`` (which raises an exception"
+" on finding a problem) plus something else, e.g. ``get()``, which returns"
+" a default instead. By your proposal, both branches would go inside "
+"``__getitem__``, which means they could share code; but there still need "
+"to be two branches.\""
+msgstr ""
+
+#: ../../pep-0472.txt:604
+msgid "Additionally, Chris continues:"
+msgstr ""
+
+#: ../../pep-0472.txt:606
+msgid ""
+"\"There'll be an ad-hoc and fairly arbitrary puddle of names (some will "
+"go ``default=``, others will say that's way too long and go ``def=``, "
+"except that that's a keyword so they'll use ``dflt=`` or something...), "
+"unless there's a strong force pushing people to one consistent name.\"."
+msgstr ""
+
+#: ../../pep-0472.txt:611
+msgid ""
+"This argument is valid but it's equally valid for any function call, and "
+"is generally fixed by established convention and documentation."
+msgstr ""
+
+#: ../../pep-0472.txt:615
+msgid "On degeneracy of notation"
+msgstr ""
+
+#: ../../pep-0472.txt:617
+msgid ""
+"User Drekin commented: \"The case of ``a[Z=3]`` and ``a[{\"Z\": 3}]`` is "
+"similar to current ``a[1, 2]`` and ``a[(1, 2)]``.  Even though one may "
+"argue that the parentheses are actually not part of tuple notation but "
+"are just needed because of syntax, it may look as degeneracy of notation "
+"when compared to function call: ``f(1, 2)`` is not the same thing as "
+"``f((1, 2))``.\"."
+msgstr ""
+
+#: ../../pep-0472.txt:624
+msgid "References"
+msgstr ""
+
+#: ../../pep-0472.txt:626
+msgid ""
+"\"keyword-only args in __getitem__\" "
+"(http://article.gmane.org/gmane.comp.python.ideas/27584)"
+msgstr ""
+
+#: ../../pep-0472.txt:629
+msgid ""
+"\"Accepting keyword arguments for __getitem__\" "
+"(https://mail.python.org/pipermail/python-ideas/2014-June/028164.html)"
+msgstr ""
+
+#: ../../pep-0472.txt:632
+msgid ""
+"\"PEP pre-draft: Support for indexing with keyword arguments\" "
+"https://mail.python.org/pipermail/python-ideas/2014-July/028250.html"
+msgstr ""
+
+#: ../../pep-0472.txt:635
+msgid ""
+"\"namedtuple is not as good as it should be\" "
+"(https://mail.python.org/pipermail/python-ideas/2013-June/021257.html)"
+msgstr ""
+
+#: ../../pep-0472.txt:638
+msgid ""
+"\"Preserving the order of \\*\\*kwargs in a function.\" "
+"http://legacy.python.org/dev/peps/pep-0468/"
+msgstr ""
+
+#: ../../pep-0472.txt:642
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0472.txt:644
+msgid "This document has been placed in the public domain."
+msgstr ""
+

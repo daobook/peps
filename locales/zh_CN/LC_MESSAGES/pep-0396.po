@@ -1,0 +1,446 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0396.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0396.txt:1
+msgid "396"
+msgstr ""
+
+#: ../../pep-0396.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0396.txt:2
+msgid "Module Version Numbers"
+msgstr ""
+
+#: ../../pep-0396.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0396.txt:5
+msgid "Barry Warsaw <barry@python.org>"
+msgstr ""
+
+#: ../../pep-0396.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0396.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0396.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0396.txt:7
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0396.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0396.txt:9
+msgid "16-Mar-2011"
+msgstr ""
+
+#: ../../pep-0396.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0396.txt:10
+msgid "2011-04-05"
+msgstr ""
+
+#: ../../pep-0396.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0396.txt:16
+msgid ""
+"Given that it is useful and common to specify version numbers for Python "
+"modules, and given that different ways of doing this have grown "
+"organically within the Python community, it is useful to establish "
+"standard conventions for module authors to adhere to and reference. This "
+"informational PEP describes best practices for Python module authors who "
+"want to define the version number of their Python module."
+msgstr ""
+
+#: ../../pep-0396.txt:23
+msgid ""
+"Conformance with this PEP is optional, however other Python tools (such "
+"as ``distutils2`` [1]_) may be adapted to use the conventions defined "
+"here."
+msgstr ""
+
+#: ../../pep-0396.txt:28
+msgid "PEP Rejection"
+msgstr ""
+
+#: ../../pep-0396.txt:30
+msgid ""
+"This PEP was formally rejected on 2021-04-14.  The packaging ecosystem "
+"has changed significantly in the intervening years since this PEP was "
+"first written, and APIs such as ``importlib.metadata.versions()`` [11]_ "
+"provide for a much better experience."
+msgstr ""
+
+#: ../../pep-0396.txt:36
+msgid "User Stories"
+msgstr ""
+
+#: ../../pep-0396.txt:38
+msgid ""
+"Alice is writing a new module, called ``alice``, which she wants to share"
+" with other Python developers.  ``alice`` is a simple module and lives in"
+" one file, ``alice.py``.  Alice wants to specify a version number so that"
+" her users can tell which version they are using. Because her module "
+"lives entirely in one file, she wants to add the version number to that "
+"file."
+msgstr ""
+
+#: ../../pep-0396.txt:45
+msgid ""
+"Bob has written a module called ``bob`` which he has shared with many "
+"users.  ``bob.py`` contains a version number for the convenience of his "
+"users.  Bob learns about the Cheeseshop [2]_, and adds some simple "
+"packaging using classic distutils so that he can upload *The Bob Bundle* "
+"to the Cheeseshop.  Because ``bob.py`` already specifies a version number"
+" which his users can access programmatically, he wants the same API to "
+"continue to work even though his users now get it from the Cheeseshop."
+msgstr ""
+
+#: ../../pep-0396.txt:54
+msgid ""
+"Carol maintains several namespace packages, each of which are "
+"independently developed and distributed.  In order for her users to "
+"properly specify dependencies on the right versions of her packages, she "
+"specifies the version numbers in the namespace package's ``setup.py`` "
+"file.  Because Carol wants to have to update one version number per "
+"package, she specifies the version number in her module and has the "
+"``setup.py`` extract the module version number when she builds the "
+"*sdist* archive."
+msgstr ""
+
+#: ../../pep-0396.txt:63
+msgid ""
+"David maintains a package in the standard library, and also produces "
+"standalone versions for other versions of Python.  The standard library "
+"copy defines the version number in the module, and this same version "
+"number is used for the standalone distributions as well."
+msgstr ""
+
+#: ../../pep-0396.txt:70
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0396.txt:72
+msgid ""
+"Python modules, both in the standard library and available from third "
+"parties, have long included version numbers.  There are established de "
+"facto standards for describing version numbers, and many ad-hoc ways have"
+" grown organically over the years.  Often, version numbers can be "
+"retrieved from a module programmatically, by importing the module and "
+"inspecting an attribute.  Classic Python distutils ``setup()`` functions "
+"[3]_ describe a ``version`` argument where the release's version number "
+"can be specified.  PEP 8 [4]_ describes the use of a module attribute "
+"called ``__version__`` for recording \"Subversion, CVS, or RCS\" version "
+"strings using keyword expansion.  In the PEP author's own email archives,"
+" the earliest example of the use of an ``__version__`` module attribute "
+"by independent module developers dates back to 1995."
+msgstr ""
+
+#: ../../pep-0396.txt:86
+msgid ""
+"Another example of version information is the sqlite3 [5]_ module with "
+"its ``sqlite_version_info``, ``version``, and ``version_info`` "
+"attributes.  It may not be immediately obvious which attribute contains a"
+" version number for the module, and which contains a version number for "
+"the underlying SQLite3 library."
+msgstr ""
+
+#: ../../pep-0396.txt:92
+msgid ""
+"This informational PEP codifies established practice, and recommends "
+"standard ways of describing module version numbers, along with some use "
+"cases for when -- and when *not* -- to include them.  Its adoption by "
+"module authors is purely voluntary; packaging tools in the standard "
+"library will provide optional support for the standards defined herein, "
+"and other tools in the Python universe may comply as well."
+msgstr ""
+
+#: ../../pep-0396.txt:101
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0396.txt:103
+msgid ""
+"In general, modules in the standard library SHOULD NOT have version "
+"numbers.  They implicitly carry the version number of the Python release "
+"they are included in."
+msgstr ""
+
+#: ../../pep-0396.txt:107
+msgid ""
+"On a case-by-case basis, standard library modules which are also released"
+" in standalone form for other Python versions MAY include a module "
+"version number when included in the standard library, and SHOULD include "
+"a version number when packaged separately."
+msgstr ""
+
+#: ../../pep-0396.txt:112
+msgid ""
+"When a module (or package) includes a version number, the version SHOULD "
+"be available in the ``__version__`` attribute."
+msgstr ""
+
+#: ../../pep-0396.txt:115
+msgid ""
+"For modules which live inside a namespace package, the module SHOULD "
+"include the ``__version__`` attribute.  The namespace package itself "
+"SHOULD NOT include its own ``__version__`` attribute."
+msgstr ""
+
+#: ../../pep-0396.txt:120
+msgid "The ``__version__`` attribute's value SHOULD be a string."
+msgstr ""
+
+#: ../../pep-0396.txt:122
+msgid ""
+"Module version numbers SHOULD conform to the normalized version format "
+"specified in PEP 386 [6]_."
+msgstr ""
+
+#: ../../pep-0396.txt:125
+msgid ""
+"Module version numbers SHOULD NOT contain version control system supplied"
+" revision numbers, or any other semantically different version numbers "
+"(e.g. underlying library version number)."
+msgstr ""
+
+#: ../../pep-0396.txt:129
+msgid ""
+"The ``version`` attribute in a classic distutils ``setup.py`` file, or "
+"the PEP 345 [7]_ ``Version`` metadata field SHOULD be derived from the "
+"``__version__`` field, or vice versa."
+msgstr ""
+
+#: ../../pep-0396.txt:135
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0396.txt:137
+msgid "Retrieving the version number from a third party package::"
+msgstr ""
+
+#: ../../pep-0396.txt:143
+msgid ""
+"Retrieving the version number from a standard library package that is "
+"also distributed as a standalone module::"
+msgstr ""
+
+#: ../../pep-0396.txt:150
+msgid "Version numbers for namespace packages::"
+msgstr ""
+
+#: ../../pep-0396.txt:172
+msgid "Deriving"
+msgstr ""
+
+#: ../../pep-0396.txt:174
+msgid ""
+"Module version numbers can appear in at least two places, and sometimes "
+"more.  For example, in accordance with this PEP, they are available "
+"programmatically on the module's ``__version__`` attribute. In a classic "
+"distutils ``setup.py`` file, the ``setup()`` function takes a ``version``"
+" argument, while the distutils2 ``setup.cfg`` file has a ``version`` key."
+"  The version number must also get into the PEP 345 metadata, preferably "
+"when the *sdist* archive is built.  It's desirable for module authors to "
+"only have to specify the version number once, and have all the other uses"
+" derive from this single definition."
+msgstr ""
+
+#: ../../pep-0396.txt:185
+msgid ""
+"This could be done in any number of ways, a few of which are outlined "
+"below.  These are included for illustrative purposes only and are not "
+"intended to be definitive, complete, or all-encompassing.  Other "
+"approaches are possible, and some included below may have limitations "
+"that prevent their use in some situations."
+msgstr ""
+
+#: ../../pep-0396.txt:191
+msgid "Let's say Elle adds this attribute to her module file ``elle.py``::"
+msgstr ""
+
+#: ../../pep-0396.txt:197
+msgid "Classic distutils"
+msgstr ""
+
+#: ../../pep-0396.txt:199
+msgid ""
+"In classic distutils, the simplest way to add the version string to the "
+"``setup()`` function in ``setup.py`` is to do something like this::"
+msgstr ""
+
+#: ../../pep-0396.txt:206
+msgid ""
+"In the PEP author's experience however, this can fail in some cases, such"
+" as when the module uses automatic Python 3 conversion via the ``2to3`` "
+"program (because ``setup.py`` is executed by Python 3 before the ``elle``"
+" module has been converted)."
+msgstr ""
+
+#: ../../pep-0396.txt:211
+msgid ""
+"In that case, it's not much more difficult to write a little code to "
+"parse the ``__version__`` from the file rather than importing it. Without"
+" providing too much detail, it's likely that modules such as "
+"``distutils2`` will provide a way to parse version strings from files. "
+"E.g.::"
+msgstr ""
+
+#: ../../pep-0396.txt:222
+msgid "Distutils2"
+msgstr ""
+
+#: ../../pep-0396.txt:224
+msgid ""
+"Because the distutils2 style ``setup.cfg`` is declarative, we can't run "
+"any code to extract the ``__version__`` attribute, either via import or "
+"via parsing."
+msgstr ""
+
+#: ../../pep-0396.txt:228
+msgid ""
+"In consultation with the distutils-sig [9]_, two options are proposed.  "
+"Both entail containing the version number in a file, and declaring that "
+"file in the ``setup.cfg``.  When the entire contents of the file contains"
+" the version number, the ``version-file`` key will be used::"
+msgstr ""
+
+#: ../../pep-0396.txt:237
+msgid ""
+"When the version number is contained within a larger file, e.g. of Python"
+" code, such that the file must be parsed to extract the version, the key "
+"``version-from-file`` will be used::"
+msgstr ""
+
+#: ../../pep-0396.txt:244
+msgid ""
+"A parsing method similar to that described above will be performed on the"
+" file named after the colon.  The exact recipe for doing this will be "
+"discussed in the appropriate distutils2 development forum."
+msgstr ""
+
+#: ../../pep-0396.txt:248
+msgid ""
+"An alternative is to only define the version number in ``setup.cfg`` and "
+"use the ``pkgutil`` module [8]_ to make it available programmatically.  "
+"E.g. in ``elle.py``::"
+msgstr ""
+
+#: ../../pep-0396.txt:257
+msgid "PEP 376 metadata"
+msgstr ""
+
+#: ../../pep-0396.txt:259
+msgid ""
+"PEP 376 [10]_ defines a standard for static metadata, but doesn't "
+"describe the process by which this metadata gets created.  It is highly "
+"desirable for the derived version information to be placed into the PEP "
+"376 ``.dist-info`` metadata at build-time rather than install-time.  This"
+" way, the metadata will be available for introspection even when the code"
+" is not installed."
+msgstr ""
+
+#: ../../pep-0396.txt:268
+msgid "References"
+msgstr ""
+
+#: ../../pep-0396.txt:270
+msgid "Distutils2 documentation (http://distutils2.notmyidea.org/)"
+msgstr ""
+
+#: ../../pep-0396.txt:273
+msgid "The Cheeseshop (Python Package Index) (http://pypi.python.org)"
+msgstr ""
+
+#: ../../pep-0396.txt:276
+msgid "http://docs.python.org/distutils/setupscript.html"
+msgstr ""
+
+#: ../../pep-0396.txt:278
+msgid ""
+"PEP 8, Style Guide for Python Code "
+"(http://www.python.org/dev/peps/pep-0008)"
+msgstr ""
+
+#: ../../pep-0396.txt:281
+msgid "sqlite3 module documentation (http://docs.python.org/library/sqlite3.html)"
+msgstr ""
+
+#: ../../pep-0396.txt:284
+msgid ""
+"PEP 386, Changing the version comparison module in Distutils "
+"(http://www.python.org/dev/peps/pep-0386/)"
+msgstr ""
+
+#: ../../pep-0396.txt:287
+msgid ""
+"PEP 345, Metadata for Python Software Packages 1.2 "
+"(http://www.python.org/dev/peps/pep-0345/#version)"
+msgstr ""
+
+#: ../../pep-0396.txt:290
+msgid ""
+"pkgutil - Package utilities "
+"(http://distutils2.notmyidea.org/library/pkgutil.html)"
+msgstr ""
+
+#: ../../pep-0396.txt:293
+msgid "https://mail.python.org/pipermail/distutils-sig/2011-June/017862.html"
+msgstr ""
+
+#: ../../pep-0396.txt:295
+msgid ""
+"PEP 376, Database of Installed Python Distributions "
+"(http://www.python.org/dev/peps/pep-0376/)"
+msgstr ""
+
+#: ../../pep-0396.txt:298
+msgid ""
+"importlib.metadata "
+"(https://docs.python.org/3/library/importlib.metadata.html#distribution-"
+"versions)"
+msgstr ""
+
+#: ../../pep-0396.txt:303
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0396.txt:305
+msgid "This document has been placed in the public domain."
+msgstr ""
+

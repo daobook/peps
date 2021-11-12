@@ -1,0 +1,223 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0299.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0299.txt:1
+msgid "299"
+msgstr ""
+
+#: ../../pep-0299.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0299.txt:2
+msgid "Special __main__() function in modules"
+msgstr ""
+
+#: ../../pep-0299.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0299.txt:5
+msgid "Jeff Epler <jepler@unpythonic.net>"
+msgstr ""
+
+#: ../../pep-0299.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0299.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0299.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0299.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0299.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0299.txt:9
+msgid "12-Aug-2002"
+msgstr ""
+
+#: ../../pep-0299.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0299.txt:10
+msgid "2.3"
+msgstr ""
+
+#: ../../pep-0299.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0299.txt:11
+msgid "29-Mar-2006"
+msgstr ""
+
+#: ../../pep-0299.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0299.txt:18
+msgid ""
+"Many Python modules are also intended to be callable as standalone "
+"scripts.  This PEP proposes that a special function called ``__main__()``"
+" should serve this purpose."
+msgstr ""
+
+#: ../../pep-0299.txt:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0299.txt:26
+msgid ""
+"There should be one simple and universal idiom for invoking a module as a"
+" standalone script."
+msgstr ""
+
+#: ../../pep-0299.txt:29
+msgid "The semi-standard idiom::"
+msgstr ""
+
+#: ../../pep-0299.txt:34
+msgid ""
+"is unclear to programmers of languages like C and C++.  It also does not "
+"permit invocation of the standalone function when the module is imported."
+"  The variant::"
+msgstr ""
+
+#: ../../pep-0299.txt:41
+msgid ""
+"is sometimes seen, but there exists no standard name for the function, "
+"and because arguments are taken from sys.argv it is not possible to pass "
+"specific arguments without changing the argument list seen by all other "
+"modules.  (Imagine a threaded Python program, with two threads wishing to"
+" invoke the standalone functionality of different modules with different "
+"argument lists)"
+msgstr ""
+
+#: ../../pep-0299.txt:50
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0299.txt:52
+msgid ""
+"The standard name of the 'main function' should be ``__main__``. When a "
+"module is invoked on the command line, such as::"
+msgstr ""
+
+#: ../../pep-0299.txt:57
+msgid ""
+"then the module behaves as though the following lines existed at the end "
+"of the module (except that the attribute __sys may not be used or assumed"
+" to exist elsewhere in the script)::"
+msgstr ""
+
+#: ../../pep-0299.txt:65
+msgid "Other modules may execute::"
+msgstr ""
+
+#: ../../pep-0299.txt:69
+msgid ""
+"It is up to ``mymodule`` to document thread-safety issues or other issues"
+" which might restrict use of ``__main__``.  (Other issues might include "
+"use of mutually exclusive GUI modules, non-sharable resources like "
+"hardware devices, reassignment of ``sys.stdin``/``stdout``, etc)"
+msgstr ""
+
+#: ../../pep-0299.txt:76
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0299.txt:78
+msgid ""
+"In ``modules/main.c``, the block near line 385 (after the "
+"``PyRun_AnyFileExFlags`` call) will be changed so that the above code (or"
+" its C equivalent) is executed."
+msgstr ""
+
+#: ../../pep-0299.txt:84
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0299.txt:86
+msgid "Should the return value from ``__main__`` be treated as the exit value?"
+msgstr ""
+
+#: ../../pep-0299.txt:88
+msgid ""
+"Yes.  Many ``__main__`` will naturally return ``None``, which "
+"``sys.exit`` translates into a \"success\" return code.  In those that "
+"return a numeric result, it behaves just like the argument to "
+"``sys.exit()`` or the return value from C's main()."
+msgstr ""
+
+#: ../../pep-0299.txt:93
+msgid ""
+"Should the argument list to ``__main__`` include ``argv[0]``, or just the"
+" \"real\" arguments ``argv[1:]``?"
+msgstr ""
+
+#: ../../pep-0299.txt:96
+msgid ""
+"``argv[0]`` is included for symmetry with ``sys.argv`` and easy "
+"transition to the new standard idiom."
+msgstr ""
+
+#: ../../pep-0299.txt:101
+msgid "Rejection"
+msgstr ""
+
+#: ../../pep-0299.txt:103
+msgid ""
+"In a short discussion on python-dev [1], two major backwards "
+"compatibility problems were brought up and Guido pronounced that he "
+"doesn't like the idea anyway as it's \"not worth the change (in docs, "
+"user habits, etc.) and there's nothing particularly broken.\""
+msgstr ""
+
+#: ../../pep-0299.txt:110
+msgid "References"
+msgstr ""
+
+#: ../../pep-0299.txt:112
+msgid ""
+"Georg Brandl, \"What about PEP 299\", https://mail.python.org/pipermail"
+"/python-dev/2006-March/062951.html"
+msgstr ""
+
+#: ../../pep-0299.txt:117
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0299.txt:119
+msgid "This document has been placed in the public domain."
+msgstr ""
+

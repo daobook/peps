@@ -1,0 +1,626 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0447.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0447.txt:1
+msgid "447"
+msgstr ""
+
+#: ../../pep-0447.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0447.txt:2
+msgid "Add __getdescriptor__ method to metaclass"
+msgstr ""
+
+#: ../../pep-0447.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0447.txt:5
+msgid "Ronald Oussoren <ronaldoussoren@mac.com>"
+msgstr ""
+
+#: ../../pep-0447.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0447.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0447.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0447.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0447.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0447.txt:9
+msgid "12-Jun-2013"
+msgstr ""
+
+#: ../../pep-0447.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0447.txt:10
+msgid "2-Jul-2013, 15-Jul-2013, 29-Jul-2013, 22-Jul-2015"
+msgstr ""
+
+#: ../../pep-0447.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0447.txt:16
+msgid ""
+"Currently ``object.__getattribute__`` and ``super.__getattribute__`` peek"
+" in the ``__dict__`` of classes on the MRO for a class when looking for "
+"an attribute. This PEP adds an optional ``__getdescriptor__`` method to a"
+" metaclass that replaces this behavior and gives more control over "
+"attribute lookup, especially when using a `super`_ object."
+msgstr ""
+
+#: ../../pep-0447.txt:22
+msgid ""
+"That is, the MRO walking loop in ``_PyType_Lookup`` and "
+"``super.__getattribute__`` gets changed from::"
+msgstr ""
+
+#: ../../pep-0447.txt:32
+msgid "to::"
+msgstr ""
+
+#: ../../pep-0447.txt:43
+msgid ""
+"The default implementation of ``__getdescriptor__`` looks in the class "
+"dictionary::"
+msgstr ""
+
+#: ../../pep-0447.txt:55
+msgid "PEP Status"
+msgstr ""
+
+#: ../../pep-0447.txt:57
+msgid ""
+"This PEP is deferred until someone has time to update this PEP and push "
+"it forward."
+msgstr ""
+
+#: ../../pep-0447.txt:61
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0447.txt:63
+msgid ""
+"It is currently not possible to influence how the `super class`_ looks up"
+" attributes (that is, ``super.__getattribute__`` unconditionally peeks in"
+" the class ``__dict__``), and that can be problematic for dynamic classes"
+" that can grow new methods on demand, for example dynamic proxy classes."
+msgstr ""
+
+#: ../../pep-0447.txt:69
+msgid ""
+"The ``__getdescriptor__`` method makes it possible to dynamically add "
+"attributes even when looking them up using the `super class`_."
+msgstr ""
+
+#: ../../pep-0447.txt:72
+msgid ""
+"The new method affects ``object.__getattribute__`` (and "
+"`PyObject_GenericGetAttr`_) as well for consistency and to have a single "
+"place to implement dynamic attribute resolution for classes."
+msgstr ""
+
+#: ../../pep-0447.txt:77
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0447.txt:79
+msgid ""
+"The current behavior of ``super.__getattribute__`` causes problems for "
+"classes that are dynamic proxies for other (non-Python) classes or types,"
+" an example of which is `PyObjC`_. PyObjC creates a Python class for "
+"every class in the Objective-C runtime, and looks up methods in the "
+"Objective-C runtime when they are used. This works fine for normal "
+"access, but doesn't work for access with `super`_ objects. Because of "
+"this PyObjC currently includes a custom `super`_ that must be used with "
+"its classes, as well as completely reimplementing "
+"`PyObject_GenericGetAttr`_ for normal attribute access."
+msgstr ""
+
+#: ../../pep-0447.txt:89
+msgid ""
+"The API in this PEP makes it possible to remove the custom `super`_ and "
+"simplifies the implementation because the custom lookup behavior can be "
+"added in a central location."
+msgstr ""
+
+#: ../../pep-0447.txt:95
+msgid ""
+"`PyObjC`_ cannot precalculate the contents of the class ``__dict__`` "
+"because Objective-C classes can grow new methods at runtime. Furthermore,"
+" Objective-C classes tend to contain a lot of methods while most Python "
+"code will only use a small subset of them, this makes precalculating "
+"unnecessarily expensive."
+msgstr ""
+
+#: ../../pep-0447.txt:103
+msgid "The superclass attribute lookup hook"
+msgstr ""
+
+#: ../../pep-0447.txt:105
+msgid ""
+"Both ``super.__getattribute__`` and ``object.__getattribute__`` (or "
+"`PyObject_GenericGetAttr`_ and in particular ``_PyType_Lookup`` in C "
+"code) walk an object's MRO and currently peek in the class' ``__dict__`` "
+"to look up attributes."
+msgstr ""
+
+#: ../../pep-0447.txt:110
+msgid ""
+"With this proposal both lookup methods no longer peek in the class "
+"``__dict__`` but call the special method ``__getdescriptor__``, which is "
+"a slot defined on the metaclass. The default implementation of that "
+"method looks up the name the class ``__dict__``, which means that "
+"attribute lookup is unchanged unless a metatype actually defines the new "
+"special method."
+msgstr ""
+
+#: ../../pep-0447.txt:117
+msgid "Aside: Attribute resolution algorithm in Python"
+msgstr ""
+
+#: ../../pep-0447.txt:119
+msgid ""
+"The attribute resolution process as implemented by "
+"``object.__getattribute__`` (or PyObject_GenericGetAttr`` in CPython's "
+"implementation) is fairly straightforward, but not entirely so without "
+"reading C code."
+msgstr ""
+
+#: ../../pep-0447.txt:123
+msgid ""
+"The current CPython implementation of object.__getattribute__ is "
+"basically equivalent to the following (pseudo-) Python code (excluding "
+"some house keeping and speed tricks)::"
+msgstr ""
+
+#: ../../pep-0447.txt:210
+msgid ""
+"This PEP should change the dict lookup at the lines starting at \"# PEP "
+"447\" with a method call to perform the actual lookup, making is possible"
+" to affect that lookup both for normal attribute access and access "
+"through the `super proxy`_."
+msgstr ""
+
+#: ../../pep-0447.txt:214
+msgid ""
+"Note that specific classes can already completely override the default "
+"behaviour by implementing their own ``__getattribute__`` slot (with or "
+"without calling the super class implementation)."
+msgstr ""
+
+#: ../../pep-0447.txt:220
+msgid "In Python code"
+msgstr ""
+
+#: ../../pep-0447.txt:222
+msgid ""
+"A meta type can define a method ``__getdescriptor__`` that is called "
+"during attribute resolution by both ``super.__getattribute__`` and "
+"``object.__getattribute``::"
+msgstr ""
+
+#: ../../pep-0447.txt:233
+msgid ""
+"The ``__getdescriptor__`` method has as its arguments a class (which is "
+"an instance of the meta type) and the name of the attribute that is "
+"looked up. It should return the value of the attribute without invoking "
+"descriptors, and should raise `AttributeError`_ when the name cannot be "
+"found."
+msgstr ""
+
+#: ../../pep-0447.txt:238
+msgid ""
+"The `type`_ class provides a default implementation for "
+"``__getdescriptor__``, that looks up the name in the class dictionary."
+msgstr ""
+
+#: ../../pep-0447.txt:242
+msgid "Example usage"
+msgstr ""
+
+#: ../../pep-0447.txt:244
+msgid ""
+"The code below implements a silly metaclass that redirects attribute "
+"lookup to uppercase versions of names::"
+msgstr ""
+
+#: ../../pep-0447.txt:264
+msgid ""
+"As mentioned earlier in this PEP a more realistic use case of this "
+"functionality is a ``__getdescriptor__`` method that dynamically "
+"populates the class ``__dict__`` based on attribute access, primarily "
+"when it is not possible to reliably keep the class dict in sync with its "
+"source, for example because the source used to populate ``__dict__`` is "
+"dynamic as well and does not have triggers that can be used to detect "
+"changes to that source."
+msgstr ""
+
+#: ../../pep-0447.txt:271
+msgid ""
+"An example of that are the class bridges in PyObjC: the class bridge is a"
+" Python object (class) that represents an Objective-C class and "
+"conceptually has a Python method for every Objective-C method in the "
+"Objective-C class. As with Python it is possible to add new methods to an"
+" Objective-C class, or replace existing ones, and there are no callbacks "
+"that can be used to detect this."
+msgstr ""
+
+#: ../../pep-0447.txt:279
+msgid "In C code"
+msgstr ""
+
+#: ../../pep-0447.txt:281
+msgid ""
+"A new type flag ``Py_TPFLAGS_GETDESCRIPTOR`` with value ``(1UL << 11)`` "
+"that indicates that the new slot is present and to be used."
+msgstr ""
+
+#: ../../pep-0447.txt:284
+msgid ""
+"A new slot ``tp_getdescriptor`` is added to the ``PyTypeObject`` struct, "
+"this slot corresponds to the ``__getdescriptor__`` method on `type`_."
+msgstr ""
+
+#: ../../pep-0447.txt:287
+msgid "The slot has the following prototype::"
+msgstr ""
+
+#: ../../pep-0447.txt:291
+msgid ""
+"This method should lookup *name* in the namespace of *cls*, without "
+"looking at superclasses, and should not invoke descriptors. The method "
+"returns ``NULL`` without setting an exception when the *name* cannot be "
+"found, and returns a new reference otherwise (not a borrowed reference)."
+msgstr ""
+
+#: ../../pep-0447.txt:296
+msgid ""
+"Classes with a ``tp_getdescriptor`` slot must add "
+"``Py_TPFLAGS_GETDESCRIPTOR`` to ``tp_flags`` to indicate that new slot "
+"must be used."
+msgstr ""
+
+#: ../../pep-0447.txt:300
+msgid "Use of this hook by the interpreter"
+msgstr ""
+
+#: ../../pep-0447.txt:302
+msgid ""
+"The new method is required for metatypes and as such is defined on "
+"`type_`. Both ``super.__getattribute__`` and "
+"``object.__getattribute__``/`PyObject_GenericGetAttr`_ (through "
+"``_PyType_Lookup``) use the this ``__getdescriptor__`` method when "
+"walking the MRO."
+msgstr ""
+
+#: ../../pep-0447.txt:309
+msgid "Other changes to the implementation"
+msgstr ""
+
+#: ../../pep-0447.txt:311
+msgid ""
+"The change for `PyObject_GenericGetAttr`_ will be done by changing the "
+"private function ``_PyType_Lookup``. This currently returns a borrowed "
+"reference, but must return a new reference when the ``__getdescriptor__``"
+" method is present. Because of this ``_PyType_Lookup`` will be renamed to"
+" ``_PyType_LookupName``, this will cause compile-time errors for all out-"
+"of-tree users of this private API."
+msgstr ""
+
+#: ../../pep-0447.txt:318
+msgid ""
+"For the same reason ``_PyType_LookupId`` is renamed to "
+"``_PyType_LookupId2``. A number of other functions in typeobject.c with "
+"the same issue do not get an updated name because they are private to "
+"that file."
+msgstr ""
+
+#: ../../pep-0447.txt:322
+msgid ""
+"The attribute lookup cache in ``Objects/typeobject.c`` is disabled for "
+"classes that have a metaclass that overrides ``__getdescriptor__``, "
+"because using the cache might not be valid for such classes."
+msgstr ""
+
+#: ../../pep-0447.txt:327
+msgid "Impact of this PEP on introspection"
+msgstr ""
+
+#: ../../pep-0447.txt:329
+msgid ""
+"Use of the method introduced in this PEP can affect introspection of "
+"classes with a metaclass that uses a custom ``__getdescriptor__`` method."
+" This section lists those changes."
+msgstr ""
+
+#: ../../pep-0447.txt:333
+msgid ""
+"The items listed below are only affected by custom ``__getdescriptor__`` "
+"methods, the default implementation for ``object`` won't cause problems "
+"because that still only uses the class ``__dict__`` and won't cause "
+"visible changes to the visible behaviour of the "
+"``object.__getattribute__``."
+msgstr ""
+
+#: ../../pep-0447.txt:338
+msgid "``dir`` might not show all attributes"
+msgstr ""
+
+#: ../../pep-0447.txt:340
+msgid ""
+"As with a custom ``__getattribute__`` method `dir()`_ might not see all "
+"(instance) attributes when using the ``__getdescriptor__()`` method to "
+"dynamically resolve attributes."
+msgstr ""
+
+#: ../../pep-0447.txt:344
+msgid ""
+"The solution for that is quite simple: classes using "
+"``__getdescriptor__`` should also implement `__dir__()`_ if they want "
+"full support for the builtin `dir()`_ function."
+msgstr ""
+
+#: ../../pep-0447.txt:348
+msgid "``inspect.getattr_static`` might not show all attributes"
+msgstr ""
+
+#: ../../pep-0447.txt:350
+msgid ""
+"The function ``inspect.getattr_static`` intentionally does not invoke "
+"``__getattribute__`` and descriptors to avoid invoking user code during "
+"introspection with this function. The ``__getdescriptor__`` method will "
+"also be ignored and is another way in which the result of "
+"``inspect.getattr_static`` can be different from that of "
+"``builtin.getattr``."
+msgstr ""
+
+#: ../../pep-0447.txt:356
+msgid "``inspect.getmembers`` and ``inspect.classify_class_attrs``"
+msgstr ""
+
+#: ../../pep-0447.txt:358
+msgid ""
+"Both of these functions directly access the class __dict__ of classes "
+"along the MRO, and hence can be affected by a custom "
+"``__getdescriptor__`` method."
+msgstr ""
+
+#: ../../pep-0447.txt:361
+msgid ""
+"Code with a custom ``__getdescriptor__`` method that want to play nice "
+"with these methods also needs to ensure that the ``__dict__`` is set up "
+"correctly when that is accessed directly by Python code."
+msgstr ""
+
+#: ../../pep-0447.txt:365
+msgid ""
+"Note that ``inspect.getmembers`` is used by ``pydoc`` and hence this can "
+"affect runtime documentation introspection."
+msgstr ""
+
+#: ../../pep-0447.txt:368
+msgid "Direct introspection of the class ``__dict__``"
+msgstr ""
+
+#: ../../pep-0447.txt:370
+msgid ""
+"Any code that directly access the class ``__dict__`` for introspection "
+"can be affected by a custom ``__getdescriptor__`` method, see the "
+"previous item."
+msgstr ""
+
+#: ../../pep-0447.txt:376
+msgid "Performance impact"
+msgstr ""
+
+#: ../../pep-0447.txt:378
+msgid ""
+"**WARNING**: The benchmark results in this section are old, and will be "
+"updated when I've ported the patch to the current trunk. I don't expect "
+"significant changes to the results in this section."
+msgstr ""
+
+#: ../../pep-0447.txt:383
+msgid "Micro benchmarks"
+msgstr ""
+
+#: ../../pep-0447.txt:385
+msgid ""
+"`Issue 18181`_ has a micro benchmark as one of its attachments (`pep447"
+"-micro-bench.py`_) that specifically tests the speed of attribute lookup,"
+" both directly and through super."
+msgstr ""
+
+#: ../../pep-0447.txt:389
+msgid ""
+"Note that attribute lookup with deep class hierarchies is significantly "
+"slower when using a custom ``__getdescriptor__`` method. This is because "
+"the attribute lookup cache for CPython cannot be used when having this "
+"method."
+msgstr ""
+
+#: ../../pep-0447.txt:394
+msgid "Pybench"
+msgstr ""
+
+#: ../../pep-0447.txt:396
+msgid ""
+"The pybench output below compares an implementation of this PEP with the "
+"regular source tree, both based on changeset a5681f50bae2, run on an idle"
+" machine and Core i7 processor running Centos 6.4."
+msgstr ""
+
+#: ../../pep-0447.txt:400
+msgid ""
+"Even though the machine was idle there were clear differences between "
+"runs, I've seen difference in \"minimum time\" vary from -0.1% to +1.5%, "
+"with similar (but slightly smaller) differences in the \"average time\" "
+"difference."
+msgstr ""
+
+#: ../../pep-0447.txt:519
+msgid ""
+"A run of the benchmark suite (with option \"-b 2n3\") also seems to "
+"indicate that the performance impact is minimal::"
+msgstr ""
+
+#: ../../pep-0447.txt:614
+msgid "Alternative proposals"
+msgstr ""
+
+#: ../../pep-0447.txt:617
+msgid "``__getattribute_super__``"
+msgstr ""
+
+#: ../../pep-0447.txt:619
+msgid ""
+"An earlier version of this PEP used the following static method on "
+"classes::"
+msgstr ""
+
+#: ../../pep-0447.txt:623
+msgid ""
+"This method performed name lookup as well as invoking descriptors and was"
+" necessarily limited to working only with ``super.__getattribute__``."
+msgstr ""
+
+#: ../../pep-0447.txt:628
+msgid "Reuse ``tp_getattro``"
+msgstr ""
+
+#: ../../pep-0447.txt:630
+msgid ""
+"It would be nice to avoid adding a new slot, thus keeping the API simpler"
+" and easier to understand.  A comment on `Issue 18181`_ asked about "
+"reusing the ``tp_getattro`` slot, that is super could call the "
+"``tp_getattro`` slot of all methods along the MRO."
+msgstr ""
+
+#: ../../pep-0447.txt:635
+msgid ""
+"That won't work because ``tp_getattro`` will look in the instance "
+"``__dict__`` before it tries to resolve attributes using classes in the "
+"MRO. This would mean that using ``tp_getattro`` instead of peeking the "
+"class dictionaries changes the semantics of the `super class`_."
+msgstr ""
+
+#: ../../pep-0447.txt:641
+msgid "Alternative placement of the new method"
+msgstr ""
+
+#: ../../pep-0447.txt:643
+msgid ""
+"This PEP proposes to add ``__getdescriptor__`` as a method on the "
+"metaclass. An alternative would be to add it as a class method on the "
+"class itself (similar to how ``__new__`` is a `staticmethod`_ of the "
+"class and not a method of the metaclass)."
+msgstr ""
+
+#: ../../pep-0447.txt:648
+msgid ""
+"The advantage of using a method on the metaclass is that will give an "
+"error when two classes on the MRO have different metaclasses that may "
+"have different behaviors for ``__getdescriptor__``. With a normal "
+"classmethod that problem would pass undetected while it might cause "
+"subtle errors when running the code."
+msgstr ""
+
+#: ../../pep-0447.txt:654
+msgid "History"
+msgstr ""
+
+#: ../../pep-0447.txt:656
+msgid ""
+"23-Jul-2015: Added type flag ``Py_TPFLAGS_GETDESCRIPTOR`` after talking "
+"with Guido."
+msgstr ""
+
+#: ../../pep-0447.txt:659
+msgid ""
+"The new flag is primarily useful to avoid crashing when loading an "
+"extension for an older version of CPython and could have positive speed "
+"implications as well."
+msgstr ""
+
+#: ../../pep-0447.txt:663
+msgid ""
+"Jul-2014: renamed slot to ``__getdescriptor__``, the old name didn't "
+"match the naming style of other slots and was less descriptive."
+msgstr ""
+
+#: ../../pep-0447.txt:667
+msgid "Discussion threads"
+msgstr ""
+
+#: ../../pep-0447.txt:669
+msgid ""
+"The initial version of the PEP was send with Message-ID "
+"`<75030FAC-6918-4E94-95DA-67A88D53E6F5@mac.com>`_"
+msgstr ""
+
+#: ../../pep-0447.txt:672
+msgid ""
+"Further discussion starting at a message with Message-ID "
+"`<5BB87CC4-F31B-4213-AAAC-0C0CE738460C@mac.com>`_"
+msgstr ""
+
+#: ../../pep-0447.txt:675
+msgid ""
+"And more discussion starting at message with Message-ID "
+"`<00AA7433-C853-4101-9718-060468EBAC54@mac.com>`_"
+msgstr ""
+
+#: ../../pep-0447.txt:681
+msgid "References"
+msgstr ""
+
+#: ../../pep-0447.txt:683
+msgid "`Issue 18181`_ contains an out of date prototype implementation"
+msgstr ""
+
+#: ../../pep-0447.txt:686
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0447.txt:688
+msgid "This document has been placed in the public domain."
+msgstr ""
+

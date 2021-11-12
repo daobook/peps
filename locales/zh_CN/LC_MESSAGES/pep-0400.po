@@ -1,0 +1,619 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0400.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0400.txt:1
+msgid "400"
+msgstr ""
+
+#: ../../pep-0400.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0400.txt:2
+msgid "Deprecate codecs.StreamReader and codecs.StreamWriter"
+msgstr ""
+
+#: ../../pep-0400.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0400.txt:5
+msgid "Victor Stinner <vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0400.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0400.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0400.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0400.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0400.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0400.txt:9
+msgid "28-May-2011"
+msgstr ""
+
+#: ../../pep-0400.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0400.txt:10
+msgid "3.3"
+msgstr ""
+
+#: ../../pep-0400.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0400.txt:16
+msgid ""
+"io.TextIOWrapper and codecs.StreamReaderWriter offer the same API [#f1]_."
+" TextIOWrapper has more features and is faster than StreamReaderWriter. "
+"Duplicate code means that bugs should be fixed twice and that we may have"
+" subtle differences between the two implementations."
+msgstr ""
+
+#: ../../pep-0400.txt:22
+msgid ""
+"The codecs module was introduced in Python 2.0 (see the `PEP 100 "
+"<http://www.python.org/dev/peps/pep-0100/>`_). The io module was "
+"introduced in Python 2.6 and 3.0 (see the `PEP 3116 "
+"<http://www.python.org/dev/peps/pep-3116/>`_), and reimplemented in C in "
+"Python 2.7 and 3.1."
+msgstr ""
+
+#: ../../pep-0400.txt:29
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0400.txt:31
+msgid ""
+"Further exploration of the concepts covered in this PEP has been deferred"
+" for lack of a current champion interested in promoting the goals of the "
+"PEP and collecting and incorporating feedback, and with sufficient "
+"available time to do so effectively."
+msgstr ""
+
+#: ../../pep-0400.txt:37
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0400.txt:39
+msgid ""
+"When the Python I/O model was updated for 3.0, the concept of a \"stream-"
+"with-known-encoding\" was introduced in the form of io.TextIOWrapper. As "
+"this class is critical to the performance of text-based I/O in Python 3, "
+"this module has an optimised C version which is used by CPython by "
+"default. Many corner cases in handling buffering, stateful codecs and "
+"universal newlines have been dealt with since the release of Python 3.0."
+msgstr ""
+
+#: ../../pep-0400.txt:47
+msgid ""
+"This new interface overlaps heavily with the legacy codecs.StreamReader, "
+"codecs.StreamWriter and codecs.StreamReaderWriter interfaces that were "
+"part of the original codec interface design in PEP 100. These interfaces "
+"are organised around the principle of an encoding with an associated "
+"stream (i.e. the reverse of arrangement in the io module), so the "
+"original PEP 100 design required that codec writers provide appropriate "
+"StreamReader and StreamWriter implementations in addition to the core "
+"codec encode() and decode() methods. This places a heavy burden on codec "
+"authors providing these specialised implementations to correctly handle "
+"many of the corner cases (see `Appendix A`_) that have now been dealt "
+"with by io.TextIOWrapper. While deeper integration between the codec and "
+"the stream allows for additional optimisations in theory, these "
+"optimisations have in practice either not been carried out and else the "
+"associated code duplication means that the corner cases that have been "
+"fixed in io.TextIOWrapper are still not handled correctly in the various "
+"StreamReader and StreamWriter implementations."
+msgstr ""
+
+#: ../../pep-0400.txt:65
+msgid "Accordingly, this PEP proposes that:"
+msgstr ""
+
+#: ../../pep-0400.txt:67
+msgid "codecs.open() be updated to delegate to the builtin open() in Python 3.3;"
+msgstr ""
+
+#: ../../pep-0400.txt:69
+msgid ""
+"the legacy codecs.Stream* interfaces, including the streamreader and "
+"streamwriter attributes of codecs.CodecInfo be deprecated in Python 3.3."
+msgstr ""
+
+#: ../../pep-0400.txt:75
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0400.txt:78
+msgid "StreamReader and StreamWriter issues"
+msgstr ""
+
+#: ../../pep-0400.txt:80
+msgid "StreamReader is unable to translate newlines."
+msgstr ""
+
+#: ../../pep-0400.txt:81
+msgid ""
+"StreamWriter doesn't support \"line buffering\" (flush if the input text "
+"contains a newline)."
+msgstr ""
+
+#: ../../pep-0400.txt:83
+msgid ""
+"StreamReader classes of the CJK encodings (e.g. GB18030) only supports "
+"UNIX newlines ('\\\\n')."
+msgstr ""
+
+#: ../../pep-0400.txt:85
+msgid ""
+"StreamReader and StreamWriter are stateful codecs but don't expose "
+"functions to control their state (getstate() or setstate()). Each codec "
+"has to handle corner cases, see `Appendix A`_."
+msgstr ""
+
+#: ../../pep-0400.txt:88
+msgid ""
+"StreamReader and StreamWriter are very similar to IncrementalReader and "
+"IncrementalEncoder, some code is duplicated for stateful codecs (e.g. "
+"UTF-16)."
+msgstr ""
+
+#: ../../pep-0400.txt:91
+msgid ""
+"Each codec has to reimplement its own StreamReader and StreamWriter "
+"class, even if it's trivial (just call the encoder/decoder)."
+msgstr ""
+
+#: ../../pep-0400.txt:93
+msgid "codecs.open(filename, \"r\") creates an io.TextIOWrapper object."
+msgstr ""
+
+#: ../../pep-0400.txt:94
+msgid ""
+"No codec implements an optimized method in StreamReader or StreamWriter "
+"based on the specificities of the codec."
+msgstr ""
+
+#: ../../pep-0400.txt:97
+msgid "Issues in the bug tracker:"
+msgstr ""
+
+#: ../../pep-0400.txt:99
+msgid ""
+"`Issue #5445 <http://bugs.python.org/issue5445>`_ (2009-03-08): "
+"codecs.StreamWriter.writelines problem when passed generator"
+msgstr ""
+
+#: ../../pep-0400.txt:101
+msgid ""
+"`Issue #7262: <http://bugs.python.org/issue7262>`_ (2009-11-04): "
+"codecs.open() + eol (windows)"
+msgstr ""
+
+#: ../../pep-0400.txt:103
+msgid ""
+"`Issue #8260 <http://bugs.python.org/issue8260>`_ (2010-03-29): When I "
+"use codecs.open(...) and f.readline() follow up by f.read() return bad "
+"result"
+msgstr ""
+
+#: ../../pep-0400.txt:106
+msgid ""
+"`Issue #8630 <http://bugs.python.org/issue8630>`_ (2010-05-05): Keepends "
+"param in codec readline(s)"
+msgstr ""
+
+#: ../../pep-0400.txt:108
+msgid ""
+"`Issue #10344 <http://bugs.python.org/issue10344>`_ (2010-11-06): "
+"codecs.readline doesn't care buffering"
+msgstr ""
+
+#: ../../pep-0400.txt:110
+msgid ""
+"`Issue #11461 <http://bugs.python.org/issue11461>`_ (2011-03-10): Reading"
+" UTF-16 with codecs.readline() breaks on surrogate pairs"
+msgstr ""
+
+#: ../../pep-0400.txt:112
+msgid ""
+"`Issue #12446 <http://bugs.python.org/issue12446>`_ (2011-06-30): "
+"StreamReader Readlines behavior odd"
+msgstr ""
+
+#: ../../pep-0400.txt:114
+msgid ""
+"`Issue #12508 <http://bugs.python.org/issue12508>`_ (2011-07-06): Codecs "
+"Anomaly"
+msgstr ""
+
+#: ../../pep-0400.txt:116
+msgid ""
+"`Issue #12512 <http://bugs.python.org/issue12512>`_ (2011-07-07): codecs:"
+" StreamWriter issues with stateful codecs after a seek or with append "
+"mode"
+msgstr ""
+
+#: ../../pep-0400.txt:119
+msgid ""
+"`Issue #12513 <http://bugs.python.org/issue12513>`_ (2011-07-07): "
+"codec.StreamReaderWriter: issues with interlaced read-write"
+msgstr ""
+
+#: ../../pep-0400.txt:123
+msgid "TextIOWrapper features"
+msgstr ""
+
+#: ../../pep-0400.txt:125
+msgid ""
+"TextIOWrapper supports any kind of newline, including translating "
+"newlines (to UNIX newlines), to read and write."
+msgstr ""
+
+#: ../../pep-0400.txt:127
+msgid ""
+"TextIOWrapper reuses codecs incremental encoders and decoders (no "
+"duplication of code)."
+msgstr ""
+
+#: ../../pep-0400.txt:129
+msgid ""
+"The io module (TextIOWrapper) is faster than the codecs module "
+"(StreamReader). It is implemented in C, whereas codecs is implemented in "
+"Python."
+msgstr ""
+
+#: ../../pep-0400.txt:132
+msgid ""
+"TextIOWrapper has a readahead algorithm which speeds up small reads: read"
+" character by character or line by line (io is 10x through 25x faster "
+"than codecs on these operations)."
+msgstr ""
+
+#: ../../pep-0400.txt:135
+msgid "TextIOWrapper has a write buffer."
+msgstr ""
+
+#: ../../pep-0400.txt:136
+msgid "TextIOWrapper.tell() is optimized."
+msgstr ""
+
+#: ../../pep-0400.txt:137
+msgid ""
+"TextIOWrapper supports random access (read+write) using a single class "
+"which permit to optimize interlaced read-write (but no such optimization "
+"is implemented)."
+msgstr ""
+
+#: ../../pep-0400.txt:142
+msgid "TextIOWrapper issues"
+msgstr ""
+
+#: ../../pep-0400.txt:144
+msgid ""
+"`Issue #12215 <http://bugs.python.org/issue12215>`_ (2011-05-30): "
+"TextIOWrapper: issues with interlaced read-write"
+msgstr ""
+
+#: ../../pep-0400.txt:148
+msgid "Possible improvements of StreamReader and StreamWriter"
+msgstr ""
+
+#: ../../pep-0400.txt:150
+msgid ""
+"By adding codec state read/write functions to the StreamReader and "
+"StreamWriter classes, it will become possible to fix issues with stateful"
+" codecs in a base class instead of in each stateful StreamReader and "
+"StreamWriter classes."
+msgstr ""
+
+#: ../../pep-0400.txt:155
+msgid ""
+"It would be possible to change StreamReader and StreamWriter to make them"
+" use IncrementalDecoder and IncrementalEncoder."
+msgstr ""
+
+#: ../../pep-0400.txt:158
+msgid ""
+"A codec can implement variants which are optimized for the specific "
+"encoding or intercept certain stream methods to add functionality or "
+"improve the encoding/decoding performance. TextIOWrapper cannot implement"
+" such optimization, but TextIOWrapper uses incremental encoders and "
+"decoders and uses read and write buffers, so the overhead of incomplete "
+"inputs is low or nul."
+msgstr ""
+
+#: ../../pep-0400.txt:165
+msgid ""
+"A lot more could be done for other variable length encoding codecs, e.g. "
+"UTF-8, since these often have problems near the end of a read due to "
+"missing bytes. The UTF-32-BE/LE codecs could simply multiply the "
+"character position by 4 to get the byte position."
+msgstr ""
+
+#: ../../pep-0400.txt:172
+msgid "Usage of StreamReader and StreamWriter"
+msgstr ""
+
+#: ../../pep-0400.txt:174
+msgid ""
+"These classes are rarely used directly, but indirectly using "
+"codecs.open(). They are not used in Python 3 standard library (except in "
+"the codecs module)."
+msgstr ""
+
+#: ../../pep-0400.txt:178
+msgid ""
+"Some projects implement their own codec with StreamReader and "
+"StreamWriter, but don't use these classes."
+msgstr ""
+
+#: ../../pep-0400.txt:183
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0400.txt:186
+msgid "Keep the public API, codecs.open"
+msgstr ""
+
+#: ../../pep-0400.txt:188
+msgid ""
+"codecs.open() can be replaced by the builtin open() function. open() has "
+"a similar API but has also more options. Both functions return file-like "
+"objects (same API)."
+msgstr ""
+
+#: ../../pep-0400.txt:192
+msgid ""
+"codecs.open() was the only way to open a text file in Unicode mode until "
+"Python 2.6. Many Python 2 programs uses this function. Removing "
+"codecs.open() implies more work to port programs from Python 2 to Python "
+"3, especially projects using the same code base for the two Python "
+"versions (without using 2to3 program)."
+msgstr ""
+
+#: ../../pep-0400.txt:198
+msgid "codecs.open() is kept for backward compatibility with Python 2."
+msgstr ""
+
+#: ../../pep-0400.txt:202
+msgid "Deprecate StreamReader and StreamWriter"
+msgstr ""
+
+#: ../../pep-0400.txt:204
+msgid ""
+"Instantiating StreamReader or StreamWriter must emit a DeprecationWarning"
+" in Python 3.3. Defining a subclass doesn't emit a DeprecationWarning."
+msgstr ""
+
+#: ../../pep-0400.txt:207
+msgid ""
+"codecs.open() will be changed to reuse the builtin open() function "
+"(TextIOWrapper) to read-write text files."
+msgstr ""
+
+#: ../../pep-0400.txt:213
+msgid "Alternative Approach"
+msgstr ""
+
+#: ../../pep-0400.txt:215
+msgid ""
+"An alternative to the deprecation of the codecs.Stream* classes is to "
+"rename codecs.open() to codecs.open_stream(), and to create a new "
+"codecs.open() function reusing open() and so io.TextIOWrapper."
+msgstr ""
+
+#: ../../pep-0400.txt:221
+msgid "Appendix A: Issues with stateful codecs"
+msgstr ""
+
+#: ../../pep-0400.txt:223
+msgid ""
+"It is difficult to use correctly a stateful codec with a stream. Some "
+"cases are supported by the codecs module, while io has no more known bug "
+"related to stateful codecs. The main difference between the codecs and "
+"the io module is that bugs have to be fixed in StreamReader and/or "
+"StreamWriter classes of each codec for the codecs module, whereas bugs "
+"can be fixed only once in io.TextIOWrapper. Here are some examples of "
+"issues with stateful codecs."
+msgstr ""
+
+#: ../../pep-0400.txt:232
+msgid "Stateful codecs"
+msgstr ""
+
+#: ../../pep-0400.txt:234
+msgid "Python supports the following stateful codecs:"
+msgstr ""
+
+#: ../../pep-0400.txt:236
+msgid "cp932"
+msgstr ""
+
+#: ../../pep-0400.txt:237
+msgid "cp949"
+msgstr ""
+
+#: ../../pep-0400.txt:238
+msgid "cp950"
+msgstr ""
+
+#: ../../pep-0400.txt:239
+msgid "euc_jis_2004"
+msgstr ""
+
+#: ../../pep-0400.txt:240
+msgid "euc_jisx2003"
+msgstr ""
+
+#: ../../pep-0400.txt:241
+msgid "euc_jp"
+msgstr ""
+
+#: ../../pep-0400.txt:242
+msgid "euc_kr"
+msgstr ""
+
+#: ../../pep-0400.txt:243
+msgid "gb18030"
+msgstr ""
+
+#: ../../pep-0400.txt:244
+msgid "gbk"
+msgstr ""
+
+#: ../../pep-0400.txt:245
+msgid "hz"
+msgstr ""
+
+#: ../../pep-0400.txt:246
+msgid "iso2022_jp"
+msgstr ""
+
+#: ../../pep-0400.txt:247
+msgid "iso2022_jp_1"
+msgstr ""
+
+#: ../../pep-0400.txt:248
+msgid "iso2022_jp_2"
+msgstr ""
+
+#: ../../pep-0400.txt:249
+msgid "iso2022_jp_2004"
+msgstr ""
+
+#: ../../pep-0400.txt:250
+msgid "iso2022_jp_3"
+msgstr ""
+
+#: ../../pep-0400.txt:251
+msgid "iso2022_jp_ext"
+msgstr ""
+
+#: ../../pep-0400.txt:252
+msgid "iso2022_kr"
+msgstr ""
+
+#: ../../pep-0400.txt:253
+msgid "shift_jis"
+msgstr ""
+
+#: ../../pep-0400.txt:254
+msgid "shift_jis_2004"
+msgstr ""
+
+#: ../../pep-0400.txt:255
+msgid "shift_jisx0213"
+msgstr ""
+
+#: ../../pep-0400.txt:256
+msgid "utf_8_sig"
+msgstr ""
+
+#: ../../pep-0400.txt:257
+msgid "utf_16"
+msgstr ""
+
+#: ../../pep-0400.txt:258
+msgid "utf_32"
+msgstr ""
+
+#: ../../pep-0400.txt:261
+msgid "Read and seek(0)"
+msgstr ""
+
+#: ../../pep-0400.txt:273
+msgid "The io and codecs modules support this usecase correctly."
+msgstr ""
+
+#: ../../pep-0400.txt:276
+msgid "seek(n)"
+msgstr ""
+
+#: ../../pep-0400.txt:291 ../../pep-0400.txt:307
+msgid ""
+"The io module supports this usecase, whereas codecs fails because it "
+"writes a new BOM on the second write (`issue #12512 "
+"<http://bugs.python.org/issue12512>`_)."
+msgstr ""
+
+#: ../../pep-0400.txt:296
+msgid "Append mode"
+msgstr ""
+
+#: ../../pep-0400.txt:313
+msgid "Links"
+msgstr ""
+
+#: ../../pep-0400.txt:315
+msgid ""
+"`PEP 100: Python Unicode Integration "
+"<http://www.python.org/dev/peps/pep-0100/>`_"
+msgstr ""
+
+#: ../../pep-0400.txt:317
+msgid "`PEP 3116: New I/O <http://www.python.org/dev/peps/pep-3116/>`_"
+msgstr ""
+
+#: ../../pep-0400.txt:318
+msgid "`Issue #8796: Deprecate codecs.open() <http://bugs.python.org/issue8796>`_"
+msgstr ""
+
+#: ../../pep-0400.txt:320
+msgid ""
+"`[python-dev] Deprecate codecs.open() and StreamWriter/StreamReader "
+"<https://mail.python.org/pipermail/python-dev/2011-May/111591.html>`_"
+msgstr ""
+
+#: ../../pep-0400.txt:325
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0400.txt:327
+msgid "This document has been placed in the public domain."
+msgstr ""
+
+#: ../../pep-0400.txt:331
+msgid "Footnotes"
+msgstr ""
+
+#: ../../pep-0400.txt:333
+msgid ""
+"StreamReaderWriter has two more attributes than TextIOWrapper, reader and"
+" writer."
+msgstr ""
+

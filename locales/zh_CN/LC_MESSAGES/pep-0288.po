@@ -1,0 +1,259 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0288.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0288.txt:1
+msgid "288"
+msgstr ""
+
+#: ../../pep-0288.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0288.txt:2
+msgid "Generators Attributes and Exceptions"
+msgstr ""
+
+#: ../../pep-0288.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0288.txt:5
+msgid "python@rcn.com (Raymond Hettinger)"
+msgstr ""
+
+#: ../../pep-0288.txt ../../pep-0288.txt:22
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0288.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0288.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0288.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0288.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0288.txt:9
+msgid "21-Mar-2002"
+msgstr ""
+
+#: ../../pep-0288.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0288.txt:10
+msgid "2.5"
+msgstr ""
+
+#: ../../pep-0288.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0288.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0288.txt:17
+msgid ""
+"This PEP proposes to enhance generators by providing mechanisms for "
+"raising exceptions and sharing data with running generators."
+msgstr ""
+
+#: ../../pep-0288.txt:24
+msgid ""
+"This PEP is withdrawn.  The exception raising mechanism was extended and "
+"subsumed into PEP 343.  The attribute passing capability never built a "
+"following, did not have a clear implementation, and did not have a clean "
+"way for the running generator to access its own namespace."
+msgstr ""
+
+#: ../../pep-0288.txt:32
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0288.txt:34
+msgid ""
+"Currently, only class based iterators can provide attributes and "
+"exception handling.  However, class based iterators are harder to write, "
+"less compact, less readable, and slower.  A better solution is to enable "
+"these capabilities for generators."
+msgstr ""
+
+#: ../../pep-0288.txt:39
+msgid ""
+"Enabling attribute assignments allows data to be passed to and from "
+"running generators.  The approach of sharing data using attributes "
+"pervades Python.  Other approaches exist but are somewhat hackish in "
+"comparison."
+msgstr ""
+
+#: ../../pep-0288.txt:44
+msgid ""
+"Another evolutionary step is to add a generator method to allow "
+"exceptions to be passed to a generator.  Currently, there is no clean "
+"method for triggering exceptions from outside the generator. Also, "
+"generator exception passing helps mitigate the try/finally prohibition "
+"for generators.  The need is especially acute for generators needing to "
+"flush buffers or close resources upon termination."
+msgstr ""
+
+#: ../../pep-0288.txt:51
+msgid ""
+"The two proposals are backwards compatible and require no new keywords.  "
+"They are being recommended for Python version 2.5."
+msgstr ""
+
+#: ../../pep-0288.txt:57
+msgid "Specification for Generator Attributes"
+msgstr ""
+
+#: ../../pep-0288.txt:59
+msgid ""
+"Essentially, the proposal is to emulate attribute writing for classes. "
+"The only wrinkle is that generators lack a way to refer to instances of "
+"themselves.  So, the proposal is to provide a function for discovering "
+"the reference.  For example::"
+msgstr ""
+
+#: ../../pep-0288.txt:77
+msgid "Uses for generator attributes include:"
+msgstr ""
+
+#: ../../pep-0288.txt:79
+msgid "Providing generator clients with extra information (as shown above)."
+msgstr ""
+
+#: ../../pep-0288.txt:81
+msgid ""
+"Externally setting control flags governing generator operation (possibly "
+"telling a generator when to step in or step over data groups)."
+msgstr ""
+
+#: ../../pep-0288.txt:84
+msgid ""
+"Writing lazy consumers with complex execution states (an arithmetic "
+"encoder output stream for example)."
+msgstr ""
+
+#: ../../pep-0288.txt:86
+msgid "Writing co-routines (as demonstrated in Dr. Mertz's articles [1]_)."
+msgstr ""
+
+#: ../../pep-0288.txt:88
+msgid ""
+"The control flow of 'yield' and 'next' is unchanged by this proposal.  "
+"The only change is that data can passed to and from the generator.  Most "
+"of the underlying machinery is already in place, only the access function"
+" needs to be added."
+msgstr ""
+
+#: ../../pep-0288.txt:96
+msgid "Specification for Generator Exception Passing"
+msgstr ""
+
+#: ../../pep-0288.txt:98
+msgid "Add a ``.throw(exception)`` method to the generator interface::"
+msgstr ""
+
+#: ../../pep-0288.txt:116
+msgid ""
+"There is no existing work-around for triggering an exception inside a "
+"generator.  It is the only case in Python where active code cannot be "
+"excepted to or through."
+msgstr ""
+
+#: ../../pep-0288.txt:120
+msgid ""
+"Generator exception passing also helps address an intrinsic limitation on"
+" generators, the prohibition against their using try/finally to trigger "
+"clean-up code [2]_."
+msgstr ""
+
+#: ../../pep-0288.txt:124
+msgid ""
+"Note A: The name of the throw method was selected for several reasons.  "
+"Raise is a keyword and so cannot be used as a method name.  Unlike raise "
+"which immediately raises an exception from the current execution point, "
+"throw will first return to the generator and then raise the exception.  "
+"The word throw is suggestive of putting the exception in another "
+"location.  The word throw is already associated with exceptions in other "
+"languages."
+msgstr ""
+
+#: ../../pep-0288.txt:132
+msgid ""
+"Alternative method names were considered: ``resolve()``, ``signal()``, "
+"``genraise()``, ``raiseinto()``, and ``flush()``.  None of these fit as "
+"well as ``throw()``."
+msgstr ""
+
+#: ../../pep-0288.txt:136
+msgid ""
+"Note B:  To keep the ``throw()`` syntax simple only the instance version "
+"of the raise syntax would be supported (no variants for \"``raise "
+"string``\" or \"``raise class, instance``\")."
+msgstr ""
+
+#: ../../pep-0288.txt:140
+msgid ""
+"Calling ``g.throw(instance)`` would correspond to writing ``raise "
+"instance`` immediately after the most recent yield."
+msgstr ""
+
+#: ../../pep-0288.txt:146
+msgid "References"
+msgstr ""
+
+#: ../../pep-0288.txt:148
+msgid ""
+"Dr. David Mertz's draft columns for Charming Python "
+"http://gnosis.cx/publish/programming/charming_python_b5.txt "
+"http://gnosis.cx/publish/programming/charming_python_b7.txt"
+msgstr ""
+
+#: ../../pep-0288.txt:152
+msgid "PEP 255 Simple Generators http://www.python.org/dev/peps/pep-0255/"
+msgstr ""
+
+#: ../../pep-0288.txt:155
+msgid ""
+"Proof-of-concept recipe "
+"http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/164044"
+msgstr ""
+
+#: ../../pep-0288.txt:161
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0288.txt:163
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,990 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0450.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0450.txt:1
+msgid "450"
+msgstr ""
+
+#: ../../pep-0450.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0450.txt:2
+msgid "Adding A Statistics Module To The Standard Library"
+msgstr ""
+
+#: ../../pep-0450.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0450.txt:5
+msgid "Steven D'Aprano <steve@pearwood.info>"
+msgstr ""
+
+#: ../../pep-0450.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0450.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0450.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0450.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0450.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0450.txt:9
+msgid "01-Aug-2013"
+msgstr ""
+
+#: ../../pep-0450.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0450.txt:10
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0450.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0450.txt:11
+msgid "13-Sep-2013"
+msgstr ""
+
+#: ../../pep-0450.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0450.txt:17
+msgid ""
+"This PEP proposes the addition of a module for common statistics "
+"functions such as mean, median, variance and standard deviation to the "
+"Python standard library. See also http://bugs.python.org/issue18606"
+msgstr ""
+
+#: ../../pep-0450.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0450.txt:25
+msgid ""
+"The proposed statistics module is motivated by the \"batteries included\""
+" philosophy towards the Python standard library.  Raymond Hettinger and "
+"other senior developers have requested a quality statistics library that "
+"falls somewhere in between high-end statistics libraries and ad hoc code."
+" [1]_ Statistical functions such as mean, standard deviation and others "
+"are obvious and useful batteries, familiar to any Secondary School "
+"student. Even cheap scientific calculators typically include multiple "
+"statistical functions such as:"
+msgstr ""
+
+#: ../../pep-0450.txt:34
+msgid "mean"
+msgstr ""
+
+#: ../../pep-0450.txt:35
+msgid "population and sample variance"
+msgstr ""
+
+#: ../../pep-0450.txt:36
+msgid "population and sample standard deviation"
+msgstr ""
+
+#: ../../pep-0450.txt:37
+msgid "linear regression"
+msgstr ""
+
+#: ../../pep-0450.txt:38
+msgid "correlation coefficient"
+msgstr ""
+
+#: ../../pep-0450.txt:40
+msgid ""
+"Graphing calculators aimed at Secondary School students typically include"
+" all of the above, plus some or all of:"
+msgstr ""
+
+#: ../../pep-0450.txt:43
+msgid "median"
+msgstr ""
+
+#: ../../pep-0450.txt:44
+msgid "mode"
+msgstr ""
+
+#: ../../pep-0450.txt:45
+msgid ""
+"functions for calculating the probability of random variables from the "
+"normal, t, chi-squared, and F distributions"
+msgstr ""
+
+#: ../../pep-0450.txt:47
+msgid "inference on the mean"
+msgstr ""
+
+#: ../../pep-0450.txt:49
+msgid ""
+"and others [2]_.  Likewise spreadsheet applications such as Microsoft "
+"Excel, LibreOffice and Gnumeric include rich collections of statistical "
+"functions [3]_."
+msgstr ""
+
+#: ../../pep-0450.txt:53
+msgid ""
+"In contrast, Python currently has no standard way to calculate even the "
+"simplest and most obvious statistical functions such as mean.  For those "
+"who need statistical functions in Python, there are two obvious "
+"solutions:"
+msgstr ""
+
+#: ../../pep-0450.txt:57
+msgid "install numpy and/or scipy [4]_;"
+msgstr ""
+
+#: ../../pep-0450.txt:59
+msgid "or use a Do It Yourself solution."
+msgstr ""
+
+#: ../../pep-0450.txt:61
+msgid ""
+"Numpy is perhaps the most full-featured solution, but it has a few "
+"disadvantages:"
+msgstr ""
+
+#: ../../pep-0450.txt:64
+msgid ""
+"It may be overkill for many purposes.  The documentation for numpy even "
+"warns"
+msgstr ""
+
+#: ../../pep-0450.txt:66
+msgid ""
+"\"It can be hard to know what functions are available in numpy.  This is "
+"not a complete list, but it does cover most of them.\"[5]_"
+msgstr ""
+
+#: ../../pep-0450.txt:69
+msgid ""
+"and then goes on to list over 270 functions, only a small number of which"
+" are related to statistics."
+msgstr ""
+
+#: ../../pep-0450.txt:72
+msgid ""
+"Numpy is aimed at those doing heavy numerical work, and may be "
+"intimidating to those who don't have a background in computational "
+"mathematics and computer science.  For example, ``numpy.mean`` takes four"
+" arguments::"
+msgstr ""
+
+#: ../../pep-0450.txt:78
+msgid ""
+"although fortunately for the beginner or casual numpy user, three are "
+"optional and ``numpy.mean`` does the right thing in simple cases::"
+msgstr ""
+
+#: ../../pep-0450.txt:84
+msgid ""
+"For many people, installing numpy may be difficult or impossible.  For "
+"example, people in corporate environments may have to go through a "
+"difficult, time-consuming process before being permitted to install "
+"third-party software.  For the casual Python user, having to learn about "
+"installing third-party packages in order to average a list of numbers is "
+"unfortunate."
+msgstr ""
+
+#: ../../pep-0450.txt:90
+msgid ""
+"This leads to option number 2, DIY statistics functions.  At first "
+"glance, this appears to be an attractive option, due to the apparent "
+"simplicity of common statistical functions.  For example::"
+msgstr ""
+
+#: ../../pep-0450.txt:106
+msgid "The above appears to be correct with a casual test::"
+msgstr ""
+
+#: ../../pep-0450.txt:112
+msgid "But adding a constant to every data point should not change the variance::"
+msgstr ""
+
+#: ../../pep-0450.txt:118
+msgid "And variance should *never* be negative::"
+msgstr ""
+
+#: ../../pep-0450.txt:123
+msgid ""
+"By contrast, the proposed reference implementation gets the exactly "
+"correct answer 7.5 for the first two examples, and a reasonably close "
+"answer for the third: 6.012. numpy does no better [6]_."
+msgstr ""
+
+#: ../../pep-0450.txt:127
+msgid ""
+"Even simple statistical calculations contain traps for the unwary, "
+"starting with the Computational Formula itself.  Despite the name, it is "
+"numerically unstable and can be extremely inaccurate, as can be seen "
+"above.  It is completely unsuitable for computation by computer [7]_.  "
+"This problem plagues users of many programming language, not just Python "
+"[8]_, as coders reinvent the same numerically inaccurate code over and "
+"over again [9]_, or advise others to do so [10]_."
+msgstr ""
+
+#: ../../pep-0450.txt:135
+msgid ""
+"It isn't just the variance and standard deviation. Even the mean is not "
+"quite as straightforward as it might appear.  The above implementation "
+"seems too simple to have problems, but it does:"
+msgstr ""
+
+#: ../../pep-0450.txt:139
+msgid ""
+"The built-in ``sum`` can lose accuracy when dealing with floats of wildly"
+" differing magnitude.  Consequently, the above naive ``mean`` fails this "
+"\"torture test\"::"
+msgstr ""
+
+#: ../../pep-0450.txt:145
+msgid "returning 0 instead of 1, a purely computational error of 100%."
+msgstr ""
+
+#: ../../pep-0450.txt:147
+msgid ""
+"Using ``math.fsum`` inside ``mean`` will make it more accurate with float"
+" data, but it also has the side-effect of converting any arguments to "
+"float even when unnecessary.  E.g. we should expect the mean of a list of"
+" Fractions to be a Fraction, not a float."
+msgstr ""
+
+#: ../../pep-0450.txt:152
+msgid ""
+"While the above mean implementation does not fail quite as "
+"catastrophically as the naive variance does, a standard library function "
+"can do much better than the DIY versions."
+msgstr ""
+
+#: ../../pep-0450.txt:156
+msgid ""
+"The example above involves an especially bad set of data, but even for "
+"more realistic data sets accuracy is important.  The first step in "
+"interpreting variation in data (including dealing with ill-conditioned "
+"data) is often to standardize it to a series with variance 1 (and often "
+"mean 0).  This standardization requires accurate computation of the mean "
+"and variance of the raw series.  Naive computation of mean and variance "
+"can lose precision very quickly.  Because precision bounds accuracy, it "
+"is important to use the most precise algorithms for computing mean and "
+"variance that are practical, or the results of standardization are "
+"themselves useless."
+msgstr ""
+
+#: ../../pep-0450.txt:168
+msgid "Comparison To Other Languages/Packages"
+msgstr ""
+
+#: ../../pep-0450.txt:170
+msgid ""
+"The proposed statistics library is not intended to be a competitor to "
+"such third-party libraries as numpy/scipy, or of proprietary full-"
+"featured statistics packages aimed at professional statisticians such as "
+"Minitab, SAS and Matlab.  It is aimed at the level of graphing and "
+"scientific calculators."
+msgstr ""
+
+#: ../../pep-0450.txt:175
+msgid ""
+"Most programming languages have little or no built-in support for "
+"statistics functions.  Some exceptions:"
+msgstr ""
+
+#: ../../pep-0450.txt:179
+msgid "R"
+msgstr ""
+
+#: ../../pep-0450.txt:181
+msgid ""
+"R (and its proprietary cousin, S) is a programming language designed for "
+"statistics work. It is extremely popular with statisticians and is "
+"extremely feature-rich [11]_."
+msgstr ""
+
+#: ../../pep-0450.txt:186
+msgid "C#"
+msgstr ""
+
+#: ../../pep-0450.txt:188
+msgid ""
+"The C# LINQ package includes extension methods to calculate the average "
+"of enumerables [12]_."
+msgstr ""
+
+#: ../../pep-0450.txt:192
+msgid "Ruby"
+msgstr ""
+
+#: ../../pep-0450.txt:194
+msgid ""
+"Ruby does not ship with a standard statistics module, despite some "
+"apparent demand [13]_.  Statsample appears to be a feature-rich third-"
+"party library, aiming to compete with R [14]_."
+msgstr ""
+
+#: ../../pep-0450.txt:199
+msgid "PHP"
+msgstr ""
+
+#: ../../pep-0450.txt:201
+msgid ""
+"PHP has an extremely feature-rich (although mostly undocumented) set of "
+"advanced statistical functions [15]_."
+msgstr ""
+
+#: ../../pep-0450.txt:205
+msgid "Delphi"
+msgstr ""
+
+#: ../../pep-0450.txt:207
+msgid ""
+"Delphi includes standard statistical functions including Mean, Sum, "
+"Variance, TotalVariance, MomentSkewKurtosis in its Math library [16]_."
+msgstr ""
+
+#: ../../pep-0450.txt:211
+msgid "GNU Scientific Library"
+msgstr ""
+
+#: ../../pep-0450.txt:213
+msgid ""
+"The GNU Scientific Library includes standard statistical functions, "
+"percentiles, median and others [17]_.  One innovation I have borrowed "
+"from the GSL is to allow the caller to optionally specify the pre-"
+"calculated mean of the sample (or an a priori known population mean) when"
+" calculating the variance and standard deviation [18]_."
+msgstr ""
+
+#: ../../pep-0450.txt:221
+msgid "Design Decisions Of The Module"
+msgstr ""
+
+#: ../../pep-0450.txt:223
+msgid ""
+"My intention is to start small and grow the library as needed, rather "
+"than try to include everything from the start.  Consequently, the current"
+" reference implementation includes only a small number of functions: "
+"mean, variance, standard deviation, median, mode. (See the reference "
+"implementation for a full list.)"
+msgstr ""
+
+#: ../../pep-0450.txt:229
+msgid "I have aimed for the following design features:"
+msgstr ""
+
+#: ../../pep-0450.txt:231
+msgid ""
+"Correctness over speed.  It is easier to speed up a correct but slow "
+"function than to correct a fast but buggy one."
+msgstr ""
+
+#: ../../pep-0450.txt:234
+msgid ""
+"Concentrate on data in sequences, allowing two-passes over the data, "
+"rather than potentially compromise on accuracy for the sake of a one-pass"
+" algorithm. Functions expect data will be passed as a list or other "
+"sequence; if given an iterator, they may internally convert to a list."
+msgstr ""
+
+#: ../../pep-0450.txt:239
+msgid ""
+"Functions should, as much as possible, honour any type of numeric data. "
+"E.g. the mean of a list of Decimals should be a Decimal, not a float. "
+"When this is not possible, treat float as the \"lowest common data "
+"type\"."
+msgstr ""
+
+#: ../../pep-0450.txt:243
+msgid ""
+"Although functions support data sets of floats, Decimals or Fractions, "
+"there is no guarantee that *mixed* data sets will be supported. (But on "
+"the other hand, they aren't explicitly rejected either.)"
+msgstr ""
+
+#: ../../pep-0450.txt:247
+msgid ""
+"Plenty of documentation, aimed at readers who understand the basic "
+"concepts but may not know (for example) which variance they should use "
+"(population or sample?).  Mathematicians and statisticians have a "
+"terrible habit of being inconsistent with both notation and terminology "
+"[19]_, and having spent many hours making sense of the "
+"contradictory/confusing definitions in use, it is only fair that I do my "
+"best to clarify rather than obfuscate the topic."
+msgstr ""
+
+#: ../../pep-0450.txt:254
+msgid "But avoid going into tedious [20]_ mathematical detail."
+msgstr ""
+
+#: ../../pep-0450.txt:258
+msgid "API"
+msgstr ""
+
+#: ../../pep-0450.txt:260
+msgid ""
+"The initial version of the library will provide univariate (single "
+"variable) statistics functions.  The general API will be based on a "
+"functional model ``function(data, ...) -> result``, where ``data`` is a "
+"mandatory iterable of (usually) numeric data."
+msgstr ""
+
+#: ../../pep-0450.txt:265
+msgid ""
+"The author expects that lists will be the most common data type used, but"
+" any iterable type should be acceptable.  Where necessary, functions may "
+"convert to lists internally.  Where possible, functions are expected to "
+"conserve the type of the data values, for example, the mean of a list of "
+"Decimals should be a Decimal rather than float."
+msgstr ""
+
+#: ../../pep-0450.txt:273
+msgid "Calculating mean, median and mode"
+msgstr ""
+
+#: ../../pep-0450.txt:275
+msgid ""
+"The ``mean``, ``median*`` and ``mode`` functions take a single mandatory "
+"argument and return the appropriate statistic, e.g.::"
+msgstr ""
+
+#: ../../pep-0450.txt:281 ../../pep-0450.txt:335
+msgid "Functions provided are:"
+msgstr ""
+
+#: ../../pep-0450.txt:284
+msgid "``mean(data)``"
+msgstr ""
+
+#: ../../pep-0450.txt:284
+msgid "arithmetic mean of *data*."
+msgstr ""
+
+#: ../../pep-0450.txt:288
+msgid "``median(data)``"
+msgstr ""
+
+#: ../../pep-0450.txt:287
+msgid ""
+"median (middle value) of *data*, taking the average of the two middle "
+"values when there are an even number of values."
+msgstr ""
+
+#: ../../pep-0450.txt:292
+msgid "``median_high(data)``"
+msgstr ""
+
+#: ../../pep-0450.txt:291
+msgid ""
+"high median of *data*, taking the larger of the two middle values when "
+"the number of items is even."
+msgstr ""
+
+#: ../../pep-0450.txt:296
+msgid "``median_low(data)``"
+msgstr ""
+
+#: ../../pep-0450.txt:295
+msgid ""
+"low median of *data*, taking the smaller of the two middle values when "
+"the number of items is even."
+msgstr ""
+
+#: ../../pep-0450.txt:299
+msgid "``median_grouped(data, interval=1)``"
+msgstr ""
+
+#: ../../pep-0450.txt:299
+msgid "50th percentile of grouped *data*, using interpolation."
+msgstr ""
+
+#: ../../pep-0450.txt:302
+msgid "``mode(data)``"
+msgstr ""
+
+#: ../../pep-0450.txt:302
+msgid "most common *data* point."
+msgstr ""
+
+#: ../../pep-0450.txt:304
+msgid ""
+"``mode`` is the sole exception to the rule that the data argument must be"
+" numeric.  It will also accept an iterable of nominal data, such as "
+"strings."
+msgstr ""
+
+#: ../../pep-0450.txt:309
+msgid "Calculating variance and standard deviation"
+msgstr ""
+
+#: ../../pep-0450.txt:311
+msgid ""
+"In order to be similar to scientific calculators, the statistics module "
+"will include separate functions for population and sample variance and "
+"standard deviation.  All four functions have similar signatures, with a "
+"single mandatory argument, an iterable of numeric data, e.g.::"
+msgstr ""
+
+#: ../../pep-0450.txt:319
+msgid ""
+"All four functions also accept a second, optional, argument, the mean of "
+"the data.  This is modelled on a similar API provided by the GNU "
+"Scientific Library [18]_.  There are three use-cases for using this "
+"argument, in no particular order:"
+msgstr ""
+
+#: ../../pep-0450.txt:324
+msgid "The value of the mean is known *a priori*."
+msgstr ""
+
+#: ../../pep-0450.txt:326
+msgid ""
+"You have already calculated the mean, and wish to avoid calculating it "
+"again."
+msgstr ""
+
+#: ../../pep-0450.txt:329
+msgid ""
+"You wish to (ab)use the variance functions to calculate the second moment"
+" about some given point other than the mean."
+msgstr ""
+
+#: ../../pep-0450.txt:332
+msgid ""
+"In each case, it is the caller's responsibility to ensure that given "
+"argument is meaningful."
+msgstr ""
+
+#: ../../pep-0450.txt:338
+msgid "``variance(data, xbar=None)``"
+msgstr ""
+
+#: ../../pep-0450.txt:338
+msgid "sample variance of *data*, optionally using *xbar* as the sample mean."
+msgstr ""
+
+#: ../../pep-0450.txt:342
+msgid "``stdev(data, xbar=None)``"
+msgstr ""
+
+#: ../../pep-0450.txt:341
+msgid ""
+"sample standard deviation of *data*, optionally using *xbar* as the "
+"sample mean."
+msgstr ""
+
+#: ../../pep-0450.txt:346
+msgid "``pvariance(data, mu=None)``"
+msgstr ""
+
+#: ../../pep-0450.txt:345
+msgid ""
+"population variance of *data*, optionally using *mu* as the population "
+"mean."
+msgstr ""
+
+#: ../../pep-0450.txt:350
+msgid "``pstdev(data, mu=None)``"
+msgstr ""
+
+#: ../../pep-0450.txt:349
+msgid ""
+"population standard deviation of *data*, optionally using *mu* as the "
+"population mean."
+msgstr ""
+
+#: ../../pep-0450.txt:353
+msgid "Other functions"
+msgstr ""
+
+#: ../../pep-0450.txt:355
+msgid "There is one other public function:"
+msgstr ""
+
+#: ../../pep-0450.txt:359
+msgid "``sum(data, start=0)``"
+msgstr ""
+
+#: ../../pep-0450.txt:358
+msgid "high-precision sum of numeric *data*."
+msgstr ""
+
+#: ../../pep-0450.txt:362
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0450.txt:364
+msgid ""
+"As the proposed reference implementation is in pure Python, other Python "
+"implementations can easily make use of the module unchanged, or adapt it "
+"as they see fit."
+msgstr ""
+
+#: ../../pep-0450.txt:370
+msgid "What Should Be The Name Of The Module?"
+msgstr ""
+
+#: ../../pep-0450.txt:372
+msgid "This will be a top-level module ``statistics``."
+msgstr ""
+
+#: ../../pep-0450.txt:374
+msgid ""
+"There was some interest in turning ``math`` into a package, and making "
+"this a sub-module of ``math``, but the general consensus eventually "
+"agreed on a top-level module.  Other potential but rejected names "
+"included ``stats`` (too much risk of confusion with existing ``stat`` "
+"module), and ``statslib`` (described as \"too C-like\")."
+msgstr ""
+
+#: ../../pep-0450.txt:382
+msgid "Discussion And Resolved Issues"
+msgstr ""
+
+#: ../../pep-0450.txt:384
+msgid "This proposal has been previously discussed here [21]_."
+msgstr ""
+
+#: ../../pep-0450.txt:386
+msgid ""
+"A number of design issues were resolved during the discussion on Python-"
+"Ideas and the initial code review.  There was a lot of concern about the "
+"addition of yet another ``sum`` function to the standard library, see the"
+" FAQs below for more details.  In addition, the initial implementation of"
+" ``sum`` suffered from some rounding issues and other design problems "
+"when dealing with Decimals. Oscar Benjamin's assistance in resolving this"
+" was invaluable."
+msgstr ""
+
+#: ../../pep-0450.txt:393
+msgid ""
+"Another issue was the handling of data in the form of iterators.  The "
+"first implementation of variance silently swapped between a one- and two-"
+"pass algorithm, depending on whether the data was in the form of an "
+"iterator or sequence.  This proved to be a design mistake, as the "
+"calculated variance could differ slightly depending on the algorithm "
+"used, and ``variance`` etc. were changed to internally generate a list "
+"and always use the more accurate two-pass implementation."
+msgstr ""
+
+#: ../../pep-0450.txt:401
+msgid ""
+"One controversial design involved the functions to calculate median, "
+"which were implemented as attributes on the ``median`` callable, e.g. "
+"``median``, ``median.low``, ``median.high`` etc.  Although there is at "
+"least one existing use of this style in the standard library, in "
+"``unittest.mock``, the code reviewers felt that this was too unusual for "
+"the standard library. Consequently, the design has been changed to a more"
+" traditional design of separate functions with a pseudo-namespace naming "
+"convention, ``median_low``, ``median_high``, etc."
+msgstr ""
+
+#: ../../pep-0450.txt:410
+msgid ""
+"Another issue that was of concern to code reviewers was the existence of "
+"a function calculating the sample mode of continuous data, with some "
+"people questioning the choice of algorithm, and whether it was a "
+"sufficiently common need to be included.  So it was dropped from the API,"
+" and ``mode`` now implements only the basic schoolbook algorithm based on"
+" counting unique values."
+msgstr ""
+
+#: ../../pep-0450.txt:416
+msgid ""
+"Another significant point of discussion was calculating statistics of "
+"``timedelta`` objects.  Although the statistics module will not directly "
+"support ``timedelta`` objects, it is possible to support this use-case by"
+" converting them to numbers first using the ``timedelta.total_seconds`` "
+"method."
+msgstr ""
+
+#: ../../pep-0450.txt:423
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: ../../pep-0450.txt:426
+msgid ""
+"Shouldn't this module spend time on PyPI before being considered for the "
+"standard library?"
+msgstr ""
+
+#: ../../pep-0450.txt:428
+msgid ""
+"Older versions of this module have been available on PyPI [22]_ since "
+"2010. Being much simpler than numpy, it does not require many years of "
+"external development."
+msgstr ""
+
+#: ../../pep-0450.txt:433
+msgid "Does the standard library really need yet another version of ``sum``?"
+msgstr ""
+
+#: ../../pep-0450.txt:435
+msgid ""
+"This proved to be the most controversial part of the reference "
+"implementation. In one sense, clearly three sums is two too many.  But in"
+" another sense, yes. The reasons why the two existing versions are "
+"unsuitable are described here [23]_ but the short summary is:"
+msgstr ""
+
+#: ../../pep-0450.txt:440
+msgid "the built-in sum can lose precision with floats;"
+msgstr ""
+
+#: ../../pep-0450.txt:442
+msgid ""
+"the built-in sum accepts any non-numeric data type that supports the "
+"``+`` operator, apart from strings and bytes;"
+msgstr ""
+
+#: ../../pep-0450.txt:445
+msgid "``math.fsum`` is high-precision, but coerces all arguments to float."
+msgstr ""
+
+#: ../../pep-0450.txt:447
+msgid ""
+"There was some interest in \"fixing\" one or the other of the existing "
+"sums. If this occurs before 3.4 feature-freeze, the decision to keep "
+"``statistics.sum`` can be re-considered."
+msgstr ""
+
+#: ../../pep-0450.txt:452
+msgid "Will this module be backported to older versions of Python?"
+msgstr ""
+
+#: ../../pep-0450.txt:454
+msgid ""
+"The module currently targets 3.3, and I will make it available on PyPI "
+"for 3.3 for the foreseeable future.  Backporting to older versions of the"
+" 3.x series is likely (but not yet decided).  Backporting to 2.7 is less "
+"likely but not ruled out."
+msgstr ""
+
+#: ../../pep-0450.txt:460
+msgid "Is this supposed to replace numpy?"
+msgstr ""
+
+#: ../../pep-0450.txt:462
+msgid ""
+"No. While it is likely to grow over the years (see open issues below) it "
+"is not aimed to replace, or even compete directly with, numpy.  Numpy is "
+"a full-featured numeric library aimed at professionals, the nuclear "
+"reactor of numeric libraries in the Python ecosystem. This is just a "
+"battery, as in \"batteries included\", and is aimed at an intermediate "
+"level somewhere between \"use numpy\" and \"roll your own version\"."
+msgstr ""
+
+#: ../../pep-0450.txt:471
+msgid "Future Work"
+msgstr ""
+
+#: ../../pep-0450.txt:473
+msgid ""
+"At this stage, I am unsure of the best API for multivariate statistical "
+"functions such as linear regression, correlation coefficient, and "
+"covariance. Possible APIs include:"
+msgstr ""
+
+#: ../../pep-0450.txt:477
+msgid "Separate arguments for x and y data::"
+msgstr ""
+
+#: ../../pep-0450.txt:481
+msgid "A single argument for (x, y) data::"
+msgstr ""
+
+#: ../../pep-0450.txt:485
+msgid "This API is preferred by GvR [24]_."
+msgstr ""
+
+#: ../../pep-0450.txt:487
+msgid "Selecting arbitrary columns from a 2D array::"
+msgstr ""
+
+#: ../../pep-0450.txt:491
+msgid "Some combination of the above."
+msgstr ""
+
+#: ../../pep-0450.txt:493
+msgid ""
+"In the absence of a consensus of preferred API for multivariate stats, I "
+"will defer including such multivariate functions until Python 3.5."
+msgstr ""
+
+#: ../../pep-0450.txt:496
+msgid ""
+"Likewise, functions for calculating probability of random variables and "
+"inference testing (e.g. Student's t-test) will be deferred until 3.5."
+msgstr ""
+
+#: ../../pep-0450.txt:499
+msgid ""
+"There is considerable interest in including one-pass functions that can "
+"calculate multiple statistics from data in iterator form, without having "
+"to convert to a list. The experimental ``stats`` package on PyPI includes"
+" co-routine versions of statistics functions. Including these will be "
+"deferred to 3.5."
+msgstr ""
+
+#: ../../pep-0450.txt:507
+msgid "References"
+msgstr ""
+
+#: ../../pep-0450.txt:509
+msgid "https://mail.python.org/pipermail/python-dev/2010-October/104721.html"
+msgstr ""
+
+#: ../../pep-0450.txt:511
+msgid "http://support.casio.com/pdf/004/CP330PLUSver310_Soft_E.pdf"
+msgstr ""
+
+#: ../../pep-0450.txt:513
+msgid "Gnumeric:: https://projects.gnome.org/gnumeric/functions.shtml"
+msgstr ""
+
+#: ../../pep-0450.txt:516
+msgid ""
+"LibreOffice: "
+"https://help.libreoffice.org/Calc/Statistical_Functions_Part_One "
+"https://help.libreoffice.org/Calc/Statistical_Functions_Part_Two "
+"https://help.libreoffice.org/Calc/Statistical_Functions_Part_Three "
+"https://help.libreoffice.org/Calc/Statistical_Functions_Part_Four "
+"https://help.libreoffice.org/Calc/Statistical_Functions_Part_Five"
+msgstr ""
+
+#: ../../pep-0450.txt:523
+msgid "Scipy: http://scipy-central.org/ Numpy: http://www.numpy.org/"
+msgstr ""
+
+#: ../../pep-0450.txt:526
+msgid "http://wiki.scipy.org/Numpy_Functions_by_Category"
+msgstr ""
+
+#: ../../pep-0450.txt:528
+msgid "Tested with numpy 1.6.1 and Python 2.7."
+msgstr ""
+
+#: ../../pep-0450.txt:530
+msgid ""
+"http://www.johndcook.com/blog/2008/09/26/comparing-three-methods-of-"
+"computing-standard-deviation/"
+msgstr ""
+
+#: ../../pep-0450.txt:532
+msgid "http://rosettacode.org/wiki/Standard_deviation"
+msgstr ""
+
+#: ../../pep-0450.txt:534
+msgid "https://bitbucket.org/larsyencken/simplestats/src/c42e048a6625/src/basic.py"
+msgstr ""
+
+#: ../../pep-0450.txt:536
+msgid ""
+"http://stackoverflow.com/questions/2341340/calculate-mean-and-variance-"
+"with-one-iteration"
+msgstr ""
+
+#: ../../pep-0450.txt:538
+msgid "http://www.r-project.org/"
+msgstr ""
+
+#: ../../pep-0450.txt:540
+msgid ""
+"http://msdn.microsoft.com/en-"
+"us/library/system.linq.enumerable.average.aspx"
+msgstr ""
+
+#: ../../pep-0450.txt:542
+msgid "https://www.bcg.wisc.edu/webteam/support/ruby/standard_deviation"
+msgstr ""
+
+#: ../../pep-0450.txt:544
+msgid "http://ruby-statsample.rubyforge.org/"
+msgstr ""
+
+#: ../../pep-0450.txt:546
+msgid "http://www.php.net/manual/en/ref.stats.php"
+msgstr ""
+
+#: ../../pep-0450.txt:548
+#, python-format
+msgid "http://www.ayton.id.au/gary/it/Delphi/D_maths.htm#Delphi%20Statistical%20functions."
+msgstr ""
+
+#: ../../pep-0450.txt:550
+msgid "http://www.gnu.org/software/gsl/manual/html_node/Statistics.html"
+msgstr ""
+
+#: ../../pep-0450.txt:552
+msgid ""
+"http://www.gnu.org/software/gsl/manual/html_node/Mean-and-standard-"
+"deviation-and-variance.html"
+msgstr ""
+
+#: ../../pep-0450.txt:554
+msgid "http://mathworld.wolfram.com/Skewness.html"
+msgstr ""
+
+#: ../../pep-0450.txt:556
+msgid "At least, tedious to those who don't like this sort of thing."
+msgstr ""
+
+#: ../../pep-0450.txt:558
+msgid "https://mail.python.org/pipermail/python-ideas/2011-September/011524.html"
+msgstr ""
+
+#: ../../pep-0450.txt:560
+msgid "https://pypi.python.org/pypi/stats/"
+msgstr ""
+
+#: ../../pep-0450.txt:562
+msgid "https://mail.python.org/pipermail/python-ideas/2013-August/022630.html"
+msgstr ""
+
+#: ../../pep-0450.txt:564
+msgid "https://mail.python.org/pipermail/python-dev/2013-September/128429.html"
+msgstr ""
+
+#: ../../pep-0450.txt:568
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0450.txt:570
+msgid "This document has been placed in the public domain."
+msgstr ""
+

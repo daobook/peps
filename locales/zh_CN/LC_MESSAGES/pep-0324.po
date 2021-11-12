@@ -1,0 +1,787 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0324.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0324.txt:1
+msgid "324"
+msgstr ""
+
+#: ../../pep-0324.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0324.txt:2
+msgid "subprocess - New process module"
+msgstr ""
+
+#: ../../pep-0324.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0324.txt:5
+msgid "Peter Astrand <astrand@lysator.liu.se>"
+msgstr ""
+
+#: ../../pep-0324.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0324.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0324.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0324.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0324.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0324.txt:9
+msgid "19-Nov-2003"
+msgstr ""
+
+#: ../../pep-0324.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0324.txt:10
+msgid "2.4"
+msgstr ""
+
+#: ../../pep-0324.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0324.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0324.txt:17
+msgid ""
+"This PEP describes a new module for starting and communicating with "
+"processes."
+msgstr ""
+
+#: ../../pep-0324.txt:22
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0324.txt:24
+msgid ""
+"Starting new processes is a common task in any programming language, and "
+"very common in a high-level language like Python. Good support for this "
+"task is needed, because:"
+msgstr ""
+
+#: ../../pep-0324.txt:28
+msgid ""
+"Inappropriate functions for starting processes could mean a security "
+"risk: If the program is started through the shell, and the arguments "
+"contain shell meta characters, the result can be disastrous. [1]_"
+msgstr ""
+
+#: ../../pep-0324.txt:33
+msgid ""
+"It makes Python an even better replacement language for over-complicated "
+"shell scripts."
+msgstr ""
+
+#: ../../pep-0324.txt:36
+msgid ""
+"Currently, Python has a large number of different functions for process "
+"creation.  This makes it hard for developers to choose."
+msgstr ""
+
+#: ../../pep-0324.txt:39
+msgid ""
+"The subprocess module provides the following enhancements over previous "
+"functions:"
+msgstr ""
+
+#: ../../pep-0324.txt:42
+msgid "One \"unified\" module provides all functionality from previous functions."
+msgstr ""
+
+#: ../../pep-0324.txt:45
+msgid ""
+"Cross-process exceptions: Exceptions happening in the child before the "
+"new process has started to execute are re-raised in the parent.  This "
+"means that it's easy to handle ``exec()`` failures, for example.  With "
+"popen2, for example, it's impossible to detect if the execution failed."
+msgstr ""
+
+#: ../../pep-0324.txt:51
+msgid ""
+"A hook for executing custom code between fork and exec.  This can be used"
+" for, for example, changing uid."
+msgstr ""
+
+#: ../../pep-0324.txt:54
+msgid ""
+"No implicit call of /bin/sh.  This means that there is no need for "
+"escaping dangerous shell meta characters."
+msgstr ""
+
+#: ../../pep-0324.txt:57
+msgid ""
+"All combinations of file descriptor redirection is possible. For example,"
+" the \"python-dialog\" [2]_ needs to spawn a process and redirect stderr,"
+" but not stdout.  This is not possible with current functions, without "
+"using temporary files."
+msgstr ""
+
+#: ../../pep-0324.txt:62
+msgid ""
+"With the subprocess module, it's possible to control if all open file "
+"descriptors should be closed before the new program is executed."
+msgstr ""
+
+#: ../../pep-0324.txt:66
+msgid "Support for connecting several subprocesses (shell \"pipe\")."
+msgstr ""
+
+#: ../../pep-0324.txt:68
+msgid "Universal newline support."
+msgstr ""
+
+#: ../../pep-0324.txt:70
+msgid ""
+"A ``communicate()`` method, which makes it easy to send stdin data and "
+"read stdout and stderr data, without risking deadlocks. Most people are "
+"aware of the flow control issues involved with child process "
+"communication, but not all have the patience or skills to write a fully "
+"correct and deadlock-free select loop. This means that many Python "
+"applications contain race conditions.  A ``communicate()`` method in the "
+"standard library solves this problem."
+msgstr ""
+
+#: ../../pep-0324.txt:81
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0324.txt:83
+msgid "The following points summarizes the design:"
+msgstr ""
+
+#: ../../pep-0324.txt:85
+msgid "subprocess was based on popen2, which is tried-and-tested."
+msgstr ""
+
+#: ../../pep-0324.txt:87
+msgid ""
+"The factory functions in popen2 have been removed, because I consider the"
+" class constructor equally easy to work with."
+msgstr ""
+
+#: ../../pep-0324.txt:90
+msgid ""
+"popen2 contains several factory functions and classes for different "
+"combinations of redirection.  subprocess, however, contains one single "
+"class.  Since the subprocess module supports 12 different combinations of"
+" redirection, providing a class or function for each of them would be "
+"cumbersome and not very intuitive.  Even with popen2, this is a "
+"readability problem. For example, many people cannot tell the difference "
+"between popen2.popen2 and popen2.popen4 without using the documentation."
+msgstr ""
+
+#: ../../pep-0324.txt:99
+msgid ""
+"One small utility function is provided: ``subprocess.call()``. It aims to"
+" be an enhancement over ``os.system()``, while still very easy to use:"
+msgstr ""
+
+#: ../../pep-0324.txt:103
+msgid "It does not use the Standard C function system(), which has limitations."
+msgstr ""
+
+#: ../../pep-0324.txt:106
+msgid "It does not call the shell implicitly."
+msgstr ""
+
+#: ../../pep-0324.txt:108
+msgid "No need for quoting; using an argument list."
+msgstr ""
+
+#: ../../pep-0324.txt:110
+msgid "The return value is easier to work with."
+msgstr ""
+
+#: ../../pep-0324.txt:112
+msgid ""
+"The ``call()`` utility function accepts an 'args' argument, just like the"
+" ``Popen`` class constructor.  It waits for the command to complete, then"
+" returns the ``returncode`` attribute.  The implementation is very "
+"simple::"
+msgstr ""
+
+#: ../../pep-0324.txt:120
+msgid ""
+"The motivation behind the ``call()`` function is simple: Starting a "
+"process and wait for it to finish is a common task."
+msgstr ""
+
+#: ../../pep-0324.txt:123
+msgid ""
+"While ``Popen`` supports a wide range of options, many users have simple "
+"needs.  Many people are using ``os.system()`` today, mainly because it "
+"provides a simple interface.  Consider this example::"
+msgstr ""
+
+#: ../../pep-0324.txt:129
+msgid "With ``subprocess.call()``, this would look like::"
+msgstr ""
+
+#: ../../pep-0324.txt:133
+msgid "or, if executing through the shell::"
+msgstr ""
+
+#: ../../pep-0324.txt:137
+msgid ""
+"The \"preexec\" functionality makes it possible to run arbitrary code "
+"between fork and exec.  One might ask why there are special arguments for"
+" setting the environment and current directory, but not for, for example,"
+" setting the uid.  The answer is:"
+msgstr ""
+
+#: ../../pep-0324.txt:142
+msgid "Changing environment and working directory is considered fairly common."
+msgstr ""
+
+#: ../../pep-0324.txt:145
+msgid "Old functions like ``spawn()`` has support for an \"env\"-argument."
+msgstr ""
+
+#: ../../pep-0324.txt:148
+msgid ""
+"env and cwd are considered quite cross-platform: They make sense even on "
+"Windows."
+msgstr ""
+
+#: ../../pep-0324.txt:151
+msgid ""
+"On POSIX platforms, no extension module is required: the module uses "
+"``os.fork()``, ``os.execvp()`` etc."
+msgstr ""
+
+#: ../../pep-0324.txt:154
+msgid ""
+"On Windows platforms, the module requires either Mark Hammond's Windows "
+"extensions [5]_, or a small extension module called _subprocess."
+msgstr ""
+
+#: ../../pep-0324.txt:160
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0324.txt:162
+msgid "This module defines one class called Popen::"
+msgstr ""
+
+#: ../../pep-0324.txt:171
+msgid "Arguments are:"
+msgstr ""
+
+#: ../../pep-0324.txt:173
+msgid ""
+"``args`` should be a string, or a sequence of program arguments. The "
+"program to execute is normally the first item in the args sequence or "
+"string, but can be explicitly set by using the executable argument."
+msgstr ""
+
+#: ../../pep-0324.txt:178
+msgid ""
+"On UNIX, with ``shell=False`` (default): In this case, the ``Popen`` "
+"class uses ``os.execvp()`` to execute the child program.  ``args`` should"
+" normally be a sequence.  A string will be treated as a sequence with the"
+" string as the only item (the program to execute)."
+msgstr ""
+
+#: ../../pep-0324.txt:184
+msgid ""
+"On UNIX, with ``shell=True``: If ``args`` is a string, it specifies the "
+"command string to execute through the shell.  If ``args`` is a sequence, "
+"the first item specifies the command string, and any additional items "
+"will be treated as additional shell arguments."
+msgstr ""
+
+#: ../../pep-0324.txt:189
+msgid ""
+"On Windows: the ``Popen`` class uses ``CreateProcess()`` to execute the "
+"child program, which operates on strings.  If ``args`` is a sequence, it "
+"will be converted to a string using the ``list2cmdline`` method.  Please "
+"note that not all MS Windows applications interpret the command line the "
+"same way: The ``list2cmdline`` is designed for applications using the "
+"same rules as the MS C runtime."
+msgstr ""
+
+#: ../../pep-0324.txt:197
+msgid ""
+"``bufsize``, if given, has the same meaning as the corresponding argument"
+" to the built-in ``open()`` function: 0 means unbuffered, 1 means line "
+"buffered, any other positive value means use a buffer of (approximately) "
+"that size.  A negative ``bufsize`` means to use the system default, which"
+" usually means fully buffered.  The default value for ``bufsize`` is 0 "
+"(unbuffered)."
+msgstr ""
+
+#: ../../pep-0324.txt:204
+msgid ""
+"``stdin``, ``stdout`` and ``stderr`` specify the executed programs' "
+"standard input, standard output and standard error file handles, "
+"respectively.  Valid values are ``PIPE``, an existing file descriptor (a "
+"positive integer), an existing file object, and ``None``.  ``PIPE`` "
+"indicates that a new pipe to the child should be created.  With ``None``,"
+" no redirection will occur; the child's file handles will be inherited "
+"from the parent.  Additionally, ``stderr`` can be STDOUT, which indicates"
+" that the stderr data from the applications should be captured into the "
+"same file handle as for stdout."
+msgstr ""
+
+#: ../../pep-0324.txt:215
+msgid ""
+"If ``preexec_fn`` is set to a callable object, this object will be called"
+" in the child process just before the child is executed."
+msgstr ""
+
+#: ../../pep-0324.txt:218
+msgid ""
+"If ``close_fds`` is true, all file descriptors except 0, 1 and 2 will be "
+"closed before the child process is executed."
+msgstr ""
+
+#: ../../pep-0324.txt:221
+msgid ""
+"If ``shell`` is true, the specified command will be executed through the "
+"shell."
+msgstr ""
+
+#: ../../pep-0324.txt:224
+msgid ""
+"If ``cwd`` is not ``None``, the current directory will be changed to cwd "
+"before the child is executed."
+msgstr ""
+
+#: ../../pep-0324.txt:227
+msgid ""
+"If ``env`` is not ``None``, it defines the environment variables for the "
+"new process."
+msgstr ""
+
+#: ../../pep-0324.txt:230
+msgid ""
+"If ``universal_newlines`` is true, the file objects stdout and stderr are"
+" opened as a text file, but lines may be terminated by any of ``\\n``, "
+"the Unix end-of-line convention, ``\\r``, the Macintosh convention or "
+"``\\r\\n``, the Windows convention.  All of these external "
+"representations are seen as ``\\n`` by the Python program.  Note: This "
+"feature is only available if Python is built with universal newline "
+"support (the default).  Also, the newlines attribute of the file objects "
+"stdout, stdin and stderr are not updated by the ``communicate()`` method."
+msgstr ""
+
+#: ../../pep-0324.txt:240
+msgid ""
+"The ``startupinfo`` and ``creationflags``, if given, will be passed to "
+"the underlying ``CreateProcess()`` function.  They can specify things "
+"such as appearance of the main window and priority for the new process.  "
+"(Windows only)"
+msgstr ""
+
+#: ../../pep-0324.txt:246
+msgid "This module also defines two shortcut functions:"
+msgstr ""
+
+#: ../../pep-0324.txt:256
+msgid "``call(*args, **kwargs)``:"
+msgstr ""
+
+#: ../../pep-0324.txt:249
+msgid ""
+"Run command with arguments.  Wait for command to complete, then return "
+"the ``returncode`` attribute."
+msgstr ""
+
+#: ../../pep-0324.txt:252
+msgid "The arguments are the same as for the Popen constructor. Example::"
+msgstr ""
+
+#: ../../pep-0324.txt:259
+msgid "Exceptions"
+msgstr ""
+
+#: ../../pep-0324.txt:261
+msgid ""
+"Exceptions raised in the child process, before the new program has "
+"started to execute, will be re-raised in the parent. Additionally, the "
+"exception object will have one extra attribute called 'child_traceback', "
+"which is a string containing traceback information from the child's point"
+" of view."
+msgstr ""
+
+#: ../../pep-0324.txt:267
+msgid ""
+"The most common exception raised is ``OSError``.  This occurs, for "
+"example, when trying to execute a non-existent file.  Applications should"
+" prepare for ``OSErrors``."
+msgstr ""
+
+#: ../../pep-0324.txt:271
+msgid "A ``ValueError`` will be raised if Popen is called with invalid arguments."
+msgstr ""
+
+#: ../../pep-0324.txt:276
+msgid "Security"
+msgstr ""
+
+#: ../../pep-0324.txt:278
+msgid ""
+"Unlike some other popen functions, this implementation will never call "
+"/bin/sh implicitly.  This means that all characters, including shell "
+"meta-characters, can safely be passed to child processes."
+msgstr ""
+
+#: ../../pep-0324.txt:285
+msgid "Popen objects"
+msgstr ""
+
+#: ../../pep-0324.txt:287
+msgid "Instances of the Popen class have the following methods:"
+msgstr ""
+
+#: ../../pep-0324.txt:291
+msgid "``poll()``"
+msgstr ""
+
+#: ../../pep-0324.txt:290
+msgid "Check if child process has terminated.  Returns ``returncode`` attribute."
+msgstr ""
+
+#: ../../pep-0324.txt:295
+msgid "``wait()``"
+msgstr ""
+
+#: ../../pep-0324.txt:294
+msgid "Wait for child process to terminate.  Returns ``returncode`` attribute."
+msgstr ""
+
+#: ../../pep-0324.txt:307
+msgid "``communicate(input=None)``"
+msgstr ""
+
+#: ../../pep-0324.txt:298
+msgid ""
+"Interact with process: Send data to stdin.  Read data from stdout and "
+"stderr, until end-of-file is reached.  Wait for process to terminate.  "
+"The optional stdin argument should be a string to be sent to the child "
+"process, or ``None``, if no data should be sent to the child."
+msgstr ""
+
+#: ../../pep-0324.txt:304
+msgid "``communicate()`` returns a tuple ``(stdout, stderr)``."
+msgstr ""
+
+#: ../../pep-0324.txt:306
+msgid ""
+"Note: The data read is buffered in memory, so do not use this method if "
+"the data size is large or unlimited."
+msgstr ""
+
+#: ../../pep-0324.txt:309
+msgid "The following attributes are also available:"
+msgstr ""
+
+#: ../../pep-0324.txt:314
+msgid "``stdin``"
+msgstr ""
+
+#: ../../pep-0324.txt:312
+msgid ""
+"If the ``stdin`` argument is ``PIPE``, this attribute is a file object "
+"that provides input to the child process.  Otherwise, it is ``None``."
+msgstr ""
+
+#: ../../pep-0324.txt:319
+msgid "``stdout``"
+msgstr ""
+
+#: ../../pep-0324.txt:317
+msgid ""
+"If the ``stdout`` argument is ``PIPE``, this attribute is a file object "
+"that provides output from the child process. Otherwise, it is ``None``."
+msgstr ""
+
+#: ../../pep-0324.txt:324
+msgid "``stderr``"
+msgstr ""
+
+#: ../../pep-0324.txt:322
+msgid ""
+"If the ``stderr`` argument is ``PIPE``, this attribute is file object "
+"that provides error output from the child process.  Otherwise, it is "
+"``None``."
+msgstr ""
+
+#: ../../pep-0324.txt:327
+msgid "``pid``"
+msgstr ""
+
+#: ../../pep-0324.txt:327
+msgid "The process ID of the child process."
+msgstr ""
+
+#: ../../pep-0324.txt:333
+msgid "``returncode``"
+msgstr ""
+
+#: ../../pep-0324.txt:330
+msgid ""
+"The child return code.  A ``None`` value indicates that the process "
+"hasn't terminated yet.  A negative value -N indicates that the child was "
+"terminated by signal N (UNIX only)."
+msgstr ""
+
+#: ../../pep-0324.txt:336
+msgid "Replacing older functions with the subprocess module"
+msgstr ""
+
+#: ../../pep-0324.txt:338
+msgid ""
+"In this section, \"a ==> b\" means that b can be used as a replacement "
+"for a."
+msgstr ""
+
+#: ../../pep-0324.txt:341
+msgid ""
+"Note: All functions in this section fail (more or less) silently if the "
+"executed program cannot be found; this module raises an OSError "
+"exception."
+msgstr ""
+
+#: ../../pep-0324.txt:345
+msgid ""
+"In the following examples, we assume that the subprocess module is "
+"imported with ``from subprocess import *``."
+msgstr ""
+
+#: ../../pep-0324.txt:350
+msgid "Replacing /bin/sh shell backquote"
+msgstr ""
+
+#: ../../pep-0324.txt:359
+msgid "Replacing shell pipe line"
+msgstr ""
+
+#: ../../pep-0324.txt:370
+msgid "Replacing ``os.system()``"
+msgstr ""
+
+#: ../../pep-0324.txt:378
+msgid "Note:"
+msgstr ""
+
+#: ../../pep-0324.txt:380
+msgid "Calling the program through the shell is usually not required."
+msgstr ""
+
+#: ../../pep-0324.txt:382
+msgid "It's easier to look at the returncode attribute than the exit status."
+msgstr ""
+
+#: ../../pep-0324.txt:385
+msgid "A more real-world example would look like this::"
+msgstr ""
+
+#: ../../pep-0324.txt:398
+msgid "Replacing ``os.spawn*``"
+msgstr ""
+
+#: ../../pep-0324.txt:400
+msgid "P_NOWAIT example::"
+msgstr ""
+
+#: ../../pep-0324.txt:407
+msgid "P_WAIT example::"
+msgstr ""
+
+#: ../../pep-0324.txt:414
+msgid "Vector example::"
+msgstr ""
+
+#: ../../pep-0324.txt:421
+msgid "Environment example::"
+msgstr ""
+
+#: ../../pep-0324.txt:429
+msgid "Replacing ``os.popen*``"
+msgstr ""
+
+#: ../../pep-0324.txt:467
+msgid "Replacing ``popen2.*``"
+msgstr ""
+
+#: ../../pep-0324.txt:469
+msgid ""
+"Note: If the cmd argument to ``popen2`` functions is a string, the "
+"command is executed through /bin/sh.  If it is a list, the command is "
+"directly executed."
+msgstr ""
+
+#: ../../pep-0324.txt:488
+msgid ""
+"The ``popen2.Popen3`` and ``popen3.Popen4`` basically works as "
+"``subprocess.Popen``, except that:"
+msgstr ""
+
+#: ../../pep-0324.txt:491
+msgid "``subprocess.Popen`` raises an exception if the execution fails"
+msgstr ""
+
+#: ../../pep-0324.txt:492
+msgid "the ``capturestderr`` argument is replaced with the stderr argument."
+msgstr ""
+
+#: ../../pep-0324.txt:493
+msgid "``stdin=PIPE`` and ``stdout=PIPE`` must be specified."
+msgstr ""
+
+#: ../../pep-0324.txt:494
+msgid ""
+"``popen2`` closes all file descriptors by default, but you have to "
+"specify ``close_fds=True`` with ``subprocess.Popen``."
+msgstr ""
+
+#: ../../pep-0324.txt:499
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0324.txt:501
+msgid ""
+"Some features have been requested but is not yet implemented. This "
+"includes:"
+msgstr ""
+
+#: ../../pep-0324.txt:504
+msgid "Support for managing a whole flock of subprocesses"
+msgstr ""
+
+#: ../../pep-0324.txt:506
+msgid "Support for managing \"daemon\" processes"
+msgstr ""
+
+#: ../../pep-0324.txt:508
+msgid "Built-in method for killing subprocesses"
+msgstr ""
+
+#: ../../pep-0324.txt:510
+msgid ""
+"While these are useful features, it's expected that these can be added "
+"later without problems."
+msgstr ""
+
+#: ../../pep-0324.txt:513
+msgid "expect-like functionality, including pty support."
+msgstr ""
+
+#: ../../pep-0324.txt:515
+msgid ""
+"pty support is highly platform-dependent, which is a problem.  Also, "
+"there are already other modules that provide this kind of functionality "
+"[6]_."
+msgstr ""
+
+#: ../../pep-0324.txt:521
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0324.txt:523
+msgid ""
+"Since this is a new module, no major backward compatible issues are "
+"expected.  The module name \"subprocess\" might collide with other, "
+"previous modules [3]_ with the same name, but the name \"subprocess\" "
+"seems to be the best suggested name so far.  The first name of this "
+"module was \"popen5\", but this name was considered too unintuitive.  For"
+" a while, the module was called \"process\", but this name is already "
+"used by Trent Mick's module [4]_."
+msgstr ""
+
+#: ../../pep-0324.txt:532
+msgid ""
+"The functions and modules that this new module is trying to replace "
+"(``os.system``, ``os.spawn*``, ``os.popen*``, ``popen2.*``, "
+"``commands.*``) are expected to be available in future Python versions "
+"for a long time, to preserve backwards compatibility."
+msgstr ""
+
+#: ../../pep-0324.txt:539
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0324.txt:541
+msgid ""
+"A reference implementation is available from "
+"http://www.lysator.liu.se/~astrand/popen5/."
+msgstr ""
+
+#: ../../pep-0324.txt:546
+msgid "References"
+msgstr ""
+
+#: ../../pep-0324.txt:548
+msgid ""
+"Secure Programming for Linux and Unix HOWTO, section 8.3. "
+"http://www.dwheeler.com/secure-programs/"
+msgstr ""
+
+#: ../../pep-0324.txt:551
+msgid "Python Dialog http://pythondialog.sourceforge.net/"
+msgstr ""
+
+#: ../../pep-0324.txt:554
+msgid "http://www.iol.ie/~padraiga/libs/subProcess.py"
+msgstr ""
+
+#: ../../pep-0324.txt:556
+msgid "http://starship.python.net/crew/tmick/"
+msgstr ""
+
+#: ../../pep-0324.txt:558
+msgid "http://starship.python.net/crew/mhammond/win32/"
+msgstr ""
+
+#: ../../pep-0324.txt:560
+msgid "http://www.lysator.liu.se/~ceder/pcl-expect/"
+msgstr ""
+
+#: ../../pep-0324.txt:564
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0324.txt:566
+msgid "This document has been placed in the public domain."
+msgstr ""
+

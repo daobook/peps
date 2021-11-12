@@ -1,0 +1,699 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3148.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3148.txt:1
+msgid "3148"
+msgstr ""
+
+#: ../../pep-3148.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3148.txt:2
+msgid "futures - execute computations asynchronously"
+msgstr ""
+
+#: ../../pep-3148.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3148.txt:5
+msgid "Brian Quinlan <brian@sweetapp.com>"
+msgstr ""
+
+#: ../../pep-3148.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3148.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3148.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3148.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3148.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3148.txt:9
+msgid "16-Oct-2009"
+msgstr ""
+
+#: ../../pep-3148.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3148.txt:10
+msgid "3.2"
+msgstr ""
+
+#: ../../pep-3148.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3148.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3148.txt:17
+msgid ""
+"This PEP proposes a design for a package that facilitates the evaluation "
+"of callables using threads and processes."
+msgstr ""
+
+#: ../../pep-3148.txt:22
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-3148.txt:24
+msgid ""
+"Python currently has powerful primitives to construct multi-threaded and "
+"multi-process applications but parallelizing simple operations requires a"
+" lot of work i.e. explicitly launching processes/threads, constructing a "
+"work/results queue, and waiting for completion or some other termination "
+"condition (e.g.  failure, timeout).  It is also difficult to design an "
+"application with a global process/thread limit when each component "
+"invents its own parallel execution strategy."
+msgstr ""
+
+#: ../../pep-3148.txt:34
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3148.txt:37
+msgid "Naming"
+msgstr ""
+
+#: ../../pep-3148.txt:39
+msgid ""
+"The proposed package would be called \"futures\" and would live in a new "
+"\"concurrent\" top-level package. The rationale behind pushing the "
+"futures library into a \"concurrent\" namespace has multiple components. "
+"The first, most simple one is to prevent any and all confusion with the "
+"existing \"from __future__ import x\" idiom which has been in use for a "
+"long time within Python. Additionally, it is felt that adding the "
+"\"concurrent\" precursor to the name fully denotes what the library is "
+"related to - namely concurrency - this should clear up any addition "
+"ambiguity as it has been noted that not everyone in the community is "
+"familiar with Java Futures, or the Futures term except as it relates to "
+"the US stock market."
+msgstr ""
+
+#: ../../pep-3148.txt:51
+msgid ""
+"Finally; we are carving out a new namespace for the standard library - "
+"obviously named \"concurrent\". We hope to either add, or move existing, "
+"concurrency-related libraries to this in the future.  A prime example is "
+"the multiprocessing.Pool work, as well as other \"addons\" included in "
+"that module, which work across thread and process boundaries."
+msgstr ""
+
+#: ../../pep-3148.txt:58
+msgid "Interface"
+msgstr ""
+
+#: ../../pep-3148.txt:60
+msgid ""
+"The proposed package provides two core classes: `Executor` and `Future`. "
+"An `Executor` receives asynchronous work requests (in terms of a callable"
+" and its arguments) and returns a `Future` to represent the execution of "
+"that work request."
+msgstr ""
+
+#: ../../pep-3148.txt:66
+msgid "Executor"
+msgstr ""
+
+#: ../../pep-3148.txt:68
+msgid ""
+"`Executor` is an abstract class that provides methods to execute calls "
+"asynchronously."
+msgstr ""
+
+#: ../../pep-3148.txt:71
+msgid "``submit(fn, *args, **kwargs)``"
+msgstr ""
+
+#: ../../pep-3148.txt:73
+msgid ""
+"Schedules the callable to be executed as ``fn(*args, **kwargs)`` and "
+"returns a `Future` instance representing the execution of the callable."
+msgstr ""
+
+#: ../../pep-3148.txt:77
+msgid "This is an abstract method and must be implemented by Executor subclasses."
+msgstr ""
+
+#: ../../pep-3148.txt:80
+msgid "``map(func, *iterables, timeout=None)``"
+msgstr ""
+
+#: ../../pep-3148.txt:82
+msgid ""
+"Equivalent to ``map(func, *iterables)`` but func is executed "
+"asynchronously and several calls to func may be made concurrently. The "
+"returned iterator raises a `TimeoutError` if `__next__()` is called and "
+"the result isn't available after *timeout* seconds from the original call"
+" to `map()`.  If *timeout* is not specified or `None` then there is no "
+"limit to the wait time.  If a call raises an exception then that "
+"exception will be raised when its value is retrieved from the iterator."
+msgstr ""
+
+#: ../../pep-3148.txt:91
+msgid "``shutdown(wait=True)``"
+msgstr ""
+
+#: ../../pep-3148.txt:93
+msgid ""
+"Signal the executor that it should free any resources that it is using "
+"when the currently pending futures are done executing. Calls to "
+"`Executor.submit` and `Executor.map` and made after shutdown will raise "
+"`RuntimeError`."
+msgstr ""
+
+#: ../../pep-3148.txt:98
+msgid ""
+"If wait is `True` then this method will not return until all the pending "
+"futures are done executing and the resources associated with the executor"
+" have been freed. If wait is `False` then this method will return "
+"immediately and the resources associated with the executor will be freed "
+"when all pending futures are done executing. Regardless of the value of "
+"wait, the entire Python program will not exit until all pending futures "
+"are done executing."
+msgstr ""
+
+#: ../../pep-3148.txt:107
+msgid "``__enter__()``"
+msgstr ""
+
+#: ../../pep-3148.txt:108
+msgid "``__exit__(exc_type, exc_val, exc_tb)``"
+msgstr ""
+
+#: ../../pep-3148.txt:110
+msgid ""
+"When using an executor as a context manager, `__exit__` will call "
+"``Executor.shutdown(wait=True)``."
+msgstr ""
+
+#: ../../pep-3148.txt:115
+msgid "ProcessPoolExecutor"
+msgstr ""
+
+#: ../../pep-3148.txt:117
+msgid ""
+"The `ProcessPoolExecutor` class is an `Executor` subclass that uses a "
+"pool of processes to execute calls asynchronously.  The callable objects "
+"and arguments passed to `ProcessPoolExecutor.submit` must be pickleable "
+"according to the same limitations as the multiprocessing module."
+msgstr ""
+
+#: ../../pep-3148.txt:123
+msgid ""
+"Calling `Executor` or `Future` methods from within a callable submitted "
+"to a `ProcessPoolExecutor` will result in deadlock."
+msgstr ""
+
+#: ../../pep-3148.txt:126 ../../pep-3148.txt:168
+msgid "``__init__(max_workers)``"
+msgstr ""
+
+#: ../../pep-3148.txt:128
+msgid ""
+"Executes calls asynchronously using a pool of a most *max_workers* "
+"processes.  If *max_workers* is ``None`` or not given then as many worker"
+" processes will be created as the machine has processors."
+msgstr ""
+
+#: ../../pep-3148.txt:133
+msgid "ThreadPoolExecutor"
+msgstr ""
+
+#: ../../pep-3148.txt:135
+msgid ""
+"The `ThreadPoolExecutor` class is an `Executor` subclass that uses a pool"
+" of threads to execute calls asynchronously."
+msgstr ""
+
+#: ../../pep-3148.txt:138
+msgid ""
+"Deadlock can occur when the callable associated with a `Future` waits on "
+"the results of another `Future`.  For example::"
+msgstr ""
+
+#: ../../pep-3148.txt:157
+msgid "And::"
+msgstr ""
+
+#: ../../pep-3148.txt:170
+msgid ""
+"Executes calls asynchronously using a pool of at most *max_workers* "
+"threads."
+msgstr ""
+
+#: ../../pep-3148.txt:174
+msgid "Future Objects"
+msgstr ""
+
+#: ../../pep-3148.txt:176
+msgid ""
+"The `Future` class encapsulates the asynchronous execution of a callable."
+" `Future` instances are returned by `Executor.submit`."
+msgstr ""
+
+#: ../../pep-3148.txt:179
+msgid "``cancel()``"
+msgstr ""
+
+#: ../../pep-3148.txt:181
+msgid ""
+"Attempt to cancel the call.  If the call is currently being executed then"
+" it cannot be cancelled and the method will return `False`, otherwise the"
+" call will be cancelled and the method will return `True`."
+msgstr ""
+
+#: ../../pep-3148.txt:186
+msgid "``cancelled()``"
+msgstr ""
+
+#: ../../pep-3148.txt:188
+msgid "Return `True` if the call was successfully cancelled."
+msgstr ""
+
+#: ../../pep-3148.txt:190
+msgid "``running()``"
+msgstr ""
+
+#: ../../pep-3148.txt:192
+msgid ""
+"Return `True` if the call is currently being executed and cannot be "
+"cancelled."
+msgstr ""
+
+#: ../../pep-3148.txt:195
+msgid "``done()``"
+msgstr ""
+
+#: ../../pep-3148.txt:197
+msgid "Return `True` if the call was successfully cancelled or finished running."
+msgstr ""
+
+#: ../../pep-3148.txt:200
+msgid "``result(timeout=None)``"
+msgstr ""
+
+#: ../../pep-3148.txt:202
+msgid ""
+"Return the value returned by the call.  If the call hasn't yet completed "
+"then this method will wait up to *timeout* seconds.  If the call hasn't "
+"completed in *timeout* seconds then a `TimeoutError` will be raised.  If "
+"*timeout* is not specified or `None` then there is no limit to the wait "
+"time."
+msgstr ""
+
+#: ../../pep-3148.txt:208 ../../pep-3148.txt:221
+msgid ""
+"If the future is cancelled before completing then `CancelledError` will "
+"be raised."
+msgstr ""
+
+#: ../../pep-3148.txt:211
+msgid "If the call raised then this method will raise the same exception."
+msgstr ""
+
+#: ../../pep-3148.txt:213
+msgid "``exception(timeout=None)``"
+msgstr ""
+
+#: ../../pep-3148.txt:215
+msgid ""
+"Return the exception raised by the call.  If the call hasn't yet "
+"completed then this method will wait up to *timeout* seconds.  If the "
+"call hasn't completed in *timeout* seconds then a `TimeoutError` will be "
+"raised.  If *timeout* is not specified or ``None`` then there is no limit"
+" to the wait time."
+msgstr ""
+
+#: ../../pep-3148.txt:224
+msgid "If the call completed without raising then `None` is returned."
+msgstr ""
+
+#: ../../pep-3148.txt:226
+msgid "``add_done_callback(fn)``"
+msgstr ""
+
+#: ../../pep-3148.txt:228
+msgid ""
+"Attaches a callable *fn* to the future that will be called when the "
+"future is cancelled or finishes running.  *fn* will be called with the "
+"future as its only argument."
+msgstr ""
+
+#: ../../pep-3148.txt:232
+msgid ""
+"Added callables are called in the order that they were added and are "
+"always called in a thread belonging to the process that added them.  If "
+"the callable raises an `Exception` then it will be logged and ignored.  "
+"If the callable raises another `BaseException` then behavior is not "
+"defined."
+msgstr ""
+
+#: ../../pep-3148.txt:238
+msgid ""
+"If the future has already completed or been cancelled then *fn* will be "
+"called immediately."
+msgstr ""
+
+#: ../../pep-3148.txt:242
+msgid "Internal Future Methods"
+msgstr ""
+
+#: ../../pep-3148.txt:244
+msgid ""
+"The following `Future` methods are meant for use in unit tests and "
+"`Executor` implementations."
+msgstr ""
+
+#: ../../pep-3148.txt:247
+msgid "``set_running_or_notify_cancel()``"
+msgstr ""
+
+#: ../../pep-3148.txt:249
+msgid ""
+"Should be called by `Executor` implementations before executing the work "
+"associated with the `Future`."
+msgstr ""
+
+#: ../../pep-3148.txt:252
+msgid ""
+"If the method returns `False` then the `Future` was cancelled, i.e.  "
+"`Future.cancel` was called and returned `True`.  Any threads waiting on "
+"the `Future` completing (i.e. through `as_completed()` or `wait()`) will "
+"be woken up."
+msgstr ""
+
+#: ../../pep-3148.txt:257
+msgid ""
+"If the method returns `True` then the `Future` was not cancelled and has "
+"been put in the running state, i.e. calls to `Future.running()` will "
+"return `True`."
+msgstr ""
+
+#: ../../pep-3148.txt:261
+msgid ""
+"This method can only be called once and cannot be called after "
+"`Future.set_result()` or `Future.set_exception()` have been called."
+msgstr ""
+
+#: ../../pep-3148.txt:265
+msgid "``set_result(result)``"
+msgstr ""
+
+#: ../../pep-3148.txt:267
+msgid "Sets the result of the work associated with the `Future`."
+msgstr ""
+
+#: ../../pep-3148.txt:269
+msgid "``set_exception(exception)``"
+msgstr ""
+
+#: ../../pep-3148.txt:271
+msgid ""
+"Sets the result of the work associated with the `Future` to the given "
+"`Exception`."
+msgstr ""
+
+#: ../../pep-3148.txt:275
+msgid "Module Functions"
+msgstr ""
+
+#: ../../pep-3148.txt:277
+msgid "``wait(fs, timeout=None, return_when=ALL_COMPLETED)``"
+msgstr ""
+
+#: ../../pep-3148.txt:279
+msgid ""
+"Wait for the `Future` instances (possibly created by different `Executor`"
+" instances) given by *fs* to complete.  Returns a named 2-tuple of sets."
+"  The first set, named \"done\", contains the futures that completed "
+"(finished or were cancelled) before the wait completed.  The second set, "
+"named \"not_done\", contains uncompleted futures."
+msgstr ""
+
+#: ../../pep-3148.txt:286
+msgid ""
+"*timeout* can be used to control the maximum number of seconds to wait "
+"before returning.  If timeout is not specified or None then there is no "
+"limit to the wait time."
+msgstr ""
+
+#: ../../pep-3148.txt:290
+msgid ""
+"*return_when* indicates when the method should return.  It must be one of"
+" the following constants:"
+msgstr ""
+
+#: ../../pep-3148.txt:294
+msgid "Constant"
+msgstr ""
+
+#: ../../pep-3148.txt:294
+msgid "Description"
+msgstr ""
+
+#: ../../pep-3148.txt:296
+msgid "`FIRST_COMPLETED`"
+msgstr ""
+
+#: ../../pep-3148.txt:296
+msgid "The method will return when any future finishes or is cancelled."
+msgstr ""
+
+#: ../../pep-3148.txt:298
+msgid "`FIRST_EXCEPTION`"
+msgstr ""
+
+#: ../../pep-3148.txt:298
+msgid ""
+"The method will return when any future finishes by raising an exception. "
+"If not future raises an exception then it is equivalent to ALL_COMPLETED."
+msgstr ""
+
+#: ../../pep-3148.txt:301
+msgid "`ALL_COMPLETED`"
+msgstr ""
+
+#: ../../pep-3148.txt:301
+msgid "The method will return when all calls finish."
+msgstr ""
+
+#: ../../pep-3148.txt:304
+msgid "``as_completed(fs, timeout=None)``"
+msgstr ""
+
+#: ../../pep-3148.txt:306
+msgid ""
+"Returns an iterator over the `Future` instances given by *fs* that yields"
+" futures as they complete (finished or were cancelled).  Any futures that"
+" completed before `as_completed()` was called will be yielded first.  The"
+" returned iterator raises a `TimeoutError` if `__next__()` is called and "
+"the result isn't available after *timeout* seconds from the original call"
+" to `as_completed()`.  If *timeout* is not specified or `None` then there"
+" is no limit to the wait time."
+msgstr ""
+
+#: ../../pep-3148.txt:315
+msgid ""
+"The `Future` instances can have been created by different `Executor` "
+"instances."
+msgstr ""
+
+#: ../../pep-3148.txt:319
+msgid "Check Prime Example"
+msgstr ""
+
+#: ../../pep-3148.txt:354
+msgid "Web Crawl Example"
+msgstr ""
+
+#: ../../pep-3148.txt:390
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3148.txt:392
+msgid ""
+"The proposed design of this module was heavily influenced by the Java "
+"java.util.concurrent package [1]_.  The conceptual basis of the module, "
+"as in Java, is the Future class, which represents the progress and result"
+" of an asynchronous computation.  The Future class makes little "
+"commitment to the evaluation mode being used e.g. it can be used to "
+"represent lazy or eager evaluation, for evaluation using threads, "
+"processes or remote procedure call."
+msgstr ""
+
+#: ../../pep-3148.txt:400
+msgid ""
+"Futures are created by concrete implementations of the Executor class "
+"(called ExecutorService in Java).  The reference implementation provides "
+"classes that use either a process or a thread pool to eagerly evaluate "
+"computations."
+msgstr ""
+
+#: ../../pep-3148.txt:405
+msgid ""
+"Futures have already been seen in Python as part of a popular Python "
+"cookbook recipe [2]_ and have discussed on the Python-3000 mailing list "
+"[3]_."
+msgstr ""
+
+#: ../../pep-3148.txt:409
+msgid ""
+"The proposed design is explicit, i.e. it requires that clients be aware "
+"that they are consuming Futures.  It would be possible to design a module"
+" that would return proxy objects (in the style of `weakref`) that could "
+"be used transparently.  It is possible to build a proxy implementation on"
+" top of the proposed explicit mechanism."
+msgstr ""
+
+#: ../../pep-3148.txt:415
+msgid ""
+"The proposed design does not introduce any changes to Python language "
+"syntax or semantics.  Special syntax could be introduced [4]_ to mark "
+"function and method calls as asynchronous.  A proxy result would be "
+"returned while the operation is eagerly evaluated asynchronously, and "
+"execution would only block if the proxy object were used before the "
+"operation completed."
+msgstr ""
+
+#: ../../pep-3148.txt:422
+msgid ""
+"Anh Hai Trinh proposed a simpler but more limited API concept [5]_ and "
+"the API has been discussed in some detail on stdlib-sig [6]_."
+msgstr ""
+
+#: ../../pep-3148.txt:425
+msgid ""
+"The proposed design was discussed on the Python-Dev mailing list [7]_. "
+"Following those discussions, the following changes were made:"
+msgstr ""
+
+#: ../../pep-3148.txt:428
+msgid "The `Executor` class was made into an abstract base class"
+msgstr ""
+
+#: ../../pep-3148.txt:429
+msgid ""
+"The `Future.remove_done_callback` method was removed due to a lack of "
+"convincing use cases"
+msgstr ""
+
+#: ../../pep-3148.txt:431
+msgid ""
+"The `Future.add_done_callback` method was modified to allow the same "
+"callable to be added many times"
+msgstr ""
+
+#: ../../pep-3148.txt:433
+msgid ""
+"The `Future` class's mutation methods were better documented to indicate "
+"that they are private to the `Executor` that created them"
+msgstr ""
+
+#: ../../pep-3148.txt:438
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-3148.txt:440
+msgid ""
+"The reference implementation [8]_ contains a complete implementation of "
+"the proposed design.  It has been tested on Linux and Mac OS X."
+msgstr ""
+
+#: ../../pep-3148.txt:445
+msgid "References"
+msgstr ""
+
+#: ../../pep-3148.txt:448
+msgid ""
+"`java.util.concurrent` package documentation "
+"http://java.sun.com/j2se/1.5.0/docs/api/java/util/concurrent/package-"
+"summary.html"
+msgstr ""
+
+#: ../../pep-3148.txt:452
+msgid ""
+"Python Cookbook recipe 84317, \"Easy threading with Futures\" "
+"http://code.activestate.com/recipes/84317/"
+msgstr ""
+
+#: ../../pep-3148.txt:456
+msgid ""
+"`Python-3000` thread, \"mechanism for handling asynchronous concurrency\""
+" https://mail.python.org/pipermail/python-3000/2006-April/000960.html"
+msgstr ""
+
+#: ../../pep-3148.txt:460
+msgid ""
+"`Python 3000` thread, \"Futures in Python 3000 (was Re: mechanism for "
+"handling asynchronous concurrency)\" "
+"https://mail.python.org/pipermail/python-3000/2006-April/000970.html"
+msgstr ""
+
+#: ../../pep-3148.txt:464
+msgid ""
+"A discussion of `stream`, a similar concept proposed by Anh Hai Trinh "
+"http://www.mail-archive.com/stdlib-sig@python.org/msg00480.html"
+msgstr ""
+
+#: ../../pep-3148.txt:468
+msgid ""
+"A discussion of the proposed API on stdlib-sig "
+"https://mail.python.org/pipermail/stdlib-sig/2009-November/000731.html"
+msgstr ""
+
+#: ../../pep-3148.txt:472
+msgid ""
+"A discussion of the PEP on python-dev https://mail.python.org/pipermail"
+"/python-dev/2010-March/098169.html"
+msgstr ""
+
+#: ../../pep-3148.txt:476
+msgid ""
+"Reference `futures` implementation "
+"http://code.google.com/p/pythonfutures/source/browse/#svn/branches/feedback"
+msgstr ""
+
+#: ../../pep-3148.txt:481
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3148.txt:483
+msgid "This document has been placed in the public domain."
+msgstr ""
+

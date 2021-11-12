@@ -1,0 +1,1402 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0368.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0368.txt:1
+msgid "368"
+msgstr ""
+
+#: ../../pep-0368.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0368.txt:2
+msgid "Standard image protocol and class"
+msgstr ""
+
+#: ../../pep-0368.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0368.txt:5
+msgid "Lino Mastrodomenico <l.mastrodomenico@gmail.com>"
+msgstr ""
+
+#: ../../pep-0368.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0368.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0368.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0368.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0368.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0368.txt:9
+msgid "28-Jun-2007"
+msgstr ""
+
+#: ../../pep-0368.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0368.txt:10
+msgid "2.6, 3.0"
+msgstr ""
+
+#: ../../pep-0368.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0368.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0368.txt:17
+msgid ""
+"The current situation of image storage and manipulation in the Python "
+"world is extremely fragmented: almost every library that uses image "
+"objects has implemented its own image class, incompatible with everyone "
+"else's and often not very pythonic.  A basic RGB image class exists in "
+"the standard library (``Tkinter.PhotoImage``), but is pretty much "
+"unusable, and unused, for anything except Tkinter programming."
+msgstr ""
+
+#: ../../pep-0368.txt:24
+msgid ""
+"This fragmentation not only takes up valuable space in the developers "
+"minds, but also makes the exchange of images between different libraries "
+"(needed in relatively common use cases) slower and more complex than it "
+"needs to be."
+msgstr ""
+
+#: ../../pep-0368.txt:29
+msgid ""
+"This PEP proposes to improve the situation by defining a simple and "
+"pythonic image protocol/interface that can be hopefully accepted and "
+"implemented by existing image classes inside and outside the standard "
+"library *without breaking backward compatibility* with their existing "
+"user bases.  In practice this is a definition of how a minimal *image-"
+"like* object should look and act (in a similar way to the ``read()`` and "
+"``write()`` methods in *file-like* objects)."
+msgstr ""
+
+#: ../../pep-0368.txt:37
+msgid ""
+"The inclusion in the standard library of a class that provides basic "
+"image manipulation functionality and implements the new protocol is also "
+"proposed, together with a mixin class that helps adding support for the "
+"protocol to existing image classes."
+msgstr ""
+
+#: ../../pep-0368.txt:43
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0368.txt:45
+msgid ""
+"Further exploration of the concepts covered in this PEP has been deferred"
+" for lack of a current champion interested in promoting the goals of the "
+"PEP and collecting and incorporating feedback, and with sufficient "
+"available time to do so effectively."
+msgstr ""
+
+#: ../../pep-0368.txt:51
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0368.txt:53
+msgid ""
+"A good way to have high quality modules ready for inclusion in the Python"
+" standard library is to simply wait for natural selection among competing"
+" external libraries to provide a clear winner with useful functionality "
+"and a big user base.  Then the de facto standard can be officially "
+"sanctioned by including it in the standard library."
+msgstr ""
+
+#: ../../pep-0368.txt:59
+msgid ""
+"Unfortunately this approach hasn't worked well for the creation of a "
+"dominant image class in the Python world: almost every third-party "
+"library that requires an image object creates its own class incompatible "
+"with the ones from other libraries.  This is a real problem because it's "
+"entirely reasonable for a program to create and manipulate an image "
+"using, e.g., PIL (the Python Imaging Library) and then display it using "
+"wxPython or pygame.  But these libraries have different and incompatible "
+"image classes, and the usual solution is to manually \"export\" an image "
+"from the source to a (width, height, bytes_string) tuple and \"import\" "
+"it creating a new instance in the target format.  This approach *works*, "
+"but is both uglier and slower than it needs to be."
+msgstr ""
+
+#: ../../pep-0368.txt:72
+msgid ""
+"Another \"solution\" that has been sometimes used is the creation of "
+"specific adapters and/or converters from a class to another (e.g. PIL "
+"offers the ``ImageTk`` module for converting PIL images to a class "
+"compatible with the Tkinter one).  But this approach doesn't scale well "
+"with the number of libraries involved and it's still annoying for the "
+"user: if I have a perfectly good image object why should I convert before"
+" passing it to the next method, why can't it simply accept my image as-"
+"is?"
+msgstr ""
+
+#: ../../pep-0368.txt:81
+msgid ""
+"The problem isn't by any stretch limited to the three mentioned libraries"
+" and has probably multiple causes, including two that IMO are very "
+"important to understand before solving it:"
+msgstr ""
+
+#: ../../pep-0368.txt:85
+msgid ""
+"in today's computing world an image is a basic type not strictly tied to "
+"a specific domain.  This is why there will never be a clear winner "
+"between the image classes from the three libraries mentioned above (PIL, "
+"wxPython and pygame): they cover different domains and don't really "
+"compete with each other;"
+msgstr ""
+
+#: ../../pep-0368.txt:91
+msgid ""
+"the Python standard library has never provided a good image class that "
+"can be adopted or imitated by third part modules. ``Tkinter.PhotoImage`` "
+"provides basic RGB functionality, but it's by far the slowest and ugliest"
+" of the bunch and it can be instantiated only after the Tkinter root "
+"window has been created."
+msgstr ""
+
+#: ../../pep-0368.txt:97
+msgid "This PEP tries to improve this situation in four ways:"
+msgstr ""
+
+#: ../../pep-0368.txt:99
+msgid ""
+"It defines a simple and pythonic image protocol/interface (both on the "
+"Python and the C side) that can be hopefully accepted and implemented by "
+"existing image classes inside and outside the standard library *without "
+"breaking backward compatibility* with their existing user bases."
+msgstr ""
+
+#: ../../pep-0368.txt:105
+msgid "It proposes the inclusion in the standard library of three new classes:"
+msgstr ""
+
+#: ../../pep-0368.txt:108
+msgid ""
+"``ImageMixin`` provides almost everything necessary to implement the new "
+"protocol; its main purpose is to make as simple as possible to support "
+"this interface for existing libraries, in some cases as simple as adding "
+"it to the list of base classes and doing minor additions to the "
+"constructor."
+msgstr ""
+
+#: ../../pep-0368.txt:114
+msgid ""
+"``Image`` is a subclass of ``ImageMixin`` and will add a constructor that"
+" can resize and/or convert an image between different pixel formats.  "
+"This is intended to provide a fast and efficient default implementation "
+"of the new protocol."
+msgstr ""
+
+#: ../../pep-0368.txt:119
+msgid "``ImageSize`` is a minor helper class.  See below for details."
+msgstr ""
+
+#: ../../pep-0368.txt:121
+msgid ""
+"``Tkinter.PhotoImage`` will implement the new protocol (mostly through "
+"the ``ImageMixin`` class) and all the Tkinter methods that can receive an"
+" image will be modified the accept any object that implements the "
+"interface.  As an aside the author of this PEP will collaborate with the "
+"developers of the most common external libraries to achieve the same goal"
+" (supporting the protocol in their classes and accepting any class that "
+"implements it)."
+msgstr ""
+
+#: ../../pep-0368.txt:129
+msgid ""
+"New ``PyImage_*`` functions will be added to the CPython C API: they "
+"implement the C side of the protocol and accept as first parameter "
+"**any** object that supports it, even if it isn't an instance of the "
+"``Image``/``ImageMixin`` classes."
+msgstr ""
+
+#: ../../pep-0368.txt:134
+msgid ""
+"The main effects for the end user will be a simplification of the "
+"interchange of images between different libraries (if everything goes "
+"well, any Python library will accept images from any other library) and "
+"the out-of-the-box availability of the new ``Image`` class.  The new "
+"class is intended to cover simple but common use cases like cropping "
+"and/or resizing a photograph to the desired size and passing it an "
+"appropriate widget for displaying it on a window, or darkening a texture "
+"and passing it to a 3D library."
+msgstr ""
+
+#: ../../pep-0368.txt:143
+msgid ""
+"The ``Image`` class is not intended to replace or compete with PIL, "
+"Pythonmagick or NumPy, even if it provides a (very small) subset of the "
+"functionality of these three libraries.  In particular PIL offers very "
+"rich image manipulation features with *dozens* of classes, filters, "
+"transformations and file formats.  The inclusion of PIL (or something "
+"similar) in the standard library may, or may not, be a worthy goal but "
+"it's completely outside the scope of this PEP."
+msgstr ""
+
+#: ../../pep-0368.txt:153
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0368.txt:155
+msgid ""
+"The ``imageop`` module is used as the *default* location for the new "
+"classes and objects because it has for a long time hosted functions that "
+"provided a somewhat similar functionality, but a new module may be "
+"created if preferred (e.g. a new \"``image``\" or \"``media``\" module; "
+"the latter may eventually include other multimedia classes)."
+msgstr ""
+
+#: ../../pep-0368.txt:161
+msgid ""
+"``MODES`` is a new module level constant: it is a set of the pixel "
+"formats supported by the ``Image`` class.  Any image object that "
+"implements the new protocol is guaranteed to be formatted in one of these"
+" modes, but libraries that accept images are allowed to support only a "
+"subset of them."
+msgstr ""
+
+#: ../../pep-0368.txt:167
+msgid ""
+"These modes are in turn also available as module level constants (e.g. "
+"``imageop.RGB``)."
+msgstr ""
+
+#: ../../pep-0368.txt:170
+msgid ""
+"The following table is a summary of the modes currently supported and "
+"their properties:"
+msgstr ""
+
+#: ../../pep-0368.txt:174
+msgid "Name"
+msgstr ""
+
+#: ../../pep-0368.txt:174
+msgid "Component names"
+msgstr ""
+
+#: ../../pep-0368.txt:174
+msgid "Bits per component"
+msgstr ""
+
+#: ../../pep-0368.txt:174
+msgid "Subsampling"
+msgstr ""
+
+#: ../../pep-0368.txt:174
+msgid "Valid intervals"
+msgstr ""
+
+#: ../../pep-0368.txt:177
+msgid "L"
+msgstr ""
+
+#: ../../pep-0368.txt:177
+msgid "l (lowercase L)"
+msgstr ""
+
+#: ../../pep-0368.txt:177 ../../pep-0368.txt:180 ../../pep-0368.txt:182
+#: ../../pep-0368.txt:184 ../../pep-0368.txt:186 ../../pep-0368.txt:187
+#: ../../pep-0368.txt:188
+msgid "8"
+msgstr ""
+
+#: ../../pep-0368.txt:177 ../../pep-0368.txt:178 ../../pep-0368.txt:179
+#: ../../pep-0368.txt:180 ../../pep-0368.txt:181 ../../pep-0368.txt:182
+#: ../../pep-0368.txt:183 ../../pep-0368.txt:184 ../../pep-0368.txt:185
+#: ../../pep-0368.txt:188 ../../pep-0368.txt:189
+msgid "no"
+msgstr ""
+
+#: ../../pep-0368.txt:177 ../../pep-0368.txt:178 ../../pep-0368.txt:179
+#: ../../pep-0368.txt:180 ../../pep-0368.txt:181 ../../pep-0368.txt:182
+#: ../../pep-0368.txt:183 ../../pep-0368.txt:184 ../../pep-0368.txt:185
+#: ../../pep-0368.txt:187 ../../pep-0368.txt:188 ../../pep-0368.txt:189
+msgid "full range"
+msgstr ""
+
+#: ../../pep-0368.txt:178
+msgid "L16"
+msgstr ""
+
+#: ../../pep-0368.txt:178 ../../pep-0368.txt:179
+msgid "l"
+msgstr ""
+
+#: ../../pep-0368.txt:178 ../../pep-0368.txt:181 ../../pep-0368.txt:183
+#: ../../pep-0368.txt:185 ../../pep-0368.txt:189
+msgid "16"
+msgstr ""
+
+#: ../../pep-0368.txt:179
+msgid "L32"
+msgstr ""
+
+#: ../../pep-0368.txt:179
+msgid "32"
+msgstr ""
+
+#: ../../pep-0368.txt:180
+msgid "LA"
+msgstr ""
+
+#: ../../pep-0368.txt:180 ../../pep-0368.txt:181
+msgid "l, a"
+msgstr ""
+
+#: ../../pep-0368.txt:181
+msgid "LA32"
+msgstr ""
+
+#: ../../pep-0368.txt:182
+msgid "RGB"
+msgstr ""
+
+#: ../../pep-0368.txt:182 ../../pep-0368.txt:183
+msgid "r, g, b"
+msgstr ""
+
+#: ../../pep-0368.txt:183
+msgid "RGB48"
+msgstr ""
+
+#: ../../pep-0368.txt:184
+msgid "RGBA"
+msgstr ""
+
+#: ../../pep-0368.txt:184 ../../pep-0368.txt:185
+msgid "r, g, b, a"
+msgstr ""
+
+#: ../../pep-0368.txt:185
+msgid "RGBA64"
+msgstr ""
+
+#: ../../pep-0368.txt:186
+msgid "YV12"
+msgstr ""
+
+#: ../../pep-0368.txt:186 ../../pep-0368.txt:187
+msgid "y, cr, cb"
+msgstr ""
+
+#: ../../pep-0368.txt:186 ../../pep-0368.txt:187
+msgid "1, 2, 2"
+msgstr ""
+
+#: ../../pep-0368.txt:186
+msgid "16-235, 16-240, 16-240"
+msgstr ""
+
+#: ../../pep-0368.txt:187
+msgid "JPEG_YV12"
+msgstr ""
+
+#: ../../pep-0368.txt:188
+msgid "CMYK"
+msgstr ""
+
+#: ../../pep-0368.txt:188 ../../pep-0368.txt:189
+msgid "c, m, y, k"
+msgstr ""
+
+#: ../../pep-0368.txt:189
+msgid "CMYK64"
+msgstr ""
+
+#: ../../pep-0368.txt:192
+msgid ""
+"When the name of a mode ends with a number, it represents the average "
+"number of bits per pixel.  All the other modes simply use a byte per "
+"component per pixel."
+msgstr ""
+
+#: ../../pep-0368.txt:196
+msgid ""
+"No palette modes or modes with less than 8 bits per component are "
+"supported.  Welcome to the 21st century."
+msgstr ""
+
+#: ../../pep-0368.txt:199
+msgid ""
+"Here's a quick description of the modes and the rationale for their "
+"inclusion; there are four groups of modes:"
+msgstr ""
+
+#: ../../pep-0368.txt:202
+msgid ""
+"**grayscale** (``L*`` modes): they are heavily used in scientific "
+"computing (those people may also need a very high dynamic range and "
+"precision, hence ``L32``, the only mode with 32 bits per component) and "
+"sometimes it can be useful to consider a single component of a color "
+"image as a grayscale image (this is used by the individual planes of the "
+"planar images, see ``YV12`` below); the name of the component (``'l'``, "
+"lowercase letter L) stands for luminance, the second optional component "
+"(``'a'``) is the alpha value and represents the opacity of the pixels: "
+"alpha = 0 means full transparency, alpha = 255/65535 represents a fully "
+"opaque pixel;"
+msgstr ""
+
+#: ../../pep-0368.txt:213
+msgid ""
+"**RGB\\* modes**: the garden variety color images.  The optional alpha "
+"component has the same meaning as in grayscale modes;"
+msgstr ""
+
+#: ../../pep-0368.txt:216
+msgid ""
+"**YCbCr**, a.k.a. YUV (``*YV12`` modes).  These modes are planar (i.e. "
+"the values of all the pixel for each component are stored in a "
+"consecutive memory area, instead of the usual arrangement where all the "
+"components of a pixel reside in consecutive bytes) and use a 1, 2, 2 "
+"(a.k.a. 4:2:0) subsampling (i.e. each pixel has its own Y value, but the "
+"Cb and Cr components are shared between groups of 2x2 adjacent pixels) "
+"because this is the format that's by far the most common for YCbCr "
+"images.  Please note that the V (Cr) plane is stored before the U (Cb) "
+"plane."
+msgstr ""
+
+#: ../../pep-0368.txt:226
+msgid ""
+"``YV12`` is commonly used for MPEG2 (including DVDs), MPEG4 (both "
+"ASP/DivX and AVC/H.264) and Theora video frames.  Valid values for Y are "
+"in range(16, 236) (excluding 236), and valid values for Cb and Cr are in "
+"range(16, 241).  ``JPEG_YV12`` is similar to ``YV12``, but the three "
+"components can have the full range of 256 values.  It's the native format"
+" used by almost all JPEG/JFIF files and by MJPEG video frames.  The "
+"\"strangeness\" of these two wrt all the other supported modes derives "
+"from the fact that they are widely used that way by a lot of existing "
+"libraries and applications; this is also the reason why they are included"
+" (and the fact that they can't losslessly converted to RGB because YCbCr "
+"is a bigger color space); the funny 4:2:0 planar arrangement of the pixel"
+" values is relatively easy to support because in most cases the three "
+"planes can be considered three separate grayscale images;"
+msgstr ""
+
+#: ../../pep-0368.txt:241
+msgid ""
+"**CMYK\\* modes** (cyan, magenta, yellow and black) are subtractive color"
+" modes, used for printing color images on dead trees. Professional "
+"designers love to pretend that they can't live without them, so here they"
+" are."
+msgstr ""
+
+#: ../../pep-0368.txt:248
+msgid "Python API"
+msgstr ""
+
+#: ../../pep-0368.txt:250
+msgid "See the examples_ below."
+msgstr ""
+
+#: ../../pep-0368.txt:252
+msgid "In Python 2.x, all the new classes defined here are new-style classes."
+msgstr ""
+
+#: ../../pep-0368.txt:256
+msgid "Mode Objects"
+msgstr ""
+
+#: ../../pep-0368.txt:258
+msgid ""
+"The mode objects offer a number of attributes and methods that can be "
+"used for implementing generic algorithms that work on different types of "
+"images:"
+msgstr ""
+
+#: ../../pep-0368.txt:262 ../../pep-0368.txt:381
+msgid "``components``"
+msgstr ""
+
+#: ../../pep-0368.txt:264
+msgid "The number of components per pixel (e.g. 4 for an RGBA image)."
+msgstr ""
+
+#: ../../pep-0368.txt:266 ../../pep-0368.txt:380
+msgid "``component_names``"
+msgstr ""
+
+#: ../../pep-0368.txt:268
+msgid "A tuple of strings; see the column \"Component names\" in the above table."
+msgstr ""
+
+#: ../../pep-0368.txt:271 ../../pep-0368.txt:378
+msgid "``bits_per_component``"
+msgstr ""
+
+#: ../../pep-0368.txt:273
+msgid "8, 16 or 32; see \"Bits per component\" in the above table."
+msgstr ""
+
+#: ../../pep-0368.txt:275 ../../pep-0368.txt:379
+msgid "``bytes_per_pixel``"
+msgstr ""
+
+#: ../../pep-0368.txt:277
+msgid ""
+"``components * bits_per_component // 8``, only available for non planar "
+"modes (see below)."
+msgstr ""
+
+#: ../../pep-0368.txt:280 ../../pep-0368.txt:383
+msgid "``planar``"
+msgstr ""
+
+#: ../../pep-0368.txt:282
+msgid ""
+"Boolean; ``True`` if the image components reside each in a separate "
+"plane.  Currently this happens if and only if the mode uses subsampling."
+msgstr ""
+
+#: ../../pep-0368.txt:286 ../../pep-0368.txt:384
+msgid "``subsampling``"
+msgstr ""
+
+#: ../../pep-0368.txt:288
+msgid ""
+"A tuple that for each component in the mode contains a tuple of two "
+"integers that represent the amount of downsampling in the horizontal and "
+"vertical direction, respectively.  In practice it's ``((1, 1), (2, 2), "
+"(2, 2))`` for ``YV12`` and ``JPEG_YV12`` and ``((1, 1),) * components`` "
+"for everything else."
+msgstr ""
+
+#: ../../pep-0368.txt:294
+msgid "``x_divisor``"
+msgstr ""
+
+#: ../../pep-0368.txt:296
+msgid ""
+"``max(x for x, y in subsampling)``; the width of an image that uses this "
+"mode must be divisible for this value."
+msgstr ""
+
+#: ../../pep-0368.txt:299
+msgid "``y_divisor``"
+msgstr ""
+
+#: ../../pep-0368.txt:301
+msgid ""
+"``max(y for x, y in subsampling)``; the height of an image that uses this"
+" mode must be divisible for this value."
+msgstr ""
+
+#: ../../pep-0368.txt:304 ../../pep-0368.txt:382
+msgid "``intervals``"
+msgstr ""
+
+#: ../../pep-0368.txt:306
+msgid ""
+"A tuple that for each component in the mode contains a tuple of two "
+"integers: the minimum and maximum valid value for the component.  Its "
+"value is ``((16, 235), (16, 240), (16, 240))`` for ``YV12`` and ``((0, 2 "
+"** bits_per_component - 1),) * components`` for everything else."
+msgstr ""
+
+#: ../../pep-0368.txt:312
+msgid "``get_length(iterable[integer]) -> int``"
+msgstr ""
+
+#: ../../pep-0368.txt:314
+msgid ""
+"The parameter must be an iterable that contains two integers: the width "
+"and height of an image; it returns the number of bytes needed to store an"
+" image of these dimensions with this mode."
+msgstr ""
+
+#: ../../pep-0368.txt:318
+msgid ""
+"Implementation detail: the modes are instances of a subclass of ``str`` "
+"and have a value equal to their name (e.g. ``imageop.RGB == 'RGB'``) "
+"except for ``L32`` that has value ``'I'``.  This is only intended for "
+"backward compatibility with existing PIL users; new code that uses the "
+"image protocol proposed here should not rely on this detail."
+msgstr ""
+
+#: ../../pep-0368.txt:327
+msgid "Image Protocol"
+msgstr ""
+
+#: ../../pep-0368.txt:329
+msgid ""
+"Any object that supports the image protocol must provide the following "
+"methods and attributes:"
+msgstr ""
+
+#: ../../pep-0368.txt:332 ../../pep-0368.txt:545 ../../pep-0368.txt:590
+msgid "``mode``"
+msgstr ""
+
+#: ../../pep-0368.txt:334
+msgid ""
+"The format and the arrangement of the pixels in this image; it's one of "
+"the constants in the ``MODES`` set."
+msgstr ""
+
+#: ../../pep-0368.txt:337
+msgid "``size``"
+msgstr ""
+
+#: ../../pep-0368.txt:339
+msgid ""
+"An instance of the `ImageSize class`_; it's a named tuple of two "
+"integers: the width and the height of the image in pixels; both of them "
+"must be >= 1 and can also be accessed as the ``width`` and ``height`` "
+"attributes of ``size``."
+msgstr ""
+
+#: ../../pep-0368.txt:344
+msgid "``buffer``"
+msgstr ""
+
+#: ../../pep-0368.txt:346
+msgid ""
+"A sequence of integers between 0 and 255; they are the actual bytes used "
+"for storing the image data (i.e. modifying their values affects the image"
+" pixels and vice versa); the data has a row-major/C-contiguous order "
+"without padding and without any special memory alignment, even when there"
+" are more than 8 bits per component.  The only supported methods are "
+"``__len__``, ``__getitem__``/``__setitem__`` (with both integers and "
+"slice indexes) and ``__iter__``; on the C side it implements the buffer "
+"protocol."
+msgstr ""
+
+#: ../../pep-0368.txt:356
+msgid ""
+"This is a pretty low level interface to the image and the user is "
+"responsible for using the correct (native) byte order for modes with more"
+" than 8 bit per component and the correct value ranges for ``YV12`` "
+"images.  A buffer may or may not keep a reference to its image, but it's "
+"still safe (if useless) to use the buffer even after the corresponding "
+"image has been destroyed by the garbage collector (this will require "
+"changes to the image class of wxPython and possibly other libraries).  "
+"Implementation detail: this can be an ``array('B')``, a ``bytes()`` "
+"object or a specialized fixed-length type."
+msgstr ""
+
+#: ../../pep-0368.txt:367
+msgid "``info``"
+msgstr ""
+
+#: ../../pep-0368.txt:369
+msgid ""
+"A ``dict`` object that can contain arbitrary metadata associated with the"
+" image (e.g. DPI, gamma, ICC profile, exposure time...); the "
+"interpretation of this data is beyond the scope of this PEP and probably "
+"depends on the library used to create and/or to save the image; if a "
+"method of the image returns a new image, it can copy or adapt metadata "
+"from its own ``info`` attribute (the ``ImageMixin`` implementation always"
+" creates a new image with an empty ``info`` dictionary)."
+msgstr ""
+
+#: ../../pep-0368.txt:386
+msgid "Shortcuts for the corresponding ``mode.*`` attributes."
+msgstr ""
+
+#: ../../pep-0368.txt:388
+msgid "``map(function[, function...]) -> None``"
+msgstr ""
+
+#: ../../pep-0368.txt:390
+msgid ""
+"For every pixel in the image, maps each component through the "
+"corresponding function.  If only one function is passed, it is used "
+"repeatedly for each component.  This method modifies the image **in "
+"place** and is usually very fast (most of the time the functions are "
+"called only a small number of times, possibly only once for simple "
+"functions without branches), but it imposes a number of restrictions on "
+"the function(s) passed:"
+msgstr ""
+
+#: ../../pep-0368.txt:398
+msgid ""
+"it must accept a single integer argument and return a number (``map`` "
+"will round the result to the nearest integer and clip it to ``range(0, 2 "
+"** bits_per_component)``, if necessary);"
+msgstr ""
+
+#: ../../pep-0368.txt:402
+msgid ""
+"it must *not* try to intercept any ``BaseException``, ``Exception`` or "
+"any unknown subclass of ``Exception`` raised by any operation on the "
+"argument (implementations may try to optimize the speed by passing funny "
+"objects, so even a simple ``\"if n == 10:\"`` may raise an exception: "
+"simply ignore it, ``map`` will take care of it); catching any other "
+"exception is fine;"
+msgstr ""
+
+#: ../../pep-0368.txt:410
+msgid ""
+"it should be side-effect free and its result should not depend on values "
+"(other than the argument) that may change during a single invocation of "
+"``map``."
+msgstr ""
+
+#: ../../pep-0368.txt:414
+msgid "``rotate90() -> image``"
+msgstr ""
+
+#: ../../pep-0368.txt:415
+msgid "``rotate180() -> image``"
+msgstr ""
+
+#: ../../pep-0368.txt:416
+msgid "``rotate270() -> image``"
+msgstr ""
+
+#: ../../pep-0368.txt:418
+msgid ""
+"Return a copy of the image rotated 90, 180 or 270 degrees "
+"counterclockwise around its center."
+msgstr ""
+
+#: ../../pep-0368.txt:421
+msgid "``clip() -> None``"
+msgstr ""
+
+#: ../../pep-0368.txt:423
+msgid ""
+"Saturates invalid component values in ``YV12`` images to the minimum or "
+"the maximum allowed (see ``mode.intervals``), for other image modes this "
+"method does nothing, very fast; libraries that save/export ``YV12`` "
+"images are encouraged to always call this method, since intermediate "
+"operations (e.g. the ``map`` method) may assign to pixels values outside "
+"the valid intervals."
+msgstr ""
+
+#: ../../pep-0368.txt:430
+msgid "``split() -> tuple[image]``"
+msgstr ""
+
+#: ../../pep-0368.txt:432
+msgid ""
+"Returns a tuple of ``L``, ``L16`` or ``L32`` images corresponding to the "
+"individual components in the image."
+msgstr ""
+
+#: ../../pep-0368.txt:435
+msgid ""
+"Planar images also supports attributes with the same names defined in "
+"``component_names``: they contain grayscale (mode ``L``) images that "
+"offer a view on the pixel values for the corresponding component; any "
+"change to the subimages is immediately reflected on the parent image and "
+"vice versa (their buffers refer to the same memory location)."
+msgstr ""
+
+#: ../../pep-0368.txt:441
+msgid "Non-planar images offer the following additional methods:"
+msgstr ""
+
+#: ../../pep-0368.txt:443
+msgid "``pixels() -> iterator[pixel]``"
+msgstr ""
+
+#: ../../pep-0368.txt:445
+msgid ""
+"Returns an iterator that iterates over all the pixels in the image, "
+"starting from the top line and scanning each line from left to right.  "
+"See below for a description of the `pixel objects`_."
+msgstr ""
+
+#: ../../pep-0368.txt:449
+msgid "``__iter__() -> iterator[line]``"
+msgstr ""
+
+#: ../../pep-0368.txt:451
+msgid ""
+"Returns an iterator that iterates over all the lines in the image, from "
+"top to bottom.  See below for a description of the `line objects`_."
+msgstr ""
+
+#: ../../pep-0368.txt:455 ../../pep-0368.txt:555 ../../pep-0368.txt:608
+msgid "``__len__() -> int``"
+msgstr ""
+
+#: ../../pep-0368.txt:457
+msgid "Returns the number of lines in the image (``size.height``)."
+msgstr ""
+
+#: ../../pep-0368.txt:459
+msgid "``__getitem__(integer) -> line``"
+msgstr ""
+
+#: ../../pep-0368.txt:461
+msgid "Returns the line at the specified (y) position."
+msgstr ""
+
+#: ../../pep-0368.txt:463
+msgid "``__getitem__(tuple[integer]) -> pixel``"
+msgstr ""
+
+#: ../../pep-0368.txt:465
+msgid ""
+"The parameter must be a tuple of two integers; they are interpreted "
+"respectively as x and y coordinates in the image (0, 0 is the top left "
+"corner) and a pixel object is returned."
+msgstr ""
+
+#: ../../pep-0368.txt:469
+msgid "``__getitem__(slice | tuple[integer | slice]) -> image``"
+msgstr ""
+
+#: ../../pep-0368.txt:471
+msgid ""
+"The parameter must be a slice or a tuple that contains two slices or an "
+"integer and a slice; the selected area of the image is copied and a new "
+"image is returned; ``image[x:y:z]`` is equivalent to ``image[:, x:y:z]``."
+msgstr ""
+
+#: ../../pep-0368.txt:476
+msgid "``__setitem__(tuple[integer], integer | iterable[integer]) -> None``"
+msgstr ""
+
+#: ../../pep-0368.txt:478
+msgid ""
+"Modifies the pixel at specified position; ``image[x, y] = integer`` is a "
+"shortcut for ``image[x, y] = (integer,)`` for images with a single "
+"component."
+msgstr ""
+
+#: ../../pep-0368.txt:482
+msgid "``__setitem__(slice | tuple[integer | slice], image) -> None``"
+msgstr ""
+
+#: ../../pep-0368.txt:484
+msgid ""
+"Selects an area in the same way as the corresponding form of the "
+"``__getitem__`` method and assigns to it a copy of the pixels from the "
+"image in the second argument, that must have exactly the same mode as "
+"this image and the same size as the specified area; the alpha component, "
+"if present, is simply copied and doesn't affect the other components of "
+"the image (i.e. no alpha compositing is performed)."
+msgstr ""
+
+#: ../../pep-0368.txt:492
+msgid ""
+"The ``mode``, ``size`` and ``buffer`` (including the address in memory of"
+" the ``buffer``) never change after an image is created."
+msgstr ""
+
+#: ../../pep-0368.txt:495
+msgid ""
+"It is expected that, if PEP 3118 is accepted, all the image objects will "
+"support the new buffer protocol, however this is beyond the scope of this"
+" PEP."
+msgstr ""
+
+#: ../../pep-0368.txt:501
+msgid "``Image`` and ``ImageMixin`` Classes"
+msgstr ""
+
+#: ../../pep-0368.txt:503
+msgid ""
+"The ``ImageMixin`` class implements all the methods and attributes "
+"described above except ``mode``, ``size``, ``buffer`` and ``info``. "
+"``Image`` is a subclass of ``ImageMixin`` that adds support for these "
+"four attributes and offers the following constructor (please note that "
+"the constructor is not part of the image protocol):"
+msgstr ""
+
+#: ../../pep-0368.txt:509
+msgid "``__init__(mode, size, color, source)``"
+msgstr ""
+
+#: ../../pep-0368.txt:511
+msgid ""
+"``mode`` must be one of the constants in the ``MODES`` set, ``size`` is a"
+" sequence of two integers (width and height of the new image); ``color`` "
+"is a sequence of integers, one for each component of the image, used to "
+"initialize all the pixels to the same value; ``source`` can be a sequence"
+" of integers of the appropriate size and format that is copied as-is in "
+"the buffer of the new image or an existing image; in Python 2.x "
+"``source`` can also be an instance of ``str`` and is interpreted as a "
+"sequence of bytes.  ``color`` and ``source`` are mutually exclusive and "
+"if they are both omitted the image is initialized to transparent black "
+"(all the bytes in the buffer have value 16 in the ``YV12`` mode, 255 in "
+"the ``CMYK*`` modes and 0 for everything else).  If ``source`` is present"
+" and is an image, ``mode`` and/or ``size`` can be omitted; if they are "
+"specified and are different from the source mode and/or size, the source "
+"image is converted."
+msgstr ""
+
+#: ../../pep-0368.txt:527
+msgid ""
+"The exact algorithms used for resizing and doing color space conversions "
+"may differ between Python versions and implementations, but they always "
+"give high quality results (e.g.: a cubic spline interpolation can be used"
+" for upsampling and an antialias filter can be used for downsampling "
+"images); any combination of mode conversion is supported, but the "
+"algorithm used for conversions to and from the ``CMYK*`` modes is pretty "
+"naïve: if you have the exact color profiles of your devices you may want "
+"to use a good color management tool such as LittleCMS. The new image has "
+"an empty ``info`` ``dict``."
+msgstr ""
+
+#: ../../pep-0368.txt:540
+msgid "Line Objects"
+msgstr ""
+
+#: ../../pep-0368.txt:542
+msgid ""
+"The line objects (returned, e.g., when iterating over an image) support "
+"the following attributes and methods:"
+msgstr ""
+
+#: ../../pep-0368.txt:547
+msgid "The mode of the image from where this line comes."
+msgstr ""
+
+#: ../../pep-0368.txt:549
+msgid "``__iter__() -> iterator[pixel]``"
+msgstr ""
+
+#: ../../pep-0368.txt:551
+msgid ""
+"Returns an iterator that iterates over all the pixels in the line, from "
+"left to right.  See below for a description of the `pixel objects`_."
+msgstr ""
+
+#: ../../pep-0368.txt:557
+msgid "Returns the number of pixels in the line (the image width)."
+msgstr ""
+
+#: ../../pep-0368.txt:559
+msgid "``__getitem__(integer) -> pixel``"
+msgstr ""
+
+#: ../../pep-0368.txt:561
+msgid "Returns the pixel at the specified (x) position."
+msgstr ""
+
+#: ../../pep-0368.txt:563
+msgid "``__getitem__(slice) -> image``"
+msgstr ""
+
+#: ../../pep-0368.txt:565
+msgid ""
+"The selected part of the line is copied and a new image is returned; the "
+"new image will always have height 1."
+msgstr ""
+
+#: ../../pep-0368.txt:568
+msgid "``__setitem__(integer, integer | iterable[integer]) -> None``"
+msgstr ""
+
+#: ../../pep-0368.txt:570
+msgid ""
+"Modifies the pixel at the specified position; ``line[x] = integer`` is a "
+"shortcut for ``line[x] = (integer,)`` for images with a single component."
+msgstr ""
+
+#: ../../pep-0368.txt:574
+msgid "``__setitem__(slice, image) -> None``"
+msgstr ""
+
+#: ../../pep-0368.txt:576
+msgid ""
+"Selects a part of the line and assigns to it a copy of the pixels from "
+"the image in the second argument, that must have height 1, a width equal "
+"to the specified slice and the same mode as this line; the alpha "
+"component, if present, is simply copied and doesn't affect the other "
+"components of the image (i.e. no alpha compositing is performed)."
+msgstr ""
+
+#: ../../pep-0368.txt:585
+msgid "Pixel Objects"
+msgstr ""
+
+#: ../../pep-0368.txt:587
+msgid ""
+"The pixel objects (returned, e.g., when iterating over a line) support "
+"the following attributes and methods:"
+msgstr ""
+
+#: ../../pep-0368.txt:592
+msgid "The mode of the image from where this pixel comes."
+msgstr ""
+
+#: ../../pep-0368.txt:594
+msgid "``value``"
+msgstr ""
+
+#: ../../pep-0368.txt:596
+msgid ""
+"A tuple of integers, one for each component.  Any iterable of the correct"
+" length can be assigned to ``value`` (it will be automagically converted "
+"to a tuple), but you can't assign to it an integer, even if the mode has "
+"only a single component: use, e.g., ``pixel.l = 123`` instead."
+msgstr ""
+
+#: ../../pep-0368.txt:602
+msgid "``r, g, b, a, l, c, m, y, k``"
+msgstr ""
+
+#: ../../pep-0368.txt:604
+msgid ""
+"The integer values of each component; only those applicable for the "
+"current mode (in ``mode.component_names``) will be available."
+msgstr ""
+
+#: ../../pep-0368.txt:607
+msgid "``__iter__() -> iterator[int]``"
+msgstr ""
+
+#: ../../pep-0368.txt:609
+msgid "``__getitem__(integer | slice) -> int | tuple[int]``"
+msgstr ""
+
+#: ../../pep-0368.txt:611
+msgid "``__setitem__(integer | slice, integer | iterable[integer]) -> None``"
+msgstr ""
+
+#: ../../pep-0368.txt:613
+msgid ""
+"These four methods emulate a fixed length list of integers, one for each "
+"pixel component."
+msgstr ""
+
+#: ../../pep-0368.txt:618
+msgid "``ImageSize`` Class"
+msgstr ""
+
+#: ../../pep-0368.txt:620
+msgid ""
+"``ImageSize`` is a named tuple, a class identical to ``tuple`` except "
+"that:"
+msgstr ""
+
+#: ../../pep-0368.txt:623
+msgid ""
+"its constructor only accepts two integers, width and height; they are "
+"converted in the constructor using their ``__index__()`` methods, so all "
+"the ``ImageSize`` objects are guaranteed to contain only ``int`` (or "
+"possibly ``long``, in Python 2.x) instances;"
+msgstr ""
+
+#: ../../pep-0368.txt:628
+msgid ""
+"it has a ``width`` and a ``height`` property that are equivalent to the "
+"first and the second number in the tuple, respectively;"
+msgstr ""
+
+#: ../../pep-0368.txt:631
+#, python-format
+msgid ""
+"the string returned by its ``__repr__`` method is "
+"``'imageop.ImageSize(width=%d, height=%d)' % (width, height)``."
+msgstr ""
+
+#: ../../pep-0368.txt:634
+msgid ""
+"``ImageSize`` is not usually instantiated by end-users, but can be used "
+"when creating a new class that implements the image protocol, since the "
+"``size`` attribute must be an ``ImageSize`` instance."
+msgstr ""
+
+#: ../../pep-0368.txt:640
+msgid "C API"
+msgstr ""
+
+#: ../../pep-0368.txt:642
+msgid ""
+"The available image modes are visible at the C level as ``PyImage_*`` "
+"constants of type ``PyObject *`` (e.g.: ``PyImage_RGB`` is "
+"``imageop.RGB``)."
+msgstr ""
+
+#: ../../pep-0368.txt:646
+msgid ""
+"The following functions offer a C-friendly interface to mode and image "
+"objects (all the functions return ``NULL`` or -1 on failure):"
+msgstr ""
+
+#: ../../pep-0368.txt:649
+msgid "``int PyImageMode_Check(PyObject *obj)``"
+msgstr ""
+
+#: ../../pep-0368.txt:651
+msgid "Returns true if the object ``obj`` is a valid image mode."
+msgstr ""
+
+#: ../../pep-0368.txt:653
+msgid "``int PyImageMode_GetComponents(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:654
+msgid "``PyObject* PyImageMode_GetComponentNames(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:655
+msgid "``int PyImageMode_GetBitsPerComponent(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:656
+msgid "``int PyImageMode_GetBytesPerPixel(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:657
+msgid "``int PyImageMode_GetPlanar(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:658
+msgid "``PyObject* PyImageMode_GetSubsampling(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:659
+msgid "``int PyImageMode_GetXDivisor(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:660
+msgid "``int PyImageMode_GetYDivisor(PyObject *mode)``"
+msgstr ""
+
+#: ../../pep-0368.txt:662
+msgid ""
+"``Py_ssize_t PyImageMode_GetLength(PyObject *mode, Py_ssize_t width, "
+"Py_ssize_t height)``"
+msgstr ""
+
+#: ../../pep-0368.txt:664
+msgid ""
+"These functions are equivalent to their corresponding Python attributes "
+"or methods."
+msgstr ""
+
+#: ../../pep-0368.txt:667
+msgid "``int PyImage_Check(PyObject *obj)``"
+msgstr ""
+
+#: ../../pep-0368.txt:669
+msgid ""
+"Returns true if the object ``obj`` is an ``Image`` object or an instance "
+"of a subtype of the ``Image`` type; see also ``PyObject_CheckImage`` "
+"below."
+msgstr ""
+
+#: ../../pep-0368.txt:673
+msgid "``int PyImage_CheckExact(PyObject *obj)``"
+msgstr ""
+
+#: ../../pep-0368.txt:675
+msgid ""
+"Returns true if the object ``obj`` is an ``Image`` object, but not an "
+"instance of a subtype of the ``Image`` type."
+msgstr ""
+
+#: ../../pep-0368.txt:679
+msgid ""
+"``PyObject* PyImage_New(PyObject *mode, Py_ssize_t width, Py_ssize_t "
+"height)``"
+msgstr ""
+
+#: ../../pep-0368.txt:681
+msgid ""
+"Returns a new ``Image`` instance, initialized to transparent black (see "
+"``Image.__init__`` above for the details)."
+msgstr ""
+
+#: ../../pep-0368.txt:685
+msgid ""
+"``PyObject* PyImage_FromImage(PyObject *image, PyObject *mode, Py_ssize_t"
+" width, Py_ssize_t height)``"
+msgstr ""
+
+#: ../../pep-0368.txt:687
+msgid ""
+"Returns a new ``Image`` instance, initialized with the contents of the "
+"``image`` object rescaled and converted to the specified ``mode``, if "
+"necessary."
+msgstr ""
+
+#: ../../pep-0368.txt:693
+msgid ""
+"``PyObject* PyImage_FromBuffer(PyObject *buffer, PyObject *mode, "
+"Py_ssize_t width, Py_ssize_t height)``"
+msgstr ""
+
+#: ../../pep-0368.txt:695
+msgid ""
+"Returns a new ``Image`` instance, initialized with the contents of the "
+"``buffer`` object."
+msgstr ""
+
+#: ../../pep-0368.txt:698
+msgid "``int PyObject_CheckImage(PyObject *obj)``"
+msgstr ""
+
+#: ../../pep-0368.txt:700
+msgid ""
+"Returns true if the object ``obj`` implements a sufficient subset of the "
+"image protocol to be accepted by the functions defined below, even if its"
+" class is not a subclass of ``ImageMixin`` and/or ``Image``.  Currently "
+"it simply checks for the existence and correctness of the attributes "
+"``mode``, ``size`` and ``buffer``."
+msgstr ""
+
+#: ../../pep-0368.txt:707
+msgid "``PyObject* PyImage_GetMode(PyObject *image)``"
+msgstr ""
+
+#: ../../pep-0368.txt:708
+msgid "``Py_ssize_t PyImage_GetWidth(PyObject *image)``"
+msgstr ""
+
+#: ../../pep-0368.txt:709
+msgid "``Py_ssize_t PyImage_GetHeight(PyObject *image)``"
+msgstr ""
+
+#: ../../pep-0368.txt:710
+msgid "``int PyImage_Clip(PyObject *image)``"
+msgstr ""
+
+#: ../../pep-0368.txt:711
+msgid "``PyObject* PyImage_Split(PyObject *image)``"
+msgstr ""
+
+#: ../../pep-0368.txt:712
+msgid "``PyObject* PyImage_GetBuffer(PyObject *image)``"
+msgstr ""
+
+#: ../../pep-0368.txt:714
+msgid ""
+"``int PyImage_AsBuffer(PyObject *image, const void **buffer, Py_ssize_t "
+"*buffer_len)``"
+msgstr ""
+
+#: ../../pep-0368.txt:716
+msgid ""
+"These functions are equivalent to their corresponding Python attributes "
+"or methods; the image memory can be accessed only with the GIL and a "
+"reference to the image or its buffer held, and extra care should be taken"
+" for modes with more than 8 bits per component: the data is stored in "
+"native byte order and it can be **not** aligned on 2 or 4 byte "
+"boundaries."
+msgstr ""
+
+#: ../../pep-0368.txt:725
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0368.txt:727
+msgid ""
+"A few examples of common operations with the new ``Image`` class and "
+"protocol::"
+msgstr ""
+
+#: ../../pep-0368.txt:786
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0368.txt:788
+msgid ""
+"There are three areas touched by this PEP where backwards compatibility "
+"should be considered:"
+msgstr ""
+
+#: ../../pep-0368.txt:791
+msgid ""
+"**Python 2.6**: new classes and objects are added to the ``imageop`` "
+"module without touching the existing module contents; new methods and "
+"attributes will be added to ``Tkinter.PhotoImage`` and its "
+"``__getitem__`` and ``__setitem__`` methods will be modified to accept "
+"integers, tuples and slices (currently they only accept strings).  All "
+"the changes provide a superset of the existing functionality, so no major"
+" compatibility issues are expected."
+msgstr ""
+
+#: ../../pep-0368.txt:799
+msgid ""
+"**Python 3.0**: the legacy contents of the ``imageop`` module will be "
+"deleted, according to PEP 3108; everything defined in this proposal will "
+"work like in Python 2.x with the exception of the usual 2.x/3.0 "
+"differences (e.g. support for ``long`` integers and for interpreting "
+"``str`` instances as sequences of bytes will be dropped)."
+msgstr ""
+
+#: ../../pep-0368.txt:806
+msgid ""
+"**external libraries**: the names and the semantics of the standard image"
+" methods and attributes are carefully chosen to allow some external "
+"libraries that manipulate images (including at least PIL, wxPython and "
+"pygame) to implement the new protocol in their image classes without "
+"breaking compatibility with existing code.  The only blatant conflicts "
+"between the image protocol and NumPy arrays are the value of the ``size``"
+" attribute and the coordinates order in the ``image[x, y]`` expression."
+msgstr ""
+
+#: ../../pep-0368.txt:817
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0368.txt:819
+msgid ""
+"If this PEP is accepted, the author will provide a reference "
+"implementation of the new classes in pure Python (that can run in "
+"CPython, PyPy, Jython and IronPython) and a second one optimized for "
+"speed in Python and C, suitable for inclusion in the CPython standard "
+"library.  The author will also submit the required Tkinter patches. For "
+"all the code will be available a version for Python 2.x and a version for"
+" Python 3.0 (it is expected that the two version will be very similar and"
+" the Python 3.0 one will probably be generated almost completely "
+"automatically)."
+msgstr ""
+
+#: ../../pep-0368.txt:831
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0368.txt:833
+msgid ""
+"The implementation of this PEP, if accepted, is sponsored by Google "
+"through the Google Summer of Code program."
+msgstr ""
+
+#: ../../pep-0368.txt:838
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0368.txt:840
+msgid "This document has been placed in the public domain."
+msgstr ""
+

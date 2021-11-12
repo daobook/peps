@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3120.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3120.txt:1
+msgid "3120"
+msgstr ""
+
+#: ../../pep-3120.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3120.txt:2
+msgid "Using UTF-8 as the default source encoding"
+msgstr ""
+
+#: ../../pep-3120.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3120.txt:5
+msgid "Martin von Löwis <martin@v.loewis.de>"
+msgstr ""
+
+#: ../../pep-3120.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3120.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3120.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3120.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3120.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3120.txt:9
+msgid "15-Apr-2007"
+msgstr ""
+
+#: ../../pep-3120.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3120.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3120.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3120.txt:15
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3120.txt:17
+msgid ""
+"This PEP proposes to change the default source encoding from ASCII to "
+"UTF-8. Support for alternative source encodings [#pep263]_ continues to "
+"exist; an explicit encoding declaration takes precedence over the "
+"default."
+msgstr ""
+
+#: ../../pep-3120.txt:24
+msgid "A Bit of History"
+msgstr ""
+
+#: ../../pep-3120.txt:26
+msgid ""
+"In Python 1, the source encoding was unspecified, except that the source "
+"encoding had to be a superset of the system's basic execution character "
+"set (i.e. an ASCII superset, on most systems).  The source encoding was "
+"only relevant for the lexis itself (bytes representing letters for "
+"keywords, identifiers, punctuation, line breaks, etc). The contents of a "
+"string literal was copied literally from the file on source."
+msgstr ""
+
+#: ../../pep-3120.txt:34
+msgid ""
+"In Python 2.0, the source encoding changed to Latin-1 as a side effect of"
+" introducing Unicode. For Unicode string literals, the characters were "
+"still copied literally from the source file, but widened on a character-"
+"by-character basis. As Unicode gives a fixed interpretation to code "
+"points, this algorithm effectively fixed a source encoding, at least for "
+"files containing non-ASCII characters in Unicode literals."
+msgstr ""
+
+#: ../../pep-3120.txt:41
+msgid ""
+"PEP 263 identified the problem that you can use only those Unicode "
+"characters in a Unicode literal which are also in Latin-1, and introduced"
+" a syntax for declaring the source encoding. If no source encoding was "
+"given, the default should be ASCII. For compatibility with Python 2.0 and"
+" 2.1, files were interpreted as Latin-1 for a transitional period. This "
+"transition ended with Python 2.5, which gives an error if non-ASCII "
+"characters are encountered and no source encoding is declared."
+msgstr ""
+
+#: ../../pep-3120.txt:51
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3120.txt:53
+msgid ""
+"With PEP 263, using arbitrary non-ASCII characters in a Python file is "
+"possible, but tedious. One has to explicitly add an encoding declaration."
+" Even though some editors (like IDLE and Emacs) support the declarations "
+"of PEP 263, many editors still do not (and never will); users have to "
+"explicitly adjust the encoding which the editor assumes on a file-by-file"
+" basis."
+msgstr ""
+
+#: ../../pep-3120.txt:60
+msgid ""
+"When the default encoding is changed to UTF-8, adding non-ASCII text to "
+"Python files becomes easier and more portable: On some systems, editors "
+"will automatically choose UTF-8 when saving text (e.g. on Unix systems "
+"where the locale uses UTF-8). On other systems, editors will guess the "
+"encoding when reading the file, and UTF-8 is easy to guess. Yet other "
+"editors support associating a default encoding with a file extension, "
+"allowing users to associate .py with UTF-8."
+msgstr ""
+
+#: ../../pep-3120.txt:68
+msgid ""
+"For Python 2, an important reason for using non-UTF-8 encodings was that "
+"byte string literals would be in the source encoding at run-time, "
+"allowing then to output them to a file or render them to the user as-is. "
+"With Python 3, all strings will be Unicode strings, so the original "
+"encoding of the source will have no impact at run-time."
+msgstr ""
+
+#: ../../pep-3120.txt:75
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-3120.txt:77
+msgid ""
+"The parser needs to be changed to accept bytes > 127 if no source "
+"encoding is specified; instead of giving an error, it needs to check that"
+" the bytes are well-formed UTF-8 (decoding is not necessary, as the "
+"parser converts all source code to UTF-8, anyway)."
+msgstr ""
+
+#: ../../pep-3120.txt:82
+msgid "IDLE needs to be changed to use UTF-8 as the default encoding."
+msgstr ""
+
+#: ../../pep-3120.txt:86
+msgid "References"
+msgstr ""
+
+#: ../../pep-3120.txt:89
+msgid "http://www.python.org/dev/peps/pep-0263/"
+msgstr ""
+
+#: ../../pep-3120.txt:94
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3120.txt:96
+msgid "This document has been placed in the public domain."
+msgstr ""
+

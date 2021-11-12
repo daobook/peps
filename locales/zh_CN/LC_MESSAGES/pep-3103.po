@@ -1,0 +1,871 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3103.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3103.txt:1
+msgid "3103"
+msgstr ""
+
+#: ../../pep-3103.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3103.txt:2
+msgid "A Switch/Case Statement"
+msgstr ""
+
+#: ../../pep-3103.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3103.txt:5
+msgid "guido@python.org (Guido van Rossum)"
+msgstr ""
+
+#: ../../pep-3103.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3103.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-3103.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3103.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3103.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3103.txt:9
+msgid "25-Jun-2006"
+msgstr ""
+
+#: ../../pep-3103.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3103.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3103.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3103.txt:11
+msgid "26-Jun-2006"
+msgstr ""
+
+#: ../../pep-3103.txt:15
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-3103.txt:17
+msgid ""
+"A quick poll during my keynote presentation at PyCon 2007 shows this "
+"proposal has no popular support.  I therefore reject it."
+msgstr ""
+
+#: ../../pep-3103.txt:22
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3103.txt:24
+msgid ""
+"Python-dev has recently seen a flurry of discussion on adding a switch "
+"statement.  In this PEP I'm trying to extract my own preferences from the"
+" smorgasbord of proposals, discussing alternatives and explaining my "
+"choices where I can.  I'll also indicate how strongly I feel about "
+"alternatives I discuss."
+msgstr ""
+
+#: ../../pep-3103.txt:30
+msgid ""
+"This PEP should be seen as an alternative to PEP 275.  My views are "
+"somewhat different from that PEP's author, but I'm grateful for the work "
+"done in that PEP."
+msgstr ""
+
+#: ../../pep-3103.txt:34
+msgid ""
+"This PEP introduces canonical names for the many variants that have been "
+"discussed for different aspects of the syntax and semantics, such as "
+"\"alternative 1\", \"school II\", \"option 3\" and so on.  Hopefully "
+"these names will help the discussion."
+msgstr ""
+
+#: ../../pep-3103.txt:41
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3103.txt:43
+msgid ""
+"A common programming idiom is to consider an expression and do different "
+"things depending on its value.  This is usually done with a chain of "
+"if/elif tests; I'll refer to this form as the \"if/elif chain\".  There "
+"are two main motivations to want to introduce new syntax for this idiom:"
+msgstr ""
+
+#: ../../pep-3103.txt:49
+msgid ""
+"It is repetitive: the variable and the test operator, usually '==' or "
+"'in', are repeated in each if/elif branch."
+msgstr ""
+
+#: ../../pep-3103.txt:52
+msgid ""
+"It is inefficient: when an expression matches the last test value (or no "
+"test value at all) it is compared to each of the preceding test values."
+msgstr ""
+
+#: ../../pep-3103.txt:56
+msgid ""
+"Both of these complaints are relatively mild; there isn't a lot of "
+"readability or performance to be gained by writing this differently. Yet,"
+" some kind of switch statement is found in many languages and it is not "
+"unreasonable to expect that its addition to Python will allow us to write"
+" up certain code more cleanly and efficiently than before."
+msgstr ""
+
+#: ../../pep-3103.txt:62
+msgid ""
+"There are forms of dispatch that are not suitable for the proposed switch"
+" statement; for example, when the number of cases is not statically "
+"known, or when it is desirable to place the code for different cases in "
+"different classes or files."
+msgstr ""
+
+#: ../../pep-3103.txt:69
+msgid "Basic Syntax"
+msgstr ""
+
+#: ../../pep-3103.txt:71
+msgid ""
+"I'm considering several variants of the syntax first proposed in PEP 275 "
+"here.  There are lots of other possibilities, but I don't see that they "
+"add anything."
+msgstr ""
+
+#: ../../pep-3103.txt:75
+msgid "I've recently been converted to alternative 1."
+msgstr ""
+
+#: ../../pep-3103.txt:77
+msgid ""
+"I should note that all alternatives here have the \"implicit break\" "
+"property: at the end of the suite for a particular case, the control flow"
+" jumps to the end of the whole switch statement.  There is no way to pass"
+" control from one case to another.  This in contrast to C, where an "
+"explicit 'break' statement is required to prevent falling through to the "
+"next case."
+msgstr ""
+
+#: ../../pep-3103.txt:84
+msgid ""
+"In all alternatives, the else-suite is optional.  It is more Pythonic to "
+"use 'else' here rather than introducing a new reserved word, 'default', "
+"as in C."
+msgstr ""
+
+#: ../../pep-3103.txt:88
+msgid "Semantics are discussed in the next top-level section."
+msgstr ""
+
+#: ../../pep-3103.txt:91
+msgid "Alternative 1"
+msgstr ""
+
+#: ../../pep-3103.txt:93
+msgid "This is the preferred form in PEP 275::"
+msgstr ""
+
+#: ../../pep-3103.txt:104
+msgid ""
+"The main downside is that the suites where all the action is are indented"
+" two levels deep; this can be remedied by indenting the cases \"half a "
+"level\" (e.g. 2 spaces if the general indentation level is 4)."
+msgstr ""
+
+#: ../../pep-3103.txt:109
+msgid "Alternative 2"
+msgstr ""
+
+#: ../../pep-3103.txt:111
+msgid ""
+"This is Fredrik Lundh's preferred form; it differs by not indenting the "
+"cases::"
+msgstr ""
+
+#: ../../pep-3103.txt:123
+msgid ""
+"Some reasons not to choose this include expected difficulties for auto-"
+"indenting editors, folding editors, and the like; and confused users.  "
+"There are no situations currently in Python where a line ending in a "
+"colon is followed by an unindented line."
+msgstr ""
+
+#: ../../pep-3103.txt:129
+msgid "Alternative 3"
+msgstr ""
+
+#: ../../pep-3103.txt:131
+msgid ""
+"This is the same as alternative 2 but leaves out the colon after the "
+"switch::"
+msgstr ""
+
+#: ../../pep-3103.txt:143
+msgid ""
+"The hope of this alternative is that it will not upset the auto-indent "
+"logic of the average Python-aware text editor less.  But it looks strange"
+" to me."
+msgstr ""
+
+#: ../../pep-3103.txt:148
+msgid "Alternative 4"
+msgstr ""
+
+#: ../../pep-3103.txt:150
+msgid "This leaves out the 'case' keyword on the basis that it is redundant::"
+msgstr ""
+
+#: ../../pep-3103.txt:161
+msgid ""
+"Unfortunately now we are forced to indent the case expressions, because "
+"otherwise (at least in the absence of an 'else' keyword) the parser would"
+" have a hard time distinguishing between an unindented case expression "
+"(which continues the switch statement) or an unrelated statement that "
+"starts like an expression (such as an assignment or a procedure call).  "
+"The parser is not smart enough to backtrack once it sees the colon.  This"
+" is my least favorite alternative."
+msgstr ""
+
+#: ../../pep-3103.txt:171
+msgid "Extended Syntax"
+msgstr ""
+
+#: ../../pep-3103.txt:173
+msgid ""
+"There is one additional concern that needs to be addressed syntactically."
+"  Often two or more values need to be treated the same. In C, this done "
+"by writing multiple case labels together without any code between them.  "
+"The \"fall through\" semantics then mean that these are all handled by "
+"the same code.  Since the Python switch will not have fall-through "
+"semantics (which have yet to find a champion) we need another solution.  "
+"Here are some alternatives."
+msgstr ""
+
+#: ../../pep-3103.txt:182
+msgid "Alternative A"
+msgstr ""
+
+#: ../../pep-3103.txt:184 ../../pep-3103.txt:202 ../../pep-3103.txt:219
+msgid "Use::"
+msgstr ""
+
+#: ../../pep-3103.txt:188 ../../pep-3103.txt:206 ../../pep-3103.txt:223
+msgid "to match on a single expression; use::"
+msgstr ""
+
+#: ../../pep-3103.txt:192
+msgid ""
+"to match on multiple expressions.  The is interpreted so that if EXPR is "
+"a parenthesized tuple or another expression whose value is a tuple, the "
+"switch expression must equal that tuple, not one of its elements. This "
+"means that we cannot use a variable to indicate multiple cases. While "
+"this is also true in C's switch statement, it is a relatively common "
+"occurrence in Python (see for example sre_compile.py)."
+msgstr ""
+
+#: ../../pep-3103.txt:200
+msgid "Alternative B"
+msgstr ""
+
+#: ../../pep-3103.txt:210
+msgid ""
+"to match on multiple expressions.  If EXPR_LIST is a single expression, "
+"the 'in' forces its interpretation as an iterable (or something "
+"supporting __contains__, in a minority semantics alternative).  If it is "
+"multiple expressions, each of those is considered for a match."
+msgstr ""
+
+#: ../../pep-3103.txt:217
+msgid "Alternative C"
+msgstr ""
+
+#: ../../pep-3103.txt:227
+msgid "to match on multiple expressions (as in alternative A); and use::"
+msgstr ""
+
+#: ../../pep-3103.txt:231
+msgid ""
+"to match on the elements of an expression whose value is an iterable. The"
+" latter two cases can be combined, so that the true syntax is more like "
+"this::"
+msgstr ""
+
+#: ../../pep-3103.txt:237
+msgid ""
+"The `*` notation is similar to the use of prefix `*` already in use for "
+"variable-length parameter lists and for passing computed argument lists, "
+"and often proposed for value-unpacking (e.g.  ``a, b, *c = X`` as an "
+"alternative to ``(a, b), c = X[:2], X[2:]``)."
+msgstr ""
+
+#: ../../pep-3103.txt:243
+msgid "Alternative D"
+msgstr ""
+
+#: ../../pep-3103.txt:245
+msgid ""
+"This is a mixture of alternatives B and C; the syntax is like alternative"
+" B but instead of the 'in' keyword it uses '*'.  This is more limited, "
+"but still allows the same flexibility.  It uses::"
+msgstr ""
+
+#: ../../pep-3103.txt:251
+msgid "to match on a single expression and::"
+msgstr ""
+
+#: ../../pep-3103.txt:255
+msgid ""
+"to match on the elements of an iterable.  If one wants to specify "
+"multiple matches in one case, one can write this::"
+msgstr ""
+
+#: ../../pep-3103.txt:260
+msgid ""
+"or perhaps this (although it's a bit strange because the relative "
+"priority of '*' and ',' is different than elsewhere)::"
+msgstr ""
+
+#: ../../pep-3103.txt:266
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-3103.txt:268
+msgid ""
+"Alternatives B, C and D are motivated by the desire to specify multiple "
+"cases with the same treatment using a variable representing a set "
+"(usually a tuple) rather than spelling them out.  The motivation for this"
+" is usually that if one has several switches over the same set of cases "
+"it's a shame to have to spell out all the alternatives each time.  An "
+"additional motivation is to be able to specify *ranges* to be matched "
+"easily and efficiently, similar to Pascal's \"1..1000:\" notation.  At "
+"the same time we want to prevent the kind of mistake that is common in "
+"exception handling (and which will be addressed in Python 3000 by "
+"changing the syntax of the except clause): writing \"case 1, 2:\" where "
+"\"case (1, 2):\" was meant, or vice versa."
+msgstr ""
+
+#: ../../pep-3103.txt:280
+msgid ""
+"The case could be made that the need is insufficient for the added "
+"complexity; C doesn't have a way to express ranges either, and it's used "
+"a lot more than Pascal these days.  Also, if a dispatch method based on "
+"dict lookup is chosen as the semantics, large ranges could be inefficient"
+" (consider range(1, sys.maxint))."
+msgstr ""
+
+#: ../../pep-3103.txt:286
+msgid ""
+"All in all my preferences are (from most to least favorite) B, A, D', C, "
+"where D' is D without the third possibility."
+msgstr ""
+
+#: ../../pep-3103.txt:291
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-3103.txt:293
+msgid ""
+"There are several issues to review before we can choose the right "
+"semantics."
+msgstr ""
+
+#: ../../pep-3103.txt:297
+msgid "If/Elif Chain vs. Dict-based Dispatch"
+msgstr ""
+
+#: ../../pep-3103.txt:299
+msgid ""
+"There are several main schools of thought about the switch statement's "
+"semantics:"
+msgstr ""
+
+#: ../../pep-3103.txt:302
+msgid ""
+"School I wants to define the switch statement in term of an equivalent "
+"if/elif chain (possibly with some optimization thrown in)."
+msgstr ""
+
+#: ../../pep-3103.txt:306
+msgid ""
+"School II prefers to think of it as a dispatch on a precomputed dict.  "
+"There are different choices for when the precomputation happens."
+msgstr ""
+
+#: ../../pep-3103.txt:310
+msgid ""
+"There's also school III, which agrees with school I that the definition "
+"of a switch statement should be in terms of an equivalent if/elif chain, "
+"but concedes to the optimization camp that all expressions involved must "
+"be hashable."
+msgstr ""
+
+#: ../../pep-3103.txt:315
+msgid "We need to further separate school I into school Ia and school Ib:"
+msgstr ""
+
+#: ../../pep-3103.txt:317
+msgid ""
+"School Ia has a simple position: a switch statement is translated to an "
+"equivalent if/elif chain, and that's that.  It should not be linked to "
+"optimization at all.  That is also my main objection against this school:"
+" without any hint of optimization, the switch statement isn't attractive "
+"enough to warrant new syntax."
+msgstr ""
+
+#: ../../pep-3103.txt:323
+msgid ""
+"School Ib has a more complex position: it agrees with school II that "
+"optimization is important, and is willing to concede the compiler certain"
+" liberties to allow this.  (For example, PEP 275 Solution 1.) In "
+"particular, hash() of the switch and case expressions may or may not be "
+"called (so it should be side-effect-free); and the case expressions may "
+"not be evaluated each time as expected by the if/elif chain behavior, so "
+"the case expressions should also be side-effect free.  My objection to "
+"this (elaborated below) is that if either the hash() or the case "
+"expressions aren't side-effect-free, optimized and unoptimized code may "
+"behave differently."
+msgstr ""
+
+#: ../../pep-3103.txt:335
+msgid ""
+"School II grew out of the realization that optimization of commonly found"
+" cases isn't so easy, and that it's better to face this head on. This "
+"will become clear below."
+msgstr ""
+
+#: ../../pep-3103.txt:339
+msgid ""
+"The differences between school I (mostly school Ib) and school II are "
+"threefold:"
+msgstr ""
+
+#: ../../pep-3103.txt:342
+msgid ""
+"When optimizing using a dispatch dict, if either the switch expression or"
+" the case expressions are unhashable (in which case hash() raises an "
+"exception), school Ib requires catching the hash() failure and falling "
+"back to an if/elif chain.  School II simply lets the exception happen.  "
+"The problem with catching an exception in hash() as required by school "
+"Ib, is that this may hide a genuine bug.  A possible way out is to only "
+"use a dispatch dict if all case expressions are ints, strings or other "
+"built-ins with known good hash behavior, and to only attempt to hash the "
+"switch expression if it is also one of those types.  Type objects should "
+"probably also be supported here.  This is the (only) problem that school "
+"III addresses."
+msgstr ""
+
+#: ../../pep-3103.txt:355
+msgid ""
+"When optimizing using a dispatch dict, if the hash() function of any "
+"expression involved returns an incorrect value, under school Ib, "
+"optimized code will not behave the same as unoptimized code.  This is a "
+"well-known problem with optimization-related bugs, and waste lots of "
+"developer time.  Under school II, in this situation incorrect results are"
+" produced at least consistently, which should make debugging a bit "
+"easier.  The way out proposed for the previous bullet would also help "
+"here."
+msgstr ""
+
+#: ../../pep-3103.txt:364
+msgid ""
+"School Ib doesn't have a good optimization strategy if the case "
+"expressions are named constants.  The compiler cannot know their values "
+"for sure, and it cannot know whether they are truly constant. As a way "
+"out, it has been proposed to re-evaluate the expression corresponding to "
+"the case once the dict has identified which case should be taken, to "
+"verify that the value of the expression didn't change.  But strictly "
+"speaking, all the case expressions occurring before that case would also "
+"have to be checked, in order to preserve the true if/elif chain "
+"semantics, thereby completely killing the optimization.  Another proposed"
+" solution is to have callbacks notifying the dispatch dict of changes in "
+"the value of variables or attributes involved in the case expressions.  "
+"But this is not likely implementable in the general case, and would "
+"require many namespaces to bear the burden of supporting such callbacks, "
+"which currently don't exist at all."
+msgstr ""
+
+#: ../../pep-3103.txt:380
+msgid ""
+"Finally, there's a difference of opinion regarding the treatment of "
+"duplicate cases (i.e. two or more cases with match expressions that "
+"evaluates to the same value).  School I wants to treat this the same is "
+"an if/elif chain would treat it (i.e. the first match wins and the code "
+"for the second match is silently unreachable); school II wants this to be"
+" an error at the time the dispatch dict is frozen (so dead code doesn't "
+"go undiagnosed)."
+msgstr ""
+
+#: ../../pep-3103.txt:388
+msgid ""
+"School I sees trouble in school II's approach of pre-freezing a dispatch "
+"dict because it places a new and unusual burden on programmers to "
+"understand exactly what kinds of case values are allowed to be frozen and"
+" when the case values will be frozen, or they might be surprised by the "
+"switch statement's behavior."
+msgstr ""
+
+#: ../../pep-3103.txt:394
+msgid ""
+"School II doesn't believe that school Ia's unoptimized switch is worth "
+"the effort, and it sees trouble in school Ib's proposal for optimization,"
+" which can cause optimized and unoptimized code to behave differently."
+msgstr ""
+
+#: ../../pep-3103.txt:399
+msgid ""
+"In addition, school II sees little value in allowing cases involving "
+"unhashable values; after all if the user expects such values, they can "
+"just as easily write an if/elif chain.  School II also doesn't believe "
+"that it's right to allow dead code due to overlapping cases to occur "
+"unflagged, when the dict-based dispatch implementation makes it so easy "
+"to trap this."
+msgstr ""
+
+#: ../../pep-3103.txt:406
+msgid ""
+"However, there are some use cases for overlapping/duplicate cases. "
+"Suppose you're switching on some OS-specific constants (e.g. exported by "
+"the os module or some module like that).  You have a case for each. But "
+"on some OS, two different constants have the same value (since on that OS"
+" they are implemented the same way -- like O_TEXT and O_BINARY on Unix)."
+"  If duplicate cases are flagged as errors, your switch wouldn't work at "
+"all on that OS.  It would be much better if you could arrange the cases "
+"so that one case has preference over another."
+msgstr ""
+
+#: ../../pep-3103.txt:415
+msgid ""
+"There's also the (more likely) use case where you have a set of cases to "
+"be treated the same, but one member of the set must be treated "
+"differently.  It would be convenient to put the exception in an earlier "
+"case and be done with it."
+msgstr ""
+
+#: ../../pep-3103.txt:420
+msgid ""
+"(Yes, it seems a shame not to be able to diagnose dead code due to "
+"accidental case duplication.  Maybe that's less important, and pychecker "
+"can deal with it?  After all we don't diagnose duplicate method "
+"definitions either.)"
+msgstr ""
+
+#: ../../pep-3103.txt:425
+msgid ""
+"This suggests school IIb: like school II but redundant cases must be "
+"resolved by choosing the first match.  This is trivial to implement when "
+"building the dispatch dict (skip keys already present)."
+msgstr ""
+
+#: ../../pep-3103.txt:429
+msgid ""
+"(An alternative would be to introduce new syntax to indicate \"okay to "
+"have overlapping cases\" or \"ok if this case is dead code\" but I find "
+"that overkill.)"
+msgstr ""
+
+#: ../../pep-3103.txt:433
+msgid ""
+"Personally, I'm in school II: I believe that the dict-based dispatch is "
+"the one true implementation for switch statements and that we should face"
+" the limitations up front, so that we can reap maximal benefits.  I'm "
+"leaning towards school IIb -- duplicate cases should be resolved by the "
+"ordering of the cases instead of flagged as errors."
+msgstr ""
+
+#: ../../pep-3103.txt:440
+msgid "When to Freeze the Dispatch Dict"
+msgstr ""
+
+#: ../../pep-3103.txt:442
+msgid ""
+"For the supporters of school II (dict-based dispatch), the next big "
+"dividing issue is when to create the dict used for switching.  I call "
+"this \"freezing the dict\"."
+msgstr ""
+
+#: ../../pep-3103.txt:446
+msgid ""
+"The main problem that makes this interesting is the observation that "
+"Python doesn't have named compile-time constants.  What is conceptually a"
+" constant, such as re.IGNORECASE, is a variable to the compiler, and "
+"there's nothing to stop crooked code from modifying its value."
+msgstr ""
+
+#: ../../pep-3103.txt:453
+msgid "Option 1"
+msgstr ""
+
+#: ../../pep-3103.txt:455
+msgid ""
+"The most limiting option is to freeze the dict in the compiler.  This "
+"would require that the case expressions are all literals or compile-time "
+"expressions involving only literals and operators whose semantics are "
+"known to the compiler, since with the current state of Python's dynamic "
+"semantics and single-module compilation, there is no hope for the "
+"compiler to know with sufficient certainty the values of any variables "
+"occurring in such expressions.  This is widely though not universally "
+"considered too restrictive."
+msgstr ""
+
+#: ../../pep-3103.txt:464
+msgid ""
+"Raymond Hettinger is the main advocate of this approach.  He proposes a "
+"syntax where only a single literal of certain types is allowed as the "
+"case expression.  It has the advantage of being unambiguous and easy to "
+"implement."
+msgstr ""
+
+#: ../../pep-3103.txt:469
+msgid ""
+"My main complaint about this is that by disallowing \"named constants\" "
+"we force programmers to give up good habits.  Named constants are "
+"introduced in most languages to solve the problem of \"magic numbers\" "
+"occurring in the source code.  For example, sys.maxint is a lot more "
+"readable than 2147483647.  Raymond proposes to use string literals "
+"instead of named \"enums\", observing that the string literal's content "
+"can be the name that the constant would otherwise have.  Thus, we could "
+"write \"case 'IGNORECASE':\" instead of \"case re.IGNORECASE:\". However,"
+" if there is a spelling error in the string literal, the case will "
+"silently be ignored, and who knows when the bug is detected.  If there is"
+" a spelling error in a NAME, however, the error will be caught as soon as"
+" it is evaluated.  Also, sometimes the constants are externally defined "
+"(e.g. when parsing a file format like JPEG) and we can't easily choose "
+"appropriate string values.  Using an explicit mapping dict sounds like a "
+"poor hack."
+msgstr ""
+
+#: ../../pep-3103.txt:486
+msgid "Option 2"
+msgstr ""
+
+#: ../../pep-3103.txt:488
+msgid ""
+"The oldest proposal to deal with this is to freeze the dispatch dict the "
+"first time the switch is executed.  At this point we can assume that all "
+"the named \"constants\" (constant in the programmer's mind, though not to"
+" the compiler) used as case expressions are defined -- otherwise an "
+"if/elif chain would have little chance of success either. Assuming the "
+"switch will be executed many times, doing some extra work the first time "
+"pays back quickly by very quick dispatch times later."
+msgstr ""
+
+#: ../../pep-3103.txt:496
+msgid ""
+"An objection to this option is that there is no obvious object where the "
+"dispatch dict can be stored.  It can't be stored on the code object, "
+"which is supposed to be immutable; it can't be stored on the function "
+"object, since many function objects may be created for the same function "
+"(e.g. for nested functions).  In practice, I'm sure that something can be"
+" found; it could be stored in a section of the code object that's not "
+"considered when comparing two code objects or when pickling or "
+"marshalling a code object; or all switches could be stored in a dict "
+"indexed by weak references to code objects.  The solution should also be "
+"careful not to leak switch dicts between multiple interpreters."
+msgstr ""
+
+#: ../../pep-3103.txt:508
+msgid ""
+"Another objection is that the first-use rule allows obfuscated code like "
+"this::"
+msgstr ""
+
+#: ../../pep-3103.txt:516
+msgid ""
+"To the untrained eye (not familiar with Python) this code would be "
+"equivalent to this::"
+msgstr ""
+
+#: ../../pep-3103.txt:523
+msgid ""
+"but that's not what it does (unless it is always called with the same "
+"value as the second argument).  This has been addressed by suggesting "
+"that the case expressions should not be allowed to reference local "
+"variables, but this is somewhat arbitrary."
+msgstr ""
+
+#: ../../pep-3103.txt:528
+msgid ""
+"A final objection is that in a multi-threaded application, the first-use "
+"rule requires intricate locking in order to guarantee the correct "
+"semantics.  (The first-use rule suggests a promise that side effects of "
+"case expressions are incurred exactly once.)  This may be as tricky as "
+"the import lock has proved to be, since the lock has to be held while all"
+" the case expressions are being evaluated."
+msgstr ""
+
+#: ../../pep-3103.txt:536
+msgid "Option 3"
+msgstr ""
+
+#: ../../pep-3103.txt:538
+msgid ""
+"A proposal that has been winning support (including mine) is to freeze a "
+"switch's dict when the innermost function containing it is defined. The "
+"switch dict is stored on the function object, just as parameter defaults "
+"are, and in fact the case expressions are evaluated at the same time and "
+"in the same scope as the parameter defaults (i.e. in the scope containing"
+" the function definition)."
+msgstr ""
+
+#: ../../pep-3103.txt:545
+msgid ""
+"This option has the advantage of avoiding many of the finesses needed to "
+"make option 2 work: there's no need for locking, no worry about immutable"
+" code objects or multiple interpreters.  It also provides a clear "
+"explanation for why locals can't be referenced in case expressions."
+msgstr ""
+
+#: ../../pep-3103.txt:551
+msgid ""
+"This option works just as well for situations where one would typically "
+"use a switch; case expressions involving imported or global named "
+"constants work exactly the same way as in option 2, as long as they are "
+"imported or defined before the function definition is encountered."
+msgstr ""
+
+#: ../../pep-3103.txt:557
+msgid ""
+"A downside however is that the dispatch dict for a switch inside a nested"
+" function must be recomputed each time the nested function is defined.  "
+"For certain \"functional\" styles of programming this may make switch "
+"unattractive in nested functions.  (Unless all case expressions are "
+"compile-time constants; then the compiler is of course free to optimize "
+"away the switch freezing code and make the dispatch table part of the "
+"code object.)"
+msgstr ""
+
+#: ../../pep-3103.txt:565
+msgid ""
+"Another downside is that under this option, there's no clear moment when "
+"the dispatch dict is frozen for a switch that doesn't occur inside a "
+"function.  There are a few pragmatic choices for how to treat a switch "
+"outside a function:"
+msgstr ""
+
+#: ../../pep-3103.txt:570
+msgid "Disallow it."
+msgstr ""
+
+#: ../../pep-3103.txt:571
+msgid "Translate it into an if/elif chain."
+msgstr ""
+
+#: ../../pep-3103.txt:572
+msgid "Allow only compile-time constant expressions."
+msgstr ""
+
+#: ../../pep-3103.txt:573
+msgid "Compute the dispatch dict each time the switch is reached."
+msgstr ""
+
+#: ../../pep-3103.txt:574
+msgid "Like (b) but tests that all expressions evaluated are hashable."
+msgstr ""
+
+#: ../../pep-3103.txt:576
+msgid ""
+"Of these, (a) seems too restrictive: it's uniformly worse than (c); and "
+"(d) has poor performance for little or no benefits compared to (b).  It "
+"doesn't make sense to have a performance-critical inner loop at the "
+"module level, as all local variable references are slow there; hence (b) "
+"is my (weak) favorite.  Perhaps I should favor (e), which attempts to "
+"prevent atypical use of a switch; examples that work interactively but "
+"not in a function are annoying.  In the end I don't think this issue is "
+"all that important (except it must be resolved somehow) and am willing to"
+" leave it up to whoever ends up implementing it."
+msgstr ""
+
+#: ../../pep-3103.txt:587
+msgid ""
+"When a switch occurs in a class but not in a function, we can freeze the "
+"dispatch dict at the same time the temporary function object representing"
+" the class body is created.  This means the case expressions can "
+"reference module globals but not class variables. Alternatively, if we "
+"choose (b) above, we could choose this implementation inside a class "
+"definition as well."
+msgstr ""
+
+#: ../../pep-3103.txt:595
+msgid "Option 4"
+msgstr ""
+
+#: ../../pep-3103.txt:597
+msgid ""
+"There are a number of proposals to add a construct to the language that "
+"makes the concept of a value pre-computed at function definition time "
+"generally available, without tying it either to parameter default values "
+"or case expressions.  Some keywords proposed include 'const', 'static', "
+"'only' or 'cached'.  The associated syntax and semantics vary."
+msgstr ""
+
+#: ../../pep-3103.txt:604
+msgid ""
+"These proposals are out of scope for this PEP, except to suggest that "
+"*if* such a proposal is accepted, there are two ways for the switch to "
+"benefit: we could require case expressions to be either compile-time "
+"constants or pre-computed values; or we could make pre-computed values "
+"the default (and only) evaluation mode for case expressions.  The latter "
+"would be my preference, since I don't see a use for more dynamic case "
+"expressions that isn't addressed adequately by writing an explicit "
+"if/elif chain."
+msgstr ""
+
+#: ../../pep-3103.txt:615
+msgid "Conclusion"
+msgstr ""
+
+#: ../../pep-3103.txt:617
+msgid ""
+"It is too early to decide.  I'd like to see at least one completed "
+"proposal for pre-computed values before deciding.  In the meantime, "
+"Python is fine without a switch statement, and perhaps those who claim it"
+" would be a mistake to add one are right."
+msgstr ""
+
+#: ../../pep-3103.txt:624
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3103.txt:626
+msgid "This document has been placed in the public domain."
+msgstr ""
+

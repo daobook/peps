@@ -1,0 +1,207 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0559.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0559.rst:1
+msgid "559"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0559.rst:2
+msgid "Built-in noop()"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0559.rst:3
+msgid "Barry Warsaw <barry@python.org>"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0559.rst:4
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0559.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0559.rst:7
+msgid "08-Sep-2017"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0559.rst:8
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0559.rst:9
+msgid "09-Sep-2017"
+msgstr ""
+
+#: ../../pep-0559.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0559.rst:10
+msgid "https://mail.python.org/pipermail/python-dev/2017-September/149438.html"
+msgstr ""
+
+#: ../../pep-0559.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0559.rst:16
+msgid ""
+"This PEP proposes adding a new built-in function called ``noop()`` which "
+"does nothing but return ``None``."
+msgstr ""
+
+#: ../../pep-0559.rst:21
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0559.rst:23
+msgid ""
+"It is trivial to implement a no-op function in Python.  It's so easy in "
+"fact that many people do it many times over and over again.  It would be "
+"useful in many cases to have a common built-in function that does "
+"nothing."
+msgstr ""
+
+#: ../../pep-0559.rst:27
+msgid ""
+"One use case would be for PEP 553, where you could set the breakpoint "
+"environment variable to the following in order to effectively disable "
+"it::"
+msgstr ""
+
+#: ../../pep-0559.rst:34
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0559.rst:36
+msgid "The Python equivalent of the ``noop()`` function is exactly::"
+msgstr ""
+
+#: ../../pep-0559.rst:41
+msgid "The C built-in implementation is available as a pull request [1]_."
+msgstr ""
+
+#: ../../pep-0559.rst:45
+msgid "Rejected alternatives"
+msgstr ""
+
+#: ../../pep-0559.rst:48
+msgid "``noop()`` returns something"
+msgstr ""
+
+#: ../../pep-0559.rst:50
+msgid "YAGNI."
+msgstr ""
+
+#: ../../pep-0559.rst:52
+msgid ""
+"This is rejected because it complicates the semantics.  For example, if "
+"you always return both ``*args`` and ``**kws``, what do you return when "
+"none of those are given?  Returning a tuple of ``((), {})`` is kind of "
+"ugly, but provides consistency.  But you might also want to just return "
+"``None`` since that's also conceptually what the function was passed."
+msgstr ""
+
+#: ../../pep-0559.rst:58
+msgid ""
+"Or, what if you pass in exactly one positional argument, e.g. "
+"``noop(7)``.  Do you return ``7`` or ``((7,), {})``?  And so on."
+msgstr ""
+
+#: ../../pep-0559.rst:61
+msgid ""
+"The author claims that you won't ever need the return value of ``noop()``"
+" so it will always return ``None``."
+msgstr ""
+
+#: ../../pep-0559.rst:64
+msgid "Coghlan's Dialogs (edited for formatting):"
+msgstr ""
+
+#: ../../pep-0559.rst:66
+msgid ""
+"My counterargument to this would be ``map(noop, iterable)``, "
+"``sorted(iterable, key=noop)``, etc. (``filter``, ``max``, and ``min`` "
+"all accept callables that accept a single argument, as do many of the "
+"itertools operations)."
+msgstr ""
+
+#: ../../pep-0559.rst:71
+msgid ""
+"Making ``noop()`` a useful default function in those cases just needs the"
+" definition to be::"
+msgstr ""
+
+#: ../../pep-0559.rst:77
+msgid ""
+"The counterargument to the counterargument is that using ``None`` as the "
+"default in all these cases is going to be faster, since it lets the "
+"algorithm skip the callback entirely, rather than calling it and having "
+"it do nothing useful."
+msgstr ""
+
+#: ../../pep-0559.rst:84
+msgid "References"
+msgstr ""
+
+#: ../../pep-0559.rst:86
+msgid "https://github.com/python/cpython/pull/3480"
+msgstr ""
+
+#: ../../pep-0559.rst:90
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0559.rst:92
+msgid "This document has been placed in the public domain."
+msgstr ""
+

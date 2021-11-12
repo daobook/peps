@@ -1,0 +1,350 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0448.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0448.txt:1
+msgid "448"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0448.txt:2
+msgid "Additional Unpacking Generalizations"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0448.txt:5
+msgid "Joshua Landau <joshua@landau.ws>"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0448.txt:6
+msgid "python-ideas@python.org"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0448.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0448.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0448.txt:10
+msgid "29-Jun-2013"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0448.txt:11
+msgid "3.5"
+msgstr ""
+
+#: ../../pep-0448.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0448.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0448.txt:18
+msgid ""
+"This PEP proposes extended usages of the ``*`` iterable unpacking "
+"operator and ``**`` dictionary unpacking operators to allow unpacking in "
+"more positions, an arbitrary number of times, and in additional "
+"circumstances.  Specifically, in function calls, in comprehensions and "
+"generator expressions, and in displays."
+msgstr ""
+
+#: ../../pep-0448.txt:25
+msgid ""
+"Function calls are proposed to support an arbitrary number of unpackings "
+"rather than just one::"
+msgstr ""
+
+#: ../../pep-0448.txt:33
+msgid ""
+"Unpacking is proposed to be allowed inside tuple, list, set, and "
+"dictionary displays::"
+msgstr ""
+
+#: ../../pep-0448.txt:45
+msgid "In dictionaries, later values will always override earlier ones::"
+msgstr ""
+
+#: ../../pep-0448.txt:53
+msgid ""
+"This PEP does not include unpacking operators inside list, set and "
+"dictionary comprehensions although this has not been ruled out for future"
+" proposals."
+msgstr ""
+
+#: ../../pep-0448.txt:59
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0448.txt:61
+msgid ""
+"Current usage of the ``*`` iterable unpacking operator features "
+"unnecessary restrictions that can harm readability."
+msgstr ""
+
+#: ../../pep-0448.txt:64
+msgid ""
+"Unpacking multiple times has an obvious rationale.  When you want to "
+"unpack several iterables into a function definition or follow an unpack "
+"with more positional arguments, the most natural way would be to write::"
+msgstr ""
+
+#: ../../pep-0448.txt:72
+msgid ""
+"Simple examples where this is useful are ``print`` and ``str.format``. "
+"Instead, you could be forced to write::"
+msgstr ""
+
+#: ../../pep-0448.txt:83
+msgid "or, if you know to do so::"
+msgstr ""
+
+#: ../../pep-0448.txt:91
+msgid ""
+"which add unnecessary line-noise and, with the first methods, causes "
+"duplication of work."
+msgstr ""
+
+#: ../../pep-0448.txt:95
+msgid ""
+"There are two primary rationales for unpacking inside of containers. "
+"Firstly there is a symmetry of assignment, where ``fst, *other, lst = "
+"elems`` and ``elems = fst, *other, lst`` are approximate inverses, "
+"ignoring the specifics of types.  This, in effect, simplifies the "
+"language by removing special cases."
+msgstr ""
+
+#: ../../pep-0448.txt:101
+msgid ""
+"Secondly, it vastly simplifies types of \"addition\" such as combining "
+"dictionaries, and does so in an unambiguous and well-defined way::"
+msgstr ""
+
+#: ../../pep-0448.txt:106
+msgid "instead of::"
+msgstr ""
+
+#: ../../pep-0448.txt:111
+msgid ""
+"which is especially important in contexts where expressions are "
+"preferred.  This is also useful as a more readable way of summing "
+"iterables into a list, such as ``my_list + list(my_tuple) + "
+"list(my_range)`` which is now equivalent to just ``[*my_list, *my_tuple, "
+"*my_range]``."
+msgstr ""
+
+#: ../../pep-0448.txt:119
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0448.txt:121
+msgid ""
+"Function calls may accept an unbounded number of ``*`` and ``**`` "
+"unpackings.  There will be no restriction of the order of positional "
+"arguments with relation to ``*`` unpackings nor any restriction of the "
+"order of keyword arguments with relation to ``**`` unpackings."
+msgstr ""
+
+#: ../../pep-0448.txt:126
+msgid ""
+"Function calls continue to have the restriction that keyword arguments "
+"must follow positional arguments and ``**`` unpackings must additionally "
+"follow ``*`` unpackings."
+msgstr ""
+
+#: ../../pep-0448.txt:130
+msgid ""
+"Currently, if an argument is given multiple times — such as a positional "
+"argument given both positionally and by keyword — a ``TypeError`` is "
+"raised.  This remains true for duplicate arguments provided through "
+"multiple ``**`` unpackings, e.g. ``f(**{'x': 2}, **{'x': 3})``, except "
+"that the error will be detected at runtime."
+msgstr ""
+
+#: ../../pep-0448.txt:137
+msgid "A function looks like this::"
+msgstr ""
+
+#: ../../pep-0448.txt:145
+msgid ""
+"Tuples, lists, sets and dictionaries will allow unpacking.  This will act"
+" as if the elements from unpacked items were inserted in order at the "
+"site of unpacking, much as happens in unpacking in a function-call. "
+"Dictionaries require ``**`` unpacking; all the others require ``*`` "
+"unpacking."
+msgstr ""
+
+#: ../../pep-0448.txt:150
+msgid ""
+"The keys in a dictionary remain in a right-to-left priority order, so "
+"``{**{'a': 1}, 'a': 2, **{'a': 3}}`` evaluates to ``{'a': 3}``.  There is"
+" no restriction on the number or position of unpackings."
+msgstr ""
+
+#: ../../pep-0448.txt:156
+msgid "Disadvantages"
+msgstr ""
+
+#: ../../pep-0448.txt:158
+msgid ""
+"The allowable orders for arguments in a function call are more "
+"complicated than before.  The simplest explanation for the rules may be "
+"\"positional arguments precede keyword arguments and ``**`` unpacking; "
+"``*`` unpacking precedes ``**`` unpacking\"."
+msgstr ""
+
+#: ../../pep-0448.txt:163
+msgid ""
+"Whilst ``*elements, = iterable`` causes ``elements`` to be a list, "
+"``elements = *iterable,`` causes ``elements`` to be a tuple.  The reason "
+"for this may confuse people unfamiliar with the construct."
+msgstr ""
+
+#: ../../pep-0448.txt:167
+msgid ""
+"Concerns have been raised about the unexpected difference between "
+"duplicate keys in dictionaries being allowed but duplicate keys in "
+"function call syntax raising an error.  Although this is already the case"
+" with current syntax, this proposal might exacerbate the issue.  It "
+"remains to be seen how much of an issue this is in practice."
+msgstr ""
+
+#: ../../pep-0448.txt:175
+msgid "Variations"
+msgstr ""
+
+#: ../../pep-0448.txt:177
+msgid ""
+"The PEP originally considered whether the ordering of argument types in a"
+" function call (positional, keyword, ``*`` or ``**``) could become less "
+"strict. This met little support so the idea was shelved."
+msgstr ""
+
+#: ../../pep-0448.txt:181
+msgid ""
+"Earlier iterations of this PEP allowed unpacking operators inside list, "
+"set, and dictionary comprehensions as a flattening operator over "
+"iterables of containers::"
+msgstr ""
+
+#: ../../pep-0448.txt:192
+msgid ""
+"This was met with a mix of strong concerns about readability and mild "
+"support. In order not to disadvantage the less controversial aspects of "
+"the PEP, this was not accepted with the rest of the proposal."
+msgstr ""
+
+#: ../../pep-0448.txt:196
+msgid ""
+"Unbracketed comprehensions in function calls, such as ``f(x for x in "
+"it)``, are already valid.  These could be extended to::"
+msgstr ""
+
+#: ../../pep-0448.txt:202
+msgid ""
+"However, it wasn't clear if this was the best behaviour or if it should "
+"unpack into the arguments of the call to `f`. Since this is likely to be "
+"confusing and is of only very marginal utility, it is not included in "
+"this PEP.  Instead, these will throw a ``SyntaxError`` and comprehensions"
+" with explicit brackets should be used instead."
+msgstr ""
+
+#: ../../pep-0448.txt:210
+msgid "Approval"
+msgstr ""
+
+#: ../../pep-0448.txt:212
+msgid "This PEP was accepted by Guido on February 25, 2015 [1]_."
+msgstr ""
+
+#: ../../pep-0448.txt:216
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0448.txt:218
+msgid ""
+"An implementation for Python 3.5 is found at Issue 2292 on bug tracker "
+"[2]_. This currently includes support for unpacking inside "
+"comprehensions, which should be removed."
+msgstr ""
+
+#: ../../pep-0448.txt:224
+msgid "References"
+msgstr ""
+
+#: ../../pep-0448.txt:226
+msgid ""
+"PEP accepted, \"PEP 448 review\", Guido van Rossum "
+"(https://mail.python.org/pipermail/python-dev/2015-February/138564.html)"
+msgstr ""
+
+#: ../../pep-0448.txt:229
+msgid ""
+"Issue 2292, \"Missing `*`-unpacking generalizations\", Thomas Wouters "
+"(http://bugs.python.org/issue2292)"
+msgstr ""
+
+#: ../../pep-0448.txt:232
+msgid ""
+"Discussion on Python-ideas list, \"list / array comprehensions "
+"extension\", Alexander Heger (https://mail.python.org/pipermail/python-"
+"ideas/2011-December/013097.html)"
+msgstr ""
+
+#: ../../pep-0448.txt:237
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0448.txt:239
+msgid "This document has been placed in the public domain."
+msgstr ""
+

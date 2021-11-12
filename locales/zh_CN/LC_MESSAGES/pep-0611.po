@@ -1,0 +1,691 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0611.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0611.rst:1
+msgid "611"
+msgstr ""
+
+#: ../../pep-0611.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0611.rst:2
+msgid "The one million limit"
+msgstr ""
+
+#: ../../pep-0611.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0611.rst:3
+msgid "Mark Shannon <mark@hotpy.org>"
+msgstr ""
+
+#: ../../pep-0611.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0611.rst:4
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0611.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0611.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0611.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0611.rst:7
+msgid "05-Dec-2019"
+msgstr ""
+
+#: ../../pep-0611.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0611.rst:12
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0611.rst:13
+msgid ""
+"This PR proposes a soft limit of one million (1 000 000), and a larger "
+"hard limit for various aspects of Python code and its implementation."
+msgstr ""
+
+#: ../../pep-0611.rst:16
+msgid ""
+"The Python language does not specify limits for many of its features. Not"
+" having any limit to these values seems to enhance programmer freedom, at"
+" least superficially, but in practice the CPython VM and other Python "
+"virtual machines have implicit limits or are forced to assume that the "
+"limits are astronomical, which is expensive."
+msgstr ""
+
+#: ../../pep-0611.rst:22
+msgid ""
+"This PR lists a number of features which are to have a limit of one "
+"million."
+msgstr ""
+
+#: ../../pep-0611.rst:24
+msgid "For CPython the hard limit will be eight million (8 000 000)."
+msgstr ""
+
+#: ../../pep-0611.rst:27
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0611.rst:29
+msgid ""
+"There are many values that need to be represented in a virtual machine. "
+"If no limit is specified for these values, then the representation must "
+"either be inefficient or vulnerable to overflow. The CPython virtual "
+"machine represents values like line numbers, stack offsets and "
+"instruction offsets by 32 bit values. This is inefficient, and "
+"potentially unsafe."
+msgstr ""
+
+#: ../../pep-0611.rst:35
+msgid ""
+"It is inefficient as actual values rarely need more than a dozen or so "
+"bits to represent them."
+msgstr ""
+
+#: ../../pep-0611.rst:37
+msgid ""
+"It is unsafe as malicious or poorly generated code could cause values to "
+"exceed 2\\ :sup:`32`."
+msgstr ""
+
+#: ../../pep-0611.rst:39
+msgid ""
+"For example, line numbers are represented by 32 bit values internally. "
+"This is inefficient, given that modules almost never exceed a few "
+"thousand lines. Despite being inefficient, is still vulnerable to "
+"overflow as it is easy for an attacker to created a module with billions "
+"of newline characters."
+msgstr ""
+
+#: ../../pep-0611.rst:44
+msgid ""
+"Memory access is usually a limiting factor in the performance of modern "
+"CPUs. Better packing of data structures enhances locality and reduces "
+"memory bandwidth, at a modest increase in ALU usage (for shifting and "
+"masking). Being able to safely store important values in 20 bits would "
+"allow memory savings in several data structures including, but not "
+"limited to:"
+msgstr ""
+
+#: ../../pep-0611.rst:50
+msgid "Frame objects"
+msgstr ""
+
+#: ../../pep-0611.rst:51
+msgid "Object headers"
+msgstr ""
+
+#: ../../pep-0611.rst:52
+msgid "Code objects"
+msgstr ""
+
+#: ../../pep-0611.rst:54
+msgid ""
+"There is also the potential for a more efficient instruction format, "
+"speeding up interpreter dispatch."
+msgstr ""
+
+#: ../../pep-0611.rst:57
+msgid "Is this a worthwhile trade off?"
+msgstr ""
+
+#: ../../pep-0611.rst:59
+msgid ""
+"The downside of any form of limit is that it might potentially make "
+"someone's job harder, for example, it may be harder to write a code "
+"generator that keeps the size of modules to one million lines. However, "
+"it is the author's opinion, having written many code generators, that "
+"such a limit is extremely unlikely to be a problem in practice."
+msgstr ""
+
+#: ../../pep-0611.rst:64
+#, python-format
+msgid ""
+"The upside of these limits is the freedom it grants implementers of "
+"runtimes, whether CPython, PyPy, or any other implementation, to improve "
+"performance. It is the author's belief, that the potential value of even "
+"a 0.1% reduction in the cost of running Python programs globally will "
+"hugely exceed the cost of modifying a handful of code generators."
+msgstr ""
+
+#: ../../pep-0611.rst:70
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0611.rst:72
+msgid ""
+"Imposing a limit on values such as lines of code in a module, and the "
+"number of local variables, has significant advantages for ease of "
+"implementation and efficiency of virtual machines. If the limit is "
+"sufficiently large, there is no adverse effect on users of the language."
+msgstr ""
+
+#: ../../pep-0611.rst:76
+msgid ""
+"By selecting a fixed but large limit for these values, it is possible to "
+"have both safety and efficiency whilst causing no inconvenience to human "
+"programmers and only very rare problems for code generators."
+msgstr ""
+
+#: ../../pep-0611.rst:81
+msgid "One million"
+msgstr ""
+
+#: ../../pep-0611.rst:83
+msgid "The value \"one million\" is very easy to remember."
+msgstr ""
+
+#: ../../pep-0611.rst:85
+msgid ""
+"The one million limit is mostly a limit on human generated code, not "
+"runtime sizes."
+msgstr ""
+
+#: ../../pep-0611.rst:87
+msgid ""
+"One million lines in a single module is a ridiculous concentration of "
+"code; the entire Python standard library is about 2/3rd of a million "
+"lines, spread over 1600 files."
+msgstr ""
+
+#: ../../pep-0611.rst:90
+msgid ""
+"The Java Virtual Machine (JVM) [1]_ specifies a limit of 2\\ :sup:`16`-1 "
+"(65535) for many program elements similar to those covered here. This "
+"limit enables limited values to fit in 16 bits, which is a very efficient"
+" machine representation. However, this limit is quite easily exceeded in "
+"practice by code generators and the author is aware of existing Python "
+"code that already exceeds 2\\ :sup:`16` lines of code."
+msgstr ""
+
+#: ../../pep-0611.rst:96
+msgid ""
+"The hard limit of eight million fits into 23 bits which, although not as "
+"convenient for machine representation, is still reasonably compact. A "
+"limit of eight million is small enough for efficiency advantages (only 23"
+" bits), but large enough not to impact users (no one has ever written a "
+"module that large)."
+msgstr ""
+
+#: ../../pep-0611.rst:101
+msgid ""
+"While it is possible that generated code could exceed the limit, it is "
+"easy for a code generator to modify its output to conform. The author has"
+" hit the 64K limit in the JVM on at least two occasions when generating "
+"Java code. The workarounds were relatively straightforward and wouldn't "
+"have been necessary with a limit of one million bytecodes or lines of "
+"code."
+msgstr ""
+
+#: ../../pep-0611.rst:107
+msgid ""
+"Where necessary, the soft limit can increased for those programs that "
+"exceed the one million limit."
+msgstr ""
+
+#: ../../pep-0611.rst:109
+msgid ""
+"Having a soft limit of one million provides a warning of problematic "
+"code, without causing an error and forcing an immediate fix. It also "
+"allows dynamic optimizers to use more compact formats without inline "
+"checks."
+msgstr ""
+
+#: ../../pep-0611.rst:113
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0611.rst:115
+msgid ""
+"This PR proposes that the following language features and runtime values "
+"have a soft limit of one million."
+msgstr ""
+
+#: ../../pep-0611.rst:117
+msgid "The number of source code lines in a module"
+msgstr ""
+
+#: ../../pep-0611.rst:118
+msgid "The number of bytecode instructions in a code object."
+msgstr ""
+
+#: ../../pep-0611.rst:119
+msgid "The sum of local variables and stack usage for a code object."
+msgstr ""
+
+#: ../../pep-0611.rst:120
+msgid "The number of classes in a running interpreter."
+msgstr ""
+
+#: ../../pep-0611.rst:121
+msgid "The recursion depth of Python code."
+msgstr ""
+
+#: ../../pep-0611.rst:123
+msgid ""
+"It is likely that memory constraints would be a limiting factor before "
+"the number of classes reaches one million."
+msgstr ""
+
+#: ../../pep-0611.rst:126
+msgid "Recursion depth"
+msgstr ""
+
+#: ../../pep-0611.rst:128
+msgid ""
+"The recursion depth limit only applies to pure Python code. Code written "
+"in a foreign language, such as C, may consume hardware stack and thus be "
+"limited to a recursion depth of a few thousand. It is expected that "
+"implementations will raise an exception should the hardware stack get "
+"close to its limit. For code that mixes Python and C calls, it is most "
+"likely that the hardware limit will apply first. The size of the hardware"
+" recursion may vary at runtime and will not be visible."
+msgstr ""
+
+#: ../../pep-0611.rst:135
+msgid "Soft and hard limits"
+msgstr ""
+
+#: ../../pep-0611.rst:137
+msgid ""
+"Implementations should emit a warning whenever a soft limit is exceeded, "
+"unless the hard limit has the same value as the soft limit. When a hard "
+"limit is exceeded, then an exception should be raised."
+msgstr ""
+
+#: ../../pep-0611.rst:140
+msgid ""
+"Depending on the implementation, different hard limits might apply. In "
+"some cases the hard limit might be below the soft limit. For example, "
+"many micropython ports are unlikely to be able to support such large "
+"limits."
+msgstr ""
+
+#: ../../pep-0611.rst:145
+msgid "Introspecting and modifying the limits"
+msgstr ""
+
+#: ../../pep-0611.rst:147
+msgid ""
+"One or more functions will be provided in the ``sys`` module to "
+"introspect or modify the soft limits at runtime, but the limits may not "
+"be raised above the hard limit."
+msgstr ""
+
+#: ../../pep-0611.rst:151
+msgid "Inferred limits"
+msgstr ""
+
+#: ../../pep-0611.rst:153
+msgid ""
+"These limits are not part of the specification, but a limit of less than "
+"one million can be inferred from the limit on the number of bytecode "
+"instructions in a code object. Because there would be insufficient "
+"instructions to load more than one million constants or use more than one"
+" million names."
+msgstr ""
+
+#: ../../pep-0611.rst:158
+msgid "The number of distinct names in a code object."
+msgstr ""
+
+#: ../../pep-0611.rst:159
+msgid "The number of constants in a code object."
+msgstr ""
+
+#: ../../pep-0611.rst:162
+msgid "The advantages for CPython of imposing these limits:"
+msgstr ""
+
+#: ../../pep-0611.rst:165
+msgid "Line of code in a module and code object restrictions."
+msgstr ""
+
+#: ../../pep-0611.rst:167
+msgid ""
+"When compiling source code to bytecode or modifying bytecode for "
+"profiling or debugging, an intermediate form is required. By limiting "
+"operands to 23 bits, instructions can be represented in a compact 64 bit "
+"form allowing very fast passes over the instruction sequence."
+msgstr ""
+
+#: ../../pep-0611.rst:172
+msgid ""
+"Having 23 bit operands (24 bits for relative branches) allows "
+"instructions to fit into 32 bits without needing additional "
+"``EXTENDED_ARG`` instructions. This improves dispatch, as the operand is "
+"strictly local to the instruction. It is unclear whether this would help "
+"performance, it is merely an example of what is possible."
+msgstr ""
+
+#: ../../pep-0611.rst:177
+msgid ""
+"The benefit of restricting the number of lines in a module is primarily "
+"the implied limit on bytecodes. It is more important for implementations "
+"that it is instructions per code object, not lines per module, that is "
+"limited to one million, but it is much easier to explain a one million "
+"line limit. Having a consistent limit of one million is just easier to "
+"remember. It is mostly likely, although not guaranteed, that the line "
+"limit will be hit first and thus provide a simpler to understand error "
+"message to the developer."
+msgstr ""
+
+#: ../../pep-0611.rst:183
+msgid "Total number of classes in a running interpreter"
+msgstr ""
+
+#: ../../pep-0611.rst:185
+msgid ""
+"This limit has to the potential to reduce the size of object headers "
+"considerably."
+msgstr ""
+
+#: ../../pep-0611.rst:187
+msgid ""
+"Currently objects have a two word header, for objects without references "
+"(int, float, str, etc.) or a four word header for objects with "
+"references. By reducing the maximum number of classes, the space for the "
+"class reference can be reduced from 64 bits to fewer than 32 bits "
+"allowing a much more compact header."
+msgstr ""
+
+#: ../../pep-0611.rst:192
+msgid "For example, a super-compact header format might look like this:"
+msgstr ""
+
+#: ../../pep-0611.rst:202
+msgid ""
+"This format would reduce the size of a Python object without slots, on a "
+"64 bit machine, from 40 to 16 bytes."
+msgstr ""
+
+#: ../../pep-0611.rst:204
+msgid ""
+"Note that there are two ways to use a 32 bit refcount on a 64 bit "
+"machine. One is to limit each sub-interpreter to 32Gb of memory. The "
+"other is to use a saturating reference count, which would be a little bit"
+" slower, but allow unlimited memory allocation."
+msgstr ""
+
+#: ../../pep-0611.rst:209
+msgid "Enforcement"
+msgstr ""
+
+#: ../../pep-0611.rst:211
+msgid ""
+"Python implementations are not obliged to enforce the limits. However, if"
+" a limit can be enforced without hurting performance, then it should be."
+msgstr ""
+
+#: ../../pep-0611.rst:214
+msgid "It is anticipated that CPython will enforce the limits as follows:"
+msgstr ""
+
+#: ../../pep-0611.rst:216
+msgid "The number of source code lines in a module: version 3.9 onward."
+msgstr ""
+
+#: ../../pep-0611.rst:217
+msgid "The number of bytecode instructions in a code object: 3.9 onward."
+msgstr ""
+
+#: ../../pep-0611.rst:218
+msgid "The sum of local variables and stack usage for a code object: 3.9 onward."
+msgstr ""
+
+#: ../../pep-0611.rst:219
+msgid ""
+"The number of classes in a running interpreter: probably 3.10 onward, "
+"maybe warning in 3.9."
+msgstr ""
+
+#: ../../pep-0611.rst:222
+msgid "Hard limits in CPython"
+msgstr ""
+
+#: ../../pep-0611.rst:224
+msgid ""
+"CPython will enforce a hard limit on all the above values. The value of "
+"the hard limit will be 8 million."
+msgstr ""
+
+#: ../../pep-0611.rst:226
+msgid ""
+"It is hypothetically possible that some machine generated code exceeds "
+"one or more of the above limits. The author believes that to be "
+"incredibly unlikely and easily fixed by modifying the output stage of the"
+" code generator."
+msgstr ""
+
+#: ../../pep-0611.rst:229
+msgid ""
+"We would like to gain the benefit from the above limits for performance "
+"as soon as possible. To that end, CPython will start applying limits from"
+" version 3.9 onward. To ease the transition and minimize breakage, the "
+"initial limits will be 16 million, reducing to 8 million in a later "
+"version."
+msgstr ""
+
+#: ../../pep-0611.rst:234
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0611.rst:236
+msgid "The actual hard limits enforced by CPython will be:"
+msgstr ""
+
+#: ../../pep-0611.rst:239 ../../pep-0611.rst:253
+msgid "Version"
+msgstr ""
+
+#: ../../pep-0611.rst:239
+msgid "Hard limit"
+msgstr ""
+
+#: ../../pep-0611.rst:241 ../../pep-0611.rst:255
+msgid "3.9"
+msgstr ""
+
+#: ../../pep-0611.rst:241
+msgid "16 million"
+msgstr ""
+
+#: ../../pep-0611.rst:242
+msgid "3.10 onward"
+msgstr ""
+
+#: ../../pep-0611.rst:242
+msgid "8 million"
+msgstr ""
+
+#: ../../pep-0611.rst:245
+msgid ""
+"Given the rarity of code generators that would exceed the one million "
+"limits, and the environments in which they are typically used, it seems "
+"reasonable to start issuing warnings in 3.9 if any limited quantity "
+"exceeds one million."
+msgstr ""
+
+#: ../../pep-0611.rst:249
+msgid ""
+"Historically the recursion limit has been set at 1000. To avoid breaking "
+"code that implicitly relies on the value being small, the soft recursion "
+"limit will be increased gradually, as follows:"
+msgstr ""
+
+#: ../../pep-0611.rst:253
+msgid "Soft limit"
+msgstr ""
+
+#: ../../pep-0611.rst:255
+msgid "4 000"
+msgstr ""
+
+#: ../../pep-0611.rst:256
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0611.rst:256
+msgid "16 000"
+msgstr ""
+
+#: ../../pep-0611.rst:257
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0611.rst:257
+msgid "64 000"
+msgstr ""
+
+#: ../../pep-0611.rst:258
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0611.rst:258
+msgid "125 000"
+msgstr ""
+
+#: ../../pep-0611.rst:259
+msgid "3.13"
+msgstr ""
+
+#: ../../pep-0611.rst:259
+msgid "1 million"
+msgstr ""
+
+#: ../../pep-0611.rst:262
+msgid "The hard limit will be set to 8 million immediately."
+msgstr ""
+
+#: ../../pep-0611.rst:265
+msgid "Other implementations"
+msgstr ""
+
+#: ../../pep-0611.rst:267
+msgid ""
+"Implementations of Python other than CPython have different purposes, so "
+"different limits might be appropriate. This is acceptable, provided the "
+"limits are clearly documented."
+msgstr ""
+
+#: ../../pep-0611.rst:271
+msgid "General purpose implementations"
+msgstr ""
+
+#: ../../pep-0611.rst:273
+msgid ""
+"General purpose implementations, such as PyPy, should use the one million"
+" limit. If maximum compatibility is a goal, then they should also follow "
+"CPython's behaviour for 3.9 to 3.11."
+msgstr ""
+
+#: ../../pep-0611.rst:277
+msgid "Special purpose implementations"
+msgstr ""
+
+#: ../../pep-0611.rst:279
+msgid ""
+"Special purpose implementations may use lower limits, as long as they are"
+" clearly documented. An implementation designed for embedded systems, for"
+" example MicroPython, might impose limits as low as a few thousand."
+msgstr ""
+
+#: ../../pep-0611.rst:283
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0611.rst:285
+msgid ""
+"Minimal. This reduces the attack surface of any Python virtual machine by"
+" a small amount."
+msgstr ""
+
+#: ../../pep-0611.rst:288
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0611.rst:290
+msgid ""
+"None, as yet. This will be implemented in CPython, once the PEP has been "
+"accepted."
+msgstr ""
+
+#: ../../pep-0611.rst:294
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0611.rst:296
+msgid ""
+"Being able to modify the hard limits upwards at compile time was "
+"suggested by Tal Einat. This is rejected as the current limits of 2\\ "
+":sup:`32` have not been an issue, and the practical advantages of "
+"allowing limits between 2\\ :sup:`20` and 2\\ :sup:`32` seem slight "
+"compared to the additional code complexity of supporting such a feature."
+msgstr ""
+
+#: ../../pep-0611.rst:303
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0611.rst:305
+msgid "None, as yet."
+msgstr ""
+
+#: ../../pep-0611.rst:309
+msgid "References"
+msgstr ""
+
+#: ../../pep-0611.rst:311
+msgid "The Java Virtual Machine specification"
+msgstr ""
+
+#: ../../pep-0611.rst:313
+msgid "https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf"
+msgstr ""
+
+#: ../../pep-0611.rst:318
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0611.rst:320
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

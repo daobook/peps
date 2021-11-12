@@ -1,0 +1,233 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0297.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0297.txt:1
+msgid "297"
+msgstr ""
+
+#: ../../pep-0297.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0297.txt:2
+msgid "Support for System Upgrades"
+msgstr ""
+
+#: ../../pep-0297.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0297.txt:5
+msgid "mal@lemburg.com (Marc-André Lemburg)"
+msgstr ""
+
+#: ../../pep-0297.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0297.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0297.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0297.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0297.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0297.txt:9
+msgid "19-Jul-2001"
+msgstr ""
+
+#: ../../pep-0297.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0297.txt:10
+msgid "2.6"
+msgstr ""
+
+#: ../../pep-0297.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0297.txt:15
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0297.txt:17
+msgid "This PEP is rejected for failure to generate significant interest."
+msgstr ""
+
+#: ../../pep-0297.txt:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0297.txt:23
+msgid ""
+"This PEP proposes strategies to allow the Python standard library to be "
+"upgraded in parts without having to reinstall the complete distribution "
+"or having to wait for a new patch level release."
+msgstr ""
+
+#: ../../pep-0297.txt:29
+msgid "Problem"
+msgstr ""
+
+#: ../../pep-0297.txt:31
+msgid ""
+"Python currently does not allow overriding modules or packages in the "
+"standard library per default. Even though this is possible by defining a "
+"``PYTHONPATH`` environment variable (the paths defined in this variable "
+"are prepended to the Python standard library path), there is no standard "
+"way of achieving this without changing the configuration."
+msgstr ""
+
+#: ../../pep-0297.txt:38
+msgid ""
+"Since Python's standard library is starting to host packages which are "
+"also available separately, e.g. the distutils, email and PyXML packages, "
+"which can also be installed independently of the Python distribution, it "
+"is desirable to have an option to upgrade these packages without having "
+"to wait for a new patch level release of the Python interpreter to bring "
+"along the changes."
+msgstr ""
+
+#: ../../pep-0297.txt:45
+msgid ""
+"On some occasions, it may also be desirable to update modules of the "
+"standard library without going through the whole Python release cycle, "
+"e.g. in order to provide hot-fixes for security problems."
+msgstr ""
+
+#: ../../pep-0297.txt:51
+msgid "Proposed Solutions"
+msgstr ""
+
+#: ../../pep-0297.txt:53
+msgid "This PEP proposes two different but not necessarily conflicting solutions:"
+msgstr ""
+
+#: ../../pep-0297.txt:56
+msgid ""
+"Adding a new standard search path to ``sys.path``: ``$stdlibpath/system-"
+"packages`` just before the ``$stdlibpath`` entry. This complements the "
+"already existing entry for site add-ons ``$stdlibpath/site-packages`` "
+"which is appended to the ``sys.path`` at interpreter startup time."
+msgstr ""
+
+#: ../../pep-0297.txt:62
+msgid ""
+"To make use of this new standard location, distutils will need to grow "
+"support for installing certain packages in ``$stdlibpath/system-"
+"packages`` rather than the standard location for third-party packages "
+"``$stdlibpath/site-packages``."
+msgstr ""
+
+#: ../../pep-0297.txt:67
+msgid ""
+"Tweaking distutils to install directly into ``$stdlibpath`` for the "
+"system upgrades rather than into ``$stdlibpath/site-packages``."
+msgstr ""
+
+#: ../../pep-0297.txt:70
+msgid "The first solution has a few advantages over the second:"
+msgstr ""
+
+#: ../../pep-0297.txt:72
+msgid ""
+"upgrades can be easily identified (just look in ``$stdlibpath/system-"
+"packages``)"
+msgstr ""
+
+#: ../../pep-0297.txt:75
+msgid ""
+"upgrades can be de-installed without affecting the rest of the "
+"interpreter installation"
+msgstr ""
+
+#: ../../pep-0297.txt:78
+msgid ""
+"modules can be virtually removed from packages; this is due to the way "
+"Python imports packages: once it finds the top-level package directory it"
+" stay in this directory for all subsequent package submodule imports"
+msgstr ""
+
+#: ../../pep-0297.txt:83
+msgid ""
+"the approach has an overall much cleaner design than the hackish install "
+"on top of an existing installation approach"
+msgstr ""
+
+#: ../../pep-0297.txt:86
+msgid ""
+"The only advantages of the second approach are that the Python "
+"interpreter does not have to changed and that it works with older Python "
+"versions."
+msgstr ""
+
+#: ../../pep-0297.txt:90
+msgid ""
+"Both solutions require changes to distutils. These changes can also be "
+"implemented by package authors, but it would be better to define a "
+"standard way of switching on the proposed behaviour."
+msgstr ""
+
+#: ../../pep-0297.txt:96
+msgid "Scope"
+msgstr ""
+
+#: ../../pep-0297.txt:98
+msgid "Solution 1: Python 2.6 and up"
+msgstr ""
+
+#: ../../pep-0297.txt:100
+msgid "Solution 2: all Python versions supported by distutils"
+msgstr ""
+
+#: ../../pep-0297.txt:104
+msgid "Credits"
+msgstr ""
+
+#: ../../pep-0297.txt:106 ../../pep-0297.txt:112
+msgid "None"
+msgstr ""
+
+#: ../../pep-0297.txt:110
+msgid "References"
+msgstr ""
+
+#: ../../pep-0297.txt:116
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0297.txt:118
+msgid "This document has been placed in the public domain."
+msgstr ""
+

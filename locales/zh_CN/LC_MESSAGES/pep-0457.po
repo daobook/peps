@@ -1,0 +1,439 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0457.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0457.txt:1
+msgid "457"
+msgstr ""
+
+#: ../../pep-0457.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0457.txt:2
+msgid "Notation For Positional-Only Parameters"
+msgstr ""
+
+#: ../../pep-0457.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0457.txt:5
+msgid "Larry Hastings <larry@hastings.org>"
+msgstr ""
+
+#: ../../pep-0457.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0457.txt:6
+msgid "Python-Dev <python-dev@python.org>"
+msgstr ""
+
+#: ../../pep-0457.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0457.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0457.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0457.txt:8
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0457.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0457.txt:10
+msgid "08-Oct-2013"
+msgstr ""
+
+#: ../../pep-0457.txt:15
+msgid "Overview"
+msgstr ""
+
+#: ../../pep-0457.txt:17
+msgid ""
+"This PEP proposes a notation for positional-only parameters in Python. "
+"Positional-only parameters are parameters without an externally-usable "
+"name; when a function accepting positional-only parameters is called, "
+"positional arguments are mapped to these parameters based solely on their"
+" position."
+msgstr ""
+
+#: ../../pep-0457.txt:23
+msgid ""
+"This PEP is an Informational PEP describing the notation for use when "
+"describing APIs that use positional-only parameters (e.g. in Argument "
+"Clinic, or in the string representation of `inspect.Signature` objects). "
+"A separate PEP, PEP 570, proposes elevation of this notation to full "
+"Python syntax."
+msgstr ""
+
+#: ../../pep-0457.txt:31
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0457.txt:33
+msgid ""
+"Python has always supported positional-only parameters. Early versions of"
+" Python lacked the concept of specifying parameters by name, so naturally"
+" all parameters were positional-only.  This changed around Python 1.0, "
+"when all parameters suddenly became positional-or-keyword. But, even in "
+"current versions of Python, many CPython \"builtin\" functions still only"
+" accept positional-only arguments."
+msgstr ""
+
+#: ../../pep-0457.txt:42
+msgid ""
+"Functions implemented in modern Python can accept an arbitrary number of "
+"positional-only arguments, via the variadic ``*args`` parameter.  "
+"However, there is no Python syntax to specify accepting a specific number"
+" of positional-only parameters.  Put another way, there are many builtin "
+"functions whose signatures are simply not expressible with Python syntax."
+msgstr ""
+
+#: ../../pep-0457.txt:50
+msgid ""
+"This PEP proposes a notation for such signatures that could form the "
+"basis of a backwards-compatible syntax that should permit implementing "
+"any builtin in pure Python code (see PEP 570 for that proposal)."
+msgstr ""
+
+#: ../../pep-0457.txt:56
+msgid "Positional-Only Parameter Semantics In Current Python"
+msgstr ""
+
+#: ../../pep-0457.txt:58
+msgid ""
+"There are many, many examples of builtins that only accept positional-"
+"only parameters.  The resulting semantics are easily experienced by the "
+"Python programmer--just try calling one, specifying its arguments by "
+"name::"
+msgstr ""
+
+#: ../../pep-0457.txt:69
+msgid ""
+"In addition, there are some functions with particularly interesting "
+"semantics:"
+msgstr ""
+
+#: ../../pep-0457.txt:72
+msgid ""
+"``range()``, which accepts an optional parameter to the *left* of its "
+"required parameter. [#RANGE]_"
+msgstr ""
+
+#: ../../pep-0457.txt:75
+msgid ""
+"``dict()``, whose mapping/iterator parameter is optional and semantically"
+" must be positional-only.  Any externally visible name for this parameter"
+" would occlude that name going into the ``**kwarg`` keyword variadic "
+"parameter dict! [#DICT]_"
+msgstr ""
+
+#: ../../pep-0457.txt:81
+msgid ""
+"Obviously one can simulate any of these in pure Python code by accepting "
+"``(*args, **kwargs)`` and parsing the arguments by hand.  But this "
+"results in a disconnect between the Python function's signature and what "
+"it actually accepts, not to mention the work of implementing said "
+"argument parsing."
+msgstr ""
+
+#: ../../pep-0457.txt:89
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0457.txt:91
+msgid ""
+"This PEP does not propose we implement positional-only parameters in "
+"Python.  The goal of this PEP is simply to define the syntax, so that:"
+msgstr ""
+
+#: ../../pep-0457.txt:95
+msgid ""
+"Documentation can clearly, unambiguously, and consistently express "
+"exactly how the arguments for a function will be interpreted."
+msgstr ""
+
+#: ../../pep-0457.txt:99
+msgid ""
+"The syntax is reserved for future use, in case the community decides "
+"someday to add positional-only parameters to the language."
+msgstr ""
+
+#: ../../pep-0457.txt:103
+msgid ""
+"Argument Clinic can use a variant of the syntax as part of its input when"
+" defining the arguments for built-in functions."
+msgstr ""
+
+#: ../../pep-0457.txt:109
+msgid "The Current State Of Documentation For Positional-Only Parameters"
+msgstr ""
+
+#: ../../pep-0457.txt:111
+msgid ""
+"The documentation for positional-only parameters is incomplete and "
+"inconsistent:"
+msgstr ""
+
+#: ../../pep-0457.txt:114
+msgid ""
+"Some functions denote optional *groups* of positional-only arguments by "
+"enclosing them in nested square brackets. [#BORDER]_"
+msgstr ""
+
+#: ../../pep-0457.txt:117
+msgid ""
+"Some functions denote optional groups of positional-only arguments by "
+"presenting multiple prototypes with varying numbers of arguments. "
+"[#SENDFILE]_"
+msgstr ""
+
+#: ../../pep-0457.txt:121
+msgid "Some functions use *both* of the above approaches. [#RANGE]_ [#ADDCH]_"
+msgstr ""
+
+#: ../../pep-0457.txt:123
+msgid ""
+"One more important idea to consider: currently in the documentation "
+"there's no way to tell whether a function takes positional-only "
+"parameters.  ``open()`` accepts keyword arguments, ``ord()`` does not, "
+"but there is no way of telling just by reading the documentation that "
+"this is true."
+msgstr ""
+
+#: ../../pep-0457.txt:131
+msgid "Syntax And Semantics"
+msgstr ""
+
+#: ../../pep-0457.txt:133
+msgid ""
+"From the \"ten-thousand foot view\", and ignoring ``*args`` and "
+"``**kwargs`` for now, the grammar for a function definition currently "
+"looks like this::"
+msgstr ""
+
+#: ../../pep-0457.txt:138
+msgid ""
+"Building on that perspective, the new syntax for functions would look "
+"like this::"
+msgstr ""
+
+#: ../../pep-0457.txt:144
+msgid ""
+"All parameters before the ``/`` are positional-only.  If ``/`` is not "
+"specified in a function signature, that function does not accept any "
+"positional-only parameters."
+msgstr ""
+
+#: ../../pep-0457.txt:148
+msgid ""
+"Positional-only parameters can have a default value, and if they do they "
+"are optional.  Positional-only parameters that don't have a default value"
+" are \"required\" positional-only parameters."
+msgstr ""
+
+#: ../../pep-0457.txt:152
+msgid "More semantics of positional-only parameters:"
+msgstr ""
+
+#: ../../pep-0457.txt:154
+msgid ""
+"Although positional-only parameter technically have names, these names "
+"are internal-only; positional-only parameters are *never* externally "
+"addressable by name.  (Similarly to ``*args`` and ``**kwargs``.)"
+msgstr ""
+
+#: ../../pep-0457.txt:159
+msgid ""
+"If there are arguments after the ``/``, then you must specify a comma "
+"after the ``/``, just as there is a comma after the ``*`` denoting the "
+"shift to keyword-only parameters."
+msgstr ""
+
+#: ../../pep-0457.txt:163
+msgid "This syntax has no effect on ``*args`` or ``**kwargs``."
+msgstr ""
+
+#: ../../pep-0457.txt:167
+msgid "Additional Limitations"
+msgstr ""
+
+#: ../../pep-0457.txt:169
+msgid ""
+"Argument Clinic uses a form of this syntax for specifying builtins.  It "
+"imposes further limitations that are theoretically unnecessary but make "
+"the implementation easier.  Specifically:"
+msgstr ""
+
+#: ../../pep-0457.txt:174
+msgid ""
+"A function that has positional-only parameters currently cannot have any "
+"other kind of parameter.  (This will probably be relaxed slightly in the "
+"near future.)"
+msgstr ""
+
+#: ../../pep-0457.txt:178
+msgid ""
+"Argument Clinic supports an additional syntax called \"optional groups\"."
+"  An \"optional group\" is a sequential set of positional-only parameters"
+" that must be specified or not-specified as a group.  If, for example, "
+"you define a function in Argument Clinic that takes four parameters, and "
+"all of them are positional-only and in one optional group, then when "
+"calling the function you must specify either zero arguments or four "
+"arguments.  This is necessary to cover more of Python's legacy library, "
+"but is outside the scope of this PEP, and is not recommended for actual "
+"inclusion in the Python language."
+msgstr ""
+
+#: ../../pep-0457.txt:192
+msgid "Notes For A Future Implementor"
+msgstr ""
+
+#: ../../pep-0457.txt:194
+msgid ""
+"If we decide to implement positional-only parameters in a future version "
+"of Python, we'd have to do some additional work to preserve their "
+"semantics.  The problem: how do we inform a parameter that no value was "
+"passed in for it when the function was called?"
+msgstr ""
+
+#: ../../pep-0457.txt:199
+msgid ""
+"The obvious solution: add a new singleton constant to Python that is "
+"passed in when a parameter is not mapped to an argument. I propose that "
+"the value be called ``undefined``, and be a singleton of a special class "
+"called ``Undefined``. If a positional-only parameter did not receive an "
+"argument when called, its value would be set to ``undefined``."
+msgstr ""
+
+#: ../../pep-0457.txt:206
+msgid ""
+"But this raises a further problem.  How do can we tell the difference "
+"between \"this positional-only parameter did not receive an argument\" "
+"and \"the caller passed in ``undefined`` for this parameter\"?"
+msgstr ""
+
+#: ../../pep-0457.txt:211
+msgid ""
+"It'd be nice to make it illegal to pass ``undefined`` in as an argument "
+"to a function--to, say, raise an exception. But that would slow Python "
+"down, and the \"consenting adults\" rule appears applicable here.  So "
+"making it illegal should probably be strongly discouraged but not "
+"outright prevented."
+msgstr ""
+
+#: ../../pep-0457.txt:217
+msgid ""
+"However, it should be allowed (and encouraged) for user functions to "
+"specify ``undefined`` as a default value for parameters."
+msgstr ""
+
+#: ../../pep-0457.txt:223
+msgid "Unresolved Questions"
+msgstr ""
+
+#: ../../pep-0457.txt:225
+msgid "There are three types of parameters in Python:"
+msgstr ""
+
+#: ../../pep-0457.txt:227
+msgid "positional-only parameters,"
+msgstr ""
+
+#: ../../pep-0457.txt:228
+msgid "positional-or-keyword parameters, and"
+msgstr ""
+
+#: ../../pep-0457.txt:229
+msgid "keyword-only parameters."
+msgstr ""
+
+#: ../../pep-0457.txt:231
+msgid ""
+"Python allows functions to have both 2 and 3.  And some builtins (e.g. "
+"range) have both 1 and 3.  Does it make sense to have functions that have"
+" both 1 and 2?  Or all of the above?"
+msgstr ""
+
+#: ../../pep-0457.txt:239
+msgid "Thanks"
+msgstr ""
+
+#: ../../pep-0457.txt:241
+msgid ""
+"Credit for the use of '/' as the separator between positional-only and "
+"positional-or-keyword parameters goes to Guido van Rossum, in a proposal "
+"from 2012. [#GUIDO]_"
+msgstr ""
+
+#: ../../pep-0457.txt:244
+msgid ""
+"Credit for making left option groups higher precedence goes to Nick "
+"Coghlan. (Conversation in person at PyCon US 2013.)"
+msgstr ""
+
+#: ../../pep-0457.txt:248
+msgid "http://docs.python.org/3/library/stdtypes.html#dict"
+msgstr ""
+
+#: ../../pep-0457.txt:251
+msgid "http://docs.python.org/3/library/functions.html#func-range"
+msgstr ""
+
+#: ../../pep-0457.txt:254
+msgid "http://docs.python.org/3/library/curses.html#curses.window.border"
+msgstr ""
+
+#: ../../pep-0457.txt:257
+msgid "http://docs.python.org/3/library/os.html#os.sendfile"
+msgstr ""
+
+#: ../../pep-0457.txt:260
+msgid "http://docs.python.org/3/library/curses.html#curses.window.addch"
+msgstr ""
+
+#: ../../pep-0457.txt:263
+msgid ""
+"Guido van Rossum, posting to python-ideas, March 2012: "
+"https://mail.python.org/pipermail/python-ideas/2012-March/014364.html and"
+" https://mail.python.org/pipermail/python-ideas/2012-March/014378.html "
+"and https://mail.python.org/pipermail/python-ideas/2012-March/014417.html"
+msgstr ""
+
+#: ../../pep-0457.txt:272
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0457.txt:274
+msgid "This document has been placed in the public domain."
+msgstr ""
+

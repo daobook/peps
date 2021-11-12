@@ -1,0 +1,793 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0644.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0644.rst:1
+msgid "644"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0644.rst:2
+msgid "Require OpenSSL 1.1.1 or newer"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0644.rst:3
+msgid "Christian Heimes <christian@python.org>"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0644.rst:4
+msgid "n/a"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0644.rst:5
+msgid "https://discuss.python.org/t/pep-644-require-openssl-1-1-or-newer/5584"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0644.rst:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0644.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0644.rst:9
+msgid "27-Oct-2020"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0644.rst:10
+msgid "3.10"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0644.rst:11
+msgid "27-Oct-2020, 03-Mar-2021, 17-Mar-2021, 17-Apr-2021"
+msgstr ""
+
+#: ../../pep-0644.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0644.rst:12
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/message/INLCO2EZVQW7R7J2OL6HWVLVU3TQRAZV/, "
+"https://bugs.python.org/issue43669"
+msgstr ""
+
+#: ../../pep-0644.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0644.rst:18
+msgid ""
+"This PEP proposes for CPython’s standard library to support only OpenSSL "
+"1.1.1 LTS or newer. Support for OpenSSL versions past end-of-lifetime, "
+"incompatible forks, and other TLS libraries are dropped."
+msgstr ""
+
+#: ../../pep-0644.rst:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0644.rst:26
+msgid ""
+"Python makes use of OpenSSL in ``hashlib``, ``hmac``, and ``ssl`` "
+"modules. OpenSSL provides fast implementations of cryptographic "
+"primitives and a full TLS stack including handling of X.509 certificates."
+" The ``ssl`` module is used by standard library modules like ``urllib`` "
+"and 3rd party modules like ``urllib3`` to implement secure variants of "
+"internet protocols. ``pip`` uses the ``ssl`` module to securely download "
+"packages from PyPI. Any bug in the ``ssl`` module's bindings to OpenSSL "
+"can lead to a severe security issue."
+msgstr ""
+
+#: ../../pep-0644.rst:34
+msgid ""
+"Over time OpenSSL's public API has evolved and changed. Version 1.0.2 "
+"introduced new APIs to verify and match hostnames. OpenSSL 1.1.0 made "
+"internal structs opaque and introduced new APIs that replace direct "
+"access of struct members. Version 3.0.0 will deprecate more APIs due to "
+"internal reorganization that moves cryptographic algorithms out of the "
+"core and into providers. Forks like LibreSSL and BoringSSL have diverged "
+"in different directions."
+msgstr ""
+
+#: ../../pep-0644.rst:42
+msgid ""
+"Currently Python versions 3.6 to 3.9 are compatible with OpenSSL 1.0.2, "
+"1.1.0, and 1.1.1. For the most part Python also works with LibreSSL >= "
+"2.7.1 with some missing features and broken tests."
+msgstr ""
+
+#: ../../pep-0644.rst:46
+msgid ""
+"Due to limited resources and time it becomes increasingly hard to support"
+" multiple versions and forks as well as test and verify correctness. "
+"Besides multiple incompatible APIs there are build time flags, "
+"distribution-specific patches, and local crypto-policy settings that add "
+"to plethora of combinations. On the other hand, the Python core team has "
+"only a couple of domain experts who are familiar with TLS and OpenSSL "
+"internals and even fewer who are active maintainers."
+msgstr ""
+
+#: ../../pep-0644.rst:54
+msgid ""
+"Requiring OpenSSL 1.1.1 would allow us to give the vast majority of users"
+" a better experience, reduce our maintenance overhead and thus free "
+"resources to implement new features. Users would be able to rely on the "
+"presence of new features and consistent behavior, ultimately resulting in"
+" a more robust experience."
+msgstr ""
+
+#: ../../pep-0644.rst:62
+msgid "Impact"
+msgstr ""
+
+#: ../../pep-0644.rst:64
+msgid ""
+"OpenSSL 1.1.1 is the default variant and version of OpenSSL on almost all"
+" supported platforms and distributions. It’s also the only version that "
+"still receives security support from upstream [9]_."
+msgstr ""
+
+#: ../../pep-0644.rst:68
+msgid ""
+"No macOS and Windows user will be affected by the deprecation. The "
+"python.org installer and alternative distributions like Conda ship with "
+"most recent OpenSSL version."
+msgstr ""
+
+#: ../../pep-0644.rst:72
+msgid ""
+"As of October 2020 and according to DistroWatch [1]_ most current BSD and"
+" Linux distributions ship with OpenSSL 1.1.1 as well. Some older releases"
+" of long-term support (LTS) and enterprise distributions have older "
+"versions of OpenSSL or LibreSSL. By the time Python 3.10 will be "
+"generally available, several of these distributions will have reached end"
+" of lifetime, end of general support, or moved from LibreSSL to OpenSSL."
+msgstr ""
+
+#: ../../pep-0644.rst:79
+msgid ""
+"Other software has dropped support for OpenSSL 1.0.2 as well. For "
+"example, PyCA cryptography 3.2 (2020-10-25) removed compatibility with "
+"OpenSSL 1.0.2."
+msgstr ""
+
+#: ../../pep-0644.rst:84
+msgid "OpenSSL 1.0.2 LTS"
+msgstr ""
+
+#: ../../pep-0644.rst:86
+msgid "released: 2015-02 end of lifetime: 2019-12"
+msgstr ""
+
+#: ../../pep-0644.rst:89
+msgid ""
+"OpenSSL 1.0.2 added hostname verification, ALPN support, and elliptic "
+"curves."
+msgstr ""
+
+#: ../../pep-0644.rst:91
+msgid "CentOS 7 (EOL 2024-06)"
+msgstr ""
+
+#: ../../pep-0644.rst:92
+msgid "Debian 8 Jessie (EOL 2020-07)"
+msgstr ""
+
+#: ../../pep-0644.rst:93
+msgid "Linux Mint 18.3 (EOL 2021-04)"
+msgstr ""
+
+#: ../../pep-0644.rst:94
+msgid "RHEL 7 (full support ends 2019-08, maintenance 2 support ends 2024-06)"
+msgstr ""
+
+#: ../../pep-0644.rst:95
+msgid "SUSE Enterprise Linux 12-SP5 (general supports ends 2024-10)"
+msgstr ""
+
+#: ../../pep-0644.rst:96
+msgid "Ubuntu 16.04 LTS / Xenial (general support ends 2021-04)"
+msgstr ""
+
+#: ../../pep-0644.rst:100
+msgid "OpenSSL 1.1.0"
+msgstr ""
+
+#: ../../pep-0644.rst:102
+msgid "released: 2016-08 end of lifetime: 2019-09"
+msgstr ""
+
+#: ../../pep-0644.rst:105
+msgid ""
+"OpenSSL 1.1.0 removed or disabled insecure ciphers by default and added "
+"support for ChaCha20-Poly1305, BLAKE2 (basic features), X25519 and CT. "
+"The majority of structs were made opaque and new APIs were introduced. "
+"OpenSSL 1.1.0 is not API compatible with 1.0.2."
+msgstr ""
+
+#: ../../pep-0644.rst:110
+msgid "Debian 9 Stretch (security support ended 2020-07, LTS until 2022-06)"
+msgstr ""
+
+#: ../../pep-0644.rst:111
+msgid "Ubuntu 18.04 LTS / Bionic (general support ends 2023-04)"
+msgstr ""
+
+#: ../../pep-0644.rst:115
+msgid "OpenSSL 1.1.1 LTS"
+msgstr ""
+
+#: ../../pep-0644.rst:117
+msgid "released: 2018-08 end of lifetime: 2023-09 (planned)"
+msgstr ""
+
+#: ../../pep-0644.rst:120
+msgid "OpenSSL 1.1.1 added TLS 1.3, SHA-3, X448 and Ed448."
+msgstr ""
+
+#: ../../pep-0644.rst:122
+msgid "Alpine (switched back to OpenSSL in 2018 [4]_)"
+msgstr ""
+
+#: ../../pep-0644.rst:123
+msgid "Arch Linux current"
+msgstr ""
+
+#: ../../pep-0644.rst:124
+msgid "CentOS 8.0+"
+msgstr ""
+
+#: ../../pep-0644.rst:125
+msgid "Debian 10 Buster"
+msgstr ""
+
+#: ../../pep-0644.rst:126
+msgid "Debian 11 Bullseye (ETA 2021-06)"
+msgstr ""
+
+#: ../../pep-0644.rst:127
+msgid "Fedora 29+"
+msgstr ""
+
+#: ../../pep-0644.rst:128
+msgid "FreeBSD 11.3+"
+msgstr ""
+
+#: ../../pep-0644.rst:129
+msgid ""
+"Gentoo Linux stable (dropped LibreSSL as alternative in January 2021 "
+"[10]_)"
+msgstr ""
+
+#: ../../pep-0644.rst:130
+msgid "HardenedBSD (switched back to OpenSSL in 2018 [3]_)"
+msgstr ""
+
+#: ../../pep-0644.rst:131
+msgid "Linux Mint 19.3+"
+msgstr ""
+
+#: ../../pep-0644.rst:132
+msgid "macOS (python.org installer)"
+msgstr ""
+
+#: ../../pep-0644.rst:133
+msgid "NetBSD 8.2+"
+msgstr ""
+
+#: ../../pep-0644.rst:134
+msgid "openSUSE 15.2+"
+msgstr ""
+
+#: ../../pep-0644.rst:135
+msgid "RHEL 8.0+"
+msgstr ""
+
+#: ../../pep-0644.rst:136
+msgid "Slackware current"
+msgstr ""
+
+#: ../../pep-0644.rst:137
+msgid "SUSE Enterprise Linux 15-SP2"
+msgstr ""
+
+#: ../../pep-0644.rst:138
+msgid "Ubuntu 18.10+"
+msgstr ""
+
+#: ../../pep-0644.rst:139
+msgid "Ubuntu 20.04 LTS / Focal"
+msgstr ""
+
+#: ../../pep-0644.rst:140
+msgid "VoidLinux (switched back to OpenSSL in March 2021 [5]_)"
+msgstr ""
+
+#: ../../pep-0644.rst:141
+msgid "Windows (python.org installer, Conda)"
+msgstr ""
+
+#: ../../pep-0644.rst:143
+msgid "Major CI providers provide images with OpenSSL 1.1.1."
+msgstr ""
+
+#: ../../pep-0644.rst:145
+msgid "AppVeyor (with image ``Ubuntu2004``)"
+msgstr ""
+
+#: ../../pep-0644.rst:146
+msgid "CircleCI (with recent ``cimg/base:stable`` or ``cimg/base:stable-20.04``)"
+msgstr ""
+
+#: ../../pep-0644.rst:147
+msgid "GitHub Actions (with ``runs-on: ubuntu-20.04``)"
+msgstr ""
+
+#: ../../pep-0644.rst:148
+msgid ""
+"Giblab CI (with Debian Stretch, Ubuntu Focal, CentOS 8, RHEL 8, or Fedora"
+" runner)"
+msgstr ""
+
+#: ../../pep-0644.rst:150
+msgid "Packit"
+msgstr ""
+
+#: ../../pep-0644.rst:151
+msgid "TravisCI (with ``dist: focal``)"
+msgstr ""
+
+#: ../../pep-0644.rst:152
+msgid "Zuul"
+msgstr ""
+
+#: ../../pep-0644.rst:156
+msgid "OpenSSL 3.0.0"
+msgstr ""
+
+#: ../../pep-0644.rst:158
+msgid "released: n/a (planned for mid/late 2021)"
+msgstr ""
+
+#: ../../pep-0644.rst:160
+msgid ""
+"OpenSSL 3.0.0 is currently under development. Major changes include "
+"relicensing to Apache License 2.0 and a new API for cryptographic "
+"algorithms providers. Most changes are internal refactorings and don’t "
+"affect public APIs. [8]_"
+msgstr ""
+
+#: ../../pep-0644.rst:167
+msgid "LibreSSL"
+msgstr ""
+
+#: ../../pep-0644.rst:169
+msgid "created: 2014-04 (forked from OpenSSL 1.0.1g)"
+msgstr ""
+
+#: ../../pep-0644.rst:171
+msgid "DragonFly BSD"
+msgstr ""
+
+#: ../../pep-0644.rst:172
+msgid "Hyperbola GNU/Linux-libre"
+msgstr ""
+
+#: ../../pep-0644.rst:173
+msgid "OpenBSD"
+msgstr ""
+
+#: ../../pep-0644.rst:174
+msgid "OpenELEC (discontinued)"
+msgstr ""
+
+#: ../../pep-0644.rst:175
+msgid "TrueOS (discontinued)"
+msgstr ""
+
+#: ../../pep-0644.rst:177
+msgid ""
+"Some distributions like FreeBSD and OPNsense also feature LibreSSL "
+"instead of OpenSSL as non-standard TLS libraries. Gentoo discontinued "
+"LibreSSL as an alternative to OpenSSL in January 2021 [10]_ due to "
+"compatibility issues and little testing."
+msgstr ""
+
+#: ../../pep-0644.rst:182
+msgid ""
+"OpenBSD ports has a port ``security/openssl/1.1`` which is documented as "
+"\"[...] is present to provide support for applications which cannot be "
+"made compatible with LibReSSL\" [7]_. The package could be used by "
+"OpenBSD to provide a working ssl module."
+msgstr ""
+
+#: ../../pep-0644.rst:189 ../../pep-0644.rst:292
+msgid "BoringSSL"
+msgstr ""
+
+#: ../../pep-0644.rst:191
+msgid "created: 2014-06"
+msgstr ""
+
+#: ../../pep-0644.rst:193
+msgid ""
+"BoringSSL is Google’s fork of OpenSSL. It’s not intended for general use "
+"and therefore not supported by Python. There are no guarantees of API or "
+"ABI stability.  Vendored copies of BoringSSL are used in Chrome/Chromium "
+"browser, Android, and on Apple platforms [6]_."
+msgstr ""
+
+#: ../../pep-0644.rst:200
+msgid "Benefits"
+msgstr ""
+
+#: ../../pep-0644.rst:203
+msgid "TLS 1.3"
+msgstr ""
+
+#: ../../pep-0644.rst:205
+msgid ""
+"OpenSSL 1.1.1 introduced support for the new TLS 1.3 version. The latest "
+"version of the TLS protocol has a faster handshake and is more secure "
+"than the previous versions."
+msgstr ""
+
+#: ../../pep-0644.rst:210
+msgid "Thread and fork safety"
+msgstr ""
+
+#: ../../pep-0644.rst:212
+msgid ""
+"Starting with release 1.1.0c, OpenSSL is fully fork and thread safe. "
+"Bindings no longer need any workarounds or additional callbacks to "
+"support multithreading."
+msgstr ""
+
+#: ../../pep-0644.rst:217
+msgid "SHA-3"
+msgstr ""
+
+#: ../../pep-0644.rst:219
+msgid ""
+"Since 1.1.0, OpenSSL ships with SHA-3 and SHAKE implementations. Python's"
+" builtin SHA-3 support is based on the reference implementation. The "
+"internal ``_sha3`` code is fairly large and the resulting shared library "
+"close to 0.5 MB. Python could drop the builtin implementation and rely on"
+" OpenSSL's ``libcrypto`` instead."
+msgstr ""
+
+#: ../../pep-0644.rst:225
+msgid ""
+"So far LibreSSL upstream development has refused to add SHA-3 support. "
+"[2]_"
+msgstr ""
+
+#: ../../pep-0644.rst:229
+msgid "Compatibility"
+msgstr ""
+
+#: ../../pep-0644.rst:232
+msgid "OpenSSL downstream patches and options"
+msgstr ""
+
+#: ../../pep-0644.rst:234
+msgid ""
+"OpenSSL features more than 70 configure and build time options in the "
+"form of  ``OPENSSL_NO_*`` macros. Around 60 options affect the presence "
+"of features like cryptographic algorithms and TLS versions. Some "
+"distributions apply patches to alter settings. Furthermore, default "
+"values for settings like security level, ciphers, TLS version range, and "
+"signature algorithms can be set in OpenSSL config file."
+msgstr ""
+
+#: ../../pep-0644.rst:241
+msgid ""
+"The Python core team lacks resources to test all possible combinations. "
+"This PEP proposes that Python only supports OpenSSL builds that have "
+"standard features enabled. Vendors shall disable deprecated or insecure "
+"algorithms and TLS versions with build time options like "
+"``OPENSSL_NO_TLS1_1_METHOD`` or OpenSSL config options like ``MinProtocol"
+" = TLSv1.2``."
+msgstr ""
+
+#: ../../pep-0644.rst:248
+msgid "Python assumes that OpenSSL is built with"
+msgstr ""
+
+#: ../../pep-0644.rst:250
+msgid ""
+"hashlib’s default algorithms such as MD5, SHA-1, SHA-2 family, "
+"SHA-3/SHAKE family, BLAKE2"
+msgstr ""
+
+#: ../../pep-0644.rst:252
+msgid "TLS 1.2 and TLS 1.3 protocols"
+msgstr ""
+
+#: ../../pep-0644.rst:253
+msgid ""
+"current key agreement, signature, and encryption algorithms for TLS 1.2 "
+"and 1.3 (ECDH, RSA, ECDSA, Curve25519, AES, Poly1309-ChaCha20, ...)"
+msgstr ""
+
+#: ../../pep-0644.rst:255
+msgid "threading, file I/O, socket I/O, and error messages"
+msgstr ""
+
+#: ../../pep-0644.rst:257
+msgid ""
+"Weak algorithms (MD5, SHA-1 signatures) and short keys (RSA < 2024 bits) "
+"may be disabled at runtime. Algorithms may also be blocked when they are "
+"disabled by a crypto policy such as FIPS. The PEP is not more specific on"
+" purpose to give room for new features as well as countermeasures against"
+" vulnerabilities. As a rule of thumb, Python should be able to connect to"
+" PyPI and the test suite should pass."
+msgstr ""
+
+#: ../../pep-0644.rst:265
+msgid "LibreSSL support"
+msgstr ""
+
+#: ../../pep-0644.rst:267
+msgid ""
+"LibreSSL is a fork of OpenSSL. The fork was created off OpenSSL 1.0.1g by"
+" members of the OpenBSD team in 2014 in light of the heartbleed "
+"vulnerability. Since its inception several features deemed problematic or"
+" insecure were removed or replaced (SSL 2.0, SSL 3.0, improved CPRNG) or "
+"backported from OpenSSL and BoringSSL."
+msgstr ""
+
+#: ../../pep-0644.rst:273
+msgid ""
+"At the moment LibreSSL is not fully API compatible with OpenSSL 1.1.1. "
+"The latest release LibreSSL 3.3.2 is missing features and behaves "
+"differently in some cases. Mentionable missing or incompatible features "
+"include"
+msgstr ""
+
+#: ../../pep-0644.rst:277
+msgid "SHA-3, SHAKE, BLAKE2"
+msgstr ""
+
+#: ../../pep-0644.rst:278
+msgid "``SSL_CERT_*`` environment variables"
+msgstr ""
+
+#: ../../pep-0644.rst:279
+msgid "security level APIs"
+msgstr ""
+
+#: ../../pep-0644.rst:280
+msgid "session handling APIs"
+msgstr ""
+
+#: ../../pep-0644.rst:281
+msgid "key logging API"
+msgstr ""
+
+#: ../../pep-0644.rst:282
+msgid "verified cert chain APIs"
+msgstr ""
+
+#: ../../pep-0644.rst:283
+msgid "OPENSSL_VERSION macro"
+msgstr ""
+
+#: ../../pep-0644.rst:285
+msgid ""
+"This PEP proposed to remove any and all LibreSSL related workarounds from"
+" Python. In the future Python will not actively prohibit LibreSSL support"
+" with configure and compile time checks. But Python will not accept "
+"patches that add non-trivial workarounds or disable tests either."
+msgstr ""
+
+#: ../../pep-0644.rst:294
+msgid "There are currently no plans to support BoringSSL."
+msgstr ""
+
+#: ../../pep-0644.rst:298
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0644.rst:301
+msgid "Formalize supported OpenSSL versions"
+msgstr ""
+
+#: ../../pep-0644.rst:303
+msgid ""
+"This PEP does not provide a set of formal rules and conditions under "
+"which an OpenSSL version is supported."
+msgstr ""
+
+#: ../../pep-0644.rst:306
+msgid ""
+"In general Python aims to be compatible with commonly used and officially"
+" supported OpenSSL versions. Patch releases of Python may not be "
+"compatible with new major releases of OpenSSL. Users should not expect "
+"that a new major or minor  release of Python works with an OpenSSL "
+"version that is past its end-of-lifetime. Python core development may "
+"backport fixes for new releases or extend compatibility with EOLed "
+"releases as we see fit."
+msgstr ""
+
+#: ../../pep-0644.rst:313
+msgid "The new ABI stability and LTS policies of OpenSSL [9]_ should help, too."
+msgstr ""
+
+#: ../../pep-0644.rst:316
+msgid "Keep support for OpenSSL 1.1.0"
+msgstr ""
+
+#: ../../pep-0644.rst:318
+msgid ""
+"It was suggested to keep support for OpenSSL 1.1.0 for compatibility with"
+" Debian 9 (Stretch). The proposal was rejected since it would complicated"
+" code cleanup and testing. Stretch is already out of regular security "
+"support and close to end of long-term support. By the time of Python 3.10"
+" final release, Debian Buster and Debian Bullseye will be available."
+msgstr ""
+
+#: ../../pep-0644.rst:324
+msgid ""
+"Instead Python 3.10 will gain additional documentation and a new "
+"``configure`` option ``--with-openssl-rpath=auto`` to simplify use of "
+"custom OpenSSL builds [11]."
+msgstr ""
+
+#: ../../pep-0644.rst:330
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0644.rst:332
+msgid ""
+"Python 3.10 will no longer support TLS/SSL and fast hashing on platforms "
+"with OpenSSL 1.0.2 or LibreSSL. The first draft of this PEP was published"
+" at the beginning of the 3.10 release cycles to give vendors like Linux "
+"distributors or CI providers sufficient time to plan."
+msgstr ""
+
+#: ../../pep-0644.rst:337
+msgid ""
+"Python's internal copy of the *Keccak Code Package* and the internal "
+"``_sha3`` module will be removed. This will reduce source code size by "
+"about 280kB and code size by roughly 0.5MB. The ``hashlib`` will solely "
+"rely on OpenSSL's SHA-3 implementation. SHA-3 and SHAKE will no longer be"
+" available without OpenSSL."
+msgstr ""
+
+#: ../../pep-0644.rst:345
+msgid "Disclaimer and special thanks"
+msgstr ""
+
+#: ../../pep-0644.rst:347
+msgid ""
+"The author of this PEP is a contributor to OpenSSL project and employed "
+"by a major Linux distributor that uses OpenSSL."
+msgstr ""
+
+#: ../../pep-0644.rst:350
+msgid ""
+"Thanks to Alex Gaynor, Gregory P. Smith, Nathaniel J. Smith, Paul Kehrer,"
+" and Seth Larson for their review and feedback on the initial draft."
+msgstr ""
+
+#: ../../pep-0644.rst:355
+msgid "References"
+msgstr ""
+
+#: ../../pep-0644.rst:357
+msgid "https://distrowatch.com/"
+msgstr ""
+
+#: ../../pep-0644.rst:358
+msgid "https://github.com/libressl-portable/portable/issues/455"
+msgstr ""
+
+#: ../../pep-0644.rst:359
+msgid ""
+"https://hardenedbsd.org/article/shawn-webb/2018-04-30/hardenedbsd-"
+"switching-back-openssl"
+msgstr ""
+
+#: ../../pep-0644.rst:360
+#, python-format
+msgid "https://lists.alpinelinux.org/~alpine/devel/%3CCA%2BT2pCGFeh30aEi43hAvJ3yoHBijABy_U62wfjhVmf3FmbNUUg%40mail.gmail.com%3E"
+msgstr ""
+
+#: ../../pep-0644.rst:361
+msgid "https://voidlinux.org/news/2021/02/OpenSSL.html"
+msgstr ""
+
+#: ../../pep-0644.rst:362
+msgid "https://forums.swift.org/t/rfc-moving-swiftnio-ssl-to-boringssl/18280"
+msgstr ""
+
+#: ../../pep-0644.rst:363
+msgid "https://openports.se/security/openssl/1.1"
+msgstr ""
+
+#: ../../pep-0644.rst:364
+msgid "https://www.openssl.org/docs/OpenSSL300Design.html"
+msgstr ""
+
+#: ../../pep-0644.rst:365
+msgid "https://www.openssl.org/policies/releasestrat.html"
+msgstr ""
+
+#: ../../pep-0644.rst:366
+msgid ""
+"https://www.gentoo.org/support/news-items/2021-01-05-libressl-support-"
+"discontinued.html"
+msgstr ""
+
+#: ../../pep-0644.rst:367
+msgid "https://bugs.python.org/issue43466"
+msgstr ""
+
+#: ../../pep-0644.rst:371
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0644.rst:373
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

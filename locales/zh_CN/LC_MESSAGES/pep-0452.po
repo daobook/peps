@@ -1,0 +1,499 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0452.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0452.txt:1
+msgid "452"
+msgstr ""
+
+#: ../../pep-0452.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0452.txt:2
+msgid "API for Cryptographic Hash Functions v2.0"
+msgstr ""
+
+#: ../../pep-0452.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0452.txt:5
+msgid "A.M. Kuchling <amk@amk.ca>, Christian Heimes <christian@python.org>"
+msgstr ""
+
+#: ../../pep-0452.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0452.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0452.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0452.txt:7
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0452.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0452.txt:9
+msgid "15-Aug-2013"
+msgstr ""
+
+#: ../../pep-0452.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0452.txt
+msgid "Replaces"
+msgstr ""
+
+#: ../../pep-0452.txt:11
+msgid "247"
+msgstr ""
+
+#: ../../pep-0452.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0452.txt:16
+msgid ""
+"There are several different modules available that implement "
+"cryptographic hashing algorithms such as MD5 or SHA.  This document "
+"specifies a standard API for such algorithms, to make it easier to switch"
+" between different implementations."
+msgstr ""
+
+#: ../../pep-0452.txt:23
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0452.txt:25
+msgid ""
+"All hashing modules should present the same interface.  Additional "
+"methods or variables can be added, but those described in this document "
+"should always be present."
+msgstr ""
+
+#: ../../pep-0452.txt:29
+msgid "Hash function modules define one function:"
+msgstr ""
+
+#: ../../pep-0452.txt:31
+msgid "``new([string])            (unkeyed hashes)``"
+msgstr ""
+
+#: ../../pep-0452.txt:60
+msgid "``new(key, [string], [digestmod])    (keyed hashes)``"
+msgstr ""
+
+#: ../../pep-0452.txt:34
+msgid ""
+"Create a new hashing object and return it.  The first form is for hashes "
+"that are unkeyed, such as MD5 or SHA.  For keyed hashes such as HMAC, "
+"'key' is a required parameter containing a string giving the key to use."
+"  In both cases, the optional 'string' parameter, if supplied, will be "
+"immediately hashed into the object's starting state, as if "
+"``obj.update(string)`` was called."
+msgstr ""
+
+#: ../../pep-0452.txt:42
+msgid ""
+"After creating a hashing object, arbitrary bytes can be fed into the "
+"object using its ``update()`` method, and the hash value can be obtained "
+"at any time by calling the object's ``digest()`` method."
+msgstr ""
+
+#: ../../pep-0452.txt:47
+msgid ""
+"Although the parameter is called 'string', hashing objects operate on "
+"8-bit data only. Both 'key' and 'string' must be a bytes-like object "
+"(bytes, bytearray...). A hashing object may support one-dimensional, "
+"contiguous buffers as argument, too. Text (unicode) is no longer "
+"supported in Python 3.x. Python 2.x implementations may take ASCII-only "
+"unicode as argument, but portable code should not rely on the feature."
+msgstr ""
+
+#: ../../pep-0452.txt:55
+msgid ""
+"Arbitrary additional keyword arguments can be added to this function, but"
+" if they're not supplied, sensible default values should be used.  For "
+"example, 'rounds' and 'digest_size' keywords could be added for a hash "
+"function which supports a variable number of rounds and several different"
+" output sizes, and they should default to values believed to be secure."
+msgstr ""
+
+#: ../../pep-0452.txt:62
+msgid "Hash function modules define one variable:"
+msgstr ""
+
+#: ../../pep-0452.txt:71 ../../pep-0452.txt:82
+msgid "``digest_size``"
+msgstr ""
+
+#: ../../pep-0452.txt:65
+msgid ""
+"An integer value; the size of the digest produced by the hashing objects "
+"created by this module, measured in bytes. You could also obtain this "
+"value by creating a sample object and accessing its 'digest_size' "
+"attribute, but it can be convenient to have this value available from the"
+" module. Hashes with a variable output size will set this variable to "
+"None."
+msgstr ""
+
+#: ../../pep-0452.txt:73
+msgid "Hashing objects require the following attribute:"
+msgstr ""
+
+#: ../../pep-0452.txt:76
+msgid ""
+"This attribute is identical to the module-level digest_size variable, "
+"measuring the size of the digest produced by the hashing object, measured"
+" in bytes.  If the hash has a variable output size, this output size must"
+" be chosen when the hashing object is created, and this attribute must "
+"contain the selected size.  Therefore, ``None`` is **not** a legal value "
+"for this attribute."
+msgstr ""
+
+#: ../../pep-0452.txt:90 ../../pep-0452.txt:189
+msgid "``block_size``"
+msgstr ""
+
+#: ../../pep-0452.txt:85
+msgid ""
+"An integer value or ``NotImplemented``; the internal block size of the "
+"hash algorithm in bytes. The block size is used by the HMAC module to pad"
+" the secret key to ``digest_size`` or to hash the secret key if it is "
+"longer than ``digest_size``. If no HMAC algorithm is standardized for the"
+" hash algorithm, return ``NotImplemented`` instead."
+msgstr ""
+
+#: ../../pep-0452.txt:95 ../../pep-0452.txt:185
+msgid "``name``"
+msgstr ""
+
+#: ../../pep-0452.txt:93
+msgid ""
+"A text string value; the canonical, lowercase name of the hashing "
+"algorithm. The name should be a suitable parameter for ``hashlib.new``."
+msgstr ""
+
+#: ../../pep-0452.txt:97
+msgid "Hashing objects require the following methods:"
+msgstr ""
+
+#: ../../pep-0452.txt:101
+msgid "``copy()``"
+msgstr ""
+
+#: ../../pep-0452.txt:100
+msgid ""
+"Return a separate copy of this hashing object.  An update to this copy "
+"won't affect the original object."
+msgstr ""
+
+#: ../../pep-0452.txt:107
+msgid "``digest()``"
+msgstr ""
+
+#: ../../pep-0452.txt:104
+msgid ""
+"Return the hash value of this hashing object as a bytes containing 8-bit "
+"data.  The object is not altered in any way by this function; you can "
+"continue updating the object after calling this function."
+msgstr ""
+
+#: ../../pep-0452.txt:113
+msgid "``hexdigest()``"
+msgstr ""
+
+#: ../../pep-0452.txt:110
+msgid ""
+"Return the hash value of this hashing object as a string containing "
+"hexadecimal digits.  Lowercase letters should be used for the digits 'a' "
+"through 'f'.  Like the ``.digest()`` method, this method mustn't alter "
+"the object."
+msgstr ""
+
+#: ../../pep-0452.txt:118
+msgid "``update(string)``"
+msgstr ""
+
+#: ../../pep-0452.txt:116
+msgid ""
+"Hash bytes-like 'string' into the current state of the hashing object. "
+"``update()`` can be called any number of times during a hashing object's "
+"lifetime."
+msgstr ""
+
+#: ../../pep-0452.txt:120
+msgid ""
+"Hashing modules can define additional module-level functions or object "
+"methods and still be compliant with this specification."
+msgstr ""
+
+#: ../../pep-0452.txt:123
+msgid "Here's an example, using a module named 'MD5'::"
+msgstr ""
+
+#: ../../pep-0452.txt:146
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0452.txt:148
+msgid ""
+"The digest size is measured in bytes, not bits, even though hash "
+"algorithm sizes are usually quoted in bits; MD5 is a 128-bit algorithm "
+"and not a 16-byte one, for example.  This is because, in the sample code "
+"I looked at, the length in bytes is often needed (to seek ahead or behind"
+" in a file; to compute the length of an output string) while the length "
+"in bits is rarely used. Therefore, the burden will fall on the few people"
+" actually needing the size in bits, who will have to multiply digest_size"
+" by 8."
+msgstr ""
+
+#: ../../pep-0452.txt:157
+msgid ""
+"It's been suggested that the ``update()`` method would be better named "
+"``append()``.  However, that method is really causing the current state "
+"of the hashing object to be updated, and ``update()`` is already used by "
+"the md5 and sha modules included with Python, so it seems simplest to "
+"leave the name ``update()`` alone."
+msgstr ""
+
+#: ../../pep-0452.txt:163
+msgid ""
+"The order of the constructor's arguments for keyed hashes was a sticky "
+"issue.  It wasn't clear whether the key should come first or second.  "
+"It's a required parameter, and the usual convention is to place required "
+"parameters first, but that also means that the 'string' parameter moves "
+"from the first position to the second. It would be possible to get "
+"confused and pass a single argument to a keyed hash, thinking that you're"
+" passing an initial string to an unkeyed hash, but it doesn't seem worth "
+"making the interface for keyed hashes more obscure to avoid this "
+"potential error."
+msgstr ""
+
+#: ../../pep-0452.txt:175
+msgid "Changes from Version 1.0 to Version 2.0"
+msgstr ""
+
+#: ../../pep-0452.txt:177
+msgid ""
+"Version 2.0 of API for Cryptographic Hash Functions clarifies some "
+"aspects of the API and brings it up-to-date. It also formalized aspects "
+"that were already de facto standards and provided by most "
+"implementations."
+msgstr ""
+
+#: ../../pep-0452.txt:182
+msgid "Version 2.0 introduces the following new attributes:"
+msgstr ""
+
+#: ../../pep-0452.txt:185
+msgid "The name property was made mandatory by `issue 18532`_."
+msgstr ""
+
+#: ../../pep-0452.txt:188
+msgid ""
+"The new version also specifies that the return value ``NotImplemented`` "
+"prevents HMAC support."
+msgstr ""
+
+#: ../../pep-0452.txt:191
+msgid ""
+"Version 2.0 takes the separation of binary and text data in Python 3.0 "
+"into account. The 'string' argument to ``new()`` and ``update()`` as well"
+" as the 'key' argument must be bytes-like objects. On Python 2.x a "
+"hashing object may also support ASCII-only unicode. The actual name of "
+"argument is not changed as it is part of the public API. Code may depend "
+"on the fact that the argument is called 'string'."
+msgstr ""
+
+#: ../../pep-0452.txt:200
+msgid "Recommended names for common hashing algorithms"
+msgstr ""
+
+#: ../../pep-0452.txt:203
+msgid "algorithm"
+msgstr ""
+
+#: ../../pep-0452.txt:203
+msgid "variant"
+msgstr ""
+
+#: ../../pep-0452.txt:203
+msgid "recommended name"
+msgstr ""
+
+#: ../../pep-0452.txt:205
+msgid "MD5"
+msgstr ""
+
+#: ../../pep-0452.txt:205
+msgid "md5"
+msgstr ""
+
+#: ../../pep-0452.txt:207
+msgid "RIPEMD-160"
+msgstr ""
+
+#: ../../pep-0452.txt:207
+msgid "ripemd160"
+msgstr ""
+
+#: ../../pep-0452.txt:209
+msgid "SHA-1"
+msgstr ""
+
+#: ../../pep-0452.txt:209
+msgid "sha1"
+msgstr ""
+
+#: ../../pep-0452.txt:211
+msgid "SHA-2"
+msgstr ""
+
+#: ../../pep-0452.txt:211
+msgid "SHA-224"
+msgstr ""
+
+#: ../../pep-0452.txt:211
+msgid "sha224"
+msgstr ""
+
+#: ../../pep-0452.txt:213
+msgid "SHA-256"
+msgstr ""
+
+#: ../../pep-0452.txt:213
+msgid "sha256"
+msgstr ""
+
+#: ../../pep-0452.txt:215
+msgid "SHA-384"
+msgstr ""
+
+#: ../../pep-0452.txt:215
+msgid "sha384"
+msgstr ""
+
+#: ../../pep-0452.txt:217
+msgid "SHA-512"
+msgstr ""
+
+#: ../../pep-0452.txt:217
+msgid "sha512"
+msgstr ""
+
+#: ../../pep-0452.txt:219
+msgid "SHA-3"
+msgstr ""
+
+#: ../../pep-0452.txt:219
+msgid "SHA-3-224"
+msgstr ""
+
+#: ../../pep-0452.txt:219
+msgid "sha3_224"
+msgstr ""
+
+#: ../../pep-0452.txt:221
+msgid "SHA-3-256"
+msgstr ""
+
+#: ../../pep-0452.txt:221
+msgid "sha3_256"
+msgstr ""
+
+#: ../../pep-0452.txt:223
+msgid "SHA-3-384"
+msgstr ""
+
+#: ../../pep-0452.txt:223
+msgid "sha3_384"
+msgstr ""
+
+#: ../../pep-0452.txt:225
+msgid "SHA-3-512"
+msgstr ""
+
+#: ../../pep-0452.txt:225
+msgid "sha3_512"
+msgstr ""
+
+#: ../../pep-0452.txt:227
+msgid "WHIRLPOOL"
+msgstr ""
+
+#: ../../pep-0452.txt:227
+msgid "whirlpool"
+msgstr ""
+
+#: ../../pep-0452.txt:232
+msgid "Changes"
+msgstr ""
+
+#: ../../pep-0452.txt:234
+msgid ""
+"2001-09-17: Renamed ``clear()`` to ``reset()``; added ``digest_size`` "
+"attribute to objects; added ``.hexdigest()`` method."
+msgstr ""
+
+#: ../../pep-0452.txt:236
+msgid "2001-09-20: Removed ``reset()`` method completely."
+msgstr ""
+
+#: ../../pep-0452.txt:237
+msgid "2001-09-28: Set ``digest_size`` to ``None`` for variable-size hashes."
+msgstr ""
+
+#: ../../pep-0452.txt:238
+msgid ""
+"2013-08-15: Added ``block_size`` and ``name`` attributes; clarified that "
+"'string' actually refers to bytes-like objects."
+msgstr ""
+
+#: ../../pep-0452.txt:243
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0452.txt:245
+msgid ""
+"Thanks to Aahz, Andrew Archibald, Rich Salz, Itamar Shtull-Trauring, and "
+"the readers of the python-crypto list for their comments on this PEP."
+msgstr ""
+
+#: ../../pep-0452.txt:251
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0452.txt:253
+msgid "This document has been placed in the public domain."
+msgstr ""
+

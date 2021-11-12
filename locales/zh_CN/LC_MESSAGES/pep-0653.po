@@ -1,0 +1,978 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0653.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0653.rst:1
+msgid "653"
+msgstr ""
+
+#: ../../pep-0653.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0653.rst:2
+msgid "Precise Semantics for Pattern Matching"
+msgstr ""
+
+#: ../../pep-0653.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0653.rst:3
+msgid "Mark Shannon <mark@hotpy.org>"
+msgstr ""
+
+#: ../../pep-0653.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0653.rst:4
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0653.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0653.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0653.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0653.rst:7
+msgid "09-Feb-2021"
+msgstr ""
+
+#: ../../pep-0653.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0653.rst:8
+msgid "18-Feb-2021"
+msgstr ""
+
+#: ../../pep-0653.rst:12
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0653.rst:14
+msgid ""
+"This PEP proposes a semantics for pattern matching that respects the "
+"general concept of PEP 634, but is more precise, easier to reason about, "
+"and should be faster."
+msgstr ""
+
+#: ../../pep-0653.rst:17
+msgid ""
+"The object model will be extended with two special (dunder) attributes, "
+"``__match_container__`` and ``__match_class__``, in addition to the "
+"``__match_args__`` attribute from PEP 634, to support pattern matching. "
+"Both of these new attributes must be integers and ``__match_args__`` is "
+"required to be a tuple of unique strings."
+msgstr ""
+
+#: ../../pep-0653.rst:21
+msgid "With this PEP:"
+msgstr ""
+
+#: ../../pep-0653.rst:23
+msgid ""
+"The semantics of pattern matching will be clearer, so that patterns are "
+"easier to reason about."
+msgstr ""
+
+#: ../../pep-0653.rst:24
+msgid ""
+"It will be possible to implement pattern matching in a more efficient "
+"fashion."
+msgstr ""
+
+#: ../../pep-0653.rst:25
+msgid ""
+"Pattern matching will be more usable for complex classes, by allowing "
+"classes some more control over which patterns they match."
+msgstr ""
+
+#: ../../pep-0653.rst:28
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0653.rst:30
+msgid ""
+"Pattern matching in Python, as described in PEP 634, is to be added to "
+"Python 3.10. Unfortunately, PEP 634 is not as precise about the semantics"
+" as it could be, nor does it allow classes sufficient control over how "
+"they match patterns."
+msgstr ""
+
+#: ../../pep-0653.rst:35
+msgid "Precise semantics"
+msgstr ""
+
+#: ../../pep-0653.rst:37
+msgid ""
+"PEP 634 explicitly includes a section on undefined behavior. Large "
+"amounts of undefined behavior may be acceptable in a language like C, but"
+" in Python it should be kept to a minimum. Pattern matching in Python can"
+" be defined more precisely without losing expressiveness or performance."
+msgstr ""
+
+#: ../../pep-0653.rst:43
+msgid "Improved control over class matching"
+msgstr ""
+
+#: ../../pep-0653.rst:45
+msgid ""
+"PEP 634 delegates the decision over whether a class is a sequence or "
+"mapping to ``collections.abc``. Not all classes that could be considered "
+"sequences are registered as subclasses of ``collections.abc.Sequence``. "
+"This PEP allows them to match sequence patterns, without the full "
+"``collections.abc.Sequence`` machinery."
+msgstr ""
+
+#: ../../pep-0653.rst:49
+msgid ""
+"PEP 634 privileges some builtin classes with a special form of matching, "
+"the \"self\" match. For example the pattern ``list(x)`` matches a list "
+"and assigns the list to ``x``. By allowing classes to choose which kinds "
+"of pattern they match, other classes can use this form as well."
+msgstr ""
+
+#: ../../pep-0653.rst:53 ../../pep-0653.rst:699
+msgid "For example, using ``sympy``, we might want to write::"
+msgstr ""
+
+#: ../../pep-0653.rst:59
+msgid ""
+"Which requires the sympy class ``Symbol`` to \"self\" match. For "
+"``sympy`` to support this pattern with PEP 634 is possible, but a bit "
+"tricky. With this PEP it can be implemented very easily [1]_."
+msgstr ""
+
+#: ../../pep-0653.rst:64
+msgid "Robustness"
+msgstr ""
+
+#: ../../pep-0653.rst:66
+msgid ""
+"With this PEP, access to attributes during pattern matching becomes well "
+"defined and deterministic. This makes pattern matching less error prone "
+"when matching objects with hidden side effects, such as object-relational"
+" mappers. Objects will have more control over their own deconstruction, "
+"which can help prevent unintended consequences should attribute access "
+"have side-effects."
+msgstr ""
+
+#: ../../pep-0653.rst:70
+msgid ""
+"PEP 634 relies on the ``collections.abc`` module when determining which "
+"patterns a value can match, implicitly importing it if necessary. This "
+"PEP will eliminate surprising import errors and misleading audit events "
+"from those imports."
+msgstr ""
+
+#: ../../pep-0653.rst:75
+msgid "Efficient implementation"
+msgstr ""
+
+#: ../../pep-0653.rst:77
+msgid ""
+"The semantics proposed in this PEP will allow efficient implementation, "
+"partly as a result of having precise semantics and partly from using the "
+"object model."
+msgstr ""
+
+#: ../../pep-0653.rst:80
+msgid ""
+"With precise semantics, it is possible to reason about what code "
+"transformations are correct, and thus apply optimizations effectively."
+msgstr ""
+
+#: ../../pep-0653.rst:83
+msgid ""
+"Because the object model is a core part of Python, implementations "
+"already handle special attribute lookup efficiently. Looking up a special"
+" attribute is much faster than performing a subclass test on an abstract "
+"base class."
+msgstr ""
+
+#: ../../pep-0653.rst:87
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0653.rst:89
+msgid ""
+"The object model and special methods are at the core of the Python "
+"language. Consequently, implementations support them well. Using special "
+"attributes for pattern matching allows pattern matching to be implemented"
+" in a way that integrates well with the rest of the implementation, and "
+"is thus easier to maintain and is likely to perform better."
+msgstr ""
+
+#: ../../pep-0653.rst:94
+msgid ""
+"A match statement performs a sequence of pattern matches. In general, "
+"matching a pattern has three parts:"
+msgstr ""
+
+#: ../../pep-0653.rst:96
+msgid "Can the value match this kind of pattern?"
+msgstr ""
+
+#: ../../pep-0653.rst:97
+msgid "When deconstructed, does the value match this particular pattern?"
+msgstr ""
+
+#: ../../pep-0653.rst:98
+msgid "Is the guard true?"
+msgstr ""
+
+#: ../../pep-0653.rst:100
+msgid ""
+"To determine whether a value can match a particular kind of pattern, we "
+"add the ``__match_container__`` and ``__match_class__`` attributes. This "
+"allows the kind of a value to be determined in a efficient fashion."
+msgstr ""
+
+#: ../../pep-0653.rst:105
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0653.rst:108
+msgid "Additions to the object model"
+msgstr ""
+
+#: ../../pep-0653.rst:110
+msgid ""
+"The ``__match_container__ ``and ``__match_class__`` attributes will be "
+"added to ``object``. ``__match_container__`` should be overridden by "
+"classes that want to match mapping or sequence patterns. "
+"``__match_class__`` should be overridden by classes that want to change "
+"the default behavior when matching class patterns."
+msgstr ""
+
+#: ../../pep-0653.rst:114
+msgid ""
+"``__match_container__`` must be an integer and should be exactly one of "
+"these::"
+msgstr ""
+
+#: ../../pep-0653.rst:120
+msgid ""
+"``MATCH_SEQUENCE`` is used to indicate that instances of the class can "
+"match sequence patterns."
+msgstr ""
+
+#: ../../pep-0653.rst:122
+msgid ""
+"``MATCH_MAPPING`` is used to indicate that instances of the class can "
+"match mapping patterns."
+msgstr ""
+
+#: ../../pep-0653.rst:124
+msgid ""
+"``__match_class__`` must be an integer and should be exactly one of "
+"these::"
+msgstr ""
+
+#: ../../pep-0653.rst:129
+msgid ""
+"``MATCH_SELF`` is used to indicate that for a single positional argument "
+"class pattern, the subject will be used and not deconstructed."
+msgstr ""
+
+#: ../../pep-0653.rst:132
+msgid ""
+"In the rest of this document, we will refer to the above values by name "
+"only. Symbolic constants will be provided both for Python and C, and the "
+"values will never be changed."
+msgstr ""
+
+#: ../../pep-0653.rst:136
+msgid "``object`` will have the following values for the special attributes::"
+msgstr ""
+
+#: ../../pep-0653.rst:142
+msgid "These special attributes will be inherited as normal."
+msgstr ""
+
+#: ../../pep-0653.rst:144
+msgid ""
+"If ``__match_args__`` is overridden, then it is required to hold a tuple "
+"of unique strings. It may be empty."
+msgstr ""
+
+#: ../../pep-0653.rst:147
+msgid ""
+"``__match_args__`` will be automatically generated for dataclasses and "
+"named tuples, as specified in PEP 634."
+msgstr ""
+
+#: ../../pep-0653.rst:149
+msgid ""
+"The pattern matching implementation is *not* required to check that any "
+"of these attributes behave as specified. If the value of "
+"``__match_container__``, ``__match_class__`` or ``__match_args__`` is not"
+" as specified, then the implementation may raise any exception, or match "
+"the wrong pattern. Of course, implementations are free to check these "
+"properties and provide meaningful error messages if they can do so "
+"efficiently."
+msgstr ""
+
+#: ../../pep-0653.rst:155
+msgid "Semantics of the matching process"
+msgstr ""
+
+#: ../../pep-0653.rst:157
+msgid ""
+"In the following, all variables of the form ``$var`` are temporary "
+"variables and are not visible to the Python program. They may be visible "
+"via introspection, but that is an implementation detail and should not be"
+" relied on. The psuedo-statement ``FAIL`` is used to signify that "
+"matching failed for this pattern and that matching should move to the "
+"next pattern. If control reaches the end of the translation without "
+"reaching a ``FAIL``, then it has matched, and following patterns are "
+"ignored."
+msgstr ""
+
+#: ../../pep-0653.rst:162
+msgid ""
+"Variables of the form ``$ALL_CAPS`` are meta-variables holding a "
+"syntactic element, they are not normal variables. So, ``$VARS = $items`` "
+"is not an assignment of ``$items`` to ``$VARS``, but an unpacking of "
+"``$items`` into the variables that ``$VARS`` holds. For example, with the"
+" abstract syntax ``case [$VARS]:``, and the concrete syntax ``case[a, "
+"b]:`` then ``$VARS`` would hold the variables ``(a, b)``, not the values "
+"of those variables."
+msgstr ""
+
+#: ../../pep-0653.rst:168
+msgid ""
+"The psuedo-function ``QUOTE`` takes a variable and returns the name of "
+"that variable. For example, if the meta-variable ``$VAR`` held the "
+"variable ``foo`` then ``QUOTE($VAR) == \"foo\"``."
+msgstr ""
+
+#: ../../pep-0653.rst:171
+msgid ""
+"All additional code listed below that is not present in the original "
+"source will not trigger line events, conforming to PEP 626."
+msgstr ""
+
+#: ../../pep-0653.rst:175
+msgid "Preamble"
+msgstr ""
+
+#: ../../pep-0653.rst:177
+msgid ""
+"Before any patterns are matched, the expression being matched is "
+"evaluated::"
+msgstr ""
+
+#: ../../pep-0653.rst:181 ../../pep-0653.rst:192 ../../pep-0653.rst:203
+#: ../../pep-0653.rst:215 ../../pep-0653.rst:233 ../../pep-0653.rst:245
+#: ../../pep-0653.rst:260 ../../pep-0653.rst:278 ../../pep-0653.rst:297
+#: ../../pep-0653.rst:319 ../../pep-0653.rst:328 ../../pep-0653.rst:343
+#: ../../pep-0653.rst:362 ../../pep-0653.rst:379 ../../pep-0653.rst:411
+#: ../../pep-0653.rst:432 ../../pep-0653.rst:740 ../../pep-0653.rst:757
+#: ../../pep-0653.rst:772 ../../pep-0653.rst:794 ../../pep-0653.rst:812
+#: ../../pep-0653.rst:831 ../../pep-0653.rst:847
+msgid "translates to::"
+msgstr ""
+
+#: ../../pep-0653.rst:186
+msgid "Capture patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:188
+msgid "Capture patterns always match, so the irrefutable match::"
+msgstr ""
+
+#: ../../pep-0653.rst:197
+msgid "Wildcard patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:199
+msgid "Wildcard patterns always match, so::"
+msgstr ""
+
+#: ../../pep-0653.rst:209
+msgid "Literal Patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:211
+msgid "The literal pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:220
+msgid ""
+"except when the literal is one of ``None``, ``True`` or ``False`` , when "
+"it translates to::"
+msgstr ""
+
+#: ../../pep-0653.rst:227
+msgid "Value Patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:229
+msgid "The value pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:239
+msgid "Sequence Patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:241
+msgid "A pattern not including a star pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:254
+msgid "Example: [2]_"
+msgstr ""
+
+#: ../../pep-0653.rst:256
+msgid "A pattern including a star pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:269
+msgid "Example: [3]_"
+msgstr ""
+
+#: ../../pep-0653.rst:272
+msgid "Mapping Patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:274
+msgid "A pattern not including a double-star pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:291
+msgid "Example: [4]_"
+msgstr ""
+
+#: ../../pep-0653.rst:293
+msgid "A pattern including a double-star pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:310
+msgid "Example: [5]_"
+msgstr ""
+
+#: ../../pep-0653.rst:313
+msgid "Class Patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:315
+msgid "Class pattern with no arguments::"
+msgstr ""
+
+#: ../../pep-0653.rst:324
+msgid "Class pattern with a single positional pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:339
+msgid "Positional-only class pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:356
+msgid "Example: [6]_"
+msgstr ""
+
+#: ../../pep-0653.rst:358
+msgid "Class patterns with all keyword patterns::"
+msgstr ""
+
+#: ../../pep-0653.rst:373
+msgid "Example: [7]_"
+msgstr ""
+
+#: ../../pep-0653.rst:375
+msgid "Class patterns with positional and keyword patterns::"
+msgstr ""
+
+#: ../../pep-0653.rst:398
+msgid "Example: [8]_"
+msgstr ""
+
+#: ../../pep-0653.rst:402
+msgid "Nested patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:404
+msgid ""
+"The above specification assumes that patterns are not nested. For nested "
+"patterns the above translations are applied recursively by introducing "
+"temporary capture patterns."
+msgstr ""
+
+#: ../../pep-0653.rst:407
+msgid "For example, the pattern::"
+msgstr ""
+
+#: ../../pep-0653.rst:426
+msgid "Guards"
+msgstr ""
+
+#: ../../pep-0653.rst:428
+msgid "Guards translate to a test following the rest of the translation::"
+msgstr ""
+
+#: ../../pep-0653.rst:440
+msgid "Non-conforming special attributes"
+msgstr ""
+
+#: ../../pep-0653.rst:442
+msgid ""
+"All classes should ensure that the the values of ``__match_container__``,"
+" ``__match_class__`` and ``__match_args__`` follow the specification. "
+"Therefore, implementations can assume, without checking, that the "
+"following are true::"
+msgstr ""
+
+#: ../../pep-0653.rst:449
+msgid "and that ``__match_args__`` is a tuple of unique strings."
+msgstr ""
+
+#: ../../pep-0653.rst:452
+msgid "Values of the special attributes for classes in the standard library"
+msgstr ""
+
+#: ../../pep-0653.rst:454
+msgid "For the core builtin container classes ``__match_container__`` will be:"
+msgstr ""
+
+#: ../../pep-0653.rst:456
+msgid "``list``: ``MATCH_SEQUENCE``"
+msgstr ""
+
+#: ../../pep-0653.rst:457
+msgid "``tuple``: ``MATCH_SEQUENCE``"
+msgstr ""
+
+#: ../../pep-0653.rst:458
+msgid "``dict``: ``MATCH_MAPPING``"
+msgstr ""
+
+#: ../../pep-0653.rst:459
+msgid "``bytearray``: 0"
+msgstr ""
+
+#: ../../pep-0653.rst:460
+msgid "``bytes``: 0"
+msgstr ""
+
+#: ../../pep-0653.rst:461
+msgid "``str``: 0"
+msgstr ""
+
+#: ../../pep-0653.rst:463
+msgid "Named tuples will have ``__match_container__`` set to ``MATCH_SEQUENCE``."
+msgstr ""
+
+#: ../../pep-0653.rst:465
+msgid ""
+"All other standard library classes for which ``issubclass(cls, "
+"collections.abc.Mapping)`` is true will have ``__match_container__`` set "
+"to ``MATCH_MAPPING``."
+msgstr ""
+
+#: ../../pep-0653.rst:466
+msgid ""
+"All other standard library classes for which ``issubclass(cls, "
+"collections.abc.Sequence)`` is true will have ``__match_container__`` set"
+" to ``MATCH_SEQUENCE``."
+msgstr ""
+
+#: ../../pep-0653.rst:468
+msgid ""
+"For the following builtin classes ``__match_class__`` will be set to "
+"``MATCH_SELF``:"
+msgstr ""
+
+#: ../../pep-0653.rst:470
+msgid "``bool``"
+msgstr ""
+
+#: ../../pep-0653.rst:471
+msgid "``bytearray``"
+msgstr ""
+
+#: ../../pep-0653.rst:472
+msgid "``bytes``"
+msgstr ""
+
+#: ../../pep-0653.rst:473
+msgid "``float``"
+msgstr ""
+
+#: ../../pep-0653.rst:474
+msgid "``frozenset``"
+msgstr ""
+
+#: ../../pep-0653.rst:475
+msgid "``int``"
+msgstr ""
+
+#: ../../pep-0653.rst:476
+msgid "``set``"
+msgstr ""
+
+#: ../../pep-0653.rst:477
+msgid "``str``"
+msgstr ""
+
+#: ../../pep-0653.rst:478
+msgid "``list``"
+msgstr ""
+
+#: ../../pep-0653.rst:479
+msgid "``tuple``"
+msgstr ""
+
+#: ../../pep-0653.rst:480
+msgid "``dict``"
+msgstr ""
+
+#: ../../pep-0653.rst:483
+msgid "Legal optimizations"
+msgstr ""
+
+#: ../../pep-0653.rst:485
+msgid ""
+"The above semantics implies a lot of redundant effort and copying in the "
+"implementation. However, it is possible to implement the above semantics "
+"efficiently by employing semantic preserving transformations on the naive"
+" implementation."
+msgstr ""
+
+#: ../../pep-0653.rst:489
+msgid ""
+"When performing matching, implementations are allowed to treat the "
+"following functions and methods as pure:"
+msgstr ""
+
+#: ../../pep-0653.rst:492
+msgid "For any class supporting ``MATCH_SEQUENCE``::"
+msgstr ""
+
+#: ../../pep-0653.rst:497
+msgid "For any class supporting ``MATCH_MAPPING``::"
+msgstr ""
+
+#: ../../pep-0653.rst:501
+msgid "Implementations are allowed to make the following assumptions:"
+msgstr ""
+
+#: ../../pep-0653.rst:503
+msgid ""
+"``isinstance(obj, cls)`` can be freely replaced with "
+"``issubclass(type(obj), cls)`` and vice-versa."
+msgstr ""
+
+#: ../../pep-0653.rst:504
+msgid ""
+"``isinstance(obj, cls)`` will always return the same result for any "
+"``(obj, cls)`` pair and repeated calls can thus be elided."
+msgstr ""
+
+#: ../../pep-0653.rst:505
+msgid ""
+"Reading any of ``__match_container__``, ``__match_class__`` or "
+"``__match_args__`` is a pure operation, and may be cached."
+msgstr ""
+
+#: ../../pep-0653.rst:506
+msgid ""
+"Sequences, that is any class for which ``__match_container__ == "
+"MATCH_SEQUENCE`` is not zero, are not modified by iteration, subscripting"
+" or calls to ``len()``. Consequently, those operations can be freely "
+"substituted for each other where they would be equivalent when applied to"
+" an immutable sequence."
+msgstr ""
+
+#: ../../pep-0653.rst:508
+msgid ""
+"Mappings, that is any class for which ``__match_container__ == "
+"MATCH_MAPPING`` is not zero, will not capture the second argument of the "
+"``get()`` method. So, the ``$sentinel`` value may be freely re-used."
+msgstr ""
+
+#: ../../pep-0653.rst:511
+msgid ""
+"In fact, implementations are encouraged to make these assumptions, as it "
+"is likely to result in significantly better performance."
+msgstr ""
+
+#: ../../pep-0653.rst:515
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0653.rst:517
+msgid "None."
+msgstr ""
+
+#: ../../pep-0653.rst:520
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0653.rst:522
+msgid ""
+"The naive implementation that follows from the specification will not be "
+"very efficient. Fortunately, there are some reasonably straightforward "
+"transformations that can be used to improve performance. Performance "
+"should be comparable to the implementation of PEP 634 (at time of "
+"writing) by the release of 3.10. Further performance improvements may "
+"have to wait for the 3.11 release."
+msgstr ""
+
+#: ../../pep-0653.rst:528
+msgid "Possible optimizations"
+msgstr ""
+
+#: ../../pep-0653.rst:530
+msgid ""
+"The following is not part of the specification, but guidelines to help "
+"developers create an efficient implementation."
+msgstr ""
+
+#: ../../pep-0653.rst:534
+msgid "Splitting evaluation into lanes"
+msgstr ""
+
+#: ../../pep-0653.rst:536
+msgid ""
+"Since the first step in matching each pattern is check to against the "
+"kind, it is possible to combine all the checks against kind into a single"
+" multi-way branch at the beginning of the match. The list of cases can "
+"then be duplicated into several \"lanes\" each corresponding to one kind."
+" It is then trivial to remove unmatchable cases from each lane. Depending"
+" on the kind, different optimization strategies are possible for each "
+"lane. Note that the body of the match clause does not need to be "
+"duplicated, just the pattern."
+msgstr ""
+
+#: ../../pep-0653.rst:543
+msgid "Sequence patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:545
+msgid ""
+"This is probably the most complex to optimize and the most profitable in "
+"terms of performance. Since each pattern can only match a range of "
+"lengths, often only a single length, the sequence of tests can be "
+"rewritten in as an explicit iteration over the sequence, attempting to "
+"match only those patterns that apply to that sequence length."
+msgstr ""
+
+#: ../../pep-0653.rst:550
+msgid "For example:"
+msgstr ""
+
+#: ../../pep-0653.rst:563
+msgid "Can be compiled roughly as:"
+msgstr ""
+
+#: ../../pep-0653.rst:594
+msgid "Mapping patterns"
+msgstr ""
+
+#: ../../pep-0653.rst:596
+msgid ""
+"The best stategy here is probably to form a decision tree based on the "
+"size of the mapping and which keys are present. There is no point "
+"repeatedly testing for the presence of a key. For example::"
+msgstr ""
+
+#: ../../pep-0653.rst:610
+msgid ""
+"If the key ``\"a\"`` is not present when checking for case X, there is no"
+" need to check it again for Y."
+msgstr ""
+
+#: ../../pep-0653.rst:612
+msgid "The mapping lane can be implemented, roughly as:"
+msgstr ""
+
+#: ../../pep-0653.rst:636
+msgid "Summary of differences between this PEP and PEP 634"
+msgstr ""
+
+#: ../../pep-0653.rst:639
+msgid "The changes to the semantics can be summarized as:"
+msgstr ""
+
+#: ../../pep-0653.rst:641
+msgid ""
+"Requires ``__match_args__`` to be a *tuple* of strings, not just a "
+"sequence. This make pattern matching a bit more robust and optimizable as"
+" ``__match_args__`` can be assumed to be immutable."
+msgstr ""
+
+#: ../../pep-0653.rst:643
+msgid ""
+"Selecting the kind of container patterns that can be matched uses "
+"``cls.__match_container__`` instead of ``issubclass(cls, "
+"collections.abc.Mapping)`` and ``issubclass(cls, "
+"collections.abc.Sequence)``."
+msgstr ""
+
+#: ../../pep-0653.rst:645
+msgid ""
+"Allows classes to opt out of deconstruction altogether, if necessary, but"
+" setting ``__match_class__ = 0``."
+msgstr ""
+
+#: ../../pep-0653.rst:646
+msgid ""
+"The behavior when matching patterns is more precisely defined, but is "
+"otherwise unchanged."
+msgstr ""
+
+#: ../../pep-0653.rst:648
+msgid ""
+"There are no changes to syntax. All examples given in the PEP 636 "
+"tutorial should continue to work as they do now."
+msgstr ""
+
+#: ../../pep-0653.rst:651
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0653.rst:654
+msgid "Using attributes from the instance's dictionary"
+msgstr ""
+
+#: ../../pep-0653.rst:656
+msgid ""
+"An earlier version of this PEP only used attributes from the instance's "
+"dictionary when matching a class pattern with ``__match_class__`` was the"
+" default value. The intent was to avoid capturing bound-methods and other"
+" synthetic attributes. However, this also mean that properties were "
+"ignored."
+msgstr ""
+
+#: ../../pep-0653.rst:659
+msgid "For the class::"
+msgstr ""
+
+#: ../../pep-0653.rst:670
+msgid ""
+"Ideally we would match the attributes \"a\" and \"p\", but not \"m\". "
+"However, there is no general way to do that, so this PEP now follows the "
+"semantics of PEP 634."
+msgstr ""
+
+#: ../../pep-0653.rst:674
+msgid "Lookup of ``__match_args__`` on the subject not the pattern"
+msgstr ""
+
+#: ../../pep-0653.rst:676
+msgid ""
+"An earlier version of this PEP looked up ``__match_args__`` on the class "
+"of the subject and not the class specified in the pattern. This has been "
+"rejected for a few reasons::"
+msgstr ""
+
+#: ../../pep-0653.rst:685
+msgid ""
+"Combining ``__match_class__`` and ``__match_container__`` into a single "
+"value"
+msgstr ""
+
+#: ../../pep-0653.rst:687
+msgid ""
+"An earlier version of this PEP combined ``__match_class__`` and "
+"``__match_container__`` into a single value, ``__match_kind__``. Using a "
+"single value has a small advantage in terms of performance, but is likely"
+" to result in unintended changes to container matching when overriding "
+"class matching behavior, and vice versa."
+msgstr ""
+
+#: ../../pep-0653.rst:693
+msgid "Deferred Ideas"
+msgstr ""
+
+#: ../../pep-0653.rst:695
+msgid ""
+"The original version of this PEP included the match kind "
+"``MATCH_POSITIONAL`` and special method ``__deconstruct__`` which would "
+"allow classes full control over their matching. This is important for "
+"libraries like ``sympy``."
+msgstr ""
+
+#: ../../pep-0653.rst:705
+msgid ""
+"For ``sympy`` to support the positional patterns with current pattern "
+"matching is possible, but is tricky. With these additional features it "
+"can be implemented easily [9]_."
+msgstr ""
+
+#: ../../pep-0653.rst:708
+msgid ""
+"This idea will feature in a future PEP for 3.11. However, it is too late "
+"in the 3.10 development cycle for such a change."
+msgstr ""
+
+#: ../../pep-0653.rst:712
+msgid "Having a separate value to reject all class matches"
+msgstr ""
+
+#: ../../pep-0653.rst:714
+msgid ""
+"In an earlier version of this PEP, there was a distinct value for "
+"``__match_class__`` that allowed classes to not match any class pattern "
+"that would have required deconstruction. However, this would become "
+"redundant once ``MATCH_POSITIONAL`` is introduced, and complicates the "
+"specification for an extremely rare case."
+msgstr ""
+
+#: ../../pep-0653.rst:719
+msgid "References"
+msgstr ""
+
+#: ../../pep-0653.rst:721
+msgid "PEP 634 https://www.python.org/dev/peps/pep-0634"
+msgstr ""
+
+#: ../../pep-0653.rst:725
+msgid "Code examples"
+msgstr ""
+
+#: ../../pep-0653.rst:736 ../../pep-0653.rst:753 ../../pep-0653.rst:768
+#: ../../pep-0653.rst:790 ../../pep-0653.rst:808 ../../pep-0653.rst:827
+#: ../../pep-0653.rst:843
+msgid "This::"
+msgstr ""
+
+#: ../../pep-0653.rst:875
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0653.rst:877
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

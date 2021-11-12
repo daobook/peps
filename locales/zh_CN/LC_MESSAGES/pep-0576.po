@@ -1,0 +1,369 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0576.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0576.rst:1
+msgid "576"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0576.rst:2
+msgid "Rationalize Built-in function classes"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0576.rst:3
+msgid "Mark Shannon <mark@hotpy.org>"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0576.rst:4
+msgid "Petr Viktorin"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0576.rst:5
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0576.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0576.rst:8
+msgid "10-May-2018"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0576.rst:9
+msgid "3.8"
+msgstr ""
+
+#: ../../pep-0576.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0576.rst:10
+msgid "17-May-2018 23-June-2018 08-July-2018 29-Mar-1028"
+msgstr ""
+
+#: ../../pep-0576.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0576.rst:18
+msgid ""
+"Expose the \"FastcallKeywords\" convention used internally by CPython to "
+"third-party code, and make the ``inspect`` module use duck-typing. In "
+"combination this will allow third-party C extensions and tools like "
+"Cython to create objects that use the same calling conventions as built-"
+"in and Python functions, thus gaining performance parity with built-in "
+"functions like ``len`` or ``print``."
+msgstr ""
+
+#: ../../pep-0576.rst:21
+msgid "A small improvement in the performance of existing code is expected."
+msgstr ""
+
+#: ../../pep-0576.rst:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0576.rst:26
+msgid ""
+"Currently third-party module authors face a dilemma when implementing "
+"functions in C. Either they can use one of the pre-existing built-in "
+"function or method classes or implement their own custom class in C. The "
+"first choice causes them to lose the ability to access the internals of "
+"the callable object. The second choice is an additional maintenance "
+"burden and, more importantly, has a significant negative impact on "
+"performance."
+msgstr ""
+
+#: ../../pep-0576.rst:33
+msgid ""
+"This PEP aims to allow authors of third-party C modules, and tools like "
+"to Cython, to utilize the faster calling convention used internally by "
+"CPython for built-in functions and methods, and to do so without a loss "
+"of capabilities relative to a function implemented in Python."
+msgstr ""
+
+#: ../../pep-0576.rst:36
+msgid "Introspection"
+msgstr ""
+
+#: ../../pep-0576.rst:38
+msgid ""
+"The inspect module will fully support duck-typing when introspecting "
+"callables."
+msgstr ""
+
+#: ../../pep-0576.rst:40
+msgid ""
+"The ``inspect.Signature.from_callable()`` function computes the signature"
+" of a callable. If an object has a ``__signature__`` property, then "
+"``inspect.Signature.from_callable()`` simply returns that. To further "
+"support duck-typing, if a callable has a ``__text_signature__`` then the "
+"``__signature__`` will be created from that."
+msgstr ""
+
+#: ../../pep-0576.rst:44
+msgid ""
+"This means that 3rd party builtin-functions can implement "
+"``__text_signature__`` if sufficient, and the more expensive "
+"``__signature__`` if necessary."
+msgstr ""
+
+#: ../../pep-0576.rst:48
+msgid "Efficient calls to third-party callables"
+msgstr ""
+
+#: ../../pep-0576.rst:50
+msgid ""
+"Currently the majority of calls are dispatched to ``function``\\s and "
+"``method_descriptor``\\s in custom code, using the \"FastcallKeywords\" "
+"internal calling convention. This PEP proposes that this calling "
+"convention is implemented via a C function pointer. Third-party callables"
+" which implement this binary interface will have the potential to be "
+"called as fast as a built-in function."
+msgstr ""
+
+#: ../../pep-0576.rst:53
+msgid "Continued prohibition of callable classes as base classes"
+msgstr ""
+
+#: ../../pep-0576.rst:55
+msgid ""
+"Currently any attempt to use ``function``, ``method`` or "
+"``method_descriptor`` as a base class for a new class will fail with a "
+"``TypeError``. This behaviour is desirable as it prevents errors when a "
+"subclass overrides the ``__call__`` method. If callables could be sub-"
+"classed then any call to a ``function`` or a ``method_descriptor`` would "
+"need an additional check that the ``__call__`` method had not been "
+"overridden. By exposing an additional call mechanism, the potential for "
+"errors  becomes greater. As a consequence, any third-party class "
+"implementing the addition call interface will not be usable as a base "
+"class."
+msgstr ""
+
+#: ../../pep-0576.rst:59
+msgid "New classes and changes to existing classes"
+msgstr ""
+
+#: ../../pep-0576.rst:62
+msgid "Python visible changes"
+msgstr ""
+
+#: ../../pep-0576.rst:64
+msgid "A new built-in class, ``builtin_function``, will be added."
+msgstr ""
+
+#: ../../pep-0576.rst:66
+msgid ""
+"``types.BuiltinFunctionType`` will refer to ``builtin_function`` not "
+"``builtin_function_or_method``."
+msgstr ""
+
+#: ../../pep-0576.rst:68
+msgid ""
+"Instances of the ``builtin_function`` class will retain the "
+"``__module__`` property of ``builtin_function_or_method`` and gain the "
+"``func_module`` and ``func_globals`` properties. The ``func_module`` "
+"allows access to the module to which the function belongs. Note that this"
+" is different from the ``__module__`` property which merely returns the "
+"name of the module. The ``func_globals`` property is equivalent to "
+"``func_module.__dict__`` and is provided to mimic the Python function "
+"property of the same name."
+msgstr ""
+
+#: ../../pep-0576.rst:70
+msgid ""
+"When binding a ``method_descriptor`` instance to an instance of its "
+"owning class, a ``bound_method`` will be created instead of a "
+"``builtin_function_or_method``. This means that the "
+"``method_descriptors`` now mimic the behaviour of Python functions more "
+"closely. In other words, ``[].append`` becomes a ``bound_method`` instead"
+" of a ``builtin_function_or_method``."
+msgstr ""
+
+#: ../../pep-0576.rst:74
+msgid "C API changes"
+msgstr ""
+
+#: ../../pep-0576.rst:76
+msgid ""
+"A new function ``PyBuiltinFunction_New(PyMethodDef *ml, PyObject "
+"*module)`` is added to create built-in functions."
+msgstr ""
+
+#: ../../pep-0576.rst:78
+msgid ""
+"``PyCFunction_NewEx()`` and ``PyCFunction_New()`` are deprecated and will"
+" return a ``PyBuiltinFunction`` if able, otherwise a "
+"``builtin_function_or_method``."
+msgstr ""
+
+#: ../../pep-0576.rst:81
+msgid "Retaining backwards compatibility in the C API and ABI"
+msgstr ""
+
+#: ../../pep-0576.rst:83
+msgid ""
+"The proposed changes are fully backwards and forwards compatible at both "
+"the API and ABI level."
+msgstr ""
+
+#: ../../pep-0576.rst:87
+msgid "Internal C changes"
+msgstr ""
+
+#: ../../pep-0576.rst:89
+msgid ""
+"Two new flags will be allowed for the ``typeobject.tp_flags`` field. "
+"These are ``Py_TPFLAGS_EXTENDED_CALL`` and "
+"``Py_TPFLAGS_FUNCTION_DESCRIPTOR``"
+msgstr ""
+
+#: ../../pep-0576.rst:93
+msgid "Py_TPFLAGS_EXTENDED_CALL"
+msgstr ""
+
+#: ../../pep-0576.rst:95
+msgid ""
+"For any built-in class that sets ``Py_TPFLAGS_EXTENDED_CALL`` The C "
+"struct corresponding to this built-in class must begin with the struct "
+"``PyExtendedCallable`` which is defined as follows::"
+msgstr ""
+
+#: ../../pep-0576.rst:106
+msgid ""
+"Any class that sets the ``Py_TPFLAGS_EXTENDED_CALL`` cannot be used as a "
+"base class and a TypeError will be raised if any Python code tries to use"
+" it a base class."
+msgstr ""
+
+#: ../../pep-0576.rst:110
+msgid "Py_TPFLAGS_FUNCTION_DESCRIPTOR"
+msgstr ""
+
+#: ../../pep-0576.rst:112
+msgid ""
+"If this flag is set for a built-in class ``F``, then instances of that "
+"class are expected to behave the same as a Python function when used as a"
+" class attribute. Specifically, this mean that the value of ``c.m`` where"
+" ``C.m`` is an instanceof the built-in class ``F`` (and ``c`` is an "
+"instance of ``C``) must be a bound-method binding ``C.m`` and ``c``. "
+"Without this flag, it would be impossible for custom callables to behave "
+"like Python functions *and* be efficient as Python or built-in functions."
+msgstr ""
+
+#: ../../pep-0576.rst:119
+msgid "Changes to existing C structs"
+msgstr ""
+
+#: ../../pep-0576.rst:121
+msgid ""
+"The ``function``, ``method_descriptor`` and ``method`` classes will have "
+"their corresponding structs changed to start with the "
+"``PyExtendedCallable`` struct."
+msgstr ""
+
+#: ../../pep-0576.rst:125
+msgid "Third-party built-in classes using the new extended call interface"
+msgstr ""
+
+#: ../../pep-0576.rst:127
+msgid ""
+"To enable call performance on a par with Python functions and built-in "
+"functions, third-party callables should set the "
+"``Py_TPFLAGS_EXTENDED_CALL`` bit of ``tp_flags`` and ensure that the "
+"corresponding C struct starts with the ``PyExtendedCallable``. Any built-"
+"in class that has the ``Py_TPFLAGS_EXTENDED_CALL`` bit set must also "
+"implement the ``tp_call`` function and make sure its behaviour is "
+"consistent with the ``ext_call`` function."
+msgstr ""
+
+#: ../../pep-0576.rst:131
+msgid "Performance implications of these changes"
+msgstr ""
+
+#: ../../pep-0576.rst:133
+msgid ""
+"Adding a function pointer to each callable, rather than each class of "
+"callable, enables the choice of dispatching function (the code to shuffle"
+" arguments about and do error checking) to be made when the callable "
+"object is created rather than when it is called. This should reduce the "
+"number of instructions executed between the call-site in the interpreter "
+"and the execution of the callee."
+msgstr ""
+
+#: ../../pep-0576.rst:137
+msgid "Alternative Suggestions"
+msgstr ""
+
+#: ../../pep-0576.rst:139
+msgid ""
+"PEP 580 <https://www.python.org/dev/peps/pep-0580/> is an alternative "
+"approach to solving the same problem as this PEP."
+msgstr ""
+
+#: ../../pep-0576.rst:144
+msgid "Reference implementation"
+msgstr ""
+
+#: ../../pep-0576.rst:146
+msgid ""
+"A draft implementation can be found at "
+"https://github.com/markshannon/cpython/tree/pep-576-minimal"
+msgstr ""
+
+#: ../../pep-0576.rst:150
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0576.rst:152
+msgid "This document has been placed in the public domain."
+msgstr ""
+

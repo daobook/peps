@@ -1,0 +1,518 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0661.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0661.rst:1
+msgid "661"
+msgstr ""
+
+#: ../../pep-0661.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0661.rst:2
+msgid "Sentinel Values"
+msgstr ""
+
+#: ../../pep-0661.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0661.rst:3
+msgid "Tal Einat <tal@python.org>"
+msgstr ""
+
+#: ../../pep-0661.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0661.rst:4
+msgid "https://discuss.python.org/t/pep-661-sentinel-values/9126"
+msgstr ""
+
+#: ../../pep-0661.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0661.rst:5
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0661.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0661.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0661.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0661.rst:8 ../../pep-0661.rst:9
+msgid "06-Jun-2021"
+msgstr ""
+
+#: ../../pep-0661.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0661.rst:12
+msgid "TL;DR: See the `Specification`_ and `Reference Implementation`_."
+msgstr ""
+
+#: ../../pep-0661.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0661.rst:18
+msgid ""
+"Unique placeholder values, commonly known as \"sentinel values\", are "
+"useful in Python programs for several things, such as default values for "
+"function arguments where ``None`` is a valid input value.  These cases "
+"are common enough for several idioms for implementing such \"sentinels\" "
+"to have arisen over the years, but uncommon enough that there hasn't been"
+" a clear need for standardization.  However, the common implementations, "
+"including some in the stdlib, suffer from several significant drawbacks."
+msgstr ""
+
+#: ../../pep-0661.rst:26
+msgid ""
+"This PEP suggests adding a utility for defining sentinel values, to be "
+"used in the stdlib and made publicly available as part of the stdlib."
+msgstr ""
+
+#: ../../pep-0661.rst:29
+msgid ""
+"Note: Changing all existing sentinels in the stdlib to be implemented "
+"this way is not deemed necessary, and whether to do so is left to the "
+"discretion of each maintainer."
+msgstr ""
+
+#: ../../pep-0661.rst:35
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0661.rst:37
+msgid ""
+"In May 2021, a question was brought up on the python-dev mailing list "
+"[#python-dev-thread]_ about how to better implement a sentinel value for "
+"``traceback.print_exception``.  The existing implementation used the "
+"following common idiom::"
+msgstr ""
+
+#: ../../pep-0661.rst:44
+msgid ""
+"However, this object has an uninformative and overly verbose repr, "
+"causing the function's signature to be overly long and hard to read::"
+msgstr ""
+
+#: ../../pep-0661.rst:54
+msgid ""
+"Additionally, two other drawbacks of many existing sentinels were brought"
+" up in the discussion:"
+msgstr ""
+
+#: ../../pep-0661.rst:57
+msgid ""
+"Not having a distinct type, hence it being impossible to define strict "
+"type signatures functions with sentinels as default values"
+msgstr ""
+
+#: ../../pep-0661.rst:59
+msgid ""
+"Incorrect behavior after being copied or unpickled, due to a separate "
+"instance being created and thus comparisons using ``is`` failing"
+msgstr ""
+
+#: ../../pep-0661.rst:62
+msgid ""
+"In the ensuing discussion, Victor Stinner supplied a list of currently "
+"used sentinel values in the Python standard library [#list-of-sentinels-"
+"in-stdlib]_. This showed that the need for sentinels is fairly common, "
+"that there are various implementation methods used even within the "
+"stdlib, and that many of these suffer from at least one of the "
+"aforementioned drawbacks."
+msgstr ""
+
+#: ../../pep-0661.rst:68
+msgid ""
+"The discussion did not lead to any clear consensus on whether a standard "
+"implementation method is needed or desirable, whether the drawbacks "
+"mentioned are significant, nor which kind of implementation would be "
+"good."
+msgstr ""
+
+#: ../../pep-0661.rst:72
+#, python-format
+msgid ""
+"A poll was created on discuss.python.org [#poll]_ to get a clearer sense "
+"of the community's opinions. The poll's results were not conclusive, with"
+" 40% voting for \"The status-quo is fine / there’s no need for "
+"consistency in this\", but most voters voting for one or more "
+"standardized solutions. Specifically, 37% of the voters chose "
+"\"Consistent use of a new, dedicated sentinel factory / class / meta-"
+"class, also made publicly available in the stdlib\"."
+msgstr ""
+
+#: ../../pep-0661.rst:80
+msgid ""
+"With such mixed opinions, this PEP was created to facilitate making a "
+"decision on the subject."
+msgstr ""
+
+#: ../../pep-0661.rst:85
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0661.rst:87
+msgid "The criteria guiding the chosen implementation were:"
+msgstr ""
+
+#: ../../pep-0661.rst:89
+msgid ""
+"The sentinel objects should behave as expected by a sentinel object: When"
+" compared using the ``is`` operator, it should always be considered "
+"identical to itself but never to any other object."
+msgstr ""
+
+#: ../../pep-0661.rst:92
+msgid "It should be simple to define as many distinct sentinel values as needed."
+msgstr ""
+
+#: ../../pep-0661.rst:93
+msgid "The sentinel objects should have a clear and short repr."
+msgstr ""
+
+#: ../../pep-0661.rst:94
+msgid ""
+"The sentinel objects should each have a *distinct* type, usable in type "
+"annotations to define *strict* type signatures."
+msgstr ""
+
+#: ../../pep-0661.rst:96
+msgid ""
+"The sentinel objects should behave correctly after copying and/or "
+"unpickling."
+msgstr ""
+
+#: ../../pep-0661.rst:98
+msgid "Creating a sentinel object should be a simple, straightforward one-liner."
+msgstr ""
+
+#: ../../pep-0661.rst:99
+msgid ""
+"Works using CPython and PyPy3.  Will hopefully also work with other "
+"implementations."
+msgstr ""
+
+#: ../../pep-0661.rst:102
+msgid ""
+"After researching existing idioms and implementations, and going through "
+"many different possible implementations, an implementation was written "
+"which meets all of these criteria (see `Reference Implementation`_)."
+msgstr ""
+
+#: ../../pep-0661.rst:108
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0661.rst:110
+msgid ""
+"A new ``sentinel`` function will be added to a new ``sentinels`` module. "
+"It will accept a single required argument, the name of the sentinel "
+"object, and a single optional argument, the repr of the object."
+msgstr ""
+
+#: ../../pep-0661.rst:123
+msgid ""
+"Checking if a value is such a sentinel *should* be done using the ``is`` "
+"operator, as is recommended for ``None``.  Equality checks using ``==`` "
+"will also work as expected, returning ``True`` only when the object is "
+"compared with itself."
+msgstr ""
+
+#: ../../pep-0661.rst:128
+msgid ""
+"The name should be set to the name of the variable used to reference the "
+"object, as in the examples above.  Otherwise, the sentinel object won't "
+"be able to survive copying or pickling+unpickling while retaining the "
+"above described behavior.  Note, that when defined in a class scope, the "
+"name must be the fully-qualified name of the variable in the module, for "
+"example::"
+msgstr ""
+
+#: ../../pep-0661.rst:137
+msgid ""
+"Type annotations for sentinel values will use `typing.Literal`_. For "
+"example::"
+msgstr ""
+
+#: ../../pep-0661.rst:147
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0661.rst:149
+msgid ""
+"The reference implementation is found in a dedicated GitHub repo "
+"[#reference-github-repo]_.  A simplified version follows::"
+msgstr ""
+
+#: ../../pep-0661.rst:176
+msgid ""
+"Note that a dedicated class is created automatically for each sentinel "
+"object. This class is assigned to the namespace of the module from which "
+"the ``sentinel()`` call was made, or to that of the ``sentinels`` module "
+"itself as a fallback.  These classes have long names comprised of several"
+" parts to ensure their uniqueness.  However, these names usually wouldn't"
+" be used, since type annotations should use ``Literal[]`` as described "
+"above, and identity checks should be preferred over type checks."
+msgstr ""
+
+#: ../../pep-0661.rst:186
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0661.rst:190
+msgid "Use ``NotGiven = object()``"
+msgstr ""
+
+#: ../../pep-0661.rst:192
+msgid ""
+"This suffers from all of the drawbacks mentioned in the `Rationale`_ "
+"section."
+msgstr ""
+
+#: ../../pep-0661.rst:196
+msgid "Add a single new sentinel value, e.g. ``MISSING`` or ``Sentinel``"
+msgstr ""
+
+#: ../../pep-0661.rst:198
+msgid ""
+"Since such a value could be used for various things in various places, "
+"one could not always be confident that it would never be a valid value in"
+" some use cases.  On the other hand, a dedicated and distinct sentinel "
+"value can be used with confidence without needing to consider potential "
+"edge-cases."
+msgstr ""
+
+#: ../../pep-0661.rst:203
+msgid ""
+"Additionally, it is useful to be able to provide a meaningful name and "
+"repr for a sentinel value, specific to the context where it is used."
+msgstr ""
+
+#: ../../pep-0661.rst:206
+#, python-format
+msgid ""
+"Finally, this was a very unpopular option in the poll [#poll]_, with only"
+" 12% of the votes voting for it."
+msgstr ""
+
+#: ../../pep-0661.rst:211
+msgid "Use the existing ``Ellipsis`` sentinel value"
+msgstr ""
+
+#: ../../pep-0661.rst:213
+msgid ""
+"This is not the original intended use of Ellipsis, though it has become "
+"increasingly common to use it to define empty class or function blocks "
+"instead of using ``pass``."
+msgstr ""
+
+#: ../../pep-0661.rst:217
+msgid ""
+"Also, similar to a potential new single sentinel value, ``Ellipsis`` "
+"can't be as confidently used in all cases, unlike a dedicated, distinct "
+"value."
+msgstr ""
+
+#: ../../pep-0661.rst:222
+msgid "Use a single-valued enum"
+msgstr ""
+
+#: ../../pep-0661.rst:224
+msgid "The suggested idiom is:"
+msgstr ""
+
+#: ../../pep-0661.rst:232
+msgid ""
+"Besides the excessive repetition, the repr is overly long: "
+"``<NotGivenType.NotGiven: 'NotGiven'>``.  A shorter repr can be defined, "
+"at the expense of a bit more code and yet more repetition."
+msgstr ""
+
+#: ../../pep-0661.rst:236
+msgid ""
+"Finally, this option was the least popular among the nine options in the "
+"poll [#poll]_, being the only option to receive no votes."
+msgstr ""
+
+#: ../../pep-0661.rst:241
+msgid "A sentinel class decorator"
+msgstr ""
+
+#: ../../pep-0661.rst:243
+msgid "The suggested interface:"
+msgstr ""
+
+#: ../../pep-0661.rst:251
+msgid ""
+"While this allowed for a very simple and clear implementation, the "
+"interface is too verbose, repetitive, and difficult to remember."
+msgstr ""
+
+#: ../../pep-0661.rst:256
+msgid "Using class objects"
+msgstr ""
+
+#: ../../pep-0661.rst:258
+msgid ""
+"Since classes are inherently singletons, using a class as a sentinel "
+"value makes sense and allows for a simple implementation."
+msgstr ""
+
+#: ../../pep-0661.rst:261
+msgid "The simplest version of this idiom is:"
+msgstr ""
+
+#: ../../pep-0661.rst:267
+msgid "To have a clear repr, one could define ``__repr__``:"
+msgstr ""
+
+#: ../../pep-0661.rst:275
+msgid "... or use a meta-class:"
+msgstr ""
+
+#: ../../pep-0661.rst:281
+msgid ""
+"However, all such implementations don't have a dedicated type for the "
+"sentinel, which is considered desirable for strict typing.  A dedicated "
+"type could be created by a meta-class or class decorator, but at that "
+"point the implementation would become much more complex and loses its "
+"advantages over the chosen implementation."
+msgstr ""
+
+#: ../../pep-0661.rst:287
+msgid "Additionally, using classes this way is unusual and could be confusing."
+msgstr ""
+
+#: ../../pep-0661.rst:291
+msgid ""
+"Define a recommended \"standard\" idiom, without supplying an "
+"implementation"
+msgstr ""
+
+#: ../../pep-0661.rst:293
+msgid ""
+"Most common exiting idioms have significant drawbacks.  So far, no idiom "
+"has been found that is clear and concise while avoiding these drawbacks."
+msgstr ""
+
+#: ../../pep-0661.rst:296
+#, python-format
+msgid ""
+"Also, in the poll on this subject [#poll]_, the options for recommending "
+"an idiom were unpopular, with the highest-voted option being voted for by"
+" only 25% of the voters."
+msgstr ""
+
+#: ../../pep-0661.rst:302
+msgid "Additional Notes"
+msgstr ""
+
+#: ../../pep-0661.rst:304
+msgid ""
+"This PEP and the initial implementation are drafted in a dedicated GitHub"
+" repo [#reference-github-repo]_."
+msgstr ""
+
+#: ../../pep-0661.rst:307
+msgid ""
+"The support for copying/unpickling works when defined in a module's scope"
+" or a (possibly nested) class's scope.  Note that in the latter case, the"
+" name provided as the first parameter must be the fully-qualified name of"
+" the variable in the module::"
+msgstr ""
+
+#: ../../pep-0661.rst:317
+msgid "References"
+msgstr ""
+
+#: ../../pep-0661.rst:319
+msgid ""
+"Python-Dev mailing list: `The repr of a sentinel "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/ZLVPD2OISI7M4POMTR2FCQTE6TPMPTO3/>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:320
+msgid ""
+"Python-Dev mailing list: `\"The stdlib contains tons of sentinels\" "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/message/JBYXQH3NV3YBF7P2HLHB5CD6V3GVTY55/>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:321
+msgid ""
+"discuss.python.org Poll: `Sentinel Values in the Stdlib "
+"<https://discuss.python.org/t/sentinel-values-in-the-stdlib/8810/>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:322
+msgid ""
+"`Reference implementation at the taleinat/python-stdlib-sentinels GitHub "
+"repo <https://github.com/taleinat/python-stdlib-sentinels>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:323
+msgid ""
+"`bpo-44123: Make function parameter sentinel values true singletons "
+"<https://bugs.python.org/issue44123>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:324
+msgid "`The \"sentinels\" package on PyPI <https://pypi.org/project/sentinels/>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:325
+msgid "`The \"sentinel\" package on PyPI <https://pypi.org/project/sentinel/>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:326
+msgid ""
+"`Discussion thread about type signatures for these sentinels on the "
+"typing-sig mailing list <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/NDEJ7UCDPINP634GXWDARVMTGDVSNBKV/#LVCPTY26JQJW7NKGKGAZXHQKWVW7GOGL>`_"
+msgstr ""
+
+#: ../../pep-0661.rst:330
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0661.rst:332
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

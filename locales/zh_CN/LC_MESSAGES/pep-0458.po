@@ -1,0 +1,2502 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0458.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0458.txt:1
+msgid "458"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0458.txt:2
+msgid "Secure PyPI downloads with signed repository metadata"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0458.txt:5
+msgid ""
+"Trishank Karthik Kuppusamy <karthik@trishank.com>, Vladimir Diaz "
+"<vladimir.diaz@nyu.edu>, Marina Moore <mm9693@nyu.edu>, Lukas Puehringer "
+"<lukas.puehringer@nyu.edu>, Joshua Lock <jlock@vmware.com>, Lois Anne "
+"DeLong <lad278@nyu.edu>, Justin Cappos <jcappos@nyu.edu>"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0458.txt:12
+msgid "Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0458.txt:13
+msgid "Donald Stufft <donald@stufft.io>"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0458.txt:14
+msgid ""
+"https://discuss.python.org/t/pep-458-secure-pypi-downloads-with-package-"
+"signing/2648"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0458.txt:15
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0458.txt:16
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0458.txt:18
+msgid "27-Sep-2013"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0458.txt:19
+msgid "06-Jan-2019, 13-Nov-2019"
+msgstr ""
+
+#: ../../pep-0458.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0458.txt:20
+msgid ""
+"https://discuss.python.org/t/pep-458-secure-pypi-downloads-with-package-"
+"signing/2648/115"
+msgstr ""
+
+#: ../../pep-0458.txt:24
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0458.txt:26
+msgid ""
+"This PEP describes changes to the PyPI infrastructure that are needed to "
+"ensure that users get valid packages from PyPI. These changes should have"
+" minimal impact on other parts of the ecosystem. The PEP focuses on "
+"communication between PyPI and users, and so does not require any action "
+"by package developers. Developers will upload packages using the current "
+"process, and PyPI will automatically generate signed repository metadata "
+"for these packages."
+msgstr ""
+
+#: ../../pep-0458.txt:33
+msgid ""
+"In order for the security mechanism to be effective, additional work will"
+" need to be done by PyPI consumers (like pip) to verify the signatures "
+"and metadata provided by PyPI. This verification can be transparent to "
+"users (unless it fails) and provides an automatic security mechanism. "
+"There is documentation for how to consume TUF metadata in the TUF "
+"repository. However, changes to PyPI consumers are not a pre-requisite "
+"for publishing the metadata from PyPI, and can be done according to the "
+"timelines and priorities of individual projects."
+msgstr ""
+
+#: ../../pep-0458.txt:45
+msgid "Proposed TUF Integration"
+msgstr ""
+
+#: ../../pep-0458.txt:47
+msgid ""
+"This PEP proposes how The Update Framework [2]_ (TUF__) should be "
+"integrated with the Python Package Index (PyPI [1]_). TUF was designed to"
+" be a flexible security add-on to a software updater or package manager."
+"  A full implementation of the framework integrates best security "
+"practices, such as separating role responsibilities, adopting the many-"
+"man rule for signing packages, keeping signing keys offline, and "
+"revocation of expired or compromised signing keys.  As a result, "
+"attackers would need to steal multiple signing keys, which are stored "
+"independently, in order to compromise the role responsible for specifying"
+" a repository's available files.  Or, alternatively, a role responsible "
+"for indicating the latest snapshot of the repository may also have to be "
+"compromised."
+msgstr ""
+
+#: ../../pep-0458.txt:62
+msgid ""
+"The initial integration proposed in this PEP will allow modern package "
+"managers, such as pip [3]_, to be more secure against attacks on PyPI "
+"mirrors and PyPI's own content distribution network, and to better "
+"protect users from such attacks. Specifically, this PEP describes how "
+"PyPI processes should be adapted to generate and incorporate TUF metadata"
+" (i.e., the minimum security model).  This minimum security model "
+"supports verification of PyPI distributions that are signed with keys "
+"stored on PyPI. Distributions that are uploaded by developers are signed "
+"by PyPI, requiring no action from developers (other than uploading the "
+"distribution), and are immediately available for download.  The minimum "
+"security model also minimizes PyPI administrative responsibilities by "
+"automating much of the signing process."
+msgstr ""
+
+#: ../../pep-0458.txt:74
+msgid ""
+"There is no discussion in *this* PEP of support for project distributions"
+" that are signed by developers (maximum security model). This possible "
+"future extension is covered in detail in PEP 480 [21]_.  The maximum "
+"security model requires more PyPI administrative work (though no added "
+"work for clients), and also proposes an easy-to-use key management "
+"solution for developers/publishers, ideas on how to interface with a "
+"potential future build farm on PyPI infrastructure, and the feasibility "
+"of end-to-end signing."
+msgstr ""
+
+#: ../../pep-0458.txt:82
+msgid ""
+"While it does provide implementation recommendations, this PEP does not "
+"prescribe exactly how package managers, such as pip, should be adapted to"
+" install or update projects from PyPI with TUF metadata.   Package "
+"managers interested in adopting TUF on the client side may consult its "
+"`library documentation`__, which was created for this purpose."
+msgstr ""
+
+#: ../../pep-0458.txt:92
+msgid "Non-goals"
+msgstr ""
+
+#: ../../pep-0458.txt:94
+msgid ""
+"This PEP does not eliminate any existing features from PyPI. In "
+"particular, it does not replace existing support for OpenPGP signatures. "
+"Developers can continue to upload detached OpenPGP signatures along with "
+"distributions. In the future, PEP 480 may allow developers to directly "
+"sign TUF metadata using their OpenPGP keys."
+msgstr ""
+
+#: ../../pep-0458.txt:101
+msgid "PEP Status"
+msgstr ""
+
+#: ../../pep-0458.txt:103
+msgid ""
+"Due to the amount of work required to implement this PEP, in early 2019 "
+"it was deferred until appropriate funding could be secured to implement "
+"the PEP. The Python Software Foundation secured this funding [22]_ and "
+"new PEP coauthors restarted PEP discussion__."
+msgstr ""
+
+#: ../../pep-0458.txt:112
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0458.txt:114
+msgid ""
+"Attacks on software repositories are common, even in organizations with "
+"very good security practices__. The resulting repository compromise "
+"allows an attacker to edit all files stored on the repository and sign "
+"these files using any keys stored on the repository (online keys). In "
+"many signing schemes (like TLS), this access allows the attacker to "
+"replace files on the repository and make it look like these files are "
+"coming from PyPI. Without a way to revoke and replace the trusted private"
+" key, it is very challenging to recover from a repository compromise. In "
+"addition to the dangers of repository compromise, software repositories "
+"are vulnerable to an attacker on the network (MITM) intercepting and "
+"changing files. These and other attacks on software repositories are "
+"detailed here__."
+msgstr ""
+
+#: ../../pep-0458.txt:126
+msgid ""
+"This PEP, together with the follow-up proposal in PEP 480, aims to "
+"protect users of PyPI from compromises of the integrity, consistency, and"
+" freshness properties of PyPI packages, and enhances compromise "
+"resilience by mitigating key risk and providing mechanisms to recover "
+"from a compromise of PyPI or its signing keys."
+msgstr ""
+
+#: ../../pep-0458.txt:134
+msgid ""
+"On January 5, 2013, the Python Software Foundation (PSF) announced that "
+"[4]_ a security breach had occurred on the python.org wikis for Python "
+"and Jython. As a result, all of the wiki data was destroyed. Fortunately,"
+" the PyPI infrastructure was not affected by this breach. However, the "
+"incident is a reminder that PyPI needed to take defensive steps to "
+"protect users as much as possible in the event of a compromise.  Attacks "
+"on software repositories happen all the time [5]_.  The PSF must accept "
+"the possibility of security breaches and prepare PyPI accordingly because"
+" it is a valuable resource used by thousands, if not millions, of people."
+msgstr ""
+
+#: ../../pep-0458.txt:144
+msgid ""
+"Before the wiki attack, PyPI used MD5 hashes to tell package managers, "
+"such as pip, whether or not a distribution file was corrupted in transit."
+"  However, the absence of SSL made it hard for package managers to verify"
+" transport integrity to PyPI. It was therefore easy to launch a man-in-"
+"the-middle attack between pip and PyPI, and arbitrarily change the "
+"content of distributions.  As a result, users could be tricked into "
+"installing malicious distributions.  After the wiki attack, several steps"
+" were proposed (some of which were implemented) to deliver a much higher "
+"level of security than was previously the case. These steps included "
+"requiring SSL to communicate with PyPI [6]_, restricting project names "
+"[7]_, and migrating from MD5 to SHA-2 hashes [8]_."
+msgstr ""
+
+#: ../../pep-0458.txt:156
+msgid ""
+"Though necessary, these steps are insufficient to protect distributions "
+"because attacks are still possible through other avenues.  For example, a"
+" public mirror is trusted to honestly mirror PyPI, but some mirrors may "
+"misbehave, whether by accident or through malicious intervention. Package"
+" managers such as pip are supposed to use signatures from PyPI to verify "
+"distribution files downloaded from a public mirror [9]_, but none are "
+"known to actually do so [10]_.  Therefore, it would be wise to add more "
+"security measures to detect attacks from public mirrors or content "
+"delivery networks [11]_ (CDNs)."
+msgstr ""
+
+#: ../../pep-0458.txt:165
+msgid ""
+"Even though official mirrors have been deprecated on PyPI [12]_, a wide "
+"variety of other attack vectors on package managers remain [13]_.  These "
+"attacks can crash client systems, cause obsolete distributions to be "
+"installed, or even allow an attacker to execute arbitrary code.  In "
+"`September 2013`__, a post was made to the Distutils mailing list showing"
+" that the latest version of pip (at the time) was susceptible to such "
+"attacks, and how TUF could protect users against them [14]_.  "
+"Specifically, testing was done to see how pip would respond to these "
+"attacks with and without TUF.  Attacks tested included replay and freeze,"
+" arbitrary installation, slow retrieval, and endless data.  The post also"
+" included a demonstration of how pip would respond if PyPI were "
+"compromised."
+msgstr ""
+
+#: ../../pep-0458.txt:179
+msgid ""
+"To provide compromise resilient protection of PyPI, this PEP proposes the"
+" use of The Update Framework [2]_ (TUF). TUF provides protection from a "
+"variety of attacks on software update systems, while also providing "
+"mechanisms to recover from a repository compromise. TUF has been used in "
+"production by a number of organizations, including use in Cloud Native "
+"Computing Foundation’s Notary service, which provides the infrastructure "
+"for container image signing in Docker Registry. The TUF specification has"
+" been the subject of three independent security audits__."
+msgstr ""
+
+#: ../../pep-0458.txt:190
+msgid ""
+"The scope of *this* PEP is protecting users from compromises of PyPI "
+"mirrors, and PyPI's own TLS termination and content distribution "
+"infrastructure. Protection from compromises of PyPI itself is discussed "
+"in PEP 480."
+msgstr ""
+
+#: ../../pep-0458.txt:196
+msgid "Threat Model"
+msgstr ""
+
+#: ../../pep-0458.txt:198
+msgid "The threat model assumes the following:"
+msgstr ""
+
+#: ../../pep-0458.txt:200
+msgid "Offline keys are safe and securely stored."
+msgstr ""
+
+#: ../../pep-0458.txt:202
+msgid "Attackers *cannot* compromise PyPI's trusted keys stored online."
+msgstr ""
+
+#: ../../pep-0458.txt:204
+msgid "Attackers can respond to client requests."
+msgstr ""
+
+#: ../../pep-0458.txt:206
+msgid ""
+"An attacker is considered successful if it can cause a client to install "
+"(or leave installed) something other than the most up-to-date version of "
+"a software distribution file. If the attacker is preventing the "
+"installation of updates, they do not want clients to realize there is "
+"anything wrong."
+msgstr ""
+
+#: ../../pep-0458.txt:211
+msgid ""
+"This threat model describes the minimum security model. The maximum "
+"security model described in PEP 480 also assumes that attackers can "
+"compromise PyPI's online keys."
+msgstr ""
+
+#: ../../pep-0458.txt:217
+msgid "Definitions"
+msgstr ""
+
+#: ../../pep-0458.txt:219
+msgid ""
+"The keywords \"MUST\", \"MUST NOT\", \"REQUIRED\", \"SHALL\", \"SHALL "
+"NOT\", \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"MAY\", and "
+"\"OPTIONAL\" in this document are to be interpreted as described in RFC "
+"2119__."
+msgstr ""
+
+#: ../../pep-0458.txt:225
+msgid ""
+"This PEP focuses only on integrating TUF into PyPI. However, the reader "
+"is encouraged to review TUF design principles [2]_ and SHOULD be familiar"
+" with the TUF specification [16]_."
+msgstr ""
+
+#: ../../pep-0458.txt:229
+msgid ""
+"The following terms used in this PEP are defined in the Python Packaging "
+"Glossary [17]_: *project*, *release*, *distribution*."
+msgstr ""
+
+#: ../../pep-0458.txt:232
+msgid "Additional terms used in this PEP are defined as follows:"
+msgstr ""
+
+#: ../../pep-0458.txt:234
+msgid ""
+"Role: TUF specifies one *root* role and multiple other roles to which the"
+" *root* role delegates responsibilities, directly or indirectly. The term"
+" *top-level* role refers to the *root* role and any role specified "
+"directly by the *root* role, i.e. *timestamp*, *snapshot* and *targets* "
+"roles. Each role has a single metadata file that it is trusted to "
+"provide."
+msgstr ""
+
+#: ../../pep-0458.txt:240
+msgid ""
+"Distribution file: A versioned archive file that contains Python "
+"packages, modules, and other resource files that are used to distribute a"
+" release. The terms *distribution file*, *distribution package* [17]_, or"
+" simply *distribution* or *package* may be used interchangeably in this "
+"PEP."
+msgstr ""
+
+#: ../../pep-0458.txt:245
+msgid ""
+"Simple index: The HTML page that contains internal links to distribution "
+"files."
+msgstr ""
+
+#: ../../pep-0458.txt:248
+msgid ""
+"Target files: As a rule of thumb, target files are all files on PyPI "
+"whose integrity should be guaranteed with TUF. Typically, this includes "
+"distribution files and PyPI metadata, such as simple indices."
+msgstr ""
+
+#: ../../pep-0458.txt:252
+msgid ""
+"Metadata: Metadata are signed files that describe roles, other metadata, "
+"and target files. If not specified otherwise metadata means TUF-specific "
+"metadata."
+msgstr ""
+
+#: ../../pep-0458.txt:256
+msgid ""
+"Repository: A repository is a source for named metadata and target files."
+"  Clients request metadata and target files stored on a repository."
+msgstr ""
+
+#: ../../pep-0458.txt:259
+msgid ""
+"Consistent snapshot: A set of TUF metadata and target files that capture "
+"the complete state of all projects on PyPI as they existed at some fixed "
+"point in time."
+msgstr ""
+
+#: ../../pep-0458.txt:263
+msgid ""
+"Developer: Either the owner or maintainer of a project who is allowed to "
+"update the TUF metadata, as well as target files for a project."
+msgstr ""
+
+#: ../../pep-0458.txt:266
+msgid ""
+"Online key: A private cryptographic key that MUST be stored on the PyPI "
+"server infrastructure.  This is usually to allow automated signing with "
+"the key.  However, an attacker who compromises the PyPI infrastructure "
+"will be able to read these keys."
+msgstr ""
+
+#: ../../pep-0458.txt:271
+msgid ""
+"Offline key: A private cryptographic key that MUST be stored independent "
+"of the PyPI server infrastructure.  This prevents automated signing with "
+"the key.  An attacker who compromises the PyPI infrastructure will not be"
+" able to immediately read these keys."
+msgstr ""
+
+#: ../../pep-0458.txt:276
+msgid ""
+"Threshold signature scheme: A role can increase its resilience to key "
+"compromises by specifying that at least t out of n keys are REQUIRED to "
+"sign its metadata.  A compromise of t-1 keys is insufficient to "
+"compromise the role itself.  Saying that a role requires (t, n) keys "
+"denotes the threshold signature property."
+msgstr ""
+
+#: ../../pep-0458.txt:284
+msgid "Overview of TUF"
+msgstr ""
+
+#: ../../pep-0458.txt:286
+msgid ""
+"At its highest level, TUF provides applications with a secure method for "
+"knowing about and obtaining new versions of files. On the surface, this "
+"all sounds simple. The basic steps for updating applications are:"
+msgstr ""
+
+#: ../../pep-0458.txt:290
+msgid "Knowing an update exists."
+msgstr ""
+
+#: ../../pep-0458.txt:292
+msgid "Downloading a correct copy of the latest version of the updated file."
+msgstr ""
+
+#: ../../pep-0458.txt:294
+msgid ""
+"The problem is that updating applications is only simple when there are "
+"no malicious activities in the picture. If an attacker is trying to "
+"interfere with these seemingly simple steps, there is plenty they can do."
+msgstr ""
+
+#: ../../pep-0458.txt:298
+msgid ""
+"Assume a software updater takes the approach of most systems (at least "
+"the ones that try to be secure). It downloads both the file it wants and "
+"a cryptographic signature of the file. The software updater already knows"
+" which key it trusts to make the signature. It checks that the signature "
+"is correct and was made by this trusted key. Unfortunately, the software "
+"updater is still at risk in many ways, including the following scenarios:"
+msgstr ""
+
+#: ../../pep-0458.txt:305
+msgid ""
+"An attacker keeps giving the software updater the same update file, so it"
+" never realizes there is an update."
+msgstr ""
+
+#: ../../pep-0458.txt:308
+msgid ""
+"An attacker gives the software updater an older, insecure version of a "
+"file that it already has, so it downloads that one and blindly uses it "
+"thinking it is newer."
+msgstr ""
+
+#: ../../pep-0458.txt:312
+msgid ""
+"An attacker gives the software updater a newer version of a file, but not"
+" the newest one.  The file is newer to the software updater, but it may "
+"be insecure and exploitable by the attacker."
+msgstr ""
+
+#: ../../pep-0458.txt:316
+msgid ""
+"An attacker compromises the key used to sign these files and now the "
+"software updater downloads a malicious file that is properly signed."
+msgstr ""
+
+#: ../../pep-0458.txt:319
+msgid ""
+"TUF is designed to address these attacks, and others, by adding signed "
+"metadata (text files that describe the repository's files) to the "
+"repository and referencing the metadata files during the update "
+"procedure.  Repository files are verified against the information "
+"included in the metadata before they are handed off to the software "
+"update system.  The framework also provides multi-signature trust, "
+"explicit and implicit revocation of cryptographic keys, responsibility "
+"separation of the metadata, and minimized key risk.  For a full list and "
+"outline of the repository attacks and software updater weaknesses "
+"addressed by TUF, see Appendix A."
+msgstr ""
+
+#: ../../pep-0458.txt:331
+msgid "Integrating PyPI with TUF"
+msgstr ""
+
+#: ../../pep-0458.txt:333
+msgid ""
+"A software update system must complete two main tasks to integrate with "
+"TUF. First, it must add the framework to the client side of the update "
+"system. For example, TUF MAY be integrated with the pip package manager. "
+"Thus, new versions of pip going forward SHOULD use TUF by default to "
+"download and verify distributions from PyPI before installing them. "
+"However, there may be unforeseen issues that might prevent users from "
+"installing or updating distributions, including pip itself, via TUF. "
+"Therefore, pip SHOULD provide an option e.g., `--unsafely-disable-"
+"package-verification`, in order to work around such issues until they are"
+" resolved. Note, the proposed option name is purposefully long, because a"
+" user must be helped to understand that the action is unsafe and not "
+"generally recommended."
+msgstr ""
+
+#: ../../pep-0458.txt:345
+msgid ""
+"Second, the repository on the server side MUST be modified to provide "
+"signed TUF metadata. This PEP is concerned with the second part of the "
+"integration, and the changes on PyPI required to support software updates"
+" with TUF. We assume that pip would use TUF to verify distributions "
+"downloaded only from PyPI. pip MAY support TAP 4__ in order use TUF to "
+"also verify distributions downloaded from elsewhere__."
+msgstr ""
+
+#: ../../pep-0458.txt:358
+msgid "What Additional Repository Files are Required on PyPI?"
+msgstr ""
+
+#: ../../pep-0458.txt:360
+msgid ""
+"In order for package managers like pip to download and verify "
+"distributions with TUF, a few extra files MUST be added to PyPI. These "
+"extra repository files are called TUF metadata, and they contain such "
+"information as which keys can be trusted, the `cryptographic hashes`__ of"
+" files, signatures, metadata version numbers, and the date after which "
+"the metadata should be considered expired."
+msgstr ""
+
+#: ../../pep-0458.txt:368
+msgid ""
+"When a package manager wants to check for updates, it asks TUF to do the "
+"work. That is, a package manager never has to deal with this additional "
+"metadata or understand what's going on underneath. If TUF reports back "
+"that there are updates available, a package manager can then ask TUF to "
+"download these files from PyPI. TUF downloads them and checks them "
+"against the TUF metadata that it also downloads from the repository. If "
+"the downloaded target files are trustworthy, TUF then hands them over to "
+"the package manager."
+msgstr ""
+
+#: ../../pep-0458.txt:376
+msgid ""
+"The `Metadata`__ document provides information about each type of "
+"required metadata and its expected content.  The next section covers the "
+"different kinds of metadata RECOMMENDED for PyPI."
+msgstr ""
+
+#: ../../pep-0458.txt:382
+msgid ""
+"In addition, all target files SHOULD be available on disk at least two "
+"times. Once under their original filename, to provide backwards "
+"compatibility, and once with their SHA-512 hash included in their "
+"filename. This is required to produce `Consistent Snapshots`_."
+msgstr ""
+
+#: ../../pep-0458.txt:387
+msgid ""
+"Depending on the used file system different data deduplication mechanisms"
+" MAY be employed to avoid storage increase from hard copies of target "
+"files."
+msgstr ""
+
+#: ../../pep-0458.txt:392
+msgid "PyPI and TUF Metadata"
+msgstr ""
+
+#: ../../pep-0458.txt:394
+msgid ""
+"TUF metadata provides information that clients can use to make update "
+"decisions.  For example, a *targets* metadata lists the available target "
+"files on PyPI and includes the required signatures, cryptographic hash, "
+"and file sizes for each.  Different metadata files provide different "
+"information, which are signed by separate roles. The *root* role "
+"indicates what metadata belongs to each role. The concept of roles allows"
+" TUF to delegate responsibilities to multiple roles, thus minimizing the "
+"impact of any one compromised role."
+msgstr ""
+
+#: ../../pep-0458.txt:402
+msgid ""
+"TUF requires four top-level roles.  These are *root*, *timestamp*, "
+"*snapshot*, and *targets*.  The *root* role specifies the public "
+"cryptographic keys of the top-level roles (including its own).  The "
+"*timestamp* role references the latest *snapshot* and can signify when a "
+"new snapshot of the repository is available.  The *snapshot* role "
+"indicates the latest version of all the TUF metadata files (other than "
+"*timestamp*). The *targets* role lists the file paths of available target"
+" files together with their cryptographic hashes. The file paths must be "
+"specified relative to a base URL. This allows the actual target files to "
+"be served from anywhere, as long as the base URL can be accessed by the "
+"client. Each top-level role will serve its responsibilities without "
+"exception.  Table 1 provides an overview of the roles used in TUF."
+msgstr ""
+
+#: ../../pep-0458.txt:416
+msgid "Roles and Responsibilities"
+msgstr ""
+
+#: ../../pep-0458.txt:418 ../../pep-0458.txt:1112
+msgid "root"
+msgstr ""
+
+#: ../../pep-0458.txt:418
+msgid ""
+"The root role is the locus of trust for the entire repository. The root "
+"role signs the root.json metadata file. This file indicates which keys "
+"are authorized for each of the top-level roles, including for the root "
+"role itself. The roles \"root\", \"snapshot\", \"timestamp\" and "
+"\"targets\" must be specified and each has a list of public keys."
+msgstr ""
+
+#: ../../pep-0458.txt:426
+msgid "targets"
+msgstr ""
+
+#: ../../pep-0458.txt:426
+msgid ""
+"The targets role is responsible for indicating which target files are "
+"available from the repository. More precisely, it shares the "
+"responsibility of providing information about the content of updates. The"
+" targets role signs targets.json metadata, and can delegate trust for "
+"repository files to other roles (delegated roles)."
+msgstr ""
+
+#: ../../pep-0458.txt:433
+msgid "delegated roles"
+msgstr ""
+
+#: ../../pep-0458.txt:433
+msgid ""
+"If the top-level targets role performs delegation, the resulting "
+"delegated roles can then provide their own metadata files. The format of "
+"the metadata files provided by delegated targets roles is the same as "
+"that of targets.json. As with targets.json, the latest version of "
+"metadata files belonging to delegated roles are described in the snapshot"
+" role's metadata."
+msgstr ""
+
+#: ../../pep-0458.txt:441
+msgid "snapshot"
+msgstr ""
+
+#: ../../pep-0458.txt:441
+msgid ""
+"The snapshot role is responsible for ensuring that clients see a "
+"consistent repository state. It provides repository state information by "
+"indicating the latest versions of the top-level targets and delegated "
+"targets metadata files on the repository in snapshot.json. root and "
+"timestamp are not listed in snapshot.json, because timestamp signs for "
+"its freshness, after snapshot.json has been created, and root, which has "
+"all top-level keys, is required ahead of time to trust any of the top-"
+"level roles."
+msgstr ""
+
+#: ../../pep-0458.txt:452
+msgid "timestamp"
+msgstr ""
+
+#: ../../pep-0458.txt:452
+msgid ""
+"The timestamp role is responsible for providing information about the "
+"timeliness of available updates. Timeliness information is made available"
+" by frequently signing a new timestamp.json file that has a short "
+"expiration time. This file indicates the latest version of snapshot.json."
+msgstr ""
+
+#: ../../pep-0458.txt:460
+msgid "Table 1: An overview of the TUF roles."
+msgstr ""
+
+#: ../../pep-0458.txt:462
+msgid ""
+"Unless otherwise specified, this PEP RECOMMENDS that every metadata or "
+"target file be hashed using the SHA2-512 function of the `SHA-2`__ "
+"family. SHA-2 has native and well-tested Python 2 and 3 support (allowing"
+" for verification of these hashes without additional, non-Python "
+"dependencies). If stronger security guarantees are required, then both "
+"SHA2-256 and SHA2-512 or both SHA2-256 and `SHA3-256`__ MAY be used "
+"instead. SHA2-256 and SHA3-256 are based on very different designs from "
+"each other, providing extra protection against `collision attacks`__. "
+"However, SHA-3 requires installing additional, non-Python dependencies "
+"for `Python 2`__."
+msgstr ""
+
+#: ../../pep-0458.txt:480
+msgid "Signing Metadata and Repository Management"
+msgstr ""
+
+#: ../../pep-0458.txt:482
+msgid ""
+"The top-level *root* role signs for the keys of the top-level "
+"*timestamp*, *snapshot*, *targets*, and *root* roles.  The *timestamp* "
+"role signs for every new snapshot of the repository metadata.  The "
+"*snapshot* role signs for *root*, *targets*, and all delegated targets "
+"roles. The delegated targets role *bins* further delegates to the *bin-n*"
+" roles, which sign for all distribution files belonging to registered "
+"PyPI projects."
+msgstr ""
+
+#: ../../pep-0458.txt:489
+msgid ""
+"Figure 1 provides an overview of the roles available within PyPI, which "
+"includes the top-level roles and the roles delegated to by *targets*. The"
+" figure also indicates the types of keys used to sign each role, and "
+"which roles are trusted to sign for files available on PyPI.  The next "
+"two sections cover the details of signing repository files and the types "
+"of keys used for each role."
+msgstr ""
+
+#: ../../pep-0458.txt:497
+msgid "Figure 1: An overview of the role metadata available on PyPI."
+msgstr ""
+
+#: ../../pep-0458.txt:499
+msgid ""
+"The roles that change most frequently are *timestamp*, *snapshot* and "
+"roles delegated to by *bins* (i.e., *bin-n*).  The *timestamp* and "
+"*snapshot* metadata MUST be updated whenever *root*, *targets* or "
+"delegated metadata are updated.  Observe, though, that *root* and "
+"*targets* metadata are much less likely to be updated as often as "
+"delegated metadata.  Similarly, the *bins* role will only be updated when"
+" a *bin-n* role is added, updated, or removed.  Therefore, *timestamp*, "
+"*snapshot*, and *bin-n* metadata will most likely be updated frequently "
+"(possibly every minute) due to delegated metadata being updated "
+"frequently in order to support continuous delivery of projects.  "
+"Continuous delivery is a set of processes that PyPI uses to produce "
+"snapshots that can safely coexist and be deleted independent of other "
+"snapshots [18]_."
+msgstr ""
+
+#: ../../pep-0458.txt:511
+msgid ""
+"Every year, PyPI administrators SHOULD sign for *root* and *targets* role"
+" keys. Automation will continuously sign for a timestamped snapshot of "
+"all projects. A `repository management`__ tool is available that can sign"
+" metadata files, generate cryptographic keys, and manage a TUF "
+"repository."
+msgstr ""
+
+#: ../../pep-0458.txt:518
+msgid ""
+"In standard operation, the *bin-n* metadata will be updated and signed as"
+" new distributions are uploaded to PyPI. However, there will also need to"
+" be a one-time online initialization mechanism to create and sign *bin-n*"
+" metadata for all existing distributions that are part of the PyPI "
+"repository every time PyPI is re-initialized."
+msgstr ""
+
+#: ../../pep-0458.txt:526
+msgid "How to Establish Initial Trust in the PyPI Root Keys"
+msgstr ""
+
+#: ../../pep-0458.txt:528
+msgid ""
+"Package managers like pip MUST ship the *root* metadata file with the "
+"installation files that users initially download. This includes "
+"information about the keys trusted for all top-level roles (including the"
+" root keys themselves). Package managers must also bundle a TUF client "
+"library. Any new version of *root* metadata that the TUF client library "
+"may download is verified against the root keys initially bundled with the"
+" package manager. If a root key is compromised, but a threshold of keys "
+"are still secured, then PyPI administrators MUST push new *root* metadata"
+" that revokes trust in the compromised keys. If a threshold of root keys "
+"are compromised, then the *root* metadata MUST be updated out-of-band. "
+"(However, the threshold of root keys should be chosen so that this event "
+"is extremely unlikely.) Package managers do not necessarily need to be "
+"updated immediately if root keys are revoked or added between new "
+"releases of the package manager, as the TUF update process automatically "
+"handles cases where a threshold of previous *root* keys sign for new "
+"*root* keys (assuming no backwards-incompatibility in the TUF "
+"specification used). So, for example, if a package manager was initially "
+"shipped with version 1 of the *root* metadata, and a threshold of *root* "
+"keys in version 1 signed version 2 of the *root metadata*, and a "
+"threshold of *root* keys in version 2 signed version 3 of the *root "
+"metadata, then the package manager should be able to transparently update"
+" its copy of the *root* metadata from version 1 to 3 using its TUF client"
+" library."
+msgstr ""
+
+#: ../../pep-0458.txt:548
+msgid ""
+"Thus, to repeat, the latest good copy of *root* metadata and a TUF client"
+" library MUST be included in any new version of pip shipped with CPython "
+"(via ensurepip). The TUF client library inside the package manager then "
+"loads the *root* metadata and downloads the rest of the roles, including "
+"updating the *root* metadata if it has changed. An `outline of the update"
+" process`__ is available."
+msgstr ""
+
+#: ../../pep-0458.txt:558
+msgid "Minimum Security Model"
+msgstr ""
+
+#: ../../pep-0458.txt:560
+msgid ""
+"There are two security models to consider when integrating TUF into PyPI."
+"  The one proposed in this PEP is the minimum security model, which "
+"supports verification of PyPI distributions signed with private "
+"cryptographic keys stored on PyPI.  Distributions uploaded by developers "
+"are signed by PyPI and immediately available for download.  A possible "
+"future extension to this PEP, discussed in PEP 480 [21]_, proposes the "
+"maximum security model and allows a developer to sign for his/her "
+"project.  Developer keys are not stored online: therefore, projects are "
+"safe from PyPI compromises."
+msgstr ""
+
+#: ../../pep-0458.txt:569
+msgid ""
+"The minimum security model requires no action from a developer and "
+"protects against malicious CDNs [19]_ and public mirrors.  To support "
+"continuous delivery of uploaded distributions, PyPI signs for projects "
+"with an online key. This level of security prevents projects from being "
+"accidentally or deliberately tampered with by a mirror or a CDN because "
+"neither will have any of the keys required to sign for projects.  "
+"However, it does not protect projects from attackers who have compromised"
+" PyPI, since they can then manipulate TUF metadata using the keys stored "
+"online."
+msgstr ""
+
+#: ../../pep-0458.txt:578
+msgid ""
+"This PEP proposes that the *bin-n* roles sign for all PyPI projects with "
+"online keys. These *bin-n* roles MUST all be delegated by the upper-level"
+" *bins* role, which is signed with an offline key, and in turn MUST be "
+"delegated by the top-level *targets* role, which is also signed with an "
+"offline key. This means that when a package manager such as pip (i.e., "
+"using TUF) downloads a distribution file from a project on PyPI, it will "
+"consult the *targets* role about the TUF metadata for that distribution "
+"file.  If ultimately no *bin-n* roles delegated by *targets* via *bins* "
+"specify the distribution file, then it is considered to be non-existent "
+"on PyPI."
+msgstr ""
+
+#: ../../pep-0458.txt:588
+msgid ""
+"Note, the reason why *targets* does not directly delegate to *bin-n*, but"
+" instead uses the intermediary *bins* role, is so that other delegations "
+"can easily be added or removed, without affecting the *bins*-to-*bin-n* "
+"mapping. This is crucial for the implementation of PEP 480 [21]_."
+msgstr ""
+
+#: ../../pep-0458.txt:595
+msgid "Metadata Expiry Times"
+msgstr ""
+
+#: ../../pep-0458.txt:597
+msgid ""
+"The metadata for the *root*, *targets*, and *bins* roles SHOULD each "
+"expire in one year, because these metadata files are expected to change "
+"very rarely."
+msgstr ""
+
+#: ../../pep-0458.txt:600
+msgid ""
+"The *timestamp*, *snapshot*, and *bin-n* metadata SHOULD each expire in "
+"one day because a CDN or mirror SHOULD synchronize itself with PyPI every"
+" day. Furthermore, this generous time frame also takes into account "
+"client clocks that are highly skewed or adrift."
+msgstr ""
+
+#: ../../pep-0458.txt:607
+msgid "Metadata Scalability"
+msgstr ""
+
+#: ../../pep-0458.txt:609
+msgid ""
+"As the number of projects and distributions on a repository grows, TUF "
+"metadata will need to grow correspondingly.  For example, consider the "
+"*bins* role.  In August 2013, it was found that the size of the *bins* "
+"metadata was about 42MB if the *bins* role itself signed for about 220K "
+"PyPI targets (which are simple indices and distributions).  This PEP does"
+" not delve into the details, but TUF features a so-called \"`lazy bin "
+"walk`__\" scheme that splits a large targets metadata file into many "
+"small ones.  This allows a TUF client updater to intelligently download "
+"only a small number of TUF metadata files in order to update any project "
+"signed for by the *bins* role.  For example, applying this scheme to the "
+"previous repository resulted in pip downloading between 1.3KB and 111KB "
+"to install or upgrade a PyPI project via TUF."
+msgstr ""
+
+#: ../../pep-0458.txt:623
+#, python-format
+msgid ""
+"Based on our findings as of the time this document was updated for "
+"implementation (Nov 7 2019), summarized in Tables 2-3, PyPI SHOULD split "
+"all targets in the *bins* role by delegating them to 16,384 *bin-n* roles"
+" (see C10 in Table 2). Each *bin-n* role would sign for the PyPI targets "
+"whose SHA2-512 hashes fall into that bin (see Figure 1 and `Consistent "
+"Snapshots`_). It was found that this number of bins would result in a "
+"5-9% metadata overhead (relative to the average size of downloaded "
+"distribution files; see V13 and V15 in Table 3) for returning users, and "
+"a 69% overhead for new users who are installing pip for the first time "
+"(see V17 in Table 3)."
+msgstr ""
+
+#: ../../pep-0458.txt:635
+msgid "A few assumptions used in calculating these metadata overhead percentages:"
+msgstr ""
+
+#: ../../pep-0458.txt:637
+msgid "We are ignoring root, timestamp, and top-level targets metadata."
+msgstr ""
+
+#: ../../pep-0458.txt:638
+msgid ""
+"pip will always be bundled with the latest good copy of metadata for all "
+"roles."
+msgstr ""
+
+#: ../../pep-0458.txt:642 ../../pep-0458.txt:674
+msgid "Name"
+msgstr ""
+
+#: ../../pep-0458.txt:642 ../../pep-0458.txt:674
+msgid "Description"
+msgstr ""
+
+#: ../../pep-0458.txt:642 ../../pep-0458.txt:674
+msgid "Value"
+msgstr ""
+
+#: ../../pep-0458.txt:644
+msgid "C1"
+msgstr ""
+
+#: ../../pep-0458.txt:644
+msgid "# of bytes in a SHA2-512 hexadecimal digest"
+msgstr ""
+
+#: ../../pep-0458.txt:644 ../../pep-0458.txt:648
+msgid "128"
+msgstr ""
+
+#: ../../pep-0458.txt:646
+msgid "C2"
+msgstr ""
+
+#: ../../pep-0458.txt:646
+msgid "# of bytes for a SHA2-512 public key ID"
+msgstr ""
+
+#: ../../pep-0458.txt:646 ../../pep-0458.txt:650
+msgid "64"
+msgstr ""
+
+#: ../../pep-0458.txt:648
+msgid "C3"
+msgstr ""
+
+#: ../../pep-0458.txt:648
+msgid "# of bytes for an Ed25519 signature"
+msgstr ""
+
+#: ../../pep-0458.txt:650
+msgid "C4"
+msgstr ""
+
+#: ../../pep-0458.txt:650
+msgid "# of bytes for an Ed25519 public key"
+msgstr ""
+
+#: ../../pep-0458.txt:652
+msgid "C5"
+msgstr ""
+
+#: ../../pep-0458.txt:652
+msgid "# of bytes for a target relative file path"
+msgstr ""
+
+#: ../../pep-0458.txt:652
+msgid "256"
+msgstr ""
+
+#: ../../pep-0458.txt:654
+msgid "C6"
+msgstr ""
+
+#: ../../pep-0458.txt:654
+msgid "# of bytes to encode a target file size"
+msgstr ""
+
+#: ../../pep-0458.txt:654
+msgid "7"
+msgstr ""
+
+#: ../../pep-0458.txt:656
+msgid "C7"
+msgstr ""
+
+#: ../../pep-0458.txt:656
+msgid "# of bytes to encode a version number"
+msgstr ""
+
+#: ../../pep-0458.txt:656
+msgid "6"
+msgstr ""
+
+#: ../../pep-0458.txt:658
+msgid "C8"
+msgstr ""
+
+#: ../../pep-0458.txt:658
+msgid "# of targets (simple indices and distributions)"
+msgstr ""
+
+#: ../../pep-0458.txt:658
+msgid "2,273,539"
+msgstr ""
+
+#: ../../pep-0458.txt:660
+msgid "C9"
+msgstr ""
+
+#: ../../pep-0458.txt:660
+msgid "Average # of bytes for a downloaded distribution"
+msgstr ""
+
+#: ../../pep-0458.txt:660
+msgid "2,184,393"
+msgstr ""
+
+#: ../../pep-0458.txt:662
+msgid "C10"
+msgstr ""
+
+#: ../../pep-0458.txt:662
+msgid "# of bins"
+msgstr ""
+
+#: ../../pep-0458.txt:662
+msgid "16,384"
+msgstr ""
+
+#: ../../pep-0458.txt:665
+msgid ""
+"C8 was computed by querying the number of release files. C9 was derived "
+"by taking the average between a rough estimate of the average size of "
+"release files *downloaded* over the past 31 days (1,628,321 bytes), and "
+"the average size of releases files on disk (2,740,465 bytes). Ee W. "
+"Durbin III helped to provide these numbers on November 7, 2019."
+msgstr ""
+
+#: ../../pep-0458.txt:671
+msgid "Table 2: A list of constants used to calculate metadata overhead."
+msgstr ""
+
+#: ../../pep-0458.txt:674
+msgid "Formula"
+msgstr ""
+
+#: ../../pep-0458.txt:676
+msgid "V1"
+msgstr ""
+
+#: ../../pep-0458.txt:676
+msgid "Length of a path hash prefix"
+msgstr ""
+
+#: ../../pep-0458.txt:676
+msgid "math.ceil(math.log(C10, 16))"
+msgstr ""
+
+#: ../../pep-0458.txt:676
+msgid "4"
+msgstr ""
+
+#: ../../pep-0458.txt:678
+msgid "V2"
+msgstr ""
+
+#: ../../pep-0458.txt:678
+msgid "Total # of path hash prefixes"
+msgstr ""
+
+#: ../../pep-0458.txt:678
+msgid "16**V1"
+msgstr ""
+
+#: ../../pep-0458.txt:678
+msgid "65,536"
+msgstr ""
+
+#: ../../pep-0458.txt:680
+msgid "V3"
+msgstr ""
+
+#: ../../pep-0458.txt:680
+msgid "Avg # of targets per bin"
+msgstr ""
+
+#: ../../pep-0458.txt:680
+msgid "math.ceil(C8/C10)"
+msgstr ""
+
+#: ../../pep-0458.txt:680
+msgid "139"
+msgstr ""
+
+#: ../../pep-0458.txt:682
+msgid "V4"
+msgstr ""
+
+#: ../../pep-0458.txt:682
+msgid "Avg size of SHA-512 hashes per bin"
+msgstr ""
+
+#: ../../pep-0458.txt:682
+msgid "V3*C1"
+msgstr ""
+
+#: ../../pep-0458.txt:682
+msgid "17,792"
+msgstr ""
+
+#: ../../pep-0458.txt:684
+msgid "V5"
+msgstr ""
+
+#: ../../pep-0458.txt:684
+msgid "Avg size of target paths per bin"
+msgstr ""
+
+#: ../../pep-0458.txt:684
+msgid "V3*C5"
+msgstr ""
+
+#: ../../pep-0458.txt:684
+msgid "35,584"
+msgstr ""
+
+#: ../../pep-0458.txt:686
+msgid "V6"
+msgstr ""
+
+#: ../../pep-0458.txt:686
+msgid "Avg size of lengths per bin"
+msgstr ""
+
+#: ../../pep-0458.txt:686
+msgid "V3*C6"
+msgstr ""
+
+#: ../../pep-0458.txt:686
+msgid "973"
+msgstr ""
+
+#: ../../pep-0458.txt:688
+msgid "V7"
+msgstr ""
+
+#: ../../pep-0458.txt:688
+msgid "Avg size of bin-n metadata (bytes)"
+msgstr ""
+
+#: ../../pep-0458.txt:688
+msgid "V4+V5+V6"
+msgstr ""
+
+#: ../../pep-0458.txt:688
+msgid "54,349"
+msgstr ""
+
+#: ../../pep-0458.txt:690
+msgid "V8"
+msgstr ""
+
+#: ../../pep-0458.txt:690
+msgid "Total size of public key IDs in bins"
+msgstr ""
+
+#: ../../pep-0458.txt:690
+msgid "C10*C2"
+msgstr ""
+
+#: ../../pep-0458.txt:690
+msgid "1,048,576"
+msgstr ""
+
+#: ../../pep-0458.txt:692
+msgid "V9"
+msgstr ""
+
+#: ../../pep-0458.txt:692
+msgid "Total size of path hash prefixes in bins"
+msgstr ""
+
+#: ../../pep-0458.txt:692
+msgid "V1*V2"
+msgstr ""
+
+#: ../../pep-0458.txt:692
+msgid "262,144"
+msgstr ""
+
+#: ../../pep-0458.txt:694
+msgid "V10"
+msgstr ""
+
+#: ../../pep-0458.txt:694
+msgid "Est. size of bins metadata (bytes)"
+msgstr ""
+
+#: ../../pep-0458.txt:694
+msgid "V8+V9"
+msgstr ""
+
+#: ../../pep-0458.txt:694
+msgid "1,310,720"
+msgstr ""
+
+#: ../../pep-0458.txt:696
+msgid "V11"
+msgstr ""
+
+#: ../../pep-0458.txt:696
+msgid "Est. size of snapshot metadata (bytes)"
+msgstr ""
+
+#: ../../pep-0458.txt:696
+msgid "C10*C7"
+msgstr ""
+
+#: ../../pep-0458.txt:696
+msgid "98,304"
+msgstr ""
+
+#: ../../pep-0458.txt:698
+msgid "V12"
+msgstr ""
+
+#: ../../pep-0458.txt:698
+msgid ""
+"Est. size of metadata overhead per distribution per returning user (same "
+"snapshot)"
+msgstr ""
+
+#: ../../pep-0458.txt:698
+msgid "2*V7"
+msgstr ""
+
+#: ../../pep-0458.txt:698
+msgid "108,698"
+msgstr ""
+
+#: ../../pep-0458.txt:700
+msgid "V13"
+msgstr ""
+
+#: ../../pep-0458.txt:700
+msgid "Est. metadata overhead per distribution per returning user (same snapshot)"
+msgstr ""
+
+#: ../../pep-0458.txt:700
+msgid "round((V12/C9)*100)"
+msgstr ""
+
+#: ../../pep-0458.txt:700
+msgid "5%"
+msgstr ""
+
+#: ../../pep-0458.txt:702
+msgid "V14"
+msgstr ""
+
+#: ../../pep-0458.txt:702
+msgid ""
+"Est. size of metadata overhead per distribution per returning user (diff "
+"snapshot)"
+msgstr ""
+
+#: ../../pep-0458.txt:702
+msgid "V12+V11"
+msgstr ""
+
+#: ../../pep-0458.txt:702
+msgid "207,002"
+msgstr ""
+
+#: ../../pep-0458.txt:704
+msgid "V15"
+msgstr ""
+
+#: ../../pep-0458.txt:704
+msgid "Est. metadata overhead per distribution per returning user (diff snapshot)"
+msgstr ""
+
+#: ../../pep-0458.txt:704
+msgid "round((V14/C9)*100)"
+msgstr ""
+
+#: ../../pep-0458.txt:704
+msgid "9%"
+msgstr ""
+
+#: ../../pep-0458.txt:706
+msgid "V16"
+msgstr ""
+
+#: ../../pep-0458.txt:706
+msgid "Est. size of metadata overhead per distribution per new user"
+msgstr ""
+
+#: ../../pep-0458.txt:706
+msgid "V14+V10"
+msgstr ""
+
+#: ../../pep-0458.txt:706
+msgid "1,517,722"
+msgstr ""
+
+#: ../../pep-0458.txt:708
+msgid "V17"
+msgstr ""
+
+#: ../../pep-0458.txt:708
+msgid "Est. metadata overhead per distribution per new user"
+msgstr ""
+
+#: ../../pep-0458.txt:708
+msgid "round((V16/C9)*100)"
+msgstr ""
+
+#: ../../pep-0458.txt:708
+msgid "69%"
+msgstr ""
+
+#: ../../pep-0458.txt:711
+msgid "Table 3: Estimated metadata overheads for new and returning users."
+msgstr ""
+
+#: ../../pep-0458.txt:713
+msgid ""
+"The interested reader may find an interactive version of the metadata "
+"overhead calculator here__:"
+msgstr ""
+
+#: ../../pep-0458.txt:718
+#, python-format
+msgid ""
+"This number of bins SHOULD increase when the metadata overhead for "
+"returning users exceeds 50%. Presently, this SHOULD happen when the "
+"number of targets increase at least 10x from over 2M to over 22M, at "
+"which point the metadata overhead for returning and new users would be "
+"around 50-54% and 114% respectively, assuming that the number of bins "
+"stay fixed. If the number of bins is increased, then the cost for all "
+"users would effectively be the cost for new users, because their cost "
+"would be dominated by the (once-in-a-while) cost of downloading the large"
+" number of delegations in the `bins` metadata. If the cost for new users "
+"should prove to be too much, primarily due to the overhead of downloading"
+" the `bins` metadata, then this subject SHOULD be revisited before that "
+"happens."
+msgstr ""
+
+#: ../../pep-0458.txt:730
+msgid ""
+"Note that changes to the number of bins on the server are transparent to "
+"the client.  The package manager will be required to download a fresh set"
+" of metadata, as though it were a new user, but this operation will not "
+"require any explicit code logic or user interaction in order to do so."
+msgstr ""
+
+#: ../../pep-0458.txt:735
+msgid ""
+"It is possible to make TUF metadata more compact by representing it in a "
+"binary format, as opposed to the JSON text format.  Nevertheless, a "
+"sufficiently large number of projects and distributions will introduce "
+"scalability challenges at some point, and therefore the *bins* role will "
+"still need delegations (as outlined in Figure 1) in order to address the "
+"problem.  The JSON format is an open and well-known standard for data "
+"interchange, which is already supported by the TUF reference "
+"implementation, and therefore the recommended data format by this PEP.  "
+"However, due to the large number of delegations, compressed versions of "
+"all metadata SHOULD also be made available to clients via the existing "
+"Warehouse mechanisms for HTTP compression. In addition, the JSON metadata"
+" could be compressed before being sent to clients. The TUF reference "
+"implementation does not currently support downloading compressed JSON "
+"metadata, but this could be added to reduce the metadata size."
+msgstr ""
+
+#: ../../pep-0458.txt:751
+msgid "PyPI and Key Requirements"
+msgstr ""
+
+#: ../../pep-0458.txt:753
+msgid ""
+"In this section, the kinds of keys required to sign for TUF roles on PyPI"
+" are examined.  TUF is agnostic with respect to choices of digital "
+"signature algorithms.  However, this PEP RECOMMENDS that all digital "
+"signatures be produced with the Ed25519 algorithm [15]_.  Ed25519 has "
+"native and well-tested Python support (allowing for verification of "
+"signatures without additional, non-Python dependencies), uses small keys,"
+" and is supported by modern HSM and authentication token hardware."
+msgstr ""
+
+#: ../../pep-0458.txt:763
+msgid "Number and Type Of Keys Recommended"
+msgstr ""
+
+#: ../../pep-0458.txt:765
+msgid ""
+"The *root* role key is critical for security and should very rarely be "
+"used. It is primarily used for key revocation, and it is the locus of "
+"trust for all of PyPI.  The *root* role signs for the keys that are "
+"authorized for each of the top-level roles (including its own).  Keys "
+"belonging to the *root* role are intended to be very well-protected and "
+"used with the least frequency of all keys.  It is RECOMMENDED that the "
+"PSF board determine the current set of trusted root key holders, each of "
+"whom will own a (strong) root key. A majority of them can then constitute"
+" a quorum to revoke or endow trust in all top-level keys.  Alternatively,"
+" the system administrators of PyPI could be given responsibility for "
+"signing for the *root* role.  Therefore, the *root* role SHOULD require "
+"(t, n) keys, where n is the number of key holders determined by the PSF "
+"board, and t > 1 (so that at least two members must sign the *root* "
+"role)."
+msgstr ""
+
+#: ../../pep-0458.txt:779
+msgid ""
+"The *targets* role will be used only to sign for the static delegation of"
+" all targets to the *bins* role.  Since these target delegations must be "
+"secured against attacks in the event of a compromise, the keys for the "
+"*targets* role MUST be offline and independent of other keys.  For "
+"simplicity of key management, without sacrificing security, it is "
+"RECOMMENDED that the keys of the *targets* role be permanently discarded "
+"as soon as they have been created and used to sign for the role.  "
+"Therefore, the *targets* role SHOULD require (2, 2) keys.  Again, this is"
+" because the keys are going to be permanently discarded, and more offline"
+" keys will not help resist key recovery attacks [20]_ unless the "
+"diversity of cryptographic algorithms is maintained."
+msgstr ""
+
+#: ../../pep-0458.txt:790
+msgid ""
+"For similar reasons, the keys for the *bins* role SHOULD be set up "
+"similar to the keys for the *targets* role."
+msgstr ""
+
+#: ../../pep-0458.txt:793
+msgid ""
+"In order to support continuous delivery, the keys for the *timestamp*, "
+"*snapshot*, and all *bin-n* roles MUST be online. There is little benefit"
+" in requiring all of these roles to use different online keys, since "
+"attackers would presumably be able to compromise all of them if they "
+"compromise PyPI. Therefore, it is reasonable to use one online key for "
+"all of them."
+msgstr ""
+
+#: ../../pep-0458.txt:801
+msgid "Managing online keys"
+msgstr ""
+
+#: ../../pep-0458.txt:803
+msgid ""
+"The online key shared by the *timestamp*, *snapshot*, and all *bin-n* "
+"roles MAY be stored, encrypted or not, on the Python infrastructure. For "
+"example, the key MAY be kept on a self-hosted key management service "
+"(e.g. Hashicorp Vault__), or a third-party one (e.g. AWS KMS__, Google "
+"Cloud KMS__, or Azure Key Vault__)."
+msgstr ""
+
+#: ../../pep-0458.txt:814
+msgid ""
+"Some of these key management services allow keys to be stored on Hardware"
+" Security Modules (HSMs) (e.g., Hashicorp Vault__, AWS CloudHSM__, Google"
+" Cloud HSM__, Azure Key Vault__). This prevents attackers from "
+"exfiltrating the online private key (albeit not from using it, although "
+"their actions may now be cryptographically auditable). However, this "
+"requires modifying the reference TUF implementation to support HSMs "
+"(WIP__)."
+msgstr ""
+
+#: ../../pep-0458.txt:827
+msgid ""
+"Regardless of where and how this online key is kept, its use SHOULD be "
+"carefully logged, monitored, and audited, ideally in such a manner that "
+"attackers who compromise PyPI are unable to immediately turn off this "
+"logging, monitoring, and auditing."
+msgstr ""
+
+#: ../../pep-0458.txt:833
+msgid "Managing offline keys"
+msgstr ""
+
+#: ../../pep-0458.txt:835
+msgid ""
+"As explained in the previous section, the *root*, *targets*, and *bins* "
+"role keys MUST be offline for maximum security. These keys will be "
+"offline in the sense that their private keys MUST NOT be stored on PyPI, "
+"though some of them MAY be online in the private infrastructure of the "
+"project."
+msgstr ""
+
+#: ../../pep-0458.txt:840
+msgid ""
+"There SHOULD be an offline key ceremony to generate, backup, and store "
+"these keys in such a manner that the private keys can be read only by the"
+" Python administrators when necessary (e.g., such as rotating the keys "
+"for the top-level TUF roles). Thus, keys SHOULD be generated, preferably "
+"in a physical location where side-channel attacks__ are not a concern, "
+"using:"
+msgstr ""
+
+#: ../../pep-0458.txt:846
+msgid ""
+"A trusted, airgapped__ computer with a true random number generator__, "
+"and with no **data** persisting after the ceremony"
+msgstr ""
+
+#: ../../pep-0458.txt:848
+msgid "A trusted operating system"
+msgstr ""
+
+#: ../../pep-0458.txt:849
+msgid ""
+"A trusted set of third-party packages (such as updated versions of "
+"cryptographic libraries or the TUF reference implementation, where the "
+"versions provided by the trusted operating system are not recent enough)"
+msgstr ""
+
+#: ../../pep-0458.txt:857
+msgid ""
+"In order to avoid the persistence of sensitive data (e.g., private keys) "
+"other than on backup media after the ceremony, offline keys SHOULD be "
+"generated encrypted using strong passwords, either on (in decreasing "
+"order of trust): private HSMs (e.g., YubiHSM__), cloud-based HSMs (e.g., "
+"those listed above), in volatile memory (e.g., RAM), or in nonvolatile "
+"memory (e.g., SSD or microSD).  If keys must be generated on nonvolatile "
+"memory, then this memory MUST be irrecoverably destroyed after having "
+"securely backed up the keys."
+msgstr ""
+
+#: ../../pep-0458.txt:868
+msgid ""
+"Passwords used to encrypt keys SHOULD be stored somewhere durable and "
+"trustworthy to which only Python admins have access."
+msgstr ""
+
+#: ../../pep-0458.txt:871
+msgid ""
+"In order to minimize OPSEC__ errors during the ceremony, scripts SHOULD "
+"be written, for execution on the trusted key-generation computer, to "
+"automate tedious steps of the ceremony, such as:"
+msgstr ""
+
+#: ../../pep-0458.txt:875
+msgid ""
+"Exporting to sneakernet__ all code and data (previous TUF metadata and "
+"*root* keys) required to generate new keys and replace old ones"
+msgstr ""
+
+#: ../../pep-0458.txt:877
+msgid ""
+"Tightening the firewall, updating the entire operating system in order to"
+" fix security vulnerabilities, and airgapping the computer"
+msgstr ""
+
+#: ../../pep-0458.txt:879
+msgid ""
+"Exporting *all* new TUF metadata and keys to encrypted backup media. This"
+" backup provides a complete copy of the data required to restore the PyPI"
+" TUF repository"
+msgstr ""
+
+#: ../../pep-0458.txt:882
+msgid ""
+"Exporting *only* new TUF metadata and online keys to encrypted backup "
+"media. This backup provides all online data for import into the PyPI "
+"infrastructure and is useful, e.g., when the online data needs to be "
+"restored from a previous archived state"
+msgstr ""
+
+#: ../../pep-0458.txt:886
+msgid ""
+"Printing and saving cryptographic hashes of new TUF metadata. This "
+"printed copy provides an additional offline paper backup, which can be "
+"used as a comparison in the case of a compromise"
+msgstr ""
+
+#: ../../pep-0458.txt:893
+msgid ""
+"Note the one-time keys for the *targets* and *bins* roles MAY be safely "
+"generated, used, and deleted during the offline key ceremony. "
+"Furthermore, the *root* keys MAY not be generated during the offline key "
+"ceremony itself. Instead, a threshold t of n Python administrators, as "
+"discussed above, MAY independently sign the *root* metadata **after** the"
+" offline key ceremony used to generate all other keys."
+msgstr ""
+
+#: ../../pep-0458.txt:902
+msgid "How Should Metadata be Generated?"
+msgstr ""
+
+#: ../../pep-0458.txt:904
+msgid ""
+"Project developers expect the distributions they upload to PyPI to be "
+"immediately available for download.  Unfortunately, there will be "
+"problems when many readers and writers simultaneously access the same "
+"metadata and target files.  That is, there needs to be a way to ensure "
+"consistency of metadata and target files when multiple developers "
+"simultaneously change these files. There are also issues with consistency"
+" on PyPI without TUF, but the problem is more severe with signed metadata"
+" that MUST keep track of the files available on PyPI in real-time."
+msgstr ""
+
+#: ../../pep-0458.txt:913
+msgid ""
+"Suppose that PyPI generates a *snapshot* that indicates the latest "
+"version of every metadata, except *timestamp*, at version 1 and a client "
+"requests this *snapshot* from PyPI.  While the client is busy downloading"
+" this *snapshot*, PyPI then timestamps a new snapshot at, say, version 2."
+"  Without ensuring consistency of metadata, the client would find itself "
+"with a copy of *snapshot* that disagrees with what is available on PyPI. "
+"The result would be indistinguishable from arbitrary metadata injected by"
+" an attacker.  The problem would also occur with mirrors attempting to "
+"sync with PyPI."
+msgstr ""
+
+#: ../../pep-0458.txt:923
+msgid "Consistent Snapshots"
+msgstr ""
+
+#: ../../pep-0458.txt:925
+msgid ""
+"To keep TUF metadata on PyPI consistent with the highly volatile target "
+"files, consistent snapshots SHOULD be used. Each consistent snapshot "
+"captures the state of all known projects at a given time and MAY safely "
+"coexist with any other snapshot, or be deleted independently, without "
+"affecting any other snapshot."
+msgstr ""
+
+#: ../../pep-0458.txt:931
+msgid ""
+"To maintain consistent snapshots, all TUF metadata MUST, when written to "
+"disk, include a version number in their filename:"
+msgstr ""
+
+#: ../../pep-0458.txt:937
+msgid "VERSION_NUMBER.ROLENAME.json,"
+msgstr ""
+
+#: ../../pep-0458.txt:935
+msgid ""
+"where VERSION_NUMBER is an incrementing integer, and ROLENAME is one of "
+"the top-level metadata roles -- *root*, *snapshot* or *targets* -- or one"
+" of the delegated targets roles -- *bins* or *bin-n*."
+msgstr ""
+
+#: ../../pep-0458.txt:939
+msgid ""
+"The only exception is the *timestamp* metadata file, whose version would "
+"not be known in advance when a client performs an update. The *timestamp*"
+" metadata lists the version of the *snapshot* metadata, which in turn "
+"lists the versions of the *targets* and delegated targets metadata, all "
+"as part of a given consistent snapshot."
+msgstr ""
+
+#: ../../pep-0458.txt:946
+msgid ""
+"In normal usage, version number overflow is unlikely to occur. An 8-byte "
+"integer, for instance, can be incremented once per millisecond and last "
+"almost 300 million years. If an attacker increases the version number "
+"arbitrarily, the repository can recover by revoking the compromised keys "
+"and resetting the version number as described in the TUF specification__."
+msgstr ""
+
+#: ../../pep-0458.txt:954
+msgid ""
+"The *targets* or delegated targets metadata refer to the actual target "
+"files, including their cryptographic hashes as specified above. Thus, to "
+"mark a target file as part of a consistent snapshot it MUST, when written"
+" to disk, include its hash in its filename:"
+msgstr ""
+
+#: ../../pep-0458.txt:961
+msgid "HASH.FILENAME"
+msgstr ""
+
+#: ../../pep-0458.txt:960
+msgid ""
+"where HASH is the `hex digest`__ of the hash of the file contents and "
+"FILENAME is the original filename."
+msgstr ""
+
+#: ../../pep-0458.txt:963
+msgid ""
+"This means that there MAY be multiple copies of every target file, one "
+"for each of the cryptographic hash functions specified above."
+msgstr ""
+
+#: ../../pep-0458.txt:968
+msgid ""
+"Assuming infinite disk space, strictly incrementing version numbers, and "
+"no `hash collisions`__, a client may safely read from one snapshot while "
+"PyPI produces another snapshot."
+msgstr ""
+
+#: ../../pep-0458.txt:974
+msgid ""
+"Clients, such as pip, that use the TUF protocol MUST be modified to "
+"download every metadata and target file, except for *timestamp* metadata."
+" This is done by including, in the file request, the version of the file "
+"(for metadata), or the cryptographic hash of the file (for target files) "
+"in the filename."
+msgstr ""
+
+#: ../../pep-0458.txt:979
+msgid ""
+"In this simple but effective manner, PyPI is able to capture a consistent"
+" snapshot of all projects and the associated metadata at a given time.  "
+"The next subsection provides implementation details of this idea."
+msgstr ""
+
+#: ../../pep-0458.txt:983
+msgid ""
+"Note: This PEP does not prohibit using advanced file systems or tools to "
+"produce consistent snapshots. There are two important reasons for "
+"proposing a simple solution in this PEP. First, the solution does not "
+"mandate that PyPI use any particular file system or tool.  Second, the "
+"generic file-system based approach allows mirrors to use extant file "
+"transfer tools, such as rsync, to efficiently transfer consistent "
+"snapshots from PyPI."
+msgstr ""
+
+#: ../../pep-0458.txt:992
+msgid "Producing Consistent Snapshots"
+msgstr ""
+
+#: ../../pep-0458.txt:994
+msgid ""
+"When a new distribution file is uploaded to PyPI, PyPI MUST update the "
+"responsible *bin-n* metadata. Remember that all target files are sorted "
+"into bins by their filename hashes. PyPI MUST also update *snapshot* to "
+"account for the updated *bin-n* metadata, and *timestamp* to account for "
+"the updated *snapshot* metadata. These updates SHOULD be handled by an "
+"automated *snapshot process*."
+msgstr ""
+
+#: ../../pep-0458.txt:1001
+msgid ""
+"File uploads MAY be handled in parallel, however, consistent snapshots "
+"MUST be produced in a strictly sequential manner. Furthermore, as long as"
+" distribution files are self-contained, a consistent snapshot MAY be "
+"produced for each uploaded file. To do so upload processes place new "
+"distribution files into a concurrency-safe FIFO queue and the snapshot "
+"process reads from that queue one file at a time and performs the "
+"following tasks:"
+msgstr ""
+
+#: ../../pep-0458.txt:1008
+msgid ""
+"First, it adds the new file path to the relevant *bin-n* metadata, "
+"increments its version number, signs it with the *bin-n* role key, and "
+"writes it to *VERSION_NUMBER.bin-N.json*."
+msgstr ""
+
+#: ../../pep-0458.txt:1012
+msgid ""
+"Then, it takes the most recent *snapshot* metadata, updates its *bin-n* "
+"metadata version numbers, increments its own version number, signs it "
+"with the *snapshot* role key, and writes it to "
+"*VERSION_NUMBER.snapshot.json*."
+msgstr ""
+
+#: ../../pep-0458.txt:1016
+msgid ""
+"And finally, the snapshot process takes the most recent *timestamp* "
+"metadata, updates its *snapshot* metadata hash and version number, "
+"increments its own version number, sets a new expiration time, signs it "
+"with the *timestamp* role key, and writes it to *timestamp.json*."
+msgstr ""
+
+#: ../../pep-0458.txt:1021
+msgid ""
+"When updating *bin-n* metadata for a consistent snapshot, the snapshot "
+"process SHOULD also include any new or updated hashes of simple index "
+"pages in the relevant *bin-n* metadata. Note that, simple index pages may"
+" be generated dynamically on API calls, so it is important that their "
+"output remains stable throughout the validity of a consistent snapshot."
+msgstr ""
+
+#: ../../pep-0458.txt:1027
+msgid ""
+"Since the snapshot process MUST generate consistent snapshots in a "
+"strictly sequential manner it constitutes a bottleneck. Fortunately, the "
+"operation of signing is fast enough that this may be done a thousand or "
+"more times per second."
+msgstr ""
+
+#: ../../pep-0458.txt:1032
+msgid ""
+"Moreover, PyPI MAY serve distribution files to clients before the "
+"corresponding consistent snapshot metadata is generated. In that case the"
+" client software SHOULD inform the user that full TUF protection is not "
+"yet available but will be shortly."
+msgstr ""
+
+#: ../../pep-0458.txt:1037
+msgid ""
+"PyPI SHOULD use a `transaction log`__ to record upload processes and the "
+"snapshot queue for auditing and to recover from errors after a server "
+"failure."
+msgstr ""
+
+#: ../../pep-0458.txt:1044
+msgid "Cleaning up old metadata"
+msgstr ""
+
+#: ../../pep-0458.txt:1046
+msgid ""
+"To avoid running out of disk space due to the constant production of new "
+"consistent snapshots, PyPI SHOULD regularly delete old consistent "
+"snapshots, i.e. metadata and target files that were obsoleted some "
+"reasonable time in the past, such as 1 hour."
+msgstr ""
+
+#: ../../pep-0458.txt:1051
+msgid ""
+"In order to preserve the latest consistent snapshot PyPI MAY use a "
+"\"mark-and-sweep\" algorithm. That is, walk from the root of the latest "
+"consistent snapshot, i.e. *timestamp* over *snapshot* over *targets* and "
+"delegated targets until the target files, marking all visited files, and "
+"delete all unmarked files. The last few consistent snapshots may be "
+"preserved in a similar fashion."
+msgstr ""
+
+#: ../../pep-0458.txt:1058
+msgid ""
+"Deleting a consistent snapshot will cause clients to see nothing except "
+"HTTP 404 responses to any request for a file within that consistent "
+"snapshot. Clients SHOULD then retry their requests (as before) with the "
+"latest consistent snapshot."
+msgstr ""
+
+#: ../../pep-0458.txt:1063
+msgid ""
+"Note that *root* metadata, even though versioned, is not part of any "
+"consistent snapshot. PyPI MUST NOT delete old versions of *root* "
+"metadata. This guarantees that clients can update to the latest *root* "
+"role keys, no matter how outdated their local *root* metadata is."
+msgstr ""
+
+#: ../../pep-0458.txt:1070
+msgid "Revoking Trust in Projects and Distributions"
+msgstr ""
+
+#: ../../pep-0458.txt:1072
+msgid ""
+"From time to time either a project or a distribution will need to be "
+"revoked. To revoke trust in either a project or a distribution, the "
+"associated bin-n role can simply remove the corresponding targets and re-"
+"sign the bin-n metadata. This action only requires actions with the "
+"online bin-n key."
+msgstr ""
+
+#: ../../pep-0458.txt:1080
+msgid "Key Compromise Analysis"
+msgstr ""
+
+#: ../../pep-0458.txt:1082
+msgid ""
+"This PEP has covered the minimum security model, the TUF roles that "
+"should be added to support continuous delivery of distributions, and how "
+"to generate and sign the metadata for each role.  The remaining sections "
+"discuss how PyPI SHOULD audit repository metadata, and the methods PyPI "
+"can use to detect and recover from a PyPI compromise."
+msgstr ""
+
+#: ../../pep-0458.txt:1088
+msgid ""
+"Table 4 summarizes a few of the attacks possible when a threshold number "
+"of private cryptographic keys (belonging to any of the PyPI roles) are "
+"compromised.  The leftmost column lists the roles (or a combination of "
+"roles) that have been compromised, and the columns to its right show "
+"whether the compromised roles leave clients susceptible to malicious "
+"updates, a freeze attack, or metadata inconsistency attacks. Note that if"
+" the timestamp, snapshot, and bin-n roles are stored in the same online "
+"location, a compromise of one means they will all be compromised. "
+"Therefore, the table considers these roles together. A version of this "
+"table that considers these roles separately is included in PEP 480 [21]_."
+msgstr ""
+
+#: ../../pep-0458.txt:1100
+msgid "Role Compromise"
+msgstr ""
+
+#: ../../pep-0458.txt:1100
+msgid "Malicious Updates"
+msgstr ""
+
+#: ../../pep-0458.txt:1100
+msgid "Freeze Attack"
+msgstr ""
+
+#: ../../pep-0458.txt:1100
+msgid "Metadata Inconsistency Attacks"
+msgstr ""
+
+#: ../../pep-0458.txt:1102
+msgid "targets **OR** bins"
+msgstr ""
+
+#: ../../pep-0458.txt:1102
+msgid "NO timestamp and snapshot need to cooperate"
+msgstr ""
+
+#: ../../pep-0458.txt:1106
+msgid "timestamp **AND** snapshot **AND** bin-n"
+msgstr ""
+
+#: ../../pep-0458.txt:1106
+msgid "YES limited by earliest root, targets, or bins metadata expiry time"
+msgstr ""
+
+#: ../../pep-0458.txt:1112
+msgid "YES"
+msgstr ""
+
+#: ../../pep-0458.txt:1115
+msgid ""
+"Table 4: Attacks possible by compromising certain combinations of role "
+"keys. In `September 2013`__, it was shown how the latest version (at the "
+"time) of pip was susceptible to these attacks and how TUF could protect "
+"users against them [14]_."
+msgstr ""
+
+#: ../../pep-0458.txt:1122
+msgid ""
+"Note that compromising *targets* or *bins* does not immediately allow an "
+"attacker to serve malicious updates.  The attacker must also compromise "
+"the *timestamp* and *snapshot* roles, which are both online and therefore"
+" more likely to be compromised. This means that, in order to launch any "
+"attack, one must not only be able to act as a man-in-the-middle, but also"
+" compromise the *timestamp* key (or compromise the *root* keys and sign a"
+" new *timestamp* key).  To launch any attack other than a freeze attack, "
+"one must also compromise the *snapshot* key. In practice, this PEP "
+"recommends storing the *snapshot*, *timestamp*, and *bin-n* keys "
+"together, or even using the same key for all of these roles. Because of "
+"this, the attacker only needs to compromise this single server to perform"
+" any of the attacks listed above. Note that clients are still protected "
+"against compromises of non-signing infrastructure such as CDNs or "
+"mirrors. Moreover, the offline *root* key will allow the repository to "
+"recover from an attack by revoking the online key(s)."
+msgstr ""
+
+#: ../../pep-0458.txt:1138
+msgid ""
+"The maximum security model shows how TUF mitigates online key compromises"
+" by introducing additional roles for end-to-signing. Details about how to"
+" generate developer keys and sign upload distributions are provided in "
+"PEP 480 [21]_."
+msgstr ""
+
+#: ../../pep-0458.txt:1144
+msgid "In the Event of a Key Compromise"
+msgstr ""
+
+#: ../../pep-0458.txt:1146
+msgid ""
+"A key compromise means that a threshold of keys (belonging to the "
+"metadata roles on PyPI), as well as the PyPI infrastructure have been "
+"compromised and used to sign new metadata on PyPI."
+msgstr ""
+
+#: ../../pep-0458.txt:1150
+msgid ""
+"If a threshold number of *timestamp*, *snapshot*, *targets*, *bins* or "
+"*bin-n* keys have been compromised, then PyPI MUST take the following "
+"steps:"
+msgstr ""
+
+#: ../../pep-0458.txt:1153
+msgid ""
+"Revoke the *timestamp*, *snapshot* and *targets* role keys from the "
+"*root* role.  This is done by replacing the compromised *timestamp*, "
+"*snapshot* and *targets* keys with newly issued keys."
+msgstr ""
+
+#: ../../pep-0458.txt:1157
+msgid ""
+"Revoke the *bins* keys from the *targets* role by replacing their keys "
+"with newly issued keys.  Sign the new *targets* role metadata and discard"
+" the new keys (because, as explained earlier, this increases the security"
+" of *targets* metadata)."
+msgstr ""
+
+#: ../../pep-0458.txt:1162
+msgid ""
+"All targets of the *bin-n* roles SHOULD be compared with the last known "
+"good consistent snapshot in which none of the *timestamp*, *snapshot*, "
+"*bins* or *bin-n* keys were known to have been compromised.  Added, "
+"updated or deleted targets in the compromised consistent snapshot that do"
+" not match the last known good consistent snapshot MAY be restored to "
+"their previous versions.  After ensuring the integrity of all *bin-n* "
+"targets, their keys should be renewed in the *bins* metadata."
+msgstr ""
+
+#: ../../pep-0458.txt:1171
+msgid ""
+"The *bins* and *bin-n* metadata MUST have their version numbers "
+"incremented, expiry times suitably extended, and signatures renewed."
+msgstr ""
+
+#: ../../pep-0458.txt:1174
+msgid "A new timestamped consistent snapshot MUST be issued."
+msgstr ""
+
+#: ../../pep-0458.txt:1176
+msgid ""
+"Following these steps would preemptively protect all of these roles, even"
+" if only one of them may have been compromised."
+msgstr ""
+
+#: ../../pep-0458.txt:1179
+msgid ""
+"If a threshold number of *root* keys have been compromised, then PyPI "
+"MUST take the above steps and also replace all *root* keys in the *root* "
+"role."
+msgstr ""
+
+#: ../../pep-0458.txt:1182
+msgid ""
+"It is also RECOMMENDED that PyPI sufficiently document compromises with "
+"security bulletins.  These security bulletins will be most informative "
+"when users of pip-with-TUF are unable to install or update a project "
+"because the keys for the *timestamp*, *snapshot* or *root* roles are no "
+"longer valid.  They could then visit the PyPI web site to consult "
+"security bulletins that would help to explain why they are no longer able"
+" to install or update, and then take action accordingly.  When a "
+"threshold number of *root* keys have not been revoked due to a "
+"compromise, then new *root* metadata may be safely updated because a "
+"threshold number of existing *root* keys will be used to sign for the "
+"integrity of the new *root* metadata.  TUF clients will be able to verify"
+" the integrity of the new *root* metadata with a threshold number of "
+"previously known *root* keys.  This will be the common case.  Otherwise, "
+"in the worst case, in which a threshold number of *root* keys have been "
+"revoked due to a compromise, an end-user may choose to update new *root* "
+"metadata with `out-of-band`__ mechanisms."
+msgstr ""
+
+#: ../../pep-0458.txt:1202
+msgid "Auditing Snapshots"
+msgstr ""
+
+#: ../../pep-0458.txt:1204
+msgid ""
+"If a malicious party compromises PyPI, they can sign arbitrary files with"
+" any of the online keys.  The roles with offline keys (i.e., *root*, "
+"*targets* and *bins*) are still protected.  To safely recover from a "
+"repository compromise, snapshots should be audited to ensure files are "
+"only restored to trusted versions."
+msgstr ""
+
+#: ../../pep-0458.txt:1209
+msgid ""
+"When a repository compromise has been detected, the integrity of three "
+"types of information must be validated:"
+msgstr ""
+
+#: ../../pep-0458.txt:1212
+msgid ""
+"If the online keys of the repository have been compromised, they can be "
+"revoked by having the *targets* role sign new metadata delegating to a "
+"new key."
+msgstr ""
+
+#: ../../pep-0458.txt:1216
+msgid ""
+"If the role metadata on the repository has been changed, this would "
+"impact the metadata that is signed by online keys.  Any role information "
+"created since the last period should be discarded. As a result, "
+"developers of new projects will need to re-register their projects."
+msgstr ""
+
+#: ../../pep-0458.txt:1221
+msgid ""
+"If the target files themselves may have been tampered with, they can be "
+"validated using the stored hash information for target files that existed"
+" at the time of the last period."
+msgstr ""
+
+#: ../../pep-0458.txt:1225
+msgid ""
+"In order to safely restore snapshots in the event of a compromise, PyPI "
+"SHOULD maintain a small number of its own mirrors to copy PyPI snapshots "
+"according to some schedule.  The mirroring protocol can be used "
+"immediately for this purpose.  The mirrors must be secured and isolated "
+"such that they are responsible only for mirroring PyPI. The mirrors can "
+"be checked against one another to detect accidental or malicious "
+"failures."
+msgstr ""
+
+#: ../../pep-0458.txt:1232
+msgid ""
+"Another approach is to generate the cryptographic hash of *snapshot* "
+"periodically and tweet it.  Perhaps a user comes forward with the actual "
+"metadata and the repository maintainers can verify the metadata file's "
+"cryptographic hash.  Alternatively, PyPI may periodically archive its own"
+" versions of *snapshot* rather than rely on externally provided metadata."
+"  In this case, PyPI SHOULD take the cryptographic hash of every target "
+"file on the repository and store this data on an offline device. If any "
+"target file hash has changed, this indicates an attack."
+msgstr ""
+
+#: ../../pep-0458.txt:1241
+msgid ""
+"As for attacks that serve different versions of metadata, or freeze a "
+"version of a distribution at a specific version, they can be handled by "
+"TUF with techniques like implicit key revocation and metadata mismatch "
+"detection [2]_."
+msgstr ""
+
+#: ../../pep-0458.txt:1247
+msgid "Managing Future Changes to the Update Process"
+msgstr ""
+
+#: ../../pep-0458.txt:1249
+msgid ""
+"If breaking changes are made to the update process, PyPI should implement"
+" these changes without disrupting existing clients. For general guidance "
+"on how to do so, see the ongoing discussion in the TAP repository__."
+msgstr ""
+
+#: ../../pep-0458.txt:1255
+msgid ""
+"Note that the changes to PyPI from this PEP will be backwards compatible."
+" The location of target files and simple indices are not changed in this "
+"PEP, so any existing PyPI clients will still be able to perform updates "
+"using these files. This PEP adds the ability for clients to use TUF "
+"metadata to improve the security of the update process."
+msgstr ""
+
+#: ../../pep-0458.txt:1263
+msgid "Hash Algorithm Transition Plan"
+msgstr ""
+
+#: ../../pep-0458.txt:1265
+msgid ""
+"If the algorithm used to hash target and metadata files becomes "
+"vulnerable, it SHOULD be replaced by a stronger hash algorithm."
+msgstr ""
+
+#: ../../pep-0458.txt:1268
+msgid ""
+"The TUF metadata format allows to list digests from different hash "
+"algorithms alongside each other, together with an algorithm identifier, "
+"so that clients can seamlessly switch between algorithms."
+msgstr ""
+
+#: ../../pep-0458.txt:1272
+msgid ""
+"However, once support for an old algorithm is turned off, clients that "
+"don't support the new algorithm will only be able to install or update "
+"packages, including the client itself, by disabling TUF verification. To "
+"allow clients to transition without temporarily losing TUF security "
+"guarantees, we recommend the following procedure."
+msgstr ""
+
+#: ../../pep-0458.txt:1278
+msgid "Implement new algorithm in Warehouse."
+msgstr ""
+
+#: ../../pep-0458.txt:1280
+msgid ""
+"Regenerate existing, unexpired TUF metadata to include hashes using both "
+"the old and new algorithms. All new metadata going forward shall list "
+"both hash algorithms. Note, only TUF metadata that lists hash digests for"
+" target files or other metadata needs to be renewed, that is *bin-n*, "
+"*snapshot* and *timestamp*. Thus, only online keys are required to sign "
+"renewed metadata."
+msgstr ""
+
+#: ../../pep-0458.txt:1287
+msgid ""
+"Announce transition on high-visibility channels, such as `packaging on "
+"Python Discourse`__ and the `PyPI changes mailing list`__."
+msgstr ""
+
+#: ../../pep-0458.txt:1290
+msgid ""
+"Give popular clients such as pip and bandersnatch the chance to adopt new"
+" hash algorithm."
+msgstr ""
+
+#: ../../pep-0458.txt:1293
+msgid "Give end-users the chance to update clients."
+msgstr ""
+
+#: ../../pep-0458.txt:1295
+msgid "Get rough consensus to remove old hash algorithm from PyPI maintainers."
+msgstr ""
+
+#: ../../pep-0458.txt:1297
+msgid "Remove Warehouse support for old algorithm and only support new algorithm."
+msgstr ""
+
+#: ../../pep-0458.txt:1304
+msgid "Appendix A: Repository Attacks Prevented by TUF"
+msgstr ""
+
+#: ../../pep-0458.txt:1306
+msgid ""
+"**Arbitrary software installation**: An attacker installs anything it "
+"wants on the client system. That is, an attacker can provide arbitrary "
+"files in response to download requests and the files will not be detected"
+" as illegitimate."
+msgstr ""
+
+#: ../../pep-0458.txt:1311
+msgid ""
+"**Rollback attacks**: An attacker presents a software update system with "
+"files older than those the client has already seen. This causes the "
+"client to use outdated files."
+msgstr ""
+
+#: ../../pep-0458.txt:1315
+msgid ""
+"**Indefinite freeze attacks**: An attacker continues to present a "
+"software update system with the same files the client has already seen. "
+"The result is that the client does not know that new files are available."
+msgstr ""
+
+#: ../../pep-0458.txt:1319
+msgid ""
+"**Endless data attacks**: An attacker responds to a file download request"
+" with an endless stream of data, causing harm to clients (e.g., a disk "
+"partition filling up or memory exhaustion)."
+msgstr ""
+
+#: ../../pep-0458.txt:1323
+msgid ""
+"**Slow retrieval attacks**: An attacker responds to clients with a very "
+"slow stream of data that essentially results in the client never "
+"continuing the update process."
+msgstr ""
+
+#: ../../pep-0458.txt:1327
+msgid ""
+"**Extraneous dependencies attacks**: An attacker indicates to clients "
+"that in order to install the software they want, they also need to "
+"install unrelated software.  This unrelated software can be from a "
+"trusted source but may have known vulnerabilities that are exploitable by"
+" the attacker."
+msgstr ""
+
+#: ../../pep-0458.txt:1332
+msgid ""
+"**Mix-and-match attacks**: An attacker presents clients with a view of a "
+"repository that includes files that never existed together on the "
+"repository at the same time. This can result in, for example, outdated "
+"versions of dependencies being installed."
+msgstr ""
+
+#: ../../pep-0458.txt:1337
+msgid ""
+"**Wrong software installation**: An attacker provides a client with a "
+"trusted file that is not the one the client wanted."
+msgstr ""
+
+#: ../../pep-0458.txt:1340
+msgid ""
+"**Malicious mirrors preventing updates**: An attacker in control of one "
+"repository mirror is able to prevent users from obtaining updates from "
+"other, good mirrors."
+msgstr ""
+
+#: ../../pep-0458.txt:1344
+msgid ""
+"**Vulnerability to key compromises**: An attacker who is able to "
+"compromise a single key or less than a given threshold of keys can "
+"compromise clients. This includes relying on a single online key, such as"
+" only being protected by SSL, or a single offline key, as most software "
+"update systems use to sign files."
+msgstr ""
+
+#: ../../pep-0458.txt:1352
+msgid "References"
+msgstr ""
+
+#: ../../pep-0458.txt:1354
+msgid "https://pypi.python.org"
+msgstr ""
+
+#: ../../pep-0458.txt:1355
+msgid ""
+"https://theupdateframework.github.io/papers/survivable-key-compromise-"
+"ccs2010.pdf"
+msgstr ""
+
+#: ../../pep-0458.txt:1356
+msgid "http://www.pip-installer.org"
+msgstr ""
+
+#: ../../pep-0458.txt:1357
+msgid "https://wiki.python.org/moin/WikiAttack2013"
+msgstr ""
+
+#: ../../pep-0458.txt:1358
+msgid ""
+"https://github.com/theupdateframework/pip/wiki/Attacks-on-software-"
+"repositories"
+msgstr ""
+
+#: ../../pep-0458.txt:1359
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-April/020596.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1360
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-May/020701.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1361
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-July/022008.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1362
+msgid ""
+"PEP 381, Mirroring infrastructure for PyPI, Ziadé, Löwis "
+"http://www.python.org/dev/peps/pep-0381/"
+msgstr ""
+
+#: ../../pep-0458.txt:1364
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-September/022773.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1365
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-May/020848.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1366
+msgid ""
+"PEP 449, Removal of the PyPI Mirror Auto Discovery and Naming Scheme, "
+"Stufft http://www.python.org/dev/peps/pep-0449/"
+msgstr ""
+
+#: ../../pep-0458.txt:1368
+msgid ""
+"https://theupdateframework.github.io/papers/attacks-on-package-managers-"
+"ccs2008.pdf"
+msgstr ""
+
+#: ../../pep-0458.txt:1369
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-September/022755.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1370
+msgid "http://ed25519.cr.yp.to/"
+msgstr ""
+
+#: ../../pep-0458.txt:1371
+msgid ""
+"https://github.com/theupdateframework/specification/blob/master/tuf-"
+"spec.md"
+msgstr ""
+
+#: ../../pep-0458.txt:1372
+msgid "https://packaging.python.org/glossary"
+msgstr ""
+
+#: ../../pep-0458.txt:1373
+msgid "https://en.wikipedia.org/wiki/Continuous_delivery"
+msgstr ""
+
+#: ../../pep-0458.txt:1374
+msgid "https://mail.python.org/pipermail/distutils-sig/2013-August/022154.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1375
+msgid "https://en.wikipedia.org/wiki/Key-recovery_attack"
+msgstr ""
+
+#: ../../pep-0458.txt:1376
+msgid "https://www.python.org/dev/peps/pep-0480/"
+msgstr ""
+
+#: ../../pep-0458.txt:1377
+msgid ""
+"https://pyfound.blogspot.com/2019/09/pypi-security-q4-2019-request-"
+"for.html"
+msgstr ""
+
+#: ../../pep-0458.txt:1380
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0458.txt:1382
+msgid ""
+"This material is based upon work supported by the National Science "
+"Foundation under Grants No. CNS-1345049 and CNS-0959138. Any opinions, "
+"findings, and conclusions or recommendations expressed in this material "
+"are those of the author(s) and do not necessarily reflect the views of "
+"the National Science Foundation."
+msgstr ""
+
+#: ../../pep-0458.txt:1388
+msgid ""
+"We thank Nick Coghlan, Daniel Holth, Donald Stufft, and the distutils-sig"
+" community in general for helping us to think about how to usably and "
+"efficiently integrate TUF with PyPI."
+msgstr ""
+
+#: ../../pep-0458.txt:1392
+msgid ""
+"Roger Dingledine, Sebastian Hahn, Nick Mathewson, Martin Peck and Justin "
+"Samuel helped us to design TUF from its predecessor, Thandy of the Tor "
+"project."
+msgstr ""
+
+#: ../../pep-0458.txt:1395
+msgid ""
+"We appreciate the efforts of Konstantin Andrianov, Geremy Condra, Zane "
+"Fisher, Justin Samuel, Tian Tian, Santiago Torres, John Ward, and Yuyu "
+"Zheng in developing TUF."
+msgstr ""
+
+#: ../../pep-0458.txt:1399
+msgid ""
+"Vladimir Diaz, Monzur Muhammad, Sai Teja Peddinti, Sumana Harihareswara, "
+"Ee W. Durbin III and Dustin Ingram helped us to review this PEP."
+msgstr ""
+
+#: ../../pep-0458.txt:1402
+msgid "Zane Fisher helped us to review and transcribe this PEP."
+msgstr ""
+
+#: ../../pep-0458.txt:1405
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0458.txt:1407
+msgid "This document has been placed in the public domain."
+msgstr ""
+

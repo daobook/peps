@@ -1,0 +1,350 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0223.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0223.txt:1
+msgid "223"
+msgstr ""
+
+#: ../../pep-0223.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0223.txt:2
+msgid "Change the Meaning of ``\\x`` Escapes"
+msgstr ""
+
+#: ../../pep-0223.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0223.txt:5
+msgid "tim.peters@gmail.com (Tim Peters)"
+msgstr ""
+
+#: ../../pep-0223.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0223.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0223.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0223.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0223.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0223.txt:9
+msgid "20-Aug-2000"
+msgstr ""
+
+#: ../../pep-0223.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0223.txt:10
+msgid "2.0"
+msgstr ""
+
+#: ../../pep-0223.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0223.txt:11
+msgid "23-Aug-2000"
+msgstr ""
+
+#: ../../pep-0223.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0223.txt:17
+msgid ""
+"Change ``\\x`` escapes, in both 8-bit and Unicode strings, to consume "
+"exactly the two hex digits following.  The proposal views this as "
+"correcting an original design flaw, leading to clearer expression in all "
+"flavors of string, a cleaner Unicode story, better compatibility with "
+"Perl regular expressions, and with minimal risk to existing code."
+msgstr ""
+
+#: ../../pep-0223.txt:26
+msgid "Syntax"
+msgstr ""
+
+#: ../../pep-0223.txt:28
+msgid ""
+"The syntax of ``\\x`` escapes, in all flavors of non-raw strings, becomes"
+" ::"
+msgstr ""
+
+#: ../../pep-0223.txt:32
+msgid ""
+"where h is a hex digit (0-9, a-f, A-F).  The exact syntax in 1.5.2 is not"
+" clearly specified in the Reference Manual; it says ::"
+msgstr ""
+
+#: ../../pep-0223.txt:37
+msgid ""
+"implying \"two or more\" hex digits, but one-digit forms are also "
+"accepted by the 1.5.2 compiler, and a plain ``\\x`` is \"expanded\" to "
+"itself (i.e., a backslash followed by the letter x).  It's unclear "
+"whether the Reference Manual intended either of the 1-digit or 0-digit "
+"behaviors."
+msgstr ""
+
+#: ../../pep-0223.txt:45
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-0223.txt:47
+msgid "In an 8-bit non-raw string, ::"
+msgstr ""
+
+#: ../../pep-0223.txt:51
+msgid "expands to the character ::"
+msgstr ""
+
+#: ../../pep-0223.txt:55
+msgid "Note that this is the same as in 1.6 and before."
+msgstr ""
+
+#: ../../pep-0223.txt:57
+msgid "In a Unicode string, ::"
+msgstr ""
+
+#: ../../pep-0223.txt:62
+msgid "acts the same as ::"
+msgstr ""
+
+#: ../../pep-0223.txt:66
+msgid ""
+"i.e. it expands to the obvious Latin-1 character from the initial segment"
+" of the Unicode space."
+msgstr ""
+
+#: ../../pep-0223.txt:69
+msgid ""
+"An ``\\x`` not followed by at least two hex digits is a compile-time "
+"error, specifically ``ValueError`` in 8-bit strings, and ``UnicodeError``"
+" (a subclass of ``ValueError``) in Unicode strings.  Note that if an "
+"``\\x`` is followed by more than two hex digits, only the first two are "
+"\"consumed\".  In 1.6 and before all but the *last* two were silently "
+"ignored."
+msgstr ""
+
+#: ../../pep-0223.txt:77
+msgid "Example"
+msgstr ""
+
+#: ../../pep-0223.txt:79
+msgid "In 1.5.2::"
+msgstr ""
+
+#: ../../pep-0223.txt:91
+msgid "In 2.0::"
+msgstr ""
+
+#: ../../pep-0223.txt:105
+msgid "History and Rationale"
+msgstr ""
+
+#: ../../pep-0223.txt:107
+msgid ""
+"``\\x`` escapes were introduced in C as a way to specify variable-width "
+"character encodings.  Exactly which encodings those were, and how many "
+"hex digits they required, was left up to each implementation.  The "
+"language simply stated that ``\\x`` \"consumed\" *all* hex digits "
+"following, and left the meaning up to each implementation.  So, in "
+"effect, ``\\x`` in C is a standard hook to supply platform-defined "
+"behavior."
+msgstr ""
+
+#: ../../pep-0223.txt:114
+msgid ""
+"Because Python explicitly aims at platform independence, the ``\\x`` "
+"escape in Python (up to and including 1.6) has been treated the same way "
+"across all platforms:  all *except* the last two hex digits were silently"
+" ignored.  So the only actual use for ``\\x`` escapes in Python was to "
+"specify a single byte using hex notation."
+msgstr ""
+
+#: ../../pep-0223.txt:120
+msgid ""
+"Larry Wall appears to have realized that this was the only real use for "
+"``\\x`` escapes in a platform-independent language, as the proposed rule "
+"for Python 2.0 is in fact what Perl has done from the start (although you"
+" need to run in Perl -w mode to get warned about ``\\x`` escapes with "
+"fewer than 2 hex digits following -- it's clearly more Pythonic to insist"
+" on 2 all the time)."
+msgstr ""
+
+#: ../../pep-0223.txt:127
+msgid ""
+"When Unicode strings were introduced to Python, ``\\x`` was generalized "
+"so as to ignore all but the last *four* hex digits in Unicode strings. "
+"This caused a technical difficulty for the new regular expression engine:"
+" SRE tries very hard to allow mixing 8-bit and Unicode patterns and "
+"strings in intuitive ways, and it no longer had any way to guess what, "
+"for example, ``r\"\\x123456\"`` should mean as a pattern:  is it asking "
+"to match the 8-bit character ``\\x56`` or the Unicode character "
+"``\\u3456``?"
+msgstr ""
+
+#: ../../pep-0223.txt:135
+msgid ""
+"There are hacky ways to guess, but it doesn't end there.  The ISO C99 "
+"standard also introduces 8-digit ``\\U12345678`` escapes to cover the "
+"entire ISO 10646 character space, and it's also desired that Python 2 "
+"support that from the start.  But then what are ``\\x`` escapes supposed "
+"to mean? Do they ignore all but the last *eight* hex digits then?  And if"
+" less than 8 following in a Unicode string, all but the last 4?  And if "
+"less than 4, all but the last 2?"
+msgstr ""
+
+#: ../../pep-0223.txt:143
+msgid ""
+"This was getting messier by the minute, and the proposal cuts the Gordian"
+" knot by making ``\\x`` simpler instead of more complicated.  Note that "
+"the 4-digit generalization to ``\\xijkl`` in Unicode strings was also "
+"redundant, because it meant exactly the same thing as ``\\uijkl`` in "
+"Unicode strings.  It's more Pythonic to have just one obvious way to "
+"specify a Unicode character via hex notation."
+msgstr ""
+
+#: ../../pep-0223.txt:152
+msgid "Development and Discussion"
+msgstr ""
+
+#: ../../pep-0223.txt:154
+msgid ""
+"The proposal was worked out among Guido van Rossum, Fredrik Lundh and Tim"
+" Peters in email.  It was subsequently explained and discussed on Python-"
+"Dev under subject \"Go \\x yourself\" [1]_, starting 2000-08-03. Response"
+" was overwhelmingly positive; no objections were raised."
+msgstr ""
+
+#: ../../pep-0223.txt:161
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-0223.txt:163
+msgid ""
+"Changing the meaning of ``\\x`` escapes does carry risk of breaking "
+"existing code, although no instances of incompatibility have yet been "
+"discovered. The risk is believed to be minimal."
+msgstr ""
+
+#: ../../pep-0223.txt:167
+msgid ""
+"Tim Peters verified that, except for pieces of the standard test suite "
+"deliberately provoking end cases, there are no instances of "
+"``\\xabcdef...`` with fewer or more than 2 hex digits following, in "
+"either the Python CVS development tree, or in assorted Python packages "
+"sitting on his machine."
+msgstr ""
+
+#: ../../pep-0223.txt:173
+msgid ""
+"It's unlikely there are any with fewer than 2, because the Reference "
+"Manual implied they weren't legal (although this is debatable!).  If "
+"there are any with more than 2, Guido is ready to argue they were buggy "
+"anyway <0.9 wink>."
+msgstr ""
+
+#: ../../pep-0223.txt:178
+msgid ""
+"Guido reported that the O'Reilly Python books *already* document that "
+"Python works the proposed way, likely due to their Perl editing heritage "
+"(as above, Perl worked (very close to) the proposed way from its start)."
+msgstr ""
+
+#: ../../pep-0223.txt:183
+msgid ""
+"Finn Bock reported that what JPython does with ``\\x`` escapes is "
+"unpredictable today.  This proposal gives a clear meaning that can be "
+"consistently and easily implemented across all Python implementations."
+msgstr ""
+
+#: ../../pep-0223.txt:189
+msgid "Effects on Other Tools"
+msgstr ""
+
+#: ../../pep-0223.txt:191
+msgid ""
+"Believed to be none.  The candidates for breakage would mostly be parsing"
+" tools, but the author knows of none that worry about the internal "
+"structure of Python strings beyond the approximation \"when there's a "
+"backslash, swallow the next character\".  Tim Peters checked ``python-"
+"mode.el``, the std ``tokenize.py`` and ``pyclbr.py``, and the IDLE syntax"
+" coloring subsystem, and believes there's no need to change any of them."
+"  Tools like ``tabnanny.py`` and ``checkappend.py`` inherit their "
+"immunity from ``tokenize.py``."
+msgstr ""
+
+#: ../../pep-0223.txt:202
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0223.txt:204
+msgid ""
+"The code changes are so simple that a separate patch will not be "
+"produced. Fredrik Lundh is writing the code, is an expert in the area, "
+"and will simply check the changes in before 2.0b1 is released."
+msgstr ""
+
+#: ../../pep-0223.txt:210
+msgid "BDFL Pronouncements"
+msgstr ""
+
+#: ../../pep-0223.txt:212
+msgid ""
+"Yes, ``ValueError``, not ``SyntaxError``.  \"Problems with literal "
+"interpretations traditionally raise 'runtime' exceptions rather than "
+"syntax errors.\""
+msgstr ""
+
+#: ../../pep-0223.txt:217
+msgid "References"
+msgstr ""
+
+#: ../../pep-0223.txt:219
+msgid ""
+"Tim Peters, Go \\x yourself https://mail.python.org/pipermail/python-"
+"dev/2000-August/007825.html"
+msgstr ""
+
+#: ../../pep-0223.txt:224
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0223.txt:226
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,690 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0419.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0419.txt:1
+msgid "419"
+msgstr ""
+
+#: ../../pep-0419.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0419.txt:2
+msgid "Protecting cleanup statements from interruptions"
+msgstr ""
+
+#: ../../pep-0419.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0419.txt:5
+msgid "Paul Colomiets <paul@colomiets.name>"
+msgstr ""
+
+#: ../../pep-0419.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0419.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0419.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0419.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0419.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0419.txt:9
+msgid "06-Apr-2012"
+msgstr ""
+
+#: ../../pep-0419.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0419.txt:10
+msgid "3.3"
+msgstr ""
+
+#: ../../pep-0419.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0419.txt:16
+msgid ""
+"This PEP proposes a way to protect Python code from being interrupted "
+"inside a finally clause or during context manager cleanup."
+msgstr ""
+
+#: ../../pep-0419.txt:20
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0419.txt:22
+msgid ""
+"Further exploration of the concepts covered in this PEP has been deferred"
+" for lack of a current champion interested in promoting the goals of the "
+"PEP and collecting and incorporating feedback, and with sufficient "
+"available time to do so effectively."
+msgstr ""
+
+#: ../../pep-0419.txt:29
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0419.txt:31
+msgid ""
+"Python has two nice ways to do cleanup.  One is a ``finally`` statement "
+"and the other is a context manager (usually called using a ``with`` "
+"statement).  However, neither is protected from interruption by "
+"``KeyboardInterrupt`` or ``GeneratorExit`` caused by "
+"``generator.throw()``.  For example::"
+msgstr ""
+
+#: ../../pep-0419.txt:45
+msgid ""
+"If ``KeyboardInterrupt`` occurs just after the second ``print()`` call, "
+"the lock will not be released.  Similarly, the following code using the "
+"``with`` statement is affected::"
+msgstr ""
+
+#: ../../pep-0419.txt:68
+msgid ""
+"If ``KeyboardInterrupt`` occurs near any of the ``print()`` calls, the "
+"lock will never be released."
+msgstr ""
+
+#: ../../pep-0419.txt:73
+msgid "Coroutine Use Case"
+msgstr ""
+
+#: ../../pep-0419.txt:75
+msgid ""
+"A similar case occurs with coroutines.  Usually coroutine libraries want "
+"to interrupt the coroutine with a timeout.  The ``generator.throw()`` "
+"method works for this use case, but there is no way of knowing if the "
+"coroutine is currently suspended from inside a ``finally`` clause."
+msgstr ""
+
+#: ../../pep-0419.txt:81
+msgid ""
+"An example that uses yield-based coroutines follows.  The code looks "
+"similar using any of the popular coroutine libraries Monocle [1]_, "
+"Bluelet [2]_, or Twisted [3]_. ::"
+msgstr ""
+
+#: ../../pep-0419.txt:96
+msgid ""
+"In the example above, ``yield something`` means to pause executing the "
+"current coroutine and to execute coroutine ``something`` until it "
+"finishes execution.  Therefore, the coroutine library itself needs to "
+"maintain a stack of generators.  The ``connection.sendall()`` call waits "
+"until the socket is writable and does a similar thing to what "
+"``socket.sendall()`` does."
+msgstr ""
+
+#: ../../pep-0419.txt:103
+msgid ""
+"The ``with`` statement ensures that all code is executed within 5 seconds"
+" timeout.  It does so by registering a callback in the main loop, which "
+"calls ``generator.throw()`` on the top-most frame in the coroutine stack "
+"when a timeout happens."
+msgstr ""
+
+#: ../../pep-0419.txt:108
+msgid ""
+"The ``greenlets`` extension works in a similar way, except that it "
+"doesn't need ``yield`` to enter a new stack frame.  Otherwise "
+"considerations are similar."
+msgstr ""
+
+#: ../../pep-0419.txt:114
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0419.txt:117
+msgid "Frame Flag 'f_in_cleanup'"
+msgstr ""
+
+#: ../../pep-0419.txt:119
+msgid ""
+"A new flag on the frame object is proposed.  It is set to ``True`` if "
+"this frame is currently executing a ``finally`` clause.  Internally, the "
+"flag must be implemented as a counter of nested finally statements "
+"currently being executed."
+msgstr ""
+
+#: ../../pep-0419.txt:124
+msgid ""
+"The internal counter also needs to be incremented during execution of the"
+" ``SETUP_WITH`` and ``WITH_CLEANUP`` bytecodes, and decremented when "
+"execution for these bytecodes is finished.  This allows to also protect "
+"``__enter__()`` and ``__exit__()`` methods."
+msgstr ""
+
+#: ../../pep-0419.txt:131
+msgid "Function 'sys.setcleanuphook'"
+msgstr ""
+
+#: ../../pep-0419.txt:133
+msgid ""
+"A new function for the ``sys`` module is proposed.  This function sets a "
+"callback which is executed every time ``f_in_cleanup`` becomes false.  "
+"Callbacks get a frame object as their sole argument, so that they can "
+"figure out where they are called from."
+msgstr ""
+
+#: ../../pep-0419.txt:138
+msgid ""
+"The setting is thread local and must be stored in the ``PyThreadState`` "
+"structure."
+msgstr ""
+
+#: ../../pep-0419.txt:143
+msgid "Inspect Module Enhancements"
+msgstr ""
+
+#: ../../pep-0419.txt:145
+msgid ""
+"Two new functions are proposed for the ``inspect`` module: "
+"``isframeincleanup()`` and ``getcleanupframe()``."
+msgstr ""
+
+#: ../../pep-0419.txt:148
+msgid ""
+"``isframeincleanup()``, given a frame or generator object as its sole "
+"argument, returns the value of the ``f_in_cleanup`` attribute of a frame "
+"itself or of the ``gi_frame`` attribute of a generator."
+msgstr ""
+
+#: ../../pep-0419.txt:152
+msgid ""
+"``getcleanupframe()``, given a frame object as its sole argument, returns"
+" the innermost frame which has a true value of ``f_in_cleanup``, or "
+"``None`` if no frames in the stack have a nonzero value for that "
+"attribute.  It starts to inspect from the specified frame and walks to "
+"outer frames using ``f_back`` pointers, just like ``getouterframes()`` "
+"does."
+msgstr ""
+
+#: ../../pep-0419.txt:161
+msgid "Example"
+msgstr ""
+
+#: ../../pep-0419.txt:163
+msgid ""
+"An example implementation of a SIGINT handler that interrupts safely "
+"might look like::"
+msgstr ""
+
+#: ../../pep-0419.txt:173
+msgid ""
+"A coroutine example is out of scope of this document, because its "
+"implementation depends very much on a trampoline (or main loop) used by "
+"coroutine library."
+msgstr ""
+
+#: ../../pep-0419.txt:179
+msgid "Unresolved Issues"
+msgstr ""
+
+#: ../../pep-0419.txt:182
+msgid "Interruption Inside With Statement Expression"
+msgstr ""
+
+#: ../../pep-0419.txt:184
+msgid "Given the statement ::"
+msgstr ""
+
+#: ../../pep-0419.txt:189
+msgid ""
+"Python can be interrupted after ``open()`` is called, but before the "
+"``SETUP_WITH`` bytecode is executed.  There are two possible decisions:"
+msgstr ""
+
+#: ../../pep-0419.txt:193
+msgid ""
+"Protect ``with`` expressions.  This would require another bytecode, since"
+" currently there is no way of recognizing the start of the ``with`` "
+"expression."
+msgstr ""
+
+#: ../../pep-0419.txt:197
+msgid ""
+"Let the user write a wrapper if he considers it important for the use-"
+"case.  A safe wrapper might look like this::"
+msgstr ""
+
+#: ../../pep-0419.txt:212
+msgid "Alternatively it can be written using the ``contextmanager()`` decorator::"
+msgstr ""
+
+#: ../../pep-0419.txt:223
+msgid ""
+"This code is safe, as the first part of the generator (before yield) is "
+"executed inside the ``SETUP_WITH`` bytecode of the caller."
+msgstr ""
+
+#: ../../pep-0419.txt:228
+msgid "Exception Propagation"
+msgstr ""
+
+#: ../../pep-0419.txt:230
+msgid ""
+"Sometimes a ``finally`` clause or an ``__enter__()``/``__exit__()`` "
+"method can raise an exception.  Usually this is not a problem, since more"
+" important exceptions like ``KeyboardInterrupt`` or ``SystemExit`` should"
+" be raised instead.  But it may be nice to be able to keep the original "
+"exception inside a ``__context__`` attribute.  So the cleanup hook "
+"signature may grow an exception argument::"
+msgstr ""
+
+#: ../../pep-0419.txt:248
+msgid ""
+"There is no need to have three arguments like in the ``__exit__`` method "
+"since there is a ``__traceback__`` attribute in exception in Python 3."
+msgstr ""
+
+#: ../../pep-0419.txt:252
+msgid ""
+"However, this will set the ``__cause__`` for the exception, which is not "
+"exactly what's intended.  So some hidden interpreter logic may be used to"
+" put a ``__context__`` attribute on every exception raised in a cleanup "
+"hook."
+msgstr ""
+
+#: ../../pep-0419.txt:259
+msgid "Interruption Between Acquiring Resource and Try Block"
+msgstr ""
+
+#: ../../pep-0419.txt:261
+msgid ""
+"The example from the first section is not totally safe.  Let's take a "
+"closer look::"
+msgstr ""
+
+#: ../../pep-0419.txt:270
+msgid ""
+"The problem might occur if the code is interrupted just after "
+"``lock.acquire()`` is executed but before the ``try`` block is entered."
+msgstr ""
+
+#: ../../pep-0419.txt:274
+msgid ""
+"There is no way the code can be fixed unmodified.  The actual fix depends"
+" very much on the use case.  Usually code can be fixed using a ``with`` "
+"statement::"
+msgstr ""
+
+#: ../../pep-0419.txt:281
+msgid ""
+"However, for coroutines one usually can't use the ``with`` statement "
+"because you need to ``yield`` for both the acquire and release "
+"operations.  So the code might be rewritten like this::"
+msgstr ""
+
+#: ../../pep-0419.txt:291
+msgid ""
+"The actual locking code might need more code to support this use case, "
+"but the implementation is usually trivial, like this: check if the lock "
+"has been acquired and unlock if it is."
+msgstr ""
+
+#: ../../pep-0419.txt:297
+msgid "Handling EINTR Inside a Finally"
+msgstr ""
+
+#: ../../pep-0419.txt:299
+msgid ""
+"Even if a signal handler is prepared to check the ``f_in_cleanup`` flag, "
+"``InterruptedError`` might be raised in the cleanup handler, because the "
+"respective system call returned an ``EINTR`` error.  The primary use "
+"cases are prepared to handle this:"
+msgstr ""
+
+#: ../../pep-0419.txt:304
+msgid "Posix mutexes never return ``EINTR``"
+msgstr ""
+
+#: ../../pep-0419.txt:306
+msgid "Networking libraries are always prepared to handle ``EINTR``"
+msgstr ""
+
+#: ../../pep-0419.txt:308
+msgid ""
+"Coroutine libraries are usually interrupted with the ``throw()`` method, "
+"not with a signal"
+msgstr ""
+
+#: ../../pep-0419.txt:311
+msgid ""
+"The platform-specific function ``siginterrupt()`` might be used to remove"
+" the need to handle ``EINTR``.  However, it may have hardly predictable "
+"consequences, for example ``SIGINT`` a handler is never called if the "
+"main thread is stuck inside an IO routine."
+msgstr ""
+
+#: ../../pep-0419.txt:316
+msgid ""
+"A better approach would be to have the code, which is usually used in "
+"cleanup handlers, be prepared to handle ``InterruptedError`` explicitly."
+"  An example of such code might be a file-based lock implementation."
+msgstr ""
+
+#: ../../pep-0419.txt:321
+msgid ""
+"``signal.pthread_sigmask`` can be used to block signals inside cleanup "
+"handlers which can be interrupted with ``EINTR``."
+msgstr ""
+
+#: ../../pep-0419.txt:326
+msgid "Setting Interruption Context Inside Finally Itself"
+msgstr ""
+
+#: ../../pep-0419.txt:328
+msgid ""
+"Some coroutine libraries may need to set a timeout for the finally clause"
+" itself.  For example::"
+msgstr ""
+
+#: ../../pep-0419.txt:340
+msgid ""
+"With current semantics, timeout will either protect the whole ``with`` "
+"block or nothing at all, depending on the implementation of each library."
+"  What the author intended is to treat ``do_slow_cleanup`` as ordinary "
+"code, and ``do_fast_cleanup`` as a cleanup (a non-interruptible one)."
+msgstr ""
+
+#: ../../pep-0419.txt:346
+msgid "A similar case might occur when using greenlets or tasklets."
+msgstr ""
+
+#: ../../pep-0419.txt:348
+msgid ""
+"This case can be fixed by exposing ``f_in_cleanup`` as a counter, and by "
+"calling a cleanup hook on each decrement.  A coroutine library may then "
+"remember the value at timeout start, and compare it on each hook "
+"execution."
+msgstr ""
+
+#: ../../pep-0419.txt:353
+msgid ""
+"But in practice, the example is considered to be too obscure to take into"
+" account."
+msgstr ""
+
+#: ../../pep-0419.txt:358
+msgid "Modifying KeyboardInterrupt"
+msgstr ""
+
+#: ../../pep-0419.txt:360
+msgid ""
+"It should be decided if the default ``SIGINT`` handler should be modified"
+" to use the described mechanism.  The initial proposition is to keep old "
+"behavior, for two reasons:"
+msgstr ""
+
+#: ../../pep-0419.txt:364
+msgid ""
+"Most application do not care about cleanup on exit (either they do not "
+"have external state, or they modify it in crash-safe way)."
+msgstr ""
+
+#: ../../pep-0419.txt:367
+msgid ""
+"Cleanup may take too much time, not giving user a chance to interrupt an "
+"application."
+msgstr ""
+
+#: ../../pep-0419.txt:370
+msgid ""
+"The latter case can be fixed by allowing an unsafe break if a ``SIGINT`` "
+"handler is called twice, but it seems not worth the complexity."
+msgstr ""
+
+#: ../../pep-0419.txt:376
+msgid "Alternative Python Implementations Support"
+msgstr ""
+
+#: ../../pep-0419.txt:378
+msgid ""
+"We consider ``f_in_cleanup`` an implementation detail.  The actual "
+"implementation may have some fake frame-like object passed to signal "
+"handler, cleanup hook and returned from ``getcleanupframe()``.  The only "
+"requirement is that the ``inspect`` module functions work as expected on "
+"these objects.  For this reason, we also allow to pass a generator object"
+" to the ``isframeincleanup()`` function, which removes the need to use "
+"the ``gi_frame`` attribute."
+msgstr ""
+
+#: ../../pep-0419.txt:386
+msgid ""
+"It might be necessary to specify that ``getcleanupframe()`` must return "
+"the same object that will be passed to cleanup hook at the next "
+"invocation."
+msgstr ""
+
+#: ../../pep-0419.txt:392
+msgid "Alternative Names"
+msgstr ""
+
+#: ../../pep-0419.txt:394
+msgid ""
+"The original proposal had a ``f_in_finally`` frame attribute, as the "
+"original intention was to protect ``finally`` clauses.  But as it grew up"
+" to protecting ``__enter__`` and ``__exit__`` methods too, the "
+"``f_in_cleanup`` name seems better.  Although the ``__enter__`` method is"
+" not a cleanup routine, it at least relates to cleanup done by context "
+"managers."
+msgstr ""
+
+#: ../../pep-0419.txt:401
+msgid ""
+"``setcleanuphook``, ``isframeincleanup`` and ``getcleanupframe`` can be "
+"unobscured to ``set_cleanup_hook``, ``is_frame_in_cleanup`` and "
+"``get_cleanup_frame``, although they follow the naming convention of "
+"their respective modules."
+msgstr ""
+
+#: ../../pep-0419.txt:408
+msgid "Alternative Proposals"
+msgstr ""
+
+#: ../../pep-0419.txt:411
+msgid "Propagating 'f_in_cleanup' Flag Automatically"
+msgstr ""
+
+#: ../../pep-0419.txt:413
+msgid ""
+"This can make ``getcleanupframe()`` unnecessary.  But for yield-based "
+"coroutines you need to propagate it yourself.  Making it writable leads "
+"to somewhat unpredictable behavior of ``setcleanuphook()``."
+msgstr ""
+
+#: ../../pep-0419.txt:419
+msgid "Add Bytecodes 'INCR_CLEANUP', 'DECR_CLEANUP'"
+msgstr ""
+
+#: ../../pep-0419.txt:421
+msgid ""
+"These bytecodes can be used to protect the expression inside the ``with``"
+" statement, as well as making counter increments more explicit and easy "
+"to debug (visible inside a disassembly).  Some middle ground might be "
+"chosen, like ``END_FINALLY`` and ``SETUP_WITH`` implicitly decrementing "
+"the counter (``END_FINALLY`` is present at end of every ``with`` suite)."
+msgstr ""
+
+#: ../../pep-0419.txt:428
+msgid "However, adding new bytecodes must be considered very carefully."
+msgstr ""
+
+#: ../../pep-0419.txt:432
+msgid "Expose 'f_in_cleanup' as a Counter"
+msgstr ""
+
+#: ../../pep-0419.txt:434
+msgid ""
+"The original intention was to expose a minimum of needed functionality.  "
+"However, as we consider the frame flag ``f_in_cleanup`` an implementation"
+" detail, we may expose it as a counter."
+msgstr ""
+
+#: ../../pep-0419.txt:439
+msgid ""
+"Similarly, if we have a counter we may need to have the cleanup hook "
+"called on every counter decrement.  It's unlikely to have much "
+"performance impact as nested finally clauses are an uncommon case."
+msgstr ""
+
+#: ../../pep-0419.txt:445
+msgid "Add code object flag 'CO_CLEANUP'"
+msgstr ""
+
+#: ../../pep-0419.txt:447
+msgid ""
+"As an alternative to set the flag inside the ``SETUP_WITH`` and "
+"``WITH_CLEANUP`` bytecodes, we can introduce a flag ``CO_CLEANUP``. When "
+"the interpreter starts to execute code with ``CO_CLEANUP`` set, it sets "
+"``f_in_cleanup`` for the whole function body.  This flag is set for code "
+"objects of ``__enter__`` and ``__exit__`` special methods.  Technically "
+"it might be set on functions called ``__enter__`` and ``__exit__``."
+msgstr ""
+
+#: ../../pep-0419.txt:455
+msgid ""
+"This seems to be less clear solution.  It also covers the case where "
+"``__enter__`` and ``__exit__`` are called manually.  This may be accepted"
+" either as a feature or as an unnecessary side-effect (or, though "
+"unlikely, as a bug)."
+msgstr ""
+
+#: ../../pep-0419.txt:460
+msgid ""
+"It may also impose a problem when ``__enter__`` or ``__exit__`` functions"
+" are implemented in C, as there is no code object to check for the "
+"``f_in_cleanup`` flag."
+msgstr ""
+
+#: ../../pep-0419.txt:466
+msgid "Have Cleanup Callback on Frame Object Itself"
+msgstr ""
+
+#: ../../pep-0419.txt:468
+msgid ""
+"The frame object may be extended to have a ``f_cleanup_callback`` member "
+"which is called when ``f_in_cleanup`` is reset to 0.  This would help to "
+"register different callbacks to different coroutines."
+msgstr ""
+
+#: ../../pep-0419.txt:472
+msgid ""
+"Despite its apparent beauty, this solution doesn't add anything, as the "
+"two primary use cases are:"
+msgstr ""
+
+#: ../../pep-0419.txt:475
+msgid ""
+"Setting the callback in a signal handler.  The callback is inherently a "
+"single one for this case."
+msgstr ""
+
+#: ../../pep-0419.txt:478
+msgid ""
+"Use a single callback per loop for the coroutine use case.  Here, in "
+"almost all cases, there is only one loop per thread."
+msgstr ""
+
+#: ../../pep-0419.txt:483
+msgid "No Cleanup Hook"
+msgstr ""
+
+#: ../../pep-0419.txt:485
+msgid ""
+"The original proposal included no cleanup hook specification, as there "
+"are a few ways to achieve the same using current tools:"
+msgstr ""
+
+#: ../../pep-0419.txt:488
+msgid ""
+"Using ``sys.settrace()`` and the ``f_trace`` callback.  This may impose "
+"some problem to debugging, and has a big performance impact (although "
+"interrupting doesn't happen very often)."
+msgstr ""
+
+#: ../../pep-0419.txt:492
+msgid ""
+"Sleeping a bit more and trying again.  For a coroutine library this is "
+"easy.  For signals it may be achieved using ``signal.alert``."
+msgstr ""
+
+#: ../../pep-0419.txt:495
+msgid ""
+"Both methods are considered too impractical and a way to catch exit from "
+"``finally`` clauses is proposed."
+msgstr ""
+
+#: ../../pep-0419.txt:500
+msgid "References"
+msgstr ""
+
+#: ../../pep-0419.txt:502
+msgid "Monocle https://github.com/saucelabs/monocle"
+msgstr ""
+
+#: ../../pep-0419.txt:505
+msgid "Bluelet https://github.com/sampsyo/bluelet"
+msgstr ""
+
+#: ../../pep-0419.txt:508
+msgid ""
+"Twisted: inlineCallbacks "
+"http://twistedmatrix.com/documents/8.1.0/api/twisted.internet.defer.html"
+msgstr ""
+
+#: ../../pep-0419.txt:511
+msgid ""
+"Original discussion https://mail.python.org/pipermail/python-"
+"ideas/2012-April/014705.html"
+msgstr ""
+
+#: ../../pep-0419.txt:514
+msgid ""
+"Issue #14730: Implementation of the PEP 419 "
+"http://bugs.python.org/issue14730"
+msgstr ""
+
+#: ../../pep-0419.txt:519
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0419.txt:521
+msgid "This document has been placed in the public domain."
+msgstr ""
+

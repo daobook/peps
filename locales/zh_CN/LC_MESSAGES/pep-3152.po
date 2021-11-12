@@ -1,0 +1,277 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3152.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3152.txt:1
+msgid "3152"
+msgstr ""
+
+#: ../../pep-3152.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3152.txt:2
+msgid "Cofunctions"
+msgstr ""
+
+#: ../../pep-3152.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3152.txt:5
+msgid "Gregory Ewing <greg.ewing@canterbury.ac.nz>"
+msgstr ""
+
+#: ../../pep-3152.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3152.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-3152.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3152.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3152.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3152.txt:9
+msgid "13-Feb-2009"
+msgstr ""
+
+#: ../../pep-3152.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3152.txt:10
+msgid "3.3"
+msgstr ""
+
+#: ../../pep-3152.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3152.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3152.txt:17
+msgid ""
+"A syntax is proposed for defining and calling a special type of generator"
+" called a 'cofunction'.  It is designed to provide a streamlined way of "
+"writing generator-based coroutines, and allow the early detection of "
+"certain kinds of error that are easily made when writing such code, which"
+" otherwise tend to cause hard-to-diagnose symptoms."
+msgstr ""
+
+#: ../../pep-3152.txt:24
+msgid ""
+"This proposal builds on the 'yield from' mechanism described in PEP 380, "
+"and describes some of the semantics of cofunctions in terms of it.  "
+"However, it would be possible to define and implement cofunctions "
+"independently of PEP 380 if so desired."
+msgstr ""
+
+#: ../../pep-3152.txt:30
+msgid "Rejection"
+msgstr ""
+
+#: ../../pep-3152.txt:32
+msgid "See https://mail.python.org/pipermail/python-dev/2015-April/139503.html"
+msgstr ""
+
+#: ../../pep-3152.txt:36
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3152.txt:39
+msgid "Cofunction definitions"
+msgstr ""
+
+#: ../../pep-3152.txt:41
+msgid ""
+"A new keyword ``codef`` is introduced which is used in place of ``def`` "
+"to define a cofunction.  A cofunction is a special kind of generator "
+"having the following characteristics:"
+msgstr ""
+
+#: ../../pep-3152.txt:45
+msgid ""
+"A cofunction is always a generator, even if it does not contain any "
+"``yield`` or ``yield from`` expressions."
+msgstr ""
+
+#: ../../pep-3152.txt:48
+msgid ""
+"A cofunction cannot be called the same way as an ordinary function. An "
+"exception is raised if an ordinary call to a cofunction is attempted."
+msgstr ""
+
+#: ../../pep-3152.txt:53
+msgid "Cocalls"
+msgstr ""
+
+#: ../../pep-3152.txt:55
+msgid ""
+"Calls from one cofunction to another are made by marking the call with a "
+"new keyword ``cocall``.  The expression ::"
+msgstr ""
+
+#: ../../pep-3152.txt:60
+msgid "is semantically equivalent to ::"
+msgstr ""
+
+#: ../../pep-3152.txt:64
+msgid ""
+"except that the object returned by __cocall__ is expected to be an "
+"iterator, so the step of calling iter() on it is skipped."
+msgstr ""
+
+#: ../../pep-3152.txt:67
+msgid ""
+"The full syntax of a cocall expression is described by the following "
+"grammar lines::"
+msgstr ""
+
+#: ../../pep-3152.txt:74
+msgid ""
+"The ``cocall`` keyword is syntactically valid only inside a cofunction.  "
+"A SyntaxError will result if it is used in any other context."
+msgstr ""
+
+#: ../../pep-3152.txt:78
+msgid ""
+"Objects which implement __cocall__ are expected to return an object "
+"obeying the iterator protocol.  Cofunctions respond to __cocall__ the "
+"same way as ordinary generator functions respond to __call__, i.e. by "
+"returning a generator-iterator."
+msgstr ""
+
+#: ../../pep-3152.txt:83
+msgid ""
+"Certain objects that wrap other callable objects, notably bound methods, "
+"will be given __cocall__ implementations that delegate to the underlying "
+"object."
+msgstr ""
+
+#: ../../pep-3152.txt:88
+msgid "New builtins, attributes and C API functions"
+msgstr ""
+
+#: ../../pep-3152.txt:90
+msgid ""
+"To facilitate interfacing cofunctions with non-coroutine code, there will"
+" be a built-in function ``costart`` whose definition is equivalent to ::"
+msgstr ""
+
+#: ../../pep-3152.txt:96
+msgid "There will also be a corresponding C API function ::"
+msgstr ""
+
+#: ../../pep-3152.txt:100
+msgid ""
+"It is left unspecified for now whether a cofunction is a distinct type of"
+" object or, like a generator function, is simply a specially-marked "
+"function instance.  If the latter, a read-only boolean attribute "
+"``__iscofunction__`` should be provided to allow testing whether a given "
+"function object is a cofunction."
+msgstr ""
+
+#: ../../pep-3152.txt:108
+msgid "Motivation and Rationale"
+msgstr ""
+
+#: ../../pep-3152.txt:110
+msgid ""
+"The ``yield from`` syntax is reasonably self-explanatory when used for "
+"the purpose of delegating part of the work of a generator to another "
+"function.  It can also be used to good effect in the implementation of "
+"generator-based coroutines, but it reads somewhat awkwardly when used for"
+" that purpose, and tends to obscure the true intent of the code."
+msgstr ""
+
+#: ../../pep-3152.txt:116
+msgid ""
+"Furthermore, using generators as coroutines is somewhat error-prone. If "
+"one forgets to use ``yield from`` when it should have been used, or uses "
+"it when it shouldn't have, the symptoms that result can be obscure and "
+"confusing."
+msgstr ""
+
+#: ../../pep-3152.txt:121
+msgid ""
+"Finally, sometimes there is a need for a function to be a coroutine even "
+"though it does not yield anything, and in these cases it is necessary to "
+"resort to kludges such as ``if 0: yield`` to force it to be a generator."
+msgstr ""
+
+#: ../../pep-3152.txt:126
+msgid ""
+"The ``codef`` and ``cocall`` constructs address the first issue by making"
+" the syntax directly reflect the intent, that is, that the function forms"
+" part of a coroutine."
+msgstr ""
+
+#: ../../pep-3152.txt:130
+msgid ""
+"The second issue is addressed by making it impossible to mix coroutine "
+"and non-coroutine code in ways that don't make sense.  If the rules are "
+"violated, an exception is raised that points out exactly what and where "
+"the problem is."
+msgstr ""
+
+#: ../../pep-3152.txt:135
+msgid ""
+"Lastly, the need for dummy yields is eliminated by making the form of "
+"definition determine whether the function is a coroutine, rather than "
+"what it contains."
+msgstr ""
+
+#: ../../pep-3152.txt:141
+msgid "Prototype Implementation"
+msgstr ""
+
+#: ../../pep-3152.txt:143
+msgid ""
+"An implementation in the form of patches to Python 3.1.2 can be found "
+"here:"
+msgstr ""
+
+#: ../../pep-3152.txt:146
+msgid "http://www.cosc.canterbury.ac.nz/greg.ewing/python/generators/cofunctions.html"
+msgstr ""
+
+#: ../../pep-3152.txt:150
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3152.txt:152
+msgid "This document has been placed in the public domain."
+msgstr ""
+

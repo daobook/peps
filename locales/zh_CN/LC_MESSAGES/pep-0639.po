@@ -1,0 +1,1691 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0639.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0639.rst:1
+msgid "639"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0639.rst:2
+msgid "Metadata for Python Software Packages 2.2"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0639.rst:5
+msgid "Philippe Ombredanne <pombredanne at nexb.com>"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0639.rst:6 ../../pep-0639.rst:7
+msgid "Paul Moore <p.f.moore at gmail.com>"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0639.rst:8
+msgid "https://discuss.python.org/t/2154"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0639.rst:9
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0639.rst:10
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0639.rst:12
+msgid "15-Aug-2019"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0639.rst:13
+msgid "3.x"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Replaces"
+msgstr ""
+
+#: ../../pep-0639.rst:15
+msgid "566"
+msgstr ""
+
+#: ../../pep-0639.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0639.rst:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0639.rst:22
+msgid ""
+"This PEP describes the changes between versions 2.1 and 2.2 of the `Core "
+"Metadata Specification` [#cms]_ for Python packages. Version 2.1 is "
+"specified in PEP 566."
+msgstr ""
+
+#: ../../pep-0639.rst:26
+msgid ""
+"The primary change introduced in this PEP updates how licenses are "
+"documented in core metadata via the ``License`` field with license "
+"expression strings using SPDX license identifiers [#spdxlist]_ such that "
+"license documentation is simpler and less ambiguous:"
+msgstr ""
+
+#: ../../pep-0639.rst:31
+msgid "for package authors to create,"
+msgstr ""
+
+#: ../../pep-0639.rst:32
+msgid "for package users to read and understand, and,"
+msgstr ""
+
+#: ../../pep-0639.rst:33
+msgid "for tools to process package license information mechanically."
+msgstr ""
+
+#: ../../pep-0639.rst:35
+msgid "The other changes include:"
+msgstr ""
+
+#: ../../pep-0639.rst:37
+msgid ""
+"specifying a ``License-File`` field which is already used by ``wheel`` "
+"and ``setuptools`` to include license files in built distributions."
+msgstr ""
+
+#: ../../pep-0639.rst:39
+msgid ""
+"defining how tools can validate license expressions and report warnings "
+"to users for invalid expressions (but still accept any string as "
+"``License``)."
+msgstr ""
+
+#: ../../pep-0639.rst:44
+msgid "Goals"
+msgstr ""
+
+#: ../../pep-0639.rst:46
+msgid ""
+"This PEP's scope is limited strictly to how we document the license of a "
+"distribution:"
+msgstr ""
+
+#: ../../pep-0639.rst:49
+msgid "with an improved and structured way to document a license expression, and,"
+msgstr ""
+
+#: ../../pep-0639.rst:50
+msgid "by including license texts in a built package."
+msgstr ""
+
+#: ../../pep-0639.rst:52
+msgid ""
+"The core metadata specification updates that are part of this PEP have "
+"been designed to have minimal impact and to be backward compatible with "
+"v2.1.  These changes utilize emerging new ways to document licenses that "
+"are already in use in some tools (e.g. by adding the ``License-File`` "
+"field already used in ``wheel`` and ``setuptools``) or by some package "
+"authors (e.g. storing an SPDX license expression in the existing "
+"``License`` field)."
+msgstr ""
+
+#: ../../pep-0639.rst:59
+msgid "In addition to an update to the metadata specification, this PEP contains:"
+msgstr ""
+
+#: ../../pep-0639.rst:61
+msgid ""
+"recommendations for publishing tools on how to validate the ``License`` "
+"and ``Classifier`` fields and report informational warnings when a "
+"package uses an older, non-structured style of license documentation "
+"conventions."
+msgstr ""
+
+#: ../../pep-0639.rst:65
+msgid ""
+"informational appendices that contain surveys of how we document licenses"
+" today in Python packages and elsewhere, and a reference Python library "
+"to parse, validate and build correct license expressions."
+msgstr ""
+
+#: ../../pep-0639.rst:69
+msgid ""
+"It is the intent of the PEP authors to work closely with tool authors to "
+"implement the recommendations for validation and warnings specified in "
+"this PEP."
+msgstr ""
+
+#: ../../pep-0639.rst:74
+msgid "Non-Goals"
+msgstr ""
+
+#: ../../pep-0639.rst:76
+msgid "This PEP is neutral regarding the choice of license by any package author."
+msgstr ""
+
+#: ../../pep-0639.rst:78
+msgid ""
+"In particular, the SPDX license expression syntax proposed in this PEP "
+"provides simpler and more expressive conventions to document accurately "
+"any kind of license that applies to a Python package, whether it is an "
+"open source license, a free or libre software license, a proprietary "
+"license, or a combination of such licenses."
+msgstr ""
+
+#: ../../pep-0639.rst:84
+msgid ""
+"This PEP makes no recommendation for specific licenses and does not "
+"require the use of specific license documentation conventions. This PEP "
+"also does not impose any restrictions when uploading to PyPI."
+msgstr ""
+
+#: ../../pep-0639.rst:88
+msgid ""
+"Instead, this PEP is intended to document common practices already in "
+"use, and recommends that publishing tools should encourage users via "
+"informational warnings when they do not follow this PEP's "
+"recommendations."
+msgstr ""
+
+#: ../../pep-0639.rst:92
+msgid ""
+"This PEP is not about license documentation in files inside packages, "
+"even though this is a surveyed topic in the appendix."
+msgstr ""
+
+#: ../../pep-0639.rst:97
+msgid "Possible future PEPs"
+msgstr ""
+
+#: ../../pep-0639.rst:99
+msgid ""
+"It is the intention of the authors of this PEP to consider the submission"
+" of related but separate PEPs in the future such as:"
+msgstr ""
+
+#: ../../pep-0639.rst:102
+msgid ""
+"make ``License`` and new ``License-File`` fields mandatory including "
+"stricter enforcement in tools and PyPI publishing."
+msgstr ""
+
+#: ../../pep-0639.rst:105
+msgid ""
+"require uploads to PyPI to use only FOSS (Free and Open Source software) "
+"licenses."
+msgstr ""
+
+#: ../../pep-0639.rst:110
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0639.rst:112
+msgid ""
+"Software is licensed, and providing accurate licensing information to "
+"Python packages users is an important matter.  Today, there are multiple "
+"places where licenses are documented in package metadata and there are "
+"limitations to what can be documented. This is often leading to confusion"
+" or a lack of clarity both for package authors and package users."
+msgstr ""
+
+#: ../../pep-0639.rst:118
+msgid ""
+"Several package authors have expressed difficulty and/or frustrations due"
+" to the limited capabilities to express licensing in package metadata. "
+"This also applies to Linux and BSD* distribution packagers. This has "
+"triggered several license-related discussions and issues, in particular:"
+msgstr ""
+
+#: ../../pep-0639.rst:123
+msgid "https://github.com/pypa/trove-classifiers/issues/17"
+msgstr ""
+
+#: ../../pep-0639.rst:124
+msgid "https://github.com/pypa/interoperability-peps/issues/46"
+msgstr ""
+
+#: ../../pep-0639.rst:125
+msgid "https://github.com/pypa/packaging-problems/issues/41"
+msgstr ""
+
+#: ../../pep-0639.rst:126
+msgid "https://github.com/pypa/wheel/issues/138"
+msgstr ""
+
+#: ../../pep-0639.rst:127
+msgid "https://github.com/pombredanne/spdx-pypi-pep/issues/1"
+msgstr ""
+
+#: ../../pep-0639.rst:129
+msgid ""
+"On average, Python packages tend to have more ambiguous, or missing, "
+"license information than other common application package formats (such "
+"as npm, Maven or Gem) as can be seen in the statistics [#cdstats]_ page "
+"of the ClearlyDefined [#cd]_ project that cover all packages from PyPI, "
+"Maven, npm and Rubygems. ClearlyDefined is an open source project to help"
+" improve clarity of other open source projects that is incubating at the "
+"OSI (Open Source Initiative) [#osi]_."
+msgstr ""
+
+#: ../../pep-0639.rst:138
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0639.rst:140
+msgid ""
+"A mini-survey of existing license metadata definitions in use in the "
+"Python ecosystem today and documented in several other system/distro and "
+"application package formats is provided in Appendix 2 of this PEP."
+msgstr ""
+
+#: ../../pep-0639.rst:144
+msgid "There are a few takeaways from the survey:"
+msgstr ""
+
+#: ../../pep-0639.rst:146
+msgid "Most package formats use a single ``License`` field."
+msgstr ""
+
+#: ../../pep-0639.rst:148
+msgid ""
+"Many modern package formats use some form of license expression syntax to"
+" optionally combine more than one license identifier together. SPDX and "
+"SPDX-like syntaxes are the most popular in use."
+msgstr ""
+
+#: ../../pep-0639.rst:152
+msgid ""
+"SPDX license identifiers are becoming a de facto way to reference common "
+"licenses everywhere, whether or not a license expression syntax is used."
+msgstr ""
+
+#: ../../pep-0639.rst:155
+msgid ""
+"Several package formats support documenting both a license expression and"
+" the paths of the corresponding files that contain the license text. Most"
+" free and open source software licenses require package authors to "
+"include their full text in a distribution."
+msgstr ""
+
+#: ../../pep-0639.rst:160
+msgid ""
+"These considerations have guided the design and recommendations of this "
+"PEP."
+msgstr ""
+
+#: ../../pep-0639.rst:162
+msgid ""
+"The reuse of the ``License`` field with license expressions will provide "
+"an intuitive and more structured way to express the license of a "
+"distribution using a well-defined syntax and well-known license "
+"identifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:166
+msgid ""
+"Over time, recommending the usage of these expressions will help Python "
+"package publishers improve the clarity of their license documentation to "
+"the benefit of package authors, consumers and redistributors."
+msgstr ""
+
+#: ../../pep-0639.rst:172
+msgid "Core Metadata Specification updates"
+msgstr ""
+
+#: ../../pep-0639.rst:174
+msgid ""
+"The canonical source for the names and semantics of each of the supported"
+" metadata fields is the Core Metadata Specification [#cms]_ document."
+msgstr ""
+
+#: ../../pep-0639.rst:177
+msgid ""
+"The details of the updates considered to the Core Metadata Specification "
+"[#cms]_ document as part of this PEP are described here and will be added"
+" to the canonical source once this PEP is approved."
+msgstr ""
+
+#: ../../pep-0639.rst:183
+msgid "Added in Version 2.2"
+msgstr ""
+
+#: ../../pep-0639.rst:186
+msgid "License-File (multiple use)"
+msgstr ""
+
+#: ../../pep-0639.rst:188
+msgid ""
+"The License-File is a string that is a path, relative to``.dist-info``, "
+"to a license file. The license file content MUST be UTF-8 encoded text."
+msgstr ""
+
+#: ../../pep-0639.rst:191
+msgid ""
+"Build tools SHOULD honor this field and include the corresponding license"
+" file(s) in the built package."
+msgstr ""
+
+#: ../../pep-0639.rst:196
+msgid "Changed in Version 2.2"
+msgstr ""
+
+#: ../../pep-0639.rst:199
+msgid "License (optional)"
+msgstr ""
+
+#: ../../pep-0639.rst:201
+msgid ""
+"Text indicating the license covering the distribution. This text can be "
+"either a valid license expression as defined here or any free text."
+msgstr ""
+
+#: ../../pep-0639.rst:204
+msgid ""
+"Publishing tools SHOULD issue an informational warning if this field is "
+"empty, missing, or is not a valid license expression as defined here. "
+"Build tools MAY issue a similar warning."
+msgstr ""
+
+#: ../../pep-0639.rst:210
+msgid "License Expression syntax"
+msgstr ""
+
+#: ../../pep-0639.rst:212
+msgid ""
+"A license expression is a string using the SPDX license expression syntax"
+" as documented in the SPDX specification [#spdx]_ using either Version "
+"2.2 [#spdx22]_ or a later compatible version. SPDX is a working group at "
+"the Linux Foundation that defines a standard way to exchange package "
+"information."
+msgstr ""
+
+#: ../../pep-0639.rst:217
+msgid ""
+"When used in the ``License`` field and as a specialization of the SPDX "
+"license expression definition, a license expression can use the following"
+" license identifiers:"
+msgstr ""
+
+#: ../../pep-0639.rst:221
+msgid ""
+"any SPDX-listed license short-form identifiers that are published in the "
+"SPDX License List [#spdxlist]_ using either Version 3.10 or any later "
+"compatible version. Note that the SPDX working group never removes any "
+"license identifiers: instead they may choose to mark an identifier as "
+"\"deprecated\"."
+msgstr ""
+
+#: ../../pep-0639.rst:226
+msgid ""
+"the ``LicenseRef-Public-Domain`` and ``LicenseRef-Proprietary`` strings "
+"to identify licenses that are not included in the SPDX license list."
+msgstr ""
+
+#: ../../pep-0639.rst:229
+msgid ""
+"When processing the ``License`` field to determine if it contains a valid"
+" license expression, tools:"
+msgstr ""
+
+#: ../../pep-0639.rst:232
+msgid ""
+"SHOULD report an informational warning if one or more of the following "
+"applies:"
+msgstr ""
+
+#: ../../pep-0639.rst:235
+msgid "the field does not contain a license expression,"
+msgstr ""
+
+#: ../../pep-0639.rst:237
+msgid "the license expression syntax is invalid,"
+msgstr ""
+
+#: ../../pep-0639.rst:239
+msgid ""
+"the license expression syntax is valid but some license identifiers are "
+"unknown as defined here or the license identifiers have been marked as "
+"deprecated in the SPDX License List [#spdxlist]_"
+msgstr ""
+
+#: ../../pep-0639.rst:243
+msgid ""
+"SHOULD store a case-normalized version of the ``License`` field using the"
+" reference case for each SPDX license identifier and uppercase for the "
+"AND, OR and WITH keywords."
+msgstr ""
+
+#: ../../pep-0639.rst:247
+msgid ""
+"SHOULD report an informational warning if normalization process results "
+"in changes to the ``License`` field contents."
+msgstr ""
+
+#: ../../pep-0639.rst:250
+msgid "License expression examples::"
+msgstr ""
+
+#: ../../pep-0639.rst:268
+msgid "Classifier (multiple use)"
+msgstr ""
+
+#: ../../pep-0639.rst:270
+msgid ""
+"Each entry is a string giving a single classification value for the "
+"distribution. Classifiers are described in PEP 301."
+msgstr ""
+
+#: ../../pep-0639.rst:273
+msgid "Examples::"
+msgstr ""
+
+#: ../../pep-0639.rst:278
+msgid ""
+"Tools SHOULD issue an informational warning if this field contains a "
+"licensing- related classifier string starting with the ``License ::`` "
+"prefix and SHOULD suggest the use of a license expression in the "
+"``License`` field instead."
+msgstr ""
+
+#: ../../pep-0639.rst:282
+msgid ""
+"If the ``License`` field is present and contains a valid license "
+"expression, publishing tools MUST NOT also provide any licensing-related "
+"classifier entries [#classif]_."
+msgstr ""
+
+#: ../../pep-0639.rst:286
+msgid ""
+"However, for compatibility with existing publishing and installation "
+"processes, licensing-related classifier entries SHOULD continue to be "
+"accepted if the ``License`` field is absent or does not contain a valid "
+"license expression."
+msgstr ""
+
+#: ../../pep-0639.rst:290
+msgid ""
+"Publishing tools MAY infer a license expression from the provided "
+"classifier entries if they are able to do so unambiguously."
+msgstr ""
+
+#: ../../pep-0639.rst:293
+msgid ""
+"However, no new licensing related classifiers will be added; anyone "
+"requesting them will be directed to use a license expression in the "
+"``License`` field instead. Note that the licensing-related classifiers "
+"may be deprecated in a future PEP."
+msgstr ""
+
+#: ../../pep-0639.rst:300
+msgid "Mapping Legacy Classifiers to New License Expressions"
+msgstr ""
+
+#: ../../pep-0639.rst:302
+msgid ""
+"Publishing tools MAY infer or suggest an equivalent license expression "
+"from the provided ``License`` or ``Classifier`` information if they are "
+"able to do so unambiguously. For instance, if a package only has this "
+"license classifier::"
+msgstr ""
+
+#: ../../pep-0639.rst:308
+msgid ""
+"Then the corresponding value for a ``License`` field using a valid "
+"license expression to suggest would be::"
+msgstr ""
+
+#: ../../pep-0639.rst:314
+msgid "Here are mapping guidelines for the legacy classifiers:"
+msgstr ""
+
+#: ../../pep-0639.rst:316
+msgid ""
+"Classifier ``License :: Other/Proprietary License`` becomes License: "
+"``LicenseRef-Proprietary`` expression."
+msgstr ""
+
+#: ../../pep-0639.rst:319
+msgid ""
+"Classifier ``License :: Public Domain`` becomes License: ``LicenseRef-"
+"Public-Domain`` expression, though tools should encourage the use of more"
+" explicit and legally portable license identifiers such as  ``CC0-1.0`` "
+"[#cc0]_, the ``Unlicense`` [#unlic]_ since the meaning associated with "
+"the term \"public domain\" is thoroughly dependent on the specific legal "
+"jurisdiction involved and some jurisdictions have no concept of Public "
+"Domain as it exists in the USA."
+msgstr ""
+
+#: ../../pep-0639.rst:326
+msgid ""
+"The generic and ambiguous classifiers ``License :: OSI Approved`` and "
+"``License :: DFSG approved`` do not have an equivalent license "
+"expression."
+msgstr ""
+
+#: ../../pep-0639.rst:329
+msgid ""
+"The generic and sometimes ambiguous classifiers ``License :: Free For "
+"Educational Use``, ``License :: Free For Home Use``, ``License :: Free "
+"for non-commercial use``, ``License :: Freely Distributable``, ``License "
+":: Free To Use But Restricted``, and ``License :: Freeware`` are mapped "
+"to the generic License: ``LicenseRef-Proprietary`` expression."
+msgstr ""
+
+#: ../../pep-0639.rst:335
+msgid ""
+"Classifiers ``License :: GUST*`` have no mapping to SPDX license "
+"identifierss for now and no package uses them in PyPI as of the writing "
+"of this PEP."
+msgstr ""
+
+#: ../../pep-0639.rst:338
+msgid ""
+"The remainder of the classifiers using a ``License ::`` prefix map to a "
+"simple single-identifier license expression using the corresponding SPDX "
+"license identifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:341
+msgid ""
+"When multiple license-related classifiers are used, their relation is "
+"ambiguous and it is typically not possible to determine if all the "
+"licenses apply or if there is a choice that is possible among the "
+"licenses. In this case, tools cannot reliably infer a license expression "
+"and should suggest that the package author construct a license expression"
+" which expresses their intent."
+msgstr ""
+
+#: ../../pep-0639.rst:349
+msgid "Summary of Differences From PEP 566"
+msgstr ""
+
+#: ../../pep-0639.rst:351
+msgid "Metadata-Version is now 2.2."
+msgstr ""
+
+#: ../../pep-0639.rst:352
+msgid "Added one new field: ``License-File``"
+msgstr ""
+
+#: ../../pep-0639.rst:353
+msgid "Updated the documentation of two fields: ``License`` and ``Classifier``"
+msgstr ""
+
+#: ../../pep-0639.rst:357
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0639.rst:359
+msgid ""
+"The reuse of the ``License`` field means that we keep backward "
+"compatibility. The specification of the ``License-File`` field is only "
+"writing down the practices of the ``wheel`` and ``setuptools`` tools and "
+"is backward compatible with their support for that field."
+msgstr ""
+
+#: ../../pep-0639.rst:364
+msgid ""
+"The \"soft\" validation of the ``License`` field when it does not contain"
+" a valid license expression and when the ``Classifier`` field is used "
+"with legacy license-related classifiers means that we can gently prepare "
+"users for possible strict and incompatible validation of these fields in "
+"the future."
+msgstr ""
+
+#: ../../pep-0639.rst:371
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0639.rst:373
+msgid ""
+"This PEP has no foreseen security implications: the License field is a "
+"plain string and the License-File(s) are file paths. None of them "
+"introduces any new security concern."
+msgstr ""
+
+#: ../../pep-0639.rst:379
+msgid "How to Teach Users to Use License Expressions"
+msgstr ""
+
+#: ../../pep-0639.rst:381
+msgid ""
+"The simple cases are simple: a single license identifier is a valid "
+"license expression and a large majority of packages use a single license."
+msgstr ""
+
+#: ../../pep-0639.rst:384
+msgid ""
+"The plan to teach users of packaging tools how to express their package's"
+" license with a valid license expression is to have tools issue "
+"informative messages when they detect invalid license expressions or when"
+" a license-related classifier is used in the ``Classifier`` field."
+msgstr ""
+
+#: ../../pep-0639.rst:389
+msgid ""
+"With a warning message that does not terminate processing, publishing "
+"tools will gently teach users how to provide correct license expressions "
+"over time."
+msgstr ""
+
+#: ../../pep-0639.rst:392
+msgid ""
+"Tools may also help with the conversion and suggest a license expression "
+"in some cases:"
+msgstr ""
+
+#: ../../pep-0639.rst:395
+msgid ""
+"The section `Mapping Legacy Classifiers to New License expressions`_ "
+"provides tool authors with guidelines on how to suggest a license "
+"expression produced from legacy classifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:399
+msgid ""
+"Tools may also be able to infer and suggest how to update an existing "
+"incorrect ``License`` value and convert that to a correct license "
+"expression. For instance a tool may suggest to correct a ``License`` "
+"field from ``Apache2`` (which is not a valid license expression as "
+"defined in this PEP) to ``Apache-2.0`` (which is a valid license "
+"expression using an SPDX license identifier as defined in this PEP)."
+msgstr ""
+
+#: ../../pep-0639.rst:408
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0639.rst:410
+msgid ""
+"Tools will need to support parsing and validating license expressions in "
+"the ``License`` field."
+msgstr ""
+
+#: ../../pep-0639.rst:413
+msgid ""
+"The ``license-expression`` library [#licexp]_ is a reference Python "
+"implementation of a library that handles license expressions including "
+"parsing, validating and formatting license expressions using flexible "
+"lists of license symbols (including SPDX license identifiers and any "
+"extra identifiers referenced here). It is licensed under the Apache-2.0 "
+"license and is used in a few projects such as the SPDX Python tools "
+"[#spdxpy]_, the ScanCode toolkit [#scancodetk]_ and the Free Software "
+"Foundation Europe (FSFE) Reuse project [#reuse]_."
+msgstr ""
+
+#: ../../pep-0639.rst:423
+msgid "Rejected ideas"
+msgstr ""
+
+#: ../../pep-0639.rst:425
+msgid ""
+"Use a new ``License-Expression`` field and deprecate the ``License`` "
+"field."
+msgstr ""
+
+#: ../../pep-0639.rst:427
+msgid ""
+"Adding a new field would introduce backward incompatible changes when the"
+" ``License`` field would be retired later and require having more complex"
+" validation. The use of such a field would further introduce a new "
+"concept that is not seen anywhere else in any other package metadata "
+"(e.g. a new field only for license expression) and possibly be a source "
+"of confusion. Also, users are less likely to start using a new field than"
+" make small adjustments to their use of existing fields."
+msgstr ""
+
+#: ../../pep-0639.rst:436
+msgid ""
+"Mapping licenses used in the license expression to specific files in the "
+"license files (or vice versa)."
+msgstr ""
+
+#: ../../pep-0639.rst:439
+msgid ""
+"This would require using a mapping (two parallel lists would be too prone"
+" to alignment errors) and a mapping would bring extra complication to how"
+" license are documented by adding an additional nesting level."
+msgstr ""
+
+#: ../../pep-0639.rst:443
+msgid ""
+"A mapping would be needed as you cannot guarantee that all expressions "
+"(e.g. GPL with an exception may be in a single file) or all the license "
+"keys have a single license file and that any expression does not have "
+"more than one. (e.g. an Apache license ``LICENSE`` and its ``NOTICE`` "
+"file for instance are two distinct files). Yet in most cases, there is a "
+"simpler \"one license\", \"one or more license files\". In the rarer and "
+"more complex cases where there are many licenses involved you can still "
+"use the proposed conventions at the cost of a slight loss of clarity by "
+"not specifying which text file is for which license identifier, but you "
+"are not forcing the more complex data model (e.g. a mapping) on everyone "
+"that may not need it."
+msgstr ""
+
+#: ../../pep-0639.rst:454
+msgid ""
+"We could of course have a data field with multiple possible value types "
+"(it’s a string, it’s a list, it’s a mapping!) but this could be a source "
+"of confusion. This is what has been done for instance in npm "
+"(historically) and in Rubygems (still today) and as result you need to "
+"test the type of the metadata field before using it in code and users are"
+" confused about when to use a list or a string."
+msgstr ""
+
+#: ../../pep-0639.rst:462
+msgid ""
+"Mapping licenses to specific source files and/or directories of source "
+"files (or vice versa)."
+msgstr ""
+
+#: ../../pep-0639.rst:465
+msgid ""
+"File-level notices are not considered as part of the scope of this PEP "
+"and the existing ``SPDX-License-Identifier`` [#spdxids]_ convention can "
+"be used and may not need further specification as a PEP."
+msgstr ""
+
+#: ../../pep-0639.rst:471
+msgid "Appendix 1. License Expression example"
+msgstr ""
+
+#: ../../pep-0639.rst:473
+msgid ""
+"The current version of ``setuptools`` metadata [#setuptools5030]_ does "
+"not use the ``License`` field. It uses instead this license-related "
+"information in ``setup.cfg``::"
+msgstr ""
+
+#: ../../pep-0639.rst:481
+msgid "The simplest migration to this PEP would consist of using this instead::"
+msgstr ""
+
+#: ../../pep-0639.rst:487
+msgid ""
+"Another possibility would be to include the licenses of the third-party "
+"packages that are vendored in the ``setuptools/_vendor/`` and "
+"``pkg_resources/_vendor`` directories::"
+msgstr ""
+
+#: ../../pep-0639.rst:496
+msgid "These license expressions for these packages are::"
+msgstr ""
+
+#: ../../pep-0639.rst:503
+msgid ""
+"Therefore, a comprehensive license expression covering both "
+"``setuptools`` proper and its vendored packages could contain these "
+"metadata, combining all the license expressions in one expression::"
+msgstr ""
+
+#: ../../pep-0639.rst:512
+msgid ""
+"Here we would assume that the ``LICENSE.MIT`` file contains the text of "
+"the MIT license and the copyrights used by ``setuptools``, ``appdirs``, "
+"``pyparsing`` and ``ordered-set``, and that the ``LICENSE.packaging`` "
+"file contains the texts of the Apache and BSD license, its copyrights and"
+" its license choice notice [#packlic]_."
+msgstr ""
+
+#: ../../pep-0639.rst:519
+msgid "Appendix 2. Surveying how we document licenses today in Python"
+msgstr ""
+
+#: ../../pep-0639.rst:521
+msgid ""
+"There are multiple ways used or recommended to document Python package "
+"licenses today:"
+msgstr ""
+
+#: ../../pep-0639.rst:526
+msgid "In Core metadata"
+msgstr ""
+
+#: ../../pep-0639.rst:528
+msgid ""
+"There are two overlapping core metadata fields to document a license: the"
+" license-related ``Classifier`` strings [#classif]_ prefixed with "
+"``License ::`` and the ``License`` field as free text [#licfield]_."
+msgstr ""
+
+#: ../../pep-0639.rst:533
+msgid ""
+"The core metadata documentation ``License`` field documentation is "
+"currently::"
+msgstr ""
+
+#: ../../pep-0639.rst:552
+msgid ""
+"Even though there are two fields, it is at times difficult to convey "
+"anything but simpler licensing. For instance some classifiers lack "
+"accuracy (GPL without a version) and when you have multiple License-"
+"related classifiers it is not clear if this is a choice or all these "
+"apply and which ones. Furthermore, the list of available license-related "
+"classifiers is often out-of-date."
+msgstr ""
+
+#: ../../pep-0639.rst:560
+msgid "In the PyPA ``sampleproject``"
+msgstr ""
+
+#: ../../pep-0639.rst:562
+msgid ""
+"The latest PyPA ``sampleproject`` recommends only to use classifiers in "
+"``setup.py`` and does not list the ``license`` field in its example "
+"``setup.py`` [#samplesetup]_."
+msgstr ""
+
+#: ../../pep-0639.rst:568
+msgid "The License Files in wheels and setuptools"
+msgstr ""
+
+#: ../../pep-0639.rst:570
+msgid ""
+"Beyond a license code or qualifier, license text files are documented and"
+" included in a built package either implicitly or explicitly and this is "
+"another possible source of confusion:"
+msgstr ""
+
+#: ../../pep-0639.rst:574
+msgid ""
+"In wheels [#wheels]_ license files are automatically added to the "
+"``.dist-info`` directory if they match one of a few common license file "
+"name patterns (such as LICENSE*, COPYING*). Alternatively a package "
+"author can specify a list of license file paths to include in the built "
+"wheel using in the ``license_files`` field in the ``[metadata]`` section "
+"of the project's ``setup.cfg``. Previously this was a (singular) "
+"``license_file`` file attribute that is now deprecated but is still in "
+"common use. See [#pipsetup]_ for instance."
+msgstr ""
+
+#: ../../pep-0639.rst:583
+msgid ""
+"In ``setuptools`` [#setuptoolssdist]_, a ``license_file`` attribute is "
+"used to add a single license file to a source distribution. This singular"
+" version is still honored by ``wheels`` for backward compatibility."
+msgstr ""
+
+#: ../../pep-0639.rst:587
+msgid ""
+"Using a LICENSE.txt file is encouraged in the packaging guide "
+"[#packaging]_ paired with a ``MANIFEST.in`` entry to ensure that the "
+"license file is included in a built source distribution (sdist)."
+msgstr ""
+
+#: ../../pep-0639.rst:591
+msgid ""
+"Note: the License-File field proposed in this PEP already exists in "
+"``wheel`` and ``setuptools`` with the same behaviour as explained above. "
+"This PEP is only recognizing and documenting the existing practice as "
+"used in ``wheel`` (with the ``license_file`` and ``license_files`` "
+"``setup.cfg`` ``[metadata]`` entries) and in ``setuptools`` "
+"``license_file`` ``setup()`` argument."
+msgstr ""
+
+#: ../../pep-0639.rst:599
+msgid "In Python code files"
+msgstr ""
+
+#: ../../pep-0639.rst:601
+msgid ""
+"(Note: Documenting licenses in source code is not in the scope of this "
+"PEP)"
+msgstr ""
+
+#: ../../pep-0639.rst:603
+msgid ""
+"Beside using comments and/or ``SPDX-License-Identifier`` conventions, the"
+" license is sometimes documented in Python code files using \"dunder\" "
+"variables typically named after one of the lower cased Core Metadata "
+"fields such as ``__license__`` [#pycode]_."
+msgstr ""
+
+#: ../../pep-0639.rst:608
+msgid ""
+"This convention (dunder global variables) is recognized by the built-in "
+"``help()`` function and the standard ``pydoc`` module. The dunder "
+"variable(s) will show up in the ``help()`` DATA section for a module."
+msgstr ""
+
+#: ../../pep-0639.rst:614
+msgid "In some other Python packaging tools"
+msgstr ""
+
+#: ../../pep-0639.rst:616
+msgid ""
+"Conda package manifest [#conda]_ has support for ``license`` and "
+"``license_file`` fields as well as a ``license_family`` license grouping "
+"field."
+msgstr ""
+
+#: ../../pep-0639.rst:619
+msgid ""
+"``flit`` [#flit]_ recommends to use classifiers instead of License (as "
+"per the current metadata spec)."
+msgstr ""
+
+#: ../../pep-0639.rst:622
+msgid ""
+"``pbr`` [#pbr]_ uses similar data as setuptools but always stored "
+"setup.cfg."
+msgstr ""
+
+#: ../../pep-0639.rst:624
+msgid ""
+"``poetry`` [#poetry]_ specifies the use of the ``license`` field in "
+"``pyproject.toml`` with SPDX license identifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:629
+msgid "Appendix 3. Surveying how other package formats document licenses"
+msgstr ""
+
+#: ../../pep-0639.rst:631
+msgid "Here is a survey of how things are done elsewhere."
+msgstr ""
+
+#: ../../pep-0639.rst:634
+msgid "License in Linux distribution packages"
+msgstr ""
+
+#: ../../pep-0639.rst:636
+msgid ""
+"Note: in most cases the license texts of the most common licenses are "
+"included globally once in a shared documentation directory (e.g. "
+"/usr/share/doc)."
+msgstr ""
+
+#: ../../pep-0639.rst:639
+msgid ""
+"Debian document package licenses with machine readable copyright files "
+"[#dep5]_. This specification defines its own license expression syntax "
+"that is very similar to the SDPX syntax and use its own list of license "
+"identifiers for common licenses (also closely related to SPDX "
+"identifiers)."
+msgstr ""
+
+#: ../../pep-0639.rst:644
+msgid ""
+"Fedora packages [#fedora]_ specify how to include ``License Texts`` "
+"[#fedoratext]_ and how use a ``License`` field [#fedoralic]_ that must be"
+" filled with an appropriate license Short License identifier(s) from an "
+"extensive list of \"Good Licenses\" identifiers [#fedoralist]_. Fedora "
+"also defines its own license expression syntax very similar to the SDPX "
+"syntax."
+msgstr ""
+
+#: ../../pep-0639.rst:650
+msgid ""
+"openSUSE packages [#opensuse]_ use SPDX license expressions with SPDX "
+"license identifiers and a list of extra license identifiers "
+"[#opensuselist]_."
+msgstr ""
+
+#: ../../pep-0639.rst:654
+msgid ""
+"Gentoo ebuild uses a ``LICENSE`` variable [#gentoo]_. This field is "
+"specified in GLEP-0023 [#glep23]_ and in the Gentoo development manual "
+"[#gentoodev]_. Gentoo also defines a license expression syntax and a list"
+" of allowed licenses. The expression syntax is rather different from "
+"SPDX."
+msgstr ""
+
+#: ../../pep-0639.rst:659
+msgid ""
+"FreeBSD package Makefile [#freebsd]_ provides ``LICENSE`` and "
+"``LICENSE_FILE`` fields with a list of custom license symbols. For non-"
+"standard licenses, FreeBSD recommend to use ``LICENSE=UNKNOWN`` and add "
+"``LICENSE_NAME`` and ``LICENSE_TEXT`` fields, as well as sophisticated "
+"``LICENSE_PERMS`` to qualify the license permissions and "
+"``LICENSE_GROUPS`` to document a license grouping. The ``LICENSE_COMB`` "
+"allows to document more than one license and how they apply together, "
+"forming a custom license expression syntax. FreeBSD also recommends the "
+"use of ``SPDX-License-Identifier`` in source code files."
+msgstr ""
+
+#: ../../pep-0639.rst:669
+msgid ""
+"Archlinux PKGBUILD [#archinux]_ define its own license identifiers "
+"[#archlinuxlist]_. The value ``'unknown'`` can be used if the license is "
+"not defined."
+msgstr ""
+
+#: ../../pep-0639.rst:673
+msgid ""
+"OpenWRT ipk packages [#openwrt]_ use the ``PKG_LICENSE`` and "
+"``PKG_LICENSE_FILES`` variables and recommend the use of SPDX License "
+"identifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:677
+msgid ""
+"NixOS uses SPDX identifiers [#nixos]_ and some extra license identifiers "
+"in its license field."
+msgstr ""
+
+#: ../../pep-0639.rst:680
+msgid ""
+"GNU Guix (based on NixOS) has a single License field, uses its own "
+"license symbols list [#guix]_ and specifies to use one license or a list "
+"of licenses [#guixlic]_."
+msgstr ""
+
+#: ../../pep-0639.rst:684
+msgid ""
+"Alpine Linux packages [#alpine]_ recommend using SPDX identifiers in the "
+"license field."
+msgstr ""
+
+#: ../../pep-0639.rst:689
+msgid "License in Language and Application packages"
+msgstr ""
+
+#: ../../pep-0639.rst:691
+msgid ""
+"In Java, Maven POM [#maven]_ defines a ``licenses`` XML tag with a list "
+"of license items each with a name, URL, comments and \"distribution\" "
+"type. This is not mandatory and the content of each field is not "
+"specified."
+msgstr ""
+
+#: ../../pep-0639.rst:695
+msgid ""
+"JavaScript npm package.json [#npm]_ use a single license field with SPDX "
+"license expression or the ``UNLICENSED`` id if no license is specified. A"
+" license file can be referenced as an alternative using \"SEE LICENSE IN "
+"<filename>\" in the single ``license`` field."
+msgstr ""
+
+#: ../../pep-0639.rst:700
+msgid ""
+"Rubygems gemspec [#gem]_ specifies either a singular license string or a "
+"list of license strings. The relationship between multiple licenses in a "
+"list is not specified. They recommend using SPDX license identifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:704
+msgid ""
+"CPAN Perl modules [#perl]_ use a single license field which is either a "
+"single string or a list of strings. The relationship between the licenses"
+" in a list is not specified. There is a list of custom license "
+"identifiers plus these generic identifiers: ``open_source``, "
+"``restricted``, ``unrestricted``, ``unknown``."
+msgstr ""
+
+#: ../../pep-0639.rst:710
+msgid ""
+"Rust Cargo [#cargo]_ specifies the use of an SPDX license expression "
+"(v2.1) in the ``license`` field. It also supports an alternative "
+"expression syntax using slash-separated SPDX license identifiers. There "
+"is also a ``license_file`` field. The crates.io package registry "
+"[#cratesio]_ requires that either ``license`` or ``license_file`` fields "
+"are set when you upload a package."
+msgstr ""
+
+#: ../../pep-0639.rst:716
+msgid ""
+"PHP Composer composer.json [#composer]_ uses a ``license`` field with an "
+"SPDX license id or \"proprietary\". The ``license`` field is either a "
+"single string that can use something which resembles the SPDX license "
+"expression syntax with \"and\" and \"or\" keywords; or is a list of "
+"strings if there is a choice of licenses (aka. a \"disjunctive\" choice "
+"of license)."
+msgstr ""
+
+#: ../../pep-0639.rst:722
+msgid ""
+"NuGet packages [#nuget]_ were using only a simple license URL and are now"
+" specifying to use an SPDX License expression and/or the path to a "
+"license file within the package. The NuGet.org repository states that "
+"they only accepts license expressions that are `approved by the Open "
+"Source Initiative or the Free Software Foundation.`"
+msgstr ""
+
+#: ../../pep-0639.rst:728
+msgid ""
+"Go language modules ``go.mod`` have no provision for any metadata beyond "
+"dependencies. Licensing information is left for code authors and other "
+"community package managers to document."
+msgstr ""
+
+#: ../../pep-0639.rst:732
+msgid ""
+"Dart/Flutter spec [#flutter]_ recommends to use a single ``LICENSE`` file"
+" that should contain all the license texts each separated by a line with "
+"80 hyphens."
+msgstr ""
+
+#: ../../pep-0639.rst:736
+msgid ""
+"JavaScript Bower [#bower]_ ``license`` field is either a single string or"
+" a list of strings using either SPDX license identifiers, or a path or a "
+"URL to a license file."
+msgstr ""
+
+#: ../../pep-0639.rst:740
+msgid ""
+"Cocoapods podspec [#cocoapod]_ ``license`` field is either a single "
+"string or a mapping with attributes of type, file and text keys. This is "
+"mandatory unless there is a LICENSE or LICENCE file provided."
+msgstr ""
+
+#: ../../pep-0639.rst:744
+msgid ""
+"Haskell Cabal [#cabal]_ accepts an SPDX license expression since version "
+"2.2. The version of the SPDX license list used is a function of the "
+"``cabal`` version. The specification also provides a mapping between pre-"
+"SPDX Legacy license Identifiers and SPDX identifiers. Cabal also "
+"specifies a ``license-file(s)`` field that lists license files that will "
+"be installed with the package."
+msgstr ""
+
+#: ../../pep-0639.rst:750
+msgid ""
+"Erlang/Elixir mix/hex package [#mix]_ specifies a ``licenses`` field as a"
+" required list of license strings and recommends to use SPDX license "
+"identifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:754
+msgid ""
+"D lang dub package [#dub]_ defines its own list of license identifiers "
+"and its own license expression syntax and both are similar to the SPDX "
+"conventions."
+msgstr ""
+
+#: ../../pep-0639.rst:757
+msgid ""
+"R Package DESCRIPTION [#cran]_ defines its own sophisticated license "
+"expression syntax and list of licenses identifiers. R has a unique way to"
+" support specifiers for license versions such as ``LGPL (>= 2.0, < 3)`` "
+"in its license expression syntax."
+msgstr ""
+
+#: ../../pep-0639.rst:764
+msgid "Conventions used by other ecosystems"
+msgstr ""
+
+#: ../../pep-0639.rst:766
+msgid ""
+"``SPDX-License-Identifier`` [#spdxids]_ is a simple convention to "
+"document the license inside a file."
+msgstr ""
+
+#: ../../pep-0639.rst:769
+msgid ""
+"The Free Software Foundation (FSF) promotes the use of SPDX license "
+"identifiers for clarity in the GPL and other versioned free software "
+"licenses [#gnu]_ [#fsf]_."
+msgstr ""
+
+#: ../../pep-0639.rst:773
+msgid ""
+"The Free Software Foundation Europe (FSFE) REUSE project [#reuse]_ "
+"promotes using ``SPDX-License-Identifier``."
+msgstr ""
+
+#: ../../pep-0639.rst:776
+msgid ""
+"The Linux kernel uses ``SPDX-License-Identifier`` and parts of the FSFE "
+"REUSE conventions to document its licenses [#linux]_."
+msgstr ""
+
+#: ../../pep-0639.rst:779
+msgid ""
+"U-Boot spearheaded using ``SPDX-License-Identifier`` in code and now "
+"follows the Linux ways [#uboot]_."
+msgstr ""
+
+#: ../../pep-0639.rst:782
+msgid ""
+"The Apache Software Foundation projects use RDF DOAP [#apache]_ with a "
+"single license field pointing to SPDX license identifiers."
+msgstr ""
+
+#: ../../pep-0639.rst:785
+msgid ""
+"The Eclipse Foundation promotes using ``SPDX-license-Identifiers`` "
+"[#eclipse]_"
+msgstr ""
+
+#: ../../pep-0639.rst:787
+msgid ""
+"The ClearlyDefined project [#cd]_ promotes using SPDX license identifiers"
+" and expressions to improve license clarity."
+msgstr ""
+
+#: ../../pep-0639.rst:790
+msgid ""
+"The Android Open Source Project [#android]_ use ``MODULE_LICENSE_XXX`` "
+"empty tag files where ``XXX`` is a license code such as BSD, APACHE, GPL,"
+" etc. And side by side with this ``MODULE_LICENSE`` file there is a "
+"``NOTICE`` file that contains license and notices texts."
+msgstr ""
+
+#: ../../pep-0639.rst:797
+msgid "References"
+msgstr ""
+
+#: ../../pep-0639.rst:799
+msgid "This document specifies version 2.2 of the metadata format."
+msgstr ""
+
+#: ../../pep-0639.rst:801
+msgid "Version 1.0 is specified in PEP 241."
+msgstr ""
+
+#: ../../pep-0639.rst:802
+msgid "Version 1.1 is specified in PEP 314."
+msgstr ""
+
+#: ../../pep-0639.rst:803
+msgid "Version 1.2 is specified in PEP 345."
+msgstr ""
+
+#: ../../pep-0639.rst:804
+msgid "Version 2.0, while not formally accepted, was specified in PEP 426."
+msgstr ""
+
+#: ../../pep-0639.rst:805
+msgid "Version 2.1 is specified in PEP 566."
+msgstr ""
+
+#: ../../pep-0639.rst:807
+msgid "https://packaging.python.org/specifications/core-metadata"
+msgstr ""
+
+#: ../../pep-0639.rst:808
+msgid "https://clearlydefined.io/stats"
+msgstr ""
+
+#: ../../pep-0639.rst:809
+msgid "https://clearlydefined.io"
+msgstr ""
+
+#: ../../pep-0639.rst:810
+msgid "http://opensource.org"
+msgstr ""
+
+#: ../../pep-0639.rst:811
+msgid "https://pypi.org/classifiers"
+msgstr ""
+
+#: ../../pep-0639.rst:812
+msgid "https://spdx.org/licenses"
+msgstr ""
+
+#: ../../pep-0639.rst:813
+msgid "https://spdx.org"
+msgstr ""
+
+#: ../../pep-0639.rst:814
+msgid "https://spdx.github.io/spdx-spec/appendix-IV-SPDX-license-expressions/"
+msgstr ""
+
+#: ../../pep-0639.rst:815
+msgid ""
+"https://github.com/pypa/wheel/blob/b8b21a5720df98703716d3cd981d8886393228fa/docs/user_guide.rst"
+"#including-license-files-in-the-generated-wheel-file"
+msgstr ""
+
+#: ../../pep-0639.rst:816
+msgid "https://reuse.software/"
+msgstr ""
+
+#: ../../pep-0639.rst:817
+msgid "https://github.com/nexB/license-expression/"
+msgstr ""
+
+#: ../../pep-0639.rst:818
+msgid "https://github.com/spdx/tools-python/"
+msgstr ""
+
+#: ../../pep-0639.rst:819
+msgid "https://github.com/nexB/scancode-toolkit"
+msgstr ""
+
+#: ../../pep-0639.rst:820
+msgid ""
+"https://packaging.python.org/guides/distributing-packages-using-"
+"setuptools/?highlight=MANIFEST.in#license"
+msgstr ""
+
+#: ../../pep-0639.rst:821
+msgid "https://github.com/pypa/sampleproject/blob/52966defd6a61e97295b0bb82cd3474ac3e11c7a/setup.py#L98"
+msgstr ""
+
+#: ../../pep-0639.rst:822
+msgid "https://github.com/pypa/pip/blob/476606425a08c66b9c9d326994ff5cf3f770926a/setup.cfg#L40"
+msgstr ""
+
+#: ../../pep-0639.rst:823
+msgid "https://github.com/pypa/setuptools/blob/97e8ad4f5ff7793729e9c8be38e0901e3ad8d09e/setuptools/command/sdist.py#L202"
+msgstr ""
+
+#: ../../pep-0639.rst:824
+msgid ""
+"https://packaging.python.org/guides/distributing-packages-using-"
+"setuptools/?highlight=MANIFEST.in#license-txt"
+msgstr ""
+
+#: ../../pep-0639.rst:825
+msgid "https://github.com/search?l=Python&q=%22__license__%22&type=Code"
+msgstr ""
+
+#: ../../pep-0639.rst:826
+msgid "https://github.com/pypa/setuptools/blob/v50.3.0/setup.cfg#L17"
+msgstr ""
+
+#: ../../pep-0639.rst:827
+msgid "https://github.com/pypa/packaging/blob/19.1/LICENSE"
+msgstr ""
+
+#: ../../pep-0639.rst:828
+msgid ""
+"https://docs.conda.io/projects/conda-build/en/latest/resources/define-"
+"metadata.html#about-section"
+msgstr ""
+
+#: ../../pep-0639.rst:829
+msgid "https://github.com/takluyver/flit"
+msgstr ""
+
+#: ../../pep-0639.rst:830
+msgid "https://poetry.eustace.io/docs/pyproject/#license"
+msgstr ""
+
+#: ../../pep-0639.rst:831
+msgid "https://docs.openstack.org/pbr/latest/user/features.html"
+msgstr ""
+
+#: ../../pep-0639.rst:832
+msgid "https://dep-team.pages.debian.net/deps/dep5/"
+msgstr ""
+
+#: ../../pep-0639.rst:833
+msgid ""
+"https://docs.fedoraproject.org/en-US/packaging-"
+"guidelines/LicensingGuidelines/"
+msgstr ""
+
+#: ../../pep-0639.rst:834
+msgid ""
+"https://docs.fedoraproject.org/en-US/packaging-"
+"guidelines/LicensingGuidelines/#_license_text"
+msgstr ""
+
+#: ../../pep-0639.rst:835
+msgid ""
+"https://docs.fedoraproject.org/en-US/packaging-"
+"guidelines/LicensingGuidelines/#_valid_license_short_names"
+msgstr ""
+
+#: ../../pep-0639.rst:836
+msgid "https://fedoraproject.org/wiki/Licensing:Main?rd=Licensing#Good_Licenses"
+msgstr ""
+
+#: ../../pep-0639.rst:837
+msgid "https://en.opensuse.org/openSUSE:Packaging_guidelines#Licensing"
+msgstr ""
+
+#: ../../pep-0639.rst:838
+msgid "https://docs.google.com/spreadsheets/d/14AdaJ6cmU0kvQ4ulq9pWpjdZL5tkR03exRSYJmPGdfs/pub"
+msgstr ""
+
+#: ../../pep-0639.rst:839
+msgid "https://devmanual.gentoo.org/ebuild-writing/variables/index.html#license"
+msgstr ""
+
+#: ../../pep-0639.rst:840
+msgid "https://www.gentoo.org/glep/glep-0023.html"
+msgstr ""
+
+#: ../../pep-0639.rst:841
+msgid "https://devmanual.gentoo.org/general-concepts/licenses/index.html"
+msgstr ""
+
+#: ../../pep-0639.rst:842
+msgid ""
+"https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-"
+"handbook/licenses.html"
+msgstr ""
+
+#: ../../pep-0639.rst:843 ../../pep-0639.rst:844
+msgid "https://wiki.archlinux.org/index.php/PKGBUILD#license"
+msgstr ""
+
+#: ../../pep-0639.rst:845
+msgid "https://openwrt.org/docs/guide-developer/packages#buildpackage_variables"
+msgstr ""
+
+#: ../../pep-0639.rst:846
+msgid "https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix"
+msgstr ""
+
+#: ../../pep-0639.rst:847
+msgid "http://git.savannah.gnu.org/cgit/guix.git/tree/guix/licenses.scm"
+msgstr ""
+
+#: ../../pep-0639.rst:848
+msgid ""
+"https://guix.gnu.org/manual/en/html_node/package-Reference.html#index-"
+"license_002c-of-packages"
+msgstr ""
+
+#: ../../pep-0639.rst:849
+msgid "https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#license"
+msgstr ""
+
+#: ../../pep-0639.rst:850
+msgid "https://maven.apache.org/pom.html#Licenses"
+msgstr ""
+
+#: ../../pep-0639.rst:851
+msgid "https://docs.npmjs.com/files/package.json#license"
+msgstr ""
+
+#: ../../pep-0639.rst:852
+msgid "https://guides.rubygems.org/specification-reference/#license="
+msgstr ""
+
+#: ../../pep-0639.rst:853
+msgid "https://metacpan.org/pod/CPAN::Meta::Spec#license"
+msgstr ""
+
+#: ../../pep-0639.rst:854
+msgid "https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata"
+msgstr ""
+
+#: ../../pep-0639.rst:855
+msgid "https://doc.rust-lang.org/cargo/reference/registries.html#publish"
+msgstr ""
+
+#: ../../pep-0639.rst:856
+msgid "https://getcomposer.org/doc/04-schema.md#license"
+msgstr ""
+
+#: ../../pep-0639.rst:857
+msgid "https://docs.microsoft.com/en-us/nuget/reference/nuspec#licenseurl"
+msgstr ""
+
+#: ../../pep-0639.rst:858
+msgid ""
+"https://flutter.dev/docs/development/packages-and-plugins/developing-"
+"packages#adding-licenses-to-the-license-file"
+msgstr ""
+
+#: ../../pep-0639.rst:859
+msgid "https://github.com/bower/spec/blob/master/json.md#license"
+msgstr ""
+
+#: ../../pep-0639.rst:860
+msgid "https://guides.cocoapods.org/syntax/podspec.html#license"
+msgstr ""
+
+#: ../../pep-0639.rst:861
+msgid ""
+"https://cabal.readthedocs.io/en/latest/developing-packages.html#pkg-"
+"field-license"
+msgstr ""
+
+#: ../../pep-0639.rst:862
+msgid "https://hex.pm/docs/publish"
+msgstr ""
+
+#: ../../pep-0639.rst:863
+msgid "https://dub.pm/package-format-json.html#licenses"
+msgstr ""
+
+#: ../../pep-0639.rst:864
+msgid "https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Licensing"
+msgstr ""
+
+#: ../../pep-0639.rst:865
+msgid "https://spdx.org/using-spdx-license-identifier"
+msgstr ""
+
+#: ../../pep-0639.rst:866
+msgid "https://www.gnu.org/licenses/identify-licenses-clearly.html"
+msgstr ""
+
+#: ../../pep-0639.rst:867
+msgid ""
+"https://www.fsf.org/blogs/rms/rms-article-for-claritys-sake-please-dont-"
+"say-licensed-under-gnu-gpl-2"
+msgstr ""
+
+#: ../../pep-0639.rst:868
+msgid ""
+"https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process"
+"/license-rules.rst"
+msgstr ""
+
+#: ../../pep-0639.rst:869
+msgid "https://www.denx.de/wiki/U-Boot/Licensing"
+msgstr ""
+
+#: ../../pep-0639.rst:870
+msgid "https://svn.apache.org/repos/asf/allura/doap_Allura.rdf"
+msgstr ""
+
+#: ../../pep-0639.rst:871
+msgid "https://www.eclipse.org/legal/epl-2.0/faq.php"
+msgstr ""
+
+#: ../../pep-0639.rst:872
+msgid ""
+"https://github.com/aosp-"
+"mirror/platform_external_tcpdump/blob/master/MODULE_LICENSE_BSD"
+msgstr ""
+
+#: ../../pep-0639.rst:873
+msgid "https://creativecommons.org/publicdomain/zero/1.0/"
+msgstr ""
+
+#: ../../pep-0639.rst:874
+msgid "https://unlicense.org/"
+msgstr ""
+
+#: ../../pep-0639.rst:878
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0639.rst:880
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license [#cc0]_, whichever is more permissive."
+msgstr ""
+
+#: ../../pep-0639.rst:885
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0639.rst:887
+msgid "Nick Coghlan"
+msgstr ""
+
+#: ../../pep-0639.rst:888
+msgid "Kevin P. Fleming"
+msgstr ""
+
+#: ../../pep-0639.rst:889
+msgid "Pradyun Gedam"
+msgstr ""
+
+#: ../../pep-0639.rst:890
+msgid "Oleg Grenrus"
+msgstr ""
+
+#: ../../pep-0639.rst:891
+msgid "Dustin Ingram"
+msgstr ""
+
+#: ../../pep-0639.rst:892
+msgid "Chris Jerdonek"
+msgstr ""
+
+#: ../../pep-0639.rst:893
+msgid "Cyril Roelandt"
+msgstr ""
+
+#: ../../pep-0639.rst:894
+msgid "Luis Villa"
+msgstr ""
+

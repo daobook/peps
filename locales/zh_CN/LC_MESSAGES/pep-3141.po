@@ -1,0 +1,387 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3141.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3141.txt:1
+msgid "3141"
+msgstr ""
+
+#: ../../pep-3141.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3141.txt:2
+msgid "A Type Hierarchy for Numbers"
+msgstr ""
+
+#: ../../pep-3141.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3141.txt:5
+msgid "Jeffrey Yasskin <jyasskin@google.com>"
+msgstr ""
+
+#: ../../pep-3141.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3141.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3141.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3141.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3141.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3141.txt:9
+msgid "23-Apr-2007"
+msgstr ""
+
+#: ../../pep-3141.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3141.txt:10
+msgid "25-Apr-2007, 16-May-2007, 02-Aug-2007"
+msgstr ""
+
+#: ../../pep-3141.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3141.txt:16
+msgid ""
+"This proposal defines a hierarchy of Abstract Base Classes (ABCs) (PEP "
+"3119) to represent number-like classes. It proposes a hierarchy of "
+"``Number :> Complex :> Real :> Rational :> Integral`` where ``A :> B`` "
+"means \"A is a supertype of B\". The hierarchy is inspired by Scheme's "
+"numeric tower [#schemetower]_."
+msgstr ""
+
+#: ../../pep-3141.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3141.txt:25
+msgid ""
+"Functions that take numbers as arguments should be able to determine the "
+"properties of those numbers, and if and when overloading based on types "
+"is added to the language, should be overloadable based on the types of "
+"the arguments. For example, slicing requires its arguments to be "
+"``Integrals``, and the functions in the ``math`` module require their "
+"arguments to be ``Real``."
+msgstr ""
+
+#: ../../pep-3141.txt:33
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3141.txt:35
+msgid ""
+"This PEP specifies a set of Abstract Base Classes, and suggests a general"
+" strategy for implementing some of the methods. It uses terminology from "
+"PEP 3119, but the hierarchy is intended to be meaningful for any "
+"systematic method of defining sets of classes."
+msgstr ""
+
+#: ../../pep-3141.txt:40
+msgid ""
+"The type checks in the standard library should use these classes instead "
+"of the concrete built-ins."
+msgstr ""
+
+#: ../../pep-3141.txt:45
+msgid "Numeric Classes"
+msgstr ""
+
+#: ../../pep-3141.txt:47
+msgid ""
+"We begin with a Number class to make it easy for people to be fuzzy about"
+" what kind of number they expect. This class only helps with overloading;"
+" it doesn't provide any operations. ::"
+msgstr ""
+
+#: ../../pep-3141.txt:54
+msgid ""
+"Most implementations of complex numbers will be hashable, but if you need"
+" to rely on that, you'll have to check it explicitly: mutable numbers are"
+" supported by this hierarchy. ::"
+msgstr ""
+
+#: ../../pep-3141.txt:158
+msgid ""
+"The ``Real`` ABC indicates that the value is on the real line, and "
+"supports the operations of the ``float`` builtin. Real numbers are "
+"totally ordered except for NaNs (which this PEP basically ignores). ::"
+msgstr ""
+
+#: ../../pep-3141.txt:287
+msgid ""
+"We should clean up Demo/classes/Rat.py and promote it into rational.py in"
+" the standard library. Then it will implement the Rational ABC. ::"
+msgstr ""
+
+#: ../../pep-3141.txt:309
+msgid "And finally integers::"
+msgstr ""
+
+#: ../../pep-3141.txt:372
+msgid "Changes to operations and __magic__ methods"
+msgstr ""
+
+#: ../../pep-3141.txt:374
+msgid ""
+"To support more precise narrowing from float to int (and more generally, "
+"from Real to Integral), we propose the following new __magic__ methods, "
+"to be called from the corresponding library functions. All of these "
+"return Integrals rather than Reals."
+msgstr ""
+
+#: ../../pep-3141.txt:379
+msgid ""
+"``__trunc__(self)``, called from a new builtin ``trunc(x)``, which "
+"returns the Integral closest to ``x`` between 0 and ``x``."
+msgstr ""
+
+#: ../../pep-3141.txt:382
+msgid ""
+"``__floor__(self)``, called from ``math.floor(x)``, which returns the "
+"greatest Integral ``<= x``."
+msgstr ""
+
+#: ../../pep-3141.txt:385
+msgid ""
+"``__ceil__(self)``, called from ``math.ceil(x)``, which returns the least"
+" Integral ``>= x``."
+msgstr ""
+
+#: ../../pep-3141.txt:388
+msgid ""
+"``__round__(self)``, called from ``round(x)``, which returns the Integral"
+" closest to ``x``, rounding half as the type chooses. ``float`` will "
+"change in 3.0 to round half toward even. There is also a 2-argument "
+"version, ``__round__(self, ndigits)``, called from ``round(x, ndigits)``,"
+" which should return a Real."
+msgstr ""
+
+#: ../../pep-3141.txt:394
+msgid ""
+"In 2.6, ``math.floor``, ``math.ceil``, and ``round`` will continue to "
+"return floats."
+msgstr ""
+
+#: ../../pep-3141.txt:397
+msgid ""
+"The ``int()`` conversion implemented by ``float`` is equivalent to "
+"``trunc()``.  In general, the ``int()`` conversion should try "
+"``__int__()`` first and if it is not found, try ``__trunc__()``."
+msgstr ""
+
+#: ../../pep-3141.txt:401
+msgid ""
+"``complex.__{divmod,mod,floordiv,int,float}__`` also go away. It would be"
+" nice to provide a nice error message to help confused porters, but not "
+"appearing in ``help(complex)`` is more important."
+msgstr ""
+
+#: ../../pep-3141.txt:407
+msgid "Notes for type implementors"
+msgstr ""
+
+#: ../../pep-3141.txt:409
+msgid ""
+"Implementors should be careful to make equal numbers equal and hash them "
+"to the same values. This may be subtle if there are two different "
+"extensions of the real numbers. For example, a complex type could "
+"reasonably implement hash() as follows::"
+msgstr ""
+
+#: ../../pep-3141.txt:417
+msgid ""
+"but should be careful of any values that fall outside of the built in "
+"complex's range or precision."
+msgstr ""
+
+#: ../../pep-3141.txt:421
+msgid "Adding More Numeric ABCs"
+msgstr ""
+
+#: ../../pep-3141.txt:423
+msgid ""
+"There are, of course, more possible ABCs for numbers, and this would be a"
+" poor hierarchy if it precluded the possibility of adding those. You can "
+"add ``MyFoo`` between ``Complex`` and ``Real`` with::"
+msgstr ""
+
+#: ../../pep-3141.txt:431
+msgid "Implementing the arithmetic operations"
+msgstr ""
+
+#: ../../pep-3141.txt:433
+msgid ""
+"We want to implement the arithmetic operations so that mixed-mode "
+"operations either call an implementation whose author knew about the "
+"types of both arguments, or convert both to the nearest built in type and"
+" do the operation there. For subtypes of Integral, this means that "
+"__add__ and __radd__ should be defined as::"
+msgstr ""
+
+#: ../../pep-3141.txt:464
+msgid ""
+"There are 5 different cases for a mixed-type operation on subclasses of "
+"Complex. I'll refer to all of the above code that doesn't refer to "
+"MyIntegral and OtherTypeIKnowAbout as \"boilerplate\". ``a`` will be an "
+"instance of ``A``, which is a subtype of ``Complex`` (``a : A <: "
+"Complex``), and ``b : B <: Complex``. I'll consider ``a + b``:"
+msgstr ""
+
+#: ../../pep-3141.txt:470
+msgid "If A defines an __add__ which accepts b, all is well."
+msgstr ""
+
+#: ../../pep-3141.txt:471
+msgid ""
+"If A falls back to the boilerplate code, and it were to return a value "
+"from __add__, we'd miss the possibility that B defines a more intelligent"
+" __radd__, so the boilerplate should return NotImplemented from __add__. "
+"(Or A may not implement __add__ at all.)"
+msgstr ""
+
+#: ../../pep-3141.txt:476
+msgid "Then B's __radd__ gets a chance. If it accepts a, all is well."
+msgstr ""
+
+#: ../../pep-3141.txt:477
+msgid ""
+"If it falls back to the boilerplate, there are no more possible methods "
+"to try, so this is where the default implementation should live."
+msgstr ""
+
+#: ../../pep-3141.txt:480
+msgid ""
+"If B <: A, Python tries B.__radd__ before A.__add__. This is ok, because "
+"it was implemented with knowledge of A, so it can handle those instances "
+"before delegating to Complex."
+msgstr ""
+
+#: ../../pep-3141.txt:484
+msgid ""
+"If ``A<:Complex`` and ``B<:Real`` without sharing any other knowledge, "
+"then the appropriate shared operation is the one involving the built in "
+"complex, and both __radd__s land there, so ``a+b == b+a``."
+msgstr ""
+
+#: ../../pep-3141.txt:490
+msgid "Rejected Alternatives"
+msgstr ""
+
+#: ../../pep-3141.txt:492
+msgid ""
+"The initial version of this PEP defined an algebraic hierarchy inspired "
+"by a Haskell Numeric Prelude [#numericprelude]_ including "
+"MonoidUnderPlus, AdditiveGroup, Ring, and Field, and mentioned several "
+"other possible algebraic types before getting to the numbers. We had "
+"expected this to be useful to people using vectors and matrices, but the "
+"NumPy community really wasn't interested, and we ran into the issue that "
+"even if ``x`` is an instance of ``X <: MonoidUnderPlus`` and ``y`` is an "
+"instance of ``Y <: MonoidUnderPlus``, ``x + y`` may still not make sense."
+msgstr ""
+
+#: ../../pep-3141.txt:502
+msgid ""
+"Then we gave the numbers a much more branching structure to include "
+"things like the Gaussian Integers and Z/nZ, which could be Complex but "
+"wouldn't necessarily support things like division. The community decided "
+"that this was too much complication for Python, so I've now scaled back "
+"the proposal to resemble the Scheme numeric tower much more closely."
+msgstr ""
+
+#: ../../pep-3141.txt:511
+msgid "The Decimal Type"
+msgstr ""
+
+#: ../../pep-3141.txt:513
+msgid ""
+"After consultation with its authors it has been decided that the "
+"``Decimal`` type should not at this time be made part of the numeric "
+"tower."
+msgstr ""
+
+#: ../../pep-3141.txt:519
+msgid "References"
+msgstr ""
+
+#: ../../pep-3141.txt:521
+msgid ""
+"Introducing Abstract Base Classes "
+"(http://www.python.org/dev/peps/pep-3119/)"
+msgstr ""
+
+#: ../../pep-3141.txt:524
+msgid ""
+"Possible Python 3K Class Tree?, wiki page by Bill Janssen "
+"(http://wiki.python.org/moin/AbstractBaseClasses)"
+msgstr ""
+
+#: ../../pep-3141.txt:527
+msgid ""
+"NumericPrelude: An experimental alternative hierarchy of numeric type "
+"classes (https://archives.haskell.org/code.haskell.org/numeric-"
+"prelude/docs/html/index.html)"
+msgstr ""
+
+#: ../../pep-3141.txt:531
+msgid ""
+"The Scheme numerical tower (https://groups.csail.mit.edu/mac/ftpdir"
+"/scheme-reports/r5rs-html/r5rs_8.html#SEC50)"
+msgstr ""
+
+#: ../../pep-3141.txt:536
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-3141.txt:538
+msgid ""
+"Thanks to Neal Norwitz for encouraging me to write this PEP in the first "
+"place, to Travis Oliphant for pointing out that the numpy people didn't "
+"really care about the algebraic concepts, to Alan Isaac for reminding me "
+"that Scheme had already done this, and to Guido van Rossum and lots of "
+"other people on the mailing list for refining the concept."
+msgstr ""
+
+#: ../../pep-3141.txt:546
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3141.txt:548
+msgid "This document has been placed in the public domain."
+msgstr ""
+

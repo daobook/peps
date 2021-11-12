@@ -1,0 +1,567 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0442.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0442.txt:1
+msgid "442"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0442.txt:2
+msgid "Safe object finalization"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0442.txt:5
+msgid "Antoine Pitrou <solipsis@pitrou.net>"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0442.txt:6
+msgid "Benjamin Peterson <benjamin@python.org>"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0442.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0442.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0442.txt:10
+msgid "18-May-2013"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0442.txt:11
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0442.txt:12
+msgid "2013-05-18"
+msgstr ""
+
+#: ../../pep-0442.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0442.txt:13
+msgid "https://mail.python.org/pipermail/python-dev/2013-June/126746.html"
+msgstr ""
+
+#: ../../pep-0442.txt:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0442.txt:19
+msgid ""
+"This PEP proposes to deal with the current limitations of object "
+"finalization.  The goal is to be able to define and run finalizers for "
+"any object, regardless of their position in the object graph."
+msgstr ""
+
+#: ../../pep-0442.txt:23
+msgid ""
+"This PEP doesn't call for any change in Python code.  Objects with "
+"existing finalizers will benefit automatically."
+msgstr ""
+
+#: ../../pep-0442.txt:28
+msgid "Definitions"
+msgstr ""
+
+#: ../../pep-0442.txt:33
+msgid "Reference"
+msgstr ""
+
+#: ../../pep-0442.txt:31
+msgid ""
+"A directional link from an object to another.  The target of the "
+"reference is kept alive by the reference, as long as the source is itself"
+" alive and the reference isn't cleared."
+msgstr ""
+
+#: ../../pep-0442.txt:37
+msgid "Weak reference"
+msgstr ""
+
+#: ../../pep-0442.txt:36
+msgid ""
+"A directional link from an object to another, which doesn't keep alive "
+"its target.  This PEP focuses on non-weak references."
+msgstr ""
+
+#: ../../pep-0442.txt:42
+msgid "Reference cycle"
+msgstr ""
+
+#: ../../pep-0442.txt:40
+msgid ""
+"A cyclic subgraph of directional links between objects, which keeps those"
+" objects from being collected in a pure reference-counting scheme."
+msgstr ""
+
+#: ../../pep-0442.txt:48
+msgid "Cyclic isolate (CI)"
+msgstr ""
+
+#: ../../pep-0442.txt:45
+msgid ""
+"A standalone subgraph of objects in which no object is referenced from "
+"the outside, containing one or several reference cycles, *and* whose "
+"objects are still in a usable, non-broken state: they can access each "
+"other from their respective finalizers."
+msgstr ""
+
+#: ../../pep-0442.txt:54
+msgid "Cyclic garbage collector (GC)"
+msgstr ""
+
+#: ../../pep-0442.txt:51
+msgid ""
+"A device able to detect cyclic isolates and turn them into cyclic trash."
+"  Objects in cyclic trash are eventually disposed of by the natural "
+"effect of the references being cleared and their reference counts "
+"dropping to zero."
+msgstr ""
+
+#: ../../pep-0442.txt:60
+msgid "Cyclic trash (CT)"
+msgstr ""
+
+#: ../../pep-0442.txt:57
+msgid ""
+"A former cyclic isolate whose objects have started being cleared by the "
+"GC.  Objects in cyclic trash are potential zombies; if they are accessed "
+"by Python code, the symptoms can vary from weird AttributeErrors to "
+"crashes."
+msgstr ""
+
+#: ../../pep-0442.txt:66
+msgid "Zombie / broken object"
+msgstr ""
+
+#: ../../pep-0442.txt:63
+msgid ""
+"An object part of cyclic trash.  The term stresses that the object is not"
+" safe: its outgoing references may have been cleared, or one of the "
+"objects it references may be zombie.  Therefore, it should not be "
+"accessed by arbitrary code (such as finalizers)."
+msgstr ""
+
+#: ../../pep-0442.txt:72
+msgid "Finalizer"
+msgstr ""
+
+#: ../../pep-0442.txt:69
+msgid ""
+"A function or method called when an object is intended to be disposed of."
+"  The finalizer can access the object and release any resource held by "
+"the object (for example mutexes or file descriptors).  An example is a "
+"``__del__`` method."
+msgstr ""
+
+#: ../../pep-0442.txt:78
+msgid "Resurrection"
+msgstr ""
+
+#: ../../pep-0442.txt:75
+msgid ""
+"The process by which a finalizer creates a new reference to an object in "
+"a CI.  This can happen as a quirky but supported side-effect of "
+"``__del__`` methods."
+msgstr ""
+
+#: ../../pep-0442.txt:81
+msgid "Impact"
+msgstr ""
+
+#: ../../pep-0442.txt:83
+msgid ""
+"While this PEP discusses CPython-specific implementation details, the "
+"change in finalization semantics is expected to affect the Python "
+"ecosystem as a whole.  In particular, this PEP obsoletes the current "
+"guideline that \"objects with a ``__del__`` method should not be part of "
+"a reference cycle\"."
+msgstr ""
+
+#: ../../pep-0442.txt:91
+msgid "Benefits"
+msgstr ""
+
+#: ../../pep-0442.txt:93
+msgid ""
+"The primary benefits of this PEP regard objects with finalizers, such as "
+"objects with a ``__del__`` method and generators with a ``finally`` "
+"block.  Those objects can now be reclaimed when they are part of a "
+"reference cycle."
+msgstr ""
+
+#: ../../pep-0442.txt:98
+msgid "The PEP also paves the way for further benefits:"
+msgstr ""
+
+#: ../../pep-0442.txt:100
+msgid ""
+"The module shutdown procedure may not need to set global variables to "
+"None anymore.  This could solve a well-known class of irritating issues."
+msgstr ""
+
+#: ../../pep-0442.txt:103
+msgid "The PEP doesn't change the semantics of:"
+msgstr ""
+
+#: ../../pep-0442.txt:105
+msgid "Weak references caught in reference cycles."
+msgstr ""
+
+#: ../../pep-0442.txt:107
+msgid "C extension types with a custom ``tp_dealloc`` function."
+msgstr ""
+
+#: ../../pep-0442.txt:111
+msgid "Description"
+msgstr ""
+
+#: ../../pep-0442.txt:114
+msgid "Reference-counted disposal"
+msgstr ""
+
+#: ../../pep-0442.txt:116
+msgid ""
+"In normal reference-counted disposal, an object's finalizer is called "
+"just before the object is deallocated.  If the finalizer resurrects the "
+"object, deallocation is aborted."
+msgstr ""
+
+#: ../../pep-0442.txt:120
+msgid ""
+"*However*, if the object was already finalized, then the finalizer isn't "
+"called.  This prevents us from finalizing zombies (see below)."
+msgstr ""
+
+#: ../../pep-0442.txt:124
+msgid "Disposal of cyclic isolates"
+msgstr ""
+
+#: ../../pep-0442.txt:126
+msgid ""
+"Cyclic isolates are first detected by the garbage collector, and then "
+"disposed of.  The detection phase doesn't change and won't be described "
+"here.  Disposal of a CI traditionally works in the following order:"
+msgstr ""
+
+#: ../../pep-0442.txt:130 ../../pep-0442.txt:143
+msgid ""
+"Weakrefs to CI objects are cleared, and their callbacks called. At this "
+"point, the objects are still safe to use."
+msgstr ""
+
+#: ../../pep-0442.txt:133 ../../pep-0442.txt:153
+msgid ""
+"The CI becomes a CT as the GC systematically breaks all known references "
+"inside it (using the ``tp_clear`` function)."
+msgstr ""
+
+#: ../../pep-0442.txt:136
+msgid ""
+"Nothing.  All CT objects should have been disposed of in step 2 (as a "
+"side-effect of clearing references); this collection is finished."
+msgstr ""
+
+#: ../../pep-0442.txt:140
+msgid ""
+"This PEP proposes to turn CI disposal into the following sequence (new "
+"steps are in bold):"
+msgstr ""
+
+#: ../../pep-0442.txt:146
+msgid "**The finalizers of all CI objects are called.**"
+msgstr ""
+
+#: ../../pep-0442.txt:148
+msgid ""
+"**The CI is traversed again to determine if it is still isolated. If it "
+"is determined that at least one object in CI is now reachable from "
+"outside the CI, this collection is aborted and the whole CI is "
+"resurrected.  Otherwise, proceed.**"
+msgstr ""
+
+#: ../../pep-0442.txt:156
+msgid ""
+"Nothing.  All CT objects should have been disposed of in step 4 (as a "
+"side-effect of clearing references); this collection is finished."
+msgstr ""
+
+#: ../../pep-0442.txt:161
+msgid ""
+"The GC doesn't recalculate the CI after step 2 above, hence the need for "
+"step 3 to check that the whole subgraph is still isolated."
+msgstr ""
+
+#: ../../pep-0442.txt:166
+msgid "C-level changes"
+msgstr ""
+
+#: ../../pep-0442.txt:168
+msgid ""
+"Type objects get a new ``tp_finalize`` slot to which ``__del__`` methods "
+"are mapped (and reciprocally).  Generators are modified to use this slot,"
+" rather than ``tp_del``.  A ``tp_finalize`` function is a normal C "
+"function which will be called with a valid and alive ``PyObject`` as its "
+"only argument.  It doesn't need to manipulate the object's reference "
+"count, as this will be done by the caller.  However, it must ensure that "
+"the original exception state is restored before returning to the caller."
+msgstr ""
+
+#: ../../pep-0442.txt:176
+msgid ""
+"For compatibility, ``tp_del`` is kept in the type structure.  Handling of"
+" objects with a non-NULL ``tp_del`` is unchanged: when part of a CI, they"
+" are not finalized and end up in ``gc.garbage``.  However, a non-NULL "
+"``tp_del`` is not encountered anymore in the CPython source tree (except "
+"for testing purposes)."
+msgstr ""
+
+#: ../../pep-0442.txt:182
+msgid ""
+"Two new C API functions are provided to ease calling of ``tp_finalize``, "
+"especially from custom deallocators."
+msgstr ""
+
+#: ../../pep-0442.txt:185
+msgid ""
+"On the internal side, a bit is reserved in the GC header for GC-managed "
+"objects to signal that they were finalized.  This helps avoid finalizing "
+"an object twice (and, especially, finalizing a CT object after it was "
+"broken by the GC)."
+msgstr ""
+
+#: ../../pep-0442.txt:191
+msgid ""
+"Objects which are not GC-enabled can also have a ``tp_finalize`` slot. "
+"They don't need the additional bit since their ``tp_finalize`` function "
+"can only be called from the deallocator: it therefore cannot be called "
+"twice, except when resurrected."
+msgstr ""
+
+#: ../../pep-0442.txt:198
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0442.txt:201
+msgid "Predictability"
+msgstr ""
+
+#: ../../pep-0442.txt:203
+msgid ""
+"Following this scheme, an object's finalizer is always called exactly "
+"once, even if it was resurrected afterwards."
+msgstr ""
+
+#: ../../pep-0442.txt:206
+msgid ""
+"For CI objects, the order in which finalizers are called (step 2 above) "
+"is undefined."
+msgstr ""
+
+#: ../../pep-0442.txt:210
+msgid "Safety"
+msgstr ""
+
+#: ../../pep-0442.txt:212
+msgid ""
+"It is important to explain why the proposed change is safe.  There are "
+"two aspects to be discussed:"
+msgstr ""
+
+#: ../../pep-0442.txt:215
+msgid ""
+"Can a finalizer access zombie objects (including the object being "
+"finalized)?"
+msgstr ""
+
+#: ../../pep-0442.txt:218
+msgid ""
+"What happens if a finalizer mutates the object graph so as to impact the "
+"CI?"
+msgstr ""
+
+#: ../../pep-0442.txt:221
+msgid ""
+"Let's discuss the first issue.  We will divide possible cases in two "
+"categories:"
+msgstr ""
+
+#: ../../pep-0442.txt:224
+msgid ""
+"If the object being finalized is part of the CI: by construction, no "
+"objects in CI are zombies yet, since CI finalizers are called before any "
+"reference breaking is done.  Therefore, the finalizer cannot access "
+"zombie objects, which don't exist."
+msgstr ""
+
+#: ../../pep-0442.txt:229
+msgid ""
+"If the object being finalized is not part of the CI/CT: by definition, "
+"objects in the CI/CT don't have any references pointing to them from "
+"outside the CI/CT.  Therefore, the finalizer cannot reach any zombie "
+"object (that is, even if the object being finalized was itself referenced"
+" from a zombie object)."
+msgstr ""
+
+#: ../../pep-0442.txt:235
+msgid "Now for the second issue.  There are three potential cases:"
+msgstr ""
+
+#: ../../pep-0442.txt:237
+msgid ""
+"The finalizer clears an existing reference to a CI object.  The CI object"
+" may be disposed of before the GC tries to break it, which is fine (the "
+"GC simply has to be aware of this possibility)."
+msgstr ""
+
+#: ../../pep-0442.txt:241
+msgid ""
+"The finalizer creates a new reference to a CI object.  This can only "
+"happen from a CI object's finalizer (see above why).  Therefore, the new "
+"reference will be detected by the GC after all CI finalizers are called "
+"(step 3 above), and collection will be aborted without any objects being "
+"broken."
+msgstr ""
+
+#: ../../pep-0442.txt:247
+msgid ""
+"The finalizer clears or creates a reference to a non-CI object.  By "
+"construction, this is not a problem."
+msgstr ""
+
+#: ../../pep-0442.txt:252
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0442.txt:254
+msgid ""
+"An implementation is available in branch ``finalize`` of the repository "
+"at http://hg.python.org/features/finalize/."
+msgstr ""
+
+#: ../../pep-0442.txt:259
+msgid "Validation"
+msgstr ""
+
+#: ../../pep-0442.txt:261
+msgid ""
+"Besides running the normal Python test suite, the implementation adds "
+"test cases for various finalization possibilities including reference "
+"cycles, object resurrection and legacy ``tp_del`` slots."
+msgstr ""
+
+#: ../../pep-0442.txt:265
+msgid ""
+"The implementation has also been checked to not produce any regressions "
+"on the following test suites:"
+msgstr ""
+
+#: ../../pep-0442.txt:268
+msgid ""
+"`Tulip <http://code.google.com/p/tulip/>`_, which makes an extensive use "
+"of generators"
+msgstr ""
+
+#: ../../pep-0442.txt:271
+msgid "`Tornado <http://www.tornadoweb.org>`_"
+msgstr ""
+
+#: ../../pep-0442.txt:273
+msgid "`SQLAlchemy <http://www.sqlalchemy.org/>`_"
+msgstr ""
+
+#: ../../pep-0442.txt:275
+msgid "`Django <https://www.djangoproject.com/>`_"
+msgstr ""
+
+#: ../../pep-0442.txt:277
+msgid "`zope.interface <http://pypi.python.org/pypi/zope.interface>`_"
+msgstr ""
+
+#: ../../pep-0442.txt:281
+msgid "References"
+msgstr ""
+
+#: ../../pep-0442.txt:283
+msgid ""
+"Notes about reference cycle collection and weak reference callbacks: "
+"http://hg.python.org/cpython/file/4e687d53b645/Modules/gc_weakref.txt"
+msgstr ""
+
+#: ../../pep-0442.txt:286
+msgid "Generator memory leak: http://bugs.python.org/issue17468"
+msgstr ""
+
+#: ../../pep-0442.txt:288
+msgid ""
+"Allow objects to decide if they can be collected by GC: "
+"http://bugs.python.org/issue9141"
+msgstr ""
+
+#: ../../pep-0442.txt:291
+msgid "Module shutdown procedure based on GC http://bugs.python.org/issue812369"
+msgstr ""
+
+#: ../../pep-0442.txt:295
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0442.txt:297
+msgid "This document has been placed in the public domain."
+msgstr ""
+

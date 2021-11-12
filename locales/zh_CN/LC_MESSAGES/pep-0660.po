@@ -1,0 +1,582 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0660.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0660.rst:1
+msgid "660"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0660.rst:2
+msgid "Editable installs for pyproject.toml based builds (wheel based)"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0660.rst:3
+msgid ""
+"Daniel Holth <dholth@gmail.com>, Stéphane Bidoul "
+"<stephane.bidoul@gmail.com>"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0660.rst:4
+msgid "Paul Moore <p.f.moore@gmail.com>"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0660.rst:5
+msgid ""
+"https://discuss.python.org/t/draft-pep-editable-installs-for-pep-517"
+"-style-build-backends/8510"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0660.rst:6
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0660.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0660.rst:9
+msgid "30-Mar-2021"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0660.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0660.rst:11
+msgid ""
+"https://discuss.python.org/t/pronouncement-on-peps-660-and-662-editable-"
+"installs"
+msgstr ""
+
+#: ../../pep-0660.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0660.rst:16
+msgid ""
+"This document describes a PEP 517 style method for the installation of "
+"packages in editable mode."
+msgstr ""
+
+#: ../../pep-0660.rst:20
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0660.rst:22
+msgid ""
+"Python programmers want to be able to develop packages without having to "
+"install (i.e. copy) them into ``site-packages``, for example, by working "
+"in a checkout of the source repository."
+msgstr ""
+
+#: ../../pep-0660.rst:26
+msgid ""
+"While this can be done by adding the relevant source directories to "
+"``PYTHONPATH``, ``setuptools`` provides the ``setup.py develop`` "
+"mechanism that makes the process easier, and also installs dependencies "
+"and entry points such as console scripts. ``pip`` exposes this mechanism "
+"via its ``pip install --editable`` option."
+msgstr ""
+
+#: ../../pep-0660.rst:32
+msgid ""
+"The installation of projects in such a way that the python code being "
+"imported remains in the source directory is known as the *editable* "
+"installation mode."
+msgstr ""
+
+#: ../../pep-0660.rst:36
+msgid ""
+"Now that PEP 517 provides a mechanism to create alternatives to "
+"setuptools, and decouple installation front ends from build backends, we "
+"need a new mechanism to install packages in editable mode."
+msgstr ""
+
+#: ../../pep-0660.rst:41
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0660.rst:43
+msgid ""
+"PEP 517 deferred \"Editable installs\", meaning non-``setup.py`` "
+"distributions lacked that feature. The only way to retain ``editable`` "
+"installs for these distributions was to provide a compatible ``setup.py "
+"develop`` implementation. By defining an editable hook other build "
+"frontends gain parity with ``setup.py``."
+msgstr ""
+
+#: ../../pep-0660.rst:50
+msgid "Terminology and goals"
+msgstr ""
+
+#: ../../pep-0660.rst:52
+msgid ""
+"The editable installation mode implies that the source code of the "
+"project being installed is available in a local directory."
+msgstr ""
+
+#: ../../pep-0660.rst:55
+msgid ""
+"Once the project is installed in editable mode, users expect that changes"
+" to the project *python* code in the local source tree become effective "
+"without the need of a new installation step."
+msgstr ""
+
+#: ../../pep-0660.rst:59
+msgid ""
+"Some kind of changes, such as the addition or modification of entry "
+"points, or the addition of new dependencies, require a new installation "
+"step to become effective. These changes are typically made in build "
+"backend configuration files (such as ``pyproject.toml``), so it is "
+"consistent with the general user expectation that *python* source code is"
+" imported from the source tree."
+msgstr ""
+
+#: ../../pep-0660.rst:65
+msgid ""
+"The modification of non-python source code such a C extension modules "
+"obviously require a compilation and/or installation step to become "
+"effective. The exact steps to perform will remain specific to the build "
+"backend used."
+msgstr ""
+
+#: ../../pep-0660.rst:69
+msgid ""
+"When a project is installed in editable mode, users expect the "
+"installation to behave identically as a regular installation. In "
+"particular the code must be importable by other code, and metadata must "
+"be available to standard mechanisms such as ``importlib.metadata``."
+msgstr ""
+
+#: ../../pep-0660.rst:74
+msgid ""
+"Depending on the way build backends implement this specification, some "
+"minor differences may be visible such as the presence of additional files"
+" that are in the source tree and would not be part of a regular install. "
+"Build backends are encouraged to document such potential differences."
+msgstr ""
+
+#: ../../pep-0660.rst:80
+msgid "The Mechanism"
+msgstr ""
+
+#: ../../pep-0660.rst:82
+msgid ""
+"This PEP adds three optional hooks to the PEP 517 backend interface. "
+"These hooks are used to build a wheel that, when installed, allows that "
+"distribution to be imported from its source folder."
+msgstr ""
+
+#: ../../pep-0660.rst:87
+msgid "build_editable"
+msgstr ""
+
+#: ../../pep-0660.rst:94
+msgid ""
+"Must build a ``.whl`` file, and place it in the specified "
+"``wheel_directory``. It must return the basename (not the full path) of "
+"the .whl file it creates, as a unicode string."
+msgstr ""
+
+#: ../../pep-0660.rst:98
+msgid ""
+"May do an in-place build of the distribution as a side effect so that any"
+" extension modules or other built artifacts are ready to be used."
+msgstr ""
+
+#: ../../pep-0660.rst:101
+msgid ""
+"The .whl file must comply with the Wheel binary file format specification"
+" (PEP 427). In particular it must contain a compliant .dist-info "
+"directory. Metadata must be identical as the one that would have been "
+"produced by ``build_wheel`` or ``prepare_metadata_for_build_wheel``, "
+"except for ``Requires-Dist`` which may differ slightly as explained "
+"below."
+msgstr ""
+
+#: ../../pep-0660.rst:107
+msgid ""
+"Build-backends must produce wheels that have the same dependencies "
+"(``Requires-Dist`` metadata) as wheels produced by the ``build_wheel`` "
+"hook, with the exception that they can add dependencies necessary for "
+"their editable mechanism to function at runtime (such as `editables`_)."
+msgstr ""
+
+#: ../../pep-0660.rst:112
+msgid ""
+"The filename for the \"editable\" wheel needs to be PEP 427 compliant "
+"too. It does not need to use the same tags as ``build_wheel`` but it must"
+" be tagged as compatible with the system."
+msgstr ""
+
+#: ../../pep-0660.rst:116
+msgid ""
+"If the build frontend has previously called "
+"``prepare_metadata_for_build_editable`` and depends on the wheel "
+"resulting from this call to have metadata matching this earlier call, "
+"then it should provide the path to the created ``.dist-info`` directory "
+"as the ``metadata_directory`` argument. If this argument is provided, "
+"then ``build_editable`` MUST produce a wheel with identical metadata. The"
+" directory passed in by the build frontend MUST be identical to the "
+"directory created by ``prepare_metadata_for_build_editable``, including "
+"any unrecognized files it created."
+msgstr ""
+
+#: ../../pep-0660.rst:125
+msgid ""
+"An \"editable\" wheel uses the wheel format not for distribution but as "
+"ephemeral communication between the build system and the front end. This "
+"avoids having the build backend install anything directly. This wheel "
+"must not be exposed to end users, nor cached, nor distributed."
+msgstr ""
+
+#: ../../pep-0660.rst:131
+msgid "get_requires_for_build_editable"
+msgstr ""
+
+#: ../../pep-0660.rst:138
+msgid ""
+"This hook MUST return an additional list of strings containing PEP 508 "
+"dependency specifications, above and beyond those specified in the "
+"``pyproject.toml`` file, to be installed when calling the "
+"``build_editable`` hooks."
+msgstr ""
+
+#: ../../pep-0660.rst:143
+msgid "If not defined, the default implementation is equivalent to ``return []``."
+msgstr ""
+
+#: ../../pep-0660.rst:146
+msgid "prepare_metadata_for_build_editable"
+msgstr ""
+
+#: ../../pep-0660.rst:153
+msgid ""
+"Must create a ``.dist-info`` directory containing wheel metadata inside "
+"the specified ``metadata_directory`` (i.e., creates a directory like "
+"``{metadata_directory}/{package}-{version}.dist-info/``). This directory "
+"MUST be a valid ``.dist-info`` directory as defined in the wheel "
+"specification, except that it need not contain ``RECORD`` or signatures. "
+"The hook MAY also create other files inside this directory, and a build "
+"frontend MUST preserve, but otherwise ignore, such files; the intention "
+"here is that in cases where the metadata depends on build-time decisions,"
+" the build backend may need to record these decisions in some convenient "
+"format for re-use by the actual wheel-building step."
+msgstr ""
+
+#: ../../pep-0660.rst:165
+msgid ""
+"This must return the basename (not the full path) of the ``.dist-info`` "
+"directory it creates, as a unicode string."
+msgstr ""
+
+#: ../../pep-0660.rst:168
+msgid ""
+"If a build frontend needs this information and the method is not defined,"
+" it should call ``build_editable`` and look at the resulting metadata "
+"directly."
+msgstr ""
+
+#: ../../pep-0660.rst:173
+msgid "What to put in the wheel"
+msgstr ""
+
+#: ../../pep-0660.rst:175
+msgid ""
+"Build backends must populate the generated wheel with files that when "
+"installed will result in an editable install. Build backends may use "
+"different techniques to achieve the goals of an editable install. This "
+"section provides examples and is not normative."
+msgstr ""
+
+#: ../../pep-0660.rst:179
+msgid ""
+"Build backends may choose to place a ``.pth`` file at the root of the "
+"``.whl`` file, containing the root directory of the source tree. This "
+"approach is simple but not very precise, although it may be considered "
+"good enough (especially when using the ``src`` layout) and is similar to "
+"what ``setup.py develop`` currently does."
+msgstr ""
+
+#: ../../pep-0660.rst:184
+msgid ""
+"The `editables`_ library shows how to build proxy modules that provide a "
+"high quality editable installation. It accepts a list of modules to "
+"include, and hide. When imported, these proxy modules replace themselves "
+"with the code from the source tree. Path-based methods make all scripts "
+"under a path importable, often including the project's own ``setup.py`` "
+"and other scripts that would not be part of a normal installation. The "
+"proxy strategy can achieve a higher level of fidelity than path-based "
+"methods."
+msgstr ""
+
+#: ../../pep-0660.rst:191
+msgid ""
+"Symbolic links are another useful mechanism to realize editable installs."
+" Since, at the time this writing, the ``wheel`` specification does not "
+"support symbolic links, they are not directly usable to set-up symbolic "
+"links in the target environment. It is however possible for the backend "
+"to create a symlink structure in some ``build`` directory of the source "
+"tree, and add that directory to the python path via a ``.pth`` file in "
+"the \"editable\" wheel. If some files linked in this manner depend on "
+"python implementation or version, ABI or platform, care must be taken to "
+"generate the link structure in different directories depending on "
+"compatibility tags, so the same project tree can be installed in editable"
+" mode in multiple environments."
+msgstr ""
+
+#: ../../pep-0660.rst:203
+msgid "Frontend requirements"
+msgstr ""
+
+#: ../../pep-0660.rst:205
+msgid ""
+"Frontends must install \"editable\" wheels in the same way as regular "
+"wheels. This also means uninstallation of editables does not require any "
+"special treatment."
+msgstr ""
+
+#: ../../pep-0660.rst:208
+msgid ""
+"Frontends must create a ``direct_url.json`` file in the ``.dist-info`` "
+"directory of the installed distribution, in compliance with PEP 610. The "
+"``url`` value must be a ``file://`` url pointing to the project directory"
+" (i.e. the directory containing ``pyproject.toml``), and the ``dir_info``"
+" value must be ``{'editable': true}``."
+msgstr ""
+
+#: ../../pep-0660.rst:214
+msgid ""
+"Frontends must execute ``get_requires_for_build_editable`` hooks in an "
+"environment which contains the bootstrap requirements specified in the "
+"``pyproject.toml`` file."
+msgstr ""
+
+#: ../../pep-0660.rst:218
+msgid ""
+"Frontends must execute the ``prepare_metadata_for_build_editable`` and "
+"``build_editable`` hooks in an environment which contains the bootstrap "
+"requirements from ``pyproject.toml`` and those specified by the "
+"``get_requires_for_build_editable`` hook."
+msgstr ""
+
+#: ../../pep-0660.rst:223
+msgid ""
+"Frontends must not expose the wheel obtained from ``build_editable`` to "
+"end users. The wheel must be discarded after installation and must not be"
+" cached nor distributed."
+msgstr ""
+
+#: ../../pep-0660.rst:228
+msgid "Limitations"
+msgstr ""
+
+#: ../../pep-0660.rst:230
+msgid ""
+"With regard to the wheel ``.data`` directory, this PEP focuses on making "
+"the ``purelib`` and ``platlib`` categories (installed into site-packages)"
+" \"editable\". It does not make special provision for the other "
+"categories such as ``headers``, ``data`` and ``scripts``. Package authors"
+" are encouraged to use ``console_scripts``, make their ``scripts`` tiny "
+"wrappers around library functionality, or manage these from the source "
+"checkout during development."
+msgstr ""
+
+#: ../../pep-0660.rst:238
+msgid "Prototypes"
+msgstr ""
+
+#: ../../pep-0660.rst:240
+msgid ""
+"At the time of writing this PEP, several prototype implementations are "
+"available in various frontends and backends. We provide links below to "
+"illustrate possible approaches."
+msgstr ""
+
+#: ../../pep-0660.rst:244
+msgid "Frontends:"
+msgstr ""
+
+#: ../../pep-0660.rst:246
+msgid "pip (`pull request <https://github.com/pypa/pip/pull/8212>`__)"
+msgstr ""
+
+#: ../../pep-0660.rst:248
+msgid "Build backends:"
+msgstr ""
+
+#: ../../pep-0660.rst:250
+msgid ""
+"enscons (`pull request 1 <https://github.com/dholth/enscons/pull/9>`__, "
+"`pull request 2 <https://github.com/dholth/enscons/pull/21>`__)"
+msgstr ""
+
+#: ../../pep-0660.rst:252
+msgid "flit (`pull request <https://github.com/takluyver/flit/pull/400>`__)"
+msgstr ""
+
+#: ../../pep-0660.rst:253
+msgid "hatchling (`sdist <https://pypi.org/project/hatchling/#files>`__)"
+msgstr ""
+
+#: ../../pep-0660.rst:254
+msgid "pdm (`pull request <https://github.com/pdm-project/pdm-pep517/pull/36>`__)"
+msgstr ""
+
+#: ../../pep-0660.rst:255
+msgid ""
+"setuptools (`setuptools_pep660 repository "
+"<https://github.com/dholth/setuptools_pep660>`_)"
+msgstr ""
+
+#: ../../pep-0660.rst:258
+msgid "Rejected ideas"
+msgstr ""
+
+#: ../../pep-0660.rst:261
+msgid "``editable`` local version identifier"
+msgstr ""
+
+#: ../../pep-0660.rst:263
+msgid ""
+"The ideas of having build backends append or modify the local version "
+"identifier to include the ``editable`` string has been rejected because "
+"it would not satisfy ``==`` version speicifier that include the local "
+"version identifier. In other words ``pkg==1.0+local`` is not satisfied by"
+" version ``1.0+local.editable``."
+msgstr ""
+
+#: ../../pep-0660.rst:270
+msgid "Virtual wheel"
+msgstr ""
+
+#: ../../pep-0660.rst:272
+msgid ""
+"Another approach was proposed in PEP 662, where the build backend returns"
+" a mapping from source files and directories to the installed layout. It "
+"is then up to the installer frontend to realize the editable installation"
+" by whatever means it deems adequate for its users."
+msgstr ""
+
+#: ../../pep-0660.rst:277
+msgid ""
+"In terms of capabilities, both proposals provide the core \"editable\" "
+"feature."
+msgstr ""
+
+#: ../../pep-0660.rst:279
+msgid ""
+"The key difference is that PEP 662 leaves it to the frontend to decide "
+"how the editable installation will be realized, while with this PEP, the "
+"choice must be made by the backend. Both approaches can in principle "
+"provide several editable installation methods for a given project, and "
+"let the developer choose one at install time."
+msgstr ""
+
+#: ../../pep-0660.rst:285
+msgid ""
+"At the time of writing this PEP, it is clear that the community has a "
+"wide range of theoretical and practical expectations about editable "
+"installs. The reality is that the only one there is wide experience with "
+"is path insertion via .pth (i.e. what setup.py develop does)."
+msgstr ""
+
+#: ../../pep-0660.rst:290
+msgid ""
+"We believe that PEP 660 better addresses these \"unknown unknowns\" today"
+" in the most reliable way, by letting project authors select the backend "
+"or implement the method that provides the editable mechanism that best "
+"suit their requirements, and test it works correctly. Since the frontend "
+"has no latitude in *how* to install the \"editable\" wheel, in case of "
+"issue, there is only one place to investigate: the build backend."
+msgstr ""
+
+#: ../../pep-0660.rst:297
+msgid ""
+"With PEP 662, issues need to be investigated in the frontend, the backend"
+" and possiblty the specification. There is also a high probability that "
+"different frontends, implementing the specification in different ways, "
+"will produce installations that behave differently than project authors "
+"intended, creating confusion, or worse, projects that only work with "
+"specific frontends or IDEs."
+msgstr ""
+
+#: ../../pep-0660.rst:305
+msgid "Unpacked wheel"
+msgstr ""
+
+#: ../../pep-0660.rst:307
+msgid ""
+"A `prototype <https://github.com/pypa/pip/pull/8154/files>`_ was made "
+"that created an unpacked wheel in a temporary directory, to be copied to "
+"the target environment by the frontend. This approach was not pursued "
+"because a wheel archive is easy to create for the backend, and using a "
+"wheel as communication mechanism is a better fit with the PEP 517 "
+"philosophy, and therefore keeps things simpler for the frontend."
+msgstr ""
+
+#: ../../pep-0660.rst:315
+msgid "References"
+msgstr ""
+
+#: ../../pep-0660.rst:320
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0660.rst:322
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

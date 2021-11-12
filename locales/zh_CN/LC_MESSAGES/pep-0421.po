@@ -1,0 +1,870 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0421.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0421.txt:1
+msgid "421"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0421.txt:2
+msgid "Adding sys.implementation"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0421.txt:5
+msgid "Eric Snow <ericsnowcurrently@gmail.com>"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0421.txt:6
+msgid "Barry Warsaw"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0421.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0421.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0421.txt:10
+msgid "26-Apr-2012"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0421.txt:11
+msgid "26-April-2012"
+msgstr ""
+
+#: ../../pep-0421.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0421.txt:12
+msgid "https://mail.python.org/pipermail/python-dev/2012-May/119683.html"
+msgstr ""
+
+#: ../../pep-0421.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0421.txt:18
+msgid ""
+"This PEP introduces a new attribute for the ``sys`` module: "
+"``sys.implementation``.  The attribute holds consolidated information "
+"about the implementation of the running interpreter.  Thus "
+"``sys.implementation`` is the source to which the standard library may "
+"look for implementation-specific information."
+msgstr ""
+
+#: ../../pep-0421.txt:24
+msgid ""
+"The proposal in this PEP is in line with a broader emphasis on making "
+"Python friendlier to alternate implementations.  It describes the new "
+"variable and the constraints on what that variable contains.  The PEP "
+"also explains some immediate use cases for ``sys.implementation``."
+msgstr ""
+
+#: ../../pep-0421.txt:31
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0421.txt:33
+msgid ""
+"For a number of years now, the distinction between Python-the-language "
+"and CPython (the reference implementation) has been growing.  Most of "
+"this change is due to the emergence of Jython, IronPython, and PyPy as "
+"viable alternate implementations of Python."
+msgstr ""
+
+#: ../../pep-0421.txt:38
+msgid ""
+"Consider, however, the nearly two decades of CPython-centric Python (i.e."
+" most of its existence).  That focus has understandably contributed to "
+"quite a few CPython-specific artifacts both in the standard library and "
+"exposed in the interpreter.  Though the core developers have made an "
+"effort in recent years to address this, quite a few of the artifacts "
+"remain."
+msgstr ""
+
+#: ../../pep-0421.txt:45
+msgid ""
+"Part of the solution is presented in this PEP: a single namespace in "
+"which to consolidate implementation specifics.  This will help focus "
+"efforts to differentiate the implementation specifics from the language."
+"  Additionally, it will foster a multiple-implementation mindset."
+msgstr ""
+
+#: ../../pep-0421.txt:53
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0421.txt:55
+msgid ""
+"We will add a new attribute to the ``sys`` module, called "
+"``sys.implementation``, as an object with attribute-access (as opposed to"
+" a mapping).  It will contain implementation-specific information."
+msgstr ""
+
+#: ../../pep-0421.txt:59
+msgid ""
+"The attributes of this object will remain fixed during interpreter "
+"execution and through the course of an implementation version.  This "
+"ensures behaviors don't change between versions which depend on "
+"attributes of ``sys.implementation``."
+msgstr ""
+
+#: ../../pep-0421.txt:64
+msgid ""
+"The object has each of the attributes described in the `Required "
+"Attributes`_ section below.  Those attribute names will never start with "
+"an underscore.  The standard library and the language definition will "
+"rely only on those required attributes."
+msgstr ""
+
+#: ../../pep-0421.txt:69
+msgid ""
+"This proposal takes a conservative approach in requiring only a small "
+"number of attributes.  As more become appropriate, they may be added with"
+" discretion, as described in `Adding New Required Attributes`_."
+msgstr ""
+
+#: ../../pep-0421.txt:73
+msgid ""
+"While this PEP places no other constraints on ``sys.implementation``, it "
+"also recommends that no one rely on capabilities outside those described "
+"here.  The only exception to that recommendation is for attributes "
+"starting with an underscore.  Implementers may use those as appropriate "
+"to store per-implementation data."
+msgstr ""
+
+#: ../../pep-0421.txt:81
+msgid "Required Attributes"
+msgstr ""
+
+#: ../../pep-0421.txt:83
+msgid ""
+"These are attributes in ``sys.implementation`` on which the standard "
+"library and language definition will rely, meaning implementers must "
+"define them:"
+msgstr ""
+
+#: ../../pep-0421.txt:89
+msgid "**name**"
+msgstr ""
+
+#: ../../pep-0421.txt:88
+msgid ""
+"A lower-case identifier representing the implementation.  Examples "
+"include 'pypy', 'jython', 'ironpython', and 'cpython'."
+msgstr ""
+
+#: ../../pep-0421.txt:94
+msgid "**version**"
+msgstr ""
+
+#: ../../pep-0421.txt:92
+msgid ""
+"The version of the implementation, as opposed to the version of the "
+"language it implements.  This value conforms to the format described in "
+"`Version Format`_."
+msgstr ""
+
+#: ../../pep-0421.txt:98
+msgid "**hexversion**"
+msgstr ""
+
+#: ../../pep-0421.txt:97
+msgid ""
+"The version of the implementation in the same hexadecimal format as "
+"``sys.hexversion``."
+msgstr ""
+
+#: ../../pep-0421.txt:106
+msgid "**cache_tag**"
+msgstr ""
+
+#: ../../pep-0421.txt:101
+msgid ""
+"A string used for the PEP 3147 cache tag [#cachetag]_.  It would normally"
+" be a composite of the name and version (e.g. 'cpython-33' for CPython "
+"3.3).  However, an implementation may explicitly use a different cache "
+"tag.  If ``cache_tag`` is set to None, it indicates that module caching "
+"should be disabled."
+msgstr ""
+
+#: ../../pep-0421.txt:109
+msgid "Adding New Required Attributes"
+msgstr ""
+
+#: ../../pep-0421.txt:111
+msgid ""
+"In time more required attributes will be added to ``sys.implementation``."
+"  However, each must have a meaningful use case across all Python "
+"implementations in order to be considered.  This is made most clear by a "
+"use case in the standard library or language specification."
+msgstr ""
+
+#: ../../pep-0421.txt:117
+msgid ""
+"All proposals for new required attributes will go through the normal PEP "
+"process.  Such a PEP need not be long, just long enough.  It will need to"
+" sufficiently spell out the rationale for the new attribute, its use "
+"cases, and the impact it will have on the various Python implementations."
+msgstr ""
+
+#: ../../pep-0421.txt:125
+msgid "Version Format"
+msgstr ""
+
+#: ../../pep-0421.txt:127
+msgid ""
+"A main point of ``sys.implementation`` is to contain information that "
+"will be used internally in the standard library.  In order to facilitate "
+"the usefulness of the version attribute, its value should be in a "
+"consistent format across implementations."
+msgstr ""
+
+#: ../../pep-0421.txt:132
+msgid ""
+"As such, the format of ``sys.implementation.version`` will follow that of"
+" ``sys.version_info``, which is effectively a named tuple.  It is a "
+"familiar format and generally consistent with normal version format "
+"conventions."
+msgstr ""
+
+#: ../../pep-0421.txt:139
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0421.txt:141
+msgid ""
+"The status quo for implementation-specific information gives us that "
+"information in a more fragile, harder to maintain way.  It is spread out "
+"over different modules or inferred from other information, as we see with"
+" `platform.python_implementation()`_."
+msgstr ""
+
+#: ../../pep-0421.txt:146
+msgid ""
+"This PEP is the main alternative to that approach.  It consolidates the "
+"implementation-specific information into a single namespace and makes "
+"explicit that which was implicit."
+msgstr ""
+
+#: ../../pep-0421.txt:152
+msgid "Type Considerations"
+msgstr ""
+
+#: ../../pep-0421.txt:154
+msgid ""
+"It's very easy to get bogged down in discussions about the type of "
+"``sys.implementation``.  However, its purpose is to support the standard "
+"library and language definition.  As such, there isn't much that really "
+"matters regarding its type, as opposed to a feature that would be more "
+"generally used.  Thus characteristics like immutability and sequence-ness"
+" have been disregarded."
+msgstr ""
+
+#: ../../pep-0421.txt:161
+msgid ""
+"The only real choice has been between an object with attribute access and"
+" a mapping with item access.  This PEP espouses dotted access to reflect "
+"the relatively fixed nature of the namespace."
+msgstr ""
+
+#: ../../pep-0421.txt:167
+msgid "Non-Required Attributes"
+msgstr ""
+
+#: ../../pep-0421.txt:169
+msgid ""
+"Earlier versions of this PEP included a required attribute called "
+"``metadata`` that held any non-required, per-implementation data "
+"[#Nick]_.  However, this proved to be an unnecessary addition considering"
+" the purpose of ``sys.implementation``."
+msgstr ""
+
+#: ../../pep-0421.txt:174
+msgid ""
+"Ultimately, non-required attributes are virtually ignored in this PEP. "
+"They have no impact other than that careless use may collide with future "
+"required attributes.  That, however, is but a marginal concern for "
+"``sys.implementation``."
+msgstr ""
+
+#: ../../pep-0421.txt:181
+msgid "Why a Part of ``sys``?"
+msgstr ""
+
+#: ../../pep-0421.txt:183
+msgid ""
+"The ``sys`` module holds the new namespace because ``sys`` is the depot "
+"for interpreter-centric variables and functions.  Many implementation-"
+"specific attributes are already found in ``sys``."
+msgstr ""
+
+#: ../../pep-0421.txt:189
+msgid "Why Strict Constraints on Any of the Values?"
+msgstr ""
+
+#: ../../pep-0421.txt:191
+msgid ""
+"As already noted in `Version Format`_, values in ``sys.implementation`` "
+"are intended for use by the standard library. Constraining those values, "
+"essentially specifying an API for them, allows them to be used "
+"consistently, regardless of how they are otherwise implemented.  However,"
+" care should be take to not over-specify the constraints."
+msgstr ""
+
+#: ../../pep-0421.txt:200
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0421.txt:202
+msgid ""
+"The topic of ``sys.implementation`` came up on the python-ideas list in "
+"2009, where the reception was broadly positive [#original]_.  I revived "
+"the discussion recently while working on a pure-python ``imp.get_tag()`` "
+"[#revived]_.  Discussion has been ongoing [#feedback]_.  The messages in "
+"`issue #14673`_ are also relevant."
+msgstr ""
+
+#: ../../pep-0421.txt:208
+msgid ""
+"A good part of the recent discussion centered on the type to use for "
+"``sys.implementation``."
+msgstr ""
+
+#: ../../pep-0421.txt:213
+msgid "Use-cases"
+msgstr ""
+
+#: ../../pep-0421.txt:216
+msgid "platform.python_implementation()"
+msgstr ""
+
+#: ../../pep-0421.txt:218
+msgid "\"explicit is better than implicit\""
+msgstr ""
+
+#: ../../pep-0421.txt:220
+msgid ""
+"The ``platform`` module determines the python implementation by looking "
+"for clues in a couple different ``sys`` variables [#guess]_.  However, "
+"this approach is fragile, requiring changes to the standard library each "
+"time an implementation changes.  Beyond that, support in ``platform`` is "
+"limited to those implementations that core developers have blessed by "
+"special-casing them in the ``platform`` module."
+msgstr ""
+
+#: ../../pep-0421.txt:227
+msgid ""
+"With ``sys.implementation`` the various implementations would "
+"*explicitly* set the values in their own version of the ``sys`` module."
+msgstr ""
+
+#: ../../pep-0421.txt:231
+msgid ""
+"Another concern is that the ``platform`` module is part of the stdlib, "
+"which ideally should minimize implementation details such as would be "
+"moved to ``sys.implementation``."
+msgstr ""
+
+#: ../../pep-0421.txt:235
+msgid ""
+"Any overlap between ``sys.implementation`` and the ``platform`` module "
+"would simply defer to ``sys.implementation`` (with the same interface in "
+"``platform`` wrapping it)."
+msgstr ""
+
+#: ../../pep-0421.txt:241
+msgid "Cache Tag Generation in Frozen Importlib"
+msgstr ""
+
+#: ../../pep-0421.txt:243
+msgid ""
+"PEP 3147 defined the use of a module cache and cache tags for file names."
+"  The importlib bootstrap code, frozen into the Python binary as of 3.3, "
+"uses the cache tags during the import process.  Part of the project to "
+"bootstrap importlib has been to clean code out of `Python/import.c`_ that"
+" did not need to be there any longer."
+msgstr ""
+
+#: ../../pep-0421.txt:249
+msgid ""
+"The cache tag defined in ``Python/import.c`` was hard-coded to "
+"``\"cpython\" MAJOR MINOR`` [#cachetag]_.  For importlib the options are "
+"either hard-coding it in the same way, or guessing the implementation in "
+"the same way as does ``platform.python_implementation()``."
+msgstr ""
+
+#: ../../pep-0421.txt:254
+msgid ""
+"As long as the hard-coded tag is limited to CPython-specific code, it is "
+"livable.  However, inasmuch as other Python implementations use the "
+"importlib code to work with the module cache, a hard-coded tag would "
+"become a problem."
+msgstr ""
+
+#: ../../pep-0421.txt:259
+msgid ""
+"Directly using the ``platform`` module in this case is a non-starter. Any"
+" module used in the importlib bootstrap must be built-in or frozen, "
+"neither of which apply to the ``platform`` module.  This is the point "
+"that led to the recent interest in ``sys.implementation``."
+msgstr ""
+
+#: ../../pep-0421.txt:264
+msgid ""
+"Regardless of the outcome for the implementation name used, another "
+"problem relates to the version used in the cache tag.  That version is "
+"likely to be the implementation version rather than the language version."
+"  However, the implementation version is not readily identified anywhere "
+"in the standard library."
+msgstr ""
+
+#: ../../pep-0421.txt:272
+msgid "Implementation-Specific Tests"
+msgstr ""
+
+#: ../../pep-0421.txt:274
+msgid ""
+"Currently there are a number of implementation-specific tests in the test"
+" suite under ``Lib/test``.  The test support module "
+"(`Lib/test/support.py`_) provides some functionality for dealing with "
+"these tests.  However, like the ``platform`` module, ``test.support`` "
+"must do some guessing that ``sys.implementation`` would render "
+"unnecessary."
+msgstr ""
+
+#: ../../pep-0421.txt:283
+msgid "Jython's ``os.name`` Hack"
+msgstr ""
+
+#: ../../pep-0421.txt:285
+msgid ""
+"In Jython, ``os.name`` is set to 'java' to accommodate special treatment "
+"of the java environment in the standard library [#os_name]_ [#javatest]_."
+"  Unfortunately it masks the os name that would otherwise go there.  "
+"``sys.implementation`` would help obviate the need for this special case."
+"  Currently Jython sets ``os._name`` for the normal ``os.name`` value."
+msgstr ""
+
+#: ../../pep-0421.txt:294
+msgid "The Problem With ``sys.(version|version_info|hexversion)``"
+msgstr ""
+
+#: ../../pep-0421.txt:296
+msgid ""
+"Earlier versions of this PEP made the mistake of calling "
+"``sys.version_info`` (and friends) the version of the Python language, in"
+" contrast to the implementation.  However, this is not the case. Instead,"
+" it is the version of the CPython implementation.  Incidentally, the "
+"first two components of ``sys.version_info`` (major and minor) also "
+"reflect the version of the language definition."
+msgstr ""
+
+#: ../../pep-0421.txt:303
+msgid ""
+"As Barry Warsaw noted, the \"semantics of sys.version_info have been "
+"sufficiently squishy in the past\" [#Barry]_.  With "
+"``sys.implementation`` we have the opportunity to improve this situation "
+"by first establishing an explicit location for the version of the "
+"implementation."
+msgstr ""
+
+#: ../../pep-0421.txt:309
+msgid ""
+"This PEP makes no other effort to directly clarify the semantics of "
+"``sys.version_info``.  Regardless, having an explicit version for the "
+"implementation will definitely help to clarify the distinction from the "
+"language version."
+msgstr ""
+
+#: ../../pep-0421.txt:316
+msgid "Feedback From Other Python Implementers"
+msgstr ""
+
+#: ../../pep-0421.txt:319
+msgid "IronPython"
+msgstr ""
+
+#: ../../pep-0421.txt:321
+msgid ""
+"Jeff Hardy responded to a request for feedback [#ironpython]_.  He said, "
+"\"I'll probably add it the day after it's approved\" [#jeff_hardy_2012]_."
+"  He also gave useful feedback on both the type of ``sys.implementation``"
+" and on the ``metadata`` attribute (which has since been removed from the"
+" PEP)."
+msgstr ""
+
+#: ../../pep-0421.txt:328
+msgid "Jython"
+msgstr ""
+
+#: ../../pep-0421.txt:330
+msgid ""
+"In 2009 Frank Wierzbicki said this (relative to Jython implementing the "
+"required attributes) [#frank_wierzbicki_2009]_::"
+msgstr ""
+
+#: ../../pep-0421.txt:337
+msgid "PyPy"
+msgstr ""
+
+#: ../../pep-0421.txt:339
+msgid ""
+"Some of the PyPy developers have responded to a request for feedback "
+"[#pypy]_.  Armin Rigo said the following [#armin_rigo_2012]_::"
+msgstr ""
+
+#: ../../pep-0421.txt:345
+msgid ""
+"He also expressed support for keeping the required list small.  Both "
+"Armin and Laura Creighton indicated that an effort to better catalog "
+"Python's implementation would be welcome.  Such an effort, for which this"
+" PEP is a small start, will be considered separately."
+msgstr ""
+
+#: ../../pep-0421.txt:352
+msgid "Past Efforts"
+msgstr ""
+
+#: ../../pep-0421.txt:355
+msgid "``PEP 3139``"
+msgstr ""
+
+#: ../../pep-0421.txt:357
+msgid ""
+"PEP 3139, from 2008, recommended a clean-up of the ``sys`` module in part"
+" by extracting implementation-specific variables and functions into a "
+"separate module.  PEP 421 is less ambitious version of that idea.  While "
+"PEP 3139 was rejected, its goals are reflected in PEP 421 to a large "
+"extent, though with a much lighter approach."
+msgstr ""
+
+#: ../../pep-0421.txt:365
+msgid "``PEP 399``"
+msgstr ""
+
+#: ../../pep-0421.txt:367
+msgid ""
+"PEP 399 dictates policy regarding the standard library, helping to make "
+"it friendlier to alternate implementations.  PEP 421 is proposed in that "
+"same spirit."
+msgstr ""
+
+#: ../../pep-0421.txt:373
+msgid "The Bigger Picture"
+msgstr ""
+
+#: ../../pep-0421.txt:375
+msgid ""
+"It's worth noting again that this PEP is a small part of a larger on-"
+"going effort to identify the implementation-specific parts of Python and "
+"mitigate their impact on alternate implementations."
+msgstr ""
+
+#: ../../pep-0421.txt:379
+msgid ""
+"``sys.implementation`` is a focal point for implementation-specific data,"
+" acting as a nexus for cooperation between the language, the standard "
+"library, and the different implementations.  As time goes by it is "
+"feasible that ``sys.implementation`` will assume current attributes of "
+"``sys`` and other builtin/stdlib modules, where appropriate.  In this "
+"way, it is a PEP 3137-lite, but starting as small as possible."
+msgstr ""
+
+#: ../../pep-0421.txt:387
+msgid ""
+"However, as already noted, many other efforts predate "
+"``sys.implementation``.   Neither is it necessarily a major part of the "
+"effort.  Rather, consider it as part of the infrastructure of the effort "
+"to make Python friendlier to alternate implementations."
+msgstr ""
+
+#: ../../pep-0421.txt:394
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0421.txt:396
+msgid ""
+"Since the single-namespace-under-sys approach is relatively "
+"straightforward, no alternatives have been considered for this PEP."
+msgstr ""
+
+#: ../../pep-0421.txt:401
+msgid "Examples of Other Attributes"
+msgstr ""
+
+#: ../../pep-0421.txt:403
+msgid ""
+"These are examples only and not part of the proposal.  Most of them were "
+"suggested during previous discussions, but did not fit into the goals of "
+"this PEP.  (See `Adding New Required Attributes`_ if they get you "
+"excited.)"
+msgstr ""
+
+#: ../../pep-0421.txt:409
+msgid "**common_name**"
+msgstr ""
+
+#: ../../pep-0421.txt:409
+msgid "The case-sensitive name by which the implementation is known."
+msgstr ""
+
+#: ../../pep-0421.txt:412
+msgid "**vcs_url**"
+msgstr ""
+
+#: ../../pep-0421.txt:412
+msgid "A URL for the main VCS repository for the implementation project."
+msgstr ""
+
+#: ../../pep-0421.txt:415
+msgid "**vcs_revision_id**"
+msgstr ""
+
+#: ../../pep-0421.txt:415
+msgid "A value that identifies the VCS revision of the implementation."
+msgstr ""
+
+#: ../../pep-0421.txt:418
+msgid "**build_toolchain**"
+msgstr ""
+
+#: ../../pep-0421.txt:418
+msgid "The tools used to build the interpreter."
+msgstr ""
+
+#: ../../pep-0421.txt:421
+msgid "**build_date**"
+msgstr ""
+
+#: ../../pep-0421.txt:421
+msgid "The timestamp of when the interpreter was built."
+msgstr ""
+
+#: ../../pep-0421.txt:424
+msgid "**homepage**"
+msgstr ""
+
+#: ../../pep-0421.txt:424
+msgid "The URL of the implementation's website."
+msgstr ""
+
+#: ../../pep-0421.txt:427
+msgid "**site_prefix**"
+msgstr ""
+
+#: ../../pep-0421.txt:427
+msgid "The preferred site prefix for the implementation."
+msgstr ""
+
+#: ../../pep-0421.txt:432
+msgid "**runtime**"
+msgstr ""
+
+#: ../../pep-0421.txt:430
+msgid ""
+"The run-time environment in which the interpreter is running, as in "
+"\"Common Language *Runtime*\" (.NET CLR) or \"Java *Runtime* "
+"Executable\"."
+msgstr ""
+
+#: ../../pep-0421.txt:437
+msgid "**gc_type**"
+msgstr ""
+
+#: ../../pep-0421.txt:435
+msgid ""
+"The type of garbage collection used, like \"reference counting\" or "
+"\"mark and sweep\"."
+msgstr ""
+
+#: ../../pep-0421.txt:440
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0421.txt:442
+msgid "Currently none."
+msgstr ""
+
+#: ../../pep-0421.txt:446
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0421.txt:448
+msgid "The implementation of this PEP is covered in `issue #14673`_."
+msgstr ""
+
+#: ../../pep-0421.txt:452
+msgid "References"
+msgstr ""
+
+#: ../../pep-0421.txt:454
+msgid ""
+"The 2009 sys.implementation discussion: https://mail.python.org/pipermail"
+"/python-dev/2009-October/092893.html"
+msgstr ""
+
+#: ../../pep-0421.txt:457
+msgid ""
+"The initial 2012 discussion: https://mail.python.org/pipermail/python-"
+"ideas/2012-March/014555.html (and https://mail.python.org/pipermail"
+"/python-ideas/2012-April/014878.html)"
+msgstr ""
+
+#: ../../pep-0421.txt:461
+msgid ""
+"Feedback on the PEP: https://mail.python.org/pipermail/python-"
+"ideas/2012-April/014954.html"
+msgstr ""
+
+#: ../../pep-0421.txt:464
+msgid ""
+"Feedback from the IronPython developers: "
+"https://mail.python.org/pipermail/ironpython-users/2012-May/015980.html"
+msgstr ""
+
+#: ../../pep-0421.txt:467
+msgid ""
+"(2009) Dino Viehland offers his opinion: "
+"https://mail.python.org/pipermail/python-dev/2009-October/092894.html"
+msgstr ""
+
+#: ../../pep-0421.txt:470
+msgid ""
+"(2012) Jeff Hardy offers his opinion: https://mail.python.org/pipermail"
+"/ironpython-users/2012-May/015981.html"
+msgstr ""
+
+#: ../../pep-0421.txt:473
+msgid "Feedback from the Jython developers: ???"
+msgstr ""
+
+#: ../../pep-0421.txt:476
+msgid ""
+"(2009) Frank Wierzbicki offers his opinion: "
+"https://mail.python.org/pipermail/python-dev/2009-October/092974.html"
+msgstr ""
+
+#: ../../pep-0421.txt:479
+msgid ""
+"Feedback from the PyPy developers: https://mail.python.org/pipermail"
+"/pypy-dev/2012-May/009883.html"
+msgstr ""
+
+#: ../../pep-0421.txt:482
+msgid ""
+"(2012) Armin Rigo offers his opinion: https://mail.python.org/pipermail"
+"/pypy-dev/2012-May/009884.html"
+msgstr ""
+
+#: ../../pep-0421.txt:485
+msgid ""
+"The ``platform`` code which divines the implementation name: "
+"http://hg.python.org/cpython/file/2f563908ebc5/Lib/platform.py#l1247"
+msgstr ""
+
+#: ../../pep-0421.txt:488
+msgid ""
+"The definition for cache tags in PEP 3147: "
+"http://www.python.org/dev/peps/pep-3147/#id53"
+msgstr ""
+
+#: ../../pep-0421.txt:491
+msgid ""
+"The original implementation of the cache tag in CPython: "
+"http://hg.python.org/cpython/file/2f563908ebc5/Python/import.c#l121"
+msgstr ""
+
+#: ../../pep-0421.txt:494
+msgid ""
+"Examples of implementation-specific handling in test.support: * "
+"http://hg.python.org/cpython/file/2f563908ebc5/Lib/test/support.py#l509 *"
+" http://hg.python.org/cpython/file/2f563908ebc5/Lib/test/support.py#l1246"
+" * "
+"http://hg.python.org/cpython/file/2f563908ebc5/Lib/test/support.py#l1252 "
+"* "
+"http://hg.python.org/cpython/file/2f563908ebc5/Lib/test/support.py#l1275"
+msgstr ""
+
+#: ../../pep-0421.txt:500
+msgid ""
+"The standard library entry for os.name: "
+"http://docs.python.org/3.3/library/os.html#os.name"
+msgstr ""
+
+#: ../../pep-0421.txt:503
+msgid ""
+"The use of ``os.name`` as 'java' in the stdlib test suite. "
+"http://hg.python.org/cpython/file/2f563908ebc5/Lib/test/support.py#l512"
+msgstr ""
+
+#: ../../pep-0421.txt:506
+msgid ""
+"Nick Coghlan's proposal for ``sys.implementation.metadata``: "
+"https://mail.python.org/pipermail/python-ideas/2012-May/014984.html"
+msgstr ""
+
+#: ../../pep-0421.txt:509
+msgid ""
+"Feedback from Barry Warsaw: https://mail.python.org/pipermail/python-"
+"dev/2012-May/119374.html"
+msgstr ""
+
+#: ../../pep-0421.txt:520
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0421.txt:522
+msgid "This document has been placed in the public domain."
+msgstr ""
+

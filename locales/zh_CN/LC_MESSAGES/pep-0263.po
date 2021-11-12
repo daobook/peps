@@ -1,0 +1,418 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0263.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0263.txt:1
+msgid "263"
+msgstr ""
+
+#: ../../pep-0263.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0263.txt:2
+msgid "Defining Python Source Code Encodings"
+msgstr ""
+
+#: ../../pep-0263.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0263.txt:5
+msgid ""
+"mal@lemburg.com (Marc-André Lemburg), martin@v.loewis.de (Martin von "
+"Löwis)"
+msgstr ""
+
+#: ../../pep-0263.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0263.txt:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0263.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0263.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0263.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0263.txt:10
+msgid "06-Jun-2001"
+msgstr ""
+
+#: ../../pep-0263.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0263.txt:11
+msgid "2.3"
+msgstr ""
+
+#: ../../pep-0263.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0263.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0263.txt:18
+msgid ""
+"This PEP proposes to introduce a syntax to declare the encoding of a "
+"Python source file. The encoding information is then used by the Python "
+"parser to interpret the file using the given encoding. Most notably this "
+"enhances the interpretation of Unicode literals in the source code and "
+"makes it possible to write Unicode literals using e.g. UTF-8 directly in "
+"an Unicode aware editor."
+msgstr ""
+
+#: ../../pep-0263.txt:27
+msgid "Problem"
+msgstr ""
+
+#: ../../pep-0263.txt:29
+msgid ""
+"In Python 2.1, Unicode literals can only be written using the Latin-1 "
+"based encoding \"unicode-escape\". This makes the programming environment"
+" rather unfriendly to Python users who live and work in non-Latin-1 "
+"locales such as many of the Asian countries. Programmers can write their "
+"8-bit strings using the favorite encoding, but are bound to the "
+"\"unicode-escape\" encoding for Unicode literals."
+msgstr ""
+
+#: ../../pep-0263.txt:39
+msgid "Proposed Solution"
+msgstr ""
+
+#: ../../pep-0263.txt:41
+msgid ""
+"I propose to make the Python source code encoding both visible and "
+"changeable on a per-source file basis by using a special comment at the "
+"top of the file to declare the encoding."
+msgstr ""
+
+#: ../../pep-0263.txt:45
+msgid ""
+"To make Python aware of this encoding declaration a number of concept "
+"changes are necessary with respect to the handling of Python source code "
+"data."
+msgstr ""
+
+#: ../../pep-0263.txt:51
+msgid "Defining the Encoding"
+msgstr ""
+
+#: ../../pep-0263.txt:53
+msgid ""
+"Python will default to ASCII as standard encoding if no other encoding "
+"hints are given."
+msgstr ""
+
+#: ../../pep-0263.txt:56
+msgid ""
+"To define a source code encoding, a magic comment must be placed into the"
+" source files either as first or second line in the file, such as::"
+msgstr ""
+
+#: ../../pep-0263.txt:62
+msgid "or (using formats recognized by popular editors)::"
+msgstr ""
+
+#: ../../pep-0263.txt:67
+msgid "or::"
+msgstr ""
+
+#: ../../pep-0263.txt:72
+msgid ""
+"More precisely, the first or second line must match the following regular"
+" expression::"
+msgstr ""
+
+#: ../../pep-0263.txt:77
+msgid ""
+"The first group of this expression is then interpreted as encoding name. "
+"If the encoding is unknown to Python, an error is raised during "
+"compilation. There must not be any Python statement on the line that "
+"contains the encoding declaration.  If the first line matches the second "
+"line is ignored."
+msgstr ""
+
+#: ../../pep-0263.txt:84
+msgid ""
+"To aid with platforms such as Windows, which add Unicode BOM marks to the"
+" beginning of Unicode files, the UTF-8 signature ``\\xef\\xbb\\xbf`` will"
+" be interpreted as 'utf-8' encoding as well (even if no magic encoding "
+"comment is given)."
+msgstr ""
+
+#: ../../pep-0263.txt:89
+msgid ""
+"If a source file uses both the UTF-8 BOM mark signature and a magic "
+"encoding comment, the only allowed encoding for the comment is 'utf-8'.  "
+"Any other encoding will cause an error."
+msgstr ""
+
+#: ../../pep-0263.txt:95
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0263.txt:97
+msgid ""
+"These are some examples to clarify the different styles for defining the "
+"source code encoding at the top of a Python source file:"
+msgstr ""
+
+#: ../../pep-0263.txt:101
+msgid "With interpreter binary and using Emacs style file encoding comment::"
+msgstr ""
+
+#: ../../pep-0263.txt:119
+msgid "Without interpreter line, using plain text::"
+msgstr ""
+
+#: ../../pep-0263.txt:125
+msgid ""
+"Text editors might have different ways of defining the file's encoding, "
+"e.g.::"
+msgstr ""
+
+#: ../../pep-0263.txt:133
+msgid "Without encoding comment, Python's parser will assume ASCII text::"
+msgstr ""
+
+#: ../../pep-0263.txt:140
+msgid "Encoding comments which don't work:"
+msgstr ""
+
+#: ../../pep-0263.txt:142
+msgid "Missing \"coding:\" prefix::"
+msgstr ""
+
+#: ../../pep-0263.txt:149
+msgid "Encoding comment not on line 1 or 2::"
+msgstr ""
+
+#: ../../pep-0263.txt:157
+msgid "Unsupported encoding::"
+msgstr ""
+
+#: ../../pep-0263.txt:166
+msgid "Concepts"
+msgstr ""
+
+#: ../../pep-0263.txt:168
+msgid ""
+"The PEP is based on the following concepts which would have to be "
+"implemented to enable usage of such a magic comment:"
+msgstr ""
+
+#: ../../pep-0263.txt:171
+msgid ""
+"The complete Python source file should use a single encoding. Embedding "
+"of differently encoded data is not allowed and will result in a decoding "
+"error during compilation of the Python source code."
+msgstr ""
+
+#: ../../pep-0263.txt:176
+msgid ""
+"Any encoding which allows processing the first two lines in the way "
+"indicated above is allowed as source code encoding, this includes ASCII "
+"compatible encodings as well as certain multi-byte encodings such as "
+"Shift_JIS. It does not include encodings which use two or more bytes for "
+"all characters like e.g. UTF-16. The reason for this is to keep the "
+"encoding detection algorithm in the tokenizer simple."
+msgstr ""
+
+#: ../../pep-0263.txt:184
+msgid ""
+"Handling of escape sequences should continue to work as it does now, but "
+"with all possible source code encodings, that is standard string literals"
+" (both 8-bit and Unicode) are subject to escape sequence expansion while "
+"raw string literals only expand a very small subset of escape sequences."
+msgstr ""
+
+#: ../../pep-0263.txt:190
+msgid ""
+"Python's tokenizer/compiler combo will need to be updated to work as "
+"follows:"
+msgstr ""
+
+#: ../../pep-0263.txt:193
+msgid "read the file"
+msgstr ""
+
+#: ../../pep-0263.txt:195
+msgid "decode it into Unicode assuming a fixed per-file encoding"
+msgstr ""
+
+#: ../../pep-0263.txt:197
+msgid "convert it into a UTF-8 byte string"
+msgstr ""
+
+#: ../../pep-0263.txt:199
+msgid "tokenize the UTF-8 content"
+msgstr ""
+
+#: ../../pep-0263.txt:201
+msgid ""
+"compile it, creating Unicode objects from the given Unicode data and "
+"creating string objects from the Unicode literal data by first reencoding"
+" the UTF-8 data into 8-bit string data using the given file encoding"
+msgstr ""
+
+#: ../../pep-0263.txt:206
+msgid ""
+"Note that Python identifiers are restricted to the ASCII subset of the "
+"encoding, and thus need no further conversion after step 4."
+msgstr ""
+
+#: ../../pep-0263.txt:212
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0263.txt:214
+msgid ""
+"For backwards-compatibility with existing code which currently uses non-"
+"ASCII in string literals without declaring an encoding, the "
+"implementation will be introduced in two phases:"
+msgstr ""
+
+#: ../../pep-0263.txt:218
+msgid ""
+"Allow non-ASCII in string literals and comments, by internally treating a"
+" missing encoding declaration as a declaration of \"iso-8859-1\". This "
+"will cause arbitrary byte strings to correctly round-trip between step 2 "
+"and step 5 of the processing, and provide compatibility with Python 2.2 "
+"for Unicode literals that contain non-ASCII bytes."
+msgstr ""
+
+#: ../../pep-0263.txt:225
+msgid ""
+"A warning will be issued if non-ASCII bytes are found in the input, once "
+"per improperly encoded input file."
+msgstr ""
+
+#: ../../pep-0263.txt:228
+msgid "Remove the warning, and change the default encoding to \"ascii\"."
+msgstr ""
+
+#: ../../pep-0263.txt:230
+msgid ""
+"The builtin ``compile()`` API will be enhanced to accept Unicode as "
+"input.  8-bit string input is subject to the standard procedure for "
+"encoding detection as described above."
+msgstr ""
+
+#: ../../pep-0263.txt:234
+msgid ""
+"If a Unicode string with a coding declaration is passed to ``compile()``,"
+" a ``SyntaxError`` will be raised."
+msgstr ""
+
+#: ../../pep-0263.txt:237
+msgid ""
+"SUZUKI Hisao is working on a patch; see [2]_ for details. A patch "
+"implementing only phase 1 is available at [1]_."
+msgstr ""
+
+#: ../../pep-0263.txt:242
+msgid "Phases"
+msgstr ""
+
+#: ../../pep-0263.txt:244
+msgid ""
+"Implementation of steps 1 and 2 above were completed in 2.3, except for "
+"changing the default encoding to \"ascii\"."
+msgstr ""
+
+#: ../../pep-0263.txt:247
+msgid "The default encoding was set to \"ascii\" in version 2.5."
+msgstr ""
+
+#: ../../pep-0263.txt:251
+msgid "Scope"
+msgstr ""
+
+#: ../../pep-0263.txt:253
+msgid ""
+"This PEP intends to provide an upgrade path from the current (more-or-"
+"less) undefined source code encoding situation to a more robust and "
+"portable definition."
+msgstr ""
+
+#: ../../pep-0263.txt:259
+msgid "References"
+msgstr ""
+
+#: ../../pep-0263.txt:261
+msgid "Phase 1 implementation: https://bugs.python.org/issue526840"
+msgstr ""
+
+#: ../../pep-0263.txt:264
+msgid "Phase 2 implementation: https://bugs.python.org/issue534304"
+msgstr ""
+
+#: ../../pep-0263.txt:268
+msgid "History"
+msgstr ""
+
+#: ../../pep-0263.txt:270
+msgid "1.10 and above: see CVS history"
+msgstr ""
+
+#: ../../pep-0263.txt:271
+msgid "1.8: Added '.' to the coding RE."
+msgstr ""
+
+#: ../../pep-0263.txt:272
+msgid ""
+"1.7: Added warnings to phase 1 implementation. Replaced the Latin-1 "
+"default encoding with the interpreter's default encoding. Added tweaks to"
+" ``compile()``."
+msgstr ""
+
+#: ../../pep-0263.txt:275
+msgid "1.4 - 1.6: Minor tweaks"
+msgstr ""
+
+#: ../../pep-0263.txt:276
+msgid ""
+"1.3: Worked in comments by Martin v. Loewis: UTF-8 BOM mark detection, "
+"Emacs style magic comment, two phase approach to the implementation"
+msgstr ""
+
+#: ../../pep-0263.txt:282
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0263.txt:284
+msgid "This document has been placed in the public domain."
+msgstr ""
+

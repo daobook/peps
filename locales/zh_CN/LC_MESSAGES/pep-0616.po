@@ -1,0 +1,540 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0616.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0616.rst:1
+msgid "616"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0616.rst:2
+msgid "String methods to remove prefixes and suffixes"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0616.rst:3
+msgid "Dennis Sweeney <sweeney.dennis650@gmail.com>"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0616.rst:4
+msgid "Eric V. Smith <eric@trueblade.com>"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0616.rst:5
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0616.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0616.rst:8
+msgid "19-Mar-2020"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0616.rst:9
+msgid "3.9"
+msgstr ""
+
+#: ../../pep-0616.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0616.rst:10
+msgid "20-Mar-2020"
+msgstr ""
+
+#: ../../pep-0616.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0616.rst:16
+msgid ""
+"This is a proposal to add two new methods, ``removeprefix()`` and "
+"``removesuffix()``, to the APIs of Python's various string objects.  "
+"These methods would remove a prefix or suffix (respectively) from a "
+"string, if present, and would be added to Unicode ``str`` objects, binary"
+" ``bytes`` and ``bytearray`` objects, and ``collections.UserString``."
+msgstr ""
+
+#: ../../pep-0616.rst:24
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0616.rst:26
+msgid ""
+"There have been repeated issues on Python-Ideas [#pyid]_ [3]_, Python-Dev"
+" [4]_ [5]_ [6]_ [7]_, the Bug Tracker, and StackOverflow [#confusion]_, "
+"related to user confusion about the existing ``str.lstrip`` and "
+"``str.rstrip`` methods.  These users are typically expecting the behavior"
+" of ``removeprefix`` and ``removesuffix``, but they are surprised that "
+"the parameter for ``lstrip`` is interpreted as a set of characters, not a"
+" substring.  This repeated issue is evidence that these methods are "
+"useful.  The new methods allow a cleaner redirection of users to the "
+"desired behavior."
+msgstr ""
+
+#: ../../pep-0616.rst:36
+msgid ""
+"As another testimonial for the usefulness of these methods, several users"
+" on Python-Ideas [#pyid]_ reported frequently including similar functions"
+" in their code for productivity.  The implementation often contained "
+"subtle mistakes regarding the handling of the empty string, so a well-"
+"tested built-in method would be useful."
+msgstr ""
+
+#: ../../pep-0616.rst:42
+msgid ""
+"The existing solutions for creating the desired behavior are to either "
+"implement the methods as in the `Specification`_ below, or to use regular"
+" expressions as in the expression ``re.sub('^' + re.escape(prefix), '', "
+"s)``, which is less discoverable, requires a module import, and results "
+"in less readable code."
+msgstr ""
+
+#: ../../pep-0616.rst:50
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0616.rst:52
+msgid ""
+"The builtin ``str`` class will gain two new methods which will behave as "
+"follows when ``type(self) is type(prefix) is type(suffix) is str``::"
+msgstr ""
+
+#: ../../pep-0616.rst:68
+msgid ""
+"When the arguments are instances of ``str`` subclasses, the methods "
+"should behave as though those arguments were first coerced to base "
+"``str`` objects, and the return value should always be a base ``str``."
+msgstr ""
+
+#: ../../pep-0616.rst:72
+msgid ""
+"Methods with the corresponding semantics will be added to the builtin "
+"``bytes`` and ``bytearray`` objects.  If ``b`` is either a ``bytes`` or "
+"``bytearray`` object, then ``b.removeprefix()`` and ``b.removesuffix()`` "
+"will accept any bytes-like object as an argument. The two methods will "
+"also be added to ``collections.UserString``, with similar behavior."
+msgstr ""
+
+#: ../../pep-0616.rst:80
+msgid "Motivating examples from the Python standard library"
+msgstr ""
+
+#: ../../pep-0616.rst:82
+msgid ""
+"The examples below demonstrate how the proposed methods can make code one"
+" or more of the following:"
+msgstr ""
+
+#: ../../pep-0616.rst:85
+msgid "Less fragile:"
+msgstr ""
+
+#: ../../pep-0616.rst:87
+msgid "The code will not depend on the user to count the length of a literal."
+msgstr ""
+
+#: ../../pep-0616.rst:89
+msgid "More performant:"
+msgstr ""
+
+#: ../../pep-0616.rst:91
+msgid ""
+"The code does not require a call to the Python built-in ``len`` function "
+"nor to the more expensive ``str.replace()`` method."
+msgstr ""
+
+#: ../../pep-0616.rst:94
+msgid "More descriptive:"
+msgstr ""
+
+#: ../../pep-0616.rst:96
+msgid ""
+"The methods give a higher-level API for code readability as opposed to "
+"the traditional method of string slicing."
+msgstr ""
+
+#: ../../pep-0616.rst:101
+msgid "find_recursionlimit.py"
+msgstr ""
+
+#: ../../pep-0616.rst:103 ../../pep-0616.rst:122 ../../pep-0616.rst:149
+#: ../../pep-0616.rst:167
+msgid "Current::"
+msgstr ""
+
+#: ../../pep-0616.rst:110 ../../pep-0616.rst:131 ../../pep-0616.rst:158
+#: ../../pep-0616.rst:175
+msgid "Improved::"
+msgstr ""
+
+#: ../../pep-0616.rst:116
+msgid "deccheck.py"
+msgstr ""
+
+#: ../../pep-0616.rst:118
+msgid ""
+"This is an interesting case because the author chose to use the "
+"``str.replace`` method in a situation where only a prefix was intended to"
+" be removed."
+msgstr ""
+
+#: ../../pep-0616.rst:140
+msgid "Arguably further improved::"
+msgstr ""
+
+#: ../../pep-0616.rst:147
+msgid "cookiejar.py"
+msgstr ""
+
+#: ../../pep-0616.rst:165
+msgid "test_i18n.py"
+msgstr ""
+
+#: ../../pep-0616.rst:180
+msgid "There were many other such examples in the stdlib."
+msgstr ""
+
+#: ../../pep-0616.rst:184
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0616.rst:187
+msgid "Expand the lstrip and rstrip APIs"
+msgstr ""
+
+#: ../../pep-0616.rst:189
+msgid ""
+"Because ``lstrip`` takes a string as its argument, it could be viewed as "
+"taking an iterable of length-1 strings.  The API could, therefore, be "
+"generalized to accept any iterable of strings, which would be "
+"successively removed as prefixes.  While this behavior would be "
+"consistent, it would not be obvious for users to have to call "
+"``'foobar'.lstrip(('foo',))`` for the common use case of a single prefix."
+msgstr ""
+
+#: ../../pep-0616.rst:199
+msgid "Remove multiple copies of a prefix"
+msgstr ""
+
+#: ../../pep-0616.rst:201
+msgid ""
+"This is the behavior that would be consistent with the aforementioned "
+"expansion of the ``lstrip``/``rstrip`` API -- repeatedly applying the "
+"function until the argument is unchanged.  This behavior is attainable "
+"from the proposed behavior via by the following::"
+msgstr ""
+
+#: ../../pep-0616.rst:214
+msgid "Raising an exception when not found"
+msgstr ""
+
+#: ../../pep-0616.rst:216
+msgid ""
+"There was a suggestion that ``s.removeprefix(pre)`` should raise an "
+"exception if ``not s.startswith(pre)``.  However, this does not match "
+"with the behavior and feel of other string methods.  There could be "
+"``required=False`` keyword added, but this violates the KISS principle."
+msgstr ""
+
+#: ../../pep-0616.rst:224
+msgid "Accepting a tuple of affixes"
+msgstr ""
+
+#: ../../pep-0616.rst:226
+msgid ""
+"It could be convenient to write the ``test_concurrent_futures.py`` "
+"example above as ``name.removesuffix(('Mixin', 'Tests', 'Test'))``, so "
+"there was a suggestion that the new methods be able to take a tuple of "
+"strings as an argument, similar to the ``startswith()`` API.  Within the "
+"tuple, only the first matching affix would be removed.  This was rejected"
+" on the following grounds:"
+msgstr ""
+
+#: ../../pep-0616.rst:233
+msgid ""
+"This behavior can be surprising or visually confusing, especially when "
+"one prefix is empty or is a substring of another prefix, as in "
+"``'FooBar'.removeprefix(('', 'Foo')) == 'Foo'`` or ``'FooBar "
+"text'.removeprefix(('Foo', 'FooBar ')) == 'Bar text'``."
+msgstr ""
+
+#: ../../pep-0616.rst:238
+msgid ""
+"The API for ``str.replace()`` only accepts a single pair of replacement "
+"strings, but has stood the test of time by refusing the temptation to "
+"guess in the face of ambiguous multiple replacements."
+msgstr ""
+
+#: ../../pep-0616.rst:242
+msgid ""
+"There may be a compelling use case for such a feature in the future, but "
+"generalization before the basic feature sees real-world use would be easy"
+" to get permanently wrong."
+msgstr ""
+
+#: ../../pep-0616.rst:248
+msgid "Alternative Method Names"
+msgstr ""
+
+#: ../../pep-0616.rst:250
+msgid ""
+"Several alternatives method names have been proposed.  Some are listed "
+"below, along with commentary for why they should be rejected in favor of "
+"``removeprefix`` (the same arguments hold for ``removesuffix``)."
+msgstr ""
+
+#: ../../pep-0616.rst:254
+msgid "``ltrim``, ``trimprefix``, etc.:"
+msgstr ""
+
+#: ../../pep-0616.rst:256
+msgid ""
+"\"Trim\" does in other languages (e.g. JavaScript, Java, Go, PHP) what "
+"``strip`` methods do in Python."
+msgstr ""
+
+#: ../../pep-0616.rst:259
+msgid "``lstrip(string=...)``"
+msgstr ""
+
+#: ../../pep-0616.rst:261
+msgid ""
+"This would avoid adding a new method, but for different behavior, it's "
+"better to have two different methods than one method with a keyword "
+"argument that selects the behavior."
+msgstr ""
+
+#: ../../pep-0616.rst:265
+msgid "``remove_prefix``:"
+msgstr ""
+
+#: ../../pep-0616.rst:267
+msgid ""
+"All of the other methods of the string API, e.g. ``str.startswith()``, "
+"use ``lowercase`` rather than ``lower_case_with_underscores``."
+msgstr ""
+
+#: ../../pep-0616.rst:271
+msgid "``removeleft``, ``leftremove``, or ``lremove``:"
+msgstr ""
+
+#: ../../pep-0616.rst:273
+msgid "The explicitness of \"prefix\" is preferred."
+msgstr ""
+
+#: ../../pep-0616.rst:275
+msgid "``cutprefix``, ``deleteprefix``, ``withoutprefix``, ``dropprefix``, etc.:"
+msgstr ""
+
+#: ../../pep-0616.rst:277
+msgid ""
+"Many of these might have been acceptable, but \"remove\" is unambiguous "
+"and matches how one would describe the \"remove the prefix\" behavior in "
+"English."
+msgstr ""
+
+#: ../../pep-0616.rst:281
+msgid "``stripprefix``:"
+msgstr ""
+
+#: ../../pep-0616.rst:283
+msgid ""
+"Users may benefit from remembering that \"strip\" means working with sets"
+" of characters, while other methods work with substrings, so re-using "
+"\"strip\" here should be avoided."
+msgstr ""
+
+#: ../../pep-0616.rst:289
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0616.rst:291
+msgid ""
+"Among the uses for the ``partition()``, ``startswith()``, and ``split()``"
+" string methods or the ``enumerate()`` or ``zip()`` built-in functions, a"
+" common theme is that if a beginner finds themselves manually indexing or"
+" slicing a string, then they should consider whether there is a higher-"
+"level method that better communicates *what* the code should do rather "
+"than merely *how* the code should do it.  The proposed  "
+"``removeprefix()`` and ``removesuffix()`` methods expand the high-level "
+"string \"toolbox\" and further allow for this sort of skepticism toward "
+"manual slicing."
+msgstr ""
+
+#: ../../pep-0616.rst:301
+msgid ""
+"The main opportunity for user confusion will be the conflation of "
+"``lstrip``/``rstrip`` with ``removeprefix``/``removesuffix``. It may "
+"therefore be helpful to emphasize (as the documentation will) the "
+"following differences between the methods:"
+msgstr ""
+
+#: ../../pep-0616.rst:306
+msgid "``(l/r)strip``:"
+msgstr ""
+
+#: ../../pep-0616.rst:308
+msgid "The argument is interpreted as a character set."
+msgstr ""
+
+#: ../../pep-0616.rst:310
+msgid ""
+"The characters are repeatedly removed from the appropriate end of the "
+"string."
+msgstr ""
+
+#: ../../pep-0616.rst:313
+msgid "``remove(prefix/suffix)``:"
+msgstr ""
+
+#: ../../pep-0616.rst:315
+msgid "The argument is interpreted as an unbroken substring."
+msgstr ""
+
+#: ../../pep-0616.rst:317
+msgid "Only at most one copy of the prefix/suffix is removed."
+msgstr ""
+
+#: ../../pep-0616.rst:321
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0616.rst:323
+msgid "See the pull request on GitHub [#pr]_."
+msgstr ""
+
+#: ../../pep-0616.rst:327
+msgid "History of Major revisions"
+msgstr ""
+
+#: ../../pep-0616.rst:329
+msgid "Version 3: Remove tuple behavior."
+msgstr ""
+
+#: ../../pep-0616.rst:331
+msgid ""
+"Version 2: Changed name to ``removeprefix``/``removesuffix``; added "
+"support for tuples as arguments"
+msgstr ""
+
+#: ../../pep-0616.rst:334
+msgid "Version 1: Initial draft with ``cutprefix``/``cutsuffix``"
+msgstr ""
+
+#: ../../pep-0616.rst:338
+msgid "References"
+msgstr ""
+
+#: ../../pep-0616.rst:340
+msgid ""
+"GitHub pull request with implementation "
+"(https://github.com/python/cpython/pull/18939)"
+msgstr ""
+
+#: ../../pep-0616.rst:342
+msgid ""
+"[Python-Ideas] \"New explicit methods to trim strings\" "
+"(https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/RJARZSUKCXRJIP42Z2YBBAEN5XA7KEC3/)"
+msgstr ""
+
+#: ../../pep-0616.rst:344
+msgid ""
+"\"Re: [Python-ideas] adding a trim convenience function\" "
+"(https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/SJ7CKPZSKB5RWT7H3YNXOJUQ7QLD2R3X/#C2W5T7RCFSHU5XI72HG53A6R3J3SN4MV)"
+msgstr ""
+
+#: ../../pep-0616.rst:346
+msgid ""
+"\"Re: [Python-Dev] strip behavior provides inconsistent results with "
+"certain strings\" (https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/XYFQMFPUV6FR2N5BGYWPBVMZ5BE5PJ6C/#XYFQMFPUV6FR2N5BGYWPBVMZ5BE5PJ6C)"
+msgstr ""
+
+#: ../../pep-0616.rst:348
+msgid ""
+"[Python-Dev] \"correction of a bug\" "
+"(https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/AOZ7RFQTQLCZCTVNKESZI67PB3PSS72X/#AOZ7RFQTQLCZCTVNKESZI67PB3PSS72X)"
+msgstr ""
+
+#: ../../pep-0616.rst:350
+msgid ""
+"[Python-Dev] \"str.lstrip bug?\" (https://mail.python.org/archives/list"
+"/python-"
+"dev@python.org/thread/OJDKRIESKGTQFNLX6KZSGKU57UXNZYAN/#CYZUFFJ2Q5ZZKMJIQBZVZR4NSLK5ZPIH)"
+msgstr ""
+
+#: ../../pep-0616.rst:352
+msgid ""
+"[Python-Dev] \"strip behavior provides inconsistent results with certain "
+"strings\" (https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/ZWRGCGANHGVDPP44VQKRIYOYX7LNVDVG/#ZWRGCGANHGVDPP44VQKRIYOYX7LNVDVG)"
+msgstr ""
+
+#: ../../pep-0616.rst:354
+msgid ""
+"Comment listing Bug Tracker and StackOverflow issues "
+"(https://mail.python.org/archives/list/python-"
+"ideas@python.org/message/GRGAFIII3AX22K3N3KT7RB4DPBY3LPVG/)"
+msgstr ""
+
+#: ../../pep-0616.rst:359
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0616.rst:361
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

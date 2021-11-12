@@ -1,0 +1,1326 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0583.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0583.rst:1
+msgid "583"
+msgstr ""
+
+#: ../../pep-0583.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0583.rst:2
+msgid "A Concurrency Memory Model for Python"
+msgstr ""
+
+#: ../../pep-0583.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0583.rst:5
+msgid "Jeffrey Yasskin <jyasskin@google.com>"
+msgstr ""
+
+#: ../../pep-0583.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0583.rst:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0583.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0583.rst:7
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0583.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0583.rst:9
+msgid "22-Mar-2008"
+msgstr ""
+
+#: ../../pep-0583.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0583.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0583.rst:16
+msgid ""
+"This PEP describes how Python programs may behave in the presence of "
+"concurrent reads and writes to shared variables from multiple threads. We"
+" use a *happens before* relation to define when variable accesses are "
+"ordered or concurrent.  Nearly all programs should simply use locks to "
+"guard their shared variables, and this PEP highlights some of the strange"
+" things that can happen when they don't, but programmers often assume "
+"that it's ok to do \"simple\" things without locking, and it's somewhat "
+"unpythonic to let the language surprise them.  Unfortunately, avoiding "
+"surprise often conflicts with making Python run quickly, so this PEP "
+"tries to find a good tradeoff between the two."
+msgstr ""
+
+#: ../../pep-0583.rst:29
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0583.rst:31
+msgid ""
+"So far, we have 4 major Python implementations -- CPython, Jython_, "
+"IronPython_, and PyPy_ -- as well as lots of minor ones.  Some of these "
+"already run on platforms that do aggressive optimizations.  In general, "
+"these optimizations are invisible within a single thread of execution, "
+"but they can be visible to other threads executing concurrently.  CPython"
+" currently uses a `GIL`_ to ensure that other threads see the results "
+"they expect, but this limits it to a single processor.  Jython and "
+"IronPython run on Java's or .NET's threading system respectively, which "
+"allows them to take advantage of more cores but can also show surprising "
+"values to other threads."
+msgstr ""
+
+#: ../../pep-0583.rst:50
+msgid ""
+"So that threaded Python programs continue to be portable between "
+"implementations, implementers and library authors need to agree on some "
+"ground rules."
+msgstr ""
+
+#: ../../pep-0583.rst:56
+msgid "A couple definitions"
+msgstr ""
+
+#: ../../pep-0583.rst:68
+msgid "Variable"
+msgstr ""
+
+#: ../../pep-0583.rst:59
+msgid ""
+"A name that refers to an object.  Variables are generally introduced by "
+"assigning to them, and may be destroyed by passing them to ``del``.  "
+"Variables are fundamentally mutable, while objects may not be.  There are"
+" several varieties of variables: module variables (often called "
+"\"globals\" when accessed from within the module), class variables, "
+"instance variables (also known as fields), and local variables.  All of "
+"these can be shared between threads (the local variables if they're saved"
+" into a closure). The object in which the variables are scoped notionally"
+" has a ``dict`` whose keys are the variables' names."
+msgstr ""
+
+#: ../../pep-0583.rst:72
+msgid "Object"
+msgstr ""
+
+#: ../../pep-0583.rst:71
+msgid ""
+"A collection of instance variables (a.k.a. fields) and methods. At least,"
+" that'll do for this PEP."
+msgstr ""
+
+#: ../../pep-0583.rst:76
+msgid "Program Order"
+msgstr ""
+
+#: ../../pep-0583.rst:75
+msgid ""
+"The order that actions (reads and writes) happen within a thread, which "
+"is very similar to the order they appear in the text."
+msgstr ""
+
+#: ../../pep-0583.rst:79
+msgid "Conflicting actions"
+msgstr ""
+
+#: ../../pep-0583.rst:79
+msgid "Two actions on the same variable, at least one of which is a write."
+msgstr ""
+
+#: ../../pep-0583.rst:84
+msgid "Data race"
+msgstr ""
+
+#: ../../pep-0583.rst:82
+msgid ""
+"A situation in which two conflicting actions happen at the same time.  "
+"\"The same time\" is defined by the memory model."
+msgstr ""
+
+#: ../../pep-0583.rst:87
+msgid "Two simple memory models"
+msgstr ""
+
+#: ../../pep-0583.rst:89
+msgid ""
+"Before talking about the details of data races and the surprising "
+"behaviors they produce, I'll present two simple memory models.  The first"
+" is probably too strong for Python, and the second is probably too weak."
+msgstr ""
+
+#: ../../pep-0583.rst:96 ../../pep-0583.rst:658
+msgid "Sequential Consistency"
+msgstr ""
+
+#: ../../pep-0583.rst:98
+msgid ""
+"In a sequentially-consistent concurrent execution, actions appear to "
+"happen in a global total order with each read of a particular variable "
+"seeing the value written by the last write that affected that variable.  "
+"The total order for actions must be consistent with the program order.  A"
+" program has a data race on a given input when one of its sequentially "
+"consistent executions puts two conflicting actions next to each other."
+msgstr ""
+
+#: ../../pep-0583.rst:106
+msgid ""
+"This is the easiest memory model for humans to understand, although it "
+"doesn't eliminate all confusion, since operations can be split in odd "
+"places."
+msgstr ""
+
+#: ../../pep-0583.rst:112
+msgid "Happens-before consistency"
+msgstr ""
+
+#: ../../pep-0583.rst:114
+msgid ""
+"The program contains a collection of *synchronization actions*, which in "
+"Python currently include lock acquires and releases and thread starts and"
+" joins.  Synchronization actions happen in a global total order that is "
+"consistent with the program order (they don't *have* to happen in a total"
+" order, but it simplifies the description of the model).  A lock release "
+"*synchronizes with* all later acquires of the same lock.  Similarly, "
+"given ``t = threading.Thread(target=worker)``:"
+msgstr ""
+
+#: ../../pep-0583.rst:122
+msgid ""
+"A call to ``t.start()`` synchronizes with the first statement in "
+"``worker()``."
+msgstr ""
+
+#: ../../pep-0583.rst:125
+msgid ""
+"The return from ``worker()`` synchronizes with the return from "
+"``t.join()``."
+msgstr ""
+
+#: ../../pep-0583.rst:128
+msgid ""
+"If the return from ``t.start()`` happens before (see below) a call to "
+"``t.isAlive()`` that returns ``False``, the return from ``worker()`` "
+"synchronizes with that call."
+msgstr ""
+
+#: ../../pep-0583.rst:132
+msgid ""
+"We call the source of the synchronizes-with edge a *release* operation on"
+" the relevant variable, and we call the target an *acquire* operation."
+msgstr ""
+
+#: ../../pep-0583.rst:135
+msgid ""
+"The *happens before* order is the transitive closure of the program order"
+" with the synchronizes-with edges.  That is, action *A* happens before "
+"action *B* if:"
+msgstr ""
+
+#: ../../pep-0583.rst:139
+msgid ""
+"A falls before B in the program order (which means they run in the same "
+"thread)"
+msgstr ""
+
+#: ../../pep-0583.rst:141
+msgid "A synchronizes with B"
+msgstr ""
+
+#: ../../pep-0583.rst:142
+msgid "You can get to B by following happens-before edges from A."
+msgstr ""
+
+#: ../../pep-0583.rst:144
+msgid ""
+"An execution of a program is happens-before consistent if each read *R* "
+"sees the value of a write *W* to the same variable such that:"
+msgstr ""
+
+#: ../../pep-0583.rst:147
+msgid "*R* does not happen before *W*, and"
+msgstr ""
+
+#: ../../pep-0583.rst:148
+msgid ""
+"There is no other write *V* that overwrote *W* before *R* got a chance to"
+" see it. (That is, it can't be the case that *W* happens before *V* "
+"happens before *R*.)"
+msgstr ""
+
+#: ../../pep-0583.rst:152
+msgid ""
+"You have a data race if two conflicting actions aren't related by "
+"happens-before."
+msgstr ""
+
+#: ../../pep-0583.rst:157
+msgid "An example"
+msgstr ""
+
+#: ../../pep-0583.rst:159
+msgid ""
+"Let's use the rules from the happens-before model to prove that the "
+"following program prints \"[7]\"::"
+msgstr ""
+
+#: ../../pep-0583.rst:195
+msgid ""
+"Because ``myqueue`` is initialized in the main thread before ``thread1`` "
+"or ``thread2`` is started, that initialization happens before ``worker1``"
+" and ``worker2`` begin running, so there's no way for either to raise a "
+"NameError, and both ``myqueue.l`` and ``myqueue.cond`` are set to their "
+"final objects."
+msgstr ""
+
+#: ../../pep-0583.rst:201
+msgid ""
+"The initialization of ``x`` in ``worker1`` happens before it calls "
+"``myqueue.put()``, which happens before it calls ``myqueue.l.append(x)``,"
+" which happens before the call to ``myqueue.cond.release()``, all because"
+" they run in the same thread."
+msgstr ""
+
+#: ../../pep-0583.rst:207
+msgid ""
+"In ``worker2``, ``myqueue.cond`` will be released and re-acquired until "
+"``myqueue.l`` contains a value (``x``). The call to "
+"``myqueue.cond.release()`` in ``worker1`` happens before that last call "
+"to ``myqueue.cond.acquire()`` in ``worker2``."
+msgstr ""
+
+#: ../../pep-0583.rst:212
+msgid ""
+"That last call to ``myqueue.cond.acquire()`` happens before "
+"``myqueue.get()`` reads ``myqueue.l``, which happens before "
+"``myqueue.get()`` returns, which happens before ``print y``, again all "
+"because they run in the same thread."
+msgstr ""
+
+#: ../../pep-0583.rst:217
+msgid ""
+"Because happens-before is transitive, the list initially stored in ``x`` "
+"in thread1 is initialized before it is printed in thread2."
+msgstr ""
+
+#: ../../pep-0583.rst:220
+msgid ""
+"Usually, we wouldn't need to look all the way into a thread-safe queue's "
+"implementation in order to prove that uses were safe.  Its interface "
+"would specify that puts happen before gets, and we'd reason directly from"
+" that."
+msgstr ""
+
+#: ../../pep-0583.rst:229
+msgid "Surprising behaviors with races"
+msgstr ""
+
+#: ../../pep-0583.rst:231
+msgid ""
+"Lots of strange things can happen when code has data races. It's easy to "
+"avoid all of these problems by just protecting shared variables with "
+"locks. This is not a complete list of race hazards; it's just a "
+"collection that seem relevant to Python."
+msgstr ""
+
+#: ../../pep-0583.rst:236
+msgid ""
+"In all of these examples, variables starting with ``r`` are local "
+"variables, and other variables are shared between threads."
+msgstr ""
+
+#: ../../pep-0583.rst:241
+msgid "Zombie values"
+msgstr ""
+
+#: ../../pep-0583.rst:243
+msgid "This example comes from the `Java memory model`_:"
+msgstr ""
+
+#: ../../pep-0583.rst:245
+msgid "Initially ``p is q`` and ``p.x == 0``."
+msgstr ""
+
+#: ../../pep-0583.rst:248 ../../pep-0583.rst:286 ../../pep-0583.rst:323
+#: ../../pep-0583.rst:375 ../../pep-0583.rst:390 ../../pep-0583.rst:412
+#: ../../pep-0583.rst:461 ../../pep-0583.rst:496 ../../pep-0583.rst:585
+#: ../../pep-0583.rst:609
+msgid "Thread 1"
+msgstr ""
+
+#: ../../pep-0583.rst:248 ../../pep-0583.rst:286 ../../pep-0583.rst:323
+#: ../../pep-0583.rst:375 ../../pep-0583.rst:390 ../../pep-0583.rst:412
+#: ../../pep-0583.rst:461 ../../pep-0583.rst:496 ../../pep-0583.rst:585
+#: ../../pep-0583.rst:609
+msgid "Thread 2"
+msgstr ""
+
+#: ../../pep-0583.rst:250 ../../pep-0583.rst:268
+msgid "r1 = p"
+msgstr ""
+
+#: ../../pep-0583.rst:250
+msgid "r6 = p"
+msgstr ""
+
+#: ../../pep-0583.rst:251 ../../pep-0583.rst:269
+msgid "r2 = r1.x"
+msgstr ""
+
+#: ../../pep-0583.rst:251
+msgid "r6.x = 3"
+msgstr ""
+
+#: ../../pep-0583.rst:252 ../../pep-0583.rst:270
+msgid "r3 = q"
+msgstr ""
+
+#: ../../pep-0583.rst:253 ../../pep-0583.rst:272
+msgid "r4 = r3.x"
+msgstr ""
+
+#: ../../pep-0583.rst:254
+msgid "r5 = r1.x"
+msgstr ""
+
+#: ../../pep-0583.rst:257
+msgid ""
+"Can produce ``r2 == r5 == 0`` but ``r4 == 3``, proving that ``p.x`` went "
+"from 0 to 3 and back to 0."
+msgstr ""
+
+#: ../../pep-0583.rst:260
+msgid ""
+"A good compiler would like to optimize out the redundant load of ``p.x`` "
+"in initializing ``r5`` by just re-using the value already loaded into "
+"``r2``.  We get the strange result if thread 1 sees memory in this order:"
+msgstr ""
+
+#: ../../pep-0583.rst:266
+msgid "Evaluation"
+msgstr ""
+
+#: ../../pep-0583.rst:266
+msgid "Computes"
+msgstr ""
+
+#: ../../pep-0583.rst:266
+msgid "Why"
+msgstr ""
+
+#: ../../pep-0583.rst:269
+msgid "r2 == 0"
+msgstr ""
+
+#: ../../pep-0583.rst:270
+msgid "r3 is p"
+msgstr ""
+
+#: ../../pep-0583.rst:271
+msgid "p.x = 3"
+msgstr ""
+
+#: ../../pep-0583.rst:271
+msgid "Side-effect of thread 2"
+msgstr ""
+
+#: ../../pep-0583.rst:272
+msgid "r4 == 3"
+msgstr ""
+
+#: ../../pep-0583.rst:273
+msgid "r5 = r2"
+msgstr ""
+
+#: ../../pep-0583.rst:273
+msgid "r5 == 0"
+msgstr ""
+
+#: ../../pep-0583.rst:273
+msgid "Optimized from r5 = r1.x because r2 == r1.x."
+msgstr ""
+
+#: ../../pep-0583.rst:278
+msgid "Inconsistent Orderings"
+msgstr ""
+
+#: ../../pep-0583.rst:280
+msgid ""
+"From `N2177: Sequential Consistency for Atomics`_, and also known as "
+"Independent Read of Independent Write (IRIW)."
+msgstr ""
+
+#: ../../pep-0583.rst:283
+msgid "Initially, ``a == b == 0``."
+msgstr ""
+
+#: ../../pep-0583.rst:286
+msgid "Thread 3"
+msgstr ""
+
+#: ../../pep-0583.rst:286
+msgid "Thread 4"
+msgstr ""
+
+#: ../../pep-0583.rst:288
+msgid "r1 = a"
+msgstr ""
+
+#: ../../pep-0583.rst:288
+msgid "r3 = b"
+msgstr ""
+
+#: ../../pep-0583.rst:288
+msgid "a = 1"
+msgstr ""
+
+#: ../../pep-0583.rst:288
+msgid "b = 1"
+msgstr ""
+
+#: ../../pep-0583.rst:289
+msgid "r2 = b"
+msgstr ""
+
+#: ../../pep-0583.rst:289
+msgid "r4 = a"
+msgstr ""
+
+#: ../../pep-0583.rst:292
+msgid ""
+"We may get ``r1 == r3 == 1`` and ``r2 == r4 == 0``, proving both that "
+"``a`` was written before ``b`` (thread 1's data), and that ``b`` was "
+"written before ``a`` (thread 2's data).  See `Special Relativity "
+"<http://en.wikipedia.org/wiki/Relativity_of_simultaneity>`__ for a real-"
+"world example."
+msgstr ""
+
+#: ../../pep-0583.rst:299
+msgid ""
+"This can happen if thread 1 and thread 3 are running on processors that "
+"are close to each other, but far away from the processors that threads 2 "
+"and 4 are running on and the writes are not being transmitted all the way"
+" across the machine before becoming visible to nearby threads."
+msgstr ""
+
+#: ../../pep-0583.rst:305
+msgid ""
+"Neither acquire/release semantics nor explicit memory barriers can help "
+"with this.  Making the orders consistent without locking requires "
+"detailed knowledge of the architecture's memory model, but Java requires "
+"it for volatiles so we could use documentation aimed at its implementers."
+msgstr ""
+
+#: ../../pep-0583.rst:316
+msgid "A happens-before race that's not a sequentially-consistent race"
+msgstr ""
+
+#: ../../pep-0583.rst:318
+msgid "From the POPL paper about the Java memory model [#JMM-popl]."
+msgstr ""
+
+#: ../../pep-0583.rst:320 ../../pep-0583.rst:372
+msgid "Initially, ``x == y == 0``."
+msgstr ""
+
+#: ../../pep-0583.rst:325 ../../pep-0583.rst:341 ../../pep-0583.rst:377
+#: ../../pep-0583.rst:393
+msgid "r1 = x"
+msgstr ""
+
+#: ../../pep-0583.rst:325 ../../pep-0583.rst:344 ../../pep-0583.rst:377
+#: ../../pep-0583.rst:392
+msgid "r2 = y"
+msgstr ""
+
+#: ../../pep-0583.rst:326 ../../pep-0583.rst:342
+msgid "if r1 != 0:"
+msgstr ""
+
+#: ../../pep-0583.rst:326 ../../pep-0583.rst:345
+msgid "if r2 != 0:"
+msgstr ""
+
+#: ../../pep-0583.rst:327 ../../pep-0583.rst:343 ../../pep-0583.rst:392
+msgid "y = 42"
+msgstr ""
+
+#: ../../pep-0583.rst:327 ../../pep-0583.rst:346
+msgid "x = 42"
+msgstr ""
+
+#: ../../pep-0583.rst:330
+msgid "Can ``r1 == r2 == 42``???"
+msgstr ""
+
+#: ../../pep-0583.rst:332
+msgid ""
+"In a sequentially-consistent execution, there's no way to get an adjacent"
+" read and write to the same variable, so the program should be considered"
+" correctly synchronized (albeit fragile), and should only produce ``r1 =="
+" r2 == 0``.  However, the following execution is happens-before "
+"consistent:"
+msgstr ""
+
+#: ../../pep-0583.rst:339
+msgid "Statement"
+msgstr ""
+
+#: ../../pep-0583.rst:339
+msgid "Value"
+msgstr ""
+
+#: ../../pep-0583.rst:339
+msgid "Thread"
+msgstr ""
+
+#: ../../pep-0583.rst:341 ../../pep-0583.rst:344
+msgid "42"
+msgstr ""
+
+#: ../../pep-0583.rst:341 ../../pep-0583.rst:342 ../../pep-0583.rst:343
+msgid "1"
+msgstr ""
+
+#: ../../pep-0583.rst:342 ../../pep-0583.rst:345
+msgid "true"
+msgstr ""
+
+#: ../../pep-0583.rst:344 ../../pep-0583.rst:345 ../../pep-0583.rst:346
+msgid "2"
+msgstr ""
+
+#: ../../pep-0583.rst:349
+msgid ""
+"WTF, you are asking yourself.  Because there were no inter-thread "
+"happens-before edges in the original program, the read of x in thread 1 "
+"can see any of the writes from thread 2, even if they only happened "
+"because the read saw them.  There *are* data races in the happens-before "
+"model."
+msgstr ""
+
+#: ../../pep-0583.rst:355
+msgid ""
+"We don't want to allow this, so the happens-before model isn't enough for"
+" Python.  One rule we could add to happens-before that would prevent this"
+" execution is:"
+msgstr ""
+
+#: ../../pep-0583.rst:359
+msgid ""
+"If there are no data races in any sequentially-consistent execution of a "
+"program, the program should have sequentially consistent semantics."
+msgstr ""
+
+#: ../../pep-0583.rst:363
+msgid ""
+"Java gets this rule as a theorem, but Python may not want all of the "
+"machinery you need to prove it."
+msgstr ""
+
+#: ../../pep-0583.rst:368
+msgid "Self-justifying values"
+msgstr ""
+
+#: ../../pep-0583.rst:370
+msgid "Also from the POPL paper about the Java memory model [#JMM-popl]."
+msgstr ""
+
+#: ../../pep-0583.rst:378 ../../pep-0583.rst:395
+msgid "y = r1"
+msgstr ""
+
+#: ../../pep-0583.rst:378 ../../pep-0583.rst:393
+msgid "x = r2"
+msgstr ""
+
+#: ../../pep-0583.rst:381
+msgid "Can ``x == y == 42``???"
+msgstr ""
+
+#: ../../pep-0583.rst:383
+msgid ""
+"In a sequentially consistent execution, no.  In a happens-before "
+"consistent execution, yes: The read of x in thread 1 is allowed to see "
+"the value written in thread 2 because there are no happens-before "
+"relations between the threads. This could happen if the compiler or "
+"processor transforms the code into:"
+msgstr ""
+
+#: ../../pep-0583.rst:394
+msgid "if r1 != 42:"
+msgstr ""
+
+#: ../../pep-0583.rst:398
+msgid ""
+"It can produce a security hole if the speculated value is a secret "
+"object, or points to the memory that an object used to occupy.  Java "
+"cares a lot about such security holes, but Python may not."
+msgstr ""
+
+#: ../../pep-0583.rst:405
+msgid "Uninitialized values (direct)"
+msgstr ""
+
+#: ../../pep-0583.rst:407
+msgid "From several classic double-checked locking examples."
+msgstr ""
+
+#: ../../pep-0583.rst:409
+msgid "Initially, ``d == None``."
+msgstr ""
+
+#: ../../pep-0583.rst:414
+msgid "while not d: pass"
+msgstr ""
+
+#: ../../pep-0583.rst:414
+msgid "d = [3, 4]"
+msgstr ""
+
+#: ../../pep-0583.rst:415
+msgid "assert d[1] == 4"
+msgstr ""
+
+#: ../../pep-0583.rst:418
+msgid ""
+"This could raise an IndexError, fail the assertion, or, without some care"
+" in the implementation, cause a crash or other undefined behavior."
+msgstr ""
+
+#: ../../pep-0583.rst:422
+msgid "Thread 2 may actually be implemented as::"
+msgstr ""
+
+#: ../../pep-0583.rst:429
+msgid ""
+"Because the assignment to d and the item assignments are independent, the"
+" compiler and processor may optimize that to::"
+msgstr ""
+
+#: ../../pep-0583.rst:437
+msgid ""
+"Which is obviously incorrect and explains the IndexError.  If we then "
+"look deeper into the implementation of ``r1.append(3)``, we may find that"
+" it and ``d[1]`` cannot run concurrently without causing their own race "
+"conditions.  In CPython (without the GIL), those race conditions would "
+"produce undefined behavior."
+msgstr ""
+
+#: ../../pep-0583.rst:443
+msgid ""
+"There's also a subtle issue on the reading side that can cause the value "
+"of d[1] to be out of date.  Somewhere in the implementation of ``list``, "
+"it stores its contents as an array in memory. This array may happen to be"
+" in thread 1's cache.  If thread 1's processor reloads ``d`` from main "
+"memory without reloading the memory that ought to contain the values 3 "
+"and 4, it could see stale values instead.  As far as I know, this can "
+"only actually happen on Alphas and maybe Itaniums, and we probably have "
+"to prevent it anyway to avoid crashes."
+msgstr ""
+
+#: ../../pep-0583.rst:454
+msgid "Uninitialized values (flag)"
+msgstr ""
+
+#: ../../pep-0583.rst:456
+msgid "From several more double-checked locking examples."
+msgstr ""
+
+#: ../../pep-0583.rst:458
+msgid "Initially, ``d == dict()`` and ``initialized == False``."
+msgstr ""
+
+#: ../../pep-0583.rst:463
+msgid "while not initialized: pass"
+msgstr ""
+
+#: ../../pep-0583.rst:463
+msgid "d['a'] = 3"
+msgstr ""
+
+#: ../../pep-0583.rst:464
+msgid "r1 = d['a']"
+msgstr ""
+
+#: ../../pep-0583.rst:464
+msgid "initialized = True"
+msgstr ""
+
+#: ../../pep-0583.rst:465
+msgid "r2 = r1 == 3"
+msgstr ""
+
+#: ../../pep-0583.rst:466
+msgid "assert r2"
+msgstr ""
+
+#: ../../pep-0583.rst:469
+msgid ""
+"This could raise a KeyError, fail the assertion, or, without some care in"
+" the implementation, cause a crash or other undefined behavior."
+msgstr ""
+
+#: ../../pep-0583.rst:473
+msgid ""
+"Because ``d`` and ``initialized`` are independent (except in the "
+"programmer's mind), the compiler and processor can rearrange these almost"
+" arbitrarily, except that thread 1's assertion has to stay after the "
+"loop."
+msgstr ""
+
+#: ../../pep-0583.rst:480
+msgid "Inconsistent guarantees from relying on data dependencies"
+msgstr ""
+
+#: ../../pep-0583.rst:482
+msgid ""
+"This is a problem with Java ``final`` variables and the proposed `data-"
+"dependency ordering`_ in C++0x."
+msgstr ""
+
+#: ../../pep-0583.rst:485
+msgid "First execute::"
+msgstr ""
+
+#: ../../pep-0583.rst:493
+msgid "Then in two threads:"
+msgstr ""
+
+#: ../../pep-0583.rst:498
+msgid "while not h: pass"
+msgstr ""
+
+#: ../../pep-0583.rst:498
+msgid "r1 = Init()"
+msgstr ""
+
+#: ../../pep-0583.rst:499
+msgid "assert h == [1,2,3]"
+msgstr ""
+
+#: ../../pep-0583.rst:499
+msgid "freeze(r1)"
+msgstr ""
+
+#: ../../pep-0583.rst:500
+msgid "assert h == g"
+msgstr ""
+
+#: ../../pep-0583.rst:500
+msgid "h = r1"
+msgstr ""
+
+#: ../../pep-0583.rst:503
+msgid ""
+"If h has semantics similar to a Java ``final`` variable (except for being"
+" write-once), then even though the first assertion is guaranteed to "
+"succeed, the second could fail."
+msgstr ""
+
+#: ../../pep-0583.rst:507
+msgid ""
+"Data-dependent guarantees like those ``final`` provides only work if the "
+"access is through the final variable.  It's not even safe to access the "
+"same object through a different route.  Unfortunately, because of how "
+"processors work, final's guarantees are only cheap when they're weak."
+msgstr ""
+
+#: ../../pep-0583.rst:518
+msgid "The rules for Python"
+msgstr ""
+
+#: ../../pep-0583.rst:520
+msgid ""
+"The first rule is that Python interpreters can't crash due to race "
+"conditions in user code.  For CPython, this means that race conditions "
+"can't make it down into C.  For Jython, it means that "
+"NullPointerExceptions can't escape the interpreter."
+msgstr ""
+
+#: ../../pep-0583.rst:525
+msgid ""
+"Presumably we also want a model at least as strong as happens-before "
+"consistency because it lets us write a simple description of how "
+"concurrent queues and thread launching and joining work."
+msgstr ""
+
+#: ../../pep-0583.rst:529
+msgid ""
+"Other rules are more debatable, so I'll present each one with pros and "
+"cons."
+msgstr ""
+
+#: ../../pep-0583.rst:534
+msgid "Data-race-free programs are sequentially consistent"
+msgstr ""
+
+#: ../../pep-0583.rst:536
+msgid ""
+"We'd like programmers to be able to reason about their programs as if "
+"they were sequentially consistent.  Since it's hard to tell whether "
+"you've written a happens-before race, we only want to require programmers"
+" to prevent sequential races.  The Java model does this through a "
+"complicated definition of causality, but if we don't want to include "
+"that, we can just assert this property directly."
+msgstr ""
+
+#: ../../pep-0583.rst:545
+msgid "No security holes from out-of-thin-air reads"
+msgstr ""
+
+#: ../../pep-0583.rst:547
+msgid ""
+"If the program produces a self-justifying value, it could expose access "
+"to an object that the user would rather the program not see. Again, "
+"Java's model handles this with the causality definition.  We might be "
+"able to prevent these security problems by banning speculative writes to "
+"shared variables, but I don't have a proof of that, and Python may not "
+"need those security guarantees anyway."
+msgstr ""
+
+#: ../../pep-0583.rst:556
+msgid "Restrict reorderings instead of defining happens-before"
+msgstr ""
+
+#: ../../pep-0583.rst:558
+msgid ""
+"The .NET [#CLR-msdn] and x86 [#x86-model] memory models are based on "
+"defining which reorderings compilers may allow.  I think that it's easier"
+" to program to a happens-before model than to reason about all of the "
+"possible reorderings of a program, and it's easier to insert enough "
+"happens-before edges to make a program correct, than to insert enough "
+"memory fences to do the same thing.  So, although we could layer some "
+"reordering restrictions on top of the happens-before base, I don't think "
+"Python's memory model should be entirely reordering restrictions."
+msgstr ""
+
+#: ../../pep-0583.rst:570
+msgid "Atomic, unordered assignments"
+msgstr ""
+
+#: ../../pep-0583.rst:572
+msgid ""
+"Assignments of primitive types are already atomic.  If you assign ``3<<72"
+" + 5`` to a variable, no thread can see only part of the value. Jeremy "
+"Manson suggested that we extend this to all objects.  This allows "
+"compilers to reorder operations to optimize them, without allowing some "
+"of the more confusing `uninitialized values`_.  The basic idea here is "
+"that when you assign a shared variable, readers can't see any changes "
+"made to the new value before the assignment, or to the old value after "
+"the assignment. So, if we have a program like:"
+msgstr ""
+
+#: ../../pep-0583.rst:581
+msgid ""
+"Initially, ``(d.a, d.b) == (1, 2)``, and ``(e.c, e.d) == (3, 4)``. We "
+"also have ``class Obj(object): pass``."
+msgstr ""
+
+#: ../../pep-0583.rst:587 ../../pep-0583.rst:611
+msgid "r1 = Obj()"
+msgstr ""
+
+#: ../../pep-0583.rst:587 ../../pep-0583.rst:611
+msgid "r3 = d"
+msgstr ""
+
+#: ../../pep-0583.rst:588 ../../pep-0583.rst:613
+msgid "r1.a = 3"
+msgstr ""
+
+#: ../../pep-0583.rst:588
+msgid "r4, r5 = r3.a, r3.b"
+msgstr ""
+
+#: ../../pep-0583.rst:589 ../../pep-0583.rst:617
+msgid "r1.b = 4"
+msgstr ""
+
+#: ../../pep-0583.rst:589 ../../pep-0583.rst:612
+msgid "r6 = e"
+msgstr ""
+
+#: ../../pep-0583.rst:590 ../../pep-0583.rst:618
+msgid "d = r1"
+msgstr ""
+
+#: ../../pep-0583.rst:590
+msgid "r7, r8 = r6.c, r6.d"
+msgstr ""
+
+#: ../../pep-0583.rst:591 ../../pep-0583.rst:612
+msgid "r2 = Obj()"
+msgstr ""
+
+#: ../../pep-0583.rst:592 ../../pep-0583.rst:614
+msgid "r2.c = 6"
+msgstr ""
+
+#: ../../pep-0583.rst:593 ../../pep-0583.rst:615
+msgid "r2.d = 7"
+msgstr ""
+
+#: ../../pep-0583.rst:594 ../../pep-0583.rst:616
+msgid "e = r2"
+msgstr ""
+
+#: ../../pep-0583.rst:597
+msgid ""
+"``(r4, r5)`` can be ``(1, 2)`` or ``(3, 4)`` but nothing else, and ``(r7,"
+" r8)`` can be either ``(3, 4)`` or ``(6, 7)`` but nothing else.  Unlike "
+"if writes were releases and reads were acquires, it's legal for thread 2 "
+"to see ``(e.c, e.d) == (6, 7) and (d.a, d.b) == (1, 2)`` (out of order)."
+msgstr ""
+
+#: ../../pep-0583.rst:603
+msgid ""
+"This allows the compiler a lot of flexibility to optimize without "
+"allowing users to see some strange values.  However, because it relies on"
+" data dependencies, it introduces some surprises of its own.  For "
+"example, the compiler could freely optimize the above example to:"
+msgstr ""
+
+#: ../../pep-0583.rst:613
+msgid "r4, r7 = r3.a, r6.c"
+msgstr ""
+
+#: ../../pep-0583.rst:614
+msgid "r5, r8 = r3.b, r6.d"
+msgstr ""
+
+#: ../../pep-0583.rst:621
+msgid ""
+"As long as it didn't let the initialization of ``e`` move above any of "
+"the initializations of members of ``r2``, and similarly for ``d`` and "
+"``r1``."
+msgstr ""
+
+#: ../../pep-0583.rst:625
+msgid ""
+"This also helps to ground happens-before consistency.  To see the "
+"problem, imagine that the user unsafely publishes a reference to an "
+"object as soon as she gets it.  The model needs to constrain what values "
+"can be read through that reference.  Java says that every field is "
+"initialized to 0 before anyone sees the object for the first time, but "
+"Python would have trouble defining \"every field\".  If instead we say "
+"that assignments to shared variables have to see a value at least as up "
+"to date as when the assignment happened, then we don't run into any "
+"trouble with early publication."
+msgstr ""
+
+#: ../../pep-0583.rst:637
+msgid "Two tiers of guarantees"
+msgstr ""
+
+#: ../../pep-0583.rst:639
+msgid ""
+"Most other languages with any guarantees for unlocked variables "
+"distinguish between ordinary variables and volatile/atomic variables. "
+"They provide many more guarantees for the volatile ones.  Python can't "
+"easily do this because we don't declare variables.  This may or may not "
+"matter, since python locks aren't significantly more expensive than "
+"ordinary python code.  If we want to get those tiers back, we could:"
+msgstr ""
+
+#: ../../pep-0583.rst:646
+msgid ""
+"Introduce a set of atomic types similar to Java's [#Java-atomics]_ or "
+"C++'s [#Cpp-atomics]_.  Unfortunately, we couldn't assign to them with "
+"``=``."
+msgstr ""
+
+#: ../../pep-0583.rst:650
+msgid ""
+"Without requiring variable declarations, we could also specify that *all*"
+" of the fields on a given object are atomic."
+msgstr ""
+
+#: ../../pep-0583.rst:653
+msgid ""
+"Extend the ``__slots__`` mechanism [#slots]_ with a parallel "
+"``__volatiles__`` list, and maybe a ``__finals__`` list."
+msgstr ""
+
+#: ../../pep-0583.rst:660
+msgid ""
+"We could just adopt sequential consistency for Python.  This avoids all "
+"of the hazards_ mentioned above, but it prohibits lots of optimizations "
+"too.  As far as I know, this is the current model of CPython, but if "
+"CPython learned to optimize out some variable reads, it would lose this "
+"property."
+msgstr ""
+
+#: ../../pep-0583.rst:666
+msgid ""
+"If we adopt this, Jython's ``dict`` implementation may no longer be able "
+"to use ConcurrentHashMap because that only promises to create appropriate"
+" happens-before edges, not to be sequentially consistent (although maybe "
+"the fact that Java volatiles are totally ordered carries over). Both "
+"Jython and IronPython would probably need to use `AtomicReferenceArray "
+"<http://java.sun.com/javase/6/docs/api/java/util/concurrent/atomic/AtomicReferenceArray.html>`__"
+" or the equivalent for any ``__slots__`` arrays."
+msgstr ""
+
+#: ../../pep-0583.rst:677
+msgid "Adapt the x86 model"
+msgstr ""
+
+#: ../../pep-0583.rst:679
+msgid "The x86 model is:"
+msgstr ""
+
+#: ../../pep-0583.rst:681
+msgid "Loads are not reordered with other loads."
+msgstr ""
+
+#: ../../pep-0583.rst:682
+msgid "Stores are not reordered with other stores."
+msgstr ""
+
+#: ../../pep-0583.rst:683
+msgid "Stores are not reordered with older loads."
+msgstr ""
+
+#: ../../pep-0583.rst:684
+msgid ""
+"Loads may be reordered with older stores to different locations but not "
+"with older stores to the same location."
+msgstr ""
+
+#: ../../pep-0583.rst:686
+msgid ""
+"In a multiprocessor system, memory ordering obeys causality (memory "
+"ordering respects transitive visibility)."
+msgstr ""
+
+#: ../../pep-0583.rst:688
+msgid ""
+"In a multiprocessor system, stores to the same location have a total "
+"order."
+msgstr ""
+
+#: ../../pep-0583.rst:690
+msgid "In a multiprocessor system, locked instructions have a total order."
+msgstr ""
+
+#: ../../pep-0583.rst:691
+msgid "Loads and stores are not reordered with locked instructions."
+msgstr ""
+
+#: ../../pep-0583.rst:693
+msgid ""
+"In acquire/release terminology, this appears to say that every store is a"
+" release and every load is an acquire.  This is slightly weaker than "
+"sequential consistency, in that it allows `inconsistent orderings`_, but "
+"it disallows `zombie values`_ and the compiler optimizations that produce"
+" them.  We would probably want to weaken the model somehow to explicitly "
+"allow compilers to eliminate redundant variable reads.  The x86 model may"
+" also be expensive to implement on other platforms, although because x86 "
+"is so common, that may not matter much."
+msgstr ""
+
+#: ../../pep-0583.rst:705
+msgid "Upgrading or downgrading to an alternate model"
+msgstr ""
+
+#: ../../pep-0583.rst:707
+msgid ""
+"We can adopt an initial memory model without totally restricting future "
+"implementations.  If we start with a weak model and want to get stronger "
+"later, we would only have to change the implementations, not programs.  "
+"Individual implementations could also guarantee a stronger memory model "
+"than the language demands, although that could hurt interoperability.  On"
+" the other hand, if we start with a strong model and want to weaken it "
+"later, we can add a ``from __future__ import weak_memory`` statement to "
+"declare that some modules are safe."
+msgstr ""
+
+#: ../../pep-0583.rst:718
+msgid "Implementation Details"
+msgstr ""
+
+#: ../../pep-0583.rst:720
+msgid ""
+"The required model is weaker than any particular implementation.  This "
+"section tries to document the actual guarantees each implementation "
+"provides, and should be updated as the implementations change."
+msgstr ""
+
+#: ../../pep-0583.rst:726
+msgid "CPython"
+msgstr ""
+
+#: ../../pep-0583.rst:728
+msgid ""
+"Uses the GIL to guarantee that other threads don't see funny reorderings,"
+" and does few enough optimizations that I believe it's actually "
+"sequentially consistent at the bytecode level.  Threads can switch "
+"between any two bytecodes (instead of only between statements), so two "
+"threads that concurrently execute::"
+msgstr ""
+
+#: ../../pep-0583.rst:736
+msgid ""
+"with ``i`` initially ``0`` could easily end up with ``i==1`` instead of "
+"the expected ``i==2``.  If they execute::"
+msgstr ""
+
+#: ../../pep-0583.rst:741
+msgid ""
+"instead, CPython 2.6 will always give the right answer, but it's easy to "
+"imagine another implementation in which this statement won't be atomic."
+msgstr ""
+
+#: ../../pep-0583.rst:747
+msgid "PyPy"
+msgstr ""
+
+#: ../../pep-0583.rst:749
+msgid ""
+"Also uses a GIL, but probably does enough optimization to violate "
+"sequential consistency.  I know very little about this implementation."
+msgstr ""
+
+#: ../../pep-0583.rst:754
+msgid "Jython"
+msgstr ""
+
+#: ../../pep-0583.rst:756
+msgid ""
+"Provides true concurrency under the `Java memory model`_ and stores all "
+"object fields (except for those in ``__slots__``?) in a "
+"`ConcurrentHashMap "
+"<http://java.sun.com/javase/6/docs/api/java/util/concurrent/ConcurrentHashMap.html>`__,"
+" which provides fairly strong ordering guarantees.  Local variables in a "
+"function may have fewer guarantees, which would become visible if they "
+"were captured into a closure that was then passed to another thread."
+msgstr ""
+
+#: ../../pep-0583.rst:767
+msgid "IronPython"
+msgstr ""
+
+#: ../../pep-0583.rst:769
+msgid ""
+"Provides true concurrency under the CLR memory model, which probably "
+"protects it from `uninitialized values`_.  IronPython uses a locked map "
+"to store object fields, providing at least as many guarantees as Jython."
+msgstr ""
+
+#: ../../pep-0583.rst:776
+msgid "References"
+msgstr ""
+
+#: ../../pep-0583.rst:782
+msgid ""
+"The Java Memory Model, by Jeremy Manson, Bill Pugh, and Sarita Adve "
+"(http://www.cs.umd.edu/users/jmanson/java/journal.pdf). This paper is an "
+"excellent introduction to memory models in general and has lots of "
+"examples of compiler/processor optimizations and the strange program "
+"behaviors they can produce."
+msgstr ""
+
+#: ../../pep-0583.rst:789
+msgid ""
+"N2480: A Less Formal Explanation of the Proposed C++ Concurrency Memory "
+"Model, Hans Boehm (http://www.open-"
+"std.org/jtc1/sc22/wg21/docs/papers/2007/n2480.html)"
+msgstr ""
+
+#: ../../pep-0583.rst:793
+msgid ""
+"Memory Models: Understand the Impact of Low-Lock Techniques in "
+"Multithreaded Apps, Vance Morrison (http://msdn2.microsoft.com/en-"
+"us/magazine/cc163715.aspx)"
+msgstr ""
+
+#: ../../pep-0583.rst:797
+msgid ""
+"Intel(R) 64 Architecture Memory Ordering White Paper "
+"(http://www.intel.com/products/processor/manuals/318147.pdf)"
+msgstr ""
+
+#: ../../pep-0583.rst:800
+msgid ""
+"Package java.util.concurrent.atomic "
+"(http://java.sun.com/javase/6/docs/api/java/util/concurrent/atomic"
+"/package-summary.html)"
+msgstr ""
+
+#: ../../pep-0583.rst:803
+msgid ""
+"C++ Atomic Types and Operations, Hans Boehm and Lawrence Crowl "
+"(http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2427.html)"
+msgstr ""
+
+#: ../../pep-0583.rst:807
+msgid "__slots__ (http://docs.python.org/ref/slots.html)"
+msgstr ""
+
+#: ../../pep-0583.rst:809
+msgid ""
+"Alternatives to SC, a thread on the cpp-threads mailing list, which "
+"includes lots of good examples. "
+"(http://www.decadentplace.org.uk/pipermail/cpp-"
+"threads/2007-January/001287.html)"
+msgstr ""
+
+#: ../../pep-0583.rst:813
+msgid ""
+"python-safethread, a patch by Adam Olsen for CPython that removes the GIL"
+" and statically guarantees that all objects shared between threads are "
+"consistently locked. (http://code.google.com/p/python-safethread/)"
+msgstr ""
+
+#: ../../pep-0583.rst:820
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0583.rst:822
+msgid ""
+"Thanks to Jeremy Manson and Alex Martelli for detailed discussions on "
+"what this PEP should look like."
+msgstr ""
+
+#: ../../pep-0583.rst:827
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0583.rst:829
+msgid "This document has been placed in the public domain."
+msgstr ""
+

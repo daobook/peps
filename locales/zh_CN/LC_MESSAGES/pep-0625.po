@@ -1,0 +1,298 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0625.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0625.rst:1
+msgid "625"
+msgstr ""
+
+#: ../../pep-0625.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0625.rst:2
+msgid "File name of a Source Distribution"
+msgstr ""
+
+#: ../../pep-0625.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0625.rst:3
+msgid "Tzu-ping Chung <uranusjr@gmail.com>, Paul Moore <p.f.moore@gmail.com>"
+msgstr ""
+
+#: ../../pep-0625.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0625.rst:5
+msgid ""
+"https://discuss.python.org/t/draft-pep-file-name-of-a-source-"
+"distribution/4686"
+msgstr ""
+
+#: ../../pep-0625.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0625.rst:6
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0625.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0625.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0625.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0625.rst:9 ../../pep-0625.rst:10
+msgid "08-Jul-2020"
+msgstr ""
+
+#: ../../pep-0625.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0625.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0625.rst:15
+msgid ""
+"This PEP describes a standard naming scheme for a Source Distribution, "
+"also known as an *sdist*. This scheme distinguishes an sdist from an "
+"arbitrary archive file containing source code of Python packages, and can"
+" be used to communicate information about the distribution to packaging "
+"tools."
+msgstr ""
+
+#: ../../pep-0625.rst:20
+msgid ""
+"A standard sdist specified here is a gzipped tar file with a specially "
+"formatted file stem and a ``.sdist`` suffix. This PEP does not specify "
+"the contents of the tarball."
+msgstr ""
+
+#: ../../pep-0625.rst:26
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0625.rst:28
+msgid ""
+"An sdist is a Python package distribution that contains \"source code\" "
+"of the Python package, and requires a build step to be turned into a "
+"wheel on installation. This format is often considered as an unbuilt "
+"counterpart of a :pep:`427` wheel, and given special treatments in "
+"various parts of the packaging ecosystem."
+msgstr ""
+
+#: ../../pep-0625.rst:34
+msgid ""
+"Compared to wheel, however, the sdist is entirely unspecified, and "
+"currently works by convention. The widely accepted format of an sdist is "
+"defined by the implementation of distutils and setuptools, which creates "
+"a source code archive in a predictable format and file name scheme. "
+"Installers exploit this predictability to assign this format certain "
+"contextual information that helps the installation process. pip, for "
+"example, parses the file name of an sdist from a :pep:`503` index, to "
+"obtain the distribution's project name and version for dependency "
+"resolution purposes. But due to the lack of specification, the installer "
+"does not have any guarantee as to the correctness of the inferred "
+"message, and must verify it at some point by locally building the "
+"distribution metadata."
+msgstr ""
+
+#: ../../pep-0625.rst:46
+msgid ""
+"This build step is awkward for a certain class of operations, when the "
+"user does not expect the build process to occur. `pypa/pip#8387`_ "
+"describes an example. The command ``pip download --no-deps --no-"
+"binary=numpy numpy`` is expected to only download an sdist for numpy, "
+"since we do not need to check for dependencies, and both the name and "
+"version are available by introspecting the downloaded file name. pip, "
+"however, cannot assume the downloaded archive follows the convention, and"
+" must build and check the metadata. For a :pep:`518` project, this means "
+"running the ``prepare_metadata_for_build_wheel`` hook specified in "
+":pep:`517`, which incurs significant overhead."
+msgstr ""
+
+#: ../../pep-0625.rst:58
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0625.rst:60
+msgid ""
+"By creating a special file name scheme for the sdist format, this PEP "
+"frees up tools from the time-consuming metadata verification step when "
+"they only need the metadata available in the file name."
+msgstr ""
+
+#: ../../pep-0625.rst:64
+msgid ""
+"This PEP also serves as the formal specification to the long-standing "
+"file name convention used by the current sdist implementations. The file "
+"name contains the distribution name and version, to aid tools identifying"
+" a distribution without needing to download, unarchive the file, and "
+"perform costly metadata generation for introspection, if all the "
+"information they need is available in the file name."
+msgstr ""
+
+#: ../../pep-0625.rst:73
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0625.rst:75
+msgid "The name of an sdist should be ``{distribution}-{version}.sdist``."
+msgstr ""
+
+#: ../../pep-0625.rst:77
+msgid ""
+"``distribution`` is the name of the distribution as defined in "
+":pep:`345`, and normalised according to :pep:`503`, e.g. ``'pip'``, "
+"``'flit-core'``."
+msgstr ""
+
+#: ../../pep-0625.rst:79
+msgid ""
+"``version`` is the version of the distribution as defined in :pep:`440`, "
+"e.g. ``20.2``."
+msgstr ""
+
+#: ../../pep-0625.rst:82
+msgid "Each component is escaped according to the same rules as :pep:`427`."
+msgstr ""
+
+#: ../../pep-0625.rst:84
+msgid ""
+"An sdist must be a gzipped tar archive that is able to be extracted by "
+"the standard library ``tarfile`` module with the open flag ``'r:gz'``."
+msgstr ""
+
+#: ../../pep-0625.rst:89
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0625.rst:91
+msgid ""
+"The new file name scheme should not incur backwards incompatibility in "
+"existing tools. Installers are likely to have already implemented logic "
+"to exclude extensions they do not understand, since they already need to "
+"deal with legacy formats on PyPI such as ``.rpm`` and ``.egg``. They "
+"should be able to correctly ignore files with extension ``.sdist``."
+msgstr ""
+
+#: ../../pep-0625.rst:97
+msgid "pip, for example, skips this extension with the following debug message::"
+msgstr ""
+
+#: ../../pep-0625.rst:101
+msgid "While setuptools ignores it silently."
+msgstr ""
+
+#: ../../pep-0625.rst:105
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0625.rst:108
+msgid "Create specification for sdist metadata"
+msgstr ""
+
+#: ../../pep-0625.rst:110
+msgid ""
+"The topic of creating a trustworthy, standard sdist metadata format as a "
+"means to distinguish sdists from arbitrary archive files has been raised "
+"and discussed multiple times, but has yet to make significant progress "
+"due to the complexity of potential metadata inconsistency between an "
+"sdist and a wheel built from it."
+msgstr ""
+
+#: ../../pep-0625.rst:116
+msgid ""
+"This PEP does not exclude the possibility of creating a metadata "
+"specification for sdists in the future. But by specifying only the file "
+"name of an sdist, a tool can reliably identify an sdist, and perform "
+"useful introspection on its identity, without going into the details "
+"required for metadata specification."
+msgstr ""
+
+#: ../../pep-0625.rst:122
+msgid "Use a currently common sdist naming scheme"
+msgstr ""
+
+#: ../../pep-0625.rst:124
+msgid ""
+"There is a currently established practice to name an sdist in the format "
+"of ``{distribution}-{version}.[tar.gz|zip]``."
+msgstr ""
+
+#: ../../pep-0625.rst:127
+msgid ""
+"Popular source code management services use a similar scheme to name the "
+"downloaded source archive. GitHub, for example, uses "
+"``distribution-1.0.zip`` as the archive name containing source code of "
+"repository ``distribution`` on branch ``1.0``. Giving this scheme a "
+"special meaning would cause confusion since a source archive may not a "
+"valid sdist."
+msgstr ""
+
+#: ../../pep-0625.rst:134
+msgid "Augment a currently common sdist naming scheme"
+msgstr ""
+
+#: ../../pep-0625.rst:136
+msgid ""
+"A scheme ``{distribution}-{version}.sdist.tar.gz`` was raised during the "
+"initial discussion. This was abandoned due to backwards compatibility "
+"issues with currently available installation tools. pip 20.1, for "
+"example, would parse ``distribution-1.0.sdist.tar.gz`` as project "
+"``distribution`` with version ``1.0.sdist``. This would cause the sdist "
+"to be downloaded, but fail to install due to inconsistent metadata."
+msgstr ""
+
+#: ../../pep-0625.rst:143
+msgid ""
+"The same problem exists for all common archive suffixes. To avoid "
+"confusing old installers, the sdist scheme must use a suffix that they do"
+" not identify as an archive."
+msgstr ""
+
+#: ../../pep-0625.rst:149
+msgid "References"
+msgstr ""
+
+#: ../../pep-0625.rst:155
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0625.rst:157
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -1,0 +1,458 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0455.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0455.txt:1
+msgid "455"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0455.txt:2
+msgid "Adding a key-transforming dictionary to collections"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0455.txt:5
+msgid "Antoine Pitrou <solipsis@pitrou.net>"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0455.txt:6
+msgid "Raymond Hettinger"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0455.txt:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0455.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0455.txt:10
+msgid "13-Sep-2013"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0455.txt:11
+msgid "3.5"
+msgstr ""
+
+#: ../../pep-0455.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0455.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0455.txt:18
+msgid ""
+"This PEP proposes a new data structure for the ``collections`` module, "
+"called \"TransformDict\" in this PEP.  This structure is a mutable "
+"mapping which transforms the key using a given function when doing a "
+"lookup, but retains the original key when reading."
+msgstr ""
+
+#: ../../pep-0455.txt:24
+msgid "Rejection"
+msgstr ""
+
+#: ../../pep-0455.txt:26
+msgid ""
+"See the rationale at https://mail.python.org/pipermail/python-"
+"dev/2015-May/140003.html and for an earlier partial review, see "
+"https://mail.python.org/pipermail/python-dev/2013-October/129937.html ."
+msgstr ""
+
+#: ../../pep-0455.txt:32
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0455.txt:34
+msgid ""
+"Numerous specialized versions of this pattern exist.  The most common is "
+"a case-insensitive case-preserving dict, i.e. a dict-like container which"
+" matches keys in a case-insensitive fashion but retains the original "
+"casing.  It is a very common need in network programming, as many "
+"protocols feature some arrays of \"key / value\" properties in their "
+"messages, where the keys are textual strings whose case is specified to "
+"be ignored on receipt but by either specification or custom is to be "
+"preserved or non-trivially canonicalized when retransmitted."
+msgstr ""
+
+#: ../../pep-0455.txt:43
+msgid ""
+"Another common request is an identity dict, where keys are matched "
+"according to their respective id()s instead of normal matching."
+msgstr ""
+
+#: ../../pep-0455.txt:46
+msgid ""
+"Both are instances of a more general pattern, where a given "
+"transformation function is applied to keys when looking them up: that "
+"function being ``str.lower`` or ``str.casefold`` in the former example "
+"and the built-in ``id`` function in the latter."
+msgstr ""
+
+#: ../../pep-0455.txt:51
+msgid ""
+"(It could be said that the pattern *projects* keys from the user-visible "
+"set onto the internal lookup set.)"
+msgstr ""
+
+#: ../../pep-0455.txt:56
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-0455.txt:58
+msgid ""
+"TransformDict is a ``MutableMapping`` implementation: it faithfully "
+"implements the well-known API of mutable mappings, like ``dict`` itself "
+"and other dict-like classes in the standard library.  Therefore, this PEP"
+" won't rehash the semantics of most TransformDict methods."
+msgstr ""
+
+#: ../../pep-0455.txt:63
+msgid ""
+"The transformation function needn't be bijective, it can be strictly "
+"surjective as in the case-insensitive example (in other words, different "
+"keys can lookup the same value)::"
+msgstr ""
+
+#: ../../pep-0455.txt:74
+msgid "TransformDict retains the first key used when creating an entry::"
+msgstr ""
+
+#: ../../pep-0455.txt:82
+msgid ""
+"The original keys needn't be hashable, as long as the transformation "
+"function returns a hashable one::"
+msgstr ""
+
+#: ../../pep-0455.txt:92
+msgid "Constructor"
+msgstr ""
+
+#: ../../pep-0455.txt:94
+msgid ""
+"As shown in the examples above, creating a TransformDict requires passing"
+" the key transformation function as the first argument (much like "
+"creating a ``defaultdict`` requires passing the factory function as first"
+" argument)."
+msgstr ""
+
+#: ../../pep-0455.txt:98
+msgid ""
+"The constructor also takes other optional arguments which can be used to "
+"initialize the TransformDict with certain key-value pairs.  Those "
+"optional arguments are the same as in the ``dict`` and ``defaultdict`` "
+"constructors::"
+msgstr ""
+
+#: ../../pep-0455.txt:108
+msgid "Getting the original key"
+msgstr ""
+
+#: ../../pep-0455.txt:110
+msgid ""
+"TransformDict also features a lookup method returning the stored key "
+"together with the corresponding value::"
+msgstr ""
+
+#: ../../pep-0455.txt:121
+msgid ""
+"The method name ``getitem()`` follows the standard ``popitem()`` method "
+"on mutable mappings."
+msgstr ""
+
+#: ../../pep-0455.txt:125
+msgid "Getting the transformation function"
+msgstr ""
+
+#: ../../pep-0455.txt:127
+msgid ""
+"TransformDict has a simple read-only property ``transform_func`` which "
+"gives back the transformation function."
+msgstr ""
+
+#: ../../pep-0455.txt:132
+msgid "Alternative proposals and questions"
+msgstr ""
+
+#: ../../pep-0455.txt:135
+msgid "Retaining the last original key"
+msgstr ""
+
+#: ../../pep-0455.txt:137
+msgid ""
+"Most python-dev respondents found retaining the first user-supplied key "
+"more intuitive than retaining the last.  Also, it matches the dict "
+"object's own behaviour when using different but equal keys::"
+msgstr ""
+
+#: ../../pep-0455.txt:147
+msgid ""
+"Furthermore, explicitly retaining the last key in a first-key-retaining "
+"scheme is still possible using the following approach::"
+msgstr ""
+
+#: ../../pep-0455.txt:153
+msgid ""
+"while the converse (retaining the first key in a last-key-retaining "
+"scheme) doesn't look possible without rewriting part of the container's "
+"code."
+msgstr ""
+
+#: ../../pep-0455.txt:158
+msgid "Using an encoder / decoder pair"
+msgstr ""
+
+#: ../../pep-0455.txt:160
+msgid ""
+"Using a function pair isn't necessary, since the original key is retained"
+" by the container.  Moreover, an encoder / decoder pair would require the"
+" transformation to be bijective, which prevents important use cases like "
+"case-insensitive matching."
+msgstr ""
+
+#: ../../pep-0455.txt:166
+msgid "Providing a transformation function for values"
+msgstr ""
+
+#: ../../pep-0455.txt:168
+msgid ""
+"Dictionary values are not used for lookup, their semantics are totally "
+"irrelevant to the container's operation.  Therefore, there is no point in"
+" having both an \"original\" and a \"transformed\" value: the transformed"
+" value wouldn't be used for anything."
+msgstr ""
+
+#: ../../pep-0455.txt:174
+msgid "Providing a specialized container, not generic"
+msgstr ""
+
+#: ../../pep-0455.txt:176
+msgid ""
+"It was asked why we would provide the generic TransformDict construct "
+"rather than a specialized case-insensitive dict variant.  The answer is "
+"that it's nearly as cheap (code-wise and performance-wise) to provide the"
+" generic construct, and it can fill more use cases."
+msgstr ""
+
+#: ../../pep-0455.txt:181
+msgid ""
+"Even case-insensitive dicts can actually elicit different transformation "
+"functions: ``str.lower``, ``str.casefold`` or in some cases "
+"``bytes.lower`` when working with text encoded in an ASCII-compatible "
+"encoding."
+msgstr ""
+
+#: ../../pep-0455.txt:186
+msgid "Other constructor patterns"
+msgstr ""
+
+#: ../../pep-0455.txt:188
+msgid "Two other constructor patterns were proposed by Serhiy Storchaka:"
+msgstr ""
+
+#: ../../pep-0455.txt:190
+msgid "A type factory scheme::"
+msgstr ""
+
+#: ../../pep-0455.txt:194
+msgid "A subclassing scheme::"
+msgstr ""
+
+#: ../../pep-0455.txt:201
+msgid ""
+"While both approaches can be defended, they don't follow established "
+"practices in the standard library, and therefore were rejected."
+msgstr ""
+
+#: ../../pep-0455.txt:206
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0455.txt:208
+msgid ""
+"A patch for the collections module is tracked on the bug tracker at "
+"http://bugs.python.org/issue18986."
+msgstr ""
+
+#: ../../pep-0455.txt:213
+msgid "Existing work"
+msgstr ""
+
+#: ../../pep-0455.txt:215
+msgid "Case-insensitive dicts are a popular request:"
+msgstr ""
+
+#: ../../pep-0455.txt:217
+msgid "http://twistedmatrix.com/documents/current/api/twisted.python.util.InsensitiveDict.html"
+msgstr ""
+
+#: ../../pep-0455.txt:218
+msgid "https://mail.python.org/pipermail/python-list/2013-May/647243.html"
+msgstr ""
+
+#: ../../pep-0455.txt:219
+msgid "https://mail.python.org/pipermail/python-list/2005-April/296208.html"
+msgstr ""
+
+#: ../../pep-0455.txt:220
+msgid "https://mail.python.org/pipermail/python-list/2004-June/241748.html"
+msgstr ""
+
+#: ../../pep-0455.txt:221
+msgid "http://bugs.python.org/msg197376"
+msgstr ""
+
+#: ../../pep-0455.txt:222
+msgid "http://stackoverflow.com/a/2082169"
+msgstr ""
+
+#: ../../pep-0455.txt:223
+msgid "http://stackoverflow.com/a/3296782"
+msgstr ""
+
+#: ../../pep-0455.txt:224
+msgid "http://code.activestate.com/recipes/66315-case-insensitive-dictionary/"
+msgstr ""
+
+#: ../../pep-0455.txt:225
+msgid "https://gist.github.com/babakness/3901174"
+msgstr ""
+
+#: ../../pep-0455.txt:226
+msgid "http://www.wikier.org/blog/key-insensitive-dictionary-in-python"
+msgstr ""
+
+#: ../../pep-0455.txt:227
+msgid "http://en.sharejs.com/python/14534"
+msgstr ""
+
+#: ../../pep-0455.txt:228
+msgid "http://www.voidspace.org.uk/python/archive.shtml#caseless"
+msgstr ""
+
+#: ../../pep-0455.txt:230
+msgid "Identity dicts have been requested too:"
+msgstr ""
+
+#: ../../pep-0455.txt:232
+msgid "https://mail.python.org/pipermail/python-ideas/2010-May/007235.html"
+msgstr ""
+
+#: ../../pep-0455.txt:233
+msgid "http://www.gossamer-threads.com/lists/python/python/209527"
+msgstr ""
+
+#: ../../pep-0455.txt:235
+msgid ""
+"Several modules in the standard library use identity lookups for object "
+"memoization, for example ``pickle``, ``json``, ``copy``, ``cProfile``, "
+"``doctest`` and ``_threading_local``."
+msgstr ""
+
+#: ../../pep-0455.txt:240
+msgid "Other languages"
+msgstr ""
+
+#: ../../pep-0455.txt:243
+msgid "C# / .Net"
+msgstr ""
+
+#: ../../pep-0455.txt:245
+msgid ""
+".Net has a generic ``Dictionary`` class where you can specify a custom "
+"``IEqualityComparer``: http://msdn.microsoft.com/en-"
+"us/library/xfhwa508.aspx"
+msgstr ""
+
+#: ../../pep-0455.txt:248
+msgid ""
+"Using it is the recommended way to write case-insensitive dictionaries: "
+"http://stackoverflow.com/questions/13230414/case-insensitive-access-for-"
+"generic-dictionary"
+msgstr ""
+
+#: ../../pep-0455.txt:252
+msgid "Java"
+msgstr ""
+
+#: ../../pep-0455.txt:254
+msgid ""
+"Java has a specialized ``CaseInsensitiveMap``: "
+"http://commons.apache.org/proper/commons-"
+"collections/apidocs/org/apache/commons/collections4/map/CaseInsensitiveMap.html"
+msgstr ""
+
+#: ../../pep-0455.txt:257
+msgid ""
+"It also has a separate ``IdentityHashMap``: "
+"http://docs.oracle.com/javase/6/docs/api/java/util/IdentityHashMap.html"
+msgstr ""
+
+#: ../../pep-0455.txt:261
+msgid "C++"
+msgstr ""
+
+#: ../../pep-0455.txt:263
+msgid ""
+"The C++ Standard Template Library features an ``unordered_map`` with "
+"customizable hash and equality functions: "
+"http://www.cplusplus.com/reference/unordered_map/unordered_map/"
+msgstr ""
+
+#: ../../pep-0455.txt:269
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0455.txt:271
+msgid "This document has been placed in the public domain."
+msgstr ""
+

@@ -1,0 +1,619 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0359.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0359.txt:1
+msgid "359"
+msgstr ""
+
+#: ../../pep-0359.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0359.txt:2
+msgid "The \"make\" Statement"
+msgstr ""
+
+#: ../../pep-0359.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0359.txt:5
+msgid "Steven Bethard <steven.bethard@gmail.com>"
+msgstr ""
+
+#: ../../pep-0359.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0359.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0359.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0359.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0359.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0359.txt:9
+msgid "05-Apr-2006"
+msgstr ""
+
+#: ../../pep-0359.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0359.txt:10
+msgid "2.6"
+msgstr ""
+
+#: ../../pep-0359.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0359.txt:11
+msgid "05-Apr-2006, 06-Apr-2006, 13-Apr-2006"
+msgstr ""
+
+#: ../../pep-0359.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0359.txt:17
+msgid ""
+"This PEP proposes a generalization of the class-declaration syntax, the "
+"``make`` statement.  The proposed syntax and semantics parallel the "
+"syntax for class definition, and so::"
+msgstr ""
+
+#: ../../pep-0359.txt:24
+msgid "is translated into the assignment::"
+msgstr ""
+
+#: ../../pep-0359.txt:28
+msgid ""
+"where ``<namespace>`` is the dict created by executing ``<block>``. This "
+"is mostly syntactic sugar for::"
+msgstr ""
+
+#: ../../pep-0359.txt:35
+msgid ""
+"and is intended to help more clearly express the intent of the statement "
+"when something other than a class is being created.  Of course, other "
+"syntax for such a statement is possible, but it is hoped that by keeping "
+"a strong parallel to the class statement, an understanding of how classes"
+" and metaclasses work will translate into an understanding of how the "
+"make-statement works as well."
+msgstr ""
+
+#: ../../pep-0359.txt:42
+msgid ""
+"The PEP is based on a suggestion [1]_ from Michele Simionato on the "
+"python-dev list."
+msgstr ""
+
+#: ../../pep-0359.txt:47
+msgid "Withdrawal Notice"
+msgstr ""
+
+#: ../../pep-0359.txt:49
+msgid ""
+"This PEP was withdrawn at Guido's request [2]_. Guido didn't like it, and"
+" in particular didn't like how the property use-case puts the instance "
+"methods of a property at a different level than other instance methods "
+"and requires fixed names for the property functions."
+msgstr ""
+
+#: ../../pep-0359.txt:56
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0359.txt:58
+msgid "Class statements provide two nice facilities to Python:"
+msgstr ""
+
+#: ../../pep-0359.txt:60
+msgid ""
+"They execute a block of statements and provide the resulting bindings as "
+"a dict to the metaclass."
+msgstr ""
+
+#: ../../pep-0359.txt:63
+msgid ""
+"They encourage DRY (don't repeat yourself) by allowing the class being "
+"created to know the name it is being assigned."
+msgstr ""
+
+#: ../../pep-0359.txt:66
+msgid "Thus in a simple class statement like::"
+msgstr ""
+
+#: ../../pep-0359.txt:73
+msgid "the metaclass (``type``) gets called with something like::"
+msgstr ""
+
+#: ../../pep-0359.txt:77
+msgid ""
+"The class statement is just syntactic sugar for the above assignment "
+"statement, but clearly a very useful sort of syntactic sugar.  It avoids "
+"not only the repetition of ``C``, but also simplifies the creation of the"
+" dict by allowing it to be expressed as a series of statements."
+msgstr ""
+
+#: ../../pep-0359.txt:83
+msgid ""
+"Historically, type instances (a.k.a. class objects) have been the only "
+"objects blessed with this sort of syntactic support.  The make statement "
+"aims to extend this support to other sorts of objects where such syntax "
+"would also be useful."
+msgstr ""
+
+#: ../../pep-0359.txt:90
+msgid "Example: simple namespaces"
+msgstr ""
+
+#: ../../pep-0359.txt:92
+msgid "Let's say I have some attributes in a module that I access like::"
+msgstr ""
+
+#: ../../pep-0359.txt:100
+msgid ""
+"and since \"Namespaces are one honking great idea\", I'd like to be able "
+"to access these attributes instead as::"
+msgstr ""
+
+#: ../../pep-0359.txt:109
+msgid "I currently have two main options:"
+msgstr ""
+
+#: ../../pep-0359.txt:111
+msgid ""
+"Turn the module into a package, turn ``roletypes`` and ``format`` into "
+"submodules, and move the attributes to the submodules."
+msgstr ""
+
+#: ../../pep-0359.txt:114
+msgid ""
+"Create ``roletypes`` and ``format`` classes, and move the attributes to "
+"the classes."
+msgstr ""
+
+#: ../../pep-0359.txt:117
+msgid ""
+"The former is a fair chunk of refactoring work, and produces two tiny "
+"modules without much content.  The latter keeps the attributes local to "
+"the module, but creates classes when there is no intention of ever "
+"creating instances of those classes."
+msgstr ""
+
+#: ../../pep-0359.txt:122
+msgid ""
+"In situations like this, it would be nice to simply be able to declare a "
+"\"namespace\" to hold the few attributes.  With the new make statement, I"
+" could introduce my new namespaces with something like::"
+msgstr ""
+
+#: ../../pep-0359.txt:134
+msgid ""
+"and keep my attributes local to the module without making classes that "
+"are never intended to be instantiated.  One definition of namespace that "
+"would make this work is::"
+msgstr ""
+
+#: ../../pep-0359.txt:142
+msgid ""
+"Given this definition, at the end of the make-statements above, "
+"``roletypes`` and ``format`` would be namespace instances."
+msgstr ""
+
+#: ../../pep-0359.txt:147
+msgid "Example: GUI objects"
+msgstr ""
+
+#: ../../pep-0359.txt:149
+msgid ""
+"In GUI toolkits, objects like frames and panels are often associated with"
+" attributes and functions.  With the make-statement, code that looks "
+"something like::"
+msgstr ""
+
+#: ../../pep-0359.txt:162
+msgid "could be rewritten to group the Button's function with its declaration::"
+msgstr ""
+
+#: ../../pep-0359.txt:177
+msgid "Example: custom descriptors"
+msgstr ""
+
+#: ../../pep-0359.txt:179
+msgid ""
+"Since descriptors are used to customize access to an attribute, it's "
+"often useful to know the name of that attribute.  Current Python doesn't "
+"give an easy way to find this name and so a lot of custom descriptors, "
+"like Ian Bicking's setonce descriptor [3]_, have to hack around this "
+"somehow.  With the make-statement, you could create a ``setonce`` "
+"attribute like::"
+msgstr ""
+
+#: ../../pep-0359.txt:192
+msgid "where the ``setonce`` descriptor would be defined like::"
+msgstr ""
+
+#: ../../pep-0359.txt:219
+msgid ""
+"Note that unlike the original implementation, the private attribute name "
+"is stable since it uses the name of the descriptor, and therefore "
+"instances of class A are pickleable."
+msgstr ""
+
+#: ../../pep-0359.txt:225
+msgid "Example: property namespaces"
+msgstr ""
+
+#: ../../pep-0359.txt:227
+msgid ""
+"Python's property type takes three function arguments and a docstring "
+"argument which, though relevant only to the property, must be declared "
+"before it and then passed as arguments to the property call, e.g.::"
+msgstr ""
+
+#: ../../pep-0359.txt:239
+msgid ""
+"This issue has been brought up before, and Guido [4]_ and others [5]_ "
+"have briefly mused over alternate property syntaxes to make declaring "
+"properties easier.  With the make-statement, the following syntax could "
+"be supported::"
+msgstr ""
+
+#: ../../pep-0359.txt:253
+msgid "with the following definition of ``block_property``::"
+msgstr ""
+
+#: ../../pep-0359.txt:265
+msgid "Example: interfaces"
+msgstr ""
+
+#: ../../pep-0359.txt:267
+msgid ""
+"Guido [6]_ and others have occasionally suggested introducing interfaces "
+"into python.  Most suggestions have offered syntax along the lines of::"
+msgstr ""
+
+#: ../../pep-0359.txt:277
+msgid ""
+"but since there is currently no way in Python to declare an interface in "
+"this manner, most implementations of Python interfaces use class objects "
+"instead, e.g. Zope's::"
+msgstr ""
+
+#: ../../pep-0359.txt:287
+msgid ""
+"With the new make-statement, these interfaces could instead be declared "
+"as::"
+msgstr ""
+
+#: ../../pep-0359.txt:296
+msgid ""
+"which makes the intent (that this is an interface, not a class) much "
+"clearer."
+msgstr ""
+
+#: ../../pep-0359.txt:301
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0359.txt:303
+msgid "Python will translate a make-statement::"
+msgstr ""
+
+#: ../../pep-0359.txt:308
+msgid "into the assignment::"
+msgstr ""
+
+#: ../../pep-0359.txt:312
+msgid ""
+"where ``<namespace>`` is the dict created by executing ``<block>``. The "
+"``<tuple>`` expression is optional; if not present, an empty tuple will "
+"be assumed."
+msgstr ""
+
+#: ../../pep-0359.txt:316
+msgid "A patch is available implementing these semantics [7]_."
+msgstr ""
+
+#: ../../pep-0359.txt:318
+msgid ""
+"The make-statement introduces a new keyword, ``make``.  Thus in Python "
+"2.6, the make-statement will have to be enabled using ``from __future__ "
+"import make_statement``."
+msgstr ""
+
+#: ../../pep-0359.txt:324
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0359.txt:327
+msgid "Keyword"
+msgstr ""
+
+#: ../../pep-0359.txt:329
+msgid ""
+"Does the ``make`` keyword break too much code?  Originally, the make "
+"statement used the keyword ``create`` (a suggestion due to Nick Coghlan)."
+"  However, investigations into the standard library [8]_ and Zope+Plone "
+"code [9]_ revealed that ``create`` would break a lot more code, so "
+"``make`` was adopted as the keyword instead.  However, there are still a "
+"few instances where ``make`` would break code.  Is there a better keyword"
+" for the statement?"
+msgstr ""
+
+#: ../../pep-0359.txt:337
+msgid ""
+"Some possible keywords and their counts in the standard library (plus "
+"some installed packages):"
+msgstr ""
+
+#: ../../pep-0359.txt:340
+msgid "make - 2 (both in tests)"
+msgstr ""
+
+#: ../../pep-0359.txt:341
+msgid "create - 19 (including existing function in imaplib)"
+msgstr ""
+
+#: ../../pep-0359.txt:342
+msgid "build - 83 (including existing class in distutils.command.build)"
+msgstr ""
+
+#: ../../pep-0359.txt:343
+msgid "construct - 0"
+msgstr ""
+
+#: ../../pep-0359.txt:344
+msgid "produce - 0"
+msgstr ""
+
+#: ../../pep-0359.txt:348
+msgid "The make-statement as an alternate constructor"
+msgstr ""
+
+#: ../../pep-0359.txt:350
+msgid ""
+"Currently, there are not many functions which have the signature ``(name,"
+" args, kwargs)``.  That means that something like::"
+msgstr ""
+
+#: ../../pep-0359.txt:357
+msgid ""
+"is currently impossible because the dict constructor has a different "
+"signature.  Does this sort of thing need to be supported?  One "
+"suggestion, by Carl Banks, would be to add a ``__make__`` magic method "
+"that if found would be called instead of ``__call__``.  For types, the "
+"``__make__`` method would be identical to ``__call__`` and thus "
+"unnecessary, but dicts could support the make-statement by defining a "
+"``__make__`` method on the dict type that looks something like::"
+msgstr ""
+
+#: ../../pep-0359.txt:368
+msgid ""
+"Of course, rather than adding another magic method, the dict type could "
+"just grow a classmethod something like ``dict.fromblock`` that could be "
+"used like::"
+msgstr ""
+
+#: ../../pep-0359.txt:376
+msgid ""
+"So the question is, will many types want to use the make-statement as an "
+"alternate constructor?  And if so, does that alternate constructor need "
+"to have the same name as the original constructor?"
+msgstr ""
+
+#: ../../pep-0359.txt:382
+msgid "Customizing the dict in which the block is executed"
+msgstr ""
+
+#: ../../pep-0359.txt:384
+msgid ""
+"Should users of the make-statement be able to determine in which dict "
+"object the code is executed?  This would allow the make-statement to be "
+"used in situations where a normal dict object would not suffice, e.g. if "
+"order and repeated names must be allowed.  Allowing this sort of "
+"customization could allow XML to be written without repeating element "
+"names, and with nesting of make-statements corresponding to nesting of "
+"XML elements::"
+msgstr ""
+
+#: ../../pep-0359.txt:404
+msgid ""
+"If the make-statement tried to get the dict in which to execute its block"
+" by calling the callable's ``__make_dict__`` method, the following code "
+"would allow the make-statement to be used as above::"
+msgstr ""
+
+#: ../../pep-0359.txt:451
+msgid ""
+"Note, however, that the code to support this is somewhat fragile -- it "
+"has to magically populate the namespace with ``attrib``, ``text`` and "
+"``tail``, and it assumes that every name binding inside the make "
+"statement body is creating an Element.  As it stands, this code would "
+"break with the introduction of a simple for-loop to any one of the make-"
+"statement bodies, because the for-loop would bind a name to a non-Element"
+" object.  This could be worked around by adding some sort of isinstance "
+"check or attribute examination, but this still results in a somewhat "
+"fragile solution."
+msgstr ""
+
+#: ../../pep-0359.txt:461
+msgid ""
+"It has also been pointed out that the with-statement can provide "
+"equivalent nesting with a much more explicit syntax::"
+msgstr ""
+
+#: ../../pep-0359.txt:474
+msgid ""
+"And if the repetition of the element names here is too much of a DRY "
+"violation, it is also possible to eliminate all as-clauses except for the"
+" first by adding a few methods to Element. [10]_"
+msgstr ""
+
+#: ../../pep-0359.txt:478
+msgid ""
+"So are there real use-cases for executing the block in a dict of a "
+"different type?  And if so, should the make-statement be extended to "
+"support them?"
+msgstr ""
+
+#: ../../pep-0359.txt:484
+msgid "Optional Extensions"
+msgstr ""
+
+#: ../../pep-0359.txt:487
+msgid "Remove the make keyword"
+msgstr ""
+
+#: ../../pep-0359.txt:489
+msgid ""
+"It might be possible to remove the make keyword so that such statements "
+"would begin with the callable being called, e.g.::"
+msgstr ""
+
+#: ../../pep-0359.txt:500
+msgid ""
+"However, almost all other Python statements begin with a keyword, and "
+"removing the keyword would make it harder to look up this construct in "
+"the documentation.  Additionally, this would add some complexity in the "
+"grammar and so far I (Steven Bethard) have not been able to implement the"
+" feature without the keyword."
+msgstr ""
+
+#: ../../pep-0359.txt:508
+msgid "Removing __metaclass__ in Python 3000"
+msgstr ""
+
+#: ../../pep-0359.txt:510
+msgid ""
+"As a side-effect of its generality, the make-statement mostly eliminates "
+"the need for the ``__metaclass__`` attribute in class objects.  Thus in "
+"Python 3000, instead of::"
+msgstr ""
+
+#: ../../pep-0359.txt:518
+msgid ""
+"metaclasses could be supported by using the metaclass as the callable in "
+"a make-statement::"
+msgstr ""
+
+#: ../../pep-0359.txt:524
+msgid ""
+"Removing the ``__metaclass__`` hook would simplify the BUILD_CLASS opcode"
+" a bit."
+msgstr ""
+
+#: ../../pep-0359.txt:529
+msgid "Removing class statements in Python 3000"
+msgstr ""
+
+#: ../../pep-0359.txt:531
+msgid ""
+"In the most extreme application of make-statements, the class statement "
+"itself could be deprecated in favor of ``make type`` statements."
+msgstr ""
+
+#: ../../pep-0359.txt:537
+msgid "References"
+msgstr ""
+
+#: ../../pep-0359.txt:539
+msgid ""
+"Michele Simionato's original suggestion "
+"(https://mail.python.org/pipermail/python-dev/2005-October/057435.html)"
+msgstr ""
+
+#: ../../pep-0359.txt:542
+msgid ""
+"Guido requests withdrawal "
+"(https://mail.python.org/pipermail/python-3000/2006-April/000936.html)"
+msgstr ""
+
+#: ../../pep-0359.txt:545
+msgid ""
+"Ian Bicking's setonce descriptor (http://blog.ianbicking.org/easy-"
+"readonly-attributes.html)"
+msgstr ""
+
+#: ../../pep-0359.txt:548
+msgid ""
+"Guido ponders property syntax (https://mail.python.org/pipermail/python-"
+"dev/2005-October/057404.html)"
+msgstr ""
+
+#: ../../pep-0359.txt:551
+msgid ""
+"Namespace-based property recipe "
+"(http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/442418)"
+msgstr ""
+
+#: ../../pep-0359.txt:554
+msgid ""
+"Python interfaces "
+"(http://www.artima.com/weblogs/viewpost.jsp?thread=86641)"
+msgstr ""
+
+#: ../../pep-0359.txt:557
+msgid ""
+"Make Statement patch "
+"(http://ucsu.colorado.edu/~bethard/py/make_statement.patch)"
+msgstr ""
+
+#: ../../pep-0359.txt:560
+msgid ""
+"Instances of create in the stdlib (https://mail.python.org/pipermail"
+"/python-list/2006-April/335159.html)"
+msgstr ""
+
+#: ../../pep-0359.txt:563
+msgid ""
+"Instances of create in Zope+Plone (https://mail.python.org/pipermail"
+"/python-list/2006-April/335284.html)"
+msgstr ""
+
+#: ../../pep-0359.txt:566
+msgid ""
+"Eliminate as-clauses in with-statement XML "
+"(https://mail.python.org/pipermail/python-list/2006-April/336774.html)"
+msgstr ""
+
+#: ../../pep-0359.txt:571
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0359.txt:573
+msgid "This document has been placed in the public domain."
+msgstr ""
+

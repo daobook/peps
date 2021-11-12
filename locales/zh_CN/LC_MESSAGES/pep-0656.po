@@ -1,0 +1,348 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0656.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0656.rst:1
+msgid "656"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0656.rst:2
+msgid "Platform Tag for Linux Distributions Using Musl"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0656.rst:3
+msgid "Tzu-ping Chung <uranusjr@gmail.com>"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0656.rst:4
+msgid "Brett Cannon <brett@python.org>"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "PEP-Delegate"
+msgstr ""
+
+#: ../../pep-0656.rst:5
+msgid "Paul Moore <p.f.moore@gmail.com>"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0656.rst:6
+msgid "https://discuss.python.org/t/7165"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0656.rst:7
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0656.rst:8
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0656.rst:10
+msgid "17-Mar-2021"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0656.rst:11
+msgid "17-Mar-2021 18-Apr-2021"
+msgstr ""
+
+#: ../../pep-0656.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0656.rst:12
+msgid "https://discuss.python.org/t/7165/32"
+msgstr ""
+
+#: ../../pep-0656.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0656.rst:18
+msgid ""
+"This PEP proposes a new platform tag series ``musllinux`` for binary "
+"Python package distributions for a Python installation that depends on "
+"musl on a Linux distribution. The tag works similarly to the \"perennial "
+"manylinux\" platform tags specified in :pep:`600`, but targeting "
+"platforms based on musl instead."
+msgstr ""
+
+#: ../../pep-0656.rst:26
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0656.rst:28
+msgid ""
+"With the wide use of containers, distributions such as Alpine Linux "
+"[alpine]_, have been gaining more popularity than ever. Many of them "
+"based on musl [musl]_, a different libc implementation from glibc, and "
+"therefore cannot use the existing ``manylinux`` platform tags. This means"
+" that Python package projects cannot deploy binary distributions on PyPI "
+"for them. Users of such projects demand build constraints from those "
+"projects, putting unnecessary burden on project maintainers."
+msgstr ""
+
+#: ../../pep-0656.rst:38
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0656.rst:40
+msgid ""
+"According to the documentation, musl has a stable ABI, and maintains "
+"backwards compatibility [musl-compatibility]_ [compare-libcs]_, so a "
+"binary compiled against an earlier version of musl is guaranteed to run "
+"against a newer musl runtime [musl-compat-ml]_. Therefore, we use a "
+"scheme similar to the glibc-version-based manylinux tags, but against "
+"musl versions instead of glibc."
+msgstr ""
+
+#: ../../pep-0656.rst:47
+msgid ""
+"Logic behind the new platform tag largely follows :pep:`600` (\"perennial"
+" manylinux\"), and requires wheels using this tag make similar promises. "
+"Please refer to :pep:`600` for more details on rationale and reasoning "
+"behind the design."
+msgstr ""
+
+#: ../../pep-0656.rst:52
+msgid ""
+"The ``musllinux`` platform tags only apply to Python interpreters "
+"dynamically linked against the musl libc and executed on the runtime "
+"shared library, on a Linux operating system. Statically linked "
+"interpreters or mixed builds with other libc implementations (such as "
+"glibc) are out of scope and not supported by platform tags defined in "
+"this document. Such interpreters should not claim compatibility with "
+"``musllinux`` platform tags."
+msgstr ""
+
+#: ../../pep-0656.rst:62
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0656.rst:64
+msgid "Tags using the new scheme will take the form::"
+msgstr ""
+
+#: ../../pep-0656.rst:68
+msgid ""
+"This tag promises the wheel works on any mainstream Linux distribution "
+"that uses musl version ``${MUSLMAJOR}.${MUSLMINOR}``, following the "
+"perennial design. All other system-level dependency requirements rely on "
+"the community's definition to the intentionally vague \"mainstream\" "
+"description introduced in :pep:`600`. A wheel may make use of newer "
+"system dependencies when all mainstream distributions using the specified"
+" musl version provide the dependency by default; once all mainstream "
+"distributions on the musl version ship a certain dependency version by "
+"default, users relying on older versions are automatically removed from "
+"the coverage of that ``musllinux`` tag."
+msgstr ""
+
+#: ../../pep-0656.rst:81
+msgid "Reading the musl version"
+msgstr ""
+
+#: ../../pep-0656.rst:83
+msgid ""
+"The musl version values can be obtained by executing the musl libc shared"
+" library the Python interpreter is currently running on, and parsing the "
+"output::"
+msgstr ""
+
+#: ../../pep-0656.rst:113
+msgid ""
+"There are currently two possible ways to find the musl library's location"
+" that a Python interpreter is running on, either with the system ``ldd`` "
+"command [ldd]_, or by parsing the ``PT_INTERP`` section's value from the "
+"executable's ELF header [elf]_."
+msgstr ""
+
+#: ../../pep-0656.rst:120
+msgid "Formatting the tag"
+msgstr ""
+
+#: ../../pep-0656.rst:122
+msgid ""
+"Distributions using the tag make similar promises to those described in "
+":pep:`600`, including:"
+msgstr ""
+
+#: ../../pep-0656.rst:125
+msgid ""
+"The distribution works on any mainstream Linux distributions with musl "
+"version ``${MUSLMAJOR}.${MUSLMINOR}`` or later."
+msgstr ""
+
+#: ../../pep-0656.rst:127
+msgid ""
+"The distribution's ``${ARCH}`` matches the return value of "
+"``sysconfig.get_platform()`` on the host system, replacing period (``.``)"
+" and hyphen (``-``) characters with underscores (``_``), as outlined in "
+":pep:`425` and :pep:`427`."
+msgstr ""
+
+#: ../../pep-0656.rst:132
+msgid "Example values::"
+msgstr ""
+
+#: ../../pep-0656.rst:137
+msgid "The value can be formatted with the following Python code::"
+msgstr ""
+
+#: ../../pep-0656.rst:148
+msgid "Recommendations to package indexes"
+msgstr ""
+
+#: ../../pep-0656.rst:150
+msgid ""
+"It is recommended for Python package repositories, including PyPI, to "
+"accept platform tags matching the following regular expression::"
+msgstr ""
+
+#: ../../pep-0656.rst:155
+msgid ""
+"Python package repositories may impose additional requirements to reject "
+"Wheels with known issues, including but not limited to:"
+msgstr ""
+
+#: ../../pep-0656.rst:158
+msgid ""
+"A ``musllinux_1_1`` wheel containing symbols only available in musl 1.2 "
+"or later."
+msgstr ""
+
+#: ../../pep-0656.rst:160
+msgid ""
+"Wheel that depends on external libraries not considered generally "
+"available to the intended audience of the package index."
+msgstr ""
+
+#: ../../pep-0656.rst:162
+msgid ""
+"A platform tag claiming compatibility to a non-existent musl version "
+"(like ``musllinux_9000_0``)."
+msgstr ""
+
+#: ../../pep-0656.rst:165
+msgid ""
+"Such policies are ultimately up to individual package repositories. It is"
+" not the author's intention to impose restrictions to the maintainers."
+msgstr ""
+
+#: ../../pep-0656.rst:171
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0656.rst:173
+msgid "There are no backwards compatibility concerns in this PEP."
+msgstr ""
+
+#: ../../pep-0656.rst:177
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0656.rst:180
+msgid "Create a platform tag based specifically for Alpine Linux"
+msgstr ""
+
+#: ../../pep-0656.rst:182
+msgid ""
+"Past experience on the ``manylinux`` tag series shows this approach would"
+" be too costly time-wise. The author feels the \"works well with others\""
+" rule both is more inclusive and works well enough in practice."
+msgstr ""
+
+#: ../../pep-0656.rst:188
+msgid "References"
+msgstr ""
+
+#: ../../pep-0656.rst:190
+msgid "https://alpinelinux.org/"
+msgstr ""
+
+#: ../../pep-0656.rst:192
+msgid "https://musl.libc.org"
+msgstr ""
+
+#: ../../pep-0656.rst:194
+msgid "https://wiki.musl-libc.org/compatibility.html"
+msgstr ""
+
+#: ../../pep-0656.rst:196
+msgid "https://www.etalabs.net/compare_libcs.html"
+msgstr ""
+
+#: ../../pep-0656.rst:198
+msgid ""
+"https://mail.python.org/archives/list/distutils-"
+"sig@python.org/message/VRXSTNXWHPAVUW253ZCWWMP7WDTBAQDL/"
+msgstr ""
+
+#: ../../pep-0656.rst:200
+msgid "https://www.unix.com/man-page/posix/1/ldd/"
+msgstr ""
+
+#: ../../pep-0656.rst:202
+msgid "https://refspecs.linuxfoundation.org/elf/elf.pdf"
+msgstr ""
+
+#: ../../pep-0656.rst:206
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0656.rst:208
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

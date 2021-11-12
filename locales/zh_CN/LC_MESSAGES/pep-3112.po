@@ -1,0 +1,249 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3112.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3112.txt:1
+msgid "3112"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3112.txt:2
+msgid "Bytes literals in Python 3000"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3112.txt:5
+msgid "Jason Orendorff <jason.orendorff@gmail.com>"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3112.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3112.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Requires"
+msgstr ""
+
+#: ../../pep-3112.txt:9
+msgid "358"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3112.txt:10 ../../pep-3112.txt:12
+msgid "23-Feb-2007"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3112.txt:11
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3112.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3112.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3112.txt:18
+msgid ""
+"This PEP proposes a literal syntax for the ``bytes`` objects introduced "
+"in PEP 358.  The purpose is to provide a convenient way to spell ASCII "
+"strings and arbitrary binary data."
+msgstr ""
+
+#: ../../pep-3112.txt:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-3112.txt:26
+msgid "Existing spellings of an ASCII string in Python 3000 include::"
+msgstr ""
+
+#: ../../pep-3112.txt:31 ../../pep-3112.txt:41
+msgid "The proposed syntax is::"
+msgstr ""
+
+#: ../../pep-3112.txt:35
+msgid "Existing spellings of an 8-bit binary sequence in Python 3000 include::"
+msgstr ""
+
+#: ../../pep-3112.txt:46
+msgid ""
+"In both cases, the advantages of the new syntax are brevity, some small "
+"efficiency gain, and the detection of encoding errors at compile time "
+"rather than at runtime.  The brevity benefit is especially felt when "
+"using the string-like methods of bytes objects::"
+msgstr ""
+
+#: ../../pep-3112.txt:54
+msgid "And when converting code from Python 2.x to Python 3000::"
+msgstr ""
+
+#: ../../pep-3112.txt:62
+msgid "Grammar Changes"
+msgstr ""
+
+#: ../../pep-3112.txt:64
+msgid ""
+"The proposed syntax is an extension of the existing string syntax "
+"[#stringliterals]_."
+msgstr ""
+
+#: ../../pep-3112.txt:67
+msgid "The new syntax for strings, including the new bytes literal, is::"
+msgstr ""
+
+#: ../../pep-3112.txt:84
+msgid ""
+"The following additional restrictions apply only to bytes literals "
+"(``stringliteral`` tokens with ``b`` or ``B`` in the ``stringprefix``):"
+msgstr ""
+
+#: ../../pep-3112.txt:88
+msgid ""
+"Each ``shortstringchar`` or ``longstringchar`` must be a character "
+"between 1 and 127 inclusive, regardless of any encoding declaration "
+"[#encodings]_ in the source file."
+msgstr ""
+
+#: ../../pep-3112.txt:92
+msgid ""
+"The Unicode-specific escape sequences ``\\u``\\ *xxxx*, ``\\U``\\ "
+"*xxxxxxxx*, and ``\\N{``\\ *name*\\ ``}`` are unrecognized in Python 2.x "
+"and forbidden in Python 3000."
+msgstr ""
+
+#: ../../pep-3112.txt:96
+msgid ""
+"Adjacent bytes literals are subject to the same concatenation rules as "
+"adjacent string literals [#concat]_.  A bytes literal adjacent to a "
+"string literal is an error."
+msgstr ""
+
+#: ../../pep-3112.txt:102
+msgid "Semantics"
+msgstr ""
+
+#: ../../pep-3112.txt:104
+msgid ""
+"Each evaluation of a bytes literal produces a new ``bytes`` object. The "
+"bytes in the new object are the bytes represented by the "
+"``shortstringitem`` or ``longstringitem`` parts of the literal, in the "
+"same order."
+msgstr ""
+
+#: ../../pep-3112.txt:111
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3112.txt:113
+msgid ""
+"The proposed syntax provides a cleaner migration path from Python 2.x to "
+"Python 3000 for most code involving 8-bit strings.  Preserving the old "
+"8-bit meaning of a string literal is usually as simple as adding a ``b`` "
+"prefix.  The one exception is Python 2.x strings containing bytes >127, "
+"which must be rewritten using escape sequences. Transcoding a source file"
+" from one encoding to another, and fixing up the encoding declaration, "
+"should preserve the meaning of the program. Python 2.x non-Unicode "
+"strings violate this principle; Python 3000 bytes literals shouldn't."
+msgstr ""
+
+#: ../../pep-3112.txt:123
+msgid ""
+"A string literal with a ``b`` in the prefix is always a syntax error in "
+"Python 2.5, so this syntax can be introduced in Python 2.6, along with "
+"the ``bytes`` type."
+msgstr ""
+
+#: ../../pep-3112.txt:127
+msgid ""
+"A bytes literal produces a new object each time it is evaluated, like "
+"list displays and unlike string literals.  This is necessary because "
+"bytes literals, like lists and unlike strings, are mutable [#eachnew]_."
+msgstr ""
+
+#: ../../pep-3112.txt:134
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-3112.txt:136
+msgid "Thomas Wouters has checked an implementation into the Py3K branch, r53872."
+msgstr ""
+
+#: ../../pep-3112.txt:141
+msgid "References"
+msgstr ""
+
+#: ../../pep-3112.txt:144
+msgid "http://docs.python.org/reference/lexical_analysis.html#string-literals"
+msgstr ""
+
+#: ../../pep-3112.txt:147
+msgid ""
+"http://docs.python.org/reference/lexical_analysis.html#encoding-"
+"declarations"
+msgstr ""
+
+#: ../../pep-3112.txt:150
+msgid ""
+"http://docs.python.org/reference/lexical_analysis.html#string-literal-"
+"concatenation"
+msgstr ""
+
+#: ../../pep-3112.txt:153
+msgid "https://mail.python.org/pipermail/python-3000/2007-February/005779.html"
+msgstr ""
+
+#: ../../pep-3112.txt:157
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3112.txt:159
+msgid "This document has been placed in the public domain."
+msgstr ""
+

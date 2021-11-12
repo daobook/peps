@@ -1,0 +1,352 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0354.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0354.txt:1
+msgid "354"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0354.txt:2
+msgid "Enumerations in Python"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0354.txt:5
+msgid "Ben Finney <ben+python@benfinney.id.au>"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0354.txt:6
+msgid "Superseded"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0354.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0354.txt:9 ../../pep-0354.txt:11
+msgid "20-Dec-2005"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0354.txt:10
+msgid "2.6"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0354.txt
+msgid "Superseded-By"
+msgstr ""
+
+#: ../../pep-0354.txt:12
+msgid "435"
+msgstr ""
+
+#: ../../pep-0354.txt:16
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0354.txt:18
+msgid ""
+"This PEP has been rejected.  This doesn't slot nicely into any of the "
+"existing modules (like collections), and the Python standard library "
+"eschews having lots of individual data structures in their own modules.  "
+"Also, the PEP has generated no widespread interest.  For those who need "
+"enumerations, there are cookbook recipes and PyPI packages that meet "
+"these needs."
+msgstr ""
+
+#: ../../pep-0354.txt:25
+msgid ""
+"*Note: this PEP was superseded by PEP 435, which has been accepted in May"
+" 2013.*"
+msgstr ""
+
+#: ../../pep-0354.txt:29
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0354.txt:31
+msgid "This PEP specifies an enumeration data type for Python."
+msgstr ""
+
+#: ../../pep-0354.txt:33
+msgid ""
+"An enumeration is an exclusive set of symbolic names bound to arbitrary "
+"unique values.  Values within an enumeration can be iterated and "
+"compared, but the values have no inherent relationship to values outside "
+"the enumeration."
+msgstr ""
+
+#: ../../pep-0354.txt:40
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0354.txt:42
+msgid ""
+"The properties of an enumeration are useful for defining an immutable, "
+"related set of constant values that have a defined sequence but no "
+"inherent semantic meaning.  Classic examples are days of the week (Sunday"
+" through Saturday) and school assessment grades ('A' through 'D', and "
+"'F').  Other examples include error status values and states within a "
+"defined process."
+msgstr ""
+
+#: ../../pep-0354.txt:49
+msgid ""
+"It is possible to simply define a sequence of values of some other basic "
+"type, such as ``int`` or ``str``, to represent discrete arbitrary values."
+"  However, an enumeration ensures that such values are distinct from any "
+"others, and that operations without meaning (\"Wednesday times two\") are"
+" not defined for these values."
+msgstr ""
+
+#: ../../pep-0354.txt:57
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0354.txt:59
+msgid ""
+"An enumerated type is created from a sequence of arguments to the type's "
+"constructor::"
+msgstr ""
+
+#: ../../pep-0354.txt:65
+msgid ""
+"Enumerations with no values are meaningless.  The exception "
+"``EnumEmptyError`` is raised if the constructor is called with no value "
+"arguments."
+msgstr ""
+
+#: ../../pep-0354.txt:69
+msgid "The values are bound to attributes of the new enumeration object::"
+msgstr ""
+
+#: ../../pep-0354.txt:73
+msgid "The values can be compared::"
+msgstr ""
+
+#: ../../pep-0354.txt:78
+msgid ""
+"Values within an enumeration cannot be meaningfully compared except with "
+"values from the same enumeration.  The comparison operation functions "
+"return ``NotImplemented`` [#CMP-NOTIMPLEMENTED]_ when a value from an "
+"enumeration is compared against any value not from the same enumeration "
+"or of a different type::"
+msgstr ""
+
+#: ../../pep-0354.txt:98
+msgid "This allows the operation to succeed, evaluating to a boolean value::"
+msgstr ""
+
+#: ../../pep-0354.txt:116
+msgid ""
+"Coercing a value from an enumeration to a ``str`` results in the string "
+"that was specified for that value when constructing the enumeration::"
+msgstr ""
+
+#: ../../pep-0354.txt:124
+msgid ""
+"The sequence index of each value from an enumeration is exported as an "
+"integer via that value's ``index`` attribute::"
+msgstr ""
+
+#: ../../pep-0354.txt:131
+msgid ""
+"An enumeration can be iterated, returning its values in the sequence they"
+" were specified when the enumeration was created::"
+msgstr ""
+
+#: ../../pep-0354.txt:137
+msgid "Values from an enumeration are hashable, and can be used as dict keys::"
+msgstr ""
+
+#: ../../pep-0354.txt:143
+msgid ""
+"The normal usage of enumerations is to provide a set of possible values "
+"for a data type, which can then be used to map to other information about"
+" the values::"
+msgstr ""
+
+#: ../../pep-0354.txt:153
+msgid "Rationale -- Other designs considered"
+msgstr ""
+
+#: ../../pep-0354.txt:156
+msgid "All in one class"
+msgstr ""
+
+#: ../../pep-0354.txt:158
+msgid ""
+"Some implementations have the enumeration and its values all as "
+"attributes of a single object or class."
+msgstr ""
+
+#: ../../pep-0354.txt:161
+msgid ""
+"This PEP specifies a design where the enumeration is a container, and the"
+" values are simple comparables.  It was felt that attempting to place all"
+" the properties of enumeration within a single class complicates the "
+"design without apparent benefit."
+msgstr ""
+
+#: ../../pep-0354.txt:168
+msgid "Metaclass for creating enumeration classes"
+msgstr ""
+
+#: ../../pep-0354.txt:170
+msgid ""
+"The enumerations specified in this PEP are instances of an ``enum`` type."
+"  Some alternative designs implement each enumeration as its own class, "
+"and a metaclass to define common properties of all enumerations."
+msgstr ""
+
+#: ../../pep-0354.txt:175
+msgid ""
+"One motivation for having a class (rather than an instance) for each "
+"enumeration is to allow subclasses of enumerations, extending and "
+"altering an existing enumeration.  A class, though, implies that "
+"instances of that class will be created; it is difficult to imagine what "
+"it means to have separate instances of a \"days of the week\" class, "
+"where each instance contains all days.  This usually leads to having each"
+" class follow the Singleton pattern, further complicating the design."
+msgstr ""
+
+#: ../../pep-0354.txt:184
+msgid ""
+"In contrast, this PEP specifies enumerations that are not expected to be "
+"extended or modified.  It is, of course, possible to create a new "
+"enumeration from the string values of an existing one, or even subclass "
+"the ``enum`` type if desired."
+msgstr ""
+
+#: ../../pep-0354.txt:191
+msgid "Values related to other types"
+msgstr ""
+
+#: ../../pep-0354.txt:193
+msgid ""
+"Some designs express a strong relationship to some other value, such as a"
+" particular integer or string, for each enumerated value."
+msgstr ""
+
+#: ../../pep-0354.txt:196
+msgid ""
+"This results in using such values in contexts where the enumeration has "
+"no meaning, and unnecessarily complicates the design.  The enumerated "
+"values specified in this PEP export the values used to create them, and "
+"can be compared for equality with any other value, but sequence "
+"comparison with values outside the enumeration is explicitly not "
+"implemented."
+msgstr ""
+
+#: ../../pep-0354.txt:205
+msgid "Hiding attributes of enumerated values"
+msgstr ""
+
+#: ../../pep-0354.txt:207
+msgid ""
+"A previous design had the enumerated values hiding as much as possible "
+"about their implementation, to the point of not exporting the string key "
+"and sequence index."
+msgstr ""
+
+#: ../../pep-0354.txt:211
+msgid ""
+"The design in this PEP acknowledges that programs will often find it "
+"convenient to know the enumerated value's enumeration type, sequence "
+"index, and string key specified for the value.  These are exported by the"
+" enumerated value as attributes."
+msgstr ""
+
+#: ../../pep-0354.txt:218
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0354.txt:220
+msgid ""
+"This design is based partly on a recipe [#ENUM-RECIPE]_ from the Python "
+"Cookbook."
+msgstr ""
+
+#: ../../pep-0354.txt:223
+msgid ""
+"The PyPI package ``enum`` [#ENUM-PACKAGE]_ provides a Python "
+"implementation of the data types described in this PEP."
+msgstr ""
+
+#: ../../pep-0354.txt:228
+msgid "References and Footnotes"
+msgstr ""
+
+#: ../../pep-0354.txt:231
+msgid ""
+"The ``NotImplemented`` return value from comparison operations signals "
+"the Python interpreter to attempt alternative comparisons or other "
+"fallbacks. <http://docs.python.org/reference/datamodel.html#the-standard-"
+"type-hierarchy>"
+msgstr ""
+
+#: ../../pep-0354.txt:237
+msgid ""
+"\"First Class Enums in Python\", Zoran Isailovski, Python Cookbook recipe"
+" 413486 <http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/413486>"
+msgstr ""
+
+#: ../../pep-0354.txt:242
+msgid ""
+"Python Package Index, package ``enum`` "
+"<http://cheeseshop.python.org/pypi/enum/>"
+msgstr ""
+
+#: ../../pep-0354.txt:247
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0354.txt:249
+msgid "This document has been placed in the public domain."
+msgstr ""
+

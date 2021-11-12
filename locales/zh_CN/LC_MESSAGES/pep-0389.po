@@ -1,0 +1,526 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0389.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0389.txt:1
+msgid "389"
+msgstr ""
+
+#: ../../pep-0389.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0389.txt:2
+msgid "argparse - New Command Line Parsing Module"
+msgstr ""
+
+#: ../../pep-0389.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0389.txt:5
+msgid "Steven Bethard <steven.bethard@gmail.com>"
+msgstr ""
+
+#: ../../pep-0389.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0389.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0389.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0389.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0389.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0389.txt:9
+msgid "25-Sep-2009"
+msgstr ""
+
+#: ../../pep-0389.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0389.txt:10
+msgid "2.7, 3.2"
+msgstr ""
+
+#: ../../pep-0389.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0389.txt:11
+msgid "27-Sep-2009, 24-Oct-2009"
+msgstr ""
+
+#: ../../pep-0389.txt:15
+msgid "Acceptance"
+msgstr ""
+
+#: ../../pep-0389.txt:16
+msgid "This PEP was approved by Guido on python-dev on February 21, 2010 [17]_."
+msgstr ""
+
+#: ../../pep-0389.txt:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0389.txt:21
+msgid ""
+"This PEP proposes inclusion of the argparse [1]_ module in the Python "
+"standard library in Python 2.7 and 3.2."
+msgstr ""
+
+#: ../../pep-0389.txt:26
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0389.txt:27
+msgid ""
+"The argparse module is a command line parsing library which provides more"
+" functionality than the existing command line parsing modules in the "
+"standard library, getopt [2]_ and optparse [3]_. It includes support for "
+"positional arguments (not just options), subcommands, required options, "
+"options syntaxes like \"/f\" and \"+rgb\", zero-or-more and one-or-more "
+"style arguments, and many other features the other two lack."
+msgstr ""
+
+#: ../../pep-0389.txt:35
+msgid ""
+"The argparse module is also already a popular third-party replacement for"
+" these modules. It is used in projects like IPython (the Scipy Python "
+"shell) [4]_, is included in Debian testing and unstable [5]_, and since "
+"2007 has had various requests for its inclusion in the standard library "
+"[6]_ [7]_ [8]_. This popularity suggests it may be a valuable addition to"
+" the Python libraries."
+msgstr ""
+
+#: ../../pep-0389.txt:44
+msgid "Why aren't getopt and optparse enough?"
+msgstr ""
+
+#: ../../pep-0389.txt:45
+msgid ""
+"One argument against adding argparse is that there are \"already two "
+"different option parsing modules in the standard library\" [9]_. The "
+"following is a list of features provided by argparse but not present in "
+"getopt or optparse:"
+msgstr ""
+
+#: ../../pep-0389.txt:50
+msgid ""
+"While it is true there are two *option* parsing libraries, there are no "
+"full command line parsing libraries -- both getopt and optparse support "
+"only options and have no support for positional arguments. The argparse "
+"module handles both, and as a result, is able to generate better help "
+"messages, avoiding redundancies like the ``usage=`` string usually "
+"required by optparse."
+msgstr ""
+
+#: ../../pep-0389.txt:57
+msgid ""
+"The argparse module values practicality over purity. Thus, argparse "
+"allows required options and customization of which characters are used to"
+" identify options, while optparse explicitly states \"the phrase "
+"'required option' is self-contradictory\" and that the option syntaxes "
+"``-pf``, ``-file``, ``+f``, ``+rgb``, ``/f`` and ``/file`` \"are not "
+"supported by optparse, and they never will be\"."
+msgstr ""
+
+#: ../../pep-0389.txt:64
+msgid ""
+"The argparse module allows options to accept a variable number of "
+"arguments using ``nargs='?'``, ``nargs='*'`` or ``nargs='+'``. The "
+"optparse module provides an untested recipe for some part of this "
+"functionality [10]_ but admits that \"things get hairy when you want an "
+"option to take a variable number of arguments.\""
+msgstr ""
+
+#: ../../pep-0389.txt:70
+msgid ""
+"The argparse module supports subcommands, where a main command line "
+"parser dispatches to other command line parsers depending on the command "
+"line arguments. This is a common pattern in command line interfaces, e.g."
+" ``svn co`` and ``svn up``."
+msgstr ""
+
+#: ../../pep-0389.txt:77
+msgid "Why isn't the functionality just being added to optparse?"
+msgstr ""
+
+#: ../../pep-0389.txt:78
+msgid ""
+"Clearly all the above features offer improvements over what is available "
+"through optparse. A reasonable question then is why these features are "
+"not simply provided as patches to optparse, instead of introducing an "
+"entirely new module. In fact, the original development of argparse "
+"intended to do just that, but because of various fairly constraining "
+"design decisions of optparse, this wasn't really possible. Some of the "
+"problems included:"
+msgstr ""
+
+#: ../../pep-0389.txt:86
+msgid ""
+"The optparse module exposes the internals of its parsing algorithm. In "
+"particular, ``parser.largs`` and ``parser.rargs`` are guaranteed to be "
+"available to callbacks [11]_. This makes it extremely difficult to "
+"improve the parsing algorithm as was necessary in argparse for proper "
+"handling of positional arguments and variable length arguments. For "
+"example, ``nargs='+'`` in argparse is matched using regular expressions "
+"and thus has no notion of things like ``parser.largs``."
+msgstr ""
+
+#: ../../pep-0389.txt:95
+msgid ""
+"The optparse extension APIs are extremely complex. For example, just to "
+"use a simple custom string-to-object conversion function, you have to "
+"subclass ``Option``, hack class attributes, and then specify your custom "
+"option type to the parser, like this::"
+msgstr ""
+
+#: ../../pep-0389.txt:107
+msgid ""
+"For comparison, argparse simply allows conversion functions to be used as"
+" ``type=`` arguments directly, e.g.::"
+msgstr ""
+
+#: ../../pep-0389.txt:113
+msgid ""
+"But given the baroque customization APIs of optparse, it is unclear how "
+"such a feature should interact with those APIs, and it is quite possible "
+"that introducing the simple argparse API would break existing custom "
+"Option code."
+msgstr ""
+
+#: ../../pep-0389.txt:118
+msgid ""
+"Both optparse and argparse parse command line arguments and assign them "
+"as attributes to an object returned by ``parse_args``. However, the "
+"optparse module guarantees that the ``take_action`` method of custom "
+"actions will always be passed a ``values`` object which provides an "
+"``ensure_value`` method [12]_, while the argparse module allows "
+"attributes to be assigned to any object, e.g.::"
+msgstr ""
+
+#: ../../pep-0389.txt:129
+msgid ""
+"Modifying optparse to allow any object to be passed in would be difficult"
+" because simply passing the ``foo_object`` around instead of a ``Values``"
+" instance will break existing custom actions that depend on the "
+"``ensure_value`` method."
+msgstr ""
+
+#: ../../pep-0389.txt:134
+msgid ""
+"Because of issues like these, which made it unreasonably difficult for "
+"argparse to stay compatible with the optparse APIs, argparse was "
+"developed as an independent module. Given these issues, merging all the "
+"argparse features into optparse with no backwards incompatibilities seems"
+" unlikely."
+msgstr ""
+
+#: ../../pep-0389.txt:142
+msgid "Deprecation of optparse"
+msgstr ""
+
+#: ../../pep-0389.txt:143
+msgid ""
+"Because all of optparse's features are available in argparse, the "
+"optparse module will be deprecated. However, because of the widespread "
+"use of optparse, the deprecation strategy contains only documentation "
+"changes and warnings that will not be visible by default:"
+msgstr ""
+
+#: ../../pep-0389.txt:149
+msgid ""
+"Python 2.7+ and 3.2+ -- The following note will be added to the optparse "
+"documentation:"
+msgstr ""
+
+#: ../../pep-0389.txt:152
+msgid ""
+"The optparse module is deprecated and will not be developed further; "
+"development will continue with the argparse module."
+msgstr ""
+
+#: ../../pep-0389.txt:155
+msgid ""
+"Python 2.7+ -- If the Python 3 compatibility flag, ``-3``, is provided at"
+" the command line, then importing optparse will issue a "
+"DeprecationWarning. Otherwise no warnings will be issued."
+msgstr ""
+
+#: ../../pep-0389.txt:159
+msgid ""
+"Python 3.2+ -- Importing optparse will issue a PendingDeprecationWarning,"
+" which is not displayed by default."
+msgstr ""
+
+#: ../../pep-0389.txt:162
+msgid "Note that no removal date is proposed for optparse."
+msgstr ""
+
+#: ../../pep-0389.txt:166
+msgid "Updates to getopt documentation"
+msgstr ""
+
+#: ../../pep-0389.txt:167
+msgid ""
+"The getopt module will not be deprecated. However, its documentation will"
+" be updated to point to argparse in a couple of places. At the top of the"
+" module, the following note will be added:"
+msgstr ""
+
+#: ../../pep-0389.txt:171
+msgid ""
+"The getopt module is a parser for command line options whose API is "
+"designed to be familiar to users of the C getopt function. Users who are "
+"unfamiliar with the C getopt function or who would like to write less "
+"code and get better help and error messages should consider using the "
+"argparse module instead."
+msgstr ""
+
+#: ../../pep-0389.txt:177
+msgid ""
+"Additionally, after the final getopt example, the following note will be "
+"added:"
+msgstr ""
+
+#: ../../pep-0389.txt:180
+msgid ""
+"Note that an equivalent command line interface could be produced with "
+"less code by using the argparse module::"
+msgstr ""
+
+#: ../../pep-0389.txt:195
+msgid "Deferred: string formatting"
+msgstr ""
+
+#: ../../pep-0389.txt:196
+#, python-format
+msgid ""
+"The argparse module supports Python from 2.3 up through 3.2 and as a "
+"result relies on traditional ``%(foo)s`` style string formatting. It has "
+"been suggested that it might be better to use the new style ``{foo}`` "
+"string formatting [13]_. There was some discussion about how best to do "
+"this for modules in the standard library [14]_ and several people are "
+"developing functions for automatically converting %-formatting to "
+"{}-formatting [15]_ [16]_. When one of these is added to the standard "
+"library, argparse will use them to support both formatting styles."
+msgstr ""
+
+#: ../../pep-0389.txt:208
+msgid "Rejected: getopt compatibility methods"
+msgstr ""
+
+#: ../../pep-0389.txt:209
+msgid ""
+"Previously, when this PEP was suggesting the deprecation of getopt as "
+"well as optparse, there was some talk of adding a method like::"
+msgstr ""
+
+#: ../../pep-0389.txt:214
+msgid "However, this method will not be added for a number of reasons:"
+msgstr ""
+
+#: ../../pep-0389.txt:216
+msgid "The getopt module is not being deprecated, so there is less need."
+msgstr ""
+
+#: ../../pep-0389.txt:217
+msgid ""
+"This method would not actually ease the transition for any getopt users "
+"who were already maintaining usage messages, because the API above gives "
+"no way of adding help messages to the arguments."
+msgstr ""
+
+#: ../../pep-0389.txt:220
+msgid ""
+"Some users of getopt consider it very important that only a single "
+"function call is necessary. The API above does not satisfy this "
+"requirement because both ``ArgumentParser()`` and ``parse_args()`` must "
+"also be called."
+msgstr ""
+
+#: ../../pep-0389.txt:227
+msgid "Out of Scope: Various Feature Requests"
+msgstr ""
+
+#: ../../pep-0389.txt:228
+msgid ""
+"Several feature requests for argparse were made in the discussion of this"
+" PEP:"
+msgstr ""
+
+#: ../../pep-0389.txt:231
+msgid "Support argument defaults from environment variables"
+msgstr ""
+
+#: ../../pep-0389.txt:232
+msgid "Support argument defaults from configuration files"
+msgstr ""
+
+#: ../../pep-0389.txt:233
+msgid ""
+"Support \"foo --help subcommand\" in addition to the currently supported "
+"\"foo subcommand --help\""
+msgstr ""
+
+#: ../../pep-0389.txt:236
+msgid ""
+"These are all reasonable feature requests for the argparse module, but "
+"are out of the scope of this PEP, and have been redirected to the "
+"argparse issue tracker."
+msgstr ""
+
+#: ../../pep-0389.txt:242
+msgid "Discussion: sys.stderr and sys.exit"
+msgstr ""
+
+#: ../../pep-0389.txt:243
+msgid ""
+"There were some concerns that argparse by default always writes to "
+"``sys.stderr`` and always calls ``sys.exit`` when invalid arguments are "
+"provided. This is the desired behavior for the vast majority of argparse "
+"use cases which revolve around simple command line interfaces. However, "
+"in some cases, it may be desirable to keep argparse from exiting, or to "
+"have it write its messages to something other than ``sys.stderr``. These "
+"use cases can be supported by subclassing ``ArgumentParser`` and "
+"overriding the ``exit`` or ``_print_message`` methods. The latter is an "
+"undocumented implementation detail, but could be officially exposed if "
+"this turns out to be a common need."
+msgstr ""
+
+#: ../../pep-0389.txt:257
+msgid "References"
+msgstr ""
+
+#: ../../pep-0389.txt:258
+msgid "argparse (http://code.google.com/p/argparse/)"
+msgstr ""
+
+#: ../../pep-0389.txt:261
+msgid "getopt (http://docs.python.org/library/getopt.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:264
+msgid "optparse (http://docs.python.org/library/optparse.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:267
+msgid ""
+"argparse in IPython (http://mail.scipy.org/pipermail/ipython-"
+"dev/2009-April/005102.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:270
+msgid "argparse in Debian (http://packages.debian.org/search?keywords=argparse)"
+msgstr ""
+
+#: ../../pep-0389.txt:273
+msgid ""
+"2007-01-03 request for argparse in the standard library "
+"(https://mail.python.org/pipermail/python-list/2007-January/472276.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:276
+msgid ""
+"2009-06-09 request for argparse in the standard library "
+"(http://bugs.python.org/issue6247)"
+msgstr ""
+
+#: ../../pep-0389.txt:279
+msgid ""
+"2009-09-10 request for argparse in the standard library "
+"(https://mail.python.org/pipermail/stdlib-sig/2009-September/000342.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:282
+msgid ""
+"Fredrik Lundh response to [6]_ (https://mail.python.org/pipermail/python-"
+"list/2007-January/1086892.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:285
+msgid ""
+"optparse variable args (http://docs.python.org/library/optparse.html"
+"#callback-example-6-variable-arguments)"
+msgstr ""
+
+#: ../../pep-0389.txt:288
+msgid ""
+"parser.largs and parser.rargs "
+"(http://docs.python.org/library/optparse.html#how-callbacks-are-called)"
+msgstr ""
+
+#: ../../pep-0389.txt:291
+msgid ""
+"take_action values argument (http://docs.python.org/library/optparse.html"
+"#adding-new-actions)"
+msgstr ""
+
+#: ../../pep-0389.txt:294
+#, python-format
+msgid ""
+"use {}-formatting instead of %-formatting "
+"(http://bugs.python.org/msg89279)"
+msgstr ""
+
+#: ../../pep-0389.txt:297
+msgid ""
+"transitioning from % to {} formatting (https://mail.python.org/pipermail"
+"/python-dev/2009-September/092326.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:300
+msgid "Vinay Sajip's %-to-{} converter (http://gist.github.com/200936)"
+msgstr ""
+
+#: ../../pep-0389.txt:303
+msgid ""
+"Benjamin Peterson's %-to-{} converter "
+"(http://bazaar.launchpad.net/~gutworth/+junk/mod2format/files)"
+msgstr ""
+
+#: ../../pep-0389.txt:306
+msgid ""
+"Guido's approval (https://mail.python.org/pipermail/python-"
+"dev/2010-February/097839.html)"
+msgstr ""
+
+#: ../../pep-0389.txt:310
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0389.txt:311
+msgid "This document has been placed in the public domain."
+msgstr ""
+

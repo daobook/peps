@@ -1,0 +1,256 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0503.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0503.txt:1
+msgid "503"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0503.txt:2
+msgid "Simple Repository API"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0503.txt:5 ../../pep-0503.txt:6
+msgid "Donald Stufft <donald@stufft.io>"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "BDFL-Delegate"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0503.txt:7
+msgid "distutils-sig@python.org"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0503.txt:8
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0503.txt:9
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0503.txt:11 ../../pep-0503.txt:12
+msgid "04-Sep-2015"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0503.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0503.txt:13
+msgid "https://mail.python.org/pipermail/distutils-sig/2015-September/026899.html"
+msgstr ""
+
+#: ../../pep-0503.txt:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0503.txt:19
+msgid ""
+"There are many implementations of a Python package repository and many "
+"tools that consume them. Of these, the canonical implementation that "
+"defines what the \"simple\" repository API looks like is the "
+"implementation that powers PyPI. This document will specify that API, "
+"documenting what the correct behavior for any implementation of the "
+"simple repository API."
+msgstr ""
+
+#: ../../pep-0503.txt:27
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0503.txt:29
+msgid ""
+"A repository that implements the simple API is defined by its base URL, "
+"this is the top level URL that all additional URLs are below. The API is "
+"named the \"simple\" repository due to the fact that PyPI's base URL is "
+"``https://pypi.org/simple/``."
+msgstr ""
+
+#: ../../pep-0503.txt:34
+msgid ""
+"All subsequent URLs in this document will be relative to this base URL "
+"(so given PyPI's URL, a URL of ``/foo/`` would be "
+"``https://pypi.org/simple/foo/``."
+msgstr ""
+
+#: ../../pep-0503.txt:39
+msgid ""
+"Within a repository, the root URL (``/`` for this PEP which represents "
+"the base URL) **MUST** be a valid HTML5 page with a single anchor element"
+" per project in the repository. The text of the anchor tag **MUST** be "
+"the name of the project and the href attribute **MUST** link to the URL "
+"for that particular project. As an example::"
+msgstr ""
+
+#: ../../pep-0503.txt:53
+msgid ""
+"Below the root URL is another URL for each individual project contained "
+"within a repository. The format of this URL is ``/<project>/`` where the "
+"``<project>`` is replaced by the normalized name for that project, so a "
+"project named \"HolyGrail\" would have a URL like ``/holygrail/``. This "
+"URL must respond with a valid HTML5 page with a single anchor element per"
+" file for the project. The href attribute **MUST** be a URL that links to"
+" the location of the file for download, and the text of the anchor tag "
+"**MUST** match the final path component (the filename) of the URL. The "
+"URL **SHOULD** include a hash in the form of a URL fragment with the "
+"following syntax: ``#<hashname>=<hashvalue>``, where ``<hashname>`` is "
+"the lowercase name of the hash function (such as ``sha256``) and "
+"``<hashvalue>`` is the hex encoded digest."
+msgstr ""
+
+#: ../../pep-0503.txt:65
+msgid "In addition to the above, the following constraints are placed on the API:"
+msgstr ""
+
+#: ../../pep-0503.txt:67
+msgid ""
+"All URLs which respond with an HTML5 page **MUST** end with a ``/`` and "
+"the repository **SHOULD** redirect the URLs without a ``/`` to add a "
+"``/`` to the end."
+msgstr ""
+
+#: ../../pep-0503.txt:71
+msgid ""
+"URLs may be either absolute or relative as long as they point to the "
+"correct location."
+msgstr ""
+
+#: ../../pep-0503.txt:74
+msgid ""
+"There are no constraints on where the files must be hosted relative to "
+"the repository."
+msgstr ""
+
+#: ../../pep-0503.txt:77
+msgid ""
+"There may be any other HTML elements on the API pages as long as the "
+"required anchor elements exist."
+msgstr ""
+
+#: ../../pep-0503.txt:80
+msgid ""
+"Repositories **MAY** redirect unnormalized URLs to the canonical "
+"normalized URL (e.g. ``/Foobar/`` may redirect to ``/foobar/``), however "
+"clients **MUST NOT** rely on this redirection and **MUST** request the "
+"normalized URL."
+msgstr ""
+
+#: ../../pep-0503.txt:85
+msgid ""
+"Repositories **SHOULD** choose a hash function from one of the ones "
+"guaranteed to be available via the ``hashlib`` module in the Python "
+"standard library (currently ``md5``, ``sha1``, ``sha224``, ``sha256``, "
+"``sha384``, ``sha512``). The current recommendation is to use ``sha256``."
+msgstr ""
+
+#: ../../pep-0503.txt:90
+msgid ""
+"If there is a GPG signature for a particular distribution file it "
+"**MUST** live alongside that file with the same name with a ``.asc`` "
+"appended to it. So if the file ``/packages/HolyGrail-1.0.tar.gz`` existed"
+" and had an associated signature, the signature would be located at "
+"``/packages/HolyGrail-1.0.tar.gz.asc``."
+msgstr ""
+
+#: ../../pep-0503.txt:96
+msgid ""
+"A repository **MAY** include a ``data-gpg-sig`` attribute on a file link "
+"with a value of either ``true`` or ``false`` to indicate whether or not "
+"there is a GPG signature. Repositories that do this **SHOULD** include it"
+" on every link."
+msgstr ""
+
+#: ../../pep-0503.txt:100
+msgid ""
+"A repository **MAY** include a ``data-requires-python`` attribute on a "
+"file link. This exposes the *Requires-Python* metadata field, specified "
+"in PEP 345, for the corresponding release. Where this is present, "
+"installer tools **SHOULD** ignore the download when installing to a "
+"Python version that doesn't satisfy the requirement. For example::"
+msgstr ""
+
+#: ../../pep-0503.txt:108
+msgid ""
+"In the attribute value, < and > have to be HTML encoded as ``&lt;`` and "
+"``&gt;``, respectively."
+msgstr ""
+
+#: ../../pep-0503.txt:112
+msgid "Normalized Names"
+msgstr ""
+
+#: ../../pep-0503.txt:114
+msgid ""
+"This PEP references the concept of a \"normalized\" project name. As per "
+"PEP 426 the only valid characters in a name are the ASCII alphabet, ASCII"
+" numbers, ``.``, ``-``, and ``_``. The name should be lowercased with all"
+" runs of the characters ``.``, ``-``, or ``_`` replaced with a single "
+"``-`` character. This can be implemented in Python with the ``re`` "
+"module::"
+msgstr ""
+
+#: ../../pep-0503.txt:126
+msgid "Changes"
+msgstr ""
+
+#: ../../pep-0503.txt:128
+msgid "The optional ``data-requires-python`` attribute was added in July 2016."
+msgstr ""
+
+#: ../../pep-0503.txt:132
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0503.txt:134
+msgid "This document has been placed in the public domain."
+msgstr ""
+

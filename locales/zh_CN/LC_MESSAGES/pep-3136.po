@@ -1,0 +1,498 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3136.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3136.txt:1
+msgid "3136"
+msgstr ""
+
+#: ../../pep-3136.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3136.txt:2
+msgid "Labeled break and continue"
+msgstr ""
+
+#: ../../pep-3136.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3136.txt:5
+msgid "Matt Chisholm <matt-python@theory.org>"
+msgstr ""
+
+#: ../../pep-3136.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3136.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-3136.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3136.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3136.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3136.txt:9
+msgid "30-Jun-2007"
+msgstr ""
+
+#: ../../pep-3136.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3136.txt:10
+msgid "3.1"
+msgstr ""
+
+#: ../../pep-3136.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3136.txt:15
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-3136.txt:17
+msgid ""
+"This PEP is rejected. See "
+"https://mail.python.org/pipermail/python-3000/2007-July/008663.html."
+msgstr ""
+
+#: ../../pep-3136.txt:23
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3136.txt:25
+msgid ""
+"This PEP proposes support for labels in Python's ``break`` and "
+"``continue`` statements.  It is inspired by labeled ``break`` and "
+"``continue`` in other languages, and the author's own infrequent but "
+"persistent need for such a feature."
+msgstr ""
+
+#: ../../pep-3136.txt:32
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-3136.txt:34
+msgid ""
+"The ``break`` statement allows the programmer to terminate a loop early, "
+"and the ``continue`` statement allows the programmer to move to the next "
+"iteration of a loop early.  In Python currently, ``break`` and "
+"``continue`` can apply only to the innermost enclosing loop."
+msgstr ""
+
+#: ../../pep-3136.txt:39
+msgid ""
+"Adding support for labels to the ``break`` and ``continue`` statements is"
+" a logical extension to the existing behavior of the ``break`` and "
+"``continue`` statements.  Labeled ``break`` and ``continue`` can improve "
+"the readability and flexibility of complex code which uses nested loops."
+msgstr ""
+
+#: ../../pep-3136.txt:45
+msgid ""
+"For brevity's sake, the examples and discussion in this PEP usually "
+"refers to the ``break`` statement.  However, all of the examples and "
+"motivations apply equally to labeled ``continue``."
+msgstr ""
+
+#: ../../pep-3136.txt:51
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-3136.txt:53
+msgid ""
+"If the programmer wishes to move to the next iteration of an outer "
+"enclosing loop, or terminate multiple loops at once, he or she has a few "
+"less-than elegant options."
+msgstr ""
+
+#: ../../pep-3136.txt:57
+msgid ""
+"Here's one common way of imitating labeled ``break`` in Python (For this "
+"and future examples, ``...`` denotes an arbitrary number of intervening "
+"lines of code)::"
+msgstr ""
+
+#: ../../pep-3136.txt:78
+msgid ""
+"This requires five lines and an extra variable, "
+"``time_to_break_out_of_a``, to keep track of when to break out of the "
+"outer (a) loop.  And those five lines are spread across many lines of "
+"code, making the control flow difficult to understand."
+msgstr ""
+
+#: ../../pep-3136.txt:83
+msgid ""
+"This technique is also error-prone.  A programmer modifying this code "
+"might inadvertently put new code after the end of the inner (b) loop but "
+"before the test for ``time_to_break_out_of_a``, instead of after the "
+"test. This means that code which should have been skipped by breaking out"
+" of the outer loop gets executed incorrectly."
+msgstr ""
+
+#: ../../pep-3136.txt:89
+msgid ""
+"This could also be written with an exception.  The programmer would "
+"declare a special exception, wrap the inner loop in a try, and catch the "
+"exception and break when you see it::"
+msgstr ""
+
+#: ../../pep-3136.txt:111
+msgid ""
+"Again, though; this requires five lines and a new, single-purpose "
+"exception class (instead of a new variable), and spreads basic control "
+"flow out over many lines.  And it breaks out of the inner loop with "
+"``break`` and out of the other loop with an exception, which is "
+"inelegant. [#toowtdi]_"
+msgstr ""
+
+#: ../../pep-3136.txt:117
+msgid ""
+"This next strategy might be the most elegant solution, assuming "
+"condition_two() is inexpensive to compute::"
+msgstr ""
+
+#: ../../pep-3136.txt:135
+msgid ""
+"Breaking twice is still inelegant.  This implementation also relies on "
+"the fact that the inner (b) loop bleeds b into the outer for loop, which "
+"(although explicitly supported) is both surprising to novices, and in my "
+"opinion counter-intuitive and poor practice."
+msgstr ""
+
+#: ../../pep-3136.txt:140
+msgid ""
+"The programmer must also still remember to put in both breaks on "
+"condition two and not insert code before the second break.  A single "
+"conceptual action, breaking out of both loops on condition_two(), "
+"requires four lines of code at two indentation levels, possibly separated"
+" by many intervening lines at the end of the inner (b) loop."
+msgstr ""
+
+#: ../../pep-3136.txt:148
+msgid "Other languages"
+msgstr ""
+
+#: ../../pep-3136.txt:150
+msgid ""
+"Now, put aside whatever dislike you may have for other programming "
+"languages, and consider the syntax of labeled ``break`` and ``continue``."
+"  In Perl::"
+msgstr ""
+
+#: ../../pep-3136.txt:171
+msgid ""
+"(Notes: Perl uses ``last`` instead of ``break``.  The BLOOP labels could "
+"be omitted; ``last`` and ``continue`` apply to the innermost loop by "
+"default.)"
+msgstr ""
+
+#: ../../pep-3136.txt:175
+msgid ""
+"PHP uses a number denoting the number of loops to break out of, rather "
+"than a label::"
+msgstr ""
+
+#: ../../pep-3136.txt:195
+msgid "C/C++, Java, and Ruby all have similar constructions."
+msgstr ""
+
+#: ../../pep-3136.txt:197
+msgid ""
+"The control flow regarding when to break out of the outer (a) loop is "
+"fully encapsulated in the ``break`` statement which gets executed when "
+"the break condition is satisfied.  The depth of the break statement does "
+"not matter.  Control flow is not spread out.  No extra variables, "
+"exceptions, or re-checking or storing of control conditions is required."
+"  There is no danger that code will get inadvertently inserted after the "
+"end of the inner (b) loop and before the break condition is re-checked "
+"inside the outer (a) loop.  These are the benefits that labeled ``break``"
+" and ``continue`` would bring to Python."
+msgstr ""
+
+#: ../../pep-3136.txt:210
+msgid "What this PEP is not"
+msgstr ""
+
+#: ../../pep-3136.txt:212
+msgid ""
+"This PEP is not a proposal to add GOTO to Python.  GOTO allows a "
+"programmer to jump to an arbitrary block or line of code, and generally "
+"makes control flow more difficult to follow.  Although ``break`` and "
+"``continue`` (with or without support for labels) can be considered a "
+"type of GOTO, it is much more restricted.  Another Python construct, "
+"``yield``, could also be considered a form of GOTO -- an even less "
+"restrictive one.  The goal of this PEP is to propose an extension to the "
+"existing control flow tools ``break`` and ``continue``, to make control "
+"flow easier to understand, not more difficult."
+msgstr ""
+
+#: ../../pep-3136.txt:223
+msgid ""
+"Labeled ``break`` and ``continue`` cannot transfer control to another "
+"function or method.  They cannot even transfer control to an arbitrary "
+"line of code in the current scope.  Currently, they can only affect the "
+"behavior of a loop, and are quite different and much more restricted than"
+" GOTO.  This extension allows them to affect any enclosing loop in the "
+"current name-space, but it does not change their behavior to that of "
+"GOTO."
+msgstr ""
+
+#: ../../pep-3136.txt:233
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3136.txt:235
+msgid ""
+"Under all of these proposals, ``break`` and ``continue`` by themselves "
+"will continue to behave as they currently do, applying to the innermost "
+"loop by default."
+msgstr ""
+
+#: ../../pep-3136.txt:241
+msgid "Proposal A - Explicit labels"
+msgstr ""
+
+#: ../../pep-3136.txt:243
+msgid ""
+"The for and while loop syntax will be followed by an optional ``as`` or "
+"``label`` (contextual) keyword [#keyword]_ and then an identifier, which "
+"may be used to identify the loop out of which to break (or which should "
+"be continued)."
+msgstr ""
+
+#: ../../pep-3136.txt:248
+msgid ""
+"The ``break`` (and ``continue``) statements will be followed by an "
+"optional identifier that refers to the loop out of which to break (or "
+"which should be continued).  Here is an example using the ``as`` "
+"keyword::"
+msgstr ""
+
+#: ../../pep-3136.txt:265
+msgid "Or, with ``label`` instead of ``as``::"
+msgstr ""
+
+#: ../../pep-3136.txt:280
+msgid ""
+"This has all the benefits outlined above.  It requires modifications to "
+"the language syntax: the syntax of ``break`` and ``continue`` syntax "
+"statements and for and while statements.  It requires either a new "
+"conditional keyword ``label`` or an extension to the conditional keyword "
+"``as``. [#as]_ It is unlikely to require any changes to existing Python "
+"programs.  Passing an identifier not defined in the local scope to "
+"``break`` or ``continue`` would raise a NameError."
+msgstr ""
+
+#: ../../pep-3136.txt:290
+msgid "Proposal B - Numeric break & continue"
+msgstr ""
+
+#: ../../pep-3136.txt:292
+msgid ""
+"Rather than altering the syntax of ``for`` and ``while`` loops, ``break``"
+" and ``continue`` would take a numeric argument denoting the enclosing "
+"loop which is being controlled, similar to PHP."
+msgstr ""
+
+#: ../../pep-3136.txt:296
+msgid ""
+"It seems more Pythonic to me for ``break`` and ``continue`` to refer to "
+"loops indexing from zero, as opposed to indexing from one as PHP does."
+msgstr ""
+
+#: ../../pep-3136.txt:314
+msgid ""
+"Passing a number that was too large, or less than zero, or non-integer to"
+" ``break`` or ``continue`` would (probably) raise an IndexError."
+msgstr ""
+
+#: ../../pep-3136.txt:317 ../../pep-3136.txt:353
+msgid "This proposal would not require any changes to existing Python programs."
+msgstr ""
+
+#: ../../pep-3136.txt:322
+msgid "Proposal C - The reduplicative method"
+msgstr ""
+
+#: ../../pep-3136.txt:324
+msgid ""
+"The syntax of ``break`` and ``continue`` would be altered to allow "
+"multiple ``break`` and continue statements on the same line.  Thus, "
+"``break break`` would break out of the first and second enclosing loops."
+msgstr ""
+
+#: ../../pep-3136.txt:344
+msgid ""
+"This would also allow the programmer to break out of the inner loop and "
+"continue the next outermost simply by writing ``break continue``, "
+"[#breakcontinue]_ and so on.  I'm not sure what exception would be raised"
+" if the programmer used more ``break`` or ``continue`` statements than "
+"existing loops (perhaps a SyntaxError?)."
+msgstr ""
+
+#: ../../pep-3136.txt:350
+msgid ""
+"I expect this proposal to get rejected because it will be judged too "
+"difficult to understand."
+msgstr ""
+
+#: ../../pep-3136.txt:358
+msgid "Proposal D - Explicit iterators"
+msgstr ""
+
+#: ../../pep-3136.txt:360
+msgid ""
+"Rather than embellishing for and while loop syntax with labels, the "
+"programmer wishing to use labeled breaks would be required to create the "
+"iterator explicitly and assign it to an identifier if he or she wanted to"
+" ``break`` out of or ``continue`` that loop from within a deeper loop."
+msgstr ""
+
+#: ../../pep-3136.txt:383
+msgid ""
+"Passing a non-iterator object to ``break`` or ``continue`` would raise a "
+"TypeError; and a nonexistent identifier would raise a NameError. This "
+"proposal requires only one extra line to create a labeled loop, and no "
+"extra lines to break out of a containing loop, and no changes to existing"
+" Python programs."
+msgstr ""
+
+#: ../../pep-3136.txt:391
+msgid "Proposal E - Explicit iterators and iterator methods"
+msgstr ""
+
+#: ../../pep-3136.txt:393
+msgid ""
+"This is a variant of Proposal D.  Iterators would need be created "
+"explicitly if anything other that the most basic use of ``break`` and "
+"``continue`` was required.  Instead of modifying the syntax of ``break`` "
+"and ``continue``, ``.break()`` and ``.continue()`` methods could be added"
+" to the Iterator type."
+msgstr ""
+
+#: ../../pep-3136.txt:416
+msgid ""
+"I expect that this proposal will get rejected on the grounds of sheer "
+"ugliness.  However, it requires no changes to the language syntax "
+"whatsoever, nor does it require any changes to existing Python programs."
+msgstr ""
+
+#: ../../pep-3136.txt:423
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-3136.txt:425
+msgid ""
+"I have never looked at the Python language implementation itself, so I "
+"have no idea how difficult this would be to implement.  If this PEP is "
+"accepted, but no one is available to write the feature, I will try to "
+"implement it myself."
+msgstr ""
+
+#: ../../pep-3136.txt:432
+msgid "Footnotes"
+msgstr ""
+
+#: ../../pep-3136.txt:434
+msgid ""
+"Breaking some loops with exceptions is inelegant because it's a violation"
+" of There's Only One Way To Do It."
+msgstr ""
+
+#: ../../pep-3136.txt:437
+msgid ""
+"Or really any new contextual keyword that the community likes: ``as``, "
+"``label``, ``labeled``, ``loop``, ``name``, ``named``, ``walrus``, "
+"whatever."
+msgstr ""
+
+#: ../../pep-3136.txt:441
+msgid ""
+"The use of ``as`` in a similar context has been proposed here, "
+"http://sourceforge.net/tracker/index.php?func=detail&aid=1714448&group_id=5470&atid=355470"
+" but to my knowledge this idea has not been written up as a PEP."
+msgstr ""
+
+#: ../../pep-3136.txt:445
+msgid ""
+"To continue the Nth outer loop, you would write break N-1 times and then "
+"continue.  Only one ``continue`` would be allowed, and only at the end of"
+" a sequence of breaks. ``continue break`` or ``continue continue`` makes "
+"no sense."
+msgstr ""
+
+#: ../../pep-3136.txt:452
+msgid "Resources"
+msgstr ""
+
+#: ../../pep-3136.txt:454
+msgid ""
+"This issue has come up before, although it has never been resolved, to my"
+" knowledge."
+msgstr ""
+
+#: ../../pep-3136.txt:457
+msgid ""
+"`labeled breaks`__, on comp.lang.python, in the context of ``do...while``"
+" loops"
+msgstr ""
+
+#: ../../pep-3136.txt:462
+msgid ""
+"`break LABEL vs. exceptions + PROPOSAL`__, on python-list, as compared to"
+" using Exceptions for flow control"
+msgstr ""
+
+#: ../../pep-3136.txt:467
+msgid ""
+"`Named code blocks`__ on python-list, a suggestion motivated by the "
+"desire for labeled break / continue"
+msgstr ""
+
+#: ../../pep-3136.txt:472
+msgid ""
+"`mod_python bug fix`__ An example of someone setting a flag inside an "
+"inner loop that triggers a continue in the containing loop, to work "
+"around the absence of labeled break and continue"
+msgstr ""
+
+#: ../../pep-3136.txt:480
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3136.txt:482
+msgid "This document has been placed in the public domain."
+msgstr ""
+

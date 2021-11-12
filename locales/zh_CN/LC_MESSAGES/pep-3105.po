@@ -1,0 +1,252 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3105.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3105.txt:1
+msgid "3105"
+msgstr ""
+
+#: ../../pep-3105.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3105.txt:2
+msgid "Make print a function"
+msgstr ""
+
+#: ../../pep-3105.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3105.txt:5
+msgid "Georg Brandl <georg@python.org>"
+msgstr ""
+
+#: ../../pep-3105.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3105.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3105.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3105.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3105.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3105.txt:9
+msgid "19-Nov-2006"
+msgstr ""
+
+#: ../../pep-3105.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3105.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3105.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3105.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3105.txt:17
+msgid ""
+"The title says it all -- this PEP proposes a new ``print()`` builtin that"
+" replaces the ``print`` statement and suggests a specific signature for "
+"the new function."
+msgstr ""
+
+#: ../../pep-3105.txt:23
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3105.txt:25
+msgid ""
+"The ``print`` statement has long appeared on lists of dubious language "
+"features that are to be removed in Python 3000, such as Guido's \"Python "
+"Regrets\" presentation [1]_. As such, the objective of this PEP is not "
+"new, though it might become much disputed among Python developers."
+msgstr ""
+
+#: ../../pep-3105.txt:30
+msgid ""
+"The following arguments for a ``print()`` function are distilled from a "
+"python-3000 message by Guido himself [2]_:"
+msgstr ""
+
+#: ../../pep-3105.txt:33
+msgid ""
+"``print`` is the only application-level functionality that has a "
+"statement dedicated to it. Within Python's world, syntax is generally "
+"used as a last resort, when something *can't* be done without help from "
+"the compiler. Print doesn't qualify for such an exception."
+msgstr ""
+
+#: ../../pep-3105.txt:38
+msgid ""
+"At some point in application development one quite often feels the need "
+"to replace ``print`` output by something more sophisticated, like logging"
+" calls or calls into some other I/O library. With a ``print()`` function,"
+" this is a straightforward string replacement, today it is a mess adding "
+"all those parentheses and possibly converting ``>>stream`` style syntax."
+msgstr ""
+
+#: ../../pep-3105.txt:45
+msgid ""
+"Having special syntax for ``print`` puts up a much larger barrier for "
+"evolution, e.g. a hypothetical new ``printf()`` function is not too far "
+"fetched when it will coexist with a ``print()`` function."
+msgstr ""
+
+#: ../../pep-3105.txt:49
+msgid ""
+"There's no easy way to convert ``print`` statements into another call if "
+"one needs a different separator, not spaces, or none at all. Also, "
+"there's no easy way *at all* to conveniently print objects with some "
+"other separator than a space."
+msgstr ""
+
+#: ../../pep-3105.txt:54
+msgid ""
+"If ``print()`` is a function, it would be much easier to replace it "
+"within one module (just ``def print(*args):...``) or even throughout a "
+"program (e.g. by putting a different function in ``__builtin__.print``). "
+"As it is, one can do this by writing a class with a ``write()`` method "
+"and assigning that to ``sys.stdout`` -- that's not bad, but definitely a "
+"much larger conceptual leap, and it works at a different level than "
+"print."
+msgstr ""
+
+#: ../../pep-3105.txt:63
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3105.txt:65
+msgid ""
+"The signature for ``print()``, taken from various mailings and recently "
+"posted on the python-3000 list [3]_ is::"
+msgstr ""
+
+#: ../../pep-3105.txt:70
+msgid "A call like::"
+msgstr ""
+
+#: ../../pep-3105.txt:74
+msgid "will be equivalent to today's::"
+msgstr ""
+
+#: ../../pep-3105.txt:78
+msgid ""
+"while the optional ``sep`` and ``end`` arguments specify what is printed "
+"between and after the arguments, respectively."
+msgstr ""
+
+#: ../../pep-3105.txt:81
+msgid ""
+"The ``softspace`` feature (a semi-secret attribute on files currently "
+"used to tell print whether to insert a space before the first item) will "
+"be removed. Therefore, there will not be a direct translation for "
+"today's::"
+msgstr ""
+
+#: ../../pep-3105.txt:89
+msgid "which will not print a space between the ``\"a\"`` and the newline."
+msgstr ""
+
+#: ../../pep-3105.txt:93
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-3105.txt:95
+msgid ""
+"The changes proposed in this PEP will render most of today's ``print`` "
+"statements invalid.  Only those which incidentally feature parentheses "
+"around all of their arguments will continue to be valid Python syntax in "
+"version 3.0, and of those, only the ones printing a single parenthesized "
+"value will continue to do the same thing.  For example, in 2.x::"
+msgstr ""
+
+#: ../../pep-3105.txt:107
+msgid "whereas in 3.0::"
+msgstr ""
+
+#: ../../pep-3105.txt:114
+msgid ""
+"Luckily, as it is a statement in Python 2, ``print`` can be detected and "
+"replaced reliably and non-ambiguously by an automated tool, so there "
+"should be no major porting problems (provided someone writes the "
+"mentioned tool)."
+msgstr ""
+
+#: ../../pep-3105.txt:121
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-3105.txt:123
+msgid ""
+"The proposed changes were implemented in the Python 3000 branch in the "
+"Subversion revisions 53685 to 53704. Most of the legacy code in the "
+"library has been converted too, but it is an ongoing effort to catch "
+"every print statement that may be left in the distribution."
+msgstr ""
+
+#: ../../pep-3105.txt:130
+msgid "References"
+msgstr ""
+
+#: ../../pep-3105.txt:132
+msgid "http://legacy.python.org/doc/essays/ppt/regrets/PythonRegrets.pdf"
+msgstr ""
+
+#: ../../pep-3105.txt:134
+msgid ""
+"Replacement for print in Python 3.0 (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-dev/2005-September/056154.html"
+msgstr ""
+
+#: ../../pep-3105.txt:137
+msgid ""
+"print() parameters in py3k (Guido van Rossum) "
+"https://mail.python.org/pipermail/python-3000/2006-November/004485.html"
+msgstr ""
+
+#: ../../pep-3105.txt:142
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3105.txt:144
+msgid "This document has been placed in the public domain."
+msgstr ""
+

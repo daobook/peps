@@ -1,0 +1,295 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0613.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0613.rst:1
+msgid "613"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0613.rst:2
+msgid "Explicit Type Aliases"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0613.rst:3
+msgid "Shannon Zhu <szhu@fb.com>"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0613.rst:4
+msgid "Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0613.rst:5
+msgid ""
+"https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/MWRJOBEEEMFVXE7CAKO7B4P46IPM4AN3/"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0613.rst:6
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0613.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0613.rst:9 ../../pep-0613.rst:10
+msgid "21-Jan-2020"
+msgstr ""
+
+#: ../../pep-0613.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0613.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0613.rst:16
+msgid ""
+"Type aliases are user-specified types which may be as complex as any type"
+" hint, and are specified with a simple variable assignment on a module "
+"top level."
+msgstr ""
+
+#: ../../pep-0613.rst:19
+msgid ""
+"This PEP formalizes a way to explicitly declare an assignment as a type "
+"alias."
+msgstr ""
+
+#: ../../pep-0613.rst:22
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0613.rst:24
+msgid ""
+"Type aliases are declared as top level variable assignments. In `PEP 484 "
+"<https://www.python.org/dev/peps/pep-0484/#type-aliases/>`_, the "
+"distinction between a valid type alias and a global variable was "
+"implicitly determined: if a top level assignment is unannotated, and the "
+"assigned value is a valid type, then the name being assigned to is a "
+"valid type alias. Otherwise, that name is simply a global value that "
+"cannot be used as a type hint."
+msgstr ""
+
+#: ../../pep-0613.rst:31
+msgid ""
+"These implicit type alias declaration rules create confusion when type "
+"aliases involve forward references, invalid types, or violate other "
+"restrictions enforced on type alias declaration. Because the distinction "
+"between an unannotated value and a type alias is implicit, ambiguous or "
+"incorrect type alias declarations implicitly default to a valid value "
+"assignment. This creates expressions that are impossible to express as "
+"type aliases and punts error diagnosis of malformed type aliases "
+"downstream."
+msgstr ""
+
+#: ../../pep-0613.rst:39
+msgid ""
+"The following examples each include an illustration of some of the "
+"suboptimal or confusing behaviors resulting from existing implicit alias "
+"declarations. We also introduce explicit aliases of the format "
+"``TypeName: TypeAlias = Expression`` here for the sake of comparison, but"
+" the syntax is discussed in further detail in later sections."
+msgstr ""
+
+#: ../../pep-0613.rst:46
+msgid "Forward References:"
+msgstr ""
+
+#: ../../pep-0613.rst:53
+msgid ""
+"This code snippet should not error so long as ``ClassName`` is defined "
+"later on. However, a type checker is forced to assume that MyType is a "
+"value assignment rather than a type alias, and therefore may throw "
+"spurious errors that (1) ``MyType`` is an unannotated global string, and "
+"(2) ``MyType`` cannot be used as a return annotation because it is not a "
+"valid type."
+msgstr ""
+
+#: ../../pep-0613.rst:64
+msgid ""
+"Explicit aliases remove ambiguity so neither of the above errors will be "
+"thrown. Additionally, if something is wrong with ``ClassName`` (i.e., "
+"it’s not actually defined later), the type checker can throw an error."
+msgstr ""
+
+#: ../../pep-0613.rst:70
+msgid "Error Messaging:"
+msgstr ""
+
+#: ../../pep-0613.rst:77
+msgid ""
+"A type checker should warn on this code snippet that ``InvalidType`` is "
+"not a valid type, and therefore cannot be used to annotate an expression "
+"or to construct a type alias. Instead, type checkers are forced to throw "
+"spurious errors that (1) ``MyType`` is a global expression missing an "
+"annotation, and (2) ``MyType`` is not a valid type in all usages of "
+"``MyType`` across the codebase."
+msgstr ""
+
+#: ../../pep-0613.rst:89
+msgid ""
+"With explicit aliases, the type checker has enough information to error "
+"on the actual definition of the bad type alias, and explain why: that "
+"``MyGeneric(int)`` and ``InvalidType`` are not valid types. When the "
+"value expression is no longer evaluated as a global value, unactionable "
+"type errors on all usages of ``MyType`` across the codebase can be "
+"suppressed."
+msgstr ""
+
+#: ../../pep-0613.rst:96
+msgid "Scope Restrictions:"
+msgstr ""
+
+#: ../../pep-0613.rst:104
+msgid ""
+"The outer ``x`` is a valid type alias, but type checkers must error if "
+"the inner ``x`` is ever used as a type because type aliases cannot be "
+"defined inside a nested scope. This is confusing because the alias "
+"declaration rule is not explicit, and because a type error will not be "
+"thrown on the location of the inner type alias declaration but rather on "
+"every one of its subsequent use cases."
+msgstr ""
+
+#: ../../pep-0613.rst:119
+msgid ""
+"With explicit aliases, the outer assignment is still a valid type "
+"variable, and the inner assignment can either be a valid local variable "
+"or a clear error, communicating to the author that type aliases cannot be"
+" defined inside a nested scope."
+msgstr ""
+
+#: ../../pep-0613.rst:126
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0613.rst:128
+msgid ""
+"The explicit alias declaration syntax clearly differentiates between the "
+"three possible kinds of assignments: typed global expressions, untyped "
+"global expressions, and type aliases. This avoids the existence of "
+"assignments that break type checking when an annotation is added, and "
+"avoids classifying the nature of the assignment based on the type of the "
+"value."
+msgstr ""
+
+#: ../../pep-0613.rst:134
+msgid "Implicit syntax (pre-existing):"
+msgstr ""
+
+#: ../../pep-0613.rst:145
+msgid "Explicit syntax:"
+msgstr ""
+
+#: ../../pep-0613.rst:159
+msgid ""
+"Note: The examples above illustrate implicit and explicit alias "
+"declarations in isolation. For the sake of backwards compatibility, type "
+"checkers should support both simultaneously, meaning an untyped global "
+"expression ``x = int`` will still be considered a valid type alias."
+msgstr ""
+
+#: ../../pep-0613.rst:166
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0613.rst:168
+msgid ""
+"Explicit aliases provide an alternative way to declare type aliases, but "
+"all pre-existing code and old alias declarations will work as before."
+msgstr ""
+
+#: ../../pep-0613.rst:173
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0613.rst:175
+msgid ""
+"The `Pyre <https://pyre-check.org/>`_ type checker supports explicit type"
+" alias declarations."
+msgstr ""
+
+#: ../../pep-0613.rst:180
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0613.rst:182
+msgid "Some alternative syntaxes were considered for explicit aliases:"
+msgstr ""
+
+#: ../../pep-0613.rst:188
+msgid "This looks a lot like an uninitialized variable."
+msgstr ""
+
+#: ../../pep-0613.rst:194
+msgid ""
+"Along with the option above, this format potentially adds confusion "
+"around what the runtime value of ``MyType`` is."
+msgstr ""
+
+#: ../../pep-0613.rst:198
+msgid ""
+"In comparison, the chosen syntax option ``MyType: TypeAlias = int`` is "
+"appealing because it still sticks with the ``MyType = int`` assignment "
+"syntax, and adds some information for the type checker purely as an "
+"annotation."
+msgstr ""
+
+#: ../../pep-0613.rst:204
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0613.rst:206
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -1,0 +1,935 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0209.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0209.txt:1
+msgid "209"
+msgstr ""
+
+#: ../../pep-0209.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0209.txt:2
+msgid "Multi-dimensional Arrays"
+msgstr ""
+
+#: ../../pep-0209.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0209.txt:5
+msgid "barrett@stsci.edu (Paul Barrett), oliphant@ee.byu.edu (Travis Oliphant)"
+msgstr ""
+
+#: ../../pep-0209.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0209.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0209.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0209.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0209.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0209.txt:9
+msgid "03-Jan-2001"
+msgstr ""
+
+#: ../../pep-0209.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0209.txt:10
+msgid "2.2"
+msgstr ""
+
+#: ../../pep-0209.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0209.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0209.txt:17
+msgid ""
+"This PEP proposes a redesign and re-implementation of the multi- "
+"dimensional array module, Numeric, to make it easier to add new features "
+"and functionality to the module.  Aspects of Numeric 2 that will receive "
+"special attention are efficient access to arrays exceeding a gigabyte in "
+"size and composed of inhomogeneous data structures or records.  The "
+"proposed design uses four Python classes: ArrayType, UFunc, Array, and "
+"ArrayView; and a low-level C-extension module, _ufunc, to handle the "
+"array operations efficiently.  In addition, each array type has its own "
+"C-extension module which defines the coercion rules, operations, and "
+"methods for that type.  This design enables new types, features, and "
+"functionality to be added in a modular fashion.  The new version will "
+"introduce some incompatibilities with the current Numeric."
+msgstr ""
+
+#: ../../pep-0209.txt:33
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0209.txt:35
+msgid ""
+"Multi-dimensional arrays are commonly used to store and manipulate data "
+"in science, engineering, and computing.  Python currently has an "
+"extension module, named Numeric (henceforth called Numeric 1), which "
+"provides a satisfactory set of functionality for users manipulating "
+"homogeneous arrays of data of moderate size (of order 10 MB).  For access"
+" to larger arrays (of order 100 MB or more) of possibly inhomogeneous "
+"data, the implementation of Numeric 1 is inefficient and cumbersome.  In "
+"the future, requests by the Numerical Python community for additional "
+"functionality is also likely as PEPs 211: Adding New Linear Operators to "
+"Python, and 225: Elementwise/Objectwise Operators illustrate."
+msgstr ""
+
+#: ../../pep-0209.txt:49
+msgid "Proposal"
+msgstr ""
+
+#: ../../pep-0209.txt:51
+msgid ""
+"This proposal recommends a re-design and re-implementation of Numeric 1, "
+"henceforth called Numeric 2, which will enable new types, features, and "
+"functionality to be added in an easy and modular manner.  The initial "
+"design of Numeric 2 should focus on providing a generic framework for "
+"manipulating arrays of various types and should enable a straightforward "
+"mechanism for adding new array types and UFuncs.  Functional methods that"
+" are more specific to various disciplines can then be layered on top of "
+"this core. This new module will still be called Numeric and most of the "
+"behavior found in Numeric 1 will be preserved."
+msgstr ""
+
+#: ../../pep-0209.txt:62
+msgid ""
+"The proposed design uses four Python classes: ArrayType, UFunc, Array, "
+"and ArrayView; and a low-level C-extension module to handle the array "
+"operations efficiently.  In addition, each array type has its own "
+"C-extension module which defines the coercion rules, operations, and "
+"methods for that type.  At a later date, when core functionality is "
+"stable, some Python classes can be converted to C-extension types."
+msgstr ""
+
+#: ../../pep-0209.txt:70
+msgid "Some planned features are:"
+msgstr ""
+
+#: ../../pep-0209.txt:72
+msgid "Improved memory usage"
+msgstr ""
+
+#: ../../pep-0209.txt:74
+msgid ""
+"This feature is particularly important when handling large arrays and can"
+" produce significant improvements in performance as well as memory usage."
+"  We have identified several areas where memory usage can be improved:"
+msgstr ""
+
+#: ../../pep-0209.txt:79
+msgid "Use a local coercion model"
+msgstr ""
+
+#: ../../pep-0209.txt:81
+msgid ""
+"Instead of using Python's global coercion model which creates temporary "
+"arrays, Numeric 2, like Numeric 1, will implement a local coercion model "
+"as described in PEP 208 which defers the responsibility of coercion to "
+"the operator.  By using internal buffers, a coercion operation can be "
+"done for each array (including output arrays), if necessary, at the time "
+"of the operation.  Benchmarks [1]_ have shown that performance is at most"
+" degraded only slightly and is improved in cases where the internal "
+"buffers are less than the L2 cache size and the processor is under load."
+"  To avoid array coercion altogether, C functions having arguments of "
+"mixed type are allowed in Numeric 2."
+msgstr ""
+
+#: ../../pep-0209.txt:94
+msgid "Avoid creation of temporary arrays"
+msgstr ""
+
+#: ../../pep-0209.txt:96
+msgid ""
+"In complex array expressions (i.e. having more than one operation), each "
+"operation will create a temporary array which will be used and then "
+"deleted by the succeeding operation.  A better approach would be to "
+"identify these temporary arrays and reuse their data buffers when "
+"possible, namely when the array shape and type are the same as the "
+"temporary array being created.  This can be done by checking the "
+"temporary array's reference count.  If it is 1, then it will be deleted "
+"once the operation is done and is a candidate for reuse."
+msgstr ""
+
+#: ../../pep-0209.txt:106
+msgid "Optional use of memory-mapped files"
+msgstr ""
+
+#: ../../pep-0209.txt:108
+msgid ""
+"Numeric users sometimes need to access data from very large files or to "
+"handle data that is greater than the available memory.  Memory-mapped "
+"arrays provide a mechanism to do this by storing the data on disk while "
+"making it appear to be in memory.  Memory- mapped arrays should improve "
+"access to all files by eliminating one of two copy steps during a file "
+"access.  Numeric should be able to access in-memory and memory-mapped "
+"arrays transparently."
+msgstr ""
+
+#: ../../pep-0209.txt:117
+msgid "Record access"
+msgstr ""
+
+#: ../../pep-0209.txt:119
+msgid ""
+"In some fields of science, data is stored in files as binary records.  "
+"For example, in astronomy, photon data is stored as a 1 dimensional list "
+"of photons in order of arrival time.  These records or C-like structures "
+"contain information about the detected photon, such as its arrival time, "
+"its position on the detector, and its energy.  Each field may be of a "
+"different type, such as char, int, or float.  Such arrays introduce new "
+"issues that must be dealt with, in particular byte alignment or byte "
+"swapping may need to be performed for the numeric values to be properly "
+"accessed (though byte swapping is also an issue for memory mapped data)."
+"  Numeric 2 is designed to automatically handle alignment and "
+"representational issues when data is accessed or operated on.  There are "
+"two approaches to implementing records; as either a derived array class "
+"or a special array type, depending on your point-of- view.  We defer this"
+" discussion to the Open Issues section."
+msgstr ""
+
+#: ../../pep-0209.txt:137
+msgid "Additional array types"
+msgstr ""
+
+#: ../../pep-0209.txt:139
+msgid ""
+"Numeric 1 has 11 defined types: char, ubyte, sbyte, short, int, long, "
+"float, double, cfloat, cdouble, and object.  There are no ushort, uint, "
+"or ulong types, nor are there more complex types such as a bit type which"
+" is of use to some fields of science and possibly for implementing "
+"masked-arrays.  The design of Numeric 1 makes the addition of these and "
+"other types a difficult and error-prone process.  To enable the easy "
+"addition (and deletion) of new array types such as a bit type described "
+"below, a re-design of Numeric is necessary."
+msgstr ""
+
+#: ../../pep-0209.txt:149
+msgid "Bit type"
+msgstr ""
+
+#: ../../pep-0209.txt:151
+msgid ""
+"The result of a rich comparison between arrays is an array of boolean "
+"values.  The result can be stored in an array of type char, but this is "
+"an unnecessary waste of memory.  A better implementation would use a bit "
+"or boolean type, compressing the array size by a factor of eight.  This "
+"is currently being implemented for Numeric 1 (by Travis Oliphant) and "
+"should be included in Numeric 2."
+msgstr ""
+
+#: ../../pep-0209.txt:159
+msgid "Enhanced array indexing syntax"
+msgstr ""
+
+#: ../../pep-0209.txt:161
+msgid ""
+"The extended slicing syntax was added to Python to provide greater "
+"flexibility when manipulating Numeric arrays by allowing step-sizes "
+"greater than 1.  This syntax works well as a shorthand for a list of "
+"regularly spaced indices.  For those situations where a list of "
+"irregularly spaced indices are needed, an enhanced array indexing syntax "
+"would allow 1-D arrays to be arguments."
+msgstr ""
+
+#: ../../pep-0209.txt:168
+msgid "Rich comparisons"
+msgstr ""
+
+#: ../../pep-0209.txt:170
+msgid ""
+"The implementation of PEP 207: Rich Comparisons in Python 2.1 provides "
+"additional flexibility when manipulating arrays.  We intend to implement "
+"this feature in Numeric 2."
+msgstr ""
+
+#: ../../pep-0209.txt:174
+msgid "Array broadcasting rules"
+msgstr ""
+
+#: ../../pep-0209.txt:176
+msgid ""
+"When an operation between a scalar and an array is done, the implied "
+"behavior is to create a new array having the same shape as the array "
+"operand containing the scalar value.  This is called array broadcasting."
+"  It also works with arrays of lesser rank, such as vectors.  This "
+"implicit behavior is implemented in Numeric 1 and will also be "
+"implemented in Numeric 2."
+msgstr ""
+
+#: ../../pep-0209.txt:185
+msgid "Design and Implementation"
+msgstr ""
+
+#: ../../pep-0209.txt:187
+msgid "The design of Numeric 2 has four primary classes:"
+msgstr ""
+
+#: ../../pep-0209.txt:189
+msgid "ArrayType:"
+msgstr ""
+
+#: ../../pep-0209.txt:191
+msgid ""
+"This is a simple class that describes the fundamental properties of an "
+"array-type, e.g. its name, its size in bytes, its coercion relations with"
+" respect to other types, etc., e.g."
+msgstr ""
+
+#: ../../pep-0209.txt:199
+msgid ""
+"Its relation to the other types is defined when the C-extension module "
+"for that type is imported.  The corresponding Python code is::"
+msgstr ""
+
+#: ../../pep-0209.txt:205
+msgid ""
+"This says that the Real64 array-type has higher priority than the Int32 "
+"array-type."
+msgstr ""
+
+#: ../../pep-0209.txt:208
+msgid ""
+"The following attributes and methods are proposed for the core "
+"implementation.  Additional attributes can be added on an individual "
+"basis, e.g. .bitsize or .bitstrides for the bit type."
+msgstr ""
+
+#: ../../pep-0209.txt:212 ../../pep-0209.txt:284 ../../pep-0209.txt:319
+msgid "Attributes::"
+msgstr ""
+
+#: ../../pep-0209.txt:222 ../../pep-0209.txt:292 ../../pep-0209.txt:326
+#: ../../pep-0209.txt:385
+msgid "Methods::"
+msgstr ""
+
+#: ../../pep-0209.txt:228 ../../pep-0209.txt:303 ../../pep-0209.txt:351
+#: ../../pep-0209.txt:360 ../../pep-0209.txt:389
+msgid "C-API: This still needs to be fleshed-out."
+msgstr ""
+
+#: ../../pep-0209.txt:231
+msgid "UFunc:"
+msgstr ""
+
+#: ../../pep-0209.txt:233
+msgid ""
+"This class is the heart of Numeric 2.  Its design is similar to that of "
+"ArrayType in that the UFunc creates a singleton callable object whose "
+"attributes are name, total and input number of arguments, a document "
+"string, and an empty CFunc dictionary; e.g."
+msgstr ""
+
+#: ../../pep-0209.txt:242
+msgid ""
+"When defined the add instance has no C functions associated with it and "
+"therefore can do no work.  The CFunc dictionary is populated or "
+"registered later when the C-extension module for an array-type is "
+"imported.  The arguments of the register method are: function name, "
+"function descriptor, and the CUFunc object.  The corresponding Python "
+"code is"
+msgstr ""
+
+#: ../../pep-0209.txt:253
+msgid ""
+"In the initialization function of an array type module, e.g. Int32, there"
+" are two C API functions: one to initialize the coercion rules and the "
+"other to register the CFunc objects."
+msgstr ""
+
+#: ../../pep-0209.txt:257
+msgid ""
+"When an operation is applied to some arrays, the ``__call__`` method is "
+"invoked.  It gets the type of each array (if the output array is not "
+"given, it is created from the coercion rules) and checks the CFunc "
+"dictionary for a key that matches the argument types. If it exists the "
+"operation is performed immediately, otherwise the coercion rules are used"
+" to search for a related operation and set of conversion functions.  The "
+"``__call__`` method then invokes a compute method written in C to iterate"
+" over slices of each array, namely::"
+msgstr ""
+
+#: ../../pep-0209.txt:269
+msgid ""
+"The 'func' argument is a CFuncObject, while the 'swap' and 'conv' "
+"arguments are lists of CFuncObjects for those arrays needing pre- or "
+"post-processing, otherwise None is used.  The data argument is a list of "
+"buffer objects, and the slice argument gives the number of iterations for"
+" each dimension along with the buffer offset and step size for each array"
+" and each dimension."
+msgstr ""
+
+#: ../../pep-0209.txt:276
+msgid ""
+"We have predefined several UFuncs for use by the ``__call__`` method: "
+"cast, swap, getobj, and setobj.  The cast and swap functions do coercion "
+"and byte-swapping, respectively and the getobj and setobj functions do "
+"coercion between Numeric arrays and Python sequences."
+msgstr ""
+
+#: ../../pep-0209.txt:281 ../../pep-0209.txt:380
+msgid ""
+"The following attributes and methods are proposed for the core "
+"implementation."
+msgstr ""
+
+#: ../../pep-0209.txt:305
+msgid "Array:"
+msgstr ""
+
+#: ../../pep-0209.txt:307
+msgid ""
+"This class contains information about the array, such as shape, type, "
+"endian-ness of the data, etc..  Its operators, '+', '-', etc. just invoke"
+" the corresponding UFunc function, e.g."
+msgstr ""
+
+#: ../../pep-0209.txt:316
+msgid ""
+"The following attributes, methods, and functions are proposed for the "
+"core implementation."
+msgstr ""
+
+#: ../../pep-0209.txt:343
+msgid "Functions::"
+msgstr ""
+
+#: ../../pep-0209.txt:353
+msgid "ArrayView"
+msgstr ""
+
+#: ../../pep-0209.txt:355
+msgid ""
+"This class is similar to the Array class except that the reshape and flat"
+" methods will raise exceptions, since non-contiguous arrays cannot be "
+"reshaped or flattened using just pointer and step-size information."
+msgstr ""
+
+#: ../../pep-0209.txt:362
+msgid "C-extension modules:"
+msgstr ""
+
+#: ../../pep-0209.txt:364
+msgid "Numeric2 will have several C-extension modules."
+msgstr ""
+
+#: ../../pep-0209.txt:366
+msgid "_ufunc:"
+msgstr ""
+
+#: ../../pep-0209.txt:368
+msgid ""
+"The primary module of this set is the _ufuncmodule.c.  The intention of "
+"this module is to do the bare minimum, i.e. iterate over arrays using a "
+"specified C function.  The interface of these functions is the same as "
+"Numeric 1, i.e."
+msgstr ""
+
+#: ../../pep-0209.txt:377
+msgid ""
+"and their functionality is expected to be the same, i.e. they iterate "
+"over the inner-most dimension."
+msgstr ""
+
+#: ../../pep-0209.txt:383
+msgid "Attributes:"
+msgstr ""
+
+#: ../../pep-0209.txt:391
+msgid "_int32, _real64, etc.:"
+msgstr ""
+
+#: ../../pep-0209.txt:393
+msgid ""
+"There will also be C-extension modules for each array type, e.g. "
+"_int32module.c, _real64module.c, etc.  As mentioned previously, when "
+"these modules are imported by the UFunc module, they will automatically "
+"register their functions and coercion rules.  New or improved versions of"
+" these modules can be easily implemented and used without affecting the "
+"rest of Numeric 2."
+msgstr ""
+
+#: ../../pep-0209.txt:403
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0209.txt:405
+msgid "Does slicing syntax default to copy or view behavior?"
+msgstr ""
+
+#: ../../pep-0209.txt:407
+msgid ""
+"The default behavior of Python is to return a copy of a sub-list or tuple"
+" when slicing syntax is used, whereas Numeric 1 returns a view into the "
+"array.  The choice made for Numeric 1 is apparently for reasons of "
+"performance: the developers wish to avoid the penalty of allocating and "
+"copying the data buffer during each array operation and feel that the "
+"need for a deep copy of an array to be rare.  Yet, some have argued that "
+"Numeric's slice notation should also have copy behavior to be consistent "
+"with Python lists. In this case the performance penalty associated with "
+"copy behavior can be minimized by implementing copy-on-write.  This "
+"scheme has both arrays sharing one data buffer (as in view behavior) "
+"until either array is assigned new data at which point a copy of the data"
+" buffer is made.  View behavior would then be implemented by an ArrayView"
+" class, whose behavior be similar to Numeric 1 arrays, i.e. .shape is not"
+" settable for non-contiguous arrays.  The use of an ArrayView class also "
+"makes explicit what type of data the array contains."
+msgstr ""
+
+#: ../../pep-0209.txt:425
+msgid "Does item syntax default to copy or view behavior?"
+msgstr ""
+
+#: ../../pep-0209.txt:427
+msgid ""
+"A similar question arises with the item syntax.  For example, if ``a = "
+"[[0,1,2], [3,4,5]]`` and ``b = a[0]``, then changing ``b[0]`` also "
+"changes ``a[0][0]``, because ``a[0]`` is a reference or view of the first"
+" row of a. Therefore, if c is a 2-d array, it would appear that ``c[i]`` "
+"should return a 1-d array which is a view into, instead of a copy of, c "
+"for consistency.  Yet, ``c[i]`` can be considered just a shorthand for "
+"``c[i,:]`` which would imply copy behavior assuming slicing syntax "
+"returns a copy.  Should Numeric 2 behave the same way as lists and return"
+" a view or should it return a copy."
+msgstr ""
+
+#: ../../pep-0209.txt:437
+msgid "How is scalar coercion implemented?"
+msgstr ""
+
+#: ../../pep-0209.txt:439
+msgid ""
+"Python has fewer numeric types than Numeric which can cause coercion "
+"problems.  For example, when multiplying a Python scalar of type float "
+"and a Numeric array of type float, the Numeric array is converted to a "
+"double, since the Python float type is actually a double.  This is often "
+"not the desired behavior, since the Numeric array will be doubled in size"
+" which is likely to be annoying, particularly for very large arrays.  We "
+"prefer that the array type trumps the python type for the same type "
+"class, namely integer, float, and complex.  Therefore, an operation "
+"between a Python integer and an Int16 (short) array will return an Int16 "
+"array.  Whereas an operation between a Python float and an Int16 array "
+"would return a Float64 (double) array.  Operations between two arrays use"
+" normal coercion rules."
+msgstr ""
+
+#: ../../pep-0209.txt:453
+msgid "How is integer division handled?"
+msgstr ""
+
+#: ../../pep-0209.txt:455
+msgid ""
+"In a future version of Python, the behavior of integer division will "
+"change.  The operands will be converted to floats, so the result will be "
+"a float.  If we implement the proposed scalar coercion rules where arrays"
+" have precedence over Python scalars, then dividing an array by an "
+"integer will return an integer array and will not be consistent with a "
+"future version of Python which would return an array of type double.  "
+"Scientific programmers are familiar with the distinction between integer "
+"and float-point division, so should Numeric 2 continue with this "
+"behavior?"
+msgstr ""
+
+#: ../../pep-0209.txt:465
+msgid "How should records be implemented?"
+msgstr ""
+
+#: ../../pep-0209.txt:467
+msgid ""
+"There are two approaches to implementing records depending on your point-"
+"of-view.  The first is two divide arrays into separate classes depending "
+"on the behavior of their types.  For example, numeric arrays are one "
+"class, strings a second, and records a third, because the range and type "
+"of operations of each class differ.  As such, a record array is not a new"
+" type, but a mechanism for a more flexible form of array.  To easily "
+"access and manipulate such complex data, the class is comprised of "
+"numeric arrays having different byte offsets into the data buffer.  For "
+"example, one might have a table consisting of an array of Int16, Real32 "
+"values.  Two numeric arrays, one with an offset of 0 bytes and a stride "
+"of 6 bytes to be interpreted as Int16, and one with an offset of 2 bytes "
+"and a stride of 6 bytes to be interpreted as Real32 would represent the "
+"record array.  Both numeric arrays would refer to the same data buffer, "
+"but have different offset and stride attributes, and a different numeric "
+"type."
+msgstr ""
+
+#: ../../pep-0209.txt:484
+msgid ""
+"The second approach is to consider a record as one of many array types, "
+"albeit with fewer, and possibly different, array operations than for "
+"numeric arrays.  This approach considers an array type to be a mapping of"
+" a fixed-length string.  The mapping can either be simple, like integer "
+"and floating-point numbers, or complex, like a complex number, a byte "
+"string, and a C-structure.  The record type effectively merges the struct"
+" and Numeric modules into a multi-dimensional struct array.  This "
+"approach implies certain changes to the array interface.  For example, "
+"the 'typecode' keyword argument should probably be changed to the more "
+"descriptive 'format' keyword."
+msgstr ""
+
+#: ../../pep-0209.txt:496
+msgid "How are record semantics defined and implemented?"
+msgstr ""
+
+#: ../../pep-0209.txt:498
+msgid ""
+"Which ever implementation approach is taken for records, the syntax and "
+"semantics of how they are to be accessed and manipulated must be decided,"
+" if one wishes to have access to sub-fields of records.  In this case, "
+"the record type can essentially be considered an inhomogeneous list, like"
+" a tuple returned by the unpack method of the struct module; and a 1-d "
+"array of records may be interpreted as a 2-d array with the second "
+"dimension being the index into the list of fields. This enhanced array "
+"semantics makes access to an array of one or more of the fields easy and "
+"straightforward.  It also allows a user to do array operations on a field"
+" in a natural and intuitive way.  If we assume that records are "
+"implemented as an array type, then last dimension defaults to 0 and can "
+"therefore be neglected for arrays comprised of simple types, like "
+"numeric."
+msgstr ""
+
+#: ../../pep-0209.txt:514
+msgid "How are masked-arrays implemented?"
+msgstr ""
+
+#: ../../pep-0209.txt:516
+msgid ""
+"Masked-arrays in Numeric 1 are implemented as a separate array class.  "
+"With the ability to add new array types to Numeric 2, it is possible that"
+" masked-arrays in Numeric 2 could be implemented as a new array type "
+"instead of an array class."
+msgstr ""
+
+#: ../../pep-0209.txt:521
+msgid ""
+"How are numerical errors handled (IEEE floating-point errors in "
+"particular)?"
+msgstr ""
+
+#: ../../pep-0209.txt:524
+msgid ""
+"It is not clear to the proposers (Paul Barrett and Travis Oliphant) what "
+"is the best or preferred way of handling errors. Since most of the C "
+"functions that do the operation, iterate over the inner-most (last) "
+"dimension of the array.  This dimension could contain a thousand or more "
+"items having one or more errors of differing type, such as divide-by-"
+"zero, underflow, and overflow.  Additionally, keeping track of these "
+"errors may come at the expense of performance.  Therefore, we suggest "
+"several options:"
+msgstr ""
+
+#: ../../pep-0209.txt:534
+msgid ""
+"Print a message of the most severe error, leaving it to the user to "
+"locate the errors."
+msgstr ""
+
+#: ../../pep-0209.txt:537
+msgid ""
+"Print a message of all errors that occurred and the number of "
+"occurrences, leaving it to the user to locate the errors."
+msgstr ""
+
+#: ../../pep-0209.txt:540
+msgid ""
+"Print a message of all errors that occurred and a list of where they "
+"occurred."
+msgstr ""
+
+#: ../../pep-0209.txt:543
+msgid ""
+"Or use a hybrid approach, printing only the most severe error, yet "
+"keeping track of what and where the errors occurred.  This would allow "
+"the user to locate the errors while keeping the error message brief."
+msgstr ""
+
+#: ../../pep-0209.txt:548
+msgid ""
+"What features are needed to ease the integration of FORTRAN libraries and"
+" code?"
+msgstr ""
+
+#: ../../pep-0209.txt:551
+msgid ""
+"It would be a good idea at this stage to consider how to ease the "
+"integration of FORTRAN libraries and user code in Numeric 2."
+msgstr ""
+
+#: ../../pep-0209.txt:556
+msgid "Implementation Steps"
+msgstr ""
+
+#: ../../pep-0209.txt:558
+msgid "Implement basic UFunc capability"
+msgstr ""
+
+#: ../../pep-0209.txt:560
+msgid "Minimal Array class:"
+msgstr ""
+
+#: ../../pep-0209.txt:562
+msgid "Necessary class attributes and methods, e.g. .shape, .data, .type, etc."
+msgstr ""
+
+#: ../../pep-0209.txt:565
+msgid "Minimal ArrayType class:"
+msgstr ""
+
+#: ../../pep-0209.txt:567
+msgid "Int32, Real64, Complex64, Char, Object"
+msgstr ""
+
+#: ../../pep-0209.txt:569
+msgid "Minimal UFunc class:"
+msgstr ""
+
+#: ../../pep-0209.txt:571
+msgid ""
+"UFunc instantiation, CFunction registration, UFunc call for 1-D arrays "
+"including the rules for doing alignment, byte-swapping, and coercion."
+msgstr ""
+
+#: ../../pep-0209.txt:575
+msgid "Minimal C-extension module:"
+msgstr ""
+
+#: ../../pep-0209.txt:577
+msgid "_UFunc, which does the innermost array loop in C."
+msgstr ""
+
+#: ../../pep-0209.txt:579
+msgid ""
+"This step implements whatever is needed to do: 'c = add(a, b)' where a, "
+"b, and c are 1-D arrays.  It teaches us how to add new UFuncs, to coerce "
+"the arrays, to pass the necessary information to a C iterator method and "
+"to do the actually computation."
+msgstr ""
+
+#: ../../pep-0209.txt:585
+msgid "Continue enhancing the UFunc iterator and Array class"
+msgstr ""
+
+#: ../../pep-0209.txt:587
+msgid ""
+"Implement some access methods for the Array class: print, repr, getitem, "
+"setitem, etc."
+msgstr ""
+
+#: ../../pep-0209.txt:590
+msgid "Implement multidimensional arrays"
+msgstr ""
+
+#: ../../pep-0209.txt:592
+msgid "Implement some of basic Array methods using UFuncs: +, -, \\*, /, etc."
+msgstr ""
+
+#: ../../pep-0209.txt:595
+msgid "Enable UFuncs to use Python sequences."
+msgstr ""
+
+#: ../../pep-0209.txt:597
+msgid "Complete the standard UFunc and Array class behavior"
+msgstr ""
+
+#: ../../pep-0209.txt:599
+msgid "Implement getslice and setslice behavior"
+msgstr ""
+
+#: ../../pep-0209.txt:601
+msgid "Work on Array broadcasting rules"
+msgstr ""
+
+#: ../../pep-0209.txt:603
+msgid "Implement Record type"
+msgstr ""
+
+#: ../../pep-0209.txt:605
+msgid "Add additional functionality"
+msgstr ""
+
+#: ../../pep-0209.txt:607
+msgid "Add more UFuncs"
+msgstr ""
+
+#: ../../pep-0209.txt:609
+msgid "Implement buffer or mmap access"
+msgstr ""
+
+#: ../../pep-0209.txt:613
+msgid "Incompatibilities"
+msgstr ""
+
+#: ../../pep-0209.txt:615
+msgid ""
+"The following is a list of incompatibilities in behavior between Numeric "
+"1 and Numeric 2."
+msgstr ""
+
+#: ../../pep-0209.txt:618
+msgid "Scalar coercion rules"
+msgstr ""
+
+#: ../../pep-0209.txt:620
+msgid ""
+"Numeric 1 has single set of coercion rules for array and Python numeric "
+"types.  This can cause unexpected and annoying problems during the "
+"calculation of an array expression.  Numeric 2 intends to overcome these "
+"problems by having two sets of coercion rules: one for arrays and Python "
+"numeric types, and another just for arrays."
+msgstr ""
+
+#: ../../pep-0209.txt:627
+msgid "No savespace attribute"
+msgstr ""
+
+#: ../../pep-0209.txt:629
+msgid ""
+"The savespace attribute in Numeric 1 makes arrays with this attribute set"
+" take precedence over those that do not have it set. Numeric 2 will not "
+"have such an attribute and therefore normal array coercion rules will be "
+"in effect."
+msgstr ""
+
+#: ../../pep-0209.txt:634
+msgid "Slicing syntax returns a copy"
+msgstr ""
+
+#: ../../pep-0209.txt:636
+msgid ""
+"The slicing syntax in Numeric 1 returns a view into the original array.  "
+"The slicing behavior for Numeric 2 will be a copy.  You should use the "
+"ArrayView class to get a view into an array."
+msgstr ""
+
+#: ../../pep-0209.txt:640
+msgid "Boolean comparisons return a boolean array"
+msgstr ""
+
+#: ../../pep-0209.txt:642
+msgid ""
+"A comparison between arrays in Numeric 1 results in a Boolean scalar, "
+"because of current limitations in Python.  The advent of Rich Comparisons"
+" in Python 2.1 will allow an array of Booleans to be returned."
+msgstr ""
+
+#: ../../pep-0209.txt:647
+msgid "Type characters are deprecated"
+msgstr ""
+
+#: ../../pep-0209.txt:649
+msgid ""
+"Numeric 2 will have an ArrayType class composed of Type instances, for "
+"example Int8, Int16, Int32, and Int for signed integers.  The typecode "
+"scheme in Numeric 1 will be available for backward compatibility, but "
+"will be deprecated."
+msgstr ""
+
+#: ../../pep-0209.txt:656
+msgid "Appendices"
+msgstr ""
+
+#: ../../pep-0209.txt:658
+msgid "Implicit sub-arrays iteration"
+msgstr ""
+
+#: ../../pep-0209.txt:660
+msgid ""
+"A computer animation is composed of a number of 2-D images or frames of "
+"identical shape.  By stacking these images into a single block of memory,"
+" a 3-D array is created.  Yet the operations to be performed are not "
+"meant for the entire 3-D array, but on the set of 2-D sub-arrays.  In "
+"most array languages, each frame has to be extracted, operated on, and "
+"then reinserted into the output array using a for-like loop.  The J "
+"language allows the programmer to perform such operations implicitly by "
+"having a rank for the frame and array.  By default these ranks will be "
+"the same during the creation of the array.  It was the intention of the "
+"Numeric 1 developers to implement this feature, since it is based on the "
+"language J.  The Numeric 1 code has the required variables for "
+"implementing this behavior, but was never implemented.  We intend to "
+"implement implicit sub-array iteration in Numeric 2, if the array "
+"broadcasting rules found in Numeric 1 do not fully support this behavior."
+msgstr ""
+
+#: ../../pep-0209.txt:679
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0209.txt:681
+msgid "This document is placed in the public domain."
+msgstr ""
+
+#: ../../pep-0209.txt:685
+msgid "Related PEPs"
+msgstr ""
+
+#: ../../pep-0209.txt:687
+msgid "PEP 207: Rich Comparisons by Guido van Rossum and David Ascher"
+msgstr ""
+
+#: ../../pep-0209.txt:690
+msgid ""
+"PEP 208: Reworking the Coercion Model by Neil Schemenauer and Marc-Andre'"
+" Lemburg"
+msgstr ""
+
+#: ../../pep-0209.txt:693
+msgid "PEP 211: Adding New Linear Algebra Operators to Python by Greg Wilson"
+msgstr ""
+
+#: ../../pep-0209.txt:696
+msgid "PEP 225: Elementwise/Objectwise Operators by Huaiyu Zhu"
+msgstr ""
+
+#: ../../pep-0209.txt:699
+msgid "PEP 228: Reworking Python's Numeric Model by Moshe Zadka"
+msgstr ""
+
+#: ../../pep-0209.txt:704
+msgid "References"
+msgstr ""
+
+#: ../../pep-0209.txt:706
+msgid "Greenfield 2000. private communication."
+msgstr ""
+

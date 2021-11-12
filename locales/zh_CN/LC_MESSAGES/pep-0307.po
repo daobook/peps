@@ -1,0 +1,1245 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0307.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0307.txt:1
+msgid "307"
+msgstr ""
+
+#: ../../pep-0307.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0307.txt:2
+msgid "Extensions to the pickle protocol"
+msgstr ""
+
+#: ../../pep-0307.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0307.txt:5
+msgid "Guido van Rossum, Tim Peters"
+msgstr ""
+
+#: ../../pep-0307.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0307.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0307.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0307.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0307.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0307.txt:9
+msgid "31-Jan-2003"
+msgstr ""
+
+#: ../../pep-0307.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0307.txt:10
+msgid "7-Feb-2003"
+msgstr ""
+
+#: ../../pep-0307.txt:13
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0307.txt:15
+msgid ""
+"Pickling new-style objects in Python 2.2 is done somewhat clumsily and "
+"causes pickle size to bloat compared to classic class instances.  This "
+"PEP documents a new pickle protocol in Python 2.3 that takes care of this"
+" and many other pickle issues."
+msgstr ""
+
+#: ../../pep-0307.txt:20
+msgid ""
+"There are two sides to specifying a new pickle protocol: the byte stream "
+"constituting pickled data must be specified, and the interface between "
+"objects and the pickling and unpickling engines must be specified.  This "
+"PEP focuses on API issues, although it may occasionally touch on byte "
+"stream format details to motivate a choice.  The pickle byte stream "
+"format is documented formally by the standard library module "
+"``pickletools.py`` (already checked into CVS for Python 2.3)."
+msgstr ""
+
+#: ../../pep-0307.txt:29
+msgid ""
+"This PEP attempts to fully document the interface between pickled objects"
+" and the pickling process, highlighting additions by specifying \"new in "
+"this PEP\".  (The interface to invoke pickling or unpickling is not "
+"covered fully, except for the changes to the API for specifying the "
+"pickling protocol to picklers.)"
+msgstr ""
+
+#: ../../pep-0307.txt:37
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0307.txt:39
+msgid "Pickling new-style objects causes serious pickle bloat.  For example::"
+msgstr ""
+
+#: ../../pep-0307.txt:48
+msgid ""
+"The binary pickle for the classic object consumed 33 bytes, and for the "
+"new-style object 86 bytes."
+msgstr ""
+
+#: ../../pep-0307.txt:51
+msgid ""
+"The reasons for the bloat are complex, but are mostly caused by the fact "
+"that new-style objects use ``__reduce__`` in order to be picklable at "
+"all.  After ample consideration we've concluded that the only way to "
+"reduce pickle sizes for new-style objects is to add new opcodes to the "
+"pickle protocol.  The net result is that with the new protocol, the "
+"pickle size in the above example is 35 (two extra bytes are used at the "
+"start to indicate the protocol version, although this isn't strictly "
+"necessary)."
+msgstr ""
+
+#: ../../pep-0307.txt:62
+msgid "Protocol versions"
+msgstr ""
+
+#: ../../pep-0307.txt:64
+msgid ""
+"Previously, pickling (but not unpickling) distinguished between text mode"
+" and binary mode.  By design, binary mode is a superset of text mode, and"
+" unpicklers don't need to know in advance whether an incoming pickle uses"
+" text mode or binary mode. The virtual machine used for unpickling is the"
+" same regardless of the mode; certain opcodes simply aren't used in text "
+"mode."
+msgstr ""
+
+#: ../../pep-0307.txt:71
+msgid ""
+"Retroactively, text mode is now called protocol 0, and binary mode "
+"protocol 1.  The new protocol is called protocol 2.  In the tradition of "
+"pickling protocols, protocol 2 is a superset of protocol 1.  But just so "
+"that future pickling protocols aren't required to be supersets of the "
+"oldest protocols, a new opcode is inserted at the start of a protocol 2 "
+"pickle indicating that it is using protocol 2.  To date, each release of "
+"Python has been able to read pickles written by all previous releases.  "
+"Of course pickles written under protocol *N* can't be read by versions of"
+" Python earlier than the one that introduced protocol *N*."
+msgstr ""
+
+#: ../../pep-0307.txt:82
+msgid ""
+"Several functions, methods and constructors used for pickling used to "
+"take a positional argument named 'bin' which was a flag, defaulting to 0,"
+" indicating binary mode.  This argument is renamed to 'protocol' and now "
+"gives the protocol number, still defaulting to 0."
+msgstr ""
+
+#: ../../pep-0307.txt:88
+msgid ""
+"It so happens that passing 2 for the 'bin' argument in previous Python "
+"versions had the same effect as passing 1.  Nevertheless, a special case "
+"is added here:  passing a negative number selects the highest protocol "
+"version supported by a particular implementation. This works in previous "
+"Python versions, too, and so can be used to select the highest protocol "
+"available in a way that's both backward and forward compatible.  In "
+"addition, a new module constant ``HIGHEST_PROTOCOL`` is supplied by both "
+"``pickle`` and ``cPickle``, equal to the highest protocol number the "
+"module can read.  This is cleaner than passing -1, but cannot be used "
+"before Python 2.3."
+msgstr ""
+
+#: ../../pep-0307.txt:99
+msgid ""
+"The ``pickle.py`` module has supported passing the 'bin' value as a "
+"keyword argument rather than a positional argument.  (This is not "
+"recommended, since ``cPickle`` only accepts positional arguments, but it "
+"works...)  Passing 'bin' as a keyword argument is deprecated, and a "
+"``PendingDeprecationWarning`` is issued in this case.  You have to invoke"
+" the Python interpreter with ``-Wa`` or a variation on that to see "
+"``PendingDeprecationWarning`` messages.  In Python 2.4, the warning class"
+" may be upgraded to ``DeprecationWarning``."
+msgstr ""
+
+#: ../../pep-0307.txt:110
+msgid "Security issues"
+msgstr ""
+
+#: ../../pep-0307.txt:112
+msgid ""
+"In previous versions of Python, unpickling would do a \"safety check\" on"
+" certain operations, refusing to call functions or constructors that "
+"weren't marked as \"safe for unpickling\" by either having an attribute "
+"``__safe_for_unpickling__`` set to 1, or by being registered in a global "
+"registry, ``copy_reg.safe_constructors``."
+msgstr ""
+
+#: ../../pep-0307.txt:118
+msgid ""
+"This feature gives a false sense of security: nobody has ever done the "
+"necessary, extensive, code audit to prove that unpickling untrusted "
+"pickles cannot invoke unwanted code, and in fact bugs in the Python 2.2 "
+"``pickle.py`` module make it easy to circumvent these security measures."
+msgstr ""
+
+#: ../../pep-0307.txt:124
+msgid ""
+"We firmly believe that, on the Internet, it is better to know that you "
+"are using an insecure protocol than to trust a protocol to be secure "
+"whose implementation hasn't been thoroughly checked.  Even high quality "
+"implementations of widely used protocols are routinely found flawed; "
+"Python's pickle implementation simply cannot make such guarantees without"
+" a much larger time investment. Therefore, as of Python 2.3, all safety "
+"checks on unpickling are officially removed, and replaced with this "
+"warning:"
+msgstr ""
+
+#: ../../pep-0307.txt:135
+msgid "Do not unpickle data received from an untrusted or unauthenticated source."
+msgstr ""
+
+#: ../../pep-0307.txt:138
+msgid ""
+"The same warning applies to previous Python versions, despite the "
+"presence of safety checks there."
+msgstr ""
+
+#: ../../pep-0307.txt:143
+msgid "Extended ``__reduce__`` API"
+msgstr ""
+
+#: ../../pep-0307.txt:145
+msgid ""
+"There are several APIs that a class can use to control pickling. Perhaps "
+"the most popular of these are ``__getstate__`` and ``__setstate__``; but "
+"the most powerful one is ``__reduce__``.  (There's also "
+"``__getinitargs__``, and we're adding ``__getnewargs__`` below.)"
+msgstr ""
+
+#: ../../pep-0307.txt:150
+msgid ""
+"There are several ways to provide ``__reduce__`` functionality: a class "
+"can implement a ``__reduce__`` method or a ``__reduce_ex__`` method (see "
+"next section), or a reduce function can be declared in ``copy_reg`` "
+"(``copy_reg.dispatch_table`` maps classes to functions).  The return "
+"values are interpreted exactly the same, though, and we'll refer to these"
+" collectively as ``__reduce__``."
+msgstr ""
+
+#: ../../pep-0307.txt:157
+msgid ""
+"**Important:** pickling of classic class instances does not look for a "
+"``__reduce__`` or ``__reduce_ex__`` method or a reduce function in the "
+"``copy_reg`` dispatch table, so that a classic class cannot provide "
+"``__reduce__`` functionality in the sense intended here.  A classic class"
+" must use ``__getinitargs__`` and/or ``__getstate__`` to customize "
+"pickling.  These are described below."
+msgstr ""
+
+#: ../../pep-0307.txt:164
+msgid ""
+"``__reduce__`` must return either a string or a tuple.  If it returns a "
+"string, this is an object whose state is not to be pickled, but instead a"
+" reference to an equivalent object referenced by name. Surprisingly, the "
+"string returned by ``__reduce__`` should be the object's local name "
+"(relative to its module); the ``pickle`` module searches the module "
+"namespace to determine the object's module."
+msgstr ""
+
+#: ../../pep-0307.txt:171
+msgid ""
+"The rest of this section is concerned with the tuple returned by "
+"``__reduce__``.  It is a variable size tuple, of length 2 through 5. The "
+"first two items (function and arguments) are required.  The remaining "
+"items are optional and may be left off from the end; giving ``None`` for "
+"the value of an optional item acts the same as leaving it off.  The last "
+"two items are new in this PEP.  The items are, in order:"
+msgstr ""
+
+#: ../../pep-0307.txt:180
+msgid "function"
+msgstr ""
+
+#: ../../pep-0307.txt:180 ../../pep-0307.txt:189
+msgid "Required."
+msgstr ""
+
+#: ../../pep-0307.txt:182
+msgid ""
+"A callable object (not necessarily a function) called to create the "
+"initial version of the object; state may be added to the object later to "
+"fully reconstruct the pickled state.  This function must itself be "
+"picklable.  See the section about ``__newobj__`` for a special case (new "
+"in this PEP) here."
+msgstr ""
+
+#: ../../pep-0307.txt:189
+msgid "arguments"
+msgstr ""
+
+#: ../../pep-0307.txt:191
+msgid ""
+"A tuple giving the argument list for the function. As a special case, "
+"designed for Zope 2's ``ExtensionClass``, this may be ``None``; in that "
+"case, function should be a class or type, and ``function.__basicnew__()``"
+" is called to create the initial version of the object.  This exception "
+"is deprecated."
+msgstr ""
+
+#: ../../pep-0307.txt:200
+msgid ""
+"Unpickling invokes ``function(*arguments)`` to create an initial object, "
+"called *obj* below.  If the remaining items are left off, that's the end "
+"of unpickling for this object and *obj* is the result.    Else *obj* is "
+"modified at unpickling time by each item specified, as follows."
+msgstr ""
+
+#: ../../pep-0307.txt:206
+msgid "state"
+msgstr ""
+
+#: ../../pep-0307.txt:206
+msgid "Optional."
+msgstr ""
+
+#: ../../pep-0307.txt:208
+msgid ""
+"Additional state.  If this is not ``None``, the state is pickled, and "
+"``obj.__setstate__(state)`` will be called when unpickling.  If no "
+"``__setstate__`` method is defined, a default implementation is provided,"
+" which assumes that state is a dictionary mapping instance variable names"
+" to their values.  The default implementation calls ::"
+msgstr ""
+
+#: ../../pep-0307.txt:218
+msgid "or, if the ``update()`` call fails, ::"
+msgstr ""
+
+#: ../../pep-0307.txt:223
+msgid "listitems"
+msgstr ""
+
+#: ../../pep-0307.txt:223 ../../pep-0307.txt:236
+msgid "Optional, and new in this PEP."
+msgstr ""
+
+#: ../../pep-0307.txt:225
+msgid ""
+"If this is not ``None``, it should be an iterator (not a sequence!) "
+"yielding successive list items.  These list items will be pickled, and "
+"appended to the object using either ``obj.append(item)`` or "
+"``obj.extend(list_of_items)``. This is primarily used for ``list`` "
+"subclasses, but may be used by other classes as long as they have "
+"``append()`` and ``extend()`` methods with the appropriate signature. "
+"(Whether ``append()`` or ``extend()`` is used depends on which pickle "
+"protocol version is used as well as the number of items to append, so "
+"both must be supported.)"
+msgstr ""
+
+#: ../../pep-0307.txt:236
+msgid "dictitems"
+msgstr ""
+
+#: ../../pep-0307.txt:238
+msgid ""
+"If this is not ``None``, it should be an iterator (not a sequence!) "
+"yielding successive dictionary items, which should be tuples of the form "
+"``(key, value)``.  These items will be pickled, and stored to the object "
+"using ``obj[key] = value``.  This is primarily used for ``dict`` "
+"subclasses, but may be used by other classes as long as they implement "
+"``__setitem__``."
+msgstr ""
+
+#: ../../pep-0307.txt:247
+msgid ""
+"Note: in Python 2.2 and before, when using ``cPickle``, state would be "
+"pickled if present even if it is ``None``; the only safe way to avoid the"
+" ``__setstate__`` call was to return a two-tuple from ``__reduce__``. "
+"(But ``pickle.py`` would not pickle state if it was ``None``.)  In Python"
+" 2.3, ``__setstate__`` will never be called at unpickling time when "
+"``__reduce__`` returns a state with value ``None`` at pickling time."
+msgstr ""
+
+#: ../../pep-0307.txt:254
+msgid ""
+"A ``__reduce__`` implementation that needs to work both under Python 2.2 "
+"and under Python 2.3 could check the variable ``pickle.format_version`` "
+"to determine whether to use the *listitems* and *dictitems* features.  If"
+" this value is ``>= \"2.0\"`` then they are supported.  If not, any list "
+"or dict items should be incorporated somehow in the 'state' return value,"
+" and the ``__setstate__`` method should be prepared to accept list or "
+"dict items as part of the state (how this is done is up to the "
+"application)."
+msgstr ""
+
+#: ../../pep-0307.txt:265
+msgid "The ``__reduce_ex__`` API"
+msgstr ""
+
+#: ../../pep-0307.txt:267
+msgid ""
+"It is sometimes useful to know the protocol version when implementing "
+"``__reduce__``.  This can be done by implementing a method named "
+"``__reduce_ex__`` instead of ``__reduce__``.  ``__reduce_ex__``, when it "
+"exists, is called in preference over ``__reduce__`` (you may still "
+"provide ``__reduce__`` for backwards compatibility).  The "
+"``__reduce_ex__`` method will be called with a single integer argument, "
+"the protocol version."
+msgstr ""
+
+#: ../../pep-0307.txt:275
+msgid ""
+"The 'object' class implements both ``__reduce__`` and ``__reduce_ex__``; "
+"however, if a subclass overrides ``__reduce__`` but not "
+"``__reduce_ex__``, the ``__reduce_ex__`` implementation detects this and "
+"calls ``__reduce__``."
+msgstr ""
+
+#: ../../pep-0307.txt:282
+msgid "Customizing pickling absent a ``__reduce__`` implementation"
+msgstr ""
+
+#: ../../pep-0307.txt:284
+msgid ""
+"If no ``__reduce__`` implementation is available for a particular class, "
+"there are three cases that need to be considered separately, because they"
+" are handled differently:"
+msgstr ""
+
+#: ../../pep-0307.txt:288
+msgid "classic class instances, all protocols"
+msgstr ""
+
+#: ../../pep-0307.txt:290
+msgid "new-style class instances, protocols 0 and 1"
+msgstr ""
+
+#: ../../pep-0307.txt:292
+msgid "new-style class instances, protocol 2"
+msgstr ""
+
+#: ../../pep-0307.txt:294
+msgid ""
+"Types implemented in C are considered new-style classes.  However, except"
+" for the common built-in types, these need to provide a ``__reduce__`` "
+"implementation in order to be picklable with protocols 0 or 1.  Protocol "
+"2 supports built-in types providing ``__getnewargs__``, ``__getstate__`` "
+"and ``__setstate__`` as well."
+msgstr ""
+
+#: ../../pep-0307.txt:302
+msgid "Case 1: pickling classic class instances"
+msgstr ""
+
+#: ../../pep-0307.txt:304
+msgid "This case is the same for all protocols, and is unchanged from Python 2.1."
+msgstr ""
+
+#: ../../pep-0307.txt:307
+msgid ""
+"For classic classes, ``__reduce__`` is not used.  Instead, classic "
+"classes can customize their pickling by providing methods named "
+"``__getstate__``, ``__setstate__`` and ``__getinitargs__``.  Absent "
+"these, a default pickling strategy for classic class instances is "
+"implemented that works as long as all instance variables are picklable.  "
+"This default strategy is documented in terms of default implementations "
+"of ``__getstate__`` and ``__setstate__``."
+msgstr ""
+
+#: ../../pep-0307.txt:315
+msgid ""
+"The primary ways to customize pickling of classic class instances is by "
+"specifying ``__getstate__`` and/or ``__setstate__`` methods.  It is fine "
+"if a class implements one of these but not the other, as long as it is "
+"compatible with the default version."
+msgstr ""
+
+#: ../../pep-0307.txt:321 ../../pep-0307.txt:493
+msgid "The ``__getstate__`` method"
+msgstr ""
+
+#: ../../pep-0307.txt:323
+msgid ""
+"The ``__getstate__`` method should return a picklable value representing "
+"the object's state without referencing the object itself.  If no "
+"``__getstate__`` method exists, a default implementation is used that "
+"returns ``self.__dict__``."
+msgstr ""
+
+#: ../../pep-0307.txt:329 ../../pep-0307.txt:527
+msgid "The ``__setstate__`` method"
+msgstr ""
+
+#: ../../pep-0307.txt:331
+msgid ""
+"The ``__setstate__`` method should take one argument; it will be called "
+"with the value returned by ``__getstate__`` (or its default "
+"implementation)."
+msgstr ""
+
+#: ../../pep-0307.txt:335
+msgid ""
+"If no ``__setstate__`` method exists, a default implementation is "
+"provided that assumes the state is a dictionary mapping instance variable"
+" names to values.  The default implementation tries two things:"
+msgstr ""
+
+#: ../../pep-0307.txt:340
+msgid "First, it tries to call ``self.__dict__.update(state)``."
+msgstr ""
+
+#: ../../pep-0307.txt:342
+msgid ""
+"If the ``update()`` call fails with a ``RuntimeError`` exception, it "
+"calls ``setattr(self, key, value)`` for each ``(key, value)`` pair in the"
+" state dictionary.  This only happens when unpickling in restricted "
+"execution mode (see the ``rexec`` standard library module)."
+msgstr ""
+
+#: ../../pep-0307.txt:349
+msgid "The ``__getinitargs__`` method"
+msgstr ""
+
+#: ../../pep-0307.txt:351
+msgid ""
+"The ``__setstate__`` method (or its default implementation) requires that"
+" a new object already exists so that its ``__setstate__`` method can be "
+"called.  The point is to create a new object that isn't fully "
+"initialized; in particular, the class's ``__init__`` method should not be"
+" called if possible."
+msgstr ""
+
+#: ../../pep-0307.txt:357
+msgid "These are the possibilities:"
+msgstr ""
+
+#: ../../pep-0307.txt:359
+msgid ""
+"Normally, the following trick is used: create an instance of a trivial "
+"classic class (one without any methods or instance variables) and then "
+"use ``__class__`` assignment to change its class to the desired class.  "
+"This creates an instance of the desired class with an empty ``__dict__`` "
+"whose ``__init__`` has not been called."
+msgstr ""
+
+#: ../../pep-0307.txt:366
+msgid ""
+"However, if the class has a method named ``__getinitargs__``, the above "
+"trick is not used, and a class instance is created by using the tuple "
+"returned by ``__getinitargs__`` as an argument list to the class "
+"constructor.  This is done even if ``__getinitargs__`` returns an empty "
+"tuple --- a ``__getinitargs__`` method that returns ``()`` is not "
+"equivalent to not having ``__getinitargs__`` at all.  ``__getinitargs__``"
+" *must* return a tuple."
+msgstr ""
+
+#: ../../pep-0307.txt:375
+msgid ""
+"In restricted execution mode, the trick from the first bullet doesn't "
+"work; in this case, the class constructor is called with an empty "
+"argument list if no ``__getinitargs__`` method exists.  This means that "
+"in order for a classic class to be unpicklable in restricted execution "
+"mode, it must either implement ``__getinitargs__`` or its constructor "
+"(i.e., its ``__init__`` method) must be callable without arguments."
+msgstr ""
+
+#: ../../pep-0307.txt:385
+msgid "Case 2: pickling new-style class instances using protocols 0 or 1"
+msgstr ""
+
+#: ../../pep-0307.txt:387
+msgid ""
+"This case is unchanged from Python 2.2.  For better pickling of new-style"
+" class instances when backwards compatibility is not an issue, protocol 2"
+" should be used; see case 3 below."
+msgstr ""
+
+#: ../../pep-0307.txt:391
+msgid ""
+"New-style classes, whether implemented in C or in Python, inherit a "
+"default ``__reduce__`` implementation from the universal base class "
+"'object'."
+msgstr ""
+
+#: ../../pep-0307.txt:395
+msgid ""
+"This default ``__reduce__`` implementation is not used for those built-in"
+" types for which the ``pickle`` module has built-in support. Here's a "
+"full list of those types:"
+msgstr ""
+
+#: ../../pep-0307.txt:399
+msgid ""
+"Concrete built-in types: ``NoneType``, ``bool``, ``int``, ``float``, "
+"``complex``, ``str``, ``unicode``, ``tuple``, ``list``, ``dict``.  "
+"(Complex is supported by virtue of a ``__reduce__`` implementation "
+"registered in ``copy_reg``.) In Jython, ``PyStringMap`` is also included "
+"in this list."
+msgstr ""
+
+#: ../../pep-0307.txt:404
+msgid "Classic instances."
+msgstr ""
+
+#: ../../pep-0307.txt:406
+msgid ""
+"Classic class objects, Python function objects, built-in function and "
+"method objects, and new-style type objects (== new-style class objects)."
+"  These are pickled by name, not by value: at unpickling time, a "
+"reference to an object with the same name (the fully qualified module "
+"name plus the variable name in that module) is substituted."
+msgstr ""
+
+#: ../../pep-0307.txt:413
+msgid ""
+"The default ``__reduce__`` implementation will fail at pickling time for "
+"built-in types not mentioned above, and for new-style classes implemented"
+" in C:  if they want to be picklable, they must supply a custom "
+"``__reduce__`` implementation under protocols 0 and 1."
+msgstr ""
+
+#: ../../pep-0307.txt:418
+msgid ""
+"For new-style classes implemented in Python, the default ``__reduce__`` "
+"implementation (``copy_reg._reduce``) works as follows:"
+msgstr ""
+
+#: ../../pep-0307.txt:421
+msgid ""
+"Let ``D`` be the class on the object to be pickled.  First, find the "
+"nearest base class that is implemented in C (either as a built-in type or"
+" as a type defined by an extension class).  Call this base class ``B``, "
+"and the class of the object to be pickled ``D``. Unless ``B`` is the "
+"class 'object', instances of class ``B`` must be picklable, either by "
+"having built-in support (as defined in the above three bullet points), or"
+" by having a non-default ``__reduce__`` implementation.  ``B`` must not "
+"be the same class as ``D`` (if it were, it would mean that ``D`` is not "
+"implemented in Python)."
+msgstr ""
+
+#: ../../pep-0307.txt:431
+msgid ""
+"The callable produced by the default ``__reduce__`` is "
+"``copy_reg._reconstructor``, and its arguments tuple is ``(D, B, "
+"basestate)``, where ``basestate`` is ``None`` if ``B`` is the builtin "
+"object class, and ``basestate`` is ::"
+msgstr ""
+
+#: ../../pep-0307.txt:438
+msgid ""
+"if ``B`` is not the builtin object class.  This is geared toward pickling"
+" subclasses of builtin types, where, for example, "
+"``list(some_list_subclass_instance)`` produces \"the list part\" of the "
+"``list`` subclass instance."
+msgstr ""
+
+#: ../../pep-0307.txt:443
+msgid ""
+"The object is recreated at unpickling time by "
+"``copy_reg._reconstructor``, like so::"
+msgstr ""
+
+#: ../../pep-0307.txt:449
+msgid ""
+"Objects using the default ``__reduce__`` implementation can customize it "
+"by defining ``__getstate__`` and/or ``__setstate__`` methods.  These work"
+" almost the same as described for classic classes above, except that if "
+"``__getstate__`` returns an object (of any type) whose value is "
+"considered false (e.g. ``None``, or a number that is zero, or an empty "
+"sequence or mapping), this state is not pickled and ``__setstate__`` will"
+" not be called at all.  If ``__getstate__`` exists and returns a true "
+"value, that value becomes the third element of the tuple returned by the "
+"default ``__reduce__``, and at unpickling time the value is passed to "
+"``__setstate__``.  If ``__getstate__`` does not exist, but "
+"``obj.__dict__`` exists, then  ``obj.__dict__`` becomes the third element"
+" of the tuple returned by  ``__reduce__``, and again at unpickling time "
+"the value is passed to ``obj.__setstate__``.  The default "
+"``__setstate__`` is the same as that for classic classes, described "
+"above."
+msgstr ""
+
+#: ../../pep-0307.txt:465
+msgid ""
+"Note that this strategy ignores slots.  Instances of new-style classes "
+"that have slots but no ``__getstate__`` method cannot be pickled by "
+"protocols 0 and 1; the code explicitly checks for this condition."
+msgstr ""
+
+#: ../../pep-0307.txt:470
+msgid ""
+"Note that pickling new-style class instances ignores ``__getinitargs__`` "
+"if it exists (and under all protocols).  ``__getinitargs__`` is useful "
+"only for classic classes."
+msgstr ""
+
+#: ../../pep-0307.txt:476
+msgid "Case 3: pickling new-style class instances using protocol 2"
+msgstr ""
+
+#: ../../pep-0307.txt:478
+msgid ""
+"Under protocol 2, the default ``__reduce__`` implementation inherited "
+"from the 'object' base class is *ignored*.  Instead, a different default "
+"implementation is used, which allows more efficient pickling of new-style"
+" class instances than possible with protocols 0 or 1, at the cost of "
+"backward incompatibility with Python 2.2 (meaning no more than that a "
+"protocol 2 pickle cannot be unpickled before Python 2.3)."
+msgstr ""
+
+#: ../../pep-0307.txt:486
+msgid ""
+"The customization uses three special methods: ``__getstate__``, "
+"``__setstate__`` and ``__getnewargs__`` (note that ``__getinitargs__`` is"
+" again ignored).  It is fine if a class implements one or more but not "
+"all of these, as long as it is compatible with the default "
+"implementations."
+msgstr ""
+
+#: ../../pep-0307.txt:495
+msgid ""
+"The ``__getstate__`` method should return a picklable value representing "
+"the object's state without referencing the object itself.  If no "
+"``__getstate__`` method exists, a default implementation is used which is"
+" described below."
+msgstr ""
+
+#: ../../pep-0307.txt:500
+msgid ""
+"There's a subtle difference between classic and new-style classes here: "
+"if a classic class's ``__getstate__`` returns ``None``, "
+"``self.__setstate__(None)`` will be called as part of unpickling. But if "
+"a new-style class's ``__getstate__`` returns ``None``, its "
+"``__setstate__`` won't be called at all as part of unpickling."
+msgstr ""
+
+#: ../../pep-0307.txt:506
+msgid ""
+"If no ``__getstate__`` method exists, a default state is computed. There "
+"are several cases:"
+msgstr ""
+
+#: ../../pep-0307.txt:509
+msgid ""
+"For a new-style class that has no instance ``__dict__`` and no "
+"``__slots__``, the default state is ``None``."
+msgstr ""
+
+#: ../../pep-0307.txt:512
+msgid ""
+"For a new-style class that has an instance ``__dict__`` and no "
+"``__slots__``, the default state is ``self.__dict__``."
+msgstr ""
+
+#: ../../pep-0307.txt:515
+msgid ""
+"For a new-style class that has an instance ``__dict__`` and "
+"``__slots__``, the default state is a tuple consisting of two "
+"dictionaries:  ``self.__dict__``, and a dictionary mapping slot names to "
+"slot values.  Only slots that have a value are included in the latter."
+msgstr ""
+
+#: ../../pep-0307.txt:521
+msgid ""
+"For a new-style class that has ``__slots__`` and no instance "
+"``__dict__``, the default state is a tuple whose first item is ``None`` "
+"and whose second item is a dictionary mapping slot names to slot values "
+"described in the previous bullet."
+msgstr ""
+
+#: ../../pep-0307.txt:529
+msgid ""
+"The ``__setstate__`` method should take one argument; it will be called "
+"with the value returned by ``__getstate__`` or with the default state "
+"described above if no ``__getstate__`` method is defined."
+msgstr ""
+
+#: ../../pep-0307.txt:534
+msgid ""
+"If no ``__setstate__`` method exists, a default implementation is "
+"provided that can handle the state returned by the default "
+"``__getstate__``, described above."
+msgstr ""
+
+#: ../../pep-0307.txt:539
+msgid "The ``__getnewargs__`` method"
+msgstr ""
+
+#: ../../pep-0307.txt:541
+msgid ""
+"Like for classic classes, the ``__setstate__`` method (or its default "
+"implementation) requires that a new object already exists so that its "
+"``__setstate__`` method can be called."
+msgstr ""
+
+#: ../../pep-0307.txt:545
+msgid ""
+"In protocol 2, a new pickling opcode is used that causes a new object to "
+"be created as follows::"
+msgstr ""
+
+#: ../../pep-0307.txt:550
+msgid ""
+"where ``C`` is the class of the pickled object, and ``args`` is either "
+"the empty tuple, or the tuple returned by the ``__getnewargs__`` method, "
+"if defined.  ``__getnewargs__`` must return a tuple.  The absence of a "
+"``__getnewargs__`` method is equivalent to the existence of one that "
+"returns ``()``."
+msgstr ""
+
+#: ../../pep-0307.txt:558
+msgid "The ``__newobj__`` unpickling function"
+msgstr ""
+
+#: ../../pep-0307.txt:560
+msgid ""
+"When the unpickling function returned by ``__reduce__`` (the first item "
+"of the returned tuple) has the name ``__newobj__``, something special "
+"happens for pickle protocol 2.  An unpickling function named "
+"``__newobj__`` is assumed to have the following semantics::"
+msgstr ""
+
+#: ../../pep-0307.txt:568
+msgid ""
+"Pickle protocol 2 special-cases an unpickling function with this name, "
+"and emits a pickling opcode that, given 'cls' and 'args', will return "
+"``cls.__new__(cls, *args)`` without also pickling a reference to "
+"``__newobj__`` (this is the same pickling opcode used by protocol 2 for a"
+" new-style class instance when no ``__reduce__`` implementation exists)."
+"  This is the main reason why protocol 2 pickles are much smaller than "
+"classic pickles.  Of course, the pickling code cannot verify that a "
+"function named ``__newobj__`` actually has the expected semantics.  If "
+"you use an unpickling function named ``__newobj__`` that returns "
+"something different, you deserve what you get."
+msgstr ""
+
+#: ../../pep-0307.txt:580
+msgid ""
+"It is safe to use this feature under Python 2.2; there's nothing in the "
+"recommended implementation of ``__newobj__`` that depends on Python 2.3."
+msgstr ""
+
+#: ../../pep-0307.txt:586
+msgid "The extension registry"
+msgstr ""
+
+#: ../../pep-0307.txt:588
+msgid "Protocol 2 supports a new mechanism to reduce the size of pickles."
+msgstr ""
+
+#: ../../pep-0307.txt:590
+msgid ""
+"When class instances (classic or new-style) are pickled, the full name of"
+" the class (module name including package name, and class name) is "
+"included in the pickle.  Especially for applications that generate many "
+"small pickles, this is a lot of overhead that has to be repeated in each "
+"pickle.  For large pickles, when using protocol 1, repeated references to"
+" the same class name are compressed using the \"memo\" feature; but each "
+"class name must be spelled in full at least once per pickle, and this "
+"causes a lot of overhead for small pickles."
+msgstr ""
+
+#: ../../pep-0307.txt:600
+msgid ""
+"The extension registry allows one to represent the most frequently used "
+"names by small integers, which are pickled very efficiently: an extension"
+" code in the range 1--255 requires only two bytes including the opcode, "
+"one in the range 256--65535 requires only three bytes including the "
+"opcode."
+msgstr ""
+
+#: ../../pep-0307.txt:606
+msgid ""
+"One of the design goals of the pickle protocol is to make pickles "
+"\"context-free\": as long as you have installed the modules containing "
+"the classes referenced by a pickle, you can unpickle it, without needing "
+"to import any of those classes ahead of time."
+msgstr ""
+
+#: ../../pep-0307.txt:611
+msgid ""
+"Unbridled use of extension codes could jeopardize this desirable property"
+" of pickles.  Therefore, the main use of extension codes is reserved for "
+"a set of codes to be standardized by some standard-setting body.  This "
+"being Python, the standard-setting body is the PSF.  From time to time, "
+"the PSF will decide on a table mapping extension codes to class names (or"
+" occasionally names of other global objects; functions are also "
+"eligible).  This table will be incorporated in the next Python "
+"release(s)."
+msgstr ""
+
+#: ../../pep-0307.txt:620
+msgid ""
+"However, for some applications, like Zope, context-free pickles are not a"
+" requirement, and waiting for the PSF to standardize some codes may not "
+"be practical.  Two solutions are offered for such applications."
+msgstr ""
+
+#: ../../pep-0307.txt:625
+msgid ""
+"First, a few ranges of extension codes are reserved for private use.  Any"
+" application can register codes in these ranges. Two applications "
+"exchanging pickles using codes in these ranges need to have some out-of-"
+"band mechanism to agree on the mapping between extension codes and names."
+msgstr ""
+
+#: ../../pep-0307.txt:631
+msgid ""
+"Second, some large Python projects (e.g. Zope) can be assigned a range of"
+" extension codes outside the \"private use\" range that they can assign "
+"as they see fit."
+msgstr ""
+
+#: ../../pep-0307.txt:635
+msgid ""
+"The extension registry is defined as a mapping between extension codes "
+"and names.  When an extension code is unpickled, it ends up producing an "
+"object, but this object is gotten by interpreting the name as a module "
+"name followed by a class (or function) name.  The mapping from names to "
+"objects is cached.  It is quite possible that certain names cannot be "
+"imported; that should not be a problem as long as no pickle containing a "
+"reference to such names has to be unpickled.  (The same issue already "
+"exists for direct references to such names in pickles that use protocols "
+"0 or 1.)"
+msgstr ""
+
+#: ../../pep-0307.txt:645
+msgid "Here is the proposed initial assignment of extension code ranges:"
+msgstr ""
+
+#: ../../pep-0307.txt:648
+msgid "First"
+msgstr ""
+
+#: ../../pep-0307.txt:648
+msgid "Last"
+msgstr ""
+
+#: ../../pep-0307.txt:648
+msgid "Count"
+msgstr ""
+
+#: ../../pep-0307.txt:648
+msgid "Purpose"
+msgstr ""
+
+#: ../../pep-0307.txt:650
+msgid "0"
+msgstr ""
+
+#: ../../pep-0307.txt:650 ../../pep-0307.txt:651
+msgid "1"
+msgstr ""
+
+#: ../../pep-0307.txt:650
+msgid "Reserved --- will never be used"
+msgstr ""
+
+#: ../../pep-0307.txt:651
+msgid "127"
+msgstr ""
+
+#: ../../pep-0307.txt:651
+msgid "Reserved for Python standard library"
+msgstr ""
+
+#: ../../pep-0307.txt:652
+msgid "128"
+msgstr ""
+
+#: ../../pep-0307.txt:652
+msgid "191"
+msgstr ""
+
+#: ../../pep-0307.txt:652
+msgid "64"
+msgstr ""
+
+#: ../../pep-0307.txt:652
+msgid "Reserved for Zope"
+msgstr ""
+
+#: ../../pep-0307.txt:653
+msgid "192"
+msgstr ""
+
+#: ../../pep-0307.txt:653
+msgid "239"
+msgstr ""
+
+#: ../../pep-0307.txt:653
+msgid "48"
+msgstr ""
+
+#: ../../pep-0307.txt:653
+msgid "Reserved for 3rd parties"
+msgstr ""
+
+#: ../../pep-0307.txt:654
+msgid "240"
+msgstr ""
+
+#: ../../pep-0307.txt:654
+msgid "255"
+msgstr ""
+
+#: ../../pep-0307.txt:654
+msgid "16"
+msgstr ""
+
+#: ../../pep-0307.txt:654
+msgid "Reserved for private use (will never be assigned)"
+msgstr ""
+
+#: ../../pep-0307.txt:655
+msgid "256"
+msgstr ""
+
+#: ../../pep-0307.txt:655
+msgid "*MAX*"
+msgstr ""
+
+#: ../../pep-0307.txt:655
+msgid "Reserved for future assignment"
+msgstr ""
+
+#: ../../pep-0307.txt:658
+msgid ""
+"*MAX* stands for 2147483647, or ``2**31-1``.  This is a hard limitation "
+"of the protocol as currently defined."
+msgstr ""
+
+#: ../../pep-0307.txt:661
+msgid "At the moment, no specific extension codes have been assigned yet."
+msgstr ""
+
+#: ../../pep-0307.txt:665
+msgid "Extension registry API"
+msgstr ""
+
+#: ../../pep-0307.txt:667
+msgid ""
+"The extension registry is maintained as private global variables in the "
+"``copy_reg`` module.  The following three functions are defined in this "
+"module to manipulate the registry:"
+msgstr ""
+
+#: ../../pep-0307.txt:682
+msgid "``add_extension(module, name, code)``"
+msgstr ""
+
+#: ../../pep-0307.txt:672
+msgid ""
+"Register an extension code.  The *module* and *name* arguments must be "
+"strings; *code* must be an ``int`` in the inclusive range 1 through "
+"*MAX*.  This must either register a new ``(module, name)`` pair to a new "
+"code, or be a redundant repeat of a previous call that was not canceled "
+"by a ``remove_extension()`` call; a ``(module, name)`` pair may not be "
+"mapped to more than one code, nor may a code be mapped to more than one "
+"``(module, name)`` pair."
+msgstr ""
+
+#: ../../pep-0307.txt:686
+msgid "``remove_extension(module, name, code)``"
+msgstr ""
+
+#: ../../pep-0307.txt:685
+msgid ""
+"Arguments are as for ``add_extension()``.  Remove a previously registered"
+" mapping between ``(module, name)`` and *code*."
+msgstr ""
+
+#: ../../pep-0307.txt:692
+msgid "``clear_extension_cache()``"
+msgstr ""
+
+#: ../../pep-0307.txt:689
+msgid ""
+"The implementation of extension codes may use a cache to speed up loading"
+" objects that are named frequently.  This cache can be emptied (removing "
+"references to cached objects) by calling this method."
+msgstr ""
+
+#: ../../pep-0307.txt:694
+msgid ""
+"Note that the API does not enforce the standard range assignments. It is "
+"up to applications to respect these."
+msgstr ""
+
+#: ../../pep-0307.txt:699
+msgid "The copy module"
+msgstr ""
+
+#: ../../pep-0307.txt:701
+msgid ""
+"Traditionally, the ``copy`` module has supported an extended subset of "
+"the pickling APIs for customizing the ``copy()`` and ``deepcopy()`` "
+"operations."
+msgstr ""
+
+#: ../../pep-0307.txt:705
+msgid ""
+"In particular, besides checking for a ``__copy__`` or ``__deepcopy__`` "
+"method, ``copy()`` and ``deepcopy()`` have always looked for "
+"``__reduce__``, and for classic classes, have looked for "
+"``__getinitargs__``, ``__getstate__`` and ``__setstate__``."
+msgstr ""
+
+#: ../../pep-0307.txt:710
+msgid ""
+"In Python 2.2, the default ``__reduce__`` inherited from 'object' made "
+"copying simple new-style classes possible, but slots and various other "
+"special cases were not covered."
+msgstr ""
+
+#: ../../pep-0307.txt:714
+msgid "In Python 2.3, several changes are made to the ``copy`` module:"
+msgstr ""
+
+#: ../../pep-0307.txt:716
+msgid ""
+"``__reduce_ex__`` is supported (and always called with 2 as the protocol "
+"version argument)."
+msgstr ""
+
+#: ../../pep-0307.txt:719
+msgid "The four- and five-argument return values of ``__reduce__`` are supported."
+msgstr ""
+
+#: ../../pep-0307.txt:722
+msgid ""
+"Before looking for a ``__reduce__`` method, the "
+"``copy_reg.dispatch_table`` is consulted, just like for pickling."
+msgstr ""
+
+#: ../../pep-0307.txt:725
+msgid ""
+"When the ``__reduce__`` method is inherited from object, it is "
+"(unconditionally) replaced by a better one that uses the same APIs as "
+"pickle protocol 2: ``__getnewargs__``, ``__getstate__``, and "
+"``__setstate__``, handling ``list`` and ``dict`` subclasses, and handling"
+" slots."
+msgstr ""
+
+#: ../../pep-0307.txt:731
+msgid ""
+"As a consequence of the latter change, certain new-style classes that "
+"were copyable under Python 2.2 are not copyable under Python 2.3.  (These"
+" classes are also not picklable using pickle protocol 2.)  A minimal "
+"example of such a class::"
+msgstr ""
+
+#: ../../pep-0307.txt:740
+msgid ""
+"The problem only occurs when ``__new__`` is overridden and has at least "
+"one mandatory argument in addition to the class argument."
+msgstr ""
+
+#: ../../pep-0307.txt:743
+msgid ""
+"To fix this, a ``__getnewargs__`` method should be added that returns the"
+" appropriate argument tuple (excluding the class)."
+msgstr ""
+
+#: ../../pep-0307.txt:748
+msgid "Pickling Python longs"
+msgstr ""
+
+#: ../../pep-0307.txt:750
+msgid ""
+"Pickling and unpickling Python longs takes time quadratic in the number "
+"of digits, in protocols 0 and 1.  Under protocol 2, new opcodes support "
+"linear-time pickling and unpickling of longs."
+msgstr ""
+
+#: ../../pep-0307.txt:756
+msgid "Pickling bools"
+msgstr ""
+
+#: ../../pep-0307.txt:758
+msgid ""
+"Protocol 2 introduces new opcodes for pickling ``True`` and ``False`` "
+"directly.  Under protocols 0 and 1, bools are pickled as integers, using "
+"a trick in the representation of the integer in the pickle so that an "
+"unpickler can recognize that a bool was intended.  That trick consumed 4 "
+"bytes per bool pickled.  The new bool opcodes consume 1 byte per bool."
+msgstr ""
+
+#: ../../pep-0307.txt:767
+msgid "Pickling small tuples"
+msgstr ""
+
+#: ../../pep-0307.txt:769
+msgid ""
+"Protocol 2 introduces new opcodes for more-compact pickling of tuples of "
+"lengths 1, 2 and 3.  Protocol 1 previously introduced an opcode for more-"
+"compact pickling of empty tuples."
+msgstr ""
+
+#: ../../pep-0307.txt:775
+msgid "Protocol identification"
+msgstr ""
+
+#: ../../pep-0307.txt:777
+msgid ""
+"Protocol 2 introduces a new opcode, with which all protocol 2 pickles "
+"begin, identifying that the pickle is protocol 2. Attempting to unpickle "
+"a protocol 2 pickle under older versions of Python will therefore raise "
+"an \"unknown opcode\" exception immediately."
+msgstr ""
+
+#: ../../pep-0307.txt:785
+msgid "Pickling of large lists and dicts"
+msgstr ""
+
+#: ../../pep-0307.txt:787
+msgid ""
+"Protocol 1 pickles large lists and dicts \"in one piece\", which "
+"minimizes pickle size, but requires that unpickling create a temp object "
+"as large as the object being unpickled.  Part of the protocol 2 changes "
+"break large lists and dicts into pieces of no more than 1000 elements "
+"each, so that unpickling needn't create a temp object larger than needed "
+"to hold 1000 elements.  This isn't part of protocol 2, however:  the "
+"opcodes produced are still part of protocol 1.  ``__reduce__`` "
+"implementations that return the optional new listitems or dictitems "
+"iterators also benefit from this unpickling temp-space optimization."
+msgstr ""
+
+#: ../../pep-0307.txt:800
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0307.txt:802
+msgid "This document has been placed in the public domain."
+msgstr ""
+

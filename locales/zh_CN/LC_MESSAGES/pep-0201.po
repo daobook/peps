@@ -1,0 +1,389 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0201.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0201.txt:1
+msgid "201"
+msgstr ""
+
+#: ../../pep-0201.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0201.txt:2
+msgid "Lockstep Iteration"
+msgstr ""
+
+#: ../../pep-0201.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0201.txt:5
+msgid "barry@python.org (Barry Warsaw)"
+msgstr ""
+
+#: ../../pep-0201.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0201.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0201.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0201.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0201.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0201.txt:9
+msgid "13-Jul-2000"
+msgstr ""
+
+#: ../../pep-0201.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0201.txt:10
+msgid "2.0"
+msgstr ""
+
+#: ../../pep-0201.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0201.txt:11
+msgid "27-Jul-2000"
+msgstr ""
+
+#: ../../pep-0201.txt:16
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0201.txt:18
+msgid ""
+"This PEP describes the 'lockstep iteration' proposal.  This PEP tracks "
+"the status and ownership of this feature, slated for introduction in "
+"Python 2.0.  It contains a description of the feature and outlines "
+"changes necessary to support the feature. This PEP summarizes discussions"
+" held in mailing list forums, and provides URLs for further information, "
+"where appropriate.  The CVS revision history of this file contains the "
+"definitive historical record."
+msgstr ""
+
+#: ../../pep-0201.txt:28
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0201.txt:30
+msgid ""
+"Standard for-loops in Python iterate over every element in a sequence "
+"until the sequence is exhausted [1]_.  However, for-loops iterate over "
+"only a single sequence, and it is often desirable to loop over more than "
+"one sequence in a lock-step fashion.  In other words, in a way such that "
+"the i-th iteration through the loop returns an object containing the i-th"
+" element from each sequence."
+msgstr ""
+
+#: ../../pep-0201.txt:37
+msgid ""
+"The common idioms used to accomplish this are unintuitive.  This PEP "
+"proposes a standard way of performing such iterations by introducing a "
+"new builtin function called ``zip``."
+msgstr ""
+
+#: ../../pep-0201.txt:41
+msgid ""
+"While the primary motivation for zip() comes from lock-step iteration, by"
+" implementing zip() as a built-in function, it has additional utility in "
+"contexts other than for-loops."
+msgstr ""
+
+#: ../../pep-0201.txt:46
+msgid "Lockstep For-Loops"
+msgstr ""
+
+#: ../../pep-0201.txt:48
+msgid ""
+"Lockstep for-loops are non-nested iterations over two or more sequences, "
+"such that at each pass through the loop, one element from each sequence "
+"is taken to compose the target.  This behavior can already be "
+"accomplished in Python through the use of the map() built- in function::"
+msgstr ""
+
+#: ../../pep-0201.txt:64
+msgid "The for-loop simply iterates over this list as normal."
+msgstr ""
+
+#: ../../pep-0201.txt:66
+msgid ""
+"While the map() idiom is a common one in Python, it has several "
+"disadvantages:"
+msgstr ""
+
+#: ../../pep-0201.txt:69
+msgid ""
+"It is non-obvious to programmers without a functional programming "
+"background."
+msgstr ""
+
+#: ../../pep-0201.txt:72
+msgid "The use of the magic ``None`` first argument is non-obvious."
+msgstr ""
+
+#: ../../pep-0201.txt:74
+msgid ""
+"It has arbitrary, often unintended, and inflexible semantics when the "
+"lists are not of the same length: the shorter sequences are padded with "
+"``None``::"
+msgstr ""
+
+#: ../../pep-0201.txt:82
+msgid ""
+"For these reasons, several proposals were floated in the Python 2.0 beta "
+"time frame for syntactic support of lockstep for-loops. Here are two "
+"suggestions::"
+msgstr ""
+
+#: ../../pep-0201.txt:94
+msgid ""
+"Neither of these forms would work, since they both already mean something"
+" in Python and changing the meanings would break existing code.  All "
+"other suggestions for new syntax suffered the same problem, or were in "
+"conflict with other another proposed feature called 'list comprehensions'"
+" (see PEP 202)."
+msgstr ""
+
+#: ../../pep-0201.txt:101
+msgid "The Proposed Solution"
+msgstr ""
+
+#: ../../pep-0201.txt:103
+msgid ""
+"The proposed solution is to introduce a new built-in sequence generator "
+"function, available in the ``__builtin__`` module.  This function is to "
+"be called ``zip`` and has the following signature::"
+msgstr ""
+
+#: ../../pep-0201.txt:109
+msgid ""
+"``zip()`` takes one or more sequences and weaves their elements together,"
+" just as ``map(None, ...)`` does with sequences of equal length.  The "
+"weaving stops when the shortest sequence is exhausted."
+msgstr ""
+
+#: ../../pep-0201.txt:115
+msgid "Return Value"
+msgstr ""
+
+#: ../../pep-0201.txt:117
+msgid "``zip()`` returns a real Python list, the same way ``map()`` does."
+msgstr ""
+
+#: ../../pep-0201.txt:121
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0201.txt:123
+msgid "Here are some examples, based on the reference implementation below::"
+msgstr ""
+
+#: ../../pep-0201.txt:139
+msgid ""
+"Note that when the sequences are of the same length, ``zip()`` is "
+"reversible::"
+msgstr ""
+
+#: ../../pep-0201.txt:156
+msgid ""
+"It is not possible to reverse zip this way when the sequences are not all"
+" the same length."
+msgstr ""
+
+#: ../../pep-0201.txt:161
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0201.txt:163
+msgid ""
+"Here is a reference implementation, in Python of the zip() built-in "
+"function.  This will be replaced with a C implementation after final "
+"approval::"
+msgstr ""
+
+#: ../../pep-0201.txt:185
+msgid "BDFL Pronouncements"
+msgstr ""
+
+#: ../../pep-0201.txt:187
+msgid ""
+"Note: the BDFL refers to Guido van Rossum, Python's Benevolent Dictator "
+"For Life."
+msgstr ""
+
+#: ../../pep-0201.txt:190
+msgid ""
+"The function's name.  An earlier version of this PEP included an open "
+"issue listing 20+ proposed alternative names to ``zip()``.  In the face "
+"of no overwhelmingly better choice, the BDFL strongly prefers ``zip()`` "
+"due to its Haskell [2]_ heritage.  See version 1.7 of this PEP for the "
+"list of alternatives."
+msgstr ""
+
+#: ../../pep-0201.txt:196
+msgid "``zip()`` shall be a built-in function."
+msgstr ""
+
+#: ../../pep-0201.txt:198
+msgid ""
+"Optional padding.  An earlier version of this PEP proposed an optional "
+"``pad`` keyword argument, which would be used when the argument sequences"
+" were not the same length.  This is similar behavior to the ``map(None, "
+"...)`` semantics except that the user would be able to specify pad "
+"object.  This has been rejected by the BDFL in favor of always truncating"
+" to the shortest sequence, because of the KISS principle.  If there's a "
+"true need, it is easier to add later.  If it is not needed, it would "
+"still be impossible to delete it in the future."
+msgstr ""
+
+#: ../../pep-0201.txt:208
+msgid ""
+"Lazy evaluation.  An earlier version of this PEP proposed that ``zip()`` "
+"return a built-in object that performed lazy evaluation using "
+"``__getitem__()`` protocol.  This has been strongly rejected by the BDFL "
+"in favor of returning a real Python list.  If lazy evaluation is desired "
+"in the future, the BDFL suggests an ``xzip()`` function be added."
+msgstr ""
+
+#: ../../pep-0201.txt:215
+msgid ""
+"``zip()`` with no arguments.  the BDFL strongly prefers this raise a "
+"TypeError exception."
+msgstr ""
+
+#: ../../pep-0201.txt:218
+msgid ""
+"``zip()`` with one argument.  the BDFL strongly prefers that this return "
+"a list of 1-tuples."
+msgstr ""
+
+#: ../../pep-0201.txt:221
+msgid ""
+"Inner and outer container control.  An earlier version of this PEP "
+"contains a rather lengthy discussion on a feature that some people "
+"wanted, namely the ability to control what the inner and outer container "
+"types were (they are tuples and list respectively in this version of the "
+"PEP).  Given the simplified API and implementation, this elaboration is "
+"rejected.  For a more detailed analysis, see version 1.7 of this PEP."
+msgstr ""
+
+#: ../../pep-0201.txt:230
+msgid "Subsequent Change to ``zip()``"
+msgstr ""
+
+#: ../../pep-0201.txt:232
+msgid ""
+"In Python 2.4, zip() with no arguments was modified to return an empty "
+"list rather than raising a TypeError exception.  The rationale for the "
+"original behavior was that the absence of arguments was thought to "
+"indicate a programming error.  However, that thinking did not anticipate "
+"the use of zip() with the ``*`` operator for unpacking variable length "
+"argument lists.  For example, the inverse of zip could be defined as:  "
+"``unzip = lambda s: zip(*s)``.  That transformation also defines a matrix"
+" transpose or an equivalent row/column swap for tables defined as lists "
+"of tuples.  The latter transformation is commonly used when reading data "
+"files with records as rows and fields as columns.  For example, the "
+"code::"
+msgstr ""
+
+#: ../../pep-0201.txt:246
+msgid ""
+"rearranges columnar data so that each field is collected into individual "
+"tuples for straightforward looping and summarization::"
+msgstr ""
+
+#: ../../pep-0201.txt:251
+msgid ""
+"Using ``zip(*args)`` is more easily coded if ``zip(*[])`` is handled as "
+"an allowable case rather than an exception.  This is especially helpful "
+"when data is either built up from or recursed down to a null case with no"
+" records."
+msgstr ""
+
+#: ../../pep-0201.txt:256
+msgid ""
+"Seeing this possibility, the BDFL agreed (with some misgivings) to have "
+"the behavior changed for Py2.4."
+msgstr ""
+
+#: ../../pep-0201.txt:260
+msgid "Other Changes"
+msgstr ""
+
+#: ../../pep-0201.txt:262
+msgid ""
+"The ``xzip()`` function discussed above was implemented in Py2.3 in the "
+"``itertools`` module as ``itertools.izip()``.  This function provides "
+"lazy behavior, consuming single elements and producing a single tuple on "
+"each pass.  The \"just-in-time\" style saves memory and runs faster than "
+"its list based counterpart, ``zip()``."
+msgstr ""
+
+#: ../../pep-0201.txt:268
+msgid ""
+"The ``itertools`` module also added ``itertools.repeat()`` and "
+"``itertools.chain()``.  These tools can be used together to pad sequences"
+" with ``None`` (to match the behavior of ``map(None, seqn)``)::"
+msgstr ""
+
+#: ../../pep-0201.txt:277
+msgid "References"
+msgstr ""
+
+#: ../../pep-0201.txt:279
+msgid "http://docs.python.org/reference/compound_stmts.html#for"
+msgstr ""
+
+#: ../../pep-0201.txt:281
+msgid "http://www.haskell.org/onlinereport/standard-prelude.html#$vzip"
+msgstr ""
+
+#: ../../pep-0201.txt:284
+msgid ""
+"Greg Wilson's questionnaire on proposed syntax to some CS grad students "
+"http://www.python.org/pipermail/python-dev/2000-July/013139.html"
+msgstr ""
+
+#: ../../pep-0201.txt:289
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0201.txt:291
+msgid "This document has been placed in the public domain."
+msgstr ""
+

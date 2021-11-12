@@ -1,0 +1,573 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0633.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0633.rst:1
+msgid "633"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0633.rst:2
+msgid "Dependency specification in pyproject.toml using an exploded TOML table"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0633.rst:3
+msgid ""
+"Laurie Opperman <laurie_opperman@hotmail.com>, Arun Babu Neelicattu "
+"<arun.neelicattu@gmail.com>"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0633.rst:5
+msgid "Brett Cannon <brett@python.org>"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0633.rst:6
+msgid ""
+"https://discuss.python.org/t/dependency-specification-in-pyproject-toml-"
+"using-an-exploded-toml-table/5123/"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0633.rst:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0633.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0633.rst:10
+msgid "02-Sep-2020"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0633.rst:11
+msgid "2020-09-02"
+msgstr ""
+
+#: ../../pep-0633.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0633.rst:12
+msgid ""
+"https://discuss.python.org/t/how-to-specify-dependencies-pep-508-strings-"
+"or-a-table-in-toml/5243/38"
+msgstr ""
+
+#: ../../pep-0633.rst:16
+msgid "Rejection Notice"
+msgstr ""
+
+#: ../../pep-0633.rst:18
+msgid ""
+"This PEP has been rejected in favour of :pep:`631` due to its popularity,"
+" consistency with the existing usage of :pep:`508` strings, and "
+"compatibility with existing packaging tool suites."
+msgstr ""
+
+#: ../../pep-0633.rst:24
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0633.rst:26
+msgid ""
+"This PEP specifies how to write a project's dependencies in a "
+"``pyproject.toml`` file for packaging-related tools to consume using the "
+"fields defined in :pep:`621`, as an alternative to the :pep:`508`-based "
+"approach defined in :pep:`631`."
+msgstr ""
+
+#: ../../pep-0633.rst:33
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0633.rst:35
+msgid ""
+"There are multiple benefits to using TOML tables and other data-types to "
+"represent requirements rather than :pep:`508` strings:"
+msgstr ""
+
+#: ../../pep-0633.rst:38
+msgid "Easy initial validation via the TOML syntax."
+msgstr ""
+
+#: ../../pep-0633.rst:40
+msgid "Easy secondary validation using a schema, for example a `JSON Schema`_."
+msgstr ""
+
+#: ../../pep-0633.rst:42
+msgid ""
+"Potential for users to guess the keys of given features, rather than "
+"memorising a syntax."
+msgstr ""
+
+#: ../../pep-0633.rst:45
+msgid ""
+"Users of multiple other popular languages may already be familiar with "
+"the TOML syntax."
+msgstr ""
+
+#: ../../pep-0633.rst:48
+msgid ""
+"TOML directly represents the same data structures as in JSON, and "
+"therefore a sub-set of Python literals, so users can understand the "
+"hierarchy and type of value"
+msgstr ""
+
+#: ../../pep-0633.rst:56
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0633.rst:58
+msgid ""
+"Most of this is taken from discussions in the `PEP 621 dependencies "
+"topic`_. This has elements from `Pipfile`_, `Poetry`_, `Dart's "
+"dependencies`_ and `Rust's Cargo`_. A `comparison document`_ shows "
+"advantages and disadvantages between this format and :pep:`508`-style "
+"specifiers."
+msgstr ""
+
+#: ../../pep-0633.rst:63
+msgid ""
+"In the specification of multiple requirements with the same distribution "
+"name (where environment markers choose the appropriate dependency), the "
+"chosen solution is similar to `Poetry`_'s, where an array of requirements"
+" is allowed."
+msgstr ""
+
+#: ../../pep-0633.rst:67
+msgid ""
+"The direct-reference keys closely align with and utilise pep:`610` and "
+":pep:`440` as to reduce differences in the packaging ecosystem and rely "
+"on previous work in specification."
+msgstr ""
+
+#: ../../pep-0633.rst:80
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0633.rst:82
+msgid ""
+"As in :pep:`621`, if metadata is improperly specified then tools MUST "
+"raise an error. The metadata MUST conform to the `TOML`_ specification."
+msgstr ""
+
+#: ../../pep-0633.rst:85
+msgid ""
+"To reduce confusion with this document being a specification for "
+"specifying dependencies, the word \"requirement\" is used to mean a "
+":pep:`508` dependency specification."
+msgstr ""
+
+#: ../../pep-0633.rst:89
+msgid ""
+"The following tables are added to the added to the ``project`` table "
+"specified in :pep:`621`."
+msgstr ""
+
+#: ../../pep-0633.rst:95
+msgid "``dependencies``"
+msgstr ""
+
+#: ../../pep-0633.rst:97 ../../pep-0633.rst:157
+msgid "Format: table"
+msgstr ""
+
+#: ../../pep-0633.rst:99
+msgid ""
+"The keys inside this table are the names of the required distribution. "
+"The values can have one of the following types:"
+msgstr ""
+
+#: ../../pep-0633.rst:102
+msgid ""
+"string: the requirement is defined only by a version requirement, with "
+"same specification as ``version`` in the requirement table, except "
+"allowing the empty string ``\"\"`` to place no restriction on the "
+"version."
+msgstr ""
+
+#: ../../pep-0633.rst:106 ../../pep-0633.rst:162
+msgid "table: a requirement table."
+msgstr ""
+
+#: ../../pep-0633.rst:108
+msgid ""
+"array: an array of requirement tables. It is an error to specify an empty"
+" array ``[]`` as a value."
+msgstr ""
+
+#: ../../pep-0633.rst:114
+msgid "Requirement table"
+msgstr ""
+
+#: ../../pep-0633.rst:116
+msgid "The keys of the requirement table are as follows (all are optional):"
+msgstr ""
+
+#: ../../pep-0633.rst:118
+msgid ""
+"``version`` (string): a :pep:`440` version specifier, which is a comma- "
+"delimited list of version specifier clauses. The string MUST be non-"
+"empty."
+msgstr ""
+
+#: ../../pep-0633.rst:121
+msgid ""
+"``extras`` (array of strings): a list of :pep:`508` extras declarations "
+"for the distribution. The list MUST be non-empty."
+msgstr ""
+
+#: ../../pep-0633.rst:124
+msgid ""
+"``markers`` (string): a :pep:`508` environment marker expression. The "
+"string MUST be non-empty."
+msgstr ""
+
+#: ../../pep-0633.rst:127
+msgid ""
+"``url`` (string): the URL of the artifact to install and satisfy the "
+"requirement. Note that ``file://`` is the prefix used for packages to be "
+"retrieved from the local filesystem."
+msgstr ""
+
+#: ../../pep-0633.rst:131
+msgid ""
+"``git``, ``hg``, ``bzr`` or ``svn`` (string): the URL of a VCS repository"
+" (as specified in :pep:`440`) to clone, whose tree will be installed to "
+"satisfy the requirement. Further VCS keys will be added via amendments to"
+" :pep:`610`, however tools MAY opt to support other VCS's using their "
+"command-line command prior to the acceptance of the amendment."
+msgstr ""
+
+#: ../../pep-0633.rst:138
+msgid ""
+"``revision`` (string): the identifier for a specific revision of the "
+"specified VCS repository to check-out before installation. Users MUST "
+"only provide this when one of ``git``, ``hg``, ``bzr``, ``svn``, or "
+"another VCS key is used to identify the distribution to install. Revision"
+" identifiers are suggested in :pep:`610`."
+msgstr ""
+
+#: ../../pep-0633.rst:144
+msgid ""
+"At most one of the following keys can be specified simultaneously, as "
+"they logically conflict with each other in the requirement: ``version``, "
+"``url``, ``git``, ``hg``, ``bzr``, ``svn``, and any other VCS key."
+msgstr ""
+
+#: ../../pep-0633.rst:148
+msgid ""
+"An empty requirement table ``{}`` places no restriction on the "
+"requirement, in addition to the empty string ``\"\"``."
+msgstr ""
+
+#: ../../pep-0633.rst:151
+msgid ""
+"Any keys provided which are not specified in this document MUST cause an "
+"error in parsing."
+msgstr ""
+
+#: ../../pep-0633.rst:155
+msgid "``optional-dependencies``"
+msgstr ""
+
+#: ../../pep-0633.rst:159
+msgid ""
+"The keys inside this table are the names of an extra's required "
+"distribution. The values can have one of the following types:"
+msgstr ""
+
+#: ../../pep-0633.rst:164
+msgid "array: an array of requirement tables."
+msgstr ""
+
+#: ../../pep-0633.rst:166
+msgid ""
+"These requirement tables have `the same specification as above "
+"<#requirement-spec>`_, with the addition of the following required key:"
+msgstr ""
+
+#: ../../pep-0633.rst:170
+msgid ""
+"``for-extra`` (string): the name of the :pep:`508` extra that this "
+"requirement is required for."
+msgstr ""
+
+#: ../../pep-0633.rst:175
+msgid "Reference implementation"
+msgstr ""
+
+#: ../../pep-0633.rst:177
+msgid ""
+"Tools will need to convert this format to :pep:`508` requirement strings."
+" Below is an example implementation of that conversion (assuming "
+"validation is already performed):"
+msgstr ""
+
+#: ../../pep-0633.rst:236
+msgid "JSON schema"
+msgstr ""
+
+#: ../../pep-0633.rst:238
+msgid ""
+"For initial validation, a JSON-schema can be used. Not only does this "
+"help tools have a consistent validation, but it allows code editors to "
+"highlight validation errors as users are building the dependencies list."
+msgstr ""
+
+#: ../../pep-0633.rst:447
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0633.rst:449
+msgid "Full artificial example:"
+msgstr ""
+
+#: ../../pep-0633.rst:472
+msgid ""
+"In homage to :pep:`631`, the following is an equivalent dependencies "
+"specification for `docker-compose`_:"
+msgstr ""
+
+#: ../../pep-0633.rst:507
+msgid "Compatibility Examples"
+msgstr ""
+
+#: ../../pep-0633.rst:509
+msgid ""
+"The authors of this PEP recognise that various tools need to both read "
+"from and write to this format for dependency specification. This section "
+"aims to provide direct comparison with and examples for translating "
+"to/from the currently used standard, :pep:`508`."
+msgstr ""
+
+#: ../../pep-0633.rst:516
+msgid ""
+"For simplicity and clarity, various ways in which TOML allows you to "
+"specify each specification is not represented. These examples use the "
+"standard inline representation."
+msgstr ""
+
+#: ../../pep-0633.rst:519
+msgid ""
+"For example, while following are considered equivalent in TOML, we choose"
+" the second form for the examples in this section."
+msgstr ""
+
+#: ../../pep-0633.rst:529
+msgid "Version Constrained Dependencies"
+msgstr ""
+
+#: ../../pep-0633.rst:531
+msgid "**No Version Constraint**"
+msgstr ""
+
+#: ../../pep-0633.rst:542
+msgid "**Simple Version Constraint**"
+msgstr ""
+
+#: ../../pep-0633.rst:556
+msgid "This can, for conciseness, be also represented as a string."
+msgstr ""
+
+#: ../../pep-0633.rst:565
+msgid "Direct Reference Dependencies"
+msgstr ""
+
+#: ../../pep-0633.rst:567
+msgid "**URL Dependency**"
+msgstr ""
+
+#: ../../pep-0633.rst:578
+msgid "**VCS Dependency**"
+msgstr ""
+
+#: ../../pep-0633.rst:591
+msgid "Environment Markers"
+msgstr ""
+
+#: ../../pep-0633.rst:603
+msgid ""
+"A slightly extended example of the above, where a particular version of "
+"``aiohttp`` is required based on the interpreter version."
+msgstr ""
+
+#: ../../pep-0633.rst:620
+msgid "Package Extras"
+msgstr ""
+
+#: ../../pep-0633.rst:622
+msgid "**Specifying dependency for a package extra**"
+msgstr ""
+
+#: ../../pep-0633.rst:633
+msgid "**Using extras from a dependency**"
+msgstr ""
+
+#: ../../pep-0633.rst:646
+msgid "Complex Examples"
+msgstr ""
+
+#: ../../pep-0633.rst:648
+msgid "**Version Constraint**"
+msgstr ""
+
+#: ../../pep-0633.rst:660
+msgid "**Direct Reference (VCS)**"
+msgstr ""
+
+#: ../../pep-0633.rst:673
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0633.rst:676
+msgid "Switch to an array for ``dependencies``"
+msgstr ""
+
+#: ../../pep-0633.rst:678
+msgid ""
+"Use an array instead of a table in order to have each element only be a "
+"table (with a ``name`` key) and no arrays of requirement tables. This was"
+" very verbose and restrictive in the TOML format, and having multiple "
+"requirements for a given distribution isn't very common."
+msgstr ""
+
+#: ../../pep-0633.rst:684
+msgid "Replace ``optional-dependencies`` with ``extras``"
+msgstr ""
+
+#: ../../pep-0633.rst:686
+msgid ""
+"Remove the ``optional-dependencies`` table in favour of both including an"
+" ``optional`` key in the requirement and an ``extras`` table which "
+"specifies which (optional) requirements are needed for a project's extra."
+" This reduces the number of table with the same specification (to 1) and "
+"allows for requirements to be specified once but used in multiple extras,"
+" but distances some of the requirement's properties (which extra(s) it "
+"belongs to), groups required and optional dependencies together (possibly"
+" mixed), and there may not be a simple way to choose a requirement when a"
+" distribution has multiple requirements. This was rejected as ``optional-"
+"dependencies`` has already been used in the :pep:`621` draft."
+msgstr ""
+
+#: ../../pep-0633.rst:698
+msgid "``direct`` table in requirement"
+msgstr ""
+
+#: ../../pep-0633.rst:700
+msgid ""
+"Include the direct-reference keys in a ``direct`` table, have the VCS "
+"specified as the value of a ``vcs`` key. This was more explicit and "
+"easier to include in a JSON-schema validation, but was decided to be too "
+"verbose and not as readable."
+msgstr ""
+
+#: ../../pep-0633.rst:706
+msgid "Include hash"
+msgstr ""
+
+#: ../../pep-0633.rst:708
+msgid ""
+"Include hash in direct-reference requirements. This was only for package "
+"lock-files, and didn't really have a place in the project's metadata."
+msgstr ""
+
+#: ../../pep-0633.rst:712
+msgid "Dependency tables for each extra"
+msgstr ""
+
+#: ../../pep-0633.rst:714
+msgid ""
+"Have the ``optional-dependencies`` be a table of dependency tables for "
+"each extra, with the table name being the extra's name. This made "
+"``optional-dependencies`` a different type (table of tables of "
+"requirements) from ``dependencies`` (table of requirements), which could "
+"be jarring for users and harder to parse."
+msgstr ""
+
+#: ../../pep-0633.rst:721
+msgid "Environment marker keys"
+msgstr ""
+
+#: ../../pep-0633.rst:723
+msgid ""
+"Make each :pep:`508` environment marker as a key (or child-table key) in "
+"the requirement. This arguably increases readability and ease of parsing."
+" The ``markers`` key would still be allowed for more advanced "
+"specification, with which the key-specified environment markers are "
+"``and``'d with the result of. This was deferred as more design needs to "
+"be undertaken."
+msgstr ""
+
+#: ../../pep-0633.rst:730
+msgid "Multiple extras which one requirement can satisfy"
+msgstr ""
+
+#: ../../pep-0633.rst:732
+msgid ""
+"Replace the ``for-extra`` key with ``for-extras``, with the value being "
+"an array of extras which the requirement satisfies. This reduces some "
+"duplication, but in this case that duplication makes explicit which "
+"extras have which dependencies."
+msgstr ""
+
+#: ../../pep-0633.rst:739
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0633.rst:741
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

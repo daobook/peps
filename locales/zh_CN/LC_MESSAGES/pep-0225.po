@@ -1,0 +1,1243 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0225.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0225.txt:1
+msgid "225"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0225.txt:2
+msgid "Elementwise/Objectwise Operators"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0225.txt:5
+msgid ""
+"hzhu@users.sourceforge.net (Huaiyu Zhu), gregory.lielens@fft.be (Gregory "
+"Lielens)"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0225.txt:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0225.txt:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0225.txt:10
+msgid "19-Sep-2000"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0225.txt:11
+msgid "2.1"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0225.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0225.txt:13
+msgid ""
+"https://www.python.org/dev/peps/pep-0465/#rejected-alternatives-to-"
+"adding-a-new-operator"
+msgstr ""
+
+#: ../../pep-0225.txt:17
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0225.txt:19
+msgid ""
+"This PEP describes a proposal to add new operators to Python which are "
+"useful for distinguishing elementwise and objectwise operations, and "
+"summarizes discussions in the news group comp.lang.python on this topic."
+"  See Credits and Archives section at end.  Issues discussed here "
+"include:"
+msgstr ""
+
+#: ../../pep-0225.txt:24
+msgid "Background."
+msgstr ""
+
+#: ../../pep-0225.txt:25
+msgid "Description of proposed operators and implementation issues."
+msgstr ""
+
+#: ../../pep-0225.txt:26
+msgid "Analysis of alternatives to new operators."
+msgstr ""
+
+#: ../../pep-0225.txt:27
+msgid "Analysis of alternative forms."
+msgstr ""
+
+#: ../../pep-0225.txt:28
+msgid "Compatibility issues"
+msgstr ""
+
+#: ../../pep-0225.txt:29
+msgid "Description of wider extensions and other related ideas."
+msgstr ""
+
+#: ../../pep-0225.txt:31
+msgid ""
+"A substantial portion of this PEP describes ideas that do not go into the"
+" proposed extension.  They are presented because the extension is "
+"essentially syntactic sugar, so its adoption must be weighed against "
+"various possible alternatives.  While many alternatives may be better in "
+"some aspects, the current proposal appears to be overall advantageous."
+msgstr ""
+
+#: ../../pep-0225.txt:37
+msgid ""
+"The issues concerning elementwise-objectwise operations extends to wider "
+"areas than numerical computation.  This document also describes how the "
+"current proposal may be integrated with more general future extensions."
+msgstr ""
+
+#: ../../pep-0225.txt:43
+msgid "Background"
+msgstr ""
+
+#: ../../pep-0225.txt:45
+msgid ""
+"Python provides six binary infix math operators: ``+`` ``-`` ``*`` ``/`` "
+"``%`` ``**`` hereafter generically represented by ``op``.  They can be "
+"overloaded with new semantics for user-defined classes.  However, for "
+"objects composed of homogeneous elements, such as arrays, vectors and "
+"matrices in numerical computation, there are two essentially distinct "
+"flavors of semantics.  The objectwise operations treat these objects as "
+"points in multidimensional spaces. The elementwise operations treat them "
+"as collections of individual elements. These two flavors of operations "
+"are often intermixed in the same formulas, thereby requiring syntactical "
+"distinction."
+msgstr ""
+
+#: ../../pep-0225.txt:55
+#, python-format
+msgid ""
+"Many numerical computation languages provide two sets of math operators."
+"  For example, in MatLab, the ordinary ``op`` is used for objectwise "
+"operation while ``.op`` is used for elementwise operation. In R, ``op`` "
+"stands for elementwise operation while ``%op%`` stands for objectwise "
+"operation."
+msgstr ""
+
+#: ../../pep-0225.txt:60
+msgid ""
+"In Python, there are other methods of representation, some of which "
+"already used by available numerical packages, such as:"
+msgstr ""
+
+#: ../../pep-0225.txt:63
+msgid "function:   mul(a,b)"
+msgstr ""
+
+#: ../../pep-0225.txt:64
+msgid "method:     a.mul(b)"
+msgstr ""
+
+#: ../../pep-0225.txt:65
+msgid "casting:    a.E*b"
+msgstr ""
+
+#: ../../pep-0225.txt:67
+msgid ""
+"In several aspects these are not as adequate as infix operators. More "
+"details will be shown later, but the key points are:"
+msgstr ""
+
+#: ../../pep-0225.txt:70
+msgid ""
+"Readability: Even for moderately complicated formulas, infix operators "
+"are much cleaner than alternatives."
+msgstr ""
+
+#: ../../pep-0225.txt:73
+msgid "Familiarity: Users are familiar with ordinary math operators."
+msgstr ""
+
+#: ../../pep-0225.txt:75
+msgid ""
+"Implementation: New infix operators will not unduly clutter Python "
+"syntax. They will greatly ease the implementation of numerical packages."
+msgstr ""
+
+#: ../../pep-0225.txt:78
+msgid ""
+"While it is possible to assign current math operators to one flavor of "
+"semantics, there is simply not enough infix operators to overload for the"
+" other flavor.  It is also impossible to maintain visual symmetry between"
+" these two flavors if one of them does not contain symbols for ordinary "
+"math operators."
+msgstr ""
+
+#: ../../pep-0225.txt:85
+msgid "Proposed extension"
+msgstr ""
+
+#: ../../pep-0225.txt:87
+msgid ""
+"Six new binary infix operators ``~+`` ``~-`` ``~*`` ``~/`` ``~%`` ``~**``"
+" are added to core Python.  They parallel the existing operators ``+`` "
+"``-`` ``*`` ``/`` ``%`` ``**``."
+msgstr ""
+
+#: ../../pep-0225.txt:91
+msgid ""
+"Six augmented assignment operators ``~+=`` ``~-=`` ``~*=`` ``~/=`` "
+"``~%=`` ``~**=`` are added to core Python.  They parallel the operators "
+"``+=`` ``-=`` ``*=`` ``/=`` ``%=`` ``**=`` available in Python 2.0."
+msgstr ""
+
+#: ../../pep-0225.txt:95
+msgid ""
+"Operator ``~op`` retains the syntactical properties of operator ``op``, "
+"including precedence."
+msgstr ""
+
+#: ../../pep-0225.txt:98
+msgid ""
+"Operator ``~op`` retains the semantical properties of operator ``op`` on "
+"built-in number types."
+msgstr ""
+
+#: ../../pep-0225.txt:101
+msgid ""
+"Operator ``~op`` raise syntax error on non-number builtin types. This is "
+"temporary until the proper behavior can be agreed upon."
+msgstr ""
+
+#: ../../pep-0225.txt:104
+msgid ""
+"These operators are overloadable in classes with names that prepend *t* "
+"(for tilde) to names of ordinary math operators. For example, "
+"``__tadd__`` and ``__rtadd__`` work for ``~+`` just as ``__add__`` and "
+"``__radd__`` work for ``+``."
+msgstr ""
+
+#: ../../pep-0225.txt:109
+msgid ""
+"As with existing operators, the ``__r*__()`` methods are invoked when the"
+" left operand does not provide the appropriate method."
+msgstr ""
+
+#: ../../pep-0225.txt:112
+msgid ""
+"It is intended that one set of ``op`` or ``~op`` is used for elementwise "
+"operations, the other for objectwise operations, but it is not specified "
+"which version of operators stands for elementwise or objectwise "
+"operations, leaving the decision to applications."
+msgstr ""
+
+#: ../../pep-0225.txt:117
+msgid ""
+"The proposed implementation is to patch several files relating to the "
+"tokenizer, parser, grammar and compiler to duplicate the functionality of"
+" corresponding existing operators as necessary. All new semantics are to "
+"be implemented in the classes that overload them."
+msgstr ""
+
+#: ../../pep-0225.txt:122
+msgid ""
+"The symbol ``~`` is already used in Python as the unary *bitwise not* "
+"operator. Currently it is not allowed for binary operators.  The new "
+"operators are completely backward compatible."
+msgstr ""
+
+#: ../../pep-0225.txt:128
+msgid "Prototype Implementation"
+msgstr ""
+
+#: ../../pep-0225.txt:130
+msgid ""
+"Greg Lielens implemented the infix ``~op`` as a patch against Python "
+"2.0b1 source [1]_."
+msgstr ""
+
+#: ../../pep-0225.txt:133
+msgid ""
+"To allow ``~`` to be part of binary operators, the tokenizer would treat "
+"``~+`` as one token.  This means that currently valid expression ``~+1`` "
+"would be tokenized as ``~+`` ``1`` instead of ``~ + 1``.  The parser "
+"would then treat ``~+`` as composite of ``~ +``.  The effect is invisible"
+" to applications."
+msgstr ""
+
+#: ../../pep-0225.txt:138
+msgid "Notes about current patch:"
+msgstr ""
+
+#: ../../pep-0225.txt:140
+msgid "It does not include ``~op=`` operators yet."
+msgstr ""
+
+#: ../../pep-0225.txt:142
+msgid ""
+"The ``~op`` behaves the same as ``op`` on lists, instead of raising "
+"exceptions."
+msgstr ""
+
+#: ../../pep-0225.txt:145
+msgid "These should be fixed when the final version of this proposal is ready."
+msgstr ""
+
+#: ../../pep-0225.txt:147
+msgid ""
+"It reserves ``xor`` as an infix operator with the semantics equivalent "
+"to::"
+msgstr ""
+
+#: ../../pep-0225.txt:154
+msgid ""
+"This preserves true value as much as possible, otherwise preserve left "
+"hand side value if possible."
+msgstr ""
+
+#: ../../pep-0225.txt:157
+msgid ""
+"This is done so that bitwise operators could be regarded as elementwise "
+"logical operators in the future (see below)."
+msgstr ""
+
+#: ../../pep-0225.txt:162
+msgid "Alternatives to adding new operators"
+msgstr ""
+
+#: ../../pep-0225.txt:164
+msgid ""
+"The discussions on comp.lang.python and python-dev mailing list explored "
+"many alternatives.  Some of the leading alternatives are listed here, "
+"using the multiplication operator as an example."
+msgstr ""
+
+#: ../../pep-0225.txt:168
+msgid "Use function ``mul(a,b)``."
+msgstr ""
+
+#: ../../pep-0225.txt:170 ../../pep-0225.txt:183 ../../pep-0225.txt:202
+#: ../../pep-0225.txt:226 ../../pep-0225.txt:243 ../../pep-0225.txt:256
+msgid "Advantage:"
+msgstr ""
+
+#: ../../pep-0225.txt:172 ../../pep-0225.txt:185 ../../pep-0225.txt:204
+#: ../../pep-0225.txt:228
+msgid "No need for new operators."
+msgstr ""
+
+#: ../../pep-0225.txt:174 ../../pep-0225.txt:187 ../../pep-0225.txt:208
+#: ../../pep-0225.txt:231 ../../pep-0225.txt:247 ../../pep-0225.txt:260
+msgid "Disadvantage:"
+msgstr ""
+
+#: ../../pep-0225.txt:176
+msgid "Prefix forms are cumbersome for composite formulas."
+msgstr ""
+
+#: ../../pep-0225.txt:177 ../../pep-0225.txt:190
+msgid "Unfamiliar to the intended users."
+msgstr ""
+
+#: ../../pep-0225.txt:178 ../../pep-0225.txt:191
+msgid "Too verbose for the intended users."
+msgstr ""
+
+#: ../../pep-0225.txt:179 ../../pep-0225.txt:192
+msgid "Unable to use natural precedence rules."
+msgstr ""
+
+#: ../../pep-0225.txt:181
+msgid "Use method call ``a.mul(b)``."
+msgstr ""
+
+#: ../../pep-0225.txt:189
+msgid "Asymmetric for both operands."
+msgstr ""
+
+#: ../../pep-0225.txt:194
+msgid ""
+"Use *shadow classes*.  For matrix class define a shadow array class "
+"accessible through a method ``.E``, so that for matrices *a* and *b*, "
+"``a.E*b`` would be a matrix object that is ``elementwise_mul(a,b)``."
+msgstr ""
+
+#: ../../pep-0225.txt:198
+msgid ""
+"Likewise define a shadow matrix class for arrays accessible through a "
+"method ``.M`` so that for arrays *a* and *b*, ``a.M*b`` would be an array"
+" that is ``matrixwise_mul(a,b)``."
+msgstr ""
+
+#: ../../pep-0225.txt:205
+msgid "Benefits of infix operators with correct precedence rules."
+msgstr ""
+
+#: ../../pep-0225.txt:206
+msgid "Clean formulas in applications."
+msgstr ""
+
+#: ../../pep-0225.txt:210
+msgid ""
+"Hard to maintain in current Python because ordinary numbers cannot have "
+"user defined class methods; i.e. ``a.E*b`` will fail if a is a pure "
+"number."
+msgstr ""
+
+#: ../../pep-0225.txt:213
+msgid ""
+"Difficult to implement, as this will interfere with existing method "
+"calls, like ``.T`` for transpose, etc."
+msgstr ""
+
+#: ../../pep-0225.txt:215 ../../pep-0225.txt:234
+msgid "Runtime overhead of object creation and method lookup."
+msgstr ""
+
+#: ../../pep-0225.txt:216
+msgid ""
+"The shadowing class cannot replace a true class, because it does not "
+"return its own type.  So there need to be a ``M`` class with shadow ``E``"
+" class, and an ``E`` class with shadow ``M`` class."
+msgstr ""
+
+#: ../../pep-0225.txt:219
+msgid "Unnatural to mathematicians."
+msgstr ""
+
+#: ../../pep-0225.txt:221
+msgid ""
+"Implement matrixwise and elementwise classes with easy casting to the "
+"other class.  So matrixwise operations for arrays would be like "
+"``a.M*b.M`` and elementwise operations for matrices would be like "
+"``a.E*b.E``.  For error detection ``a.E*b.M`` would raise exceptions."
+msgstr ""
+
+#: ../../pep-0225.txt:229
+msgid "Similar to infix notation with correct precedence rules."
+msgstr ""
+
+#: ../../pep-0225.txt:233
+msgid "Similar difficulty due to lack of user-methods for pure numbers."
+msgstr ""
+
+#: ../../pep-0225.txt:235
+msgid "More cluttered formulas."
+msgstr ""
+
+#: ../../pep-0225.txt:236
+msgid ""
+"Switching of flavor of objects to facilitate operators becomes "
+"persistent. This introduces long range context dependencies in "
+"application code that would be extremely hard to maintain."
+msgstr ""
+
+#: ../../pep-0225.txt:240
+msgid ""
+"Using mini parser to parse formulas written in arbitrary extension placed"
+" in quoted strings."
+msgstr ""
+
+#: ../../pep-0225.txt:245
+msgid "Pure Python, without new operators"
+msgstr ""
+
+#: ../../pep-0225.txt:249
+msgid ""
+"The actual syntax is within the quoted string, which does not resolve the"
+" problem itself."
+msgstr ""
+
+#: ../../pep-0225.txt:251
+msgid "Introducing zones of special syntax."
+msgstr ""
+
+#: ../../pep-0225.txt:252
+msgid "Demanding on the mini-parser."
+msgstr ""
+
+#: ../../pep-0225.txt:254
+msgid "Introducing a single operator, such as ``@``, for matrix multiplication."
+msgstr ""
+
+#: ../../pep-0225.txt:258
+msgid "Introduces less operators"
+msgstr ""
+
+#: ../../pep-0225.txt:262
+msgid ""
+"The distinctions for operators like ``+`` ``-`` ``**`` are equally "
+"important.  Their meaning in matrix or array-oriented packages would be "
+"reversed (see below)."
+msgstr ""
+
+#: ../../pep-0225.txt:265
+msgid "The new operator occupies a special character."
+msgstr ""
+
+#: ../../pep-0225.txt:266
+msgid "This does not work well with more general object-element issues."
+msgstr ""
+
+#: ../../pep-0225.txt:268
+msgid ""
+"Among these alternatives, the first and second are used in current "
+"applications to some extent, but found inadequate.  The third is the most"
+" favorite for applications, but it will incur huge implementation "
+"complexity.  The fourth would make applications codes very context-"
+"sensitive and hard to maintain. These two alternatives also share "
+"significant implementational difficulties due to current type/class "
+"split.  The fifth appears to create more problems than it would solve.  "
+"The sixth does not cover the same range of applications."
+msgstr ""
+
+#: ../../pep-0225.txt:278
+msgid "Alternative forms of infix operators"
+msgstr ""
+
+#: ../../pep-0225.txt:280
+msgid ""
+"Two major forms and several minor variants of new infix operators were "
+"discussed:"
+msgstr ""
+
+#: ../../pep-0225.txt:283
+msgid "Bracketed form::"
+msgstr ""
+
+#: ../../pep-0225.txt:293
+msgid "Meta character form::"
+msgstr ""
+
+#: ../../pep-0225.txt:299
+msgid "Alternatively the meta character is put after the operator."
+msgstr ""
+
+#: ../../pep-0225.txt:301
+msgid ""
+"Less consistent variations of these themes.  These are considered "
+"unfavorably.  For completeness some are listed here:"
+msgstr ""
+
+#: ../../pep-0225.txt:304
+msgid "Use ``@/`` and ``/@`` for left and right division"
+msgstr ""
+
+#: ../../pep-0225.txt:305
+msgid "Use ``[*]`` and ``(*)`` for outer and inner products"
+msgstr ""
+
+#: ../../pep-0225.txt:306
+msgid "Use a single operator ``@`` for multiplication."
+msgstr ""
+
+#: ../../pep-0225.txt:308
+msgid "Use ``__call__`` to simulate multiplication::"
+msgstr ""
+
+#: ../../pep-0225.txt:312
+msgid "Criteria for choosing among the representations include:"
+msgstr ""
+
+#: ../../pep-0225.txt:314
+msgid "No syntactical ambiguities with existing operators."
+msgstr ""
+
+#: ../../pep-0225.txt:316
+msgid ""
+"Higher readability in actual formulas.  This makes the bracketed forms "
+"unfavorable.  See examples below."
+msgstr ""
+
+#: ../../pep-0225.txt:319
+msgid "Visually similar to existing math operators."
+msgstr ""
+
+#: ../../pep-0225.txt:321
+msgid "Syntactically simple, without blocking possible future extensions."
+msgstr ""
+
+#: ../../pep-0225.txt:323
+msgid ""
+"With these criteria the overall winner in bracket form appear to be "
+"``{op}``. A clear winner in the meta character form is ``~op``. Comparing"
+" these it appears that ``~op`` is the favorite among them all."
+msgstr ""
+
+#: ../../pep-0225.txt:327
+msgid "Some analysis are as follows:"
+msgstr ""
+
+#: ../../pep-0225.txt:329
+msgid "The ``.op`` form is ambiguous: ``1.+a`` would be different from ``1 .+a``."
+msgstr ""
+
+#: ../../pep-0225.txt:330
+msgid ""
+"The bracket type operators are most favorable when standing alone, but "
+"not in formulas, as they interfere with visual parsing of parentheses for"
+" precedence and function argument. This is so for ``(op)`` and ``[op]``, "
+"and somewhat less so for ``{op}`` and ``<op>``."
+msgstr ""
+
+#: ../../pep-0225.txt:335
+msgid ""
+"The ``<op>`` form has the potential to be confused with ``<`` ``>`` and "
+"``=``."
+msgstr ""
+
+#: ../../pep-0225.txt:337
+msgid ""
+"The ``@op`` is not favored because ``@`` is visually heavy (dense, more "
+"like a letter): ``a@+b`` is more readily read as ``a@ + b`` than ``a @+ "
+"b``."
+msgstr ""
+
+#: ../../pep-0225.txt:340
+msgid ""
+"For choosing meta-characters: Most of existing ASCII symbols have already"
+" been used.  The only three unused are ``@`` ``$`` ``?``."
+msgstr ""
+
+#: ../../pep-0225.txt:345
+msgid "Semantics of new operators"
+msgstr ""
+
+#: ../../pep-0225.txt:347
+msgid ""
+"There are convincing arguments for using either set of operators as "
+"objectwise or elementwise.  Some of them are listed here:"
+msgstr ""
+
+#: ../../pep-0225.txt:350
+msgid "``op`` for element, ``~op`` for object"
+msgstr ""
+
+#: ../../pep-0225.txt:352
+msgid "Consistent with current multiarray interface of Numeric package."
+msgstr ""
+
+#: ../../pep-0225.txt:353 ../../pep-0225.txt:360
+msgid "Consistent with some other languages."
+msgstr ""
+
+#: ../../pep-0225.txt:354
+msgid "Perception that elementwise operations are more natural."
+msgstr ""
+
+#: ../../pep-0225.txt:355
+msgid "Perception that elementwise operations are used more frequently"
+msgstr ""
+
+#: ../../pep-0225.txt:357
+msgid "``op`` for object, ``~op`` for element"
+msgstr ""
+
+#: ../../pep-0225.txt:359
+msgid "Consistent with current linear algebra interface of MatPy package."
+msgstr ""
+
+#: ../../pep-0225.txt:361
+msgid "Perception that objectwise operations are more natural."
+msgstr ""
+
+#: ../../pep-0225.txt:362
+msgid "Perception that objectwise operations are used more frequently."
+msgstr ""
+
+#: ../../pep-0225.txt:363
+msgid "Consistent with the current behavior of operators on lists."
+msgstr ""
+
+#: ../../pep-0225.txt:364
+msgid ""
+"Allow ``~`` to be a general elementwise meta-character in future "
+"extensions."
+msgstr ""
+
+#: ../../pep-0225.txt:367
+msgid "It is generally agreed upon that"
+msgstr ""
+
+#: ../../pep-0225.txt:369
+msgid "There is no absolute reason to favor one or the other."
+msgstr ""
+
+#: ../../pep-0225.txt:370
+msgid ""
+"It is easy to cast from one representation to another in a sizable chunk "
+"of code, so the other flavor of operators is always minority."
+msgstr ""
+
+#: ../../pep-0225.txt:372
+msgid ""
+"There are other semantic differences that favor existence of array-"
+"oriented and matrix-oriented packages, even if their operators are "
+"unified."
+msgstr ""
+
+#: ../../pep-0225.txt:374
+msgid ""
+"Whatever the decision is taken, codes using existing interfaces should "
+"not be broken for a very long time."
+msgstr ""
+
+#: ../../pep-0225.txt:377
+msgid ""
+"Therefore, not much is lost, and much flexibility retained, if the "
+"semantic flavors of these two sets of operators are not dictated by the "
+"core language. The application packages are responsible for making the "
+"most suitable choice. This is already the case for NumPy and MatPy which "
+"use opposite semantics. Adding new operators will not break this.  See "
+"also observation after subsection 2 in the Examples below."
+msgstr ""
+
+#: ../../pep-0225.txt:384
+msgid ""
+"The issue of numerical precision was raised, but if the semantics is left"
+" to the applications, the actual precisions should also go there."
+msgstr ""
+
+#: ../../pep-0225.txt:389
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0225.txt:391
+msgid ""
+"Following are examples of the actual formulas that will appear using "
+"various operators or other representations described above."
+msgstr ""
+
+#: ../../pep-0225.txt:394
+msgid "The matrix inversion formula:"
+msgstr ""
+
+#: ../../pep-0225.txt:396 ../../pep-0225.txt:431
+msgid "Using ``op`` for object and ``~op`` for element::"
+msgstr ""
+
+#: ../../pep-0225.txt:402
+msgid "Using ``op`` for element and ``~op`` for object::"
+msgstr ""
+
+#: ../../pep-0225.txt:416
+msgid "Observation: For linear algebra using ``op`` for object is preferable."
+msgstr ""
+
+#: ../../pep-0225.txt:418
+msgid ""
+"Observation: The ``~op`` type operators look better than ``(op)`` type in"
+" complicated formulas."
+msgstr ""
+
+#: ../../pep-0225.txt:421
+msgid "using named operators::"
+msgstr ""
+
+#: ../../pep-0225.txt:427
+msgid "Observation: Named operators are not suitable for math formulas."
+msgstr ""
+
+#: ../../pep-0225.txt:429
+msgid "Plotting a 3d graph"
+msgstr ""
+
+#: ../../pep-0225.txt:435
+msgid "Using op for element and ~op for object::"
+msgstr ""
+
+#: ../../pep-0225.txt:439
+msgid ""
+"Observation: Elementwise operations with broadcasting allows much more "
+"efficient implementation than MatLab."
+msgstr ""
+
+#: ../../pep-0225.txt:442
+msgid ""
+"Observation: It is useful to have two related classes with the semantics "
+"of ``op`` and ``~op`` swapped.  Using these the ``~op`` operators would "
+"only need to appear in chunks of code where the other flavor dominates, "
+"while maintaining consistent semantics of the code."
+msgstr ""
+
+#: ../../pep-0225.txt:447
+msgid "Using ``+`` and ``-`` with automatic broadcasting::"
+msgstr ""
+
+#: ../../pep-0225.txt:451
+msgid ""
+"Observation: This would silently produce hard-to-trace bugs if one of *b*"
+" or *c* is row vector while the other is column vector."
+msgstr ""
+
+#: ../../pep-0225.txt:456
+msgid "Miscellaneous issues"
+msgstr ""
+
+#: ../../pep-0225.txt:458
+msgid ""
+"Need for the ``~+`` ``~-`` operators.  The objectwise ``+`` ``-`` are "
+"important because they provide important sanity checks as per linear "
+"algebra. The elementwise ``+`` ``-`` are important because they allow "
+"broadcasting that are very efficient in applications."
+msgstr ""
+
+#: ../../pep-0225.txt:463
+msgid ""
+"Left division (solve).  For matrix, ``a*x`` is not necessarily equal to "
+"``x*a``.  The solution of ``a*x==b``, denoted ``x=solve(a,b)``, is "
+"therefore different from the solution of ``x*a==b``, denoted "
+"``x=div(b,a)``.  There are discussions about finding a new symbol for "
+"solve.  [Background: MatLab use ``b/a`` for ``div(b,a)`` and ``a\\b`` for"
+" ``solve(a,b)``.]"
+msgstr ""
+
+#: ../../pep-0225.txt:469
+msgid ""
+"It is recognized that Python provides a better solution without requiring"
+" a new symbol: the ``inverse`` method ``.I`` can be made to be delayed so"
+" that ``a.I*b`` and ``b*a.I`` are equivalent to Matlab's ``a\\b`` and "
+"``b/a``.  The implementation is quite simple and the resulting "
+"application code clean."
+msgstr ""
+
+#: ../../pep-0225.txt:474
+msgid ""
+"Power operator.  Python's use of ``a**b`` as ``pow(a,b)`` has two "
+"perceived disadvantages:"
+msgstr ""
+
+#: ../../pep-0225.txt:477
+msgid "Most mathematicians are more familiar with ``a^b`` for this purpose."
+msgstr ""
+
+#: ../../pep-0225.txt:478
+msgid "It results in long augmented assignment operator ``~**=``."
+msgstr ""
+
+#: ../../pep-0225.txt:480
+msgid "However, this issue is distinct from the main issue here."
+msgstr ""
+
+#: ../../pep-0225.txt:482
+msgid ""
+"Additional multiplication operators.  Several forms of multiplications "
+"are used in (multi-)linear algebra.  Most can be seen as variations of "
+"multiplication in linear algebra sense (such as Kronecker product).  But "
+"two forms appear to be more fundamental: outer product and inner product."
+" However, their specification includes indices, which can be either"
+msgstr ""
+
+#: ../../pep-0225.txt:488
+msgid "associated with the operator, or"
+msgstr ""
+
+#: ../../pep-0225.txt:489
+msgid "associated with the objects."
+msgstr ""
+
+#: ../../pep-0225.txt:491
+msgid ""
+"The latter (the Einstein notation) is used extensively on paper, and is "
+"also the easier one to implement.  By implementing a tensor-with-indices "
+"class, a general form of multiplication would cover both outer and inner "
+"products, and specialize to linear algebra multiplication as well.  The "
+"index rule can be defined as class methods, like::"
+msgstr ""
+
+#: ../../pep-0225.txt:499
+msgid "Therefore, one objectwise multiplication is sufficient."
+msgstr ""
+
+#: ../../pep-0225.txt:501
+msgid "Bitwise operators."
+msgstr ""
+
+#: ../../pep-0225.txt:503
+msgid ""
+"The proposed new math operators use the symbol ~ that is *bitwise not* "
+"operator.  This poses no compatibility problem but somewhat complicates "
+"implementation."
+msgstr ""
+
+#: ../../pep-0225.txt:507
+msgid ""
+"The symbol ``^`` might be better used for ``pow`` than bitwise ``xor``. "
+"But this depends on the future of bitwise operators.  It does not "
+"immediately impact on the proposed math operator."
+msgstr ""
+
+#: ../../pep-0225.txt:511
+msgid ""
+"The symbol ``|`` was suggested to be used for matrix solve.  But the new "
+"solution of using delayed ``.I`` is better in several ways."
+msgstr ""
+
+#: ../../pep-0225.txt:514
+msgid ""
+"The current proposal fits in a larger and more general extension that "
+"will remove the need for special bitwise operators.  (See elementization "
+"below.)"
+msgstr ""
+
+#: ../../pep-0225.txt:517
+msgid "Alternative to special operator names used in definition,"
+msgstr ""
+
+#: ../../pep-0225.txt:523
+msgid ""
+"This appears to require greater syntactical change, and would only be "
+"useful when arbitrary additional operators are allowed."
+msgstr ""
+
+#: ../../pep-0225.txt:528
+msgid "Impact on general elementization"
+msgstr ""
+
+#: ../../pep-0225.txt:530
+msgid ""
+"The distinction between objectwise and elementwise operations are "
+"meaningful in other contexts as well, where an object can be conceptually"
+" regarded as a collection of elements.  It is important that the current "
+"proposal does not preclude possible future extensions."
+msgstr ""
+
+#: ../../pep-0225.txt:535
+msgid ""
+"One general future extension is to use ``~`` as a meta operator to "
+"*elementize* a given operator.  Several examples are listed here:"
+msgstr ""
+
+#: ../../pep-0225.txt:538
+msgid ""
+"Bitwise operators.  Currently Python assigns six operators to bitwise "
+"operations: and (``&``), or (``|``), xor (``^``), complement (``~``), "
+"left shift (``<<``) and right shift (``>>``), with their own precedence "
+"levels."
+msgstr ""
+
+#: ../../pep-0225.txt:542
+msgid ""
+"Among them, the ``&`` ``|`` ``^`` ``~`` operators can be regarded as "
+"elementwise versions of lattice operators applied to integers regarded as"
+" bit strings.::"
+msgstr ""
+
+#: ../../pep-0225.txt:552
+msgid ""
+"These can be regarded as general elementwise lattice operators, not "
+"restricted to bits in integers."
+msgstr ""
+
+#: ../../pep-0225.txt:555
+msgid ""
+"In order to have named operators for ``xor`` ``~xor``, it is necessary to"
+" make ``xor`` a reserved word."
+msgstr ""
+
+#: ../../pep-0225.txt:558
+msgid "List arithmetics.::"
+msgstr ""
+
+#: ../../pep-0225.txt:569
+msgid "It is also consistent to Cartesian product::"
+msgstr ""
+
+#: ../../pep-0225.txt:573
+msgid "List comprehension.::"
+msgstr ""
+
+#: ../../pep-0225.txt:580
+msgid "Tuple generation (the zip function in Python 2.0)::"
+msgstr ""
+
+#: ../../pep-0225.txt:585
+msgid "Using ``~`` as generic elementwise meta-character to replace map::"
+msgstr ""
+
+#: ../../pep-0225.txt:590
+msgid "More generally,::"
+msgstr ""
+
+#: ../../pep-0225.txt:596
+msgid "Elementwise format operator (with broadcasting)::"
+msgstr ""
+
+#: ../../pep-0225.txt:603
+msgid "Rich comparison::"
+msgstr ""
+
+#: ../../pep-0225.txt:608
+msgid "Rich indexing::"
+msgstr ""
+
+#: ../../pep-0225.txt:612
+msgid "Tuple flattening::"
+msgstr ""
+
+#: ../../pep-0225.txt:617
+msgid "Copy operator::"
+msgstr ""
+
+#: ../../pep-0225.txt:621
+msgid "There can be specific levels of deep copy::"
+msgstr ""
+
+#: ../../pep-0225.txt:626
+msgid "Notes"
+msgstr ""
+
+#: ../../pep-0225.txt:628
+msgid ""
+"There are probably many other similar situations.  This general approach "
+"seems well suited for most of them, in place of several separated "
+"extensions for each of them (parallel and cross iteration, list "
+"comprehension, rich comparison, etc)."
+msgstr ""
+
+#: ../../pep-0225.txt:633
+msgid ""
+"The semantics of *elementwise* depends on applications.  For example, an "
+"element of matrix is two levels down from the list-of-list point of view."
+" This requires more fundamental change than the current proposal.  In any"
+" case, the current proposal will not negatively impact on future "
+"possibilities of this nature."
+msgstr ""
+
+#: ../../pep-0225.txt:639
+msgid ""
+"Note that this section describes a type of future extensions that is "
+"consistent with current proposal, but may present additional "
+"compatibility or other problems.  They are not tied to the current "
+"proposal."
+msgstr ""
+
+#: ../../pep-0225.txt:645
+msgid "Impact on named operators"
+msgstr ""
+
+#: ../../pep-0225.txt:647
+msgid ""
+"The discussions made it generally clear that infix operators is a scarce "
+"resource in Python, not only in numerical computation, but in other "
+"fields as well.  Several proposals and ideas were put forward that would "
+"allow infix operators be introduced in ways similar to named functions.  "
+"We show here that the current extension does not negatively impact on "
+"future extensions in this regard."
+msgstr ""
+
+#: ../../pep-0225.txt:654
+msgid "Named infix operators."
+msgstr ""
+
+#: ../../pep-0225.txt:656
+msgid ""
+"Choose a meta character, say ``@``, so that for any identifier "
+"``opname``, the combination ``@opname`` would be a binary infix operator,"
+" and::"
+msgstr ""
+
+#: ../../pep-0225.txt:661
+msgid "Other representations mentioned include::"
+msgstr ""
+
+#: ../../pep-0225.txt:665
+msgid ""
+"and similar variations.  The pure bracket based operators cannot be used "
+"this way."
+msgstr ""
+
+#: ../../pep-0225.txt:668
+msgid ""
+"This requires a change in the parser to recognize ``@opname``, and parse "
+"it into the same structure as a function call.  The precedence of all "
+"these operators would have to be fixed at one level, so the "
+"implementation would be different from additional math operators which "
+"keep the precedence of existing math operators."
+msgstr ""
+
+#: ../../pep-0225.txt:674
+msgid ""
+"The current proposed extension do not limit possible future extensions of"
+" such form in any way."
+msgstr ""
+
+#: ../../pep-0225.txt:677
+msgid "More general symbolic operators."
+msgstr ""
+
+#: ../../pep-0225.txt:679
+msgid ""
+"One additional form of future extension is to use meta character and "
+"operator symbols (symbols that cannot be used in syntactical structures "
+"other than operators).  Suppose ``@`` is the meta character.  Then::"
+msgstr ""
+
+#: ../../pep-0225.txt:685
+msgid "would all be operators with a hierarchy of precedence, defined by::"
+msgstr ""
+
+#: ../../pep-0225.txt:692
+msgid ""
+"One advantage compared with named operators is greater flexibility for "
+"precedences based on either the meta character or the ordinary operator "
+"symbols.  This also allows operator composition.  The disadvantage is "
+"that they are more like *line noise*.  In any case the current proposal "
+"does not impact its future possibility."
+msgstr ""
+
+#: ../../pep-0225.txt:698
+msgid ""
+"These kinds of future extensions may not be necessary when Unicode "
+"becomes generally available."
+msgstr ""
+
+#: ../../pep-0225.txt:701
+msgid ""
+"Note that this section discusses compatibility of the proposed extension "
+"with possible future extensions.  The desirability or compatibility of "
+"these other extensions themselves are specifically not considered here."
+msgstr ""
+
+#: ../../pep-0225.txt:707
+msgid "Credits and archives"
+msgstr ""
+
+#: ../../pep-0225.txt:709
+msgid ""
+"The discussions mostly happened in July to August of 2000 on news group "
+"comp.lang.python and the mailing list python-dev.  There are altogether "
+"several hundred postings, most can be retrieved from these two pages (and"
+" searching word \"operator\"):"
+msgstr ""
+
+#: ../../pep-0225.txt:714
+msgid ""
+"http://www.python.org/pipermail/python-list/2000-July/ "
+"http://www.python.org/pipermail/python-list/2000-August/"
+msgstr ""
+
+#: ../../pep-0225.txt:717
+msgid ""
+"The names of contributors are too numerous to mention here, suffice to "
+"say that a large proportion of ideas discussed here are not our own."
+msgstr ""
+
+#: ../../pep-0225.txt:720
+msgid ""
+"Several key postings (from our point of view) that may help to navigate "
+"the discussions include:"
+msgstr ""
+
+#: ../../pep-0225.txt:723
+msgid ""
+"http://www.python.org/pipermail/python-list/2000-July/108893.html "
+"http://www.python.org/pipermail/python-list/2000-July/108777.html "
+"http://www.python.org/pipermail/python-list/2000-July/108848.html "
+"http://www.python.org/pipermail/python-list/2000-July/109237.html "
+"http://www.python.org/pipermail/python-list/2000-July/109250.html "
+"http://www.python.org/pipermail/python-list/2000-July/109310.html "
+"http://www.python.org/pipermail/python-list/2000-July/109448.html "
+"http://www.python.org/pipermail/python-list/2000-July/109491.html "
+"http://www.python.org/pipermail/python-list/2000-July/109537.html "
+"http://www.python.org/pipermail/python-list/2000-July/109607.html "
+"http://www.python.org/pipermail/python-list/2000-July/109709.html "
+"http://www.python.org/pipermail/python-list/2000-July/109804.html "
+"http://www.python.org/pipermail/python-list/2000-July/109857.html "
+"http://www.python.org/pipermail/python-list/2000-July/110061.html "
+"http://www.python.org/pipermail/python-list/2000-July/110208.html "
+"http://www.python.org/pipermail/python-list/2000-August/111427.html "
+"http://www.python.org/pipermail/python-list/2000-August/111558.html "
+"http://www.python.org/pipermail/python-list/2000-August/112551.html "
+"http://www.python.org/pipermail/python-list/2000-August/112606.html "
+"http://www.python.org/pipermail/python-list/2000-August/112758.html"
+msgstr ""
+
+#: ../../pep-0225.txt:744
+msgid ""
+"http://www.python.org/pipermail/python-dev/2000-July/013243.html "
+"http://www.python.org/pipermail/python-dev/2000-July/013364.html "
+"http://www.python.org/pipermail/python-dev/2000-August/014940.html"
+msgstr ""
+
+#: ../../pep-0225.txt:748
+msgid "These are earlier drafts of this PEP:"
+msgstr ""
+
+#: ../../pep-0225.txt:750
+msgid ""
+"http://www.python.org/pipermail/python-list/2000-August/111785.html "
+"http://www.python.org/pipermail/python-list/2000-August/112529.html "
+"http://www.python.org/pipermail/python-dev/2000-August/014906.html"
+msgstr ""
+
+#: ../../pep-0225.txt:754
+msgid ""
+"There is an alternative PEP (officially, PEP 211) by Greg Wilson, titled "
+"\"Adding New Linear Algebra Operators to Python\"."
+msgstr ""
+
+#: ../../pep-0225.txt:757
+msgid "Its first (and current) version is at:"
+msgstr ""
+
+#: ../../pep-0225.txt:759
+msgid ""
+"http://www.python.org/pipermail/python-dev/2000-August/014876.html "
+"http://www.python.org/dev/peps/pep-0211/"
+msgstr ""
+
+#: ../../pep-0225.txt:764
+msgid "Additional References"
+msgstr ""
+
+#: ../../pep-0225.txt:766
+msgid "http://MatPy.sourceforge.net/Misc/index.html"
+msgstr ""
+

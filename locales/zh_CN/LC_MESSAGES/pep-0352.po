@@ -1,0 +1,368 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0352.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0352.txt:1
+msgid "352"
+msgstr ""
+
+#: ../../pep-0352.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0352.txt:2
+msgid "Required Superclass for Exceptions"
+msgstr ""
+
+#: ../../pep-0352.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0352.txt:5
+msgid "Brett Cannon, Guido van Rossum"
+msgstr ""
+
+#: ../../pep-0352.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0352.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0352.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0352.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0352.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0352.txt:9
+msgid "27-Oct-2005"
+msgstr ""
+
+#: ../../pep-0352.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0352.txt:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0352.txt:16
+msgid ""
+"In Python 2.4 and before, any (classic) class can be raised as an "
+"exception.  The plan for 2.5 was to allow new-style classes, but this "
+"makes the problem worse -- it would mean *any* class (or instance) can be"
+" raised! This is a problem as it prevents any guarantees from being made "
+"about the interface of exceptions. This PEP proposes introducing a new "
+"superclass that all raised objects must inherit from.  Imposing the "
+"restriction will allow a standard interface for exceptions to exist that "
+"can be relied upon.  It also leads to a known hierarchy for all "
+"exceptions to adhere to."
+msgstr ""
+
+#: ../../pep-0352.txt:26
+msgid ""
+"One might counter that requiring a specific base class for a particular "
+"interface is unPythonic.  However, in the specific case of exceptions "
+"there's a good reason (which has generally been agreed to on python-dev):"
+" requiring hierarchy helps code that wants to *catch* exceptions by "
+"making it possible to catch *all* exceptions explicitly by writing "
+"``except BaseException:`` instead of ``except *:``. [#hierarchy-good]_"
+msgstr ""
+
+#: ../../pep-0352.txt:34
+msgid ""
+"Introducing a new superclass for exceptions also gives us the chance to "
+"rearrange the exception hierarchy slightly for the better.  As it "
+"currently stands, all exceptions in the built-in namespace inherit from "
+"Exception.  This is a problem since this includes two exceptions "
+"(KeyboardInterrupt and SystemExit) that often need to be excepted from "
+"the application's exception handling: the default behavior of shutting "
+"the interpreter down without a traceback is usually more desirable than "
+"whatever the application might do (with the possible exception of "
+"applications that emulate Python's interactive command loop with ``>>>`` "
+"prompt).  Changing it so that these two exceptions inherit from the "
+"common superclass instead of Exception will make it easy for people to "
+"write ``except`` clauses that are not overreaching and not catch "
+"exceptions that should propagate up."
+msgstr ""
+
+#: ../../pep-0352.txt:48
+msgid "This PEP is based on previous work done for PEP 348 [#pep348]_."
+msgstr ""
+
+#: ../../pep-0352.txt:52
+msgid "Requiring a Common Superclass"
+msgstr ""
+
+#: ../../pep-0352.txt:54
+msgid ""
+"This PEP proposes introducing a new exception named BaseException that is"
+" a new-style class and has a single attribute, ``args``.  Below is the "
+"code as the exception will work in Python 3.0 (how it will work in Python"
+" 2.x is covered in the `Transition Plan`_ section)::"
+msgstr ""
+
+#: ../../pep-0352.txt:82
+msgid ""
+"No restriction is placed upon what may be passed in for ``args`` for "
+"backwards-compatibility reasons.  In practice, though, only a single "
+"string argument should be used.  This keeps the string representation of "
+"the exception to be a useful message about the exception that is human-"
+"readable; this is why the ``__str__`` method special-cases on length-1 "
+"``args`` value.  Including programmatic information (e.g., an error code "
+"number) should be stored as a separate attribute in a subclass."
+msgstr ""
+
+#: ../../pep-0352.txt:91
+msgid ""
+"The ``raise`` statement will be changed to require that any object passed"
+" to it must inherit from BaseException.  This will make sure that all "
+"exceptions fall within a single hierarchy that is anchored at "
+"BaseException [#hierarchy-good]_.  This also guarantees a basic interface"
+" that is inherited from BaseException.  The change to ``raise`` will be "
+"enforced starting in Python 3.0 (see the `Transition Plan`_ below)."
+msgstr ""
+
+#: ../../pep-0352.txt:99
+msgid ""
+"With BaseException being the root of the exception hierarchy, Exception "
+"will now inherit from it."
+msgstr ""
+
+#: ../../pep-0352.txt:104
+msgid "Exception Hierarchy Changes"
+msgstr ""
+
+#: ../../pep-0352.txt:106
+msgid ""
+"With the exception hierarchy now even more important since it has a basic"
+" root, a change to the existing hierarchy is called for.  As it stands "
+"now, if one wants to catch all exceptions that signal an error *and* do "
+"not mean the interpreter should be allowed to exit, you must specify all "
+"but two exceptions specifically in an ``except`` clause or catch the two "
+"exceptions separately and then re-raise them and have all other "
+"exceptions fall through to a bare ``except`` clause::"
+msgstr ""
+
+#: ../../pep-0352.txt:119
+msgid ""
+"That is needlessly explicit.  This PEP proposes moving KeyboardInterrupt "
+"and SystemExit to inherit directly from BaseException."
+msgstr ""
+
+#: ../../pep-0352.txt:131
+msgid ""
+"Doing this makes catching Exception more reasonable.  It would catch only"
+" exceptions that signify errors.  Exceptions that signal that the "
+"interpreter should exit will not be caught and thus be allowed to "
+"propagate up and allow the interpreter to terminate."
+msgstr ""
+
+#: ../../pep-0352.txt:136
+msgid ""
+"KeyboardInterrupt has been moved since users typically expect an "
+"application to exit when they press the interrupt key (usually Ctrl-C). "
+"If people have overly broad ``except`` clauses the expected behaviour "
+"does not occur."
+msgstr ""
+
+#: ../../pep-0352.txt:141
+msgid ""
+"SystemExit has been moved for similar reasons.  Since the exception is "
+"raised when ``sys.exit()`` is called the interpreter should normally be "
+"allowed to terminate.  Unfortunately overly broad ``except`` clauses can "
+"prevent the explicitly requested exit from occurring."
+msgstr ""
+
+#: ../../pep-0352.txt:146
+msgid ""
+"To make sure that people catch Exception most of the time, various parts "
+"of the documentation and tutorials will need to be updated to strongly "
+"suggest that Exception be what programmers want to use.  Bare ``except`` "
+"clauses or catching BaseException directly should be discouraged based on"
+" the fact that KeyboardInterrupt and SystemExit almost always should be "
+"allowed to propagate up."
+msgstr ""
+
+#: ../../pep-0352.txt:155
+msgid "Transition Plan"
+msgstr ""
+
+#: ../../pep-0352.txt:157
+msgid ""
+"Since semantic changes to Python are being proposed, a transition plan is"
+" needed.  The goal is to end up with the new semantics being used in "
+"Python 3.0 while providing a smooth transition for 2.x code.  All "
+"deprecations mentioned in the plan will lead to the removal of the "
+"semantics starting in the version following the initial deprecation."
+msgstr ""
+
+#: ../../pep-0352.txt:163
+msgid "Here is BaseException as implemented in the 2.x series::"
+msgstr ""
+
+#: ../../pep-0352.txt:208
+msgid ""
+"Deprecation of features in Python 2.9 is optional.  This is because it is"
+" not known at this time if Python 2.9 (which is slated to be the last "
+"version in the 2.x series) will actively deprecate features that will not"
+" be in 3.0.  It is conceivable that no deprecation warnings will be used "
+"in 2.9 since there could be such a difference between 2.9 and 3.0 that it"
+" would make 2.9 too \"noisy\" in terms of warnings.  Thus the proposed "
+"deprecation warnings for Python 2.9 will be revisited when development of"
+" that version begins, to determine if they are still desired."
+msgstr ""
+
+#: ../../pep-0352.txt:218
+msgid "Python 2.5 [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:220
+msgid "all standard exceptions become new-style classes [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:222
+msgid "introduce BaseException [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:224
+msgid ""
+"Exception, KeyboardInterrupt, and SystemExit inherit from BaseException "
+"[done]"
+msgstr ""
+
+#: ../../pep-0352.txt:227
+msgid "deprecate raising string exceptions [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:229
+msgid "Python 2.6 [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:231
+msgid "deprecate catching string exceptions [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:233
+msgid "deprecate ``message`` attribute (see `Retracted Ideas`_) [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:235
+msgid "Python 2.7 [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:237
+msgid "deprecate raising exceptions that do not inherit from BaseException"
+msgstr ""
+
+#: ../../pep-0352.txt:239
+msgid "Python 3.0 [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:241
+msgid "drop everything that was deprecated above:"
+msgstr ""
+
+#: ../../pep-0352.txt:243
+msgid "string exceptions (both raising and catching) [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:245
+msgid "all exceptions must inherit from BaseException [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:247
+msgid "drop ``__getitem__``, ``message`` [done]"
+msgstr ""
+
+#: ../../pep-0352.txt:251
+msgid "Retracted Ideas"
+msgstr ""
+
+#: ../../pep-0352.txt:253
+msgid ""
+"A previous version of this PEP that was implemented in Python 2.5 "
+"included a 'message' attribute on BaseException.  Its purpose was to "
+"begin a transition to BaseException accepting only a single argument. "
+"This was to tighten the interface and to force people to use attributes "
+"in subclasses to carry arbitrary information with an exception instead of"
+" cramming it all into ``args``."
+msgstr ""
+
+#: ../../pep-0352.txt:260
+msgid ""
+"Unfortunately, while implementing the removal of the ``args`` attribute "
+"in Python 3.0 at the PyCon 2007 sprint [#pycon2007-sprint-email]_, it was"
+" discovered that the transition was very painful, especially for C "
+"extension modules.  It was decided that it would be better to deprecate "
+"the ``message`` attribute in Python 2.6 (and remove it in Python 2.7 and "
+"Python 3.0) and consider a more long-term transition strategy in Python "
+"3.0 to remove multiple-argument support in BaseException in preference of"
+" accepting only a single argument.  Thus the introduction of ``message`` "
+"and the original deprecation of ``args`` has been retracted."
+msgstr ""
+
+#: ../../pep-0352.txt:273
+msgid "References"
+msgstr ""
+
+#: ../../pep-0352.txt:275
+msgid ""
+"PEP 348 (Exception Reorganization for Python 3.0) "
+"http://www.python.org/dev/peps/pep-0348/"
+msgstr ""
+
+#: ../../pep-0352.txt:278
+msgid ""
+"python-dev Summary for 2004-08-01 through 2004-08-15 "
+"http://www.python.org/dev/summary/2004-08-01_2004-08-15.html#an-"
+"exception-is-an-exception-unless-it-doesn-t-inherit-from-exception"
+msgstr ""
+
+#: ../../pep-0352.txt:281
+msgid ""
+"SF patch #1104669 (new-style exceptions) "
+"https://bugs.python.org/issue1104669"
+msgstr ""
+
+#: ../../pep-0352.txt:284
+msgid ""
+"python-3000 email (\"How far to go with cleaning up exceptions\") "
+"https://mail.python.org/pipermail/python-3000/2007-March/005911.html"
+msgstr ""
+
+#: ../../pep-0352.txt:289
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0352.txt:291
+msgid "This document has been placed in the public domain."
+msgstr ""
+

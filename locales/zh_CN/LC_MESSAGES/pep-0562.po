@@ -1,0 +1,263 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0562.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0562.rst:1
+msgid "562"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0562.rst:2
+msgid "Module __getattr__ and __dir__"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0562.rst:3
+msgid "Ivan Levkivskyi <levkivskyi@gmail.com>"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0562.rst:4
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0562.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0562.rst:7 ../../pep-0562.rst:9
+msgid "09-Sep-2017"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0562.rst:8
+msgid "3.7"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0562.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0562.rst:10
+msgid "https://mail.python.org/pipermail/python-dev/2017-December/151033.html"
+msgstr ""
+
+#: ../../pep-0562.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0562.rst:16
+msgid ""
+"It is proposed to support ``__getattr__`` and ``__dir__`` function "
+"defined on modules to provide basic customization of module attribute "
+"access."
+msgstr ""
+
+#: ../../pep-0562.rst:22
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0562.rst:24
+msgid ""
+"It is sometimes convenient to customize or otherwise have control over "
+"access to module attributes. A typical example is managing deprecation "
+"warnings. Typical workarounds are assigning ``__class__`` of a module "
+"object to a custom subclass of ``types.ModuleType`` or replacing the "
+"``sys.modules`` item with a custom wrapper instance. It would be "
+"convenient to simplify this procedure by recognizing ``__getattr__`` "
+"defined directly in a module that would act like a normal ``__getattr__``"
+" method, except that it will be defined on module *instances*. For "
+"example::"
+msgstr ""
+
+#: ../../pep-0562.rst:52
+msgid ""
+"Another widespread use case for ``__getattr__`` would be lazy submodule "
+"imports. Consider a simple example::"
+msgstr ""
+
+#: ../../pep-0562.rst:77
+msgid ""
+"There is a related proposal PEP 549 that proposes to support instance "
+"properties for a similar functionality. The difference is this PEP "
+"proposes a faster and simpler mechanism, but provides more basic "
+"customization. An additional motivation for this proposal is that PEP 484"
+" already defines the use of module ``__getattr__`` for this purpose in "
+"Python stub files, see [1]_."
+msgstr ""
+
+#: ../../pep-0562.rst:84
+msgid ""
+"In addition, to allow modifying result of a ``dir()`` call on a module to"
+" show deprecated and other dynamically generated attributes, it is "
+"proposed to support module level ``__dir__`` function. For example::"
+msgstr ""
+
+#: ../../pep-0562.rst:109
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0562.rst:111
+msgid ""
+"The ``__getattr__`` function at the module level should accept one "
+"argument which is the name of an attribute and return the computed value "
+"or raise an ``AttributeError``::"
+msgstr ""
+
+#: ../../pep-0562.rst:117
+msgid ""
+"If an attribute is not found on a module object through the normal lookup"
+" (i.e. ``object.__getattribute__``), then ``__getattr__`` is searched in "
+"the module ``__dict__`` before raising an ``AttributeError``. If found, "
+"it is called with the attribute name and the result is returned. Looking "
+"up a name as a module global will bypass module ``__getattr__``. This is "
+"intentional, otherwise calling ``__getattr__`` for builtins will "
+"significantly harm performance."
+msgstr ""
+
+#: ../../pep-0562.rst:125
+msgid ""
+"The ``__dir__`` function should accept no arguments, and return a list of"
+" strings that represents the names accessible on module::"
+msgstr ""
+
+#: ../../pep-0562.rst:130
+msgid ""
+"If present, this function overrides the standard ``dir()`` search on a "
+"module."
+msgstr ""
+
+#: ../../pep-0562.rst:133
+msgid "The reference implementation for this PEP can be found in [2]_."
+msgstr ""
+
+#: ../../pep-0562.rst:137
+msgid "Backwards compatibility and impact on performance"
+msgstr ""
+
+#: ../../pep-0562.rst:139
+msgid ""
+"This PEP may break code that uses module level (global) names "
+"``__getattr__`` and ``__dir__``.  (But the language reference explicitly "
+"reserves *all* undocumented dunder names, and allows \"breakage without "
+"warning\"; see [3]_.) The performance implications of this PEP are "
+"minimal, since ``__getattr__`` is called only for missing attributes."
+msgstr ""
+
+#: ../../pep-0562.rst:145
+msgid ""
+"Some tools that perform module attributes discovery might not expect "
+"``__getattr__``. This problem is not new however, since it is already "
+"possible to replace a module with a module subclass with overridden "
+"``__getattr__`` and ``__dir__``, but with this PEP such problems can "
+"occur more often."
+msgstr ""
+
+#: ../../pep-0562.rst:152
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-0562.rst:154
+msgid ""
+"Note that the use of module ``__getattr__`` requires care to keep the "
+"referred objects pickleable. For example, the ``__name__`` attribute of a"
+" function should correspond to the name with which it is accessible via "
+"``__getattr__``::"
+msgstr ""
+
+#: ../../pep-0562.rst:168
+msgid ""
+"One should be also careful to avoid recursion as one would do with a "
+"class level ``__getattr__``."
+msgstr ""
+
+#: ../../pep-0562.rst:171
+msgid ""
+"To use a module global with triggering ``__getattr__`` (for example if "
+"one wants to use a lazy loaded submodule) one can access it as::"
+msgstr ""
+
+#: ../../pep-0562.rst:176
+msgid "or as::"
+msgstr ""
+
+#: ../../pep-0562.rst:180
+msgid ""
+"Note that the latter sets the module attribute, thus ``__getattr__`` will"
+" be called only once."
+msgstr ""
+
+#: ../../pep-0562.rst:185
+msgid "References"
+msgstr ""
+
+#: ../../pep-0562.rst:187
+msgid ""
+"PEP 484 section about ``__getattr__`` in stub files "
+"(https://www.python.org/dev/peps/pep-0484/#stub-files)"
+msgstr ""
+
+#: ../../pep-0562.rst:190
+msgid ""
+"The reference implementation "
+"(https://github.com/ilevkivskyi/cpython/pull/3/files)"
+msgstr ""
+
+#: ../../pep-0562.rst:193
+msgid ""
+"Reserved classes of identifiers "
+"(https://docs.python.org/3/reference/lexical_analysis.html#reserved-"
+"classes-of-identifiers)"
+msgstr ""
+
+#: ../../pep-0562.rst:198
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0562.rst:200
+msgid "This document has been placed in the public domain."
+msgstr ""
+

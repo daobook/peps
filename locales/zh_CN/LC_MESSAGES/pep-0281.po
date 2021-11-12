@@ -1,0 +1,220 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0281.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0281.txt:1
+msgid "281"
+msgstr ""
+
+#: ../../pep-0281.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0281.txt:2
+msgid "Loop Counter Iteration with range and xrange"
+msgstr ""
+
+#: ../../pep-0281.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0281.txt:5
+msgid "magnus@hetland.org (Magnus Lie Hetland)"
+msgstr ""
+
+#: ../../pep-0281.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0281.txt:6
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0281.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0281.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0281.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0281.txt:9
+msgid "11-Feb-2002"
+msgstr ""
+
+#: ../../pep-0281.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0281.txt:10
+msgid "2.3"
+msgstr ""
+
+#: ../../pep-0281.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0281.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0281.txt:17
+msgid ""
+"This PEP describes yet another way of exposing the loop counter in for-"
+"loops. It basically proposes that the functionality of the function "
+"``indices()`` from PEP 212 [1]_ be included in the existing functions "
+"``range()`` and ``xrange()``."
+msgstr ""
+
+#: ../../pep-0281.txt:24
+msgid "Pronouncement"
+msgstr ""
+
+#: ../../pep-0281.txt:26
+msgid ""
+"In commenting on PEP 279's ``enumerate()`` function, this PEP's author "
+"offered, \"I'm quite happy to have it make PEP 281 obsolete.\" "
+"Subsequently, PEP 279 was accepted into Python 2.3."
+msgstr ""
+
+#: ../../pep-0281.txt:30
+msgid ""
+"On 17 June 2005, the BDFL concurred with it being obsolete and hereby "
+"rejected the PEP.  For the record, he found some of the examples to "
+"somewhat jarring in appearance::"
+msgstr ""
+
+#: ../../pep-0281.txt:39
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0281.txt:41
+msgid ""
+"It is often desirable to loop over the indices of a sequence.  PEP 212 "
+"describes several ways of doing this, including adding a built-in "
+"function called indices, conceptually defined as::"
+msgstr ""
+
+#: ../../pep-0281.txt:48
+msgid ""
+"On the assumption that adding functionality to an existing built-in "
+"function may be less intrusive than adding a new built-in function, this "
+"PEP proposes adding this functionality to the existing functions "
+"``range()`` and ``xrange()``."
+msgstr ""
+
+#: ../../pep-0281.txt:55
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0281.txt:57
+msgid ""
+"It is proposed that all three arguments to the built-in functions "
+"``range()`` and ``xrange()`` are allowed to be objects with a length "
+"(i.e. objects implementing the ``__len__`` method).  If an argument "
+"cannot be interpreted as an integer (i.e. it has no ``__int__`` method), "
+"its length will be used instead."
+msgstr ""
+
+#: ../../pep-0281.txt:63
+msgid "Examples::"
+msgstr ""
+
+#: ../../pep-0281.txt:83
+msgid "Alternatives"
+msgstr ""
+
+#: ../../pep-0281.txt:85
+msgid ""
+"A natural alternative to the above specification is allowing ``xrange()``"
+" to access its arguments in a lazy manner.  Thus, instead of using their "
+"length explicitly, ``xrange`` can return one index for each element of "
+"the stop argument until the end is reached.  A similar lazy treatment "
+"makes little sense for the start and step arguments since their length "
+"must be calculated before iteration can begin.  (Actually, the length of "
+"the step argument isn't needed until the second element is returned.)"
+msgstr ""
+
+#: ../../pep-0281.txt:94
+msgid ""
+"A pseudo-implementation (using only the stop argument, and assuming that "
+"it is iterable) is::"
+msgstr ""
+
+#: ../../pep-0281.txt:103
+msgid ""
+"Testing whether to use ``int()`` or lazy iteration could be done by "
+"checking for an ``__iter__`` attribute.  (This example assumes the "
+"presence of generators, but could easily have been implemented as a plain"
+" iterator object.)"
+msgstr ""
+
+#: ../../pep-0281.txt:108
+msgid ""
+"It may be questionable whether this feature is truly useful, since one "
+"would not be able to access the elements of the iterable object inside "
+"the for loop through indexing."
+msgstr ""
+
+#: ../../pep-0281.txt:112 ../../pep-0281.txt:122
+msgid "Example::"
+msgstr ""
+
+#: ../../pep-0281.txt:118
+msgid ""
+"A more controversial alternative (to deal with this) would be to let "
+"``range()`` behave like the function ``irange()`` of PEP 212 when "
+"supplied with a sequence."
+msgstr ""
+
+#: ../../pep-0281.txt:131
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0281.txt:133
+msgid ""
+"The proposal could cause backwards incompatibilities if arguments are "
+"used which implement both ``__int__`` and ``__len__`` (or ``__iter__`` in"
+" the case of lazy iteration with ``xrange``).  The author does not "
+"believe that this is a significant problem."
+msgstr ""
+
+#: ../../pep-0281.txt:140
+msgid "References and Footnotes"
+msgstr ""
+
+#: ../../pep-0281.txt:142
+msgid "PEP 212, Loop Counter Iteration http://www.python.org/dev/peps/pep-0212/"
+msgstr ""
+
+#: ../../pep-0281.txt:147
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0281.txt:149
+msgid "This document has been placed in the public domain."
+msgstr ""
+

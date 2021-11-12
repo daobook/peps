@@ -1,0 +1,937 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3143.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3143.txt:1
+msgid "3143"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3143.txt:2
+msgid "Standard daemon process library"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3143.txt:5
+msgid "Ben Finney <ben+python@benfinney.id.au>"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3143.txt:6
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3143.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3143.txt:9
+msgid "26-Jan-2009"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3143.txt:10
+msgid "3.x"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3143.txt:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3143.txt:18
+msgid ""
+"Writing a program to become a well-behaved Unix daemon is somewhat "
+"complex and tricky to get right, yet the steps are largely similar for "
+"any daemon regardless of what else the program may need to do."
+msgstr ""
+
+#: ../../pep-3143.txt:22
+msgid ""
+"This PEP introduces a package to the Python standard library that "
+"provides a simple interface to the task of becoming a daemon process."
+msgstr ""
+
+#: ../../pep-3143.txt:27
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-3143.txt:29
+msgid ""
+"Further exploration of the concepts covered in this PEP has been deferred"
+" for lack of a current champion interested in promoting the goals of the "
+"PEP and collecting and incorporating feedback, and with sufficient "
+"available time to do so effectively."
+msgstr ""
+
+#: ../../pep-3143.txt:36
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-3143.txt:39
+msgid "Example usage"
+msgstr ""
+
+#: ../../pep-3143.txt:41
+msgid "Simple example of direct `DaemonContext` usage::"
+msgstr ""
+
+#: ../../pep-3143.txt:50
+msgid "More complex example usage::"
+msgstr ""
+
+#: ../../pep-3143.txt:91
+msgid "Interface"
+msgstr ""
+
+#: ../../pep-3143.txt:93
+msgid "A new package, `daemon`, is added to the standard library."
+msgstr ""
+
+#: ../../pep-3143.txt:95
+msgid ""
+"A class, `DaemonContext`, is defined to represent the settings and "
+"process context for the program running as a daemon process."
+msgstr ""
+
+#: ../../pep-3143.txt:100
+msgid "``DaemonContext`` objects"
+msgstr ""
+
+#: ../../pep-3143.txt:102
+msgid ""
+"A `DaemonContext` instance represents the behaviour settings and process "
+"context for the program when it becomes a daemon. The behaviour and "
+"environment is customised by setting options on the instance, before "
+"calling the `open` method."
+msgstr ""
+
+#: ../../pep-3143.txt:107
+msgid ""
+"Each option can be passed as a keyword argument to the `DaemonContext` "
+"constructor, or subsequently altered by assigning to an attribute on the "
+"instance at any time prior to calling `open`. That is, for options named "
+"`wibble` and `wubble`, the following invocation::"
+msgstr ""
+
+#: ../../pep-3143.txt:115
+msgid "is equivalent to::"
+msgstr ""
+
+#: ../../pep-3143.txt:122
+msgid "The following options are defined."
+msgstr ""
+
+#: ../../pep-3143.txt:132
+msgid "`files_preserve`"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Default"
+msgstr ""
+
+#: ../../pep-3143.txt:125 ../../pep-3143.txt:135 ../../pep-3143.txt:163
+#: ../../pep-3143.txt:169 ../../pep-3143.txt:238 ../../pep-3143.txt:241
+#: ../../pep-3143.txt:244 ../../pep-3143.txt:264 ../../pep-3143.txt:324
+#: ../../pep-3143.txt:347
+msgid "``None``"
+msgstr ""
+
+#: ../../pep-3143.txt:127
+msgid ""
+"List of files that should *not* be closed when starting the daemon. If "
+"``None``, all open file descriptors will be closed."
+msgstr ""
+
+#: ../../pep-3143.txt:130
+msgid ""
+"Elements of the list are file descriptors (as returned by a file object's"
+" `fileno()` method) or Python `file` objects. Each specifies a file that "
+"is not to be closed during daemon start."
+msgstr ""
+
+#: ../../pep-3143.txt:139
+msgid "`chroot_directory`"
+msgstr ""
+
+#: ../../pep-3143.txt:137
+msgid ""
+"Full path to a directory to set as the effective root directory of the "
+"process. If ``None``, specifies that the root directory is not to be "
+"changed."
+msgstr ""
+
+#: ../../pep-3143.txt:150
+msgid "`working_directory`"
+msgstr ""
+
+#: ../../pep-3143.txt:142
+msgid "``'/'``"
+msgstr ""
+
+#: ../../pep-3143.txt:144
+msgid ""
+"Full path of the working directory to which the process should change on "
+"daemon start."
+msgstr ""
+
+#: ../../pep-3143.txt:147
+msgid ""
+"Since a filesystem cannot be unmounted if a process has its current "
+"working directory on that filesystem, this should either be left at "
+"default or set to a directory that is a sensible “home directory” for the"
+" daemon while it is running."
+msgstr ""
+
+#: ../../pep-3143.txt:160
+msgid "`umask`"
+msgstr ""
+
+#: ../../pep-3143.txt:153
+msgid "``0``"
+msgstr ""
+
+#: ../../pep-3143.txt:155
+msgid ""
+"File access creation mask (“umask”) to set for the process on daemon "
+"start."
+msgstr ""
+
+#: ../../pep-3143.txt:158
+msgid ""
+"Since a process inherits its umask from its parent process, starting the "
+"daemon will reset the umask to this value so that files are created by "
+"the daemon with access modes as it expects."
+msgstr ""
+
+#: ../../pep-3143.txt:166
+msgid "`pidfile`"
+msgstr ""
+
+#: ../../pep-3143.txt:165
+msgid ""
+"Context manager for a PID lock file. When the daemon context opens and "
+"closes, it enters and exits the `pidfile` context manager."
+msgstr ""
+
+#: ../../pep-3143.txt:178
+msgid "`detach_process`"
+msgstr ""
+
+#: ../../pep-3143.txt:171
+msgid ""
+"If ``True``, detach the process context when opening the daemon context; "
+"if ``False``, do not detach."
+msgstr ""
+
+#: ../../pep-3143.txt:174
+msgid ""
+"If unspecified (``None``) during initialisation of the instance, this "
+"will be set to ``True`` by default, and ``False`` only if detaching the "
+"process is determined to be redundant; for example, in the case when the "
+"process was started by `init`, by `initd`, or by `inetd`."
+msgstr ""
+
+#: ../../pep-3143.txt:216
+msgid "`signal_map`"
+msgstr ""
+
+#: ../../pep-3143.txt:181
+msgid "system-dependent"
+msgstr ""
+
+#: ../../pep-3143.txt:183
+msgid "Mapping from operating system signals to callback actions."
+msgstr ""
+
+#: ../../pep-3143.txt:185
+msgid ""
+"The mapping is used when the daemon context opens, and determines the "
+"action for each signal's signal handler:"
+msgstr ""
+
+#: ../../pep-3143.txt:188
+msgid ""
+"A value of ``None`` will ignore the signal (by setting the signal action "
+"to ``signal.SIG_IGN``)."
+msgstr ""
+
+#: ../../pep-3143.txt:191
+msgid ""
+"A string value will be used as the name of an attribute on the "
+"``DaemonContext`` instance. The attribute's value will be used as the "
+"action for the signal handler."
+msgstr ""
+
+#: ../../pep-3143.txt:195
+msgid "Any other value will be used as the action for the signal handler."
+msgstr ""
+
+#: ../../pep-3143.txt:198
+msgid ""
+"The default value depends on which signals are defined on the running "
+"system. Each item from the list below whose signal is actually defined in"
+" the ``signal`` module will appear in the default map:"
+msgstr ""
+
+#: ../../pep-3143.txt:203
+msgid "``signal.SIGTTIN``: ``None``"
+msgstr ""
+
+#: ../../pep-3143.txt:205
+msgid "``signal.SIGTTOU``: ``None``"
+msgstr ""
+
+#: ../../pep-3143.txt:207
+msgid "``signal.SIGTSTP``: ``None``"
+msgstr ""
+
+#: ../../pep-3143.txt:209
+msgid "``signal.SIGTERM``: ``'terminate'``"
+msgstr ""
+
+#: ../../pep-3143.txt:211
+msgid ""
+"Depending on how the program will interact with its child processes, it "
+"may need to specify a signal map that includes the ``signal.SIGCHLD`` "
+"signal (received when a child process exits). See the specific operating "
+"system's documentation for more detail on how to determine what "
+"circumstances dictate the need for signal handlers."
+msgstr ""
+
+#: ../../pep-3143.txt:219
+msgid "`uid`"
+msgstr ""
+
+#: ../../pep-3143.txt:219
+msgid "``os.getuid()``"
+msgstr ""
+
+#: ../../pep-3143.txt:229
+msgid "`gid`"
+msgstr ""
+
+#: ../../pep-3143.txt:222
+msgid "``os.getgid()``"
+msgstr ""
+
+#: ../../pep-3143.txt:224
+msgid ""
+"The user ID (“UID”) value and group ID (“GID”) value to switch the "
+"process to on daemon start."
+msgstr ""
+
+#: ../../pep-3143.txt:227
+msgid ""
+"The default values, the real UID and GID of the process, will relinquish "
+"any effective privilege elevation inherited by the process."
+msgstr ""
+
+#: ../../pep-3143.txt:235
+msgid "`prevent_core`"
+msgstr ""
+
+#: ../../pep-3143.txt:232
+msgid "``True``"
+msgstr ""
+
+#: ../../pep-3143.txt:234
+msgid ""
+"If true, prevents the generation of core files, in order to avoid leaking"
+" sensitive information from daemons run as `root`."
+msgstr ""
+
+#: ../../pep-3143.txt:238
+msgid "`stdin`"
+msgstr ""
+
+#: ../../pep-3143.txt:241
+msgid "`stdout`"
+msgstr ""
+
+#: ../../pep-3143.txt:259
+msgid "`stderr`"
+msgstr ""
+
+#: ../../pep-3143.txt:246
+msgid ""
+"Each of `stdin`, `stdout`, and `stderr` is a file-like object which will "
+"be used as the new file for the standard I/O stream `sys.stdin`, "
+"`sys.stdout`, and `sys.stderr` respectively. The file should therefore be"
+" open, with a minimum of mode 'r' in the case of `stdin`, and mode 'w+' "
+"in the case of `stdout` and `stderr`."
+msgstr ""
+
+#: ../../pep-3143.txt:252
+msgid ""
+"If the object has a `fileno()` method that returns a file descriptor, the"
+" corresponding file will be excluded from being closed during daemon "
+"start (that is, it will be treated as though it were listed in "
+"`files_preserve`)."
+msgstr ""
+
+#: ../../pep-3143.txt:257
+msgid ""
+"If ``None``, the corresponding system stream is re-bound to the file "
+"named by `os.devnull`."
+msgstr ""
+
+#: ../../pep-3143.txt:261
+msgid "The following methods are defined."
+msgstr ""
+
+#: ../../pep-3143.txt:321
+msgid "`open()`"
+msgstr ""
+
+#: ../../pep-3143.txt
+msgid "Return"
+msgstr ""
+
+#: ../../pep-3143.txt:266
+msgid ""
+"Open the daemon context, turning the current program into a daemon "
+"process. This performs the following steps:"
+msgstr ""
+
+#: ../../pep-3143.txt:269
+msgid ""
+"If this instance's `is_open` property is true, return immediately. This "
+"makes it safe to call `open` multiple times on an instance."
+msgstr ""
+
+#: ../../pep-3143.txt:273
+msgid ""
+"If the `prevent_core` attribute is true, set the resource limits for the "
+"process to prevent any core dump from the process."
+msgstr ""
+
+#: ../../pep-3143.txt:276
+msgid ""
+"If the `chroot_directory` attribute is not ``None``, set the effective "
+"root directory of the process to that directory (via `os.chroot`)."
+msgstr ""
+
+#: ../../pep-3143.txt:280
+msgid ""
+"This allows running the daemon process inside a “chroot gaol” as a means "
+"of limiting the system's exposure to rogue behaviour by the process. Note"
+" that the specified directory needs to already be set up for this "
+"purpose."
+msgstr ""
+
+#: ../../pep-3143.txt:285
+msgid "Set the process UID and GID to the `uid` and `gid` attribute values."
+msgstr ""
+
+#: ../../pep-3143.txt:288
+msgid ""
+"Close all open file descriptors. This excludes those listed in the "
+"`files_preserve` attribute, and those that correspond to the `stdin`, "
+"`stdout`, or `stderr` attributes."
+msgstr ""
+
+#: ../../pep-3143.txt:292
+msgid ""
+"Change current working directory to the path specified by the "
+"`working_directory` attribute."
+msgstr ""
+
+#: ../../pep-3143.txt:295
+msgid ""
+"Reset the file access creation mask to the value specified by the `umask`"
+" attribute."
+msgstr ""
+
+#: ../../pep-3143.txt:298
+msgid ""
+"If the `detach_process` option is true, detach the current process into "
+"its own process group, and disassociate from any controlling terminal."
+msgstr ""
+
+#: ../../pep-3143.txt:302
+msgid "Set signal handlers as specified by the `signal_map` attribute."
+msgstr ""
+
+#: ../../pep-3143.txt:304
+msgid ""
+"If any of the attributes `stdin`, `stdout`, `stderr` are not ``None``, "
+"bind the system streams `sys.stdin`, `sys.stdout`, and/or `sys.stderr` to"
+" the files represented by the corresponding attributes. Where the "
+"attribute has a file descriptor, the descriptor is duplicated (instead of"
+" re-binding the name)."
+msgstr ""
+
+#: ../../pep-3143.txt:311
+msgid "If the `pidfile` attribute is not ``None``, enter its context manager."
+msgstr ""
+
+#: ../../pep-3143.txt:314
+msgid ""
+"Mark this instance as open (for the purpose of future `open` and `close` "
+"calls)."
+msgstr ""
+
+#: ../../pep-3143.txt:317
+msgid "Register the `close` method to be called during Python's exit processing."
+msgstr ""
+
+#: ../../pep-3143.txt:320
+msgid "When the function returns, the running program is a daemon process."
+msgstr ""
+
+#: ../../pep-3143.txt:336
+msgid "`close()`"
+msgstr ""
+
+#: ../../pep-3143.txt:326
+msgid "Close the daemon context. This performs the following steps:"
+msgstr ""
+
+#: ../../pep-3143.txt:328
+msgid ""
+"If this instance's `is_open` property is false, return immediately. This "
+"makes it safe to call `close` multiple times on an instance."
+msgstr ""
+
+#: ../../pep-3143.txt:332
+msgid "If the `pidfile` attribute is not ``None``, exit its context manager."
+msgstr ""
+
+#: ../../pep-3143.txt:335
+msgid ""
+"Mark this instance as closed (for the purpose of future `open` and "
+"`close` calls)."
+msgstr ""
+
+#: ../../pep-3143.txt:344
+msgid "`is_open`"
+msgstr ""
+
+#: ../../pep-3143.txt:339
+msgid "``True`` if the instance is open, ``False`` otherwise."
+msgstr ""
+
+#: ../../pep-3143.txt:341
+msgid ""
+"This property exposes the state indicating whether the instance is "
+"currently open. It is ``True`` if the instance's `open` method has been "
+"called and the `close` method has not subsequently been called."
+msgstr ""
+
+#: ../../pep-3143.txt:352
+msgid "`terminate(signal_number, stack_frame)`"
+msgstr ""
+
+#: ../../pep-3143.txt:349
+msgid ""
+"Signal handler for the ``signal.SIGTERM`` signal. Performs the following "
+"step:"
+msgstr ""
+
+#: ../../pep-3143.txt:352
+msgid "Raise a ``SystemExit`` exception explaining the signal."
+msgstr ""
+
+#: ../../pep-3143.txt:354
+msgid ""
+"The class also implements the context manager protocol via ``__enter__`` "
+"and ``__exit__`` methods."
+msgstr ""
+
+#: ../../pep-3143.txt:360
+msgid "`__enter__()`"
+msgstr ""
+
+#: ../../pep-3143.txt:358
+msgid "The ``DaemonContext`` instance"
+msgstr ""
+
+#: ../../pep-3143.txt:360
+msgid "Call the instance's `open()` method, then return the instance."
+msgstr ""
+
+#: ../../pep-3143.txt:368
+msgid "`__exit__(exc_type, exc_value, exc_traceback)`"
+msgstr ""
+
+#: ../../pep-3143.txt:363
+msgid "``True`` or ``False`` as defined by the context manager protocol"
+msgstr ""
+
+#: ../../pep-3143.txt:366
+msgid ""
+"Call the instance's `close()` method, then return ``True`` if the "
+"exception was handled or ``False`` if it was not."
+msgstr ""
+
+#: ../../pep-3143.txt:372
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-3143.txt:374
+msgid ""
+"The majority of programs written to be Unix daemons either implement "
+"behaviour very similar to that in the `specification`_, or are poorly-"
+"behaved daemons by the `correct daemon behaviour`_."
+msgstr ""
+
+#: ../../pep-3143.txt:378
+msgid ""
+"Since these steps should be much the same in most implementations but are"
+" very particular and easy to omit or implement incorrectly, they are a "
+"prime target for a standard well-tested implementation in the standard "
+"library."
+msgstr ""
+
+#: ../../pep-3143.txt:386
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3143.txt:389
+msgid "Correct daemon behaviour"
+msgstr ""
+
+#: ../../pep-3143.txt:391
+msgid ""
+"According to Stevens in [stevens]_ §2.6, a program should perform the "
+"following steps to become a Unix daemon process."
+msgstr ""
+
+#: ../../pep-3143.txt:394
+msgid "Close all open file descriptors."
+msgstr ""
+
+#: ../../pep-3143.txt:396
+msgid "Change current working directory."
+msgstr ""
+
+#: ../../pep-3143.txt:398
+msgid "Reset the file access creation mask."
+msgstr ""
+
+#: ../../pep-3143.txt:400
+msgid "Run in the background."
+msgstr ""
+
+#: ../../pep-3143.txt:402
+msgid "Disassociate from process group."
+msgstr ""
+
+#: ../../pep-3143.txt:404
+msgid "Ignore terminal I/O signals."
+msgstr ""
+
+#: ../../pep-3143.txt:406
+msgid "Disassociate from control terminal."
+msgstr ""
+
+#: ../../pep-3143.txt:408
+msgid "Don't reacquire a control terminal."
+msgstr ""
+
+#: ../../pep-3143.txt:410
+msgid "Correctly handle the following circumstances:"
+msgstr ""
+
+#: ../../pep-3143.txt:412
+msgid "Started by System V `init` process."
+msgstr ""
+
+#: ../../pep-3143.txt:414
+msgid "Daemon termination by ``SIGTERM`` signal."
+msgstr ""
+
+#: ../../pep-3143.txt:416
+msgid "Children generate ``SIGCLD`` signal."
+msgstr ""
+
+#: ../../pep-3143.txt:418
+msgid ""
+"The `daemon` tool [slack-daemon]_ lists (in its summary of features) "
+"behaviour that should be performed when turning a program into a well-"
+"behaved Unix daemon process. It differs from this PEP's intent in that it"
+" invokes a *separate* program as a daemon process. The following features"
+" are appropriate for a daemon that starts itself once the program is "
+"already running:"
+msgstr ""
+
+#: ../../pep-3143.txt:425
+msgid "Sets up the correct process context for a daemon."
+msgstr ""
+
+#: ../../pep-3143.txt:427
+msgid "Behaves sensibly when started by `initd(8)` or `inetd(8)`."
+msgstr ""
+
+#: ../../pep-3143.txt:429
+msgid ""
+"Revokes any suid or sgid privileges to reduce security risks in case "
+"daemon is incorrectly installed with special privileges."
+msgstr ""
+
+#: ../../pep-3143.txt:432
+msgid ""
+"Prevents the generation of core files to prevent leaking sensitive "
+"information from daemons run as root (optional)."
+msgstr ""
+
+#: ../../pep-3143.txt:435
+msgid ""
+"Names the daemon by creating and locking a PID file to guarantee that "
+"only one daemon with the given name can execute at any given time "
+"(optional)."
+msgstr ""
+
+#: ../../pep-3143.txt:439
+msgid ""
+"Sets the user and group under which to run the daemon (optional, root "
+"only)."
+msgstr ""
+
+#: ../../pep-3143.txt:442
+msgid "Creates a chroot gaol (optional, root only)."
+msgstr ""
+
+#: ../../pep-3143.txt:444
+msgid ""
+"Captures the daemon's stdout and stderr and directs them to syslog "
+"(optional)."
+msgstr ""
+
+#: ../../pep-3143.txt:448
+msgid "A daemon is not a service"
+msgstr ""
+
+#: ../../pep-3143.txt:450
+msgid ""
+"This PEP addresses only Unix-style daemons, for which the above correct "
+"behaviour is relevant, as opposed to comparable behaviours on other "
+"operating systems."
+msgstr ""
+
+#: ../../pep-3143.txt:454
+msgid ""
+"There is a related concept in many systems, called a “service”. A service"
+" differs from the model in this PEP, in that rather than having the "
+"*current* program continue to run as a daemon process, a service starts "
+"an *additional* process to run in the background, and the current process"
+" communicates with that additional process via some defined channels."
+msgstr ""
+
+#: ../../pep-3143.txt:461
+msgid ""
+"The Unix-style daemon model in this PEP can be used, among other things, "
+"to implement the background-process part of a service; but this PEP does "
+"not address the other aspects of setting up and managing a service."
+msgstr ""
+
+#: ../../pep-3143.txt:469
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-3143.txt:471
+msgid "The `python-daemon` package [python-daemon]_."
+msgstr ""
+
+#: ../../pep-3143.txt:474
+msgid "Other daemon implementations"
+msgstr ""
+
+#: ../../pep-3143.txt:476
+msgid ""
+"Prior to this PEP, several existing third-party Python libraries or tools"
+" implemented some of this PEP's `correct daemon behaviour`_."
+msgstr ""
+
+#: ../../pep-3143.txt:479
+msgid ""
+"The `reference implementation`_ is a fairly direct successor from the "
+"following implementations:"
+msgstr ""
+
+#: ../../pep-3143.txt:482
+msgid ""
+"Many good ideas were contributed by the community to Python cookbook "
+"recipes #66012 [cookbook-66012]_ and #278731 [cookbook-278731]_."
+msgstr ""
+
+#: ../../pep-3143.txt:485
+msgid ""
+"The `bda.daemon` library [bda.daemon]_ is an implementation of "
+"[cookbook-66012]_. It is the predecessor of [python-daemon]_."
+msgstr ""
+
+#: ../../pep-3143.txt:488
+msgid "Other Python daemon implementations that differ from this PEP:"
+msgstr ""
+
+#: ../../pep-3143.txt:490
+msgid ""
+"The `zdaemon` tool [zdaemon]_ was written for the Zope project. Like "
+"[slack-daemon]_, it differs from this specification because it is used to"
+" run another program as a daemon process."
+msgstr ""
+
+#: ../../pep-3143.txt:494
+msgid ""
+"The Python library `daemon` [clapper-daemon]_ is (according to its "
+"homepage) no longer maintained. As of version 1.0.1, it implements the "
+"basic steps from [stevens]_."
+msgstr ""
+
+#: ../../pep-3143.txt:498
+msgid ""
+"The `daemonize` library [seutter-daemonize]_ also implements the basic "
+"steps from [stevens]_."
+msgstr ""
+
+#: ../../pep-3143.txt:501
+msgid ""
+"Ray Burr's `daemon.py` module [burr-daemon]_ provides the [stevens]_ "
+"procedure as well as PID file handling and redirection of output to "
+"syslog."
+msgstr ""
+
+#: ../../pep-3143.txt:505
+msgid ""
+"Twisted [twisted]_ includes, perhaps unsurprisingly, an implementation of"
+" a process daemonisation API that is integrated with the rest of the "
+"Twisted framework; it differs significantly from the API in this PEP."
+msgstr ""
+
+#: ../../pep-3143.txt:510
+msgid ""
+"The Python `initd` library [dagitses-initd]_, which uses [clapper-"
+"daemon]_, implements an equivalent of Unix `initd(8)` for controlling a "
+"daemon process."
+msgstr ""
+
+#: ../../pep-3143.txt:517
+msgid "References"
+msgstr ""
+
+#: ../../pep-3143.txt:521
+msgid "`Unix Network Programming`, W. Richard Stevens, 1994 Prentice Hall."
+msgstr ""
+
+#: ../../pep-3143.txt:526
+msgid ""
+"The (non-Python) “libslack” implementation of a `daemon` tool "
+"`<http://www.libslack.org/daemon/>`_ by “raf” <raf@raf.org>."
+msgstr ""
+
+#: ../../pep-3143.txt:531
+msgid ""
+"The `python-daemon` library `<http://pypi.python.org/pypi/python-"
+"daemon/>`_ by Ben Finney et al."
+msgstr ""
+
+#: ../../pep-3143.txt:537
+msgid ""
+"Python Cookbook recipe 66012, “Fork a daemon process on Unix” "
+"`<http://code.activestate.com/recipes/66012/>`_."
+msgstr ""
+
+#: ../../pep-3143.txt:542
+msgid ""
+"Python Cookbook recipe 278731, “Creating a daemon the Python way” "
+"`<http://code.activestate.com/recipes/278731/>`_."
+msgstr ""
+
+#: ../../pep-3143.txt:547
+msgid ""
+"The `bda.daemon` library `<http://pypi.python.org/pypi/bda.daemon/>`_ by "
+"Robert Niederreiter et al."
+msgstr ""
+
+#: ../../pep-3143.txt:553
+msgid ""
+"The `zdaemon` tool `<http://pypi.python.org/pypi/zdaemon/>`_ by Guido van"
+" Rossum et al."
+msgstr ""
+
+#: ../../pep-3143.txt:558
+msgid ""
+"The `daemon` library `<http://pypi.python.org/pypi/daemon/>`_ by Brian "
+"Clapper."
+msgstr ""
+
+#: ../../pep-3143.txt:563
+msgid ""
+"The `daemonize` library `<http://daemonize.sourceforge.net/>`_ by Jerry "
+"Seutter."
+msgstr ""
+
+#: ../../pep-3143.txt:568
+msgid ""
+"The `daemon.py` module `<http://www.nightmare.com/~ryb/code/daemon.py>`_ "
+"by Ray Burr."
+msgstr ""
+
+#: ../../pep-3143.txt:573
+msgid ""
+"The `Twisted` application framework "
+"`<http://pypi.python.org/pypi/Twisted/>`_ by Glyph Lefkowitz et al."
+msgstr ""
+
+#: ../../pep-3143.txt:579
+msgid ""
+"The Python `initd` library `<http://pypi.python.org/pypi/initd/>`_ by "
+"Michael Andreas Dagitses."
+msgstr ""
+
+#: ../../pep-3143.txt:585
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3143.txt:587
+msgid ""
+"This work is hereby placed in the public domain. To the extent that "
+"placing a work in the public domain is not legally possible, the "
+"copyright holder hereby grants to all recipients of this work all rights "
+"and freedoms that would otherwise be restricted by copyright."
+msgstr ""
+

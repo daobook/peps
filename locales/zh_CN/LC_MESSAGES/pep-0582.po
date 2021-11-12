@@ -1,0 +1,320 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0582.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0582.rst:1
+msgid "582"
+msgstr ""
+
+#: ../../pep-0582.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0582.rst:2
+msgid "Python local packages directory"
+msgstr ""
+
+#: ../../pep-0582.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0582.rst:5
+msgid ""
+"Kushal Das <mail@kushaldas.in>, Steve Dower <steve.dower@python.org>, "
+"Donald Stufft <donald@stufft.io>, Nick Coghlan <ncoghlan@gmail.com>"
+msgstr ""
+
+#: ../../pep-0582.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0582.rst:7
+msgid "https://discuss.python.org/t/pep-582-python-local-packages-directory/963/"
+msgstr ""
+
+#: ../../pep-0582.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0582.rst:8
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0582.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0582.rst:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0582.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0582.rst:11
+msgid "16-May-2018"
+msgstr ""
+
+#: ../../pep-0582.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0582.rst:12
+msgid "3.8"
+msgstr ""
+
+#: ../../pep-0582.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0582.rst:18
+msgid ""
+"This PEP proposes to add to Python a mechanism to automatically recognize"
+" a ``__pypackages__`` directory and prefer importing packages installed "
+"in this location over user or global site-packages. This will avoid the "
+"steps to create, activate or deactivate \"virtual environments\". Python "
+"will use the ``__pypackages__`` from the base directory of the script "
+"when present."
+msgstr ""
+
+#: ../../pep-0582.rst:27
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0582.rst:29
+msgid ""
+"Python virtual environments have become an essential part of development "
+"and teaching workflow in the community, but at the same time, they create"
+" a barrier to entry for many. The following are a few of the issues "
+"people run into while being introduced to Python (or programming for the "
+"first time)."
+msgstr ""
+
+#: ../../pep-0582.rst:34
+msgid ""
+"How virtual environments work is a lot of information for anyone new. It "
+"takes a lot of extra time and effort to explain them."
+msgstr ""
+
+#: ../../pep-0582.rst:37
+msgid ""
+"Different platforms and shell environments require different sets of "
+"commands to activate the virtual environments. Any workshop or teaching "
+"environment with people coming with different operating systems installed"
+" on their laptops create a lot of confusion among the participants."
+msgstr ""
+
+#: ../../pep-0582.rst:42
+msgid ""
+"Virtual environments need to be activated on each opened terminal. If "
+"someone creates/opens a new terminal, that by default does not get the "
+"same environment as in a previous terminal with virtual environment "
+"activated."
+msgstr ""
+
+#: ../../pep-0582.rst:48
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0582.rst:50
+msgid ""
+"When the Python binary is executed, it attempts to determine its prefix "
+"(as stored in ``sys.prefix``), which is then used to find the standard "
+"library and other key files, and by the ``site`` module to determine the "
+"location of the ``site-package`` directories.  Currently the prefix is "
+"found -- assuming ``PYTHONHOME`` is not set -- by first walking up the "
+"filesystem tree looking for a marker file (``os.py``) that signifies the "
+"presence of the standard library, and if none is found, falling back to "
+"the build-time prefix hard coded in the binary. The result of this "
+"process is the contents of ``sys.path`` - a list of locations that the "
+"Python import system will search for modules."
+msgstr ""
+
+#: ../../pep-0582.rst:60
+msgid ""
+"This PEP proposes to add a new step in this process. If a "
+"``__pypackages__`` directory is found in the current working directory, "
+"then it will be included in ``sys.path`` after the current working "
+"directory and just before the system site-packages. This way, if the "
+"Python executable starts in the given project directory, it will "
+"automatically find all the dependencies inside of ``__pypackages__``."
+msgstr ""
+
+#: ../../pep-0582.rst:67
+msgid ""
+"In case of Python scripts, Python will try to find ``__pypackages__`` in "
+"the same directory as the script. If found (along with the current Python"
+" version directory inside), then it will be used, otherwise Python will "
+"behave as it does currently."
+msgstr ""
+
+#: ../../pep-0582.rst:72
+msgid ""
+"If any package management tool finds the same ``__pypackages__`` "
+"directory in the current working directory, it will install any packages "
+"there and also create it if required based on Python version."
+msgstr ""
+
+#: ../../pep-0582.rst:76
+msgid ""
+"Projects that use a source management system can include a "
+"``__pypackages__`` directory (empty or with e.g. a file like "
+"``.gitignore``). After doing a fresh check out the source code, a tool "
+"like ``pip`` can be used to install the required dependencies directly "
+"into this directory."
+msgstr ""
+
+#: ../../pep-0582.rst:82
+msgid "Example"
+msgstr ""
+
+#: ../../pep-0582.rst:84
+msgid ""
+"The following shows an example project directory structure, and different"
+" ways the Python executable and any script will behave."
+msgstr ""
+
+#: ../../pep-0582.rst:115
+msgid ""
+"We have a project directory called ``foo`` and it has a "
+"``__pypackages__`` inside of it. We have ``bottle`` installed in that "
+"``__pypackages__/3.8/lib``, and have a ``myscript.py`` file inside of the"
+" project directory. We have used whatever tool we generally use to "
+"install ``bottle`` in that location."
+msgstr ""
+
+#: ../../pep-0582.rst:121
+msgid ""
+"For invoking a script, Python will try to find a ``__pypackages__`` "
+"inside of the directory that the script resides[1]_, ``/usr/bin``.  The "
+"same will happen in case of the last example, where we are executing "
+"``/usr/bin/ansible`` from inside of the ``foo`` directory. In both cases,"
+" it will **not** use the ``__pypackages__`` in the current working "
+"directory."
+msgstr ""
+
+#: ../../pep-0582.rst:127
+msgid ""
+"Similarly, if we invoke ``myscript.py`` from the first example, it will "
+"use the ``__pypackages__`` directory that was in the ``foo`` directory."
+msgstr ""
+
+#: ../../pep-0582.rst:130
+msgid ""
+"If we go inside of the ``foo`` directory and start the Python executable "
+"(the interpreter), it will find the ``__pypackages__`` directory inside "
+"of the current working directory and use it in the ``sys.path``. The same"
+" happens if we try to use the ``-m`` and use a module. In our example, "
+"``bottle`` module will be found inside of the ``__pypackages__`` "
+"directory."
+msgstr ""
+
+#: ../../pep-0582.rst:136
+msgid ""
+"The above two examples are only cases where ``__pypackages__`` from "
+"current working directory is used."
+msgstr ""
+
+#: ../../pep-0582.rst:139
+msgid ""
+"In another example scenario, a trainer of a Python class can say \"Today "
+"we are going to learn how to use Twisted! To start, please checkout our "
+"example project, go to that directory, and then run ``python3 -m pip "
+"install twisted``.\""
+msgstr ""
+
+#: ../../pep-0582.rst:143
+msgid ""
+"That will install Twisted into a directory separate from ``python3``. "
+"There's no need to discuss virtual environments, global versus user "
+"installs, etc. as the install will be local by default. The trainer can "
+"then just keep telling them to use ``python3`` without any activation "
+"step, etc."
+msgstr ""
+
+#: ../../pep-0582.rst:154
+msgid "Security Considerations"
+msgstr ""
+
+#: ../../pep-0582.rst:156
+msgid ""
+"While executing a Python script, it will not consider the "
+"``__pypackages__`` in the current directory, instead if there is a "
+"``__pypackages__`` directory in the same path of the script, that will be"
+" used."
+msgstr ""
+
+#: ../../pep-0582.rst:160
+msgid ""
+"For example, if we execute ``python /usr/share/myproject/fancy.py`` from "
+"the ``/tmp`` directory and  if there is a ``__pypackages__`` directory "
+"inside of ``/usr/share/myproject/`` directory, it will be used. Any "
+"potential ``__pypackages__`` directory in ``/tmp`` will be ignored."
+msgstr ""
+
+#: ../../pep-0582.rst:167
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0582.rst:169
+msgid "This does not affect any older version of Python implementation."
+msgstr ""
+
+#: ../../pep-0582.rst:172
+msgid "Impact on other Python implementations"
+msgstr ""
+
+#: ../../pep-0582.rst:174
+msgid ""
+"Other Python implementations will need to replicate the new behavior of "
+"the interpreter bootstrap, including locating the ``__pypackages__`` "
+"directory and adding it the ``sys.path`` just before site packages, if it"
+" is present."
+msgstr ""
+
+#: ../../pep-0582.rst:180
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0582.rst:182
+msgid ""
+"`Here <https://github.com/kushaldas/cpython/tree/pypackages>`_ is a PoC "
+"implementation (in the ``pypackages`` branch)."
+msgstr ""
+
+#: ../../pep-0582.rst:187
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0582.rst:189
+msgid "``__pylocal__`` and ``python_modules``."
+msgstr ""
+
+#: ../../pep-0582.rst:193
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0582.rst:195
+msgid "This document has been placed in the public domain."
+msgstr ""
+

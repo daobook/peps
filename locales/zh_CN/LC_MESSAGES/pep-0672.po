@@ -1,0 +1,628 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0672.rst
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0672.rst:1
+msgid "672"
+msgstr ""
+
+#: ../../pep-0672.rst
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0672.rst:2
+msgid "Unicode-related Security Considerations for Python"
+msgstr ""
+
+#: ../../pep-0672.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0672.rst:3
+msgid "Petr Viktorin <encukou@gmail.com>"
+msgstr ""
+
+#: ../../pep-0672.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0672.rst:4
+msgid "Active"
+msgstr ""
+
+#: ../../pep-0672.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0672.rst:5
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0672.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0672.rst:7 ../../pep-0672.rst:8
+msgid "01-Nov-2021"
+msgstr ""
+
+#: ../../pep-0672.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0672.rst:11
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0672.rst:13
+msgid ""
+"This document explains possible ways to misuse Unicode to write Python "
+"programs that appear to do something else than they actually do."
+msgstr ""
+
+#: ../../pep-0672.rst:16
+msgid "This document does not give any recommendations and solutions."
+msgstr ""
+
+#: ../../pep-0672.rst:20
+msgid "Introduction"
+msgstr ""
+
+#: ../../pep-0672.rst:22
+msgid ""
+"`Unicode`_ is a system for handling all kinds of written language. It "
+"aims to allow any character from any human language to be used. Python "
+"code may consist of almost all valid Unicode characters. While this "
+"allows programmers from all around the world to express themselves, it "
+"also allows writing code that is potentially confusing to readers."
+msgstr ""
+
+#: ../../pep-0672.rst:28
+msgid ""
+"It is possible to misuse Python's Unicode-related features to write code "
+"that *appears* to do something else than what it does. Evildoers could "
+"take advantage of this to trick code reviewers into accepting malicious "
+"code."
+msgstr ""
+
+#: ../../pep-0672.rst:33
+msgid ""
+"The possible issues generally can't be solved in Python itself without "
+"excessive restrictions of the language. They should be solved in code "
+"edirors and review tools (such as *diff* displays), by enforcing project-"
+"specific policies, and by raising awareness of individual programmers."
+msgstr ""
+
+#: ../../pep-0672.rst:39
+msgid ""
+"This document purposefully does not give any solutions or "
+"recommendations: it is rather a list of things to keep in mind."
+msgstr ""
+
+#: ../../pep-0672.rst:42
+msgid ""
+"This document is specific to Python. For general security considerations "
+"in Unicode text, see [tr36]_ and [tr39]_."
+msgstr ""
+
+#: ../../pep-0672.rst:47
+msgid "Acknowledgement"
+msgstr ""
+
+#: ../../pep-0672.rst:49
+msgid ""
+"Investigation for this document was prompted by `CVE-2021-42574`_, "
+"*Trojan Source Attacks*, reported by Nicholas Boucher and Ross Anderson, "
+"which focuses on Bidirectional override characters and homoglyphs in a "
+"variety of programming languages."
+msgstr ""
+
+#: ../../pep-0672.rst:56
+msgid "Confusing Features"
+msgstr ""
+
+#: ../../pep-0672.rst:58
+msgid ""
+"This section lists some Unicode-related features that can be surprising "
+"or misusable."
+msgstr ""
+
+#: ../../pep-0672.rst:63
+msgid "ASCII-only Considerations"
+msgstr ""
+
+#: ../../pep-0672.rst:65
+msgid ""
+"ASCII is a subset of Unicode, consisting of the most common symbols, "
+"numbers, Latin letters and control characters."
+msgstr ""
+
+#: ../../pep-0672.rst:68
+msgid ""
+"While issues with the ASCII character set are generally well understood, "
+"the're presented here to help better understanding of the non-ASCII "
+"cases."
+msgstr ""
+
+#: ../../pep-0672.rst:72
+msgid "Confusables and Typos"
+msgstr ""
+
+#: ../../pep-0672.rst:74
+msgid ""
+"Some characters look alike. Before the age of computers, many mechanical "
+"typewriters lacked the keys for the digits ``0`` and ``1``: users typed "
+"``O`` (capital o) and ``l`` (lowercase L) instead. Human readers could "
+"tell them apart by context only. In programming languages, however, "
+"distinction between digits and letters is critical -- and most fonts "
+"designed for programmers make it easy to tell them apart."
+msgstr ""
+
+#: ../../pep-0672.rst:82
+msgid ""
+"Similarly, in fonts designed for human languages, the uppercase “I” and "
+"lowercase “l” can look similar. Or the letters “rn” may be virtually "
+"indistinguishable from the single letter “m”. Again, programmers' fonts "
+"make these pairs of *confusables* noticeably different."
+msgstr ""
+
+#: ../../pep-0672.rst:88
+msgid ""
+"However, what is “noticeably” different always depends on the context. "
+"Humans tend to ignore details in longer identifiers: the variable name "
+"``accessibi1ity_options`` can still look indistinguishable from "
+"``accessibility_options``, while they are distinct for the compiler. The "
+"same can be said for plain typos: most humans will not notice the typo in"
+" ``responsbility_chain_delegate``."
+msgstr ""
+
+#: ../../pep-0672.rst:96
+msgid "Control Characters"
+msgstr ""
+
+#: ../../pep-0672.rst:98
+msgid ""
+"Python generally considers all ``CR`` (``\\r``), ``LF`` (``\\n``), and "
+"``CR-LF`` pairs (``\\r\\n``) as an end of line characters. Most code "
+"editors do as well, but there are editors that display “non-native” line "
+"endings as unknown characters (or nothing at all), rather than ending the"
+" line, displaying this example::"
+msgstr ""
+
+#: ../../pep-0672.rst:107
+msgid "as a harmless comment like::"
+msgstr ""
+
+#: ../../pep-0672.rst:111
+msgid ""
+"CPython may treat the control character NUL (``\\0``) as end of input, "
+"but many editors simply skip it, possibly showing code that Python will "
+"not run as a regular part of a file."
+msgstr ""
+
+#: ../../pep-0672.rst:115
+msgid ""
+"Some characters can be used to hide/overwrite other characters when "
+"source is listed in common terminals. For example:"
+msgstr ""
+
+#: ../../pep-0672.rst:118
+msgid ""
+"BS (``\\b``, Backspace) moves the cursor back, so the character after it "
+"will overwrite the character before."
+msgstr ""
+
+#: ../../pep-0672.rst:120
+msgid ""
+"CR (``\\r``, carriage return) moves the cursor to the start of line, "
+"subsequent characters overwrite the start of the line."
+msgstr ""
+
+#: ../../pep-0672.rst:122
+msgid ""
+"SUB (``\\x1A``, Ctrl+Z) means “End of text” on Windows. Some programs "
+"(such as ``type``) ignore the rest of the file after it."
+msgstr ""
+
+#: ../../pep-0672.rst:124
+msgid ""
+"ESC (``\\x1B``) commonly initiates escape codes which allow arbitrary "
+"control of the terminal."
+msgstr ""
+
+#: ../../pep-0672.rst:129
+msgid "Confusable Characters in Identifiers"
+msgstr ""
+
+#: ../../pep-0672.rst:131
+msgid ""
+"Python is not limited to ASCII. It allows characters of all scripts – "
+"Latin letters to ancient Egyptian hieroglyphs – in identifiers (such as "
+"variable names). See :pep:`3131` for details and rationale. Only “letters"
+" and numbers” are allowed, so while ``γάτα`` is a valid Python "
+"identifier, ``🐱`` is not.  (See `Identifiers and keywords`_ for details.)"
+msgstr ""
+
+#: ../../pep-0672.rst:138
+msgid "Non-printing control characters are also not allowed in identifiers."
+msgstr ""
+
+#: ../../pep-0672.rst:140
+msgid ""
+"However, within the allowed set there is a large number of “confusables”."
+" For example, the uppercase versions of the Latin ``b``, Greek ``β`` "
+"(Beta), and Cyrillic ``в`` (Ve) often look identical: ``B``, ``Β`` and "
+"``В``, respectively."
+msgstr ""
+
+#: ../../pep-0672.rst:144
+msgid ""
+"This allows identifiers that look the same to humans, but not to Python. "
+"For example, all of the following are distinct identifiers:"
+msgstr ""
+
+#: ../../pep-0672.rst:147
+msgid "``scope`` (Latin, ASCII-only)"
+msgstr ""
+
+#: ../../pep-0672.rst:148
+msgid "``scоpe`` (wih a Cyrillic ``о``)"
+msgstr ""
+
+#: ../../pep-0672.rst:149
+msgid "``scοpe`` (with a Greek ``ο``)"
+msgstr ""
+
+#: ../../pep-0672.rst:150
+msgid "``ѕсоре`` (all Cyrillic letters)"
+msgstr ""
+
+#: ../../pep-0672.rst:152
+msgid "Additionally, some letters can look like non-letters:"
+msgstr ""
+
+#: ../../pep-0672.rst:154
+msgid ""
+"The letter for the Hawaiian *ʻokina* looks like an apostrophe; "
+"``ʻHelloʻ`` is a Python identifier, not a string."
+msgstr ""
+
+#: ../../pep-0672.rst:156
+msgid ""
+"The East Asian word for *ten* looks like a plus sign, so ``十= 10`` is a "
+"complete Python statement. (The “十” is a word: “ten” rather than “10”.)"
+msgstr ""
+
+#: ../../pep-0672.rst:162
+msgid ""
+"The converse also applies – some symbols look like letters – but since "
+"Python does not allow arbitrary symbols in identifiers, this is not an "
+"issue."
+msgstr ""
+
+#: ../../pep-0672.rst:168
+msgid "Confusable  Digits"
+msgstr ""
+
+#: ../../pep-0672.rst:170
+msgid ""
+"Numeric literals in Python only use the ASCII digits 0-9 (and non-digits "
+"such as ``.`` or ``e``)."
+msgstr ""
+
+#: ../../pep-0672.rst:173
+msgid ""
+"However, when numbers are converted from strings, such as in the ``int`` "
+"and ``float`` constructors or by the ``str.format`` method, any decimal "
+"digit can be used. For example ``߅`` (``NKO DIGIT FIVE``) or ``௫`` "
+"(``TAMIL DIGIT FIVE``) work as the digit ``5``."
+msgstr ""
+
+#: ../../pep-0672.rst:178
+msgid ""
+"Some scripts include digits that look similar to ASCII ones, but have a "
+"different value. For example::"
+msgstr ""
+
+#: ../../pep-0672.rst:188
+msgid "Bidirectional Text"
+msgstr ""
+
+#: ../../pep-0672.rst:190
+msgid ""
+"Some scripts, such as Hebrew or Arabic, are written right-to-left. "
+"Phrases in such scripts interact with nearby text in ways that can be "
+"surprising to people who aren't familiar with these writing systems and "
+"their computer representation."
+msgstr ""
+
+#: ../../pep-0672.rst:195
+msgid ""
+"The exact process is complicated, and explained in Unicode Standard Annex"
+" #9, `Unicode Bidirectional Algorithm`_."
+msgstr ""
+
+#: ../../pep-0672.rst:198
+msgid ""
+"Consider the following code, which assigns a 100-character string to the "
+"variable ``s``::"
+msgstr ""
+
+#: ../../pep-0672.rst:203
+msgid "When the ``X`` is replaced by the Hebrew letter ``א``, the line becomes::"
+msgstr ""
+
+#: ../../pep-0672.rst:207
+msgid ""
+"This command still assigns a 100-character string to ``s``, but when "
+"displayed as general text following the Bidirectional Algorithm (e.g. in "
+"a browser), it appears as ``s = \"א\"`` followed by a comment."
+msgstr ""
+
+#: ../../pep-0672.rst:211
+msgid "Other surprising examples include:"
+msgstr ""
+
+#: ../../pep-0672.rst:213
+msgid ""
+"In the statement ``ערך = 23``, the variable ``ערך`` is set to the integer"
+" 23."
+msgstr ""
+
+#: ../../pep-0672.rst:215
+msgid ""
+"In the statement ``قيمة = ערך``, the variable ``قيمة`` is set to the "
+"value of ``ערך``."
+msgstr ""
+
+#: ../../pep-0672.rst:218
+msgid ""
+"In the statement ``قيمة - (ערך ** 2)``, the value of ``ערך`` is squared "
+"and then subtracted from ``قيمة``. The *opening* parenthesis is displayed"
+" as ``)``."
+msgstr ""
+
+#: ../../pep-0672.rst:225
+msgid "Bidirectional Marks, Embeddings, Overrides and Isolates"
+msgstr ""
+
+#: ../../pep-0672.rst:227
+msgid ""
+"Default reordering rules do not always yield the intended direction of "
+"text, so Unicode provides several ways to alter it."
+msgstr ""
+
+#: ../../pep-0672.rst:230
+msgid ""
+"The most basic are **directional marks**, which are invisible but affect "
+"text as a left-to-right (or right-to-left) character would. Continuing "
+"with the ``s = \"X\"`` example above, in the next example the ``X`` is "
+"replaced by the Latin ``x`` followed or preceded by a right-to-left mark "
+"(``U+200F``). This assigns a 200-character string to ``s`` (100 copies of"
+" ``x`` interspersed with 100 invisible marks), but under Unicode rules "
+"for general text, it is rendered as ``s = \"x\"`` followed by an ASCII-"
+"only comment::"
+msgstr ""
+
+#: ../../pep-0672.rst:241
+msgid ""
+"The directional **embedding**, **override** and **isolate** characters "
+"are also invisible, but affect the ordering of all text after them until "
+"either ended by a dedicated character, or until the end of line. (Unicode"
+" specifies the effect to last until the end of a “paragraph” (see "
+"`Unicode Bidirectional Algorithm`_), but allows tools to interpret "
+"newline characters as paragraph ends (see Unicode `Newline Guidelines`_)."
+" Most code editors and terminals do so.)"
+msgstr ""
+
+#: ../../pep-0672.rst:249
+msgid ""
+"These characters essentially allow arbitrary reordering of the text that "
+"follows them. Python only allows them in strings and comments, which does"
+" limit their potential (especially in combination with the fact that "
+"Python's comments always extend to the end of a line), but it doesn't "
+"render them harmless."
+msgstr ""
+
+#: ../../pep-0672.rst:256
+msgid "Normalizing identifiers"
+msgstr ""
+
+#: ../../pep-0672.rst:258
+msgid "Python strings are collections of *Unicode codepoints*, not “characters”."
+msgstr ""
+
+#: ../../pep-0672.rst:260
+msgid ""
+"For reasons like compatibility with earlier encodings, Unicode often has "
+"several ways to encode what is essentially a single “character”. For "
+"example, all are these different ways of writing ``Å`` as a Python "
+"string, each of which is unequal to the others."
+msgstr ""
+
+#: ../../pep-0672.rst:265
+msgid "``\"\\N{LATIN CAPITAL LETTER A WITH RING ABOVE}\"`` (1 codepoint)"
+msgstr ""
+
+#: ../../pep-0672.rst:266
+msgid ""
+"``\"\\N{LATIN CAPITAL LETTER A}\\N{COMBINING RING ABOVE}\"`` (2 "
+"codepoints)"
+msgstr ""
+
+#: ../../pep-0672.rst:267
+msgid "``\"\\N{ANGSTROM SIGN}\"`` (1 codepoint, but different)"
+msgstr ""
+
+#: ../../pep-0672.rst:269
+msgid ""
+"For another example, the ligature ``ﬁ`` has a dedicated Unicode "
+"codepoint, even though it has the same meaning as the two letters ``fi``."
+msgstr ""
+
+#: ../../pep-0672.rst:272
+msgid ""
+"Also, common letters frequently have several distinct variations. Unicode"
+" provides them for contexts where the difference has some semantic "
+"meaning, like mathematics. For example, some variations of ``n`` are:"
+msgstr ""
+
+#: ../../pep-0672.rst:276
+msgid "``n`` (LATIN SMALL LETTER N)"
+msgstr ""
+
+#: ../../pep-0672.rst:277
+msgid "``𝐧`` (MATHEMATICAL BOLD SMALL N)"
+msgstr ""
+
+#: ../../pep-0672.rst:278
+msgid "``𝘯`` (MATHEMATICAL SANS-SERIF ITALIC SMALL N)"
+msgstr ""
+
+#: ../../pep-0672.rst:279
+msgid "``ｎ`` (FULLWIDTH LATIN SMALL LETTER N)"
+msgstr ""
+
+#: ../../pep-0672.rst:280
+msgid "``ⁿ`` (SUPERSCRIPT LATIN SMALL LETTER N)"
+msgstr ""
+
+#: ../../pep-0672.rst:282
+msgid ""
+"Unicode includes algorithms to *normalize* variants like these to a "
+"single form, and Python identifiers are normalized. (There are several "
+"normal forms; Python uses ``NFKC``.)"
+msgstr ""
+
+#: ../../pep-0672.rst:286
+msgid "For example, ``xn`` and ``xⁿ`` are the same identifier in Python::"
+msgstr ""
+
+#: ../../pep-0672.rst:292
+msgid "… as is ``ﬁ`` and ``fi``, and as are the different ways to encode ``Å``."
+msgstr ""
+
+#: ../../pep-0672.rst:294
+msgid ""
+"This normalization applies *only* to identifiers, however. Functions that"
+" treat strings as identifiers, such as ``getattr``, do not perform "
+"normalization::"
+msgstr ""
+
+#: ../../pep-0672.rst:311
+msgid "This also applies when importing:"
+msgstr ""
+
+#: ../../pep-0672.rst:313
+msgid ""
+"``import ﬁnalization`` performs normalization, and looks for a file named"
+" ``finalization.py`` (and other ``finalization.*`` files)."
+msgstr ""
+
+#: ../../pep-0672.rst:315
+msgid ""
+"``importlib.import_module(\"ﬁnalization\")`` does not normalize, so it "
+"looks for a file named ``ﬁnalization.py``."
+msgstr ""
+
+#: ../../pep-0672.rst:318
+msgid ""
+"Some filesystems independently apply normalization and/or case folding. "
+"On some systems, ``ﬁnalization.py``, ``finalization.py`` and "
+"``FINALIZATION.py`` are three distinct filenames; on others, some or all "
+"of these name the same file."
+msgstr ""
+
+#: ../../pep-0672.rst:325
+msgid "Source Encoding"
+msgstr ""
+
+#: ../../pep-0672.rst:327
+msgid ""
+"The encoding of Python source files is given by a specific regex on the "
+"first two lines of a file, as per `Encoding declarations`_. This "
+"mechanism is very liberal in what it accepts, and thus easy to obfuscate."
+msgstr ""
+
+#: ../../pep-0672.rst:331
+msgid ""
+"This can be misused in combination with Python-specific special-purpose "
+"encodings (see `Text Encodings`_). For example, with ``encoding: "
+"unicode_escape``, characters like quotes or braces can be hidden in an "
+"(f-)string, with many tools (syntax highlighters, linters, etc.) "
+"considering them part of the string. For example::"
+msgstr ""
+
+#: ../../pep-0672.rst:354
+msgid ""
+"Here, ``encoding: unicode_escape`` in the initial comment is an encoding "
+"declaration. The ``unicode_escape`` encoding instructs Python to treat "
+"``\\u0027`` as a single quote (which can start/end a string), ``\\u002c``"
+" as a comma (punctuator), etc."
+msgstr ""
+
+#: ../../pep-0672.rst:361
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0672.rst:363
+msgid "We should probably write and publish:"
+msgstr ""
+
+#: ../../pep-0672.rst:365
+msgid "Recommendations for Text Editors and Code Tools"
+msgstr ""
+
+#: ../../pep-0672.rst:366
+msgid "Recommendations for Programmers and Teams"
+msgstr ""
+
+#: ../../pep-0672.rst:367
+msgid "Possible Improvements in Python"
+msgstr ""
+
+#: ../../pep-0672.rst:371
+msgid "References"
+msgstr ""
+
+#: ../../pep-0672.rst:378
+msgid ""
+"Unicode Technical Report #36: Unicode Security Considerations "
+"http://www.unicode.org/reports/tr36/"
+msgstr ""
+
+#: ../../pep-0672.rst:380
+msgid ""
+"Unicode® Technical Standard #39: Unicode Security Mechanisms "
+"http://www.unicode.org/reports/tr39/"
+msgstr ""
+
+#: ../../pep-0672.rst:390
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0672.rst:392
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -1,0 +1,665 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0394.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0394.txt:1
+msgid "394"
+msgstr ""
+
+#: ../../pep-0394.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0394.txt:2
+msgid "The \"python\" Command on Unix-Like Systems"
+msgstr ""
+
+#: ../../pep-0394.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0394.txt:5
+msgid ""
+"Kerrick Staley <mail@kerrickstaley.com>, Nick Coghlan "
+"<ncoghlan@gmail.com>, Barry Warsaw <barry@python.org>, Petr Viktorin "
+"<encukou@gmail.com>, Miro Hrončok <miro@hroncok.cz>, Carol Willing "
+"<willingc@gmail.com>,"
+msgstr ""
+
+#: ../../pep-0394.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0394.txt:11
+msgid "Active"
+msgstr ""
+
+#: ../../pep-0394.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0394.txt:12
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0394.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0394.txt:14
+msgid "02-Mar-2011"
+msgstr ""
+
+#: ../../pep-0394.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0394.txt:15
+msgid ""
+"04-Mar-2011, 20-Jul-2011, 16-Feb-2012, 30-Sep-2014, 28-Apr-2018, "
+"26-Jun-2019"
+msgstr ""
+
+#: ../../pep-0394.txt
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0394.txt:17
+msgid "https://mail.python.org/pipermail/python-dev/2012-February/116594.html"
+msgstr ""
+
+#: ../../pep-0394.txt:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0394.txt:23
+msgid ""
+"This PEP outlines the behavior of Python scripts when the ``python`` "
+"command is invoked. Depending on a distribution or system configuration, "
+"``python`` may or may not be installed. If ``python`` is installed its "
+"target interpreter may refer to ``python2`` or ``python3``. End users may"
+" be unaware of this inconsistency across Unix-like systems. This PEP's "
+"goal is to reduce user confusion about what ``python`` references and "
+"what will be the script's behavior."
+msgstr ""
+
+#: ../../pep-0394.txt:33
+msgid ""
+"The recommendations in the next section of this PEP will outline the "
+"behavior when:"
+msgstr ""
+
+#: ../../pep-0394.txt:36
+msgid "using virtual environments"
+msgstr ""
+
+#: ../../pep-0394.txt:37
+msgid ""
+"writing cross-platform scripts with shebangs for either ``python2`` or "
+"``python3``"
+msgstr ""
+
+#: ../../pep-0394.txt:39
+msgid ""
+"The PEP's goal is to clarify the behavior for script end users, "
+"distribution providers, and script maintainers / authors."
+msgstr ""
+
+#: ../../pep-0394.txt:44
+msgid "Recommendation"
+msgstr ""
+
+#: ../../pep-0394.txt:47
+msgid ""
+"Our recommendations are detailed below. We call out any expectations that"
+" these recommendations are based upon."
+msgstr ""
+
+#: ../../pep-0394.txt:51
+msgid "For Python runtime distributors"
+msgstr ""
+
+#: ../../pep-0394.txt:53
+msgid ""
+"We expect Unix-like software distributions (including systems like macOS "
+"and Cygwin) to install the ``python2`` command into the default path "
+"whenever a version of the Python 2 interpreter is installed, and the same"
+" for ``python3`` and the Python 3 interpreter."
+msgstr ""
+
+#: ../../pep-0394.txt:57
+msgid ""
+"When  invoked, ``python2`` should run some version of the Python 2 "
+"interpreter, and ``python3`` should run some version of the Python 3 "
+"interpreter."
+msgstr ""
+
+#: ../../pep-0394.txt:60
+msgid ""
+"If the ``python`` command is installed, it is expected to invoke either "
+"the same version of Python as the ``python3`` command or as the "
+"``python2`` command."
+msgstr ""
+
+#: ../../pep-0394.txt:63
+msgid ""
+"Distributors may choose to set the behavior of the ``python`` command as "
+"follows:"
+msgstr ""
+
+#: ../../pep-0394.txt:66
+msgid "``python2``,"
+msgstr ""
+
+#: ../../pep-0394.txt:67
+msgid "``python3``,"
+msgstr ""
+
+#: ../../pep-0394.txt:68
+msgid "not provide ``python`` command,"
+msgstr ""
+
+#: ../../pep-0394.txt:69
+msgid ""
+"allow ``python`` to be configurable by an end user or a system "
+"administrator."
+msgstr ""
+
+#: ../../pep-0394.txt:72
+msgid ""
+"The Python 3.x ``idle``, ``pydoc``, and ``python-config`` commands should"
+" likewise be available as ``idle3``, ``pydoc3``, and ``python3-config``; "
+"Python 2.x versions as ``idle2``, ``pydoc2``, and ``python2-config``. The"
+" commands with no version number should either invoke the same version of"
+" Python as the ``python`` command, or not be available at all."
+msgstr ""
+
+#: ../../pep-0394.txt:77
+msgid ""
+"When packaging third party Python scripts, distributors are encouraged to"
+" change less specific shebangs to more specific ones. This ensures "
+"software is used with the latest version of Python available, and it can "
+"remove a dependency on Python 2. The details on what specifics to set are"
+" left to the distributors; though. Example specifics could include:"
+msgstr ""
+
+#: ../../pep-0394.txt:84
+msgid "Changing ``python`` shebangs to ``python3`` when Python 3.x is supported."
+msgstr ""
+
+#: ../../pep-0394.txt:85
+msgid ""
+"Changing ``python`` shebangs to ``python2`` when Python 3.x is not yet "
+"supported."
+msgstr ""
+
+#: ../../pep-0394.txt:87
+msgid ""
+"Changing ``python3`` shebangs to ``python3.8`` if the software is built "
+"with Python 3.8."
+msgstr ""
+
+#: ../../pep-0394.txt:90
+msgid ""
+"When a virtual environment (created by the PEP 405 ``venv`` package or a "
+"similar tool such as ``virtualenv`` or ``conda``) is active, the "
+"``python`` command should refer to the virtual environment's interpreter "
+"and should always be available. The ``python3`` or ``python2`` command "
+"(according to the environment's interpreter version) should also be "
+"available."
+msgstr ""
+
+#: ../../pep-0394.txt:98
+msgid "For Python script publishers"
+msgstr ""
+
+#: ../../pep-0394.txt:100
+msgid ""
+"When reinvoking the interpreter from a Python script, querying "
+"``sys.executable`` to avoid hardcoded assumptions regarding the "
+"interpreter location remains the preferred approach."
+msgstr ""
+
+#: ../../pep-0394.txt:103
+msgid ""
+"Encourage your end users to use a virtual environment. This makes the "
+"user's environment more predictable (possibly resulting in fewer issues),"
+" and helps avoid disrupting their system."
+msgstr ""
+
+#: ../../pep-0394.txt:106
+msgid ""
+"For scripts that are only expected to be run in an activated virtual "
+"environment, shebang lines can be written as ``#!/usr/bin/env python``, "
+"as this instructs the script to respect the active virtual environment."
+msgstr ""
+
+#: ../../pep-0394.txt:109
+msgid ""
+"In cases where the script is expected to be executed outside virtual "
+"environments, developers will need to be aware of the following "
+"discrepancies across platforms and installation methods:"
+msgstr ""
+
+#: ../../pep-0394.txt:113
+msgid ""
+"Older Linux distributions will provide a ``python`` command that refers "
+"to Python 2, and will likely not provide a ``python2`` command."
+msgstr ""
+
+#: ../../pep-0394.txt:115
+msgid ""
+"Some newer Linux distributions will provide a ``python`` command that "
+"refers to Python 3."
+msgstr ""
+
+#: ../../pep-0394.txt:117
+msgid ""
+"Some Linux distributions will not provide a ``python`` command at all by "
+"default, but will provide a ``python3`` command by default."
+msgstr ""
+
+#: ../../pep-0394.txt:120
+msgid ""
+"When potentially targeting these environments, developers may either use "
+"a Python package installation tool that rewrites shebang lines for the "
+"installed environment, provide instructions on updating shebang lines "
+"interactively, or else use more specific shebang lines that are tailored "
+"to the target environment."
+msgstr ""
+
+#: ../../pep-0394.txt:125
+msgid ""
+"Scripts targeting both “*old systems*” and systems without the default "
+"``python`` command need to make a compromise and document this situation."
+" Avoiding shebangs (via the console_scripts Entry Points ([9]_) or "
+"similar means) is the recommended workaround for this problem."
+msgstr ""
+
+#: ../../pep-0394.txt:129
+msgid ""
+"Applications designed exclusively for a specific environment (such as a "
+"container or virtual environment) may continue to use the ``python`` "
+"command name."
+msgstr ""
+
+#: ../../pep-0394.txt:134
+msgid "For end users of Python"
+msgstr ""
+
+#: ../../pep-0394.txt:136
+msgid ""
+"While far from being universally available, ``python`` remains the "
+"preferred spelling for explicitly invoking Python, as this is the "
+"spelling that virtual environments make consistently available across "
+"different platforms and Python installations."
+msgstr ""
+
+#: ../../pep-0394.txt:140
+msgid ""
+"For software that is not distributed with (or developed for) your system,"
+" we recommend using a virtual environment, possibly with an environment "
+"manager like ``conda`` or ``pipenv``, to help avoid disrupting your "
+"system Python installation."
+msgstr ""
+
+#: ../../pep-0394.txt:146
+msgid ""
+"These recommendations are the outcome of the relevant python-dev "
+"discussions in March and July 2011 ([1]_, [2]_), February 2012 ([4]_), "
+"September 2014 ([6]_), discussion on GitHub in April 2018 ([7]_), on "
+"python-dev in February 2019 ([8]_), and during the PEP update review in "
+"May/June 2019 ([10]_)."
+msgstr ""
+
+#: ../../pep-0394.txt:154
+msgid "History of this PEP"
+msgstr ""
+
+#: ../../pep-0394.txt:156
+msgid ""
+"In 2011, the majority of distributions aliased the ``python`` command to "
+"Python 2, but some started switching it to Python 3 ([5]_). As some of "
+"the former distributions did not provide a ``python2`` command by "
+"default, there was previously no way for Python 2 code (or any code that "
+"invokes the Python 2 interpreter directly rather than via "
+"``sys.executable``) to reliably run on all Unix-like systems without "
+"modification, as the ``python`` command would invoke the wrong "
+"interpreter version on some systems, and the ``python2`` command would "
+"fail completely on others. This PEP originally provided a very simple "
+"mechanism to restore cross-platform support, with minimal additional work"
+" required on the part of distribution maintainers. Simplified, the "
+"recommendation was:"
+msgstr ""
+
+#: ../../pep-0394.txt:168
+msgid ""
+"The ``python`` command was preferred for code compatible with both Python"
+" 2 and 3 (since it was available on all systems, even those that already "
+"aliased it to Python 3)."
+msgstr ""
+
+#: ../../pep-0394.txt:171
+msgid ""
+"The ``python`` command should always invoke Python 2 (to prevent hard-to-"
+"diagnose errors when Python 2 code is run on Python 3)."
+msgstr ""
+
+#: ../../pep-0394.txt:173
+msgid ""
+"The ``python2`` and ``python3`` commands should be available to specify "
+"the version explicitly."
+msgstr ""
+
+#: ../../pep-0394.txt:176
+msgid ""
+"However, these recommendations implicitly assumed that Python 2 would "
+"always be available. As Python 2 is nearing its end of life in 2020 (PEP "
+"373, PEP 404), distributions are making Python 2 optional or removing it "
+"entirely. This means either removing the ``python`` command or switching "
+"it to invoke Python 3. Some distributors also decided that their users "
+"were better served by ignoring the PEP's original recommendations, and "
+"provided system administrators with the freedom to configure their "
+"systems based on the needs of their particular environment."
+msgstr ""
+
+#: ../../pep-0394.txt:189
+msgid "Current Rationale"
+msgstr ""
+
+#: ../../pep-0394.txt:191
+msgid ""
+"As of 2019, activating a Python virtual environment (or its functional "
+"equivalent) prior to script execution is one way to obtain a consistent "
+"cross-platform and cross-distribution experience."
+msgstr ""
+
+#: ../../pep-0394.txt:195
+msgid ""
+"Accordingly, publishers can expect users of the software to provide a "
+"suitable execution environment."
+msgstr ""
+
+#: ../../pep-0394.txt:200
+msgid "Future Changes to this Recommendation"
+msgstr ""
+
+#: ../../pep-0394.txt:202
+msgid ""
+"This recommendation will be periodically reviewed over the next few "
+"years, and updated when the core development team judges it appropriate. "
+"As a point of reference, regular maintenance releases for the Python 2.7 "
+"series will continue until January 2020."
+msgstr ""
+
+#: ../../pep-0394.txt:209
+msgid "Migration Notes"
+msgstr ""
+
+#: ../../pep-0394.txt:211
+msgid ""
+"This section does not contain any official recommendations from the core "
+"CPython developers. It's merely a collection of notes regarding various "
+"aspects of migrating to Python 3 as the default version of Python for a "
+"system. They will hopefully be helpful to any distributions considering "
+"making such a change."
+msgstr ""
+
+#: ../../pep-0394.txt:217
+msgid ""
+"The main barrier to a distribution switching the ``python`` command from "
+"``python2`` to ``python3`` isn't breakage within the distribution, but "
+"instead breakage of private third party scripts developed by sysadmins "
+"and other users. Updating the ``python`` command to invoke ``python3`` by"
+" default indicates that a distribution is willing to break such scripts "
+"with errors that are potentially quite confusing for users that aren't "
+"familiar with the backwards incompatible changes in Python 3. For "
+"example, while the change of ``print`` from a statement to a builtin "
+"function is relatively simple for automated converters to handle, the "
+"SyntaxError from attempting to use the Python 2 notation in Python 3 may "
+"be confusing for users that are not aware of the change::"
+msgstr ""
+
+#: ../../pep-0394.txt:235
+msgid ""
+"While this might be obvious for experienced Pythonistas, such scripts "
+"might even be run by people who are not familiar with Python at all. "
+"Avoiding breakage of such third party scripts was the key reason this PEP"
+" used to recommend that ``python`` continue to refer to ``python2``."
+msgstr ""
+
+#: ../../pep-0394.txt:239
+msgid ""
+"The error message ``python: command not found`` tends to be surprisingly "
+"actionable, even for people unfamiliar with Python."
+msgstr ""
+
+#: ../../pep-0394.txt:241
+msgid ""
+"The ``pythonX.X`` (e.g. ``python3.6``) commands exist on modern systems, "
+"on which they invoke specific minor versions of the Python interpreter. "
+"It can be useful for distribution-specific packages to take advantage of "
+"these utilities if they exist, since it will prevent code breakage if the"
+" default minor version of a given major version is changed. However, "
+"scripts intending to be cross-platform should not rely on the presence of"
+" these utilities, but rather should be tested on several recent minor "
+"versions of the target major version, compensating, if necessary, for the"
+" small differences that exist between minor versions. This prevents the "
+"need for sysadmins to install many very similar versions of the "
+"interpreter."
+msgstr ""
+
+#: ../../pep-0394.txt:251
+msgid ""
+"When the ``pythonX.X`` binaries are provided by a distribution, the "
+"``python2`` and ``python3`` commands should refer to one of those files "
+"rather than being provided as a separate binary file."
+msgstr ""
+
+#: ../../pep-0394.txt:254
+msgid ""
+"It is strongly encouraged that distribution-specific packages use "
+"``python3`` (or ``python2``) rather than ``python``, even in code that is"
+" not intended to operate on other distributions. This will reduce "
+"problems if the distribution later decides to change the version of the "
+"Python interpreter that the ``python`` command invokes, or if a sysadmin "
+"installs a custom ``python`` command with a different major version than "
+"the distribution default."
+msgstr ""
+
+#: ../../pep-0394.txt:261
+msgid ""
+"If the above point is adhered to and sysadmins are permitted to change "
+"the ``python`` command, then the ``python`` command should always be "
+"implemented as a link to the interpreter binary (or a link to a link) and"
+" not vice versa. That way, if a sysadmin does decide to replace the "
+"installed ``python`` file, they can do so without inadvertently deleting "
+"the previously installed binary."
+msgstr ""
+
+#: ../../pep-0394.txt:267
+msgid ""
+"Even as the Python 2 interpreter becomes less common, it remains "
+"reasonable for scripts to continue to use the ``python3`` convention, "
+"rather than just ``python``."
+msgstr ""
+
+#: ../../pep-0394.txt:270
+msgid ""
+"If these conventions are adhered to, it will become the case that the "
+"``python`` command is only executed in an interactive manner as a user "
+"convenience, or else when using a virtual environment or similar "
+"mechanism."
+msgstr ""
+
+#: ../../pep-0394.txt:276
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0394.txt:278
+msgid ""
+"A potential problem can arise if a script adhering to the "
+"``python2``/``python3`` convention is executed on a system not supporting"
+" these commands. This is mostly a non-issue, since the sysadmin can "
+"simply create these symbolic links and avoid further problems. It is a "
+"significantly more obvious breakage than the sometimes cryptic errors "
+"that can arise when attempting to execute a script containing Python 2 "
+"specific syntax with a Python 3 interpreter or vice versa."
+msgstr ""
+
+#: ../../pep-0394.txt:288
+msgid "Application to the CPython Reference Interpreter"
+msgstr ""
+
+#: ../../pep-0394.txt:290
+msgid ""
+"While technically a new feature, the ``make install`` and ``make "
+"bininstall`` command in the 2.7 version of CPython were adjusted to "
+"create the following chains of symbolic links in the relevant ``bin`` "
+"directory (the final item listed in the chain is the actual installed "
+"binary, preceding items are relative symbolic links)::"
+msgstr ""
+
+#: ../../pep-0394.txt:299
+msgid "Similar adjustments were made to the macOS binary installer."
+msgstr ""
+
+#: ../../pep-0394.txt:301
+msgid ""
+"This feature first appeared in the default installation process in "
+"CPython 2.7.3."
+msgstr ""
+
+#: ../../pep-0394.txt:304
+msgid ""
+"The installation commands in the CPython 3.x series already create the "
+"appropriate symlinks. For example, CPython 3.2 creates::"
+msgstr ""
+
+#: ../../pep-0394.txt:312
+msgid "And CPython 3.3 creates::"
+msgstr ""
+
+#: ../../pep-0394.txt:320
+msgid ""
+"The implementation progress of these features in the default installers "
+"was managed on the tracker as issue #12627 ([3]_)."
+msgstr ""
+
+#: ../../pep-0394.txt:325
+msgid "Impact on PYTHON* Environment Variables"
+msgstr ""
+
+#: ../../pep-0394.txt:327
+msgid ""
+"The choice of target for the ``python`` command implicitly affects a "
+"distribution's expected interpretation of the various Python related "
+"environment variables. The use of ``*.pth`` files in the relevant ``site-"
+"packages`` folder, the \"per-user site packages\" feature (see ``python "
+"-m site``) or more flexible tools such as ``virtualenv`` are all more "
+"tolerant of the presence of multiple versions of Python on a system than "
+"the direct use of ``PYTHONPATH``."
+msgstr ""
+
+#: ../../pep-0394.txt:337
+msgid "Exclusion of MS Windows"
+msgstr ""
+
+#: ../../pep-0394.txt:339
+msgid ""
+"This PEP deliberately excludes any proposals relating to Microsoft "
+"Windows, as devising an equivalent solution for Windows was deemed too "
+"complex to handle here. PEP 397 and the related discussion on the python-"
+"dev mailing list address this issue."
+msgstr ""
+
+#: ../../pep-0394.txt:346
+msgid "References"
+msgstr ""
+
+#: ../../pep-0394.txt:348
+msgid ""
+"Support the /usr/bin/python2 symlink upstream (with bonus grammar class!)"
+" (https://mail.python.org/pipermail/python-dev/2011-March/108491.html)"
+msgstr ""
+
+#: ../../pep-0394.txt:351
+msgid ""
+"Rebooting \\PEP 394 (aka Support the /usr/bin/python2 symlink upstream) "
+"(https://mail.python.org/pipermail/python-dev/2011-July/112322.html)"
+msgstr ""
+
+#: ../../pep-0394.txt:354
+msgid ""
+"Implement \\PEP 394 in the CPython Makefile "
+"(http://bugs.python.org/issue12627)"
+msgstr ""
+
+#: ../../pep-0394.txt:357
+msgid ""
+"\\PEP 394 request for pronouncement (python2 symlink in \\*nix systems) "
+"(https://mail.python.org/pipermail/python-dev/2012-February/116435.html)"
+msgstr ""
+
+#: ../../pep-0394.txt:360
+msgid ""
+"Arch Linux announcement that their \"python\" link now refers Python 3 "
+"(https://www.archlinux.org/news/python-is-now-python-3/)"
+msgstr ""
+
+#: ../../pep-0394.txt:363
+msgid ""
+"PEP 394 - Clarification of what \"python\" command should invoke "
+"(https://mail.python.org/pipermail/python-dev/2014-September/136374.html)"
+msgstr ""
+
+#: ../../pep-0394.txt:366
+msgid ""
+"PEP 394: Allow the `python` command to not be installed, and other minor "
+"edits (https://github.com/python/peps/pull/630)"
+msgstr ""
+
+#: ../../pep-0394.txt:370
+msgid ""
+"Another update for PEP 394 -- The \"python\" Command on Unix-Like Systems"
+" (https://mail.python.org/pipermail/python-dev/2019-February/156272.html)"
+msgstr ""
+
+#: ../../pep-0394.txt:373
+msgid ""
+"The console_scripts Entry Point (https://python-"
+"packaging.readthedocs.io/en/latest/command-line-scripts.html#the-console-"
+"scripts-entry-point)"
+msgstr ""
+
+#: ../../pep-0394.txt:376
+msgid "May 2019 PEP update review (https://github.com/python/peps/pull/989)"
+msgstr ""
+
+#: ../../pep-0394.txt:381
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0394.txt:382
+msgid "This document has been placed in the public domain."
+msgstr ""
+

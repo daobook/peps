@@ -1,0 +1,511 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-3131.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-3131.txt:1
+msgid "3131"
+msgstr ""
+
+#: ../../pep-3131.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-3131.txt:2
+msgid "Supporting Non-ASCII Identifiers"
+msgstr ""
+
+#: ../../pep-3131.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-3131.txt:5
+msgid "Martin von Löwis <martin@v.loewis.de>"
+msgstr ""
+
+#: ../../pep-3131.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-3131.txt:6
+msgid "Final"
+msgstr ""
+
+#: ../../pep-3131.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-3131.txt:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-3131.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-3131.txt:9
+msgid "01-May-2007"
+msgstr ""
+
+#: ../../pep-3131.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3131.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3131.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-3131.txt:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-3131.txt:17
+msgid ""
+"This PEP suggests to support non-ASCII letters (such as accented "
+"characters, Cyrillic, Greek, Kanji, etc.) in Python identifiers."
+msgstr ""
+
+#: ../../pep-3131.txt:21
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-3131.txt:23
+msgid ""
+"Python code is written by many people in the world who are not familiar "
+"with the English language, or even well-acquainted with the Latin writing"
+" system.  Such developers often desire to define classes and functions "
+"with names in their native languages, rather than having to come up with "
+"an (often incorrect) English translation of the concept they want to "
+"name. By using identifiers in their native language, code clarity and "
+"maintainability of the code among speakers of that language improves."
+msgstr ""
+
+#: ../../pep-3131.txt:32
+msgid ""
+"For some languages, common transliteration systems exist (in particular, "
+"for the Latin-based writing systems).  For other languages, users have "
+"larger difficulties to use Latin to write their native words."
+msgstr ""
+
+#: ../../pep-3131.txt:37
+msgid "Common Objections"
+msgstr ""
+
+#: ../../pep-3131.txt:39
+msgid "Some objections are often raised against proposals similar to this one."
+msgstr ""
+
+#: ../../pep-3131.txt:41
+msgid ""
+"People claim that they will not be able to use a library if to do so they"
+" have to use characters they cannot type on their keyboards.  However, it"
+" is the choice of the designer of the library to decide on various "
+"constraints for using the library: people may not be able to use the "
+"library because they cannot get physical access to the source code "
+"(because it is not published), or because licensing prohibits usage, or "
+"because the documentation is in a language they cannot understand.  A "
+"developer wishing to make a library widely available needs to make a "
+"number of explicit choices (such as publication, licensing, language of "
+"documentation, and language of identifiers).  It should always be the "
+"choice of the author to make these decisions - not the choice of the "
+"language designers."
+msgstr ""
+
+#: ../../pep-3131.txt:53
+msgid ""
+"In particular, projects wishing to have wide usage probably might want to"
+" establish a policy that all identifiers, comments, and documentation is "
+"written in English (see the GNU coding style guide for an example of such"
+" a policy). Restricting the language to ASCII-only identifiers does not "
+"enforce comments and documentation to be English, or the identifiers "
+"actually to be English words, so an additional policy is necessary, "
+"anyway."
+msgstr ""
+
+#: ../../pep-3131.txt:61
+msgid "Specification of Language Changes"
+msgstr ""
+
+#: ../../pep-3131.txt:63
+msgid ""
+"The syntax of identifiers in Python will be based on the Unicode standard"
+" annex UAX-31 [1]_, with elaboration and changes as defined below."
+msgstr ""
+
+#: ../../pep-3131.txt:66
+msgid ""
+"Within the ASCII range (U+0001..U+007F), the valid characters for "
+"identifiers are the same as in Python 2.5.  This specification only "
+"introduces additional characters from outside the ASCII range.  For other"
+" characters, the classification uses the version of the Unicode Character"
+" Database as included in the ``unicodedata`` module."
+msgstr ""
+
+#: ../../pep-3131.txt:72
+msgid "The identifier syntax is ``<XID_Start> <XID_Continue>*``."
+msgstr ""
+
+#: ../../pep-3131.txt:74
+msgid ""
+"The exact specification of what characters have the XID_Start or "
+"XID_Continue properties can be found in the DerivedCoreProperties file of"
+" the Unicode data in use by Python (4.1 at the time this PEP was "
+"written), see [6]_. For reference, the construction rules for these sets "
+"are given below. The XID_* properties are derived from "
+"ID_Start/ID_Continue, which are derived themselves."
+msgstr ""
+
+#: ../../pep-3131.txt:81
+msgid ""
+"``ID_Start`` is defined as all characters having one of the general "
+"categories uppercase letters (Lu), lowercase letters (Ll), titlecase "
+"letters (Lt), modifier letters (Lm), other letters (Lo), letter numbers "
+"(Nl), the underscore, and characters carrying the Other_ID_Start "
+"property. ``XID_Start`` then closes this set under normalization, by "
+"removing all characters whose NFKC normalization is not of the form "
+"ID_Start ID_Continue* anymore."
+msgstr ""
+
+#: ../../pep-3131.txt:89
+msgid ""
+"``ID_Continue`` is defined as all characters in ``ID_Start``, plus "
+"nonspacing marks (Mn), spacing combining marks (Mc), decimal number (Nd),"
+" connector punctuations (Pc), and characters carrying the "
+"Other_ID_Continue property. Again, ``XID_Continue`` closes this set under"
+" NFKC-normalization; it also adds U+00B7 to support Catalan."
+msgstr ""
+
+#: ../../pep-3131.txt:95
+msgid ""
+"All identifiers are converted into the normal form NFKC while parsing; "
+"comparison of identifiers is based on NFKC."
+msgstr ""
+
+#: ../../pep-3131.txt:98
+msgid ""
+"A non-normative HTML file listing all valid identifier characters for "
+"Unicode 4.1 can be found at http://www.dcl.hpi.uni-"
+"potsdam.de/home/loewis/table-3131.html."
+msgstr ""
+
+#: ../../pep-3131.txt:103
+msgid "Policy Specification"
+msgstr ""
+
+#: ../../pep-3131.txt:105
+msgid ""
+"As an addition to the Python Coding style, the following policy is "
+"prescribed: All identifiers in the Python standard library MUST use "
+"ASCII-only identifiers, and SHOULD use English words wherever feasible "
+"(in many cases, abbreviations and technical terms are used which aren't "
+"English). In addition, string literals and comments must also be in "
+"ASCII. The only exceptions are (a) test cases testing the non-ASCII "
+"features, and (b) names of authors. Authors whose names are not based on "
+"the Latin alphabet MUST provide a Latin transliteration of their names."
+msgstr ""
+
+#: ../../pep-3131.txt:115
+msgid ""
+"As an option, this specification can be applied to Python 2.x.  In that "
+"case, ASCII-only identifiers would continue to be represented as byte "
+"string objects in namespace dictionaries; identifiers with non-ASCII "
+"characters would be represented as Unicode strings."
+msgstr ""
+
+#: ../../pep-3131.txt:121
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-3131.txt:123
+msgid "The following changes will need to be made to the parser:"
+msgstr ""
+
+#: ../../pep-3131.txt:125
+msgid ""
+"If a non-ASCII character is found in the UTF-8 representation of the "
+"source code, a forward scan is made to find the first ASCII non-"
+"identifier character (e.g. a space or punctuation character)"
+msgstr ""
+
+#: ../../pep-3131.txt:129
+msgid ""
+"The entire UTF-8 string is passed to a function to normalize the string "
+"to NFKC, and then verify that it follows the identifier syntax. No such "
+"callout is made for pure-ASCII identifiers, which continue to be parsed "
+"the way they are today. The Unicode database must start including the "
+"Other_ID_{Start|Continue} property."
+msgstr ""
+
+#: ../../pep-3131.txt:135
+msgid ""
+"If this specification is implemented for 2.x, reflective libraries (such "
+"as pydoc) must be verified to continue to work when Unicode strings "
+"appear in ``__dict__`` slots as keys."
+msgstr ""
+
+#: ../../pep-3131.txt:140
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-3131.txt:142
+msgid ""
+"John Nagle suggested consideration of Unicode Technical Standard #39, "
+"[2]_, which discusses security mechanisms for Unicode identifiers. It's "
+"not clear how that can precisely apply to this PEP; possible consequences"
+" are"
+msgstr ""
+
+#: ../../pep-3131.txt:147
+msgid "warn about characters listed as \"restricted\" in xidmodifications.txt"
+msgstr ""
+
+#: ../../pep-3131.txt:148
+msgid "warn about identifiers using mixed scripts"
+msgstr ""
+
+#: ../../pep-3131.txt:149
+msgid "somehow perform Confusable Detection"
+msgstr ""
+
+#: ../../pep-3131.txt:151
+msgid ""
+"In the latter two approaches, it's not clear how precisely the algorithm "
+"should work. For mixed scripts, certain kinds of mixing should probably "
+"allowed - are these the \"Common\" and \"Inherited\" scripts mentioned in"
+" section 5? For Confusable Detection, it seems one needs two identifiers "
+"to compare them for confusion - is it possible to somehow apply it to a "
+"single identifier only, and warn?"
+msgstr ""
+
+#: ../../pep-3131.txt:158
+msgid ""
+"In follow-up discussion, it turns out that John Nagle actually meant to "
+"suggest UTR#36, level \"Highly Restrictive\", [3]_."
+msgstr ""
+
+#: ../../pep-3131.txt:161
+msgid ""
+"Several people suggested to allow and ignore formatting control "
+"characters (general category Cf), as is done in Java, JavaScript, and C#."
+" It's not clear whether this would improve things (it might for RTL "
+"languages); if there is a need, these can be added later."
+msgstr ""
+
+#: ../../pep-3131.txt:167
+msgid ""
+"Some people would like to see an option on selecting support for this PEP"
+" at run-time; opinions vary on what precisely that option should be, and "
+"what precisely its default value should be. Guido van Rossum commented in"
+" [5]_ that a global flag passed to the interpreter is not acceptable, as "
+"it would apply to all modules."
+msgstr ""
+
+#: ../../pep-3131.txt:175
+msgid "Discussion"
+msgstr ""
+
+#: ../../pep-3131.txt:177
+msgid "Ka-Ping Yee summarizes discussion and further objection in [4]_ as such:"
+msgstr ""
+
+#: ../../pep-3131.txt:180
+msgid "Should identifiers be allowed to contain any Unicode letter?"
+msgstr ""
+
+#: ../../pep-3131.txt:182
+msgid "Drawbacks of allowing non-ASCII identifiers wholesale:"
+msgstr ""
+
+#: ../../pep-3131.txt:184
+msgid ""
+"Python will lose the ability to make a reliable round trip to a human-"
+"readable display on screen or on paper."
+msgstr ""
+
+#: ../../pep-3131.txt:187
+msgid ""
+"Python will become vulnerable to a new class of security exploits; code "
+"and submitted patches will be much harder to inspect."
+msgstr ""
+
+#: ../../pep-3131.txt:190
+msgid "Humans will no longer be able to validate Python syntax."
+msgstr ""
+
+#: ../../pep-3131.txt:192
+msgid ""
+"Unicode is young; its problems are not yet well understood and solved; "
+"tool support is weak."
+msgstr ""
+
+#: ../../pep-3131.txt:195
+msgid ""
+"Languages with non-ASCII identifiers use different character sets and "
+"normalization schemes; PEP 3131's choices are non-obvious."
+msgstr ""
+
+#: ../../pep-3131.txt:198
+msgid ""
+"The Unicode bidi algorithm yields an extremely confusing display order "
+"for RTL text when digits or operators are nearby."
+msgstr ""
+
+#: ../../pep-3131.txt:202
+msgid ""
+"Should the default behaviour accept only ASCII identifiers, or should it "
+"accept identifiers containing non-ASCII characters?"
+msgstr ""
+
+#: ../../pep-3131.txt:205
+msgid "Arguments for ASCII only by default:"
+msgstr ""
+
+#: ../../pep-3131.txt:207
+msgid ""
+"Non-ASCII identifiers by default makes common practice/assumptions "
+"subtly/unknowingly wrong; rarely wrong is worse than obviously wrong."
+msgstr ""
+
+#: ../../pep-3131.txt:210
+msgid ""
+"Better to raise a warning than to fail silently when encountering a "
+"probably unexpected situation."
+msgstr ""
+
+#: ../../pep-3131.txt:213
+msgid ""
+"All of current usage is ASCII-only; the vast majority of future usage "
+"will be ASCII-only."
+msgstr ""
+
+#: ../../pep-3131.txt:216
+msgid ""
+"It is the pockets of Unicode adoption that are parochial, not the ASCII "
+"advocates."
+msgstr ""
+
+#: ../../pep-3131.txt:219
+msgid ""
+"Python should audit for ASCII-only identifiers for the same reasons that "
+"it audits for tab-space consistency"
+msgstr ""
+
+#: ../../pep-3131.txt:222
+msgid "Incremental change is safer."
+msgstr ""
+
+#: ../../pep-3131.txt:224
+msgid ""
+"An ASCII-only default favors open-source development and sharing of "
+"source code."
+msgstr ""
+
+#: ../../pep-3131.txt:227
+msgid ""
+"Existing projects won't have to waste any brainpower worrying about the "
+"implications of Unicode identifiers."
+msgstr ""
+
+#: ../../pep-3131.txt:230
+msgid "Should non-ASCII identifiers be optional?"
+msgstr ""
+
+#: ../../pep-3131.txt:232
+msgid ""
+"Various voices in support of a flag (although there's been debate over "
+"which should be the default, no one seems to be saying that there "
+"shouldn't be an off switch)"
+msgstr ""
+
+#: ../../pep-3131.txt:236
+msgid "Should the identifier character set be configurable?"
+msgstr ""
+
+#: ../../pep-3131.txt:238
+msgid ""
+"Various voices proposing and supporting a selectable character set, so "
+"that users can get all the benefits of using their own language without "
+"the drawbacks of confusable/unfamiliar characters"
+msgstr ""
+
+#: ../../pep-3131.txt:243
+msgid "Which identifier characters should be allowed?"
+msgstr ""
+
+#: ../../pep-3131.txt:245
+msgid "What to do about bidi format control characters?"
+msgstr ""
+
+#: ../../pep-3131.txt:247
+msgid ""
+"What about other ID_Continue characters?  What about characters that look"
+" like punctuation?  What about other recommendations in UTS #39?  What "
+"about mixed-script identifiers?"
+msgstr ""
+
+#: ../../pep-3131.txt:251
+msgid "Which normalization form should be used, NFC or NFKC?"
+msgstr ""
+
+#: ../../pep-3131.txt:253
+msgid "Should source code be required to be in normalized form?"
+msgstr ""
+
+#: ../../pep-3131.txt:257
+msgid "References"
+msgstr ""
+
+#: ../../pep-3131.txt:259
+msgid "http://www.unicode.org/reports/tr31/"
+msgstr ""
+
+#: ../../pep-3131.txt:260
+msgid "http://www.unicode.org/reports/tr39/"
+msgstr ""
+
+#: ../../pep-3131.txt:261
+msgid "http://www.unicode.org/reports/tr36/"
+msgstr ""
+
+#: ../../pep-3131.txt:262
+msgid "https://mail.python.org/pipermail/python-3000/2007-June/008161.html"
+msgstr ""
+
+#: ../../pep-3131.txt:263
+msgid "https://mail.python.org/pipermail/python-3000/2007-May/007925.html"
+msgstr ""
+
+#: ../../pep-3131.txt:264
+msgid "http://www.unicode.org/Public/4.1.0/ucd/DerivedCoreProperties.txt"
+msgstr ""
+
+#: ../../pep-3131.txt:267
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-3131.txt:269
+msgid "This document has been placed in the public domain."
+msgstr ""
+

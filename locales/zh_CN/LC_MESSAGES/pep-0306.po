@@ -1,0 +1,230 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../pep-0306.txt
+msgid "PEP"
+msgstr ""
+
+#: ../../pep-0306.txt:1
+msgid "306"
+msgstr ""
+
+#: ../../pep-0306.txt
+msgid "Title"
+msgstr ""
+
+#: ../../pep-0306.txt:2
+msgid "How to Change Python's Grammar"
+msgstr ""
+
+#: ../../pep-0306.txt
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0306.txt:5
+msgid ""
+"Michael Hudson <mwh@python.net>, Jack Diederich <jackdied@gmail.com>, "
+"Nick Coghlan <ncoghlan@gmail.com>, Benjamin Peterson "
+"<benjamin@python.org>"
+msgstr ""
+
+#: ../../pep-0306.txt
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0306.txt:6
+msgid "Withdrawn"
+msgstr ""
+
+#: ../../pep-0306.txt
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0306.txt:7
+msgid "Informational"
+msgstr ""
+
+#: ../../pep-0306.txt
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0306.txt:9
+msgid "29-Jan-2003"
+msgstr ""
+
+#: ../../pep-0306.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0306.txt:10
+msgid "30-Jan-2003"
+msgstr ""
+
+#: ../../pep-0306.txt:14
+msgid "Note"
+msgstr ""
+
+#: ../../pep-0306.txt:16
+msgid "This PEP has been moved to the Python dev guide [1]_."
+msgstr ""
+
+#: ../../pep-0306.txt:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0306.txt:22
+msgid ""
+"There's more to changing Python's grammar than editing "
+"``Grammar/Grammar`` and ``Python/compile.c``.  This PEP aims to be a "
+"checklist of places that must also be fixed."
+msgstr ""
+
+#: ../../pep-0306.txt:26
+msgid ""
+"It is probably incomplete.  If you see omissions, just add them if you "
+"can -- you are not going to offend the author's sense of ownership.  "
+"Otherwise submit a bug or patch and assign it to mwh."
+msgstr ""
+
+#: ../../pep-0306.txt:30
+msgid ""
+"This PEP is not intended to be an instruction manual on Python grammar "
+"hacking, for several reasons."
+msgstr ""
+
+#: ../../pep-0306.txt:35
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0306.txt:37
+msgid ""
+"People are getting this wrong all the time; it took well over a year "
+"before someone noticed [2]_ that adding the floor division operator "
+"(``//``) broke the ``parser`` module."
+msgstr ""
+
+#: ../../pep-0306.txt:43
+msgid "Checklist"
+msgstr ""
+
+#: ../../pep-0306.txt:45
+msgid "``Grammar/Grammar``: OK, you'd probably worked this one out :)"
+msgstr ""
+
+#: ../../pep-0306.txt:47
+msgid ""
+"``Parser/Python.asdl`` may need changes to match the ``Grammar``.  Run "
+"``make`` to regenerate ``Include/Python-ast.h`` and ``Python/Python-"
+"ast.c``."
+msgstr ""
+
+#: ../../pep-0306.txt:51
+msgid ""
+"``Python/ast.c`` will need changes to create the AST objects involved "
+"with the ``Grammar`` change.  ``Lib/compiler/ast.py`` will need matching "
+"changes to the pure-python AST objects."
+msgstr ""
+
+#: ../../pep-0306.txt:55
+msgid ""
+"``Parser/pgen`` needs to be rerun to regenerate ``Include/graminit.h`` "
+"and ``Python/graminit.c``. (make should handle this for you.)"
+msgstr ""
+
+#: ../../pep-0306.txt:58
+msgid ""
+"``Python/symbtable.c``: This handles the symbol collection pass that "
+"happens immediately before the compilation pass."
+msgstr ""
+
+#: ../../pep-0306.txt:61
+msgid ""
+"``Python/compile.c``: You will need to create or modify the "
+"``compiler_*`` functions to generate opcodes for your productions."
+msgstr ""
+
+#: ../../pep-0306.txt:64
+msgid ""
+"You may need to regenerate ``Lib/symbol.py`` and/or ``Lib/token.py`` "
+"and/or ``Lib/keyword.py``."
+msgstr ""
+
+#: ../../pep-0306.txt:67
+msgid ""
+"The ``parser`` module.  Add some of your new syntax to ``test_parser``, "
+"bang on ``Modules/parsermodule.c`` until it passes."
+msgstr ""
+
+#: ../../pep-0306.txt:70
+msgid "Add some usage of your new syntax to ``test_grammar.py``."
+msgstr ""
+
+#: ../../pep-0306.txt:72
+msgid ""
+"The ``compiler`` package.  A good test is to compile the standard library"
+" and test suite with the ``compiler`` package and then check it runs.  "
+"Note that this only needs to be done in Python 2.x."
+msgstr ""
+
+#: ../../pep-0306.txt:76
+msgid ""
+"If you've gone so far as to change the token structure of Python, then "
+"the ``Lib/tokenizer.py`` library module will need to be changed."
+msgstr ""
+
+#: ../../pep-0306.txt:80
+msgid "Certain changes may require tweaks to the library module ``pyclbr``."
+msgstr ""
+
+#: ../../pep-0306.txt:83
+msgid "Documentation must be written!"
+msgstr ""
+
+#: ../../pep-0306.txt:85
+msgid ""
+"After everything's been checked in, you're likely to see a new change to "
+"``Python/Python-ast.c``.  This is because this (generated) file contains "
+"the SVN version of the source from which it was generated.  There's no "
+"way to avoid this; you just have to submit this file separately."
+msgstr ""
+
+#: ../../pep-0306.txt:93
+msgid "References"
+msgstr ""
+
+#: ../../pep-0306.txt:95
+msgid ""
+"CPython Developer's Guide: Changing CPython's Grammar "
+"https://devguide.python.org/grammar/"
+msgstr ""
+
+#: ../../pep-0306.txt:98
+msgid ""
+"SF Bug #676521, parser module validation failure "
+"https://bugs.python.org/issue676521"
+msgstr ""
+
+#: ../../pep-0306.txt:103
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0306.txt:105
+msgid "This document has been placed in the public domain."
+msgstr ""
+
