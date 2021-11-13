@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 18:54+0800\n"
+"POT-Creation-Date: 2021-11-14 00:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,9 @@ msgid "Post-History"
 msgstr ""
 
 #: ../../pep-0467.txt:11
-msgid "2014-03-30 2014-08-15 2014-08-16 2016-06-07 2016-09-01 2021-04-13"
+msgid ""
+"2014-03-30 2014-08-15 2014-08-16 2016-06-07 2016-09-01 2021-04-13 "
+"2021-11-03"
 msgstr ""
 
 #: ../../pep-0467.txt:15
@@ -93,19 +95,23 @@ msgid ""
 msgstr ""
 
 #: ../../pep-0467.txt:20
-msgid "Add ``bytes.fromsize`` and ``bytearray.fromsize`` alternative constructors"
+msgid "Add ``fromsize`` alternative constructor"
 msgstr ""
 
 #: ../../pep-0467.txt:21
-msgid "Add ``bytes.fromint`` and ``bytearray.fromint`` alternative constructors"
+msgid "Add ``fromint`` alternative constructor"
 msgstr ""
 
 #: ../../pep-0467.txt:22
-msgid "Add ``bytes.getbyte`` and ``bytearray.getbyte`` byte retrieval methods"
+msgid "Add ``ascii`` alternative constructor"
 msgstr ""
 
 #: ../../pep-0467.txt:23
-msgid "Add ``bytes.iterbytes`` and ``bytearray.iterbytes`` alternative iterators"
+msgid "Add ``getbyte`` byte retrieval method"
+msgstr ""
+
+#: ../../pep-0467.txt:24
+msgid "Add ``iterbytes`` alternative iterator"
 msgstr ""
 
 #: ../../pep-0467.txt:27
@@ -222,47 +228,77 @@ msgid ""
 msgstr ""
 
 #: ../../pep-0467.txt:123
-msgid "Addition of \"getbyte\" method to retrieve a single byte"
+msgid "Addition of \"ascii\" constructors"
 msgstr ""
 
 #: ../../pep-0467.txt:125
+msgid ""
+"In Python 2 converting an object, such as the integer ``123``, to bytes "
+"(aka the Python 2 ``str``) was as simple as::"
+msgstr ""
+
+#: ../../pep-0467.txt:131
+msgid "With Python 3 that became the more verbose::"
+msgstr ""
+
+#: ../../pep-0467.txt:135
+msgid "or even::"
+msgstr ""
+
+#: ../../pep-0467.txt:139
+msgid ""
+"This PEP proposes that an ``ascii`` method be added to ``bytes`` and "
+"``bytearray`` to handle this use-case::"
+msgstr ""
+
+#: ../../pep-0467.txt:145
+msgid ""
+"Note that ``bytes.ascii()`` would handle simple ascii-encodable text "
+"correctly, unlike the `ascii()`` built-in::"
+msgstr ""
+
+#: ../../pep-0467.txt:153
+msgid "Addition of \"getbyte\" method to retrieve a single byte"
+msgstr ""
+
+#: ../../pep-0467.txt:155
 msgid ""
 "This PEP proposes that ``bytes`` and ``bytearray`` gain the method "
 "``getbyte`` which will always return ``bytes``::"
 msgstr ""
 
-#: ../../pep-0467.txt:131
+#: ../../pep-0467.txt:161
 msgid "If an index is asked for that doesn't exist, ``IndexError`` is raised::"
 msgstr ""
 
-#: ../../pep-0467.txt:140
+#: ../../pep-0467.txt:170
 msgid "Addition of optimised iterator methods that produce ``bytes`` objects"
 msgstr ""
 
-#: ../../pep-0467.txt:142
+#: ../../pep-0467.txt:172
 msgid ""
 "This PEP proposes that ``bytes`` and ``bytearray`` gain an optimised "
 "``iterbytes`` method that produces length 1 ``bytes`` objects rather than"
 " integers::"
 msgstr ""
 
-#: ../../pep-0467.txt:149
+#: ../../pep-0467.txt:179
 msgid "For example::"
 msgstr ""
 
-#: ../../pep-0467.txt:156
+#: ../../pep-0467.txt:186
 msgid "Design discussion"
 msgstr ""
 
-#: ../../pep-0467.txt:159
+#: ../../pep-0467.txt:189
 msgid "Why not rely on sequence repetition to create zero-initialised sequences?"
 msgstr ""
 
-#: ../../pep-0467.txt:161
+#: ../../pep-0467.txt:191
 msgid "Zero-initialised sequences can be created via sequence repetition::"
 msgstr ""
 
-#: ../../pep-0467.txt:168
+#: ../../pep-0467.txt:198
 msgid ""
 "However, this was also the case when the ``bytearray`` type was "
 "originally designed, and the decision was made to add explicit support "
@@ -270,7 +306,7 @@ msgid ""
 "inherited that feature when it was introduced in PEP 3137."
 msgstr ""
 
-#: ../../pep-0467.txt:173
+#: ../../pep-0467.txt:203
 msgid ""
 "This PEP isn't revisiting that original design decision, just changing "
 "the spelling as users sometimes find the current behavior of the binary "
@@ -280,11 +316,11 @@ msgid ""
 " behaviors as separate class methods avoids that ambiguity."
 msgstr ""
 
-#: ../../pep-0467.txt:182
+#: ../../pep-0467.txt:212
 msgid "Omitting the originally proposed builtin function"
 msgstr ""
 
-#: ../../pep-0467.txt:184
+#: ../../pep-0467.txt:214
 msgid ""
 "When submitted to the Steering Council, this PEP proposed the "
 "introduction of a ``bchr`` builtin (with the same behaviour as "
@@ -292,7 +328,7 @@ msgid ""
 "Python 2 under a different naming scheme (``ord``/``bchr``/``chr``)."
 msgstr ""
 
-#: ../../pep-0467.txt:189
+#: ../../pep-0467.txt:219
 msgid ""
 "The SC indicated they didn't think this functionality was needed often "
 "enough to justify offering two ways of doing the same thing, especially "
@@ -301,67 +337,67 @@ msgid ""
 "``bytes.fromint`` alternate constructor."
 msgstr ""
 
-#: ../../pep-0467.txt:194
+#: ../../pep-0467.txt:224
 msgid ""
 "Developers that use this method frequently will instead have the option "
 "to define their own ``bchr = bytes.fromint`` aliases."
 msgstr ""
 
-#: ../../pep-0467.txt:199
+#: ../../pep-0467.txt:229
 msgid "Scope limitation: memoryview"
 msgstr ""
 
-#: ../../pep-0467.txt:201
+#: ../../pep-0467.txt:231
 msgid ""
 "Updating ``memoryview`` with the new item retrieval methods is outside "
 "the scope of this PEP."
 msgstr ""
 
-#: ../../pep-0467.txt:206
+#: ../../pep-0467.txt:236
 msgid "References"
 msgstr ""
 
-#: ../../pep-0467.txt:208
+#: ../../pep-0467.txt:238
 msgid ""
 "Initial March 2014 discussion thread on python-ideas "
 "(https://mail.python.org/pipermail/python-ideas/2014-March/027295.html)"
 msgstr ""
 
-#: ../../pep-0467.txt:210
+#: ../../pep-0467.txt:240
 msgid ""
 "Guido's initial feedback in that thread "
 "(https://mail.python.org/pipermail/python-ideas/2014-March/027376.html)"
 msgstr ""
 
-#: ../../pep-0467.txt:212
+#: ../../pep-0467.txt:242
 msgid ""
 "Issue proposing moving zero-initialised sequences to a dedicated API "
 "(http://bugs.python.org/issue20895)"
 msgstr ""
 
-#: ../../pep-0467.txt:214
+#: ../../pep-0467.txt:244
 msgid ""
 "Issue proposing to use calloc() for zero-initialised binary sequences "
 "(http://bugs.python.org/issue21644)"
 msgstr ""
 
-#: ../../pep-0467.txt:216
+#: ../../pep-0467.txt:246
 msgid ""
 "August 2014 discussion thread on python-dev "
 "(https://mail.python.org/pipermail/python-ideas/2014-March/027295.html)"
 msgstr ""
 
-#: ../../pep-0467.txt:218
+#: ../../pep-0467.txt:248
 msgid ""
 "June 2016 discussion thread on python-dev "
 "(https://mail.python.org/pipermail/python-dev/2016-June/144875.html)"
 msgstr ""
 
-#: ../../pep-0467.txt:223
+#: ../../pep-0467.txt:253
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0467.txt:225
+#: ../../pep-0467.txt:255
 msgid "This document has been placed in the public domain."
 msgstr ""
 
@@ -411,5 +447,26 @@ msgstr ""
 #~ "Note that ``bytes.ascii()`` would handle "
 #~ "simple ascii-encodable text correctly, "
 #~ "unlike the `ascii()`` built-in::"
+#~ msgstr ""
+
+#~ msgid "2014-03-30 2014-08-15 2014-08-16 2016-06-07 2016-09-01 2021-04-13"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Add ``bytes.fromsize`` and ``bytearray.fromsize``"
+#~ " alternative constructors"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Add ``bytes.fromint`` and ``bytearray.fromint`` "
+#~ "alternative constructors"
+#~ msgstr ""
+
+#~ msgid "Add ``bytes.getbyte`` and ``bytearray.getbyte`` byte retrieval methods"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Add ``bytes.iterbytes`` and ``bytearray.iterbytes``"
+#~ " alternative iterators"
 #~ msgstr ""
 
