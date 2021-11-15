@@ -31,7 +31,7 @@ msgstr ""
 
 #: ../../pep-0004.txt:2
 msgid "Deprecation of Standard Modules"
-msgstr ""
+msgstr "标准模块的废弃情况"
 
 #: ../../pep-0004.txt
 msgid "Author"
@@ -71,7 +71,7 @@ msgstr ""
 
 #: ../../pep-0004.txt:14
 msgid "Introduction"
-msgstr ""
+msgstr "介绍"
 
 #: ../../pep-0004.txt:16
 msgid ""
@@ -81,6 +81,9 @@ msgid ""
 "may discharge over time.  Carrying old modules around is a burden on the "
 "maintainer, especially when there is no interest in the module anymore."
 msgstr ""
+"过去当新的模块被添加到标准的 Python 库中时，不可能预见到它们在未来是否仍然有用。"
+"即使 Python “附带电池”，电池也会随着时间的推移而放电。"
+"携带旧模块是维护者的负担，特别是当人们对模块不再感兴趣的时候。"
 
 #: ../../pep-0004.txt:23
 msgid ""
@@ -92,10 +95,14 @@ msgid ""
 " module is also collected in this PEP.  If the rationale turns out "
 "faulty, the module may become 'undeprecated'."
 msgstr ""
+"同时，从发行版中移除一个模块是很困难的，因为一般来说，不知道是否还有人在使用它。"
+"这个 PEP 定义了一个从标准 Python 库中移除模块的程序。"
+"一个模块的使用可能会被 “废弃”（'deprecated'），这意味着它可能会被从未来的 Python 版本中移除。"
+"废弃一个模块的理由也被收集在这个 PEP 中。如果理由被证明是错误的，那么该模块可能会成为 “非废弃”（'undeprecated'）。"
 
 #: ../../pep-0004.txt:33
 msgid "Procedure for declaring a module deprecated"
-msgstr ""
+msgstr "宣布一个模块被废弃的程序"
 
 #: ../../pep-0004.txt:35
 msgid ""
@@ -103,6 +110,7 @@ msgid ""
 " for deprecating modules MUST be made by providing a change to the text "
 "of this PEP."
 msgstr ""
+"由于本 PEP 中记录了模块废弃的状态，因此关于废弃模块的提议必须通过对本 PEP 的文本进行修改来提出。"
 
 #: ../../pep-0004.txt:39
 msgid ""
@@ -115,6 +123,10 @@ msgid ""
 "DeprecationWarning.  The proposal MUST include patches to remove any use "
 "of the deprecated module from the standard library."
 msgstr ""
+"废除模块的提议必须包括提议废除的日期和废除的理由。"
+"此外，提议必须包括对模块文档的修改；废弃的表示方法是：该模块是 \"obsolete\" 或 \"deprecated\"。"
+"提案应该包括对模块源代码的补丁，通过引发 DeprecationWarning 来表明该模块的废弃。"
+"该提案必须包括补丁，以从标准库中移除对废弃模块的任何使用。"
 
 #: ../../pep-0004.txt:48
 msgid ""
@@ -122,10 +134,11 @@ msgid ""
 " that immediately follows the deprecation; later releases may ship "
 "without the deprecated modules."
 msgstr ""
+"我们希望被废弃的模块包含在紧随废弃的 Python 版本中；以后的版本可能没有废弃的模块。"
 
 #: ../../pep-0004.txt:54
 msgid "For modules existing in both Python 2.7 and Python 3.5"
-msgstr ""
+msgstr "对于同时存在于 Python 2.7 和 Python 3.5 中的模块来说"
 
 #: ../../pep-0004.txt:56
 msgid ""
@@ -136,10 +149,14 @@ msgid ""
 "module in the idlelib package as well as any exceptions granted by the "
 "Python development team."
 msgstr ""
+"为了方便编写可以同时在 Python 2 和 3 中工作的代码，"
+"任何同时存在于 Python 3.5 和 Python 2.7 中的模块将不会从标准库中移除，"
+"直到 PEP 373 规定的 Python 2.7 不再被支持。"
+"这一规则的例外是 idlelib 包中的任何模块，以及 Python 开发团队授予的任何例外。"
 
 #: ../../pep-0004.txt:65
 msgid "Procedure for declaring a module undeprecated"
-msgstr ""
+msgstr "宣布模块为非废弃模块的程序"
 
 #: ../../pep-0004.txt:67
 msgid ""
@@ -149,6 +166,9 @@ msgid ""
 "cases, the need for having the functionality of the module may not exist "
 "anymore."
 msgstr ""
+"当一个模块被废弃时，会给出其废弃的理由。"
+"在某些情况下，提供了相同功能的替代接口，所以旧的接口被废弃了。"
+"在其他情况下，拥有该模块功能的需求可能不再存在。"
 
 #: ../../pep-0004.txt:73
 msgid ""
@@ -158,16 +178,20 @@ msgid ""
 "procedure MUST be listed in this PEP for at least one major release of "
 "Python."
 msgstr ""
+"如果理由是错误的，必须再次提交对该PEP文本的修改。"
+"这个修改必须包括取消使用的日期和取消使用的理由。"
+"在这个过程中被取消的模块必须被列在这个 PEP 中，至少在 Python 的一个主要版本中。"
 
 #: ../../pep-0004.txt:81
 msgid "Obsolete modules"
-msgstr ""
+msgstr "过时的模块"
 
 #: ../../pep-0004.txt:83
 msgid ""
 "A number of modules are already listed as obsolete in the library "
 "documentation.  These are listed here for completeness."
 msgstr ""
+"一些模块已经在库文件中被列为过时的模块。为了完整起见，我们在此列出这些模块。"
 
 #: ../../pep-0004.txt:86
 msgid "cl, sv, timing"
@@ -178,10 +202,11 @@ msgid ""
 "All these modules have been declared as obsolete in Python 2.0, some even"
 " earlier."
 msgstr ""
+"所有这些模块在 Python 2.0 中都被宣布为过时，有些甚至更早。"
 
 #: ../../pep-0004.txt:91
 msgid "The following obsolete modules were removed in Python 2.5:"
-msgstr ""
+msgstr "在 Python 2.5 中移除了下列过时的模块："
 
 #: ../../pep-0004.txt:93
 msgid ""
@@ -192,7 +217,7 @@ msgstr ""
 
 #: ../../pep-0004.txt:98
 msgid "The following modules were removed in Python 2.6:"
-msgstr ""
+msgstr "以下模块在 Python 2.6 中被移除："
 
 #: ../../pep-0004.txt:100
 msgid "gopherlib, rgbimg, macfs"
@@ -200,7 +225,7 @@ msgstr ""
 
 #: ../../pep-0004.txt:102
 msgid "The following modules currently lack a DeprecationWarning:"
-msgstr ""
+msgstr "以下模块目前缺乏 DeprecationWarning："
 
 #: ../../pep-0004.txt:104
 msgid "rfc822, mimetools, multifile"
@@ -208,11 +233,11 @@ msgstr ""
 
 #: ../../pep-0004.txt:108
 msgid "Deprecated modules"
-msgstr ""
+msgstr "废弃的模块"
 
 #: ../../pep-0004.txt:294
 msgid "Deprecation of modules removed in Python 3.0"
-msgstr ""
+msgstr "在 Python 3.0 中移除的模块的废弃情况"
 
 #: ../../pep-0004.txt:296
 msgid ""
@@ -220,10 +245,12 @@ msgid ""
 "all are documented as deprecated in Python 2.6, and raise a "
 "DeprecationWarning if the -3 flag is activated."
 msgstr ""
+"PEP 3108 列出了所有已经从 Python 3.0 中移除的模块。"
+"它们都被记录为在 Python 2.6 中被废弃，如果激活了 -3 标志，就会引发 DeprecationWarning。"
 
 #: ../../pep-0004.txt:302
 msgid "Undeprecated modules"
-msgstr ""
+msgstr "未废弃的模块"
 
 #: ../../pep-0004.txt:304
 msgid "None."
@@ -231,9 +258,9 @@ msgstr ""
 
 #: ../../pep-0004.txt:308
 msgid "Copyright"
-msgstr ""
+msgstr "版权声明"
 
 #: ../../pep-0004.txt:310
 msgid "This document has been placed in the public domain."
-msgstr ""
+msgstr "本文件已被置于公共领域。"
 
