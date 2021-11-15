@@ -31,7 +31,7 @@ msgstr ""
 
 #: ../../pep-0006.txt:2
 msgid "Bug Fix Releases"
-msgstr ""
+msgstr "漏洞修复发布"
 
 #: ../../pep-0006.txt
 msgid "Author"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: ../../pep-0006.txt:15
 msgid "Abstract"
-msgstr ""
+msgstr "摘要"
 
 #: ../../pep-0006.txt:17
 msgid ""
@@ -85,6 +85,9 @@ msgid ""
 "\"major releases\").  This PEP describes how to fork off maintenance, or "
 "bug fix, releases of old versions for the primary purpose of fixing bugs."
 msgstr ""
+"Python 在历史上只有一次分叉开发，其发布的目的是增加新功能和提供漏洞修复"
+"（这些类型的发布将被称为 “主要发布”）。"
+"这个 PEP 描述了如何将旧版本的维护或漏洞修复分叉出来，主要目的是修复漏洞。"
 
 #: ../../pep-0006.txt:24
 msgid ""
@@ -93,10 +96,12 @@ msgid ""
 "releases are desired by enough of the Python community willing to do the "
 "work."
 msgstr ""
+"这个 PEP 不是，重复一遍，不是对错误修复版本存在的保证；"
+"它只是指定了一个程序，在有足够多的 Python 社区愿意做这项工作的情况下，需要遵循这个程序。"
 
 #: ../../pep-0006.txt:31
 msgid "Motivation"
-msgstr ""
+msgstr "动机"
 
 #: ../../pep-0006.txt:33
 msgid ""
@@ -106,6 +111,9 @@ msgid ""
 "versions to get bug fixes when so many features have been added, "
 "sometimes late in the development cycle."
 msgstr ""
+"随着向 SourceForge 的转移，Python 的发展已经加速。"
+"在社区的一部分人中有一种情绪，认为加速的程度太高了，在增加了这么多功能的情况下，"
+"许多人对升级到新版本以获得错误修复感到不舒服，有时在开发周期的晚期。"
 
 #: ../../pep-0006.txt:39
 msgid ""
@@ -114,14 +122,16 @@ msgid ""
 "Python more attractive for enterprise development, where Python may need "
 "to be installed on hundreds or thousands of machines."
 msgstr ""
+"这个问题的一个解决方案是维护以前的主要版本，提供错误修复，直到下一个主要版本。"
+"这应该使 Python 对企业开发更有吸引力，因为 Python 可能需要安装在数百或数千台机器上"。
 
 #: ../../pep-0006.txt:46
 msgid "Prohibitions"
-msgstr ""
+msgstr "禁止事项"
 
 #: ../../pep-0006.txt:48
 msgid "Bug fix releases are required to adhere to the following restrictions:"
-msgstr ""
+msgstr "错误修复版本需要遵守以下限制："
 
 #: ../../pep-0006.txt:50
 msgid ""
@@ -129,10 +139,12 @@ msgid ""
 " (no regeneration needed) with all bugfix releases forked off from a "
 "major release."
 msgstr ""
+"必须有零的语法变化。"
+"所有的 “.pyc” 和 “.pyo” 文件必须能与所有从主要版本分叉出来的错误修正版本一起工作（不需要再生）。"
 
 #: ../../pep-0006.txt:54
 msgid "There must be zero pickle changes."
-msgstr ""
+msgstr "必须有零的 pickle 变化。"
 
 #: ../../pep-0006.txt:56
 msgid ""
@@ -140,20 +152,23 @@ msgid ""
 "continue to work without recompiling in all bugfix releases in the same "
 "fork as a major release."
 msgstr ""
+"不能有任何不兼容的C语言API变化。"
+"在与主要版本相同的分叉中的所有错误修复版本中，所有扩展必须继续工作而不需要重新编译。"
 
 #: ../../pep-0006.txt:60
 msgid ""
 "Breaking any of these prohibitions requires a BDFL proclamation (and a "
 "prominent warning in the release notes)."
 msgstr ""
+"违反任何这些禁令都需要 BDFL 的公告（以及在发布说明中的显著警告）。"
 
 #: ../../pep-0006.txt:65
 msgid "Not-Quite-Prohibitions"
-msgstr ""
+msgstr "不完全禁止"
 
 #: ../../pep-0006.txt:67
 msgid "Where possible, bug fix releases should also:"
-msgstr ""
+msgstr "在可能的情况下，错误修复版本也应如此："
 
 #: ../../pep-0006.txt:69
 msgid ""
@@ -161,6 +176,7 @@ msgid ""
 "not add the latest and greatest whizzo feature from the HEAD of the CVS "
 "root."
 msgstr ""
+"没有新的功能。错误修复版本的目的是修复错误，而不是从 CVS 根的 HEAD 中添加最新、最棒的 whizzo 功能。"
 
 #: ../../pep-0006.txt:73
 msgid ""
@@ -169,10 +185,12 @@ msgid ""
 " unless it is necessary to fix a bug, the standard library should not "
 "change behavior, or worse yet, APIs."
 msgstr ""
+"成为一个无痛的升级。用户应该感到有信心，从 2.x.y 升级到 2.x.(y+1) 不会破坏他们的运行系统。"
+"这意味着，除非有必要修复一个错误，否则标准库不应该改变行为，或者更糟糕的是，不应该改变 API。"
 
 #: ../../pep-0006.txt:80
 msgid "Applicability of Prohibitions"
-msgstr ""
+msgstr "禁止事项的适用性"
 
 #: ../../pep-0006.txt:82
 msgid ""
@@ -180,20 +198,23 @@ msgid ""
 "release to a bugfix release (for instance, 2.4 to 2.4.1) and for one "
 "bugfix release to the next in a series (for instance 2.4.1 to 2.4.2)."
 msgstr ""
+"上述禁令和不完全禁令既适用于一个最终版本到一个错误修复版本（例如，2.4 到 2.4.1），"
+"也适用于一个系列中的一个错误修复版本到下一个系列（例如 2.4.1 到 2.4.2）。"
 
 #: ../../pep-0006.txt:87
 msgid ""
 "Following the prohibitions listed in this PEP should help keep the "
 "community happy that a bug fix release is a painless and safe upgrade."
 msgstr ""
+"遵循本 PEP 中列出的禁令应该有助于保持社区的快乐，即错误修复版本是一种无痛和安全的升级。"
 
 #: ../../pep-0006.txt:92
 msgid "Helping the Bug Fix Releases Happen"
-msgstr ""
+msgstr "有助于错误修复的发布"
 
 #: ../../pep-0006.txt:94
 msgid "Here's a few pointers on helping the bug fix release process along."
-msgstr ""
+msgstr "这里有一些关于帮助错误修复发布过程的提示。"
 
 #: ../../pep-0006.txt:96
 msgid ""
@@ -202,12 +223,15 @@ msgid ""
 " unable to backport it yourself, make a note in the commit message, with "
 "words like 'Bugfix candidate' or 'Backport candidate'."
 msgstr ""
+"回传错误修复。如果你修复了一个bug，而且看起来很合适，就把它移植到当前 bug 修复版本的 CVS 分支中。"
+"如果你不愿意或不能自己进行回传，请在提交信息中注明 “Bugfix candidate” 或 “Backport candidate” 等字样。"
 
 #: ../../pep-0006.txt:102
 msgid ""
 "If you're not sure, ask. Ask the person managing the current bug fix "
 "releases if they think a particular fix is appropriate."
 msgstr ""
+"如果你不确定，就问。问问管理当前错误修复版本的人，他们是否认为某个特定的修复是合适的。"
 
 #: ../../pep-0006.txt:105
 msgid ""
@@ -216,10 +240,12 @@ msgid ""
 "hours before a bug fix release is due, and then start asking for bug "
 "fixes to be included."
 msgstr ""
+"如果有一个你特别希望在错误修复版本中修复的特定错误，那就跳起来，努力把它完成。"
+"不要等到错误修复版本到期前 48 小时，才开始要求将错误修复包括在内。"
 
 #: ../../pep-0006.txt:112
 msgid "Version Numbers"
-msgstr ""
+msgstr "版本编号"
 
 #: ../../pep-0006.txt:114
 msgid ""
@@ -227,12 +253,15 @@ msgid ""
 "version number of the form X.Y; bugfix releases will always be of the "
 "form X.Y.Z."
 msgstr ""
+"从 Python 2.0 开始，所有的主要版本都需要有 X.Y 形式的版本号；错误修复版本将总是 X.Y.Z 形式。"
 
 #: ../../pep-0006.txt:118
 msgid ""
 "The current major release under development is referred to as release N; "
 "the just-released major version is referred to as N-1."
 msgstr ""
+"目前正在开发的主要版本被称为N 版；"
+"刚刚发布的主要版本被称为 N-1。"
 
 #: ../../pep-0006.txt:121
 msgid ""
@@ -240,16 +269,19 @@ msgid ""
 "branch is named 'release2x-maint'. For example, the branch for the 2.3 "
 "maintenance releases is release23-maint"
 msgstr ""
+"在 CVS 中，错误修复版本发生在一个分支上。"
+"对于 2.x 版，该分支被命名为 'release2x-maint'。例如，2.3 维护版本的分支是 release23-maint"
 
 #: ../../pep-0006.txt:127
 msgid "Procedure"
-msgstr ""
+msgstr "流程"
 
 #: ../../pep-0006.txt:129
 msgid ""
 "The process for managing bugfix releases is modeled in part on the Tcl "
 "system [1]_."
 msgstr ""
+"管理 bugfix 发布的过程部分仿照了 Tcl 系统 [1]_。"
 
 #: ../../pep-0006.txt:132
 msgid ""
@@ -259,6 +291,9 @@ msgid ""
 "branch of development - it's quite possible that a different person might"
 " be maintaining the 2.3.x and the 2.4.x releases."
 msgstr ""
+"Patch Czar 是与 BDFL 相对应的，用于错误修复发布。"
+"然而，BDFL 和指定的任命者对单个补丁保留否决权。"
+"一个补丁管理员可能只负责一个开发分支--很可能一个不同的人在维护 2.3.x 和 2.4.x 版本。"
 
 #: ../../pep-0006.txt:138
 msgid ""
@@ -268,6 +303,8 @@ msgid ""
 "suitable, the committer can either commit the release to the maintenance "
 "branch, or else mark the patch in the commit message."
 msgstr ""
+"当单个补丁被贡献到 CVS 的当前主干时，每个补丁提交者都会被要求考虑该补丁是否是一个适合包含在错误修复版本中的错误修复。"
+"如果该补丁被认为是合适的，提交者可以将该版本提交到维护分支，或者在提交信息中标记该补丁。"
 
 #: ../../pep-0006.txt:144
 msgid ""
@@ -277,6 +314,9 @@ msgid ""
 "it's probably better that a bug in a specific release also be fixed on "
 "the HEAD as well as the branch."
 msgstr ""
+"此外，来自 Python 社区的任何人都可以自由地提出要加入的补丁。"
+"补丁可以专门为错误修复版本提交；它们应该遵循 PEP 3 [2]_ 中的指导方针。"
+"不过一般来说，一个特定版本中的错误最好也能在 HEAD 以及分支上得到修正。"
 
 #: ../../pep-0006.txt:150
 msgid ""
@@ -288,6 +328,10 @@ msgid ""
 "trying for a release approximately every six months, but this should not "
 "be considered binding in any way on any future releases."
 msgstr ""
+"补丁管理员决定何时有足够数量的补丁需要发布。"
+"该版本被打包，包括一个 Windows 安装程序，并被公开。"
+"如果发现任何新的错误，必须立即修复，并公布一个新的错误修复版本（增加版本号）。"
+"对于 2.3.x 周期，补丁管理员（Anthony）一直在尝试大约每六个月发布一次，但这不应该被视为对任何未来版本的约束。
 
 #: ../../pep-0006.txt:159
 msgid ""
@@ -299,42 +343,47 @@ msgid ""
 "someone qualified wishes to continue the work to maintain an older "
 "release, they should be encouraged."
 msgstr ""
+"预计错误修复的发布时间间隔大约为六个月。"
+"然而，这只是一个指导原则--显然，如果发现了一个重大的错误，那么错误修复版本可能会更早地出现。"
+"一般来说，只有 N-1 版本在任何时候都会处于主动维护状态。"
+"也就是说，在 Python 2.4 的开发过程中，Python 2.3 会得到错误修复版本。"
+"但是，如果有合格的人希望继续维护一个较早的版本，应该鼓励他们。"
 
 #: ../../pep-0006.txt:169
 msgid "Patch Czar History"
-msgstr ""
+msgstr "补丁管理员历史"
 
 #: ../../pep-0006.txt:171
 msgid "Anthony Baxter is the Patch Czar for 2.3.1 through 2.3.4."
-msgstr ""
+msgstr "Anthony Baxter 是 2.3.1 到 2.3.4 的补丁管理员。"
 
 #: ../../pep-0006.txt:173
 msgid "Barry Warsaw is the Patch Czar for 2.2.3."
-msgstr ""
+msgstr "Barry Warsaw 是 2.2.3 版本的补丁管理员。"
 
 #: ../../pep-0006.txt:175
 msgid "Guido van Rossum is the Patch Czar for 2.2.2."
-msgstr ""
+msgstr "Guido van Rossum 是 2.2.2 的补丁管理员。"
 
 #: ../../pep-0006.txt:177
 msgid "Michael Hudson is the Patch Czar for 2.2.1."
-msgstr ""
+msgstr "Michael Hudson 是 2.2.1 版本的补丁管理员。"
 
 #: ../../pep-0006.txt:179
 msgid "Anthony Baxter is the Patch Czar for 2.1.2 and 2.1.3."
-msgstr ""
+msgstr "Anthony Baxter 是 2.1.2 和 2.1.3 的补丁管理员。"
 
 #: ../../pep-0006.txt:181
 msgid "Thomas Wouters is the Patch Czar for 2.1.1."
-msgstr ""
+msgstr "Thomas Wouters 是 2.1.1 版本的补丁管理员。"
 
 #: ../../pep-0006.txt:183
 msgid "Moshe Zadka is the Patch Czar for 2.0.1."
-msgstr ""
+msgstr "Moshe Zadka 是 2.0.1 版本的补丁管理员。"
 
 #: ../../pep-0006.txt:187
 msgid "History"
-msgstr ""
+msgstr "历史"
 
 #: ../../pep-0006.txt:189
 msgid ""
@@ -343,6 +392,9 @@ msgid ""
 "concurrently with the N release.  The original version also argued for "
 "sticking with a strict bug fix policy."
 msgstr ""
+"这个 PEP 最初是在 comp.lang.python 上的一个提议。"
+"最初的版本建议为 N-1 版本打一个补丁，与 N 版本同时发布。"
+"最初的版本还主张坚持严格的错误修复政策。"
 
 #: ../../pep-0006.txt:194
 msgid ""
@@ -352,6 +404,9 @@ msgid ""
 "requirement (mainly due to the example of PEP 235 [3]_, which could be "
 "argued as either a bug fix or a feature)."
 msgstr ""
+"根据 BDFL 和其他方面的反馈，编写了 PEP 草案，其中包含一个扩大的错误修复发布周期，"
+"允许之前的任何主要版本获得补丁，还放宽了严格的错误修复要求"
+"（主要是由于 PEP 235 [3]_ 的例子，可以说是错误修复或功能）。"
 
 #: ../../pep-0006.txt:200
 msgid ""
@@ -361,16 +416,21 @@ msgid ""
 "N-1 release and only bug fixes, but allowing multiple bugfix releases "
 "until release N is published."
 msgstr ""
+"后来讨论主要转移到 python-dev，在那里BDFL终于发布了一个公告，"
+"将 Python 的 bugfix 发布过程建立在 Tcl 的基础上，"
+"这基本上回到了最初的提议，即只做 N-1 版本，只做 bugfix，"
+"但在 N 版本发布之前允许多次 bugfix 发布。"
 
 #: ../../pep-0006.txt:206
 msgid ""
 "Anthony Baxter then took this PEP and revised it, based on lessons from "
 "the 2.3 release cycle."
 msgstr ""
+"Anthony Baxter 随后根据 2.3 发布周期的经验教训，对这个 PEP 进行了修订。"
 
 #: ../../pep-0006.txt:211
 msgid "References"
-msgstr ""
+msgstr "参考"
 
 #: ../../pep-0006.txt:213
 msgid "http://www.tcl.tk/cgi-bin/tct/tip/28.html"
@@ -381,18 +441,22 @@ msgid ""
 "PEP 3, Guidelines for Handling Bug Reports, Hylton "
 "(http://www.python.org/dev/peps/pep-0003/)"
 msgstr ""
+"PEP 3，处理错误报告的指南，Hylton"
+"（http://www.python.org/dev/peps/pep-0003/）"
 
 #: ../../pep-0006.txt:219
 msgid ""
 "PEP 235, Import on Case-Insensitive Platforms, Peters "
 "(http://www.python.org/dev/peps/pep-0235/)"
 msgstr ""
+"PEP 235，在对大小写不敏感的平台上导入，Peters"
+"（http://www.python.org/dev/peps/pep-0235/）"
 
 #: ../../pep-0006.txt:224
 msgid "Copyright"
-msgstr ""
+msgstr "版权声明"
 
 #: ../../pep-0006.txt:226
 msgid "This document has been placed in the public domain."
-msgstr ""
+msgstr "本文档已被置于公共领域。"
 
