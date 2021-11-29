@@ -618,15 +618,15 @@ msgstr ""
 
 #: ../../pep-0420.txt:326
 msgid "Examples"
-msgstr ""
+msgstr "示例"
 
 #: ../../pep-0420.txt:329
 msgid "Nested namespace packages"
-msgstr ""
+msgstr "嵌套的命名空间包"
 
 #: ../../pep-0420.txt:331
 msgid "This example uses the following directory structure::"
-msgstr ""
+msgstr "这个例子使用了以下目录结构 ::"
 
 #: ../../pep-0420.txt:343
 msgid ""
@@ -634,18 +634,21 @@ msgid ""
 "exist in different directories, and they do not have ``__init__.py`` "
 "files."
 msgstr ""
+"这里，父代和子代都是命名空间包。它们的 portion 存在于不同的目录中，并且它们没有 ``__init__.py`` 文件。"
 
 #: ../../pep-0420.txt:347
 msgid ""
 "Here we add the parent directories to ``sys.path``, and show that the "
 "portions are correctly found::"
 msgstr ""
+"这里我们将父目录添加到 ``sys.path`` 中，并显示 portion 被正确找到 ::"
 
 #: ../../pep-0420.txt:363
 msgid ""
 "This example uses a similar directory structure, but adds a third "
 "portion::"
 msgstr ""
+"这个例子使用类似的目录结构，但增加了第三个部分 ::"
 
 #: ../../pep-0420.txt:380
 msgid ""
@@ -654,16 +657,20 @@ msgid ""
 "``project3`` to ``sys.path`` and when ``parent.child.three`` is imported,"
 " ``project3/parent`` is automatically added to ``parent.__path__``::"
 msgstr ""
+"我们在 ``sys.path`` 中添加 ``project1`` 和 ``project2``，然后导入 ``parent.child.one`` 和 ``parent.child.two``。"
+"然后我们在 ``sys.path`` 中加入 ``project3``，"
+"当 ``parent.child.three`` 被导入时，``project3/parent`` 被自动添加到 ``parent.__path__`` ::"
 
 #: ../../pep-0420.txt:428
 msgid "Discussion"
-msgstr ""
+msgstr "讨论"
 
 #: ../../pep-0420.txt:430
 msgid ""
 "At PyCon 2012, we had a discussion about namespace packages at which PEP "
 "382 and PEP 402 were rejected, to be replaced by this PEP [3]_."
 msgstr ""
+"在 2012 年的 PyCon 大会上，我们对命名空间包进行了讨论，其中 PEP 382 和 PEP 402 被否决，由这个 PEP [3]_ 取代。"
 
 #: ../../pep-0420.txt:433
 msgid ""
@@ -675,6 +682,10 @@ msgid ""
 "With namespace packages, all entries in the path must be scanned before "
 "the package is created."
 msgstr ""
+"没有打算取消对常规包的支持。"
+"如果开发者知道其包永远不会成为命名空间包的一部分，那么它作为一个普通的包（有一个 ``init__.py``）会有性能上的优势。"
+"当一个常规包位于路径上时，它的创建和加载可以立即进行。"
+"对于命名空间包，在创建包之前，必须对路径中的所有条目进行扫描。"
 
 #: ../../pep-0420.txt:441
 msgid ""
@@ -683,12 +694,16 @@ msgid ""
 "as a namespace package, whereas in prior Python versions an ImportWarning"
 " would be raised."
 msgstr ""
+"注意，如果一个目录没有 ``init__.py`` 文件，将不再引发 ImportWarning。"
+"这样的目录现在将作为一个命名空间包被导入，而在之前的 Python 版本中，导入警告将被触发。"
 
 #: ../../pep-0420.txt:446
 msgid ""
 "Nick Coghlan presented a list of his objections to this proposal [4]_. "
 "They are:"
 msgstr ""
+"Nick Coghlan 提出了他对这一建议的反对意见清单 [4]_。"
+"它们是："
 
 #: ../../pep-0420.txt:449
 msgid "Implicit package directories go against the Zen of Python."
