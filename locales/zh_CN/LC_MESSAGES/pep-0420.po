@@ -31,7 +31,7 @@ msgstr ""
 
 #: ../../pep-0420.txt:2
 msgid "Implicit Namespace Packages"
-msgstr ""
+msgstr "隐式命名空间包"
 
 #: ../../pep-0420.txt
 msgid "Author"
@@ -87,7 +87,7 @@ msgstr ""
 
 #: ../../pep-0420.txt:15
 msgid "Abstract"
-msgstr ""
+msgstr "摘要"
 
 #: ../../pep-0420.txt:17
 msgid ""
@@ -100,20 +100,26 @@ msgid ""
 "been rejected in favor of this one.  An implementation of this PEP is at "
 "[1]_."
 msgstr ""
+"命名空间包是一种将单个 Python 包分割到磁盘上多个目录的机制。"
+"在当前的 Python 版本中，必须制定一种算法来计算软件包的 ``__path__``。"
+"通过这里提出的改进，导入机制本身将构建构成包的目录列表。"
+"这个 PEP 建立在以前的工作之上，记录在 PEP 382 和 PEP 402 中。"
+"这些 PEP 后来被否决了，转而支持这个 PEP。 这个 PEP 的实现是在 [1]_。"
 
 #: ../../pep-0420.txt:27
 msgid "Terminology"
-msgstr ""
+msgstr "术语"
 
 #: ../../pep-0420.txt:29
 msgid "Within this PEP:"
-msgstr ""
+msgstr "在此 PEP 中："
 
 #: ../../pep-0420.txt:31
 msgid ""
 "\"package\" refers to Python packages as defined by Python's import "
 "statement."
 msgstr ""
+"\"package\" 指的是由 Python 的导入语句定义的 Python 包。"
 
 #: ../../pep-0420.txt:34
 msgid ""
@@ -121,6 +127,7 @@ msgid ""
 "as stored in the Python package index, and installed by distutils or "
 "setuptools."
 msgstr ""
+"\"distribution\" 指的是存储在 Python 包索引中，并由 distutils 或 setuptools 安装的可单独安装的 Python 模块集。"
 
 #: ../../pep-0420.txt:38
 msgid ""
@@ -128,38 +135,43 @@ msgid ""
 "system's packaging mechanism (e.g. Debian or Redhat packages install on "
 "Linux systems)."
 msgstr ""
+"\"vendor package\" 指的是由操作系统的打包机制安装的文件组（例如，Debian 或 Redhat 软件包在 Linux 系统上的安装）。"
 
 #: ../../pep-0420.txt:42
 msgid ""
 "\"regular package\" refers to packages as they are implemented in Python "
 "3.2 and earlier."
 msgstr ""
+"\"regular package\" 指的是 Python 3.2 和更早版本中实现的包。"
 
 #: ../../pep-0420.txt:45
 msgid ""
 "\"portion\" refers to a set of files in a single directory (possibly "
 "stored in a zip file) that contribute to a namespace package."
 msgstr ""
+"\"portion\" 指的是一个单一目录中的一组文件（可能存储在一个压缩文件中），这些文件对一个命名空间包有贡献。"
 
 #: ../../pep-0420.txt:48
 msgid ""
 "\"legacy portion\" refers to a portion that uses ``__path__`` "
 "manipulation in order to implement namespace packages."
 msgstr ""
+"\"legacy portion\" 指的是为了实现命名空间包而使用 ``__path__`` 操作的部分。"
 
 #: ../../pep-0420.txt:51
 msgid "This PEP defines a new type of package, the \"namespace package\"."
-msgstr ""
+msgstr "这个 PEP 定义了一种新的包的类型，即 \"namespace package\"。"
 
 #: ../../pep-0420.txt:55
 msgid "Namespace packages today"
-msgstr ""
+msgstr "今天的命名空间包"
 
 #: ../../pep-0420.txt:57
 msgid ""
 "Python currently provides ``pkgutil.extend_path`` to denote a package as "
 "a namespace package.  The recommended way of using it is to put::"
 msgstr ""
+"Python 目前提供了 ``pkgutil.extend_path`` 来表示一个包为命名空间包。推荐的使用方法是把 ::"
 
 #: ../../pep-0420.txt:63
 msgid ""
@@ -172,12 +184,17 @@ msgid ""
 "feature, ``extend_path`` reads files named ``<packagename>.pkg`` which "
 "allows declaration of additional portions."
 msgstr ""
+"放在包的 ``__init__.py`` 中。"
+"每个发行版都需要在其 ``__init__.py`` 中提供相同的内容，这样 ``extend_path`` 的调用就与软件包的哪一部分先被导入无关。"
+"因此，软件包的 ``__init__.py`` 实际上不能定义任何名字，因为它依赖于 ``sys.path`` 上的软件包片段的顺序来决定哪部分先被导入。"
+"作为一个特殊的功能，``extend_path`` 读取名为 ``<packagename>.pkg`` 的文件，允许声明额外的部分。"
 
 #: ../../pep-0420.txt:72
 msgid ""
 "setuptools provides a similar function named "
 "``pkg_resources.declare_namespace`` that is used in the form::"
 msgstr ""
+"setuptools 提供了一个类似的函数，名为 ``pkg_resources.declare_namespace`` ，其使用形式为 ::"
 
 #: ../../pep-0420.txt:78
 msgid ""
@@ -188,6 +205,10 @@ msgid ""
 "that future additions to ``sys.path`` by setuptools can properly add "
 "additional portions to each package."
 msgstr ""
+"在该部分的 ``__init__.py`` 中，不需要对 ``__path__`` 进行赋值，"
+"因为 ``declare_namespace`` 通过 ``sys.modules`` 修改了软件包 ``__path__``。"
+"作为一个特殊的功能，``declare_namespace`` 也支持压缩文件，并在内部注册包的名称，"
+"以便将来 setuptools 对 ``sys.path`` 的添加可以正确地添加到每个包的附加部分。"
 
 #: ../../pep-0420.txt:85
 msgid ""
@@ -195,6 +216,8 @@ msgid ""
 "``setup.py``, so that distribution developers don't need to put the magic"
 " ``__path__`` modification into ``__init__.py`` themselves."
 msgstr ""
+"setuptools 允许在发行版的 ``setup.py`` 中声明命名空间包，"
+"这样发行版的开发者就不需要自己把神奇的 ``__path__`` 修改到 ``__init__.py`` 中。"
 
 #: ../../pep-0420.txt:89
 msgid ""
@@ -202,10 +225,12 @@ msgid ""
 " namespace packages.  Note that PEP 402 has been rejected, but the "
 "motivating use cases are still valid."
 msgstr ""
+"参见 PEP 402 的 \"The Problem\" 部分 [2]_ ，了解命名空间包的其他动机。"
+"请注意，PEP 402 已经被否决了，但激励的用例仍然有效。"
 
 #: ../../pep-0420.txt:95
 msgid "Rationale"
-msgstr ""
+msgstr "理论依据"
 
 #: ../../pep-0420.txt:97
 msgid ""
@@ -215,6 +240,9 @@ msgid ""
 " setuptools supports inspecting zip files, and supports adding portions "
 "to its ``_namespace_packages`` variable, whereas pkgutil doesn't."
 msgstr ""
+"目前对命名空间包的命令式方法导致了提供命名空间包的多种稍微不兼容的机制。"
+"例如，pkgutil 支持 ``*.pkg`` 文件；setuptools 则不支持。"
+"同样，setuptools 支持检查 zip 文件，并支持向其 ``_namespace_packages`` 变量添加部分内容，而 pkgutil 不支持。"
 
 #: ../../pep-0420.txt:104
 msgid ""
@@ -232,6 +260,12 @@ msgid ""
 "portions can be installed into a common directory or split across "
 "multiple directories as distributions see fit."
 msgstr ""
+"命名空间包被设计为支持在多个目录中分割（因此通过多个 ``sys.path`` 条目找到）。"
+"在这种配置下，如果多个部分都提供了一个 ``__init__.py`` 文件，这并不重要，只要每个部分都正确地初始化了命名空间包。"
+"然而，Linux 发行商（包括其他人）更喜欢将独立的部分结合起来，并将它们全部安装到 *相同的* 文件系统目录中。"
+"这就产生了潜在的冲突，因为这些部分现在正试图在目标系统上提供 *相同的* 文件 -- 这是许多软件包管理器所不允许的。"
+"允许隐式命名空间包意味着可以完全放弃提供 ``__init__.py`` 文件的要求，"
+"受影响的部分可以安装到一个共同的目录中，或者按照发行版的要求分割到多个目录中。"
 
 #: ../../pep-0420.txt:119
 msgid ""
@@ -239,28 +273,33 @@ msgid ""
 "computed from the parent path at namespace package creation time. "
 "Consider the standard library ``encodings`` package:"
 msgstr ""
+"一个命名空间包不会受到固定的 ``__path__`` 的约束，在命名空间包创建时从父路径计算出来。"
+"考虑一下标准库的 ``encodings`` 包："
 
 #: ../../pep-0420.txt:123
 msgid "Suppose that ``encodings`` becomes a namespace package."
-msgstr ""
+msgstr "假设 ``encodings`` 成为一个命名空间包。"
 
 #: ../../pep-0420.txt:125
 msgid ""
 "It sometimes gets imported during interpreter startup to initialize the "
 "standard io streams."
 msgstr ""
+"它有时会在解释器启动时被导入，以初始化标准 io 流。"
 
 #: ../../pep-0420.txt:128
 msgid ""
 "An application modifies ``sys.path`` after startup and wants to "
 "contribute additional encodings from new path entries."
 msgstr ""
+"一个应用程序在启动后修改了 ``sys.path``，并希望从新的路径条目中贡献额外的编码。"
 
 #: ../../pep-0420.txt:131
 msgid ""
 "An attempt is made to import an encoding from an ``encodings`` portion "
 "that is found on a path entry added in step 3."
 msgstr ""
+"试图从 ``encodings`` 部分导入编码，该部分在步骤 3 中添加的路径条目中发现。"
 
 #: ../../pep-0420.txt:134
 msgid ""
@@ -277,16 +316,23 @@ msgid ""
 "it detects that the parent path has changed.  In the case of a top-level "
 "package like ``encodings``, this parent path would be ``sys.path``."
 msgstr ""
+"如果导入系统被限制为只能沿着 ``sys.path`` 的值寻找在创建 ``encodings`` 命名空间包时存在的部分，"
+"那么在步骤 3 中添加的额外路径将永远不会被搜索到步骤 4 中导入的额外部分。"
+"此外，如果步骤 2 有时被跳过（由于某些运行时标志或其他条件），那么在步骤 3 中添加的路径项确实会在第一次导入部分时被使用。"
+"因此，本 PEP 要求在每个部分被加载时动态地计算路径项的列表。"
+"预计导入机制将通过缓存 ``__path__`` 值来有效地完成这一工作，并且只有在检测到父路径发生变化时才刷新它们。"
+"对于像 ``encodings`` 这样的顶级包来说，这个父路径就是 ``sys.path``。"
 
 #: ../../pep-0420.txt:150
 msgid "Specification"
-msgstr ""
+msgstr "规格"
 
 #: ../../pep-0420.txt:152
 msgid ""
 "Regular packages will continue to have an ``__init__.py`` and will reside"
 " in a single directory."
 msgstr ""
+"常规软件包将继续有一个 ``__init__.py``，并驻留在一个目录中。"
 
 #: ../../pep-0420.txt:155
 msgid ""
@@ -295,6 +341,9 @@ msgid ""
 "obsolete for purposes of namespace package creation.  There will be no "
 "marker file or directory for specifying a namespace package."
 msgstr ""
+"命名空间包不能包含一个 ``__init__.py``。"
+"因此，``pkgutil.extend_path`` 和 ``pkg_resources.declare_namespace`` 对于创建命名空间包来说已经过时了。"
+"将不会有用于指定命名空间包的标记文件或目录。"
 
 #: ../../pep-0420.txt:161
 msgid ""
@@ -303,12 +352,15 @@ msgid ""
 "looking for a module or package named \"foo\", for each directory in the "
 "parent path:"
 msgstr ""
+"在导入处理过程中，导入机制将继续遍历父路径中的每个目录，就像在 Python 3.2 中那样。"
+"在寻找名为 \"foo\" 的模块或包时，对于父路径中的每个目录："
 
 #: ../../pep-0420.txt:166
 msgid ""
 "If ``<directory>/foo/__init__.py`` is found, a regular package is "
 "imported and returned."
 msgstr ""
+"如果找到 ``<directory>/foo/__init__.py``，就会导入并返回一个常规包。"
 
 #: ../../pep-0420.txt:169
 msgid ""
@@ -316,6 +368,8 @@ msgid ""
 "imported and returned.  The exact list of extension varies by platform "
 "and whether the -O flag is specified.  The list here is representative."
 msgstr ""
+"如果没有，但找到了 ``<directory>/foo.{py,pyc,so,pyd}``，则会导入一个模块并返回。"
+"确切的扩展列表因平台和是否指定 -O 标志而不同。这里的列表是有代表性的。"
 
 #: ../../pep-0420.txt:174
 msgid ""
@@ -323,10 +377,11 @@ msgid ""
 "recorded and the scan continues with the next directory in the parent "
 "path."
 msgstr ""
+"如果没有，但找到了 ``<directory>/foo``，并且是一个目录，就会被记录下来，然后继续扫描父路径中的下一个目录。"
 
 #: ../../pep-0420.txt:178
 msgid "Otherwise the scan continues with the next directory in the parent path."
-msgstr ""
+msgstr "否则将继续扫描父路径中的下一个目录。"
 
 #: ../../pep-0420.txt:181
 msgid ""
@@ -334,16 +389,18 @@ msgid ""
 " one directory was recorded, then a namespace package is created. The new"
 " namespace package:"
 msgstr ""
+"如果扫描完成后没有返回一个模块或包，并且至少有一个目录被记录，那么就会创建一个命名空间包。新的命名空间包："
 
 #: ../../pep-0420.txt:185
 msgid ""
 "Has a ``__path__`` attribute set to an iterable of the path strings that "
 "were found and recorded during the scan."
 msgstr ""
+"有一个 ``__path__`` 属性，设置为在扫描过程中发现并记录的路径字符串是可迭代的。"
 
 #: ../../pep-0420.txt:188
 msgid "Does not have a ``__file__`` attribute."
-msgstr ""
+msgstr "没有 ``__file__`` 属性。"
 
 #: ../../pep-0420.txt:190
 msgid ""
@@ -352,6 +409,8 @@ msgid ""
 "created as a package.  The creation of the namespace package is not "
 "deferred until a sub-level import occurs."
 msgstr ""
+"注意，如果执行了 \"import foo\"，并且发现 \"foo\" 是一个命名空间包（使用上述规则），"
+"那么 \"foo\" 会立即被创建为一个包。命名空间包的创建不会被推迟到子级导入发生时。"
 
 #: ../../pep-0420.txt:195
 msgid ""
@@ -360,16 +419,20 @@ msgid ""
 "namespace package is created, there is no functional difference between "
 "it and a regular package."
 msgstr ""
+"命名空间包与常规包没有本质上的区别。"
+"它只是创建包的一种不同方式。"
+"一旦创建了命名空间包，它和常规包之间就没有功能上的区别。"
 
 #: ../../pep-0420.txt:201 ../../pep-0420.txt:361 ../../pep-0420.txt:499
 msgid "Dynamic path computation"
-msgstr ""
+msgstr "动态路径的计算"
 
 #: ../../pep-0420.txt:203
 msgid ""
 "The import machinery will behave as if a namespace package's ``__path__``"
 " is recomputed before each portion is loaded."
 msgstr ""
+"导入机制将表现为命名空间包的 ``__path__`` 在每个部分被加载之前被重新计算。"
 
 #: ../../pep-0420.txt:206
 msgid ""
@@ -380,10 +443,13 @@ msgid ""
 "path are detected, as well as detecting the replacement of the parent "
 "path with a new path entry list object."
 msgstr ""
+"出于性能方面的考虑，预计这将通过检测父路径的变化来实现。"
+"如果没有发生变化，那么就不需要对 ``__path__`` 重新进行计算。"
+"实现必须确保检测到父路径内容的变化，以及检测到用新的路径入口列表对象替换父路径。"
 
 #: ../../pep-0420.txt:214
 msgid "Impact on import finders and loaders"
-msgstr ""
+msgstr "对 import 发现器与加载器的影响"
 
 #: ../../pep-0420.txt:216
 msgid ""
@@ -391,6 +457,8 @@ msgid ""
 "These finders' ``find_module`` methods return either a \"loader\" object "
 "or ``None``."
 msgstr ""
+"PEP 302 定义了被调用来搜索路径元素的 \"finders\"。"
+"这些查找器的 ``find_module`` 方法返回一个 \"loader\" 对象或 ``None``。"
 
 #: ../../pep-0420.txt:220
 msgid ""
