@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"POT-Creation-Date: 2023-01-31 10:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: xinetzone <xinzone@outlook.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -77,7 +77,7 @@ msgstr ""
 
 #: ../../pep-0582.rst:17
 msgid "Abstract"
-msgstr ""
+msgstr "摘要"
 
 #: ../../pep-0582.rst:19
 msgid ""
@@ -88,10 +88,13 @@ msgid ""
 "will use the ``__pypackages__`` from the base directory of the script "
 "when present."
 msgstr ""
+"此 PEP 提议向 Python 添加一种自动识别 ``__pypackages__`` "
+"目录的机制，并优先导入安装在此位置的包，而不是用户或全局站点包。这将避免创建、激活或禁用“虚拟环境”的步骤。当出现时，Python "
+"将使用脚本基目录中的 ``__pypackages__``。"
 
 #: ../../pep-0582.rst:28
 msgid "Motivation"
-msgstr ""
+msgstr "动机"
 
 #: ../../pep-0582.rst:30
 msgid ""
@@ -101,12 +104,14 @@ msgid ""
 "people run into while being introduced to Python (or programming for the "
 "first time)."
 msgstr ""
+"Python 虚拟环境已经成为社区中开发和教学工作流程的重要组成部分，但与此同时，它们也为许多人创造了进入的障碍。以下是人们在接触 "
+"Python（或第一次编程）时遇到的一些问题。"
 
 #: ../../pep-0582.rst:35
 msgid ""
 "How virtual environments work is a lot of information for anyone new. It "
 "takes a lot of extra time and effort to explain them."
-msgstr ""
+msgstr "对于新手来说，虚拟环境是如何工作的是很多信息。解释它们需要花费大量额外的时间和精力。"
 
 #: ../../pep-0582.rst:38
 msgid ""
@@ -115,6 +120,8 @@ msgid ""
 "environment with people coming with different operating systems installed"
 " on their laptops create a lot of confusion among the participants."
 msgstr ""
+"不同的平台和 shell "
+"环境需要不同的命令集来激活虚拟环境。任何研讨会或教学环境，如果人们的笔记本电脑上安装了不同的操作系统，都会在参与者中造成很多困惑。"
 
 #: ../../pep-0582.rst:43
 msgid ""
@@ -122,11 +129,11 @@ msgid ""
 "someone creates/opens a new terminal, that by default does not get the "
 "same environment as in a previous terminal with virtual environment "
 "activated."
-msgstr ""
+msgstr "虚拟环境需要在每个打开的终端上被激活。如果有人创建/打开新终端，默认情况下，该终端不会获得与之前激活的虚拟环境相同的环境。"
 
 #: ../../pep-0582.rst:49
 msgid "Rationale"
-msgstr ""
+msgstr "基本原理"
 
 #: ../../pep-0582.rst:51
 #, python-format
@@ -139,6 +146,8 @@ msgid ""
 "far easier than learning the details of virtual environments in various "
 "platforms."
 msgstr ""
+"Python 是初学者友好的编程语言。但是，到目前为止，虚拟环境是新人学习过程中的主要时间。这个 PEP 并不是试图解决每个打包问题，而是专注于 "
+"90% 在学习过程中与虚拟环境作斗争的新人。创建新目录仍然比在不同平台上了解虚拟环境的细节容易得多。"
 
 #: ../../pep-0582.rst:58
 msgid ""
@@ -147,10 +156,12 @@ msgid ""
 " should use proper virtual environments (for example, created using the "
 ":mod:`venv` module)."
 msgstr ""
+"PEP 的主要观点是，它并没有试图取代虚拟环境。如果需要虚拟环境的所有功能，他们应该使用合适的虚拟环境（例如，使用 :mod:`venv` "
+"模块创建）。"
 
 #: ../../pep-0582.rst:63
 msgid "Specification"
-msgstr ""
+msgstr "规范"
 
 #: ../../pep-0582.rst:65
 msgid ""
@@ -165,6 +176,10 @@ msgid ""
 "process is the contents of ``sys.path`` - a list of locations that the "
 "Python import system will search for modules."
 msgstr ""
+"当 Python 二进制文件执行时，它尝试确定其前缀（存储在 ``sys.prefix`` 中），然后使用该前缀查找标准库和其他关键文件，并由 "
+"``site`` 模块确定 ``site-package`` 目录的位置。目前要找到前缀（假设 ``PYTHONHOME`` "
+"未设置），首先要遍历文件系统树，寻找表示标准库存在的标记文件（``os.py``），如果没有找到，则返回到二进制文件中硬编码的构建时前缀。这个过程的结果是"
+" ``sys.path`` 文件的内容 - Python 导入系统将搜索模块的位置列表。"
 
 #: ../../pep-0582.rst:75
 msgid ""
@@ -175,6 +190,9 @@ msgid ""
 "Python executable starts in the given project directory, it will "
 "automatically find all the dependencies inside of ``__pypackages__``."
 msgstr ""
+"这个 PEP 提议在这个过程中增加一个新步骤。如果在当前工作目录中找到 ``__pypackages__`` 目录，那么它将包含在 "
+"``sys.path`` 目录中，位于当前工作目录之后，在系统 site-packages 之前。这样，如果 Python "
+"可执行文件在给定的项目目录中启动，它将自动找到 ``__pypackages__`` 中的所有依赖项。"
 
 #: ../../pep-0582.rst:82
 msgid ""
@@ -183,13 +201,15 @@ msgid ""
 " version directory inside), then it will be used, otherwise Python will "
 "behave as it does currently."
 msgstr ""
+"对于 Python 脚本，Python 将尝试在与脚本相同的目录中找到 ``__pypackages__``。如果找到了（以及其中的当前 "
+"Python 版本目录），那么它将被使用，否则 Python 将像当前一样运行。"
 
 #: ../../pep-0582.rst:87
 msgid ""
 "If any package management tool finds the same ``__pypackages__`` "
 "directory in the current working directory, it will install any packages "
 "there and also create it if required based on Python version."
-msgstr ""
+msgstr "如果任何包管理工具在当前工作目录中发现相同的 ``__pypackages__`` 目录，它将在那里安装任何包，并根据 Python 版本创建它。"
 
 #: ../../pep-0582.rst:91
 msgid ""
@@ -199,6 +219,8 @@ msgid ""
 "like ``pip`` can be used to install the required dependencies directly "
 "into this directory."
 msgstr ""
+"使用源代码管理系统的项目可以包含 ``__pypackages__`` 目录（空目录或带有例如 ``.gitignore`` "
+"这样的文件）。在重新检查源代码之后，可以使用像 ``pip`` 这样的工具将所需的依赖项直接安装到这个目录中。"
 
 #: ../../pep-0582.rst:96
 msgid ""
@@ -207,16 +229,18 @@ msgid ""
 "helper scripts in a different directory to build the project, a normal "
 "virtual environment should be preferred over ``__pypackages__``."
 msgstr ""
+"但是，这并不能以类似的方式启用虚拟环境的所有功能。例如，如果项目有多个脚本，或者在不同的目录中有用于构建项目的辅助脚本，则应该优先使用普通的虚拟环境而不是"
+" ``__pypackages__``。"
 
 #: ../../pep-0582.rst:103
 msgid "Example"
-msgstr ""
+msgstr "示例"
 
 #: ../../pep-0582.rst:105
 msgid ""
 "The following shows an example project directory structure, and different"
 " ways the Python executable and any script will behave."
-msgstr ""
+msgstr "下面显示了项目目录结构示例，以及 Python 可执行文件和任何脚本的不同行为方式。"
 
 #: ../../pep-0582.rst:137
 msgid ""
@@ -229,6 +253,11 @@ msgid ""
 "as mentioned in the ``sysconfig._INSTALL_SCHEMES['posix_prefix']`` "
 "dictionary."
 msgstr ""
+"我们有名为 ``foo`` 的项目目录，其中有 ``__pypackages__``。将 ``bottle`` 安装在 "
+"``__pypackages__/lib/python3.10/stie-packages/`` 中，并在项目目录中有 "
+"``myscript.py`` 文件。通常使用的任何工具来安装 ``bottle`` 在那个位置。正如 "
+"``sysconfig._INSTALL_SCHEMES['posix_prefix']`` 字典中提到的，这个实际的内部路径将依赖于 "
+"Python 实现名。"
 
 #: ../../pep-0582.rst:145
 msgid ""
@@ -239,12 +268,15 @@ msgid ""
 " it will **not** use the ``__pypackages__`` in the current working "
 "directory."
 msgstr ""
+"为了调用脚本，Python 将尝试在脚本所在的目录 [1]_，``/usr/bin`` 中找到 "
+"``__pypackages__``。在最后一个例子中，在 ``foo`` 目录中执行 "
+"``/usr/bin/ansible``。在这两种情况下，它都不会在当前工作目录中使用 ``__pypackages__``。"
 
 #: ../../pep-0582.rst:151
 msgid ""
 "Similarly, if we invoke ``myscript.py`` from the first example, it will "
 "use the ``__pypackages__`` directory that was in the ``foo`` directory."
-msgstr ""
+msgstr "类似地，如果调用第一个例子中的 ``myscript.py``，它将使用 ``foo`` 目录中的 ``__pypackages__`` 目录。"
 
 #: ../../pep-0582.rst:154
 msgid ""
@@ -255,12 +287,16 @@ msgid ""
 "``bottle`` module will be found inside of the ``__pypackages__`` "
 "directory."
 msgstr ""
+"如果进入 ``foo`` 目录并启动 Python 可执行文件（解释器），它将在当前工作目录中找到 ``__pypackages__`` "
+"目录，并在 ``sys.path`` 中使用它。如果我们尝试使用 ``-m`` "
+"并使用模块，也会发生同样的情况。在我们的例子中，``bottle`` 模块将在 ``__pypackages__`` 目录中找到。"
 
 #: ../../pep-0582.rst:160
 msgid ""
 "The above two examples are only cases where ``__pypackages__`` from "
 "current working directory is used."
 msgstr ""
+"以上两个例子只是使用当前工作目录中的 ``__pypackages__`` 的情况。"
 
 #: ../../pep-0582.rst:163
 msgid ""
@@ -269,6 +305,8 @@ msgid ""
 "example project, go to that directory, and then run ``python3 -m pip "
 "install twisted``.\""
 msgstr ""
+"在另一个例子中，Python 类的 trainer 会说“今天我们要学习如何使用 Twisted！"
+"开始，请签出我们的示例项目，进入该目录，然后运行 ``python3 -m pip install twisted``。”"
 
 #: ../../pep-0582.rst:167
 msgid ""
@@ -278,16 +316,20 @@ msgid ""
 "then just keep telling them to use ``python3`` without any activation "
 "step, etc."
 msgstr ""
+"这将把 Twisted 安装到与 ``python3`` 分开的目录中。"
+"没有必要讨论虚拟环境、全局安装和用户安装等问题，因为默认情况下安装将是本地的。"
+"然后，trainer 可以一直告诉他们使用 ``python3``，而不需要任何激活步骤，等等。"
 
 #: ../../pep-0582.rst:173
 msgid ""
 "In the case of symlinks, it is the directory where the actual script "
 "resides, not the symlink pointing to the script"
 msgstr ""
+"在符号链接的情况下，它是实际脚本所在的目录，而不是指向脚本的符号链接。"
 
 #: ../../pep-0582.rst:178
 msgid "Security Considerations"
-msgstr ""
+msgstr "安全注意事项"
 
 #: ../../pep-0582.rst:180
 msgid ""
@@ -296,6 +338,8 @@ msgid ""
 "``__pypackages__`` directory in the same path of the script, that will be"
 " used."
 msgstr ""
+"在执行 Python 脚本时，它不会考虑当前目录中的 ``__pypackages__``，相反，"
+"如果在脚本的同一路径中存在 ``__pypackages__`` 目录，则将使用该目录。"
 
 #: ../../pep-0582.rst:184
 msgid ""
@@ -304,6 +348,9 @@ msgid ""
 "inside of ``/usr/share/myproject/`` directory, it will be used. Any "
 "potential ``__pypackages__`` directory in ``/tmp`` will be ignored."
 msgstr ""
+"例如，如果从 ``/tmp`` 目录中执行 ``python /usr/share/myproject/fancy.py``，"
+"如果 ``/usr/share/myproject/`` 目录中有 ``__pypackages__`` 目录，它将被使用。"
+"``/tmp`` 中任何潜在的 ``__pypackages__`` 目录都将被忽略。"
 
 #: ../../pep-0582.rst:189
 msgid ""
@@ -312,18 +359,20 @@ msgid ""
 "directory, then the ``__pypackages__`` directory must be inside of the "
 "``~/bin/`` directory."
 msgstr ""
+"这也意味着在执行脚本时不会扫描任何父目录。"
+"如果想要在 ``~/bin/`` 目录中执行脚本，那么 ``__pypackages__`` 目录必须在 ``~/bin/`` 目录中。"
 
 #: ../../pep-0582.rst:194
 msgid "Backwards Compatibility"
-msgstr ""
+msgstr "向后兼容性"
 
 #: ../../pep-0582.rst:196
 msgid "This does not affect any older version of Python implementation."
-msgstr ""
+msgstr "这不会影响任何旧版本的 Python 实现。"
 
 #: ../../pep-0582.rst:199
 msgid "Impact on other Python implementations"
-msgstr ""
+msgstr "对其他 Python 实现的影响"
 
 #: ../../pep-0582.rst:201
 msgid ""
@@ -332,26 +381,31 @@ msgid ""
 "directory and adding it the ``sys.path`` just before site packages, if it"
 " is present."
 msgstr ""
+"其他 Python 实现将需要复制解释器引导的新行为，"
+"包括定位 ``__pypackages__`` 目录并将其添加到 ``sys.path`` 刚好在站点包之前，如果它存在的话。"
 
 #: ../../pep-0582.rst:207
 msgid "Reference Implementation"
-msgstr ""
+msgstr "参考实现"
 
 #: ../../pep-0582.rst:209
 msgid ""
 "`Here <https://github.com/kushaldas/pep582>`_ is a small script which "
 "will enable the implementation for ``Cpython`` & in ``PyPy``."
 msgstr ""
+"`这里 <https://github.com/kushaldas/pep582>`_  是一个小脚本，"
+"它将启用 ``Cpython`` 在 ``PyPy`` 中的实现。”"
 
 #: ../../pep-0582.rst:214
 msgid "Rejected Ideas"
-msgstr ""
+msgstr "拒绝的想法"
 
 #: ../../pep-0582.rst:216
 msgid ""
 "``__pylocal__`` and ``python_modules`` as directory name. We will also "
 "not reimplement all the features of virtual environments."
 msgstr ""
+"``__pylocal__`` 和 ``python_modules`` 作为目录名。我们也不会重新实现虚拟环境的所有功能。"
 
 #: ../../pep-0582.rst:220
 msgid "Copyright"
@@ -361,52 +415,6 @@ msgstr ""
 msgid "This document has been placed in the public domain."
 msgstr ""
 
-#~ msgid "PEP"
-#~ msgstr ""
-
-#~ msgid "582"
-#~ msgstr ""
-
-#~ msgid "Title"
-#~ msgstr ""
-
 #~ msgid "Python local packages directory"
-#~ msgstr ""
-
-#~ msgid "3.8"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "We have a project directory called "
-#~ "``foo`` and it has a ``__pypackages__``"
-#~ " inside of it. We have ``bottle`` "
-#~ "installed in that ``__pypackages__/3.8/lib``, "
-#~ "and have a ``myscript.py`` file inside"
-#~ " of the project directory. We have"
-#~ " used whatever tool we generally use"
-#~ " to install ``bottle`` in that "
-#~ "location."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "For invoking a script, Python will "
-#~ "try to find a ``__pypackages__`` inside"
-#~ " of the directory that the script "
-#~ "resides[1]_, ``/usr/bin``.  The same will "
-#~ "happen in case of the last "
-#~ "example, where we are executing "
-#~ "``/usr/bin/ansible`` from inside of the "
-#~ "``foo`` directory. In both cases, it "
-#~ "will **not** use the ``__pypackages__`` "
-#~ "in the current working directory."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "`Here <https://github.com/kushaldas/cpython/tree/pypackages>`_"
-#~ " is a PoC implementation (in the "
-#~ "``pypackages`` branch)."
-#~ msgstr ""
-
-#~ msgid "``__pylocal__`` and ``python_modules``."
-#~ msgstr ""
+#~ msgstr "Python 本地包目录"
 

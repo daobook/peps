@@ -64,7 +64,8 @@ html_use_index = False  # Disable index (we use PEP 0)
 html_style = ""  # must be defined here or in theme.conf, but is unused
 html_permalinks = False  # handled in the PEPContents transform
 html_baseurl = "https://peps.python.org"  # to create the CNAME file
-gettext_auto_build = False  # speed-ups
+# gettext_auto_build = False  # speed-ups
 
 templates_path = ['pep_sphinx_extensions/pep_theme/templates']  # Theme template relative paths from `confdir`
 language = 'zh_CN'
+locale_dirs = ['locales/']   # path is example but recommended.
