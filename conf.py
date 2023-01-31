@@ -1,3 +1,6 @@
+# This file is placed in the public domain or under the
+# CC0-1.0-Universal license, whichever is more permissive.
+
 """Configuration for building PEPs using Sphinx."""
 
 from pathlib import Path
@@ -13,7 +16,11 @@ master_doc = "contents"
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings.
-extensions = ["pep_sphinx_extensions", "sphinx.ext.githubpages"]
+extensions = [
+    "pep_sphinx_extensions",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.githubpages",
+]
 
 # The file extensions of source files. Sphinx uses these suffixes as sources.
 source_suffix = {
@@ -22,37 +29,42 @@ source_suffix = {
 }
 
 # List of patterns (relative to source dir) to ignore when looking for source files.
-exclude_patterns = [
-    # Windows:
-    "Thumbs.db",
-    ".DS_Store",
-    # Python:
-    "venv",
-    "requirements.txt",
-    # Sphinx:
-    "build",
-    "output.txt",  # Link-check output
-    # PEPs:
-    "README.rst",
-    "CONTRIBUTING.rst",
+include_patterns = [
+    # Required for Sphinx
+    "contents.rst",
+    # PEP files
+    "pep-????.rst",
+    "pep-????.txt",
+    # PEP ancillary files
+    "pep-????/*.rst",
+    # Documentation
+    "docs/*.rst",
 ]
+exclude_patterns = [
+    # PEP Template
+    "pep-0012/pep-NNNN.rst",
+]
+
+# Intersphinx configuration
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3/', None),
+    'packaging': ('https://packaging.python.org/en/latest/', None),
+}
+intersphinx_disabled_reftypes = []
 
 # -- Options for HTML output -------------------------------------------------
 
 # HTML output settings
 html_math_renderer = "maths_to_html"  # Maths rendering
-html_show_copyright = False  # Turn off miscellany
-html_show_sphinx = False
-html_title = "peps.python.org"  # Set <title/>
 
 # Theme settings
 html_theme_path = ["pep_sphinx_extensions"]
 html_theme = "pep_theme"  # The actual theme directory (child of html_theme_path)
 html_use_index = False  # Disable index (we use PEP 0)
-html_sourcelink_suffix = ""  # Fix links to GitHub (don't append .txt)
 html_style = ""  # must be defined here or in theme.conf, but is unused
 html_permalinks = False  # handled in the PEPContents transform
+html_baseurl = "https://peps.python.org"  # to create the CNAME file
+gettext_auto_build = False  # speed-ups
 
 templates_path = ['pep_sphinx_extensions/pep_theme/templates']  # Theme template relative paths from `confdir`
-
 language = 'zh_CN'

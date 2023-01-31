@@ -7,9 +7,10 @@ Author: Kushal Das <mail@kushaldas.in>, Steve Dower <steve.dower@python.org>,
 Discussions-To: https://discuss.python.org/t/pep-582-python-local-packages-directory/963/
 Status: Draft
 Type: Standards Track
+Topic: Packaging
 Content-Type: text/x-rst
 Created: 16-May-2018
-Python-Version: 3.8
+Python-Version: 3.12
 
 
 Abstract
@@ -43,6 +44,20 @@ being introduced to Python (or programming for the first time).
   creates/opens a new terminal, that by default does not get the same environment
   as in a previous terminal with virtual environment activated.
 
+
+Rationale
+=========
+
+Python is a beginner friendly programming language. But, so far virtual environment(s)
+is the major time taking part of the learning process of a new person. This PEP is not
+trying to solve every packaging problem, but focused on the 90% of the new folks who
+struggle with virtual environments in their learning path. Creating a new directory
+is still far easier than learning the details of virtual environments in various
+platforms.
+
+A major point for this PEP is that it is not trying to replace virtual environments.
+If one needs all the features of virtual environments, they should use proper virtual
+environments (for example, created using the :mod:`venv` module).
 
 Specification
 =============
@@ -78,6 +93,12 @@ directory (empty or with e.g. a file like ``.gitignore``). After doing a fresh
 check out the source code, a tool like ``pip`` can be used to install the
 required dependencies directly into this directory.
 
+But, this does not enable all features of virtual environments in a similar
+fashion. For example, if the project has multiple scripts, or helper scripts
+in a different directory to build the project, a normal virtual environment
+should be preferred over ``__pypackages__``.
+
+
 Example
 -------
 
@@ -88,14 +109,15 @@ the Python executable and any script will behave.
 
     foo
         __pypackages__
-            3.8
-                lib
-                    bottle
+            lib
+                python3.10
+                           site-packages
+                                         bottle
         myscript.py
 
     /> python foo/myscript.py
     sys.path[0] == 'foo'
-    sys.path[1] == 'foo/__pypackages__/3.8/lib'
+    sys.path[1] == 'foo/__pypackages__/lib/python3.10/site-packages/'
 
 
     cd foo
@@ -108,18 +130,20 @@ the Python executable and any script will behave.
 
     foo> python
     sys.path[0] == '.'
-    sys.path[1] == './__pypackages__/3.8/lib'
+    sys.path[1] == './__pypackages__/lib/python3.10/site-packages'
 
     foo> python -m bottle
 
 We have a project directory called ``foo`` and it has a ``__pypackages__``
 inside of it. We have ``bottle`` installed in that
-``__pypackages__/3.8/lib``, and have a ``myscript.py`` file inside of the
-project directory. We have used whatever tool we generally use to install ``bottle``
-in that location.
+``__pypackages__/lib/python3.10/stie-packages/``, and have a ``myscript.py``
+file inside of the project directory. We have used whatever tool we generally
+use to install ``bottle`` in that location. This actual internal path will
+depend on the Python implementation name, as mentioned in the
+``sysconfig._INSTALL_SCHEMES['posix_prefix']`` dictionary.
 
 For invoking a script, Python will try to find a ``__pypackages__`` inside of
-the directory that the script resides[1]_, ``/usr/bin``.  The same will happen
+the directory that the script resides [1]_, ``/usr/bin``.  The same will happen
 in case of the last example, where we are executing ``/usr/bin/ansible`` from
 inside of the ``foo`` directory. In both cases, it will **not** use the
 ``__pypackages__`` in the current working directory.
@@ -146,7 +170,7 @@ install will be local by default. The trainer can then just keep telling them to
 use ``python3`` without any activation step, etc.
 
 
-.. [1]_: In the case of symlinks, it is the directory where the actual script
+.. [1] In the case of symlinks, it is the directory where the actual script
    resides, not the symlink pointing to the script
 
 
@@ -162,6 +186,9 @@ For example, if we execute ``python /usr/share/myproject/fancy.py`` from the
 ``/usr/share/myproject/`` directory, it will be used. Any potential
 ``__pypackages__`` directory in ``/tmp`` will be ignored.
 
+This also means we will not scan any parent directory while executing scripts.
+If we want to execute scripts inside of the ``~/bin/`` directory, then
+the ``__pypackages__`` directory must be inside of the ``~/bin/`` directory.
 
 Backwards Compatibility
 =======================
@@ -179,15 +206,15 @@ adding it the ``sys.path`` just before site packages, if it is present.
 Reference Implementation
 ========================
 
-`Here <https://github.com/kushaldas/cpython/tree/pypackages>`_ is a PoC
-implementation (in the ``pypackages`` branch).
+`Here <https://github.com/kushaldas/pep582>`_ is a small script which will
+enable the implementation for ``Cpython`` & in ``PyPy``.
 
 
 Rejected Ideas
 ==============
 
-``__pylocal__`` and ``python_modules``.
-
+``__pylocal__`` and ``python_modules`` as directory name. We will also not
+reimplement all the features of virtual environments.
 
 Copyright
 =========

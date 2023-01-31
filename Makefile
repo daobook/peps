@@ -1,81 +1,87 @@
-# Builds PEP files to HTML using docutils or sphinx
-# Also contains testing targets
-
-PEP2HTML=pep2html.py
+# Builds PEP files to HTML using sphinx
 
 PYTHON=python3
+VENVDIR=.venv
+JOBS=8
+OUTPUT_DIR=build
+RENDER_COMMAND=$(VENVDIR)/bin/python3 build.py -j $(JOBS) -o $(OUTPUT_DIR)
 
-VENV_DIR=venv
+## html           to render PEPs to "pep-NNNN.html" files
+.PHONY: html
+html: venv
+	$(RENDER_COMMAND)
 
-.SUFFIXES: .txt .html .rst
+## dirhtml        to render PEPs to "index.html" files within "pep-NNNN" directories
+.PHONY: dirhtml
+dirhtml: venv rss
+	$(RENDER_COMMAND) --build-dirs
 
-.txt.html:
-	@$(PYTHON) $(PEP2HTML) $<
+## fail-warning   to render PEPs to "pep-NNNN.html" files and fail the Sphinx build on any warning
+.PHONY: fail-warning
+fail-warning: venv
+	$(RENDER_COMMAND) --fail-on-warning
 
-.rst.html:
-	@$(PYTHON) $(PEP2HTML) $<
+## check-links    to check validity of links within PEP sources
+.PHONY: check-links
+check-links: venv
+	$(RENDER_COMMAND) --check-links
 
-TARGETS= $(patsubst %.rst,%.html,$(wildcard pep-????.rst)) $(patsubst %.txt,%.html,$(wildcard pep-????.txt)) pep-0000.html
+## rss            to generate the peps.rss file
+.PHONY: rss
+rss: venv
+	$(VENVDIR)/bin/python3 generate_rss.py -o $(OUTPUT_DIR)
 
-all: pep-0000.rst $(TARGETS)
+## clean          to remove the venv and build files
+.PHONY: clean
+clean: clean-venv
+	-rm -rf build topic
 
-$(TARGETS): pep2html.py
+## clean-venv     to remove the venv
+.PHONY: clean-venv
+clean-venv:
+	rm -rf $(VENVDIR)
 
-pep-0000.rst: $(wildcard pep-????.txt) $(wildcard pep-????.rst) $(wildcard pep0/*.py) genpepindex.py
-	$(PYTHON) genpepindex.py .
-
-rss:
-	$(PYTHON) pep2rss.py .
-
-install:
-	echo "Installing is not necessary anymore. It will be done in post-commit."
-
-clean:
-	-rm pep-0000.rst
-	-rm *.html
-	-rm -rf build
-
-update:
-	git pull https://github.com/python/peps.git
-
+## venv           to create a venv with necessary tools
+.PHONY: venv
 venv:
-	$(PYTHON) -m venv $(VENV_DIR)
-	./$(VENV_DIR)/bin/python -m pip install -r requirements.txt
+	@if [ -d $(VENVDIR) ] ; then \
+		echo "venv already exists."; \
+		echo "To recreate it, remove it first with \`make clean-venv'."; \
+	else \
+		$(PYTHON) -m venv $(VENVDIR); \
+		$(VENVDIR)/bin/python3 -m pip install -U pip wheel; \
+		$(VENVDIR)/bin/python3 -m pip install -r requirements.txt; \
+		echo "The venv has been created in the $(VENVDIR) directory"; \
+	fi
 
-package: all rss
-	mkdir -p build/peps
-	cp pep-*.txt build/peps/
-	cp pep-*.rst build/peps/
-	cp *.html build/peps/
-	cp *.png build/peps/
-	cp *.rss build/peps/
-	tar -C build -czf build/peps.tar.gz peps
+## lint           to lint all the files
+.PHONY: lint
+lint: venv
+	$(VENVDIR)/bin/python3 -m pre_commit --version > /dev/null || $(VENVDIR)/bin/python3 -m pip install pre-commit
+	$(VENVDIR)/bin/python3 -m pre_commit run --all-files
 
-lint:
-	pre-commit --version > /dev/null || python3 -m pip install pre-commit
-	pre-commit run --all-files
+## test           to test the Sphinx extensions for PEPs
+.PHONY: test
+test: venv
+	$(VENVDIR)/bin/python3 -bb -X dev -W error -m pytest
 
-# New Sphinx targets:
+## spellcheck     to check spelling
+.PHONY: spellcheck
+spellcheck: venv
+	$(VENVDIR)/bin/python3 -m pre_commit --version > /dev/null || $(VENVDIR)/bin/python3 -m pip install pre-commit
+	$(VENVDIR)/bin/python3 -m pre_commit run --all-files --hook-stage manual codespell
 
-SPHINX_JOBS=8
-SPHINX_BUILD=$(PYTHON) build.py -j $(SPHINX_JOBS)
+## render         (deprecated: use 'make html' alias instead)
+.PHONY: render
+render: html
+	@echo "\033[0;33mWarning:\033[0;31m 'make render' \033[0;33mis deprecated, use\033[0;32m 'make html' \033[0;33malias instead\033[0m"
 
-# TODO replace `rss:` with this when merged & tested
-pep_rss:
-	$(PYTHON) pep_rss_gen.py
+## pages          (deprecated: use 'make dirhtml' alias instead)
+.PHONY: pages
+pages: dirhtml
+	@echo "\033[0;33mWarning:\033[0;31m 'make pages' \033[0;33mis deprecated, use\033[0;32m 'make dirhtml' \033[0;33malias instead\033[0m"
 
-pages: pep_rss
-	$(SPHINX_BUILD) --index-file
-
-sphinx:
-	$(SPHINX_BUILD)
-
-# for building Sphinx without a web-server
-sphinx-local:
-	$(SPHINX_BUILD) --build-files
-
-fail-warning:
-	$(SPHINX_BUILD) --fail-on-warning
-
-check-links:
-	$(SPHINX_BUILD) --check-links
+.PHONY: help
+help : Makefile
+	@echo "Please use \`make <target>' where <target> is one of"
+	@sed -n 's/^##//p' $<

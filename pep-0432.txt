@@ -11,8 +11,9 @@ Type: Standards Track
 Content-Type: text/x-rst
 Requires: 587
 Created: 28-Dec-2012
-Post-History: 28-Dec-2012, 2-Jan-2013, 30-Mar-2019, 28-Jun-2020
+Post-History: 28-Dec-2012, 02-Jan-2013, 30-Mar-2019, 28-Jun-2020
 
+.. highlight:: c
 
 PEP Withdrawal
 ==============
@@ -24,17 +25,17 @@ and the CPython runtime easier to embed as part of a larger application.
 For most of that time, the changes were maintained either in a separate feature
 branch, or else as underscore-prefixed private APIs in the main CPython repo.
 
-In 2019, PEP 587 migrated a subset of those API changes to the public CPython
+In 2019, :pep:`587` migrated a subset of those API changes to the public CPython
 API for Python 3.8+ (specifically, the PEP updated the interpreter runtime to
 offer an explicitly multi-stage struct-based configuration interface).
 
 In June 2020, in response to a query from the Steering Council, the PEP authors
 decided that it made sense to withdraw the original PEP, as enough has changed
-since PEP 432 was first written that we think any further changes to the
+since :pep:`432` was first written that we think any further changes to the
 startup sequence and embedding API would be best formulated as a new PEP (or
-PEPs) that take into account not only the not-yet-implemented ideas from PEP 432
+PEPs) that take into account not only the not-yet-implemented ideas from :pep:`432`
 that weren't considered sufficiently well validated to make their way into
-PEP 587, but also any feedback on the public PEP 587 API, and any other lessons
+:pep:`587`, but also any feedback on the public :pep:`587` API, and any other lessons
 that have been learned while adjusting the CPython implementation to be more
 embedding and subinterpreter friendly.
 
@@ -118,7 +119,7 @@ well-defined phases during the initialization sequence:
 * Initialized - main interpreter fully available, subinterpreter creation
   available
 
-PEP 587 is a more detailed proposal that covers separating out the
+:pep:`587` is a more detailed proposal that covers separating out the
 Pre-Initialization phase from the last two phases, but doesn't allow embedding
 applications to run arbitrary code while in the "Runtime Initialized" state
 (instead, initializing the core runtime will also always fully initialize the
@@ -151,10 +152,10 @@ Background
 
 Over time, CPython's initialization sequence has become progressively more
 complicated, offering more options, as well as performing more complex tasks
-(such as configuring the Unicode settings for OS interfaces in Python 3 [10_],
+(such as configuring the Unicode settings for OS interfaces in Python 3 [10]_,
 bootstrapping a pure Python implementation of the import system, and
 implementing an isolated mode more suitable for system applications that run
-with elevated privileges [6_]).
+with elevated privileges [6]_).
 
 Much of this complexity is formally accessible only through the ``Py_Main``
 and ``Py_Initialize`` APIs, offering embedding applications little
@@ -166,9 +167,9 @@ API cannot be used safely.
 A number of proposals are on the table for even *more* sophisticated
 startup behaviour, such as better control over ``sys.path``
 initialization (e.g. easily adding additional directories on the command line
-in a cross-platform fashion [7_], controlling the configuration of
-``sys.path[0]`` [8_]), easier configuration of utilities like coverage
-tracing when launching Python subprocesses [9_]).
+in a cross-platform fashion [7]_, controlling the configuration of
+``sys.path[0]`` [8]_), easier configuration of utilities like coverage
+tracing when launching Python subprocesses [9]_).
 
 Rather than continuing to bolt such behaviour onto an already complicated
 system indefinitely, this PEP proposes to start simplifying the status quo by
@@ -195,7 +196,7 @@ The CPython startup sequence as of Python 3.6 was difficult to understand, and
 even more difficult to modify. It was not clear what state the interpreter was
 in while much of the initialization code executed, leading to behaviour such
 as lists, dictionaries and Unicode values being created prior to the call
-to ``Py_Initialize`` when the ``-X`` or ``-W`` options are used [1_].
+to ``Py_Initialize`` when the ``-X`` or ``-W`` options are used [1]_.
 
 By moving to an explicitly multi-phase startup sequence, developers should
 only need to understand:
@@ -209,7 +210,7 @@ only need to understand:
   fully configured (which will hopefully be a relatively small subset of the
   full C API)
 
-The first two aspects of that are covered by PEP 587, while the details of the
+The first two aspects of that are covered by :pep:`587`, while the details of the
 latter distinction are still being considered.
 
 By basing the new design on a combination of C structures and Python
@@ -238,11 +239,15 @@ should minimise their impact on the startup overhead.
 Experience with the importlib migration suggests that the startup time is
 dominated by IO operations. However, to monitor the impact of any changes,
 a simple benchmark can be used to check how long it takes to start and then
-tear down the interpreter::
+tear down the interpreter:
+
+.. code-block:: bash
 
    python3 -m timeit -s "from subprocess import call" "call(['./python', '-Sc', 'pass'])"
 
-Current numbers on my system for Python 3.7 (as built by the Fedora project)::
+Current numbers on my system for Python 3.7 (as built by the Fedora project):
+
+.. code-block:: console
 
     $ python3 -m timeit -s "from subprocess import call" "call(['python3', '-Sc', 'pass'])"
     50 loops, best of 5: 6.48 msec per loop
@@ -261,7 +266,7 @@ sophisticated microbenchmark will be developed to assist in investigation.
 Required Configuration Settings
 ===============================
 
-See PEP 587 for a detailed listing of CPython interpreter configuration settings
+See :pep:`587` for a detailed listing of CPython interpreter configuration settings
 and the various means available for setting them.
 
 
@@ -269,7 +274,7 @@ Implementation Strategy
 =======================
 
 An initial attempt was made at implementing an earlier version of this PEP for
-Python 3.4 [2_], with one of the significant problems encountered being merge
+Python 3.4 [2]_, with one of the significant problems encountered being merge
 conflicts after the initial structural changes were put in place to start the
 refactoring process. Unlike some other previous major changes, such as the
 switch to an AST-based compiler in Python 2.5, or the switch to the importlib
@@ -283,7 +288,7 @@ of exposing the new functions and structures as public API elements in CPython
 3.8.
 
 After the initial merge, Victor Stinner then proceeded to actually migrate
-settings to the new structure in order to successfully implement the PEP 540
+settings to the new structure in order to successfully implement the :pep:`540`
 UTF-8 mode changes (which required the ability to track all settings that had
 previously been decoded with the locale encoding, and decode them again using
 UTF-8 instead). Eric Snow also migrated a number of internal subsystems over as
@@ -291,7 +296,7 @@ part of making the subinterpreter feature more robust.
 
 That work showed that the detailed design originally proposed in this PEP had a
 range of practical issues, so Victor designed and implemented an improved
-private API (inspired by an earlier iteration of this PEP), which PEP 587
+private API (inspired by an earlier iteration of this PEP), which :pep:`587`
 proposes to promote to a public API in Python 3.8.
 
 
@@ -307,7 +312,7 @@ Design Details
     * https://github.com/python/cpython/blob/master/Include/cpython/pystate.h
     * https://github.com/python/cpython/blob/master/Include/cpython/pylifecycle.h
 
-    PEP 587 covers the aspects of the API that are considered potentially stable
+    :pep:`587` covers the aspects of the API that are considered potentially stable
     enough to make public. Where a proposed API is covered by that PEP,
     "(see PEP 587)" is added to the text below.
 
@@ -319,7 +324,7 @@ simplifying a number of operations that currently need to rely on basic C
 functionality rather than being able to use the richer data structures provided
 by the CPython C API.
 
-PEP 587 covers a subset of that task, which is splitting out the components that
+:pep:`587` covers a subset of that task, which is splitting out the components that
 even the existing "May be called before ``Py_Initialize``" interfaces need (like
 memory allocators and operating system interface encoding details) into a
 separate pre-configuration step.
@@ -343,7 +348,7 @@ The following distinct interpreter initialisation phases are proposed:
     which encoding to use to access operating system interfaces (or chooses
     to delegate those decisions to the Python runtime)
   * Application starts the initialization process by calling one of the
-    ``Py_PreInitialize`` APIs (see PEP 587)
+    ``Py_PreInitialize`` APIs (see :pep:`587`)
 
 * Runtime Pre-Initialization:
 
@@ -354,7 +359,7 @@ The following distinct interpreter initialisation phases are proposed:
   * The embedding application determines the settings required to initialize
     the core CPython runtime and create the main interpreter and moves to the
     next phase by calling ``Py_InitializeRuntime``
-  * Note: as of PEP 587, the embedding application instead calls ``Py_Main()``,
+  * Note: as of :pep:`587`, the embedding application instead calls ``Py_Main()``,
     ``Py_UnixMain``, or one of the ``Py_Initialize`` APIs, and hence jumps
     directly to the Initialized state.
 
@@ -368,7 +373,7 @@ The following distinct interpreter initialisation phases are proposed:
   * The embedding application determines and applies the settings
     required to complete the initialization process by calling
     ``Py_InitializeMainInterpreter``
-  * Note: as of PEP 587, this state is not reachable via any public API, it
+  * Note: as of :pep:`587`, this state is not reachable via any public API, it
     only exists as an implicit internal state while one of the ``Py_Initialize``
     functions is running
 
@@ -396,7 +401,7 @@ over CPython's initial state, it will be able to use the new, finer
 grained API, which allows the embedding application greater control
 over the initialization process.
 
-PEP 587 covers an initial iteration of that API, separating out the
+:pep:`587` covers an initial iteration of that API, separating out the
 pre-initialization phase without attempting to separate core runtime
 initialization from main interpreter initialization.
 
@@ -411,7 +416,7 @@ to the embedded Python runtime.
 This covers telling Python which memory allocator to use, as well as which text
 encoding to use when processing provided settings.
 
-PEP 587 defines the settings needed to exit this state in its ``PyPreConfig``
+:pep:`587` defines the settings needed to exit this state in its ``PyPreConfig``
 struct.
 
 A new query API will allow code to determine if the interpreter hasn't even
@@ -426,7 +431,7 @@ The query for a completely uninitialized environment would then be
 Runtime Pre-Initialization Phase
 --------------------------------
 
-.. note:: In PEP 587, the settings for this phase are not yet separated out,
+.. note:: In :pep:`587`, the settings for this phase are not yet separated out,
    and are instead only available through the combined ``PyConfig`` struct
 
 The pre-initialization phase is where an embedding application determines
@@ -462,9 +467,9 @@ The proposed APIs for this step in the startup sequence are::
 If ``Py_IsInitializing()`` is false, the ``Py_InitializeRuntime`` functions will
 implicitly call the corresponding ``Py_PreInitialize`` function. The
 ``use_environment`` setting will be passed down, while other settings will be
-processed according to their defaults, as described in PEP 587.
+processed according to their defaults, as described in :pep:`587`.
 
-The ``PyInitError`` return type is defined in PEP 587, and allows an embedding
+The ``PyInitError`` return type is defined in :pep:`587`, and allows an embedding
 application to gracefully handle Python runtime initialization failures,
 rather than having the entire process abruptly terminated by ``Py_FatalError``.
 
@@ -653,7 +658,7 @@ application wants to adjust a setting rather than replace it completely,
 such as removing ``sys.path[0]``).
 
 The ``c_config`` argument is an optional pointer to a ``PyConfig`` structure,
-as defined in PEP 587. If provided, it is used in preference to reading settings
+as defined in :pep:`587`. If provided, it is used in preference to reading settings
 directly from the environment or process global state.
 
 Merely reading the configuration has no effect on the interpreter state: it
@@ -675,10 +680,10 @@ or not the interpreter is the main interpreter will be configured on a per
 interpreter basis. Other fields will be reviewed for whether or not they can
 feasibly be made interpreter specific over the course of the implementation.
 
-.. note:: The list of config fields below is currently out of sync with PEP 587.
-   Where they differ, PEP 587 takes precedence.
+.. note:: The list of config fields below is currently out of sync with :pep:`587`.
+   Where they differ, :pep:`587` takes precedence.
 
-The ``PyConfigAsObjects`` struct mirrors the ``PyConfig`` struct from PEP 587,
+The ``PyConfigAsObjects`` struct mirrors the ``PyConfig`` struct from :pep:`587`,
 but uses full Python objects to store values, rather than C level data types.
 It adds ``raw_argv`` and ``argv`` list fields, so later initialisation steps
 don't need to accept those separately.
@@ -831,7 +836,7 @@ state if ``import site`` is later explicitly executed in the process.
 Preparing the main module
 -------------------------
 
-.. note:: In PEP 587, ``PyRun_PrepareMain`` and ``PyRun_ExecMain`` are not
+.. note:: In :pep:`587`, ``PyRun_PrepareMain`` and ``PyRun_ExecMain`` are not
    exposed separately, and are instead accessed through a ``Py_RunMain`` API
    that both prepares and executes main, and then finalizes the Python
    interpreter.
@@ -902,7 +907,7 @@ configuration system)
 Executing the main module
 -------------------------
 
-.. note:: In PEP 587, ``PyRun_PrepareMain`` and ``PyRun_ExecMain`` are not
+.. note:: In :pep:`587`, ``PyRun_PrepareMain`` and ``PyRun_ExecMain`` are not
    exposed separately, and are instead accessed through a ``Py_RunMain`` API
    that both prepares and executes main, and then finalizes the Python
    interpreter.
@@ -971,7 +976,7 @@ settings are part of the CPython implementation, rather than part of the
 Python language definition. If new settings are needed to support
 cross-implementation compatibility in the standard library, then those
 should be agreed with the other implementations and exposed as new required
-attributes on ``sys.implementation``, as described in PEP 421.
+attributes on ``sys.implementation``, as described in :pep:`421`.
 
 These are *snapshots* of the initial configuration settings. They are not
 modified by the interpreter during runtime (except as noted above).
@@ -1069,7 +1074,7 @@ aspects are the fact that user site directories are enabled,
 environment variables are trusted and that the directory containing the
 executed file is placed at the beginning of the import path.
 
-Issue 16499 [6_] added a ``-I`` option to change the behaviour of
+Issue 16499 [6]_ added a ``-I`` option to change the behaviour of
 the normal CPython executable, but this is a hard to discover solution (and
 adds yet another option to an already complex CLI). This PEP proposes to
 instead add a separate ``system-python`` executable
@@ -1112,7 +1117,7 @@ The reference implementation is being developed as a private API refactoring
 within the CPython reference interpreter (as attempting to maintain it as an
 independent project proved impractical).
 
-PEP 587 extracts a subset of the proposal that is considered sufficiently stable
+:pep:`587` extracts a subset of the proposal that is considered sufficiently stable
 to be worth proposing as a public API for Python 3.8.
 
 
@@ -1123,7 +1128,7 @@ The current mechanisms for configuring the interpreter have accumulated in
 a fairly ad hoc fashion over the past 20+ years, leading to a rather
 inconsistent interface with varying levels of documentation.
 
-Also see PEP 587 for further discussion of the existing settings and their
+Also see :pep:`587` for further discussion of the existing settings and their
 handling.
 
 (Note: some of the info below could probably be cleaned up and added to the
@@ -1173,9 +1178,9 @@ Locating Python and the standard library
 
 The location of the Python binary and the standard library is influenced
 by several elements. The algorithm used to perform the calculation is
-not documented anywhere other than in the source code [3_,4_]. Even that
+not documented anywhere other than in the source code [3]_, [4]_. Even that
 description is incomplete, as it failed to be updated for the virtual
-environment support added in Python 3.3 (detailed in PEP 405).
+environment support added in Python 3.3 (detailed in :pep:`405`).
 
 These calculations are affected by the following function calls (made
 prior to calling ``Py_Initialize()``) and environment variables:
@@ -1184,7 +1189,7 @@ prior to calling ``Py_Initialize()``) and environment variables:
 * ``Py_SetPythonHome()``
 * ``PYTHONHOME``
 
-The filesystem is also inspected for ``pyvenv.cfg`` files (see PEP 405) or,
+The filesystem is also inspected for ``pyvenv.cfg`` files (see :pep:`405`) or,
 failing that, a ``lib/os.py`` (Windows) or ``lib/python$VERSION/os.py``
 file.
 
@@ -1213,7 +1218,7 @@ the ``PYTHONPATH`` environment variable.
 
 The ``site`` module, which is implicitly imported at startup (unless
 disabled via the ``-S`` option) adds additional paths to this initial
-set of paths, as described in its documentation [5_].
+set of paths, as described in its documentation [5]_.
 
 The ``-s`` command line option can be used to exclude the user site
 directory from the list of directories added. Embedding applications
@@ -1372,7 +1377,7 @@ connection by the operating system.
 TBD: Document how the "-x" option is handled (skips processing of the
 first comment line in the main script)
 
-Also see detailed sequence of operations notes at [1_]
+Also see detailed sequence of operations notes at [1]_.
 
 
 References

@@ -5,7 +5,7 @@ Last-Modified: $Date$
 Author: Tobias Kohn <kohnt@tobiaskohn.ch>,
         Guido van Rossum <guido@python.org>
 BDFL-Delegate:
-Discussions-To: Python-Dev <python-dev@python.org>
+Discussions-To: python-dev@python.org
 Status: Final
 Type: Informational
 Content-Type: text/x-rst
@@ -18,9 +18,9 @@ Resolution: https://mail.python.org/archives/list/python-committers@python.org/m
 Abstract
 ========
 
-This PEP provides the motivation and rationale for PEP 634
+This PEP provides the motivation and rationale for :pep:`634`
 ("Structural Pattern Matching: Specification").  First-time readers
-are encouraged to start with PEP 636, which provides a gentler
+are encouraged to start with :pep:`636`, which provides a gentler
 introduction to the concepts, syntax and semantics of patterns.
 
 
@@ -97,8 +97,8 @@ but also on the value of some class attributes, like the ``BinOp``
 example above.  The Visitor pattern is insufficiently flexible for
 this: it can only select based on the class.
 
-For a complete example, see
-https://github.com/gvanrossum/patma/blob/master/examples/expr.py#L231
+See a `complete example
+<https://github.com/gvanrossum/patma/blob/be5969442d0584005492134c3b24eea408709db2/examples/expr.py#L231>`_.
 
 Like the Visitor pattern, pattern matching allows for a strict separation
 of concerns: specific actions or data processing is independent of the
@@ -155,7 +155,7 @@ Rationale
 
 This section provides the rationale for individual design decisions.
 It takes the place of "Rejected ideas" in the standard PEP format.
-It is organized in sections corresponding to the specification (PEP 634).
+It is organized in sections corresponding to the specification (:pep:`634`).
 
 
 Overview and Terminology
@@ -397,7 +397,7 @@ and not for individual patterns.
               return a + [p] + b
 
 
-.. _patterns:
+.. _635-patterns:
 
 Patterns
 --------
@@ -586,7 +586,7 @@ without adding a significant benefit.  It can always be added later.
       return expr
 
 
-.. _literal_pattern:
+.. _635-literal_pattern:
 
 Literal Patterns
 ~~~~~~~~~~~~~~~~
@@ -675,7 +675,7 @@ being.
       return expr
 
 
-.. _capture_pattern:
+.. _635-capture_pattern:
 
 Capture Patterns
 ~~~~~~~~~~~~~~~~
@@ -734,7 +734,7 @@ especially given that we expect capture patterns to be very common.
               return sum(a) / len(a)
 
 
-.. _wildcard_pattern:
+.. _635-wildcard_pattern:
 
 Wildcard Pattern
 ~~~~~~~~~~~~~~~~
@@ -775,7 +775,7 @@ ultimate "wildcard", it does not convey the desired semantics.
 
 An alternative that does not suggest an arbitrary number of items
 would be ``?``.  This is even being proposed independently from
-pattern matching in PEP 640.  We feel however that using ``?`` as a
+pattern matching in :pep:`640`.  We feel however that using ``?`` as a
 special "assignment" target is likely more confusing to Python users
 than using ``_``.  It violates Python's (admittedly vague) principle
 of using punctuation characters only in ways similar to how they are
@@ -790,7 +790,7 @@ globbing, "maybe" in regular expressions, "conditional expression" in
 C and many C-derived languages, "predicate function" in Scheme,
 "modify error handling" in Rust, "optional argument" and "optional
 chaining" in TypeScript (the latter meaning has also been proposed for
-Python by PEP 505).  An as yet unnamed PEP proposes it to mark
+Python by :pep:`505`).  An as yet unnamed PEP proposes it to mark
 optional types, e.g. ``int?``.
 
 Another common use of ``?`` in programming systems is "help", for
@@ -901,7 +901,7 @@ Allowing users to explicitly specify the grouping is particularly helpful
 in case of OR patterns.
 
 
-.. _sequence_pattern:
+.. _635-sequence_pattern:
 
 Sequence Patterns
 ~~~~~~~~~~~~~~~~~
@@ -961,7 +961,7 @@ enumerate all other types that may be used to represent bytes
 (e.g. some, but not all, instances of ``memoryview`` and ``array.array``).
 
 
-.. _mapping_pattern:
+.. _635-mapping_pattern:
 
 Mapping Patterns
 ~~~~~~~~~~~~~~~~
@@ -1008,7 +1008,7 @@ unexpected side effect.
                   change_red_to_blue(child)
 
 
-.. _class_pattern:
+.. _635-class_pattern:
 
 Class Patterns
 ~~~~~~~~~~~~~~
@@ -1235,7 +1235,7 @@ an instance of ``Node`` but only extract the value of the ``right`` attribute.
 Backwards Compatibility
 =======================
 
-Through its use of "soft keywords" and the new PEG parser (PEP 617),
+Through its use of "soft keywords" and the new PEG parser (:pep:`617`),
 the proposal remains fully backwards compatible.  However, 3rd party
 tooling that uses a LL(1) parser to parse Python source code may be
 forced to switch parser technology to be able to support those same
@@ -1278,13 +1278,3 @@ Copyright
 
 This document is placed in the public domain or under the
 CC0-1.0-Universal license, whichever is more permissive.
-
-
-..
-   Local Variables:
-   mode: indented-text
-   indent-tabs-mode: nil
-   sentence-end-double-space: t
-   fill-column: 70
-   coding: utf-8
-   End:

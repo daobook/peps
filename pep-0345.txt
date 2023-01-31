@@ -1,15 +1,17 @@
 PEP: 345
 Title: Metadata for Python Software Packages 1.2
-Version: $Revision$
-Last-Modified: $Date$
 Author: Richard Jones <richard@python.org>
-Discussions-To: Distutils SIG
-Status: Final
+Discussions-To: distutils-sig@python.org
+Status: Superseded
 Type: Standards Track
+Topic: Packaging
 Content-Type: text/x-rst
 Created: 28-Apr-2005
-Python-Version: 2.5
-Post-History:
+Python-Version: 2.7
+Post-History: `22-Dec-2009 <https://mail.python.org/archives/list/python-dev@python.org/thread/5QWS2FXKZNNPKNZO6RLPGT5NORS5ZQ2V/>`__
+Replaces: 314
+Superseded-By: 566
+Resolution: https://mail.python.org/archives/list/python-dev@python.org/thread/MKHXVV746H7ZDFN62Z72VNAX6KIRXNRO/
 
 
 Abstract
@@ -20,8 +22,8 @@ It includes specifics of the field names, and their semantics and
 usage.
 
 This document specifies version 1.2 of the metadata format.
-Version 1.0 is specified in PEP 241.
-Version 1.1 is specified in PEP 314.
+Version 1.0 is specified in :pep:`241`.
+Version 1.1 is specified in :pep:`314`.
 
 Version 1.2 of the metadata format adds a number of optional fields
 designed to make third-party packaging of Python Software easier.
@@ -68,7 +70,7 @@ Version
 :::::::
 
 A string containing the distribution's version number.  This
-field  must be in the format specified in PEP 440.
+field  must be in the format specified in :pep:`440`.
 
 Example::
 
@@ -127,10 +129,10 @@ field as-is.  This means that authors should be conservative in
 the markup they use.
 
 To support empty lines and lines with indentation with respect to
-the RFC 822 format, any CRLF character has to be suffixed by 7 spaces
+the :rfc:`822` format, any CRLF character has to be suffixed by 7 spaces
 followed by a pipe ("|") char. As a result, the Description field is
-encoded into a folded field that can be interpreted by RFC822
-parser [2]_.
+encoded into a folded field that can be interpreted by :rfc:`822#section-3.1.1`
+parser.
 
 Example::
 
@@ -145,7 +147,7 @@ Example::
 
 This encoding implies that any occurrences of a CRLF followed by 7 spaces
 and a pipe char have to be replaced by a single CRLF when the field is unfolded
-using a RFC822 reader.
+using a :rfc:`822` reader.
 
 
 Keywords (optional)
@@ -193,7 +195,7 @@ Author-email (optional)
 :::::::::::::::::::::::
 
 A string containing the author's e-mail address.  It can contain
-a name and e-mail address in the legal forms for a RFC-822
+a name and e-mail address in the legal forms for a :rfc:`822`
 ``From:`` header.
 
 Example::
@@ -221,7 +223,7 @@ Maintainer-email (optional)
 :::::::::::::::::::::::::::
 
 A string containing the maintainer's e-mail address.  It can contain
-a name and e-mail address in the legal forms for a RFC-822
+a name and e-mail address in the legal forms for a :rfc:`822`
 ``From:`` header.
 
 Note that this field is intended for use when a project is being
@@ -255,7 +257,7 @@ Classifier (multiple use)
 :::::::::::::::::::::::::
 
 Each entry is a string giving a single classification value
-for the distribution.  Classifiers are described in PEP 301 [3]_.
+for the distribution.  Classifiers are described in :pep:`301`.
 
 Examples::
 
@@ -371,7 +373,7 @@ parentheses.
 
 Because they refer to non-Python software releases, version numbers
 for this field are **not** required to conform to the format
-specified in PEP 440:  they should correspond to the
+specified in :pep:`440`:  they should correspond to the
 version scheme used by the external dependency.
 
 Notice that there's is no particular rule on the strings to be used.
@@ -395,8 +397,8 @@ Examples::
     Project-URL: Documentation, https://setuptools.readthedocs.io/
     Project-URL: Funding, https://donate.pypi.org
 
-The label is free text, with a maximum length of 32 characters.  Notice 
-that distributions uploaded to PyPI will have these extra entries 
+The label is free text, with a maximum length of 32 characters.  Notice
+that distributions uploaded to PyPI will have these extra entries
 displayed under the "Project links" section of their landing page.
 
 
@@ -411,7 +413,7 @@ Any number of conditional operators can be specified, e.g.
 the string ">1.0, !=1.3.4, <2.0" is a legal version declaration.
 The comma (",") is equivalent to the **and** operator.
 
-Each version number must be in the format specified in PEP 440.
+Each version number must be in the format specified in :pep:`440`.
 
 When a version is provided, it always includes all versions that
 starts with the same value. For example, the "2.5" version of Python
@@ -536,19 +538,14 @@ References
 ==========
 
 This document specifies version 1.2 of the metadata format.
-Version 1.0 is specified in PEP 241.
-Version 1.1 is specified in PEP 314.
+Version 1.0 is specified in :pep:`241`.
+Version 1.1 is specified in :pep:`314`.
 
 .. [1] reStructuredText markup:
    http://docutils.sourceforge.net/
 
 .. _`Python Package Index`: http://pypi.python.org/pypi/
 
-.. [2] RFC 822 Long Header Fields:
-   http://www.freesoft.org/CIE/RFC/822/7.htm
-
-.. [3] PEP 301, Package Index and Metadata for Distutils:
-   http://www.python.org/dev/peps/pep-0301/
 
 Copyright
 =========

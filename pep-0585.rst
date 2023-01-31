@@ -3,9 +3,10 @@ Title: Type Hinting Generics In Standard Collections
 Version: $Revision$
 Last-Modified: $Date$
 Author: Łukasz Langa <lukasz@python.org>
-Discussions-To: Typing-Sig <typing-sig@python.org>
-Status: Accepted
+Discussions-To: typing-sig@python.org
+Status: Final
 Type: Standards Track
+Topic: Typing
 Content-Type: text/x-rst
 Created: 03-Mar-2019
 Python-Version: 3.9
@@ -68,7 +69,7 @@ collections directly.  Example::
     def find(haystack: dict[str, list[int]]) -> int:
         ...
 
-Usefulness of this syntax before PEP 585 is limited as external tooling
+Usefulness of this syntax before :pep:`585` is limited as external tooling
 like Mypy does not recognize standard collections as generic.  Moreover,
 certain features of typing like type aliases or casting require putting
 types outside of annotations, in runtime context.  While these are
@@ -116,16 +117,16 @@ Python 3.9, the following collections become generic using
 * ``re.Pattern``  # typing.Pattern, typing.re.Pattern
 * ``re.Match``  # typing.Match, typing.re.Match
 
-Importing those from ``typing`` is deprecated.  Due to PEP 563 and the
+Importing those from ``typing`` is deprecated.  Due to :pep:`563` and the
 intention to minimize the runtime impact of typing, this deprecation
 will not generate DeprecationWarnings.  Instead, type checkers may warn
 about such deprecated usage when the target version of the checked
 program is signalled to be Python 3.9 or newer.  It's recommended to
 allow for those warnings to be silenced on a project-wide basis.
 
-The deprecated functionality will be removed from the ``typing`` module
-in the first Python version released 5 years after the release of
-Python 3.9.0.
+The deprecated functionality may eventually be removed from the ``typing``
+module. Removal will occur no sooner than Python 3.9's end of life,
+scheduled for October 2025.
 
 
 Parameters to generics are available at runtime

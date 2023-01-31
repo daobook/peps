@@ -9,10 +9,10 @@ Type: Standards Track
 Content-Type: text/x-rst
 Created: 28-Dec-2016
 Python-Version: 3.7
-Post-History: 03-Jan-2017 (linux-sig),
-              07-Jan-2017 (python-ideas),
-              05-Mar-2017 (python-dev),
-              09-May-2017 (python-dev)
+Post-History: 03-Jan-2017,
+              07-Jan-2017,
+              05-Mar-2017,
+              09-May-2017
 Resolution: https://mail.python.org/pipermail/python-dev/2017-May/148035.html
 
 Abstract
@@ -26,7 +26,7 @@ implies a default text encoding of ASCII, which is entirely inadequate for the
 development of networked services and client applications in a multilingual
 world.
 
-PEP 540 proposes a change to CPython's handling of the legacy C locale such
+:pep:`540` proposes a change to CPython's handling of the legacy C locale such
 that CPython will assume the use of UTF-8 in such environments, rather than
 persisting with the demonstrably problematic assumption of ASCII as an
 appropriate encoding for communicating with operating system interfaces.
@@ -46,7 +46,7 @@ works, rather than relying primarily on existing configuration settings that
 are supported by Python versions prior to Python 3.7.
 
 Accordingly, this PEP proposes that independently of the UTF-8 mode proposed
-in PEP 540, the way the CPython implementation handles the default C locale be
+in :pep:`540`, the way the CPython implementation handles the default C locale be
 changed to be roughly equivalent to the following existing configuration
 settings (supported since Python 3.1)::
 
@@ -70,7 +70,7 @@ With this change, any \*nix platform that does *not* offer at least one of the
 ``C.UTF-8``, ``C.utf8`` or ``UTF-8`` locales as part of its standard
 configuration would only be considered a fully supported platform for CPython
 3.7+ deployments when a suitable locale other than the default ``C`` locale is
-configured explicitly (e.g. ``en_AU.UTF-8``, ``zh_CN.gb18030``). If PEP 540 is
+configured explicitly (e.g. ``en_AU.UTF-8``, ``zh_CN.gb18030``). If :pep:`540` is
 accepted in addition to this PEP, then pure Python modules would also be
 supported when using the proposed ``PYTHONUTF8`` mode, but expectations for
 full Unicode compatibility in extension modules would continue to be limited
@@ -113,7 +113,7 @@ reported by ``sys.getfilesystemencoding()`` matches the encoding used during
 this early bootstrapping process.
 
 On Windows, the limitations of the ``mbcs`` format used by default in these
-conversions proved sufficiently problematic that PEP 528 and PEP 529 were
+conversions proved sufficiently problematic that :pep:`528` and :pep:`529` were
 implemented to bypass the operating system supplied interfaces for binary data
 handling and force the use of UTF-8 instead.
 
@@ -124,7 +124,7 @@ can cause problems in some situations (for example, when using the GNU readline
 module [16_]).
 
 On non-Apple and non-Android \*nix systems, these operations are handled using
-the C locale system in glibc, which has the following characteristics [4_]:
+the C locale system in glibc, which has the following characteristics [4]_:
 
 * by default, all processes start in the ``C`` locale, which uses ``ASCII``
   for these conversions. This is almost never what anyone doing multilingual
@@ -136,7 +136,7 @@ the C locale system in glibc, which has the following characteristics [4_]:
 
 The specific locale category that covers the APIs that CPython depends on is
 ``LC_CTYPE``, which applies to "classification and conversion of characters,
-and to multibyte and wide characters" [5_]. Accordingly, CPython includes the
+and to multibyte and wide characters" [5]_. Accordingly, CPython includes the
 following key calls to ``setlocale``:
 
 * in the main ``python`` binary, CPython calls ``setlocale(LC_ALL, "")`` to
@@ -149,7 +149,7 @@ following key calls to ``setlocale``:
 
 (This summary of the locale handling omits several technical details related
 to exactly where and when the text encoding declared as part of the locale
-settings is used - see PEP 540 for further discussion, as these particular
+settings is used - see :pep:`540` for further discussion, as these particular
 details matter more when decoupling CPython from the declared C locale than
 they do when overriding the locale with one based on UTF-8)
 
@@ -183,7 +183,7 @@ Mac OS X and other \*BSD systems have taken a different approach: instead of
 offering a ``C.UTF-8`` locale, they offer a partial ``UTF-8`` locale that only
 defines the ``LC_CTYPE`` category. On such systems, the preferred
 environmental locale adjustment is to set ``LC_CTYPE=UTF-8`` rather than to set
-``LC_ALL`` or ``LANG``. [17_]
+``LC_ALL`` or ``LANG``. [17]_
 
 In the specific case of Docker containers and similar technologies, the
 appropriate locale setting can be specified directly in the container image
@@ -197,11 +197,11 @@ more narrowly scoped ``LC_MESSAGES=C`` or ``LANGUAGE=en``.
 Relationship with other PEPs
 ============================
 
-This PEP shares a common problem statement with PEP 540 (improving Python 3's
+This PEP shares a common problem statement with :pep:`540` (improving Python 3's
 behaviour in the default C locale), but diverges markedly in the proposed
 solution:
 
-* PEP 540 proposes to entirely decouple CPython's default text encoding from
+* :pep:`540` proposes to entirely decouple CPython's default text encoding from
   the C locale system in that case, allowing text handling inconsistencies to
   arise between CPython and other locale-aware components running in the same
   process and in subprocesses. This approach aims to make CPython behave less
@@ -219,7 +219,7 @@ solution:
   in the wider C/C++ ecosystem
 
 After reviewing both PEPs, it became clear that they didn't actually conflict
-at a technical level, and the proposal in PEP 540 offered a superior option in
+at a technical level, and the proposal in :pep:`540` offered a superior option in
 cases where no suitable locale was available, as well as offering a better
 reference behaviour for platforms where the notion of a "locale encoding"
 doesn't make sense (for example, embedded systems running MicroPython rather
@@ -229,13 +229,13 @@ Meanwhile, this PEP offered improved compatibility with other locale-aware
 components, and an approach more amenable to being backported to Python 3.6
 by downstream redistributors.
 
-As a result, this PEP was amended to refer to PEP 540 as a complementary
+As a result, this PEP was amended to refer to :pep:`540` as a complementary
 solution that offered improved behaviour when none of the standard UTF-8 based
 locales were available, as well as extending the changes in the default
 settings to APIs that aren't currently independently configurable (such as
 the default encoding and error handler for ``open()``).
 
-The availability of PEP 540 also meant that the ``LC_CTYPE=en_US.UTF-8`` legacy
+The availability of :pep:`540` also meant that the ``LC_CTYPE=en_US.UTF-8`` legacy
 fallback was removed from the list of UTF-8 locales tried as a coercion target,
 with the expectation being that CPython will instead rely solely on the
 proposed PYTHONUTF8 mode in such cases.
@@ -247,8 +247,8 @@ Motivation
 While Linux container technologies like Docker, Kubernetes, and OpenShift are
 best known for their use in web service development, the related container
 formats and execution models are also being adopted for Linux command line
-application development. Technologies like Gnome Flatpak [7_] and
-Ubuntu Snappy [8_] further aim to bring these same techniques to Linux GUI
+application development. Technologies like Gnome Flatpak [7]_ and
+Ubuntu Snappy [8]_ further aim to bring these same techniques to Linux GUI
 application development.
 
 When using Python 3 for application development in these contexts, it isn't
@@ -327,11 +327,11 @@ with this problem automatically rather than relying on redistributors or end
 users to handle it through system configuration changes.
 
 While the glibc developers are working towards making the C.UTF-8 locale
-universally available for use by glibc based applications like CPython [6_],
+universally available for use by glibc based applications like CPython [6]_,
 this unfortunately doesn't help on platforms that ship older versions of glibc
 without that feature, and also don't provide C.UTF-8 (or an equivalent) as an
 on-disk locale the way Debian and Fedora do. These platforms are considered
-out of scope for this PEP - see PEP 540 for further discussion of possible
+out of scope for this PEP - see :pep:`540` for further discussion of possible
 options for improving CPython's default behaviour in such environments.
 
 
@@ -592,7 +592,7 @@ Android-specific details:
 Platform Support Changes
 ========================
 
-A new "Legacy C Locale" section will be added to PEP 11 that states:
+A new "Legacy C Locale" section will be added to :pep:`11` that states:
 
 * as of CPython 3.7, \*nix platforms are expected to provide at least one of
   ``C.UTF-8`` (full locale), ``C.utf8`` (full locale) or ``UTF-8`` (
@@ -649,8 +649,8 @@ Defaulting to "surrogateescape" error handling on the standard IO streams
 By coercing the locale away from the legacy C default and its assumption of
 ASCII as the preferred text encoding, this PEP also disables the implicit use
 of the "surrogateescape" error handler on the standard IO streams that was
-introduced in Python 3.5 ([15_]), as well as the automatic use of
-``surrogateescape`` when operating in PEP 540's proposed UTF-8 mode.
+introduced in Python 3.5 ([15]_), as well as the automatic use of
+``surrogateescape`` when operating in :pep:`540`'s proposed UTF-8 mode.
 
 Rather than introducing yet another configuration option to adjust that
 behaviour, this PEP instead proposes to extend the "surrogateescape" default
@@ -662,7 +662,7 @@ provided text values are typically able to be transparently passed through a
 Python 3 application even if it is incorrect in assuming that that text has
 been encoded as UTF-8.
 
-In particular, GB 18030 [12_] is a Chinese national text encoding standard
+In particular, GB 18030 [12]_ is a Chinese national text encoding standard
 that handles all Unicode code points, that is formally incompatible with both
 ASCII and UTF-8, but will nevertheless often tolerate processing as surrogate
 escaped data - the points where GB 18030 reuses ASCII byte values in an
@@ -672,7 +672,7 @@ the relevant ASCII code points. Operations that don't involve splitting on or
 searching for particular ASCII or Unicode code point values are almost
 certain to work correctly.
 
-Similarly, Shift-JIS [13_] and ISO-2022-JP [14_] remain in widespread use in
+Similarly, Shift-JIS [13]_ and ISO-2022-JP [14]_ remain in widespread use in
 Japan, and are incompatible with both ASCII and UTF-8, but will tolerate text
 processing operations that don't involve splitting on or searching for
 particular ASCII or Unicode code point values.
@@ -794,7 +794,7 @@ legacy C locale for over a decade at this point. Not only haven't we been able
 to get it to work, neither has anyone else - the only viable alternatives
 identified have been to pass the bytes along verbatim without eagerly decoding
 them to text (C/C++, Python 2.x, Ruby, etc), or else to largely ignore the
-nominal C/C++ locale encoding and assume the use of either UTF-8 (PEP 540,
+nominal C/C++ locale encoding and assume the use of either UTF-8 (:pep:`540`,
 Rust, Go, Node.js, etc) or UTF-16-LE (JVM, .NET CLR).
 
 While this PEP ensures that developers that genuinely need to do so can still
@@ -803,7 +803,7 @@ opt-in to running their Python code in the legacy C locale (by setting
 ``--without-c-locale-coercion``), it also makes it clear that we *don't*
 expect Python 3's Unicode handling to be completely reliable in that
 configuration, and the recommended alternative is to use a more appropriate
-locale setting (potentially in combination with PEP 540's UTF-8 mode, if that
+locale setting (potentially in combination with :pep:`540`'s UTF-8 mode, if that
 is available).
 
 
@@ -908,7 +908,7 @@ This was later removed on the grounds that setting only ``LC_CTYPE`` is
 sufficient to handle all of the problematic scenarios that the PEP aimed
 to resolve, while setting ``LANG`` as well would break cases where ``LANG``
 was set correctly, and the locale problems were solely due to an incorrect
-``LC_CTYPE`` setting ([22_]).
+``LC_CTYPE`` setting ([22]_).
 
 For example, consider a Python application that called the Linux ``date``
 utility in a subprocess rather than doing its own date formatting::
@@ -954,15 +954,15 @@ coercion notice in that case, coercion is instead skipped entirely.
 Considering locale coercion independently of "UTF-8 mode"
 ---------------------------------------------------------
 
-With both this PEP's locale coercion and PEP 540's UTF-8 mode under
+With both this PEP's locale coercion and :pep:`540`'s UTF-8 mode under
 consideration for Python 3.7, it makes sense to ask whether or not we can
 limit ourselves to only doing one or the other, rather than making both
 changes.
 
-The UTF-8 mode proposed in PEP 540 has two major limitations that make it a
+The UTF-8 mode proposed in :pep:`540` has two major limitations that make it a
 potential complement to this PEP rather than a potential replacement.
 
-First, unlike this PEP, PEP 540's UTF-8 mode makes it possible to change default
+First, unlike this PEP, :pep:`540`'s UTF-8 mode makes it possible to change default
 behaviours that are not currently configurable at all. While that's exactly
 what makes the proposal interesting, it's also what makes it an entirely
 unproven approach. By contrast, the approach proposed in this PEP builds
@@ -975,7 +975,7 @@ Secondly, one of the things we know based on that experience is that the
 proposed locale coercion can resolve problems not only in CPython itself,
 but also in extension modules that interact with the standard streams, like
 GNU readline. As an example, consider the following interactive session
-from a PEP 538 enabled CPython build, where each line after the first is
+from a :pep:`538` enabled CPython build, where each line after the first is
 executed by doing "up-arrow, left-arrow x4, delete, enter"::
 
     $ LANG=C ./python
@@ -1018,7 +1018,7 @@ locale settings::
 That particular misbehaviour is coming from GNU readline, *not* CPython -
 because the command history editing wasn't UTF-8 aware, it corrupted the history
 buffer and fed such nonsense to stdin that even the surrogateescape error
-handler was bypassed. While PEP 540's UTF-8 mode could technically be updated
+handler was bypassed. While :pep:`540`'s UTF-8 mode could technically be updated
 to also reconfigure readline, that's just *one* extension module that might
 be interacting with the standard streams without going through the CPython
 C API, and any change made by CPython would only apply when readline is running
@@ -1077,7 +1077,7 @@ be entirely redundant.
 However, that assumption turned out to be incorrect, as subsequent
 investigations showed that if you explicitly configure ``LANG=C`` on
 these platforms, extension modules like GNU readline will misbehave in much the
-same way as they do on other \*nix systems. [21_]
+same way as they do on other \*nix systems. [21]_
 
 In addition, Mac OS X is also frequently used as a development and testing
 platform for Python software intended for deployment to other \*nix environments
@@ -1093,12 +1093,12 @@ Implementation
 ==============
 
 The reference implementation is being developed in the
-``pep538-coerce-c-locale`` feature branch [18_] in Nick Coghlan's fork of the
-CPython repository on GitHub. A work-in-progress PR is available at [20_].
+``pep538-coerce-c-locale`` feature branch [18]_ in Nick Coghlan's fork of the
+CPython repository on GitHub. A work-in-progress PR is available at [20]_.
 
 This reference implementation covers not only the enhancement request in
-issue 28180 [1_], but also the Android compatibility fixes needed to resolve
-issue 28997 [16_].
+issue 28180 [1]_, but also the Android compatibility fixes needed to resolve
+issue 28997 [16]_.
 
 
 Backporting to earlier Python 3 releases
@@ -1115,7 +1115,7 @@ default, or else specifically for platforms where such a locale is already
 consistently available.
 
 At least the Fedora project is planning to pursue this approach for the
-upcoming Fedora 26 release [19_].
+upcoming Fedora 26 release [19]_.
 
 
 Backporting to other 3.x releases
@@ -1139,7 +1139,7 @@ Acknowledgements
 
 The locale coercion approach proposed in this PEP is inspired directly by
 Armin Ronacher's handling of this problem in the ``click`` command line
-utility development framework [2_]::
+utility development framework [2]_::
 
     $ LANG=C python3 -c 'import click; cli = click.command()(lambda:None); cli()'
     Traceback (most recent call last):
@@ -1157,18 +1157,18 @@ utility development framework [2_]::
         export LANG=C.UTF-8
 
 The change was originally proposed as a downstream patch for Fedora's
-system Python 3.6 package [3_], and then reformulated as a PEP for Python 3.7
+system Python 3.6 package [3]_, and then reformulated as a PEP for Python 3.7
 with a section allowing for backports to earlier versions by redistributors.
 In parallel with the development of the upstream patch, Charalampos Stratakis
 has been working on the Fedora 26 backport and providing feedback on the
 practical viability of the proposed changes.
 
-The initial draft was posted to the Python Linux SIG for discussion [10_] and
+The initial draft was posted to the Python Linux SIG for discussion [10]_ and
 then amended based on both that discussion and Victor Stinner's work in
-PEP 540 [11_].
+:pep:`540` [11]_.
 
 The "ℙƴ☂ℌøἤ" string used in the Unicode handling examples throughout this PEP
-is taken from Ned Batchelder's excellent "Pragmatic Unicode" presentation [9_].
+is taken from Ned Batchelder's excellent "Pragmatic Unicode" presentation [9]_.
 
 Stephen Turnbull has long provided valuable insight into the text encoding
 handling challenges he regularly encounters at the University of Tsukuba
@@ -1179,16 +1179,16 @@ References
 ==========
 
 .. [1] CPython: sys.getfilesystemencoding() should default to utf-8
-   (http://bugs.python.org/issue28180)
+   (https://bugs.python.org/issue28180)
 
 .. [2] Locale configuration required for click applications under Python 3
-   (http://click.pocoo.org/5/python3/#python-3-surrogate-handling)
+   (https://click.palletsprojects.com/en/5.x/python3/#python-3-surrogate-handling)
 
 .. [3] Fedora: force C.UTF-8 when Python 3 is run under the C locale
    (https://bugzilla.redhat.com/show_bug.cgi?id=1404918)
 
 .. [4] GNU C: How Programs Set the Locale
-   ( https://www.gnu.org/software/libc/manual/html_node/Setting-the-Locale.html)
+   (https://www.gnu.org/software/libc/manual/html_node/Setting-the-Locale.html)
 
 .. [5] GNU C: Locale Categories
    (https://www.gnu.org/software/libc/manual/html_node/Locale-Categories.html)
@@ -1197,13 +1197,13 @@ References
    (https://sourceware.org/glibc/wiki/Proposals/C.UTF-8)
 
 .. [7] GNOME Flatpak
-   (http://flatpak.org/)
+   (https://flatpak.org/)
 
 .. [8] Ubuntu Snappy
    (https://www.ubuntu.com/desktop/snappy)
 
 .. [9] Pragmatic Unicode
-   (http://nedbatchelder.com/text/unipain.html)
+   (https://nedbatchelder.com/text/unipain.html)
 
 .. [10] linux-sig discussion of initial PEP draft
    (https://mail.python.org/pipermail/linux-sig/2017-January/000014.html)
@@ -1224,10 +1224,10 @@ References
    (https://bugs.python.org/issue19977)
 
 .. [16] test_readline.test_nonascii fails on Android
-   (http://bugs.python.org/issue28997)
+   (https://bugs.python.org/issue28997)
 
 .. [17] UTF-8 locale discussion on "locale.getdefaultlocale() fails on Mac OS X with default language set to English"
-   (http://bugs.python.org/issue18378#msg215215)
+   (https://bugs.python.org/issue18378#msg215215)
 
 .. [18] GitHub branch diff for ``ncoghlan:pep538-coerce-c-locale``
    (https://github.com/python/cpython/compare/master...ncoghlan:pep538-coerce-c-locale)
@@ -1250,13 +1250,3 @@ Copyright
 
 This document has been placed in the public domain under the terms of the
 CC0 1.0 license: https://creativecommons.org/publicdomain/zero/1.0/
-
-
-..
-   Local Variables:
-   mode: indented-text
-   indent-tabs-mode: nil
-   sentence-end-double-space: t
-   fill-column: 70
-   coding: utf-8
-   End:
