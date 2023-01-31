@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C)
 # This file is distributed under the same license as the PEPs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR xinetzone <xinzone@outlook.com>, 2023.
 #
 #, fuzzy
 msgid ""
@@ -91,7 +91,7 @@ msgstr ""
 
 #: ../../pep-0508.txt:18
 msgid "Abstract"
-msgstr ""
+msgstr "摘要"
 
 #: ../../pep-0508.txt:20
 msgid ""
@@ -101,6 +101,8 @@ msgid ""
 "is a higher level problem. The intent is to provide a building block for "
 "higher layer specifications."
 msgstr ""
+"这个 PEP 指定用于描述包的依赖关系的语言。"
+"它在描述单个依赖项的边缘描绘了边界——不同种类的依赖项以及何时应该安装它们是更高层次的问题。其目的是为更高层次的规范提供构建模块。"
 
 #: ../../pep-0508.txt:26
 msgid ""
@@ -111,6 +113,9 @@ msgid ""
 "only some versions are acceptable, so the language permits describing all"
 " these cases."
 msgstr ""
+"依赖项的作用是使像pip [#pip]_ 这样的工具能够找到要安装的正确软件包。"
+"有时这是非常松散的——只指定名称，有时是非常具体的——引用要安装的特定文件。"
+"有时候依赖关系只适用于一个平台，或者只有某些版本是可接受的，所以语言允许描述所有这些情况。"
 
 #: ../../pep-0508.txt:32
 msgid ""
@@ -121,10 +126,12 @@ msgid ""
 "implemented in pip, but since :pep:`440` is accepted, we use that format "
 "rather than pip's current native format."
 msgstr ""
+"所定义的语言是一种紧凑的基于行的格式，它已经在 pip 需求文件中广泛使用，尽管我们没有指定这些文件允许的命令行选项处理。"
+"有一点需要注意 —— :pep:`440` 中指定的 URL 引用表单实际上并没有在 pip 中实现，但是由于 :pep:`440` 是被接受的，所以我们使用该格式而不是 pip 当前的原生格式。"
 
 #: ../../pep-0508.txt:40
 msgid "Motivation"
-msgstr ""
+msgstr "动机"
 
 #: ../../pep-0508.txt:42
 msgid ""
@@ -136,26 +143,28 @@ msgid ""
 "so adopting them is arguably much better than approving an aspirational, "
 "unconsumed, format."
 msgstr ""
+"Python 打包生态系统中任何需要使用依赖项列表的规范都需要构建在已批准的 PEP 之上，但是 :pep:`426` 主要是一种期望——而且我们可以采用已有的依赖项规范实现。"
+"现有的实现是经过实战验证的，用户友好，所以采用它们比批准一种理想的、未被使用的格式要好得多。"
 
 #: ../../pep-0508.txt:50
 msgid "Specification"
-msgstr ""
+msgstr "规范"
 
 #: ../../pep-0508.txt:53
 msgid "Examples"
-msgstr ""
+msgstr "示例"
 
 #: ../../pep-0508.txt:55
 msgid "All features of the language shown with a name based lookup::"
-msgstr ""
+msgstr "该语言的所有功能都通过基于名称的查找来显示::"
 
 #: ../../pep-0508.txt:59
 msgid "A minimal URL based lookup::"
-msgstr ""
+msgstr "最小的基于 URL 的查找::"
 
 #: ../../pep-0508.txt:64
 msgid "Concepts"
-msgstr ""
+msgstr "概念"
 
 #: ../../pep-0508.txt:66
 msgid ""
@@ -166,16 +175,19 @@ msgid ""
 "install. Finally the dependency can be made conditional using environment"
 " markers."
 msgstr ""
+"依赖项规范总是指定发行版名称。它可能包括额外的内容，这些内容扩展了命名发行版的依赖关系，以启用可选特性。"
+"安装的版本可以使用版本限制来控制，或者将 URL 提供给要安装的特定工件。最后，通过使用环境标记，这种依赖关系可以变成有条件的。"
 
 #: ../../pep-0508.txt:73
 msgid "Grammar"
-msgstr ""
+msgstr "语法"
 
 #: ../../pep-0508.txt:75
 msgid ""
 "We first cover the grammar briefly and then drill into the semantics of "
 "each section later."
 msgstr ""
+"首先简要介绍语法，然后再深入研究每个部分的语义。"
 
 #: ../../pep-0508.txt:78
 msgid ""
@@ -185,56 +197,64 @@ msgid ""
 " such as comments, multiple line support via continuations, or other such"
 " features."
 msgstr ""
+"分发规范是用 ASCII 文本编写的。"
+"使用 parsley [#parsley]_ 语法来提供精确的语法。"
+"预计该规范将被嵌入到更大的系统中，该系统提供框架(如注解)、通过延续的多行支持或其他类似特性。"
 
 #: ../../pep-0508.txt:83
 msgid ""
 "The full grammar including annotations to build a useful parse tree is "
 "included at the end of the PEP."
 msgstr ""
+"PEP 的末尾包含了完整的语法，包括用于构建有用的解析树的注解。"
 
 #: ../../pep-0508.txt:86
 msgid ""
 "Versions may be specified according to the :pep:`440` rules. (Note: URI "
 "is defined in :rfc:`std-66 <3986>`)::"
 msgstr ""
+"版本可以根据 :pep:`440` 规则指定。(注：URI 定义在 :rfc:`std-66 <3986>`)::"
 
 #: ../../pep-0508.txt:96
 msgid ""
 "Environment markers allow making a specification only take effect in some"
 " environments::"
 msgstr ""
+"环境标记允许使规范只在某些环境中生效::"
 
 #: ../../pep-0508.txt:125
 msgid ""
 "Optional components of a distribution may be specified using the extras "
 "field::"
 msgstr ""
+"可以使用 extras 字段指定发行版的可选组件::"
 
 #: ../../pep-0508.txt:134
 msgid "Giving us a rule for name based requirements::"
-msgstr ""
+msgstr "给我们一个基于名称的需求规则::"
 
 #: ../../pep-0508.txt:138
 msgid "And a rule for direct reference specifications::"
-msgstr ""
+msgstr "以及直接引用规范的规则::"
 
 #: ../../pep-0508.txt:142
 msgid "Leading to the unified rule that can specify a dependency.::"
-msgstr ""
+msgstr "导致可以指定依赖项的统一规则。::"
 
 #: ../../pep-0508.txt:147
 msgid "Whitespace"
-msgstr ""
+msgstr "空格"
 
 #: ../../pep-0508.txt:149
 msgid ""
 "Non line-breaking whitespace is mostly optional with no semantic meaning."
 " The sole exception is detecting the end of a URL requirement."
 msgstr ""
+"非换行空格大多是可选的，没有语义意义。唯一的例外是检测 URL 需求的结尾。"
 
 #: ../../pep-0508.txt:153
 msgid "Names"
-msgstr ""
+msgstr "名称"
 
 #: ../../pep-0508.txt:155
 msgid ""
@@ -247,10 +267,15 @@ msgid ""
 " full redefinition of name may take place in a future metadata PEP. The "
 "regex (run with re.IGNORECASE) is::"
 msgstr ""
+"Python 发行版名称目前定义在 :pep:`345` 中。"
+"名称充当发行版的主要标识符。它们存在于所有依赖项规范中，并且足以作为规范。"
+"但是，PyPI 对名称进行了严格的限制——它们必须匹配大小写不敏感的正则表达式，否则它们将不被接受。"
+"因此，在这个 PEP 中，我们将标识符的可接受值限制为该正则表达式。"
+"在将来的元数据 PEP 中可能会对 name 进行完全的重新定义。regex(使用 re.IGNORECASE 运行)是::"
 
 #: ../../pep-0508.txt:167
 msgid "Extras"
-msgstr ""
+msgstr "额外组件"
 
 #: ../../pep-0508.txt:169
 msgid ""
@@ -259,6 +284,7 @@ msgid ""
 "of additional dependencies of the distribution **when** the extra is used"
 " in a dependency specification. For instance::"
 msgstr ""
+"额外内容是发行版的可选部分。发行版可以指定任意多的附加项，当在依赖项规范中使用附加项时，每个附加项都会导致声明该发行版的附加依赖项。例如::"
 
 #: ../../pep-0508.txt:176
 msgid ""
@@ -267,14 +293,16 @@ msgid ""
 "requests being installed, and requests own dependencies, and also any "
 "dependencies that are listed in the \"security\" extra of requests."
 msgstr ""
+"额外组件在它们定义的依赖项中与它们所连接的发行版的依赖项相结合。"
+"上面的例子将导致请求被安装，并且请求拥有自己的依赖项，以及在请求的 \"security\" 附加项中列出的任何依赖项。"
 
 #: ../../pep-0508.txt:181
 msgid "If multiple extras are listed, all the dependencies are unioned together."
-msgstr ""
+msgstr "如果列出了多个附加项，则将所有依赖项联合在一起。"
 
 #: ../../pep-0508.txt:184
 msgid "Versions"
-msgstr ""
+msgstr "版本"
 
 #: ../../pep-0508.txt:186
 msgid ""
@@ -285,10 +313,13 @@ msgid ""
 "feature. The optional brackets around a version are present for "
 "compatibility with :pep:`345` but should not be generated, only accepted."
 msgstr ""
+"有关版本号和版本比较的更多详细信息，请参阅 :pep:`440`。版本规范限制了可以使用的发行版的版本。"
+"它们只适用于通过名称查找的发行版，而不是通过 URL 查找的发行版。"
+"版本比较也用于标记功能。版本周围的可选括号是为了与 :pep:`345` 兼容而存在的，但不应该生成，只接受。"
 
 #: ../../pep-0508.txt:194
 msgid "Environment Markers"
-msgstr ""
+msgstr "环境标记"
 
 #: ../../pep-0508.txt:196
 msgid ""
@@ -298,12 +329,16 @@ msgid ""
 " On older Python versions it has to be installed as a dependency. This "
 "can be expressed as so::"
 msgstr ""
+"环境标记允许依赖项规范提供描述何时应该使用依赖项的规则。"
+"例如，考虑需要 argparse 的包。在 Python 2.7 中，argparse 始终存在。"
+"在较旧的 Python 版本中，它必须作为依赖项安装。这可以表达为::"
 
 #: ../../pep-0508.txt:203
 msgid ""
 "A marker expression evaluates to either True or False. When it evaluates "
 "to False, the dependency specification should be ignored."
 msgstr ""
+"标记表达式的计算结果为 True 或 False。当它的计算结果为 False 时，依赖项规范应该被忽略。"
 
 #: ../../pep-0508.txt:206
 msgid ""
@@ -313,6 +348,8 @@ msgid ""
 "This PEP fixes some issues that were observed in the design described in "
 ":pep:`426`."
 msgstr ""
+"标记语言的灵感来自 Python 本身，选择它是为了能够安全地计算它，而不会运行可能成为安全漏洞的任意代码。"
+"标记第一次标准化是在 :pep:`345`。这个 PEP 修复了在 :pep:`426` 中描述的设计中观察到的一些问题。"
 
 #: ../../pep-0508.txt:211
 msgid ""
@@ -325,6 +362,10 @@ msgid ""
 " falls back to the Python behaviour. Otherwise an error should be raised."
 " e.g. the following will result in  errors::"
 msgstr ""
+"标记表达式中的比较是由比较运算符输入的。"
+"<marker_op> 算子不在 <version_cmp> 执行与 Python 中处理字符串相同的操作。"
+"<version_cmp> 当定义了 :pep:`440` 版本比较规则时（即两端都有有效的版本说明符时），算子使用 :pep:`440` 版本比较规则。"
+"如果没有定义的 :pep:`440` 行为，并且该操作符存在于 Python 中，则该算子将退回到 Python 行为。否则将引发错误。例如，以下将导致错误::"
 
 #: ../../pep-0508.txt:223
 msgid ""
@@ -336,6 +377,9 @@ msgid ""
 "all the runtime variables we are referencing are expected to be ASCII-"
 "only."
 msgstr ""
+"用户提供的常量总是被编码为带有 ``'`` 或 ``\"`` 引号的字符串。"
+"注意，反斜杠转义没有定义，但是现有的实现支持它们。它们没有包括在本规范中，因为它们增加了复杂性，而且目前还没有明显的需求。"
+"类似地，我们没有定义非 ASCII 字符支持：我们引用的所有运行时变量都希望是仅 ASCII 的。"
 
 #: ../../pep-0508.txt:230
 msgid ""
@@ -344,12 +388,15 @@ msgid ""
 "values are defined on all Python versions today - it is an error in the "
 "implementation of markers if a value is not defined."
 msgstr ""
+"标记语法中的变量，如 \"os_name\"，解析为在 Python 运行时中查找的值。"
+"除了 \"extra\" 之外，所有的值都在现在所有的 Python 版本上定义了——如果值没有定义，这是标记实现中的错误。"
 
 #: ../../pep-0508.txt:235
 msgid ""
 "Unknown variables must raise an error rather than resulting in a "
 "comparison that evaluates to True or False."
 msgstr ""
+"未知变量必须引发错误，而不是导致比较结果为 True 或 False。"
 
 #: ../../pep-0508.txt:238
 msgid ""
@@ -357,6 +404,7 @@ msgid ""
 "implementation should evaluate to ``0`` for versions, and an empty string"
 " for all other variables."
 msgstr ""
+"在给定的 Python 实现中不能计算值的变量对于某些版本应该计算为 ``0``，对于所有其他变量应该计算为空字符串。"
 
 #: ../../pep-0508.txt:242
 msgid ""
@@ -367,18 +415,21 @@ msgid ""
 "context where this special handling is taking place, the \"extra\" "
 "variable should result in an error like all other unknown variables."
 msgstr ""
+"\"extra\" 变量是特殊的。轮子使用它来指示 wheel ``METADATA`` 文件中哪些规范适用于给定的额外元素，"
+"但由于 ``METADATA`` 文件基于 :pep:`426` 的草案版本，因此目前没有对此的规范。"
+"无论如何，在发生这种特殊处理的上下文之外，\"extra\" 变量应该像所有其他未知变量一样导致错误。"
 
 #: ../../pep-0508.txt:252
 msgid "Marker"
-msgstr ""
+msgstr "标记"
 
 #: ../../pep-0508.txt:253
 msgid "Python equivalent"
-msgstr ""
+msgstr "Python等效"
 
 #: ../../pep-0508.txt:254
 msgid "Sample values"
-msgstr ""
+msgstr "样例值"
 
 #: ../../pep-0508.txt:255
 msgid "``os_name``"
@@ -532,22 +583,25 @@ msgid ""
 "The ``implementation_version`` marker variable is derived from "
 "``sys.implementation.version``::"
 msgstr ""
+"``implementation_version`` 标记来源于 ``sys.implementation.version``::"
 
 #: ../../pep-0508.txt:312
 msgid "Backwards Compatibility"
-msgstr ""
+msgstr "向后兼容"
 
 #: ../../pep-0508.txt:314
 msgid ""
 "Most of this PEP is already widely deployed and thus offers no "
 "compatibility concerns."
 msgstr ""
+"这个 PEP 的大部分已经被广泛部署，因此不存在兼容性问题。"
 
 #: ../../pep-0508.txt:317
 msgid ""
 "There are however a few points where the PEP differs from the deployed "
 "base."
 msgstr ""
+"然而，PEP 与部署的 base 有一些不同之处。"
 
 #: ../../pep-0508.txt:319
 msgid ""
@@ -557,6 +611,8 @@ msgid ""
 "existing dependency metadata in distributions - particularly since they "
 "won't be permitted to be present in PyPI uploaded distributions anyway."
 msgstr ""
+"首先，:pep:`440` 直接引用实际上还没有正式部署，但它们被设计为可兼容添加的，"
+"并且将它们添加到 pip 或其他使用发行版中现有依赖项元数据的工具中并没有已知的障碍——特别是因为它们无论如何都不允许出现在 PyPI 上传的发行版中。"
 
 #: ../../pep-0508.txt:325
 msgid ""
@@ -572,6 +628,12 @@ msgid ""
 "judgement as to when support has become sufficiently widespread in the "
 "ecosystem that using them will not cause compatibility issues."
 msgstr ""
+"其次，:pep:`426` 标记已经进行了一些合理的部署，特别是在 wheels 和 pip 中，"
+"它将以不同的方式处理与 ``python_full_version`` \"2.7.10\" 的版本比较。"
+"特别是在 426 中，\"2.7.10\" 小于 \"2.7.9\"。这种向后不兼容是故意的。"
+"还定义了新的算子—— \"~=\" 和 \"===\"，以及新的变量—— "
+"``platform_release``， ``platform_system``， ``implementation_name`` 和 ``implementation_version``，这些在旧的标记实现中是不存在的。"
+"变量将在这些实现上出错。这两个特性的用户都需要做出判断，当支持在生态系统中足够广泛时，使用它们不会引起兼容性问题。"
 
 #: ../../pep-0508.txt:337
 msgid ""
@@ -579,10 +641,11 @@ msgid ""
 " to accept :pep:`345` dependency specifications, brackets are accepted, "
 "but they should not be generated."
 msgstr ""
+"第三，:pep:`345` 要求在版本说明符周围加括号。为了接受 :pep:`345` 依赖规范，括号是接受的，但不应该生成它们。"
 
 #: ../../pep-0508.txt:342
 msgid "Rationale"
-msgstr ""
+msgstr "基本原理"
 
 #: ../../pep-0508.txt:344
 msgid ""
@@ -591,6 +654,7 @@ msgid ""
 "form. This PEP brings together all the currently unspecified components "
 "into a specified form."
 msgstr ""
+"为了推进任何依赖于环境标记的新 pep，需要以现代形式包含它们的规范。这个 PEP 将所有当前未指定的组件组合成指定的形式。"
 
 #: ../../pep-0508.txt:349
 msgid ""
@@ -598,28 +662,30 @@ msgid ""
 "pkg_resources documentation, since we wish to avoid depending on a de "
 "facto, vs PEP specified, standard."
 msgstr ""
+"需求说明符是从 setuptools pkg_resources 文档中的 EBNF 中采用的，因为希望避免依赖于事实上的标准，而不是 PEP 指定的标准。"
 
 #: ../../pep-0508.txt:354
 msgid "Complete Grammar"
-msgstr ""
+msgstr "完整语法"
 
 #: ../../pep-0508.txt:356
 msgid "The complete parsley grammar::"
-msgstr ""
+msgstr "完整的 parsley 语法::"
 
 #: ../../pep-0508.txt:463
 msgid "A test program - if the grammar is in a string ``grammar``::"
-msgstr ""
+msgstr "测试程序——如果语法是在字符串 ``grammar``::"
 
 #: ../../pep-0508.txt:530
 msgid "Summary of changes to PEP 508"
-msgstr ""
+msgstr "对 PEP 508 的变更摘要"
 
 #: ../../pep-0508.txt:532
 msgid ""
 "The following changes were made to this PEP based on feedback after its "
 "initial implementation:"
 msgstr ""
+"根据最初实施后的反馈，对 PEP 进行了以下更改:"
 
 #: ../../pep-0508.txt:535
 msgid ""
@@ -629,6 +695,9 @@ msgid ""
 "potential future versions of Python with 2-digit major and minor versions"
 " (e.g. 3.10). [#future_versions]_"
 msgstr ""
+"``python_version`` 的定义从 ``platform.python_version()[:3]`` "
+"更改为 ``'.'.join(platform.python_version_tuple()[:2])``，"
+"以适应具有两位主版本和副版本的 Python 的潜在未来版本(例如 3.10)。 [#future_versions]_"
 
 #: ../../pep-0508.txt:543
 msgid "References"
@@ -658,204 +727,3 @@ msgstr ""
 #: ../../pep-0508.txt:558
 msgid "This document has been placed in the public domain."
 msgstr ""
-
-#~ msgid "PEP"
-#~ msgstr ""
-
-#~ msgid "508"
-#~ msgstr ""
-
-#~ msgid "Title"
-#~ msgstr ""
-
-#~ msgid "Dependency specification for Python Software Packages"
-#~ msgstr ""
-
-#~ msgid "distutils-sig <distutils-sig@python.org>"
-#~ msgstr ""
-
-#~ msgid "Active"
-#~ msgstr ""
-
-#~ msgid "Informational"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The language defined is a compact "
-#~ "line based format which is already "
-#~ "in widespread use in pip requirements"
-#~ " files, though we do not specify "
-#~ "the command line option handling that"
-#~ " those files permit. There is one "
-#~ "caveat - the URL reference form, "
-#~ "specified in PEP-440 [#pep440]_ is not"
-#~ " actually implemented in pip, but "
-#~ "since PEP-440 is accepted, we use "
-#~ "that format rather than pip's current"
-#~ " native format."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Any specification in the Python "
-#~ "packaging ecosystem that needs to "
-#~ "consume lists of dependencies needs to"
-#~ " build on an approved PEP for "
-#~ "such, but PEP-426 [#pep426]_ is mostly"
-#~ " aspirational - and there are already"
-#~ " existing implementations of the dependency"
-#~ " specification which we can instead "
-#~ "adopt. The existing implementations are "
-#~ "battle proven and user friendly, so "
-#~ "adopting them is arguably much better"
-#~ " than approving an aspirational, "
-#~ "unconsumed, format."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Versions may be specified according to"
-#~ " the PEP-440 [#pep440]_ rules. (Note: "
-#~ "URI is defined in std-66 [#std66]_)::"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Python distribution names are currently "
-#~ "defined in PEP-345 [#pep345]_. Names act"
-#~ " as the primary identifier for "
-#~ "distributions. They are present in all"
-#~ " dependency specifications, and are "
-#~ "sufficient to be a specification on "
-#~ "their own. However, PyPI places strict"
-#~ " restrictions on names - they must"
-#~ " match a case insensitive regex or"
-#~ " they won't be accepted. Accordingly, "
-#~ "in this PEP we limit the "
-#~ "acceptable values for identifiers to "
-#~ "that regex. A full redefinition of "
-#~ "name may take place in a future"
-#~ " metadata PEP. The regex (run with"
-#~ " re.IGNORECASE) is::"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "See PEP-440 [#pep440]_ for more detail"
-#~ " on both version numbers and version"
-#~ " comparisons. Version specifications limit "
-#~ "the versions of a distribution that "
-#~ "can be used. They only apply to"
-#~ " distributions looked up by name, "
-#~ "rather than via a URL. Version "
-#~ "comparison are also used in the "
-#~ "markers feature. The optional brackets "
-#~ "around a version are present for "
-#~ "compatibility with PEP-345 [#pep345]_ but "
-#~ "should not be generated, only accepted."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The marker language is inspired by "
-#~ "Python itself, chosen for the ability"
-#~ " to safely evaluate it without "
-#~ "running arbitrary code that could become"
-#~ " a security vulnerability. Markers were "
-#~ "first standardised in PEP-345 [#pep345]_. "
-#~ "This PEP fixes some issues that "
-#~ "were observed in the design described"
-#~ " in PEP-426 [#pep426]_."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Comparisons in marker expressions are "
-#~ "typed by the comparison operator.  The"
-#~ " <marker_op> operators that are not "
-#~ "in <version_cmp> perform the same as "
-#~ "they do for strings in Python. The"
-#~ " <version_cmp> operators use the PEP-440"
-#~ " [#pep440]_ version comparison rules when"
-#~ " those are defined (that is when "
-#~ "both sides have a valid version "
-#~ "specifier). If there is no defined "
-#~ "PEP-440 behaviour and the operator "
-#~ "exists in Python, then the operator "
-#~ "falls back to the Python behaviour. "
-#~ "Otherwise an error should be raised. "
-#~ "e.g. the following will result in  "
-#~ "errors::"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The \"extra\" variable is special. It"
-#~ " is used by wheels to signal "
-#~ "which specifications apply to a given"
-#~ " extra in the wheel ``METADATA`` "
-#~ "file, but since the ``METADATA`` file"
-#~ " is based on a draft version of"
-#~ " PEP-426, there is no current "
-#~ "specification for this. Regardless, outside"
-#~ " of a context where this special "
-#~ "handling is taking place, the \"extra\""
-#~ " variable should result in an error"
-#~ " like all other unknown variables."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Firstly, PEP-440 direct references haven't "
-#~ "actually been deployed in the wild, "
-#~ "but they were designed to be "
-#~ "compatibly added, and there are no "
-#~ "known obstacles to adding them to "
-#~ "pip or other tools that consume "
-#~ "the existing dependency metadata in "
-#~ "distributions - particularly since they "
-#~ "won't be permitted to be present "
-#~ "in PyPI uploaded distributions anyway."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Secondly, PEP-426 markers which have had"
-#~ " some reasonable deployment, particularly "
-#~ "in wheels and pip, will handle "
-#~ "version comparisons with ``python_full_version`` "
-#~ "\"2.7.10\" differently. Specifically in 426"
-#~ " \"2.7.10\" is less than \"2.7.9\". "
-#~ "This backward incompatibility is deliberate."
-#~ " We are also defining new operators"
-#~ " - \"~=\" and \"===\", and new "
-#~ "variables - ``platform_release``, "
-#~ "``platform_system``, ``implementation_name``, and "
-#~ "``implementation_version`` which are not "
-#~ "present in older marker implementations. "
-#~ "The variables will error on those "
-#~ "implementations. Users of both features "
-#~ "will need to make a judgement as"
-#~ " to when support has become "
-#~ "sufficiently widespread in the ecosystem "
-#~ "that using them will not cause "
-#~ "compatibility issues."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Thirdly, PEP-345 required brackets around "
-#~ "version specifiers. In order to accept"
-#~ " PEP-345 dependency specifications, brackets "
-#~ "are accepted, but they should not "
-#~ "be generated."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "PEP-345, Python distribution metadata version"
-#~ " 1.2. (https://www.python.org/dev/peps/pep-0345/)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "PEP-426, Python distribution metadata. "
-#~ "(https://www.python.org/dev/peps/pep-0426/)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "PEP-440, Python distribution metadata. "
-#~ "(https://www.python.org/dev/peps/pep-0440/)"
-#~ msgstr ""
-
-#~ msgid "The URL specification. (https://tools.ietf.org/html/rfc3986)"
-#~ msgstr ""
-
