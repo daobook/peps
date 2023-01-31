@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C)
 # This file is distributed under the same license as the PEPs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR xinetzone <xinzone@outlook.com>, 2023.
 #
 #, fuzzy
 msgid ""
@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: xinetzone <xinzone@outlook.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -91,7 +91,7 @@ msgstr ""
 
 #: ../../pep-0517.txt:19
 msgid "Abstract"
-msgstr ""
+msgstr "摘要"
 
 #: ../../pep-0517.txt:21
 msgid ""
@@ -107,12 +107,18 @@ msgid ""
 "standard interface for installing packages expected by both users and "
 "installation tools like ``pip``."
 msgstr ""
+"虽然 ``distutils`` / ``setuptools`` 已经带我们走了很长一段路，"
+"但它们有三个严重的问题：(a) 它们缺少重要的功能，比如可用的构建时依赖声明，自动配置，"
+"甚至基本的人体工程学细节，比如符合 `DRY <https://en.wikipedia.org/wiki/Don%27t_repeat_yourself>`_ 的版本号管理，"
+"(b)扩展它们是困难的，所以虽然确实存在针对上述问题的各种解决方案，但它们通常是古怪的，脆弱的，维护成本昂贵，"
+"然而(c)很难使用其他任何东西，因为 distutils/setuptools 为安装用户和 ``pip`` 等安装工具所需的包提供了标准接口。"
 
 #: ../../pep-0517.txt:33
 msgid ""
 "Previous efforts (e.g. distutils2 or setuptools itself) have attempted to"
 " solve problems (a) and/or (b). This proposal aims to solve (c)."
 msgstr ""
+"以前的努力（例如 distutils2 或 setuptools 本身）试图解决问题(a)和/或(b)。这个提案旨在解决(c)。"
 
 #: ../../pep-0517.txt:36
 msgid ""
@@ -129,6 +135,12 @@ msgid ""
 "is that it have some way to spit out standard-compliant wheels and "
 "sdists."
 msgstr ""
+"这个 PEP 的目标是让 distutils-sig 不再充当 Python 构建系统的看门人。"
+"如果你想用 distutils，很好；如果您想使用其他方法，那么使用标准化方法应该很容易做到。"
+"与 distutils 进行接口的困难意味着目前还没有很多这样的系统，但是为了让我们了解我们正在考虑什么，"
+"请参阅 `flit <https://github.com/takluyver/flit>`_ 或 `bento <https://cournape.github.io/Bento/>`_。"
+"幸运的是，wheels 现在已经解决了这里的许多难题——例如，"
+"构建系统不再需要知道可能的安装配置——所以真正需要的基本上就是构建系统能够以某种方式吐出符合标准的 wheels 和 sdist。"
 
 #: ../../pep-0517.txt:50
 msgid ""
@@ -136,10 +148,11 @@ msgid ""
 " tools like ``pip`` to interact with package source trees and source "
 "distributions."
 msgstr ""
+"因此，建议为 ``pip`` 等安装工具提供新的、相对最小的接口，以与包源代码树和源代码分发进行交互。"
 
 #: ../../pep-0517.txt:57
 msgid "Terminology and goals"
-msgstr ""
+msgstr "术语和目标"
 
 #: ../../pep-0517.txt:59
 msgid ""
@@ -147,6 +160,7 @@ msgid ""
 "interface for installing from this format, to support usages like ``pip "
 "install some-directory/``."
 msgstr ""
+"源代码树有点像 VCS 签出。需要标准的接口来从这种格式安装，以支持像 ``pip install some-directory/`` 这样的用法。"
 
 #: ../../pep-0517.txt:63
 msgid ""
@@ -165,10 +179,18 @@ msgid ""
 " automatically locates the sdist for ``bar``, downloads it, builds it, "
 "and installs the resulting package."
 msgstr ""
+"源代码发行版（source distribution）是表示某些源代码的特定版本的静态快照，如 ``lxml-3.4.4.tar.gz``。"
+"源代码发行版有很多用途：它们形成了版本的归档记录，"
+"它们为那些想要吸收和处理大量代码（可能用多种语言编写）的工具提供了一种笨拙而简单的事实上的标准，"
+"它们充当了下游打包系统（如 Debian/Fedora/Conda/...）的输入，等等。"
+"在 Python 生态系统中，它们还扮演着特别重要的角色，"
+"因为像 ``pip`` 这样的打包工具能够使用源代码发行版来实现二进制依赖关系，"
+"例如，如果有发行版 ``foo.whl`` 声明了对 ``bar`` 的依赖，那么需要支持这样的情况，"
+"即 ``pip install bar`` 或 ``pip install foo`` 自动为 ``bar`` 定位 sdist，下载它，构建它，并安装结果包。"
 
 #: ../../pep-0517.txt:78
 msgid "Source distributions are also known as *sdists* for short."
-msgstr ""
+msgstr "源代码发行版也简称为 *sdists*。"
 
 #: ../../pep-0517.txt:80
 msgid ""
@@ -178,6 +200,9 @@ msgid ""
 "command like ``pip wheel some-directory/``, pip is acting as a build "
 "frontend."
 msgstr ""
+"**构建前端** （build frontend）是一种用户可以运行的工具，它可以获取任意的源代码树或源代码分布，并从中构建轮子。"
+"实际的构建由每个源树的 **构建后端** （build backend）完成。"
+"在像 ``pip wheel some-directory/`` 这样的命令中，``pip`` 充当构建前端。"
 
 #: ../../pep-0517.txt:86
 msgid ""
@@ -188,10 +213,14 @@ msgid ""
 "sdists. In a command like ``pip install lxml==2.4.0``, pip is acting as "
 "an integration frontend."
 msgstr ""
+"**集成前端** （integration frontend）是用户可能运行的一种工具，"
+"它接受一组包需求（例如，requirements.txt 文件），并尝试更新工作环境以满足这些需求。"
+"这可能需要定位、构建和安装轮子和 sdist 的组合。"
+"在像 ``pip install lxml==2.4.0`` 这样的命令中，pip 充当集成前端。”"
 
 #: ../../pep-0517.txt:96
 msgid "Source trees"
-msgstr ""
+msgstr "源码树"
 
 #: ../../pep-0517.txt:98
 msgid ""
@@ -200,6 +229,9 @@ msgid ""
 " in the source code and documentation of ``distutils``, ``setuptools``, "
 "``pip``, and other tools. We'll refer to it as the ``setup.py``\\-style."
 msgstr ""
+"有一个现有的、遗留的源代码树格式涉及 ``setup.py``。"
+"我们不打算进一步详细说明；它的实际规范编码在 ``distutils``、``setuptools``、``pip`` 和其他工具的源代码和文档中。"
+"我们称之为 ``setup.py`` 样式。"
 
 #: ../../pep-0517.txt:104
 msgid ""
@@ -208,6 +240,9 @@ msgid ""
 "system]`` table in that file with one additional key, ``build-backend``. "
 "Here's an example of how it would look::"
 msgstr ""
+"在这里，基于 :pep:`518` 中定义的 ``pyproject.toml`` 文件定义了一种新的源代码树样式，"
+"扩展了该文件中的 ``[build-system]`` 表，并添加了附加键 ``build-backend``。"
+"下面是例子::"
 
 #: ../../pep-0517.txt:115
 msgid ""

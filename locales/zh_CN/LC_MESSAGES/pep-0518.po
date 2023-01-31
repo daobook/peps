@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C)
 # This file is distributed under the same license as the PEPs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR xinetzone <xinzone@outlook.com>, 2023.
 #
 #, fuzzy
 msgid ""
@@ -93,7 +93,7 @@ msgstr ""
 
 #: ../../pep-0518.txt:22
 msgid "Abstract"
-msgstr ""
+msgstr "摘要"
 
 #: ../../pep-0518.txt:24
 msgid ""
@@ -104,10 +104,12 @@ msgid ""
 "expectation that the same configuration file will be used for future "
 "configuration details)."
 msgstr ""
+"这个 PEP 指定了 Python 软件包应该如何指定它们所拥有的构建依赖关系，以便执行所选择的构建系统。"
+"作为该规范的一部分，为软件包引入了新的配置文件，用于指定它们的构建依赖关系（预期相同的配置文件将用于未来的配置细节）。"
 
 #: ../../pep-0518.txt:33
 msgid "Rationale"
-msgstr ""
+msgstr "基本原理"
 
 #: ../../pep-0518.txt:35
 msgid ""
@@ -118,6 +120,9 @@ msgid ""
 "file that project maintainers executed to build distributions of their "
 "software (as well as users to install said distribution)."
 msgstr ""
+"当 Python 第一次开发用于构建项目软件发行版的工具时，distutils [#distutils]_ 是被选择的解决方案。"
+"随着时间的推移，setuptools [#setuptools]_ 越来越受欢迎，它在 distutils 之上添加了一些功能。"
+"两者都使用了 ``setup.py`` 文件的概念，项目维护者执行该文件来构建其软件的发行版（以及用户安装该发行版）。"
 
 #: ../../pep-0518.txt:43
 msgid ""
@@ -128,6 +133,9 @@ msgid ""
 "build a distribution of their project. There was no need to specify any "
 "dependency information as the only dependency is Python."
 msgstr ""
+"使用可执行文件在 distutils 下指定构建需求不是问题，因为 distutils 是 Python 标准库的一部分。"
+"将构建工具作为 Python 的一部分意味着 ``setup.py`` 没有项目维护者在构建项目发行版时需要担心的外部依赖项。"
+"没有必要指定任何依赖项信息，因为唯一的依赖项就是 Python。"
 
 #: ../../pep-0518.txt:50
 msgid ""
@@ -139,6 +147,9 @@ msgid ""
 " It's a catch-22 of a file not being runnable without knowing its own "
 "contents which can't be known programmatically unless you run the file."
 msgstr ""
+"但是当项目选择使用 setuptools 时，像 ``setup.py`` 这样的可执行文件的使用就成了问题。"
+"你不能在不知道它的依赖关系的情况下执行 ``setup.py`` 文件，但目前没有标准的方法来自动地知道这些依赖关系是什么，而不执行存储信息的 ``setup.py`` 文件。"
+"这是进退两难的局面，文件如果不知道它自己的内容就不能运行，除非你运行文件，否则无法通过编程知道它的内容。"
 
 #: ../../pep-0518.txt:59
 msgid ""
@@ -146,6 +157,7 @@ msgid ""
 "``setup()`` function [#setup_args]_. This solution has a number of "
 "issues, such as:"
 msgstr ""
+"Setuptools 试图用 ``setup_requires`` 参数来解决这个问题，它的 ``setup()`` 函数 [#setup_args]_。这个解决方案有很多问题，比如："
 
 #: ../../pep-0518.txt:63
 msgid ""
@@ -153,6 +165,7 @@ msgid ""
 "without executing the ``setup.py``, but ``setup.py`` can't be executed "
 "without having these items installed."
 msgstr ""
+"没有任何工具（除了 setuptools 本身）可以在不执行 ``setup.py`` 的情况下访问这些信息，但是如果没有安装这些项，``setup.py`` 就不能执行。"
 
 #: ../../pep-0518.txt:66
 msgid ""
@@ -163,6 +176,8 @@ msgid ""
 " of these modules until later on in the execution of the ``setup()`` "
 "function."
 msgstr ""
+"虽然 setuptools 本身将安装中列出这样的东西，他们不会被安装到执行期间 ``setup()`` 的函数，"
+"这意味着实际使用任何添加的唯一途径是通过日益复杂的机制，推迟 import 和使用这些模块，直到后来的执行 ``setup()`` 函数。"
 
 #: ../../pep-0518.txt:72
 msgid ""
@@ -172,6 +187,9 @@ msgid ""
 "cannot take advantage of newer setuptools features until their users "
 "naturally upgrade the version of setuptools to a newer one."
 msgstr ""
+"这不能包括 ``setuptools`` 本身，也不能包括 ``setuptools`` 的替代品，"
+"这意味着 ``numpy.distutils`` 等项目，在很大程度上无法利用它，项目不能利用更新的 ``setuptools`` 功能，"
+"直到他们的用户自然地将 ``setuptools`` 版本升级到更新的版本。"
 
 #: ../../pep-0518.txt:78
 msgid ""
@@ -187,6 +205,11 @@ msgid ""
 " may support different package formats or determine the latest version "
 "differently."
 msgstr ""
+"当您执行 ``setup.py`` 时，``setup_requires`` 中列出的项目将隐式安装，"
+"但是执行 ``setup.py`` 的常见方式之一是通过另一个工具，例如 ``pip``，它已经在管理依赖项。"
+"这意味着像 ``pip install spam`` 这样的命令可能最终会让 ``pip`` 和 ``setuptools`` 同时下载和安装包，"
+"最终用户需要配置这两个工具（对于 ``setuptools`` 来说，不需要控制调用）来更改设置，比如从哪个存储库安装。"
+"这还意味着用户需要了解这两种工具的发现规则，因为工具可能支持不同的包格式，或者以不同的方式确定最新版本。"
 
 #: ../../pep-0518.txt:91
 msgid ""
@@ -196,6 +219,8 @@ msgid ""
 "simply documenting elsewhere what they expect the user to have manually "
 "installed prior to attempting to build or install their project."
 msgstr ""
+"这种情况导致很少使用 ``setup_requires``，项目倾向于简单地在 ``setup.py`` 文件之间复制和粘贴代码片段，"
+"或者在试图构建或安装他们的项目之前简单地在其他地方记录他们希望用户手动安装的内容。"
 
 #: ../../pep-0518.txt:98
 msgid ""
@@ -207,6 +232,9 @@ msgid ""
 "when pip can't infer the fact that something other than setuptools is "
 "required."
 msgstr ""
+"所有这些导致pip [#pip]_ 简单地假设在执行 ``setup.py`` 文件时 setuptools 是必要的。"
+"但问题是，如果另一个项目开始像 setuptools 一样在社区中获得吸引力，它就无法扩展。"
+"当 pip 无法推断除了 setuptools 之外还需要其他工具时，它还可以防止其他项目获得关注，因为在项目中使用它所需的摩擦。"
 
 #: ../../pep-0518.txt:106
 msgid ""
@@ -220,24 +248,28 @@ msgid ""
 "upfront so that tools like pip can make sure that they are installed in "
 "order to run the build system to build the project."
 msgstr ""
+"这个 PEP 试图通过指定一种方法在特定文件中以声明的方式列出项目构建系统的最小依赖项来纠正这种情况。"
+"这允许项目列出从源代码签出到轮的构建依赖关系，而不会陷入 ``setup.py`` 所具有的 catch-22 陷阱，即工具无法推断项目需要自己构建什么。"
+"实现这个 PEP 将允许项目预先指定它们依赖的构建系统，这样像 ``pip`` 这样的工具就可以确保它们被安装，以便运行构建系统来构建项目。"
 
 #: ../../pep-0518.txt:116
 msgid ""
 "To provide more context and motivation for this PEP, think of the (rough)"
 " steps required to produce a built artifact for a project:"
 msgstr ""
+"为了为这个 PEP 提供更多的上下文和动机，请考虑为项目生成构建工件所需的(粗略的)步骤："
 
 #: ../../pep-0518.txt:119
 msgid "The source checkout of the project."
-msgstr ""
+msgstr "项目的源代码检出"
 
 #: ../../pep-0518.txt:120
 msgid "Installation of the build system."
-msgstr ""
+msgstr "构建系统的安装。"
 
 #: ../../pep-0518.txt:121
 msgid "Execute the build system."
-msgstr ""
+msgstr "执行构建系统。"
 
 #: ../../pep-0518.txt:123
 msgid ""
@@ -247,20 +279,23 @@ msgid ""
 " specify the minimal set of requirements for the build system to simply "
 "begin execution."
 msgstr ""
+"这个 PEP 涵盖了第 2 步。:pep:`517` 涵盖了第 3 步，包括如何让构建系统动态地指定构建系统执行其工作所需的更多依赖项。"
+"不过，这个 PEP 的目的是指定构建系统开始执行所需的最小需求集。"
 
 #: ../../pep-0518.txt:131
 msgid "Specification"
-msgstr ""
+msgstr "规范"
 
 #: ../../pep-0518.txt:134
 msgid "File Format"
-msgstr ""
+msgstr "文件格式"
 
 #: ../../pep-0518.txt:136
 msgid ""
 "The build system dependencies will be stored in a file named "
 "``pyproject.toml`` that is written in the TOML format [#toml]_."
 msgstr ""
+"构建系统依赖项将存储在以 TOML 格式 [#toml]_ 编写名为 ``pyproject.toml`` 的文件中。"
 
 #: ../../pep-0518.txt:139
 msgid ""
@@ -276,6 +311,11 @@ msgid ""
 "ultimately subjective and a choice had to be made and the authors prefer "
 "TOML for this situation."
 msgstr ""
+"选择这种格式是因为它是人类可用的(不像JSON [#json]_)，它足够灵活(不像 configparser [#configparser]_)，"
+"源于一个标准(也不像 configparser [#configparser]_)，并且它不是太复杂(不像 YAML [#yaml]_)。"
+"TOML 格式已经被 Rust 社区作为 Cargo 包管理器 [#cargo]_ 的一部分使用，并且在私人邮件中表示他们对选择 TOML 非常满意。"
+"关于为什么没有选择各种替代方案的更彻底的讨论可以在 `Other file formats`_  一节中阅读。"
+"不过，作者确实意识到，配置文件格式的选择最终是主观的，必须做出选择，对于这种情况，作者更倾向于 TOML。"
 
 #: ../../pep-0518.txt:151
 msgid ""
@@ -283,10 +323,11 @@ msgid ""
 "Tables not specified in this PEP are reserved for future use by other "
 "PEPs."
 msgstr ""
+"下面我们列出了工具应该认可/尊重的表格。本 PEP 中未指定的表将保留给其他 PEP 将来使用。"
 
 #: ../../pep-0518.txt:156
 msgid "build-system table"
-msgstr ""
+msgstr "build-system 表"
 
 #: ../../pep-0518.txt:158
 msgid ""
@@ -297,12 +338,16 @@ msgid ""
 " (currently that means what dependencies are required to execute a "
 "``setup.py`` file)."
 msgstr ""
+"``[build-system]`` 表用于存储与构建相关的数据。"
+"最初，表中只有一个键是有效的，并且对于表来说是强制性的：``requires``。"
+"该键必须具有字符串列表的值，该字符串列表表示执行构建系统所需的 :pep:`508` 依赖项（目前这意味着执行 ``setup.py`` 文件所需的依赖项）。"
 
 #: ../../pep-0518.txt:165
 msgid ""
 "For the vast majority of Python projects that rely upon setuptools, the "
 "``pyproject.toml`` file will be::"
 msgstr ""
+"对于绝大多数依赖于 setuptools 的 Python 项目来说，``pyproject.toml`` 将是::"
 
 #: ../../pep-0518.txt:172
 msgid ""
@@ -311,6 +356,8 @@ msgid ""
 " file above as their default semantics when a ``pyproject.toml`` file is "
 "not present."
 msgstr ""
+"因为目前 setuptools 和 wheel 的使用在社区中非常广泛，"
+"当 ``pyproject.toml`` 文件不存在时，构建工具将使用上面的示例配置文件作为默认语义。"
 
 #: ../../pep-0518.txt:177
 msgid ""
@@ -322,10 +369,12 @@ msgid ""
 "table is specified but is missing required fields then the tool should "
 "consider it an error."
 msgstr ""
+"工具不应该要求存在 ``[build-system]`` 表。``pyproject.toml`` 文件可能用于存储与构建相关的数据以外的配置细节，因此合法地缺少 ``[build-system]`` 表。"
+"如果文件存在，但是缺少 ``[build-system]`` 表，那么应该使用上面指定的默认值。如果指定了表，但缺少必需的字段，那么工具应该认为这是一个错误。"
 
 #: ../../pep-0518.txt:187
 msgid "tool table"
-msgstr ""
+msgstr "tool 表"
 
 #: ../../pep-0518.txt:189
 msgid ""
@@ -335,6 +384,8 @@ msgid ""
 "<https://pypi.python.org/pypi/flit>`_ tool would store its configuration "
 "in ``[tool.flit]``."
 msgstr ""
+"``[tool]`` 表是任何与你的 Python 项目相关的工具（不仅仅是构建工具）都可以让用户指定配置数据的地方，"
+"只要他们使用 ``[tool]`` 中的子表，例如 `flit <https://pypi.python.org/pypi/flit>`_ 工具会将其配置存储在 ``[tool.flit]`` 中。"
 
 #: ../../pep-0518.txt:195
 msgid ""
@@ -344,10 +395,12 @@ msgid ""
 "``tool.$NAME`` if, and only if, they own the entry for ``$NAME`` in the "
 "Cheeseshop/PyPI."
 msgstr ""
+"需要一些机制来在 ``tool.*`` 命名空间中分配名称，以确保不同的项目不会试图使用相同的子表而发生冲突。"
+"我们的规则是项目可以使用子表工具。当且仅当他们拥有 Cheeseshop/PyPI 中 ``$NAME`` 的条目时。"
 
 #: ../../pep-0518.txt:202
 msgid "JSON Schema"
-msgstr ""
+msgstr "JSON 模式"
 
 #: ../../pep-0518.txt:204
 msgid ""
@@ -355,14 +408,15 @@ msgid ""
 "TOML file for illustrative purposes only, the following JSON Schema "
 "[#jsonschema]_ would match the data format::"
 msgstr ""
+"为了从 TOML 文件中提供特定类型的结果数据表示，仅用于说明目的，以下 JSON 模式 [#jsonschema]_ 将匹配数据格式::"
 
 #: ../../pep-0518.txt:238
 msgid "Rejected Ideas"
-msgstr ""
+msgstr "拒绝的想法"
 
 #: ../../pep-0518.txt:241
 msgid "A semantic version key"
-msgstr ""
+msgstr "语义版本键"
 
 #: ../../pep-0518.txt:243
 msgid ""
@@ -372,6 +426,8 @@ msgid ""
 "tables occurred which were not backwards-compatible, then the "
 "``semantics-version`` would be incremented to a new number."
 msgstr ""
+"为了保证配置文件的结构不受未来影响，最初提出了 ``semantics-version`` 键。"
+"默认为 ``1``，其想法是，如果之前定义的键或表发生了任何语义更改，而这些更改不向后兼容，那么 ``semantics-version`` 将被增加为新数字。"
 
 #: ../../pep-0518.txt:249
 msgid ""
@@ -382,10 +438,13 @@ msgid ""
 "occurred, different names can be used for the new semantics to avoid "
 "breaking older tools."
 msgstr ""
+"但最终，我们认为这是不成熟的优化。"
+"我们期望对配置文件中预定义语义的更改相当保守。"
+"在可能发生向后不兼容更改的情况下，可以使用不同的名称来表示新的语义，以避免破坏旧的工具。"
 
 #: ../../pep-0518.txt:258
 msgid "A more nested namespace"
-msgstr ""
+msgstr "嵌套更多的命名空间"
 
 #: ../../pep-0518.txt:260
 msgid ""
@@ -395,10 +454,13 @@ msgid ""
 "for scoping removed, the point of having a top-level table became "
 "superfluous."
 msgstr ""
+"这个 PEP 的早期草案有一个顶级的 ``[package]`` 表。"
+"这个想法是为语义版本控制方案强加一些作用域(参见 `A semantic version key`_ 了解为什么这个想法被拒绝)。"
+"随着范围需求的消除，拥有顶级表的意义变得多余。"
 
 #: ../../pep-0518.txt:268
 msgid "Other table names"
-msgstr ""
+msgstr "其他表名称"
 
 #: ../../pep-0518.txt:270
 msgid ""
@@ -407,10 +469,12 @@ msgid ""
 "intention of what information is stored in the table. After a vote on the"
 " distutils-sig mailing list, the current name won out."
 msgstr ""
+"为 ``[build-system]`` 表提议的另一个名称是 ``[build]``。"
+"替代名称更短，但不能传达表中存储哪些信息的意图。在对 distutils-sig 邮件列表进行投票后，当前的名称胜出。"
 
 #: ../../pep-0518.txt:277
 msgid "Other file formats"
-msgstr ""
+msgstr "其他文件格式"
 
 #: ../../pep-0518.txt:279
 msgid ""
@@ -421,6 +485,8 @@ msgid ""
 " are not friendly towards human beings and were never seriously "
 "discussed."
 msgstr ""
+"曾提出其他几种文件格式供考虑，但均因各种原因被拒绝。"
+"关键的要求是格式可以由人编辑，并且有一个可以由项目轻松提供的实现。这完全排除了 XML 等对人类不友好的格式，而且从未认真讨论过。"
 
 #: ../../pep-0518.txt:287
 msgid "Overview of file formats considered"
