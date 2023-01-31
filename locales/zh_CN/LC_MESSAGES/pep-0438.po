@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0438.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0438.txt:1
-msgid "438"
-msgstr ""
-
-#: ../../pep-0438.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0438.txt:2
-msgid "Transitioning to release-file hosting on PyPI"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0438.txt
 msgid "Author"
@@ -74,10 +58,18 @@ msgid "Process"
 msgstr ""
 
 #: ../../pep-0438.txt
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0438.txt:10
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0438.txt
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0438.txt:11
+#: ../../pep-0438.txt:12
 msgid "15-Mar-2013"
 msgstr ""
 
@@ -85,7 +77,7 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0438.txt:12
+#: ../../pep-0438.txt:13
 msgid "19-May-2013"
 msgstr ""
 
@@ -93,7 +85,7 @@ msgstr ""
 msgid "Superseded-By"
 msgstr ""
 
-#: ../../pep-0438.txt:13
+#: ../../pep-0438.txt:14
 msgid "470"
 msgstr ""
 
@@ -101,15 +93,15 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0438.txt:14
+#: ../../pep-0438.txt:15
 msgid "https://mail.python.org/pipermail/distutils-sig/2013-May/020773.html"
 msgstr ""
 
-#: ../../pep-0438.txt:18
+#: ../../pep-0438.txt:19
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0438.txt:20
+#: ../../pep-0438.txt:21
 msgid ""
 "This PEP proposes a backward-compatible two-phase transition process to "
 "speed up, simplify and robustify installing from the pypi.python.org "
@@ -119,7 +111,7 @@ msgid ""
 "result in faster, more reliable installs for most existing packages**."
 msgstr ""
 
-#: ../../pep-0438.txt:28
+#: ../../pep-0438.txt:29
 msgid ""
 "The first transition phase implements easy and explicit means for a "
 "package maintainer to control which release file links are served to "
@@ -131,7 +123,7 @@ msgid ""
 "release files which were uploaded to PyPI."
 msgstr ""
 
-#: ../../pep-0438.txt:37
+#: ../../pep-0438.txt:38
 msgid ""
 "The second transition phase concerns end-user installation tools, which "
 "shall default to only install release files that are hosted on PyPI and "
@@ -142,22 +134,22 @@ msgid ""
 "(PyPI-hosted release files always carry such a checksum)."
 msgstr ""
 
-#: ../../pep-0438.txt:46
+#: ../../pep-0438.txt:47
 msgid ""
 "Alternative PyPI server implementations should implement the new simple "
 "index serving behaviour of transition phase 1 to avoid installation tools"
 " treating their release links as external ones in phase 2."
 msgstr ""
 
-#: ../../pep-0438.txt:53
+#: ../../pep-0438.txt:54
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0438.txt:58
+#: ../../pep-0438.txt:59
 msgid "History and motivations for external hosting"
 msgstr ""
 
-#: ../../pep-0438.txt:60
+#: ../../pep-0438.txt:61
 msgid ""
 "When PyPI went online, it offered release registration but had no "
 "facility to host release files itself.  When hosting was added, no "
@@ -167,7 +159,7 @@ msgid ""
 "hosted packages was implemented as follows:"
 msgstr ""
 
-#: ../../pep-0438.txt:67
+#: ../../pep-0438.txt:68
 msgid ""
 "The PyPI ``simple/`` index for a package contains all links found by "
 "scraping them from that package's long_description metadata for any "
@@ -175,7 +167,7 @@ msgid ""
 "are given ``rel=download`` and ``rel=homepage`` attributes, respectively."
 msgstr ""
 
-#: ../../pep-0438.txt:73
+#: ../../pep-0438.txt:74
 msgid ""
 "Any of these links whose target is a file whose name appears to be in the"
 " form of an installable source or binary distribution, with name in the "
@@ -183,77 +175,77 @@ msgid ""
 "installation candidate by installation tools."
 msgstr ""
 
-#: ../../pep-0438.txt:78
+#: ../../pep-0438.txt:79
 msgid ""
 "Similarly, any links suffixed with an \"#egg=packagename-version\" "
 "fragment are considered an installation candidate."
 msgstr ""
 
-#: ../../pep-0438.txt:81
+#: ../../pep-0438.txt:82
 msgid ""
 "Additionally, the ``rel=homepage`` and ``rel=download`` links are crawled"
 " by installation tools and, if HTML, are themselves scraped for release-"
 "file links in the above formats."
 msgstr ""
 
-#: ../../pep-0438.txt:85
+#: ../../pep-0438.txt:86
 msgid ""
 "See the easy_install documentation for a complete description of this "
 "behavior. [1]_"
 msgstr ""
 
-#: ../../pep-0438.txt:88
+#: ../../pep-0438.txt:89
 msgid ""
 "Today, most packages indexed on PyPI host their release files on PyPI. "
 "Out of 29,117 total projects on PyPI, only 2,581 (less than 10%) include "
 "any links to installable files that are available only off-PyPI. [2]_"
 msgstr ""
 
-#: ../../pep-0438.txt:93
+#: ../../pep-0438.txt:94
 msgid ""
 "There are many reasons [3]_ why people have chosen external hosting. To "
 "cite just a few:"
 msgstr ""
 
-#: ../../pep-0438.txt:96
+#: ../../pep-0438.txt:97
 msgid ""
 "release processes and scripts have been developed already and upload to "
 "external sites"
 msgstr ""
 
-#: ../../pep-0438.txt:99
+#: ../../pep-0438.txt:100
 msgid "it takes too long to upload large files from some places in the world"
 msgstr ""
 
-#: ../../pep-0438.txt:102
+#: ../../pep-0438.txt:103
 msgid "export restrictions e.g. for crypto-related software"
 msgstr ""
 
-#: ../../pep-0438.txt:104
+#: ../../pep-0438.txt:105
 msgid ""
 "company policies which require offering open source packages through own "
 "sites"
 msgstr ""
 
-#: ../../pep-0438.txt:107
+#: ../../pep-0438.txt:108
 msgid ""
 "problems with integrating uploading to PyPI into one's release process "
 "(because of release policies)"
 msgstr ""
 
-#: ../../pep-0438.txt:110
+#: ../../pep-0438.txt:111
 msgid "desiring download statistics different from those maintained by PyPI"
 msgstr ""
 
-#: ../../pep-0438.txt:112
+#: ../../pep-0438.txt:113
 msgid "perceived bad reliability of PyPI"
 msgstr ""
 
-#: ../../pep-0438.txt:114
+#: ../../pep-0438.txt:115
 msgid "not aware that PyPI offers file-hosting"
 msgstr ""
 
-#: ../../pep-0438.txt:116
+#: ../../pep-0438.txt:117
 msgid ""
 "Irrespective of the present-day validity of these reasons, there clearly "
 "is a history why people choose to host files externally and it even was "
@@ -262,11 +254,11 @@ msgid ""
 "today."
 msgstr ""
 
-#: ../../pep-0438.txt:123
+#: ../../pep-0438.txt:124
 msgid "Problem"
 msgstr ""
 
-#: ../../pep-0438.txt:125
+#: ../../pep-0438.txt:126
 msgid ""
 "**Today, python package installers (pip, easy_install, buildout, and "
 "others) often need to query many non-PyPI URLs even if there are no "
@@ -280,7 +272,7 @@ msgid ""
 "around the world."
 msgstr ""
 
-#: ../../pep-0438.txt:136
+#: ../../pep-0438.txt:137
 msgid ""
 "Most packages are hosted directly on pypi.python.org [2]_.  Even for "
 "these packages, installers still crawl their homepage and download-url, "
@@ -289,7 +281,7 @@ msgid ""
 "needlessly slow down the installation process for all users."
 msgstr ""
 
-#: ../../pep-0438.txt:142
+#: ../../pep-0438.txt:143
 msgid ""
 "Relying on third party sites also opens up more attack vectors for "
 "injecting malicious packages into sites using automated installs.  A "
@@ -303,7 +295,7 @@ msgid ""
 "files externally as their homepages are contacted by installers anyway."
 msgstr ""
 
-#: ../../pep-0438.txt:154
+#: ../../pep-0438.txt:155
 msgid ""
 "There is currently no way for package maintainers to avoid external-link "
 "crawling, other than removing all homepage/download url metadata for all "
@@ -312,7 +304,7 @@ msgid ""
 "metadata from PyPI releases."
 msgstr ""
 
-#: ../../pep-0438.txt:160
+#: ../../pep-0438.txt:161
 msgid ""
 "Even if the sites referenced by \"Homepage\" and \"Download-URL\" links "
 "were not scraped for further links, there is no obvious way under the "
@@ -324,15 +316,15 @@ msgid ""
 "in metadata fields."
 msgstr ""
 
-#: ../../pep-0438.txt:171
+#: ../../pep-0438.txt:172
 msgid "Goals"
 msgstr ""
 
-#: ../../pep-0438.txt:173
+#: ../../pep-0438.txt:174
 msgid "These are the goals to be achieved by implementation of this PEP:"
 msgstr ""
 
-#: ../../pep-0438.txt:175
+#: ../../pep-0438.txt:176
 msgid ""
 "Package owners should be able to explicitly control which files are "
 "presented by PyPI to installer tools as installation candidates. "
@@ -341,7 +333,7 @@ msgid ""
 "nominate as installation files."
 msgstr ""
 
-#: ../../pep-0438.txt:181
+#: ../../pep-0438.txt:182
 msgid ""
 "It should remain possible for package owners to choose to host their "
 "release files on their own hosting, external to PyPI. It should be easy "
@@ -350,7 +342,7 @@ msgid ""
 " together with a checksum hash."
 msgstr ""
 
-#: ../../pep-0438.txt:187
+#: ../../pep-0438.txt:188
 msgid ""
 "Automated installer tools should not install externally-hosted packages "
 "**by default**, but require explicit authorization to do so by the user. "
@@ -362,7 +354,7 @@ msgid ""
 "interaction."
 msgstr ""
 
-#: ../../pep-0438.txt:196
+#: ../../pep-0438.txt:197
 msgid ""
 "Migration from the status quo to the above points should be gradual and "
 "minimize breakage. This includes tooling that makes it easy for package "
@@ -370,11 +362,11 @@ msgid ""
 "to also upload those release files to PyPI."
 msgstr ""
 
-#: ../../pep-0438.txt:203
+#: ../../pep-0438.txt:204
 msgid "Solution / two transition phases"
 msgstr ""
 
-#: ../../pep-0438.txt:205
+#: ../../pep-0438.txt:206
 msgid ""
 "The first transition phase introduces a \"hosting-mode\" field for each "
 "project on PyPI, allowing package owners explicit control of which "
@@ -391,7 +383,7 @@ msgid ""
 "reachable."
 msgstr ""
 
-#: ../../pep-0438.txt:219
+#: ../../pep-0438.txt:220
 msgid ""
 "Also in the first phase, each link served in the ``simple/`` index will "
 "be explicitly marked as ``rel=\"internal\"`` if it is hosted by the index"
@@ -400,7 +392,7 @@ msgid ""
 "an external link."
 msgstr ""
 
-#: ../../pep-0438.txt:225
+#: ../../pep-0438.txt:226
 msgid ""
 "In the second transition phase, PyPI client installation tools shall be "
 "updated to default to only install ``rel=\"internal\"`` packages unless a"
@@ -408,7 +400,7 @@ msgid ""
 "`second transition phase`_ for details on how installers should behave."
 msgstr ""
 
-#: ../../pep-0438.txt:231
+#: ../../pep-0438.txt:232
 msgid ""
 "Maintainers of packages which currently host release files on non-PyPI "
 "sites shall receive instructions and tools to ease \"re-hosting\" of "
@@ -417,15 +409,15 @@ msgid ""
 "package maintainers."
 msgstr ""
 
-#: ../../pep-0438.txt:239
+#: ../../pep-0438.txt:240
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0438.txt:242
+#: ../../pep-0438.txt:243
 msgid "Hosting modes"
 msgstr ""
 
-#: ../../pep-0438.txt:244
+#: ../../pep-0438.txt:245
 msgid ""
 "The foundation of the first transition phase is the introduction of three"
 " \"modes\" of PyPI hosting for a package, affecting which links are "
@@ -434,18 +426,18 @@ msgid ""
 " generating the machine-readable ``simple/`` index."
 msgstr ""
 
-#: ../../pep-0438.txt:250
+#: ../../pep-0438.txt:251
 msgid "The modes are:"
 msgstr ""
 
-#: ../../pep-0438.txt:252
+#: ../../pep-0438.txt:253
 msgid ""
 "``pypi-scrape-crawl``: no change from the current situation of generating"
 " machine-readable links for installation tools, as outlined in the "
 "history_."
 msgstr ""
 
-#: ../../pep-0438.txt:256
+#: ../../pep-0438.txt:257
 msgid ""
 "``pypi-scrape``: for a package in this mode, links to be added to the "
 "``simple/`` index are still scraped from package metadata. However, the "
@@ -460,7 +452,7 @@ msgid ""
 "external pages but MUST NOT default to it."
 msgstr ""
 
-#: ../../pep-0438.txt:269
+#: ../../pep-0438.txt:270
 msgid ""
 "``pypi-explicit``: for a package in this mode, only links to release "
 "files uploaded to PyPI, and external links to release files explicitly "
@@ -472,7 +464,7 @@ msgid ""
 "intended file."
 msgstr ""
 
-#: ../../pep-0438.txt:278
+#: ../../pep-0438.txt:279
 msgid ""
 "Thus the hope is that eventually all projects on PyPI can be migrated to "
 "the ``pypi-explicit`` mode, while preserving the ability to install "
@@ -485,44 +477,44 @@ msgid ""
 " packages."
 msgstr ""
 
-#: ../../pep-0438.txt:290
+#: ../../pep-0438.txt:291
 msgid "First transition phase (PyPI)"
 msgstr ""
 
-#: ../../pep-0438.txt:292
+#: ../../pep-0438.txt:293
 msgid ""
 "The proposed solution consists of multiple implementation and "
 "communication steps:"
 msgstr ""
 
-#: ../../pep-0438.txt:295
+#: ../../pep-0438.txt:296
 msgid ""
 "Implement in PyPI the three modes described above, with an interface for "
 "package owners to select the mode for each package and register explicit "
 "external file URLs."
 msgstr ""
 
-#: ../../pep-0438.txt:299
+#: ../../pep-0438.txt:300
 msgid ""
 "For packages in all modes, label links in the ``simple/`` index to index-"
 "hosted files with ``rel=\"internal\"``, to make it easier for client "
 "tools to distinguish these links in the second phase."
 msgstr ""
 
-#: ../../pep-0438.txt:303
+#: ../../pep-0438.txt:304
 msgid ""
 "Add an HTML tag ``<meta name=\"api-version\" value=\"2\">`` to all "
 "``simple/`` index pages, to allow clients to distinguish between indexes "
 "providing the ``rel=\"internal\"`` metadata and older ones that do not."
 msgstr ""
 
-#: ../../pep-0438.txt:308
+#: ../../pep-0438.txt:309
 msgid ""
 "Default all newly-registered packages to ``pypi-explicit`` mode (package "
 "owners can still switch to the other modes as desired)."
 msgstr ""
 
-#: ../../pep-0438.txt:311
+#: ../../pep-0438.txt:312
 msgid ""
 "Determine (via automated analysis [2]_) which packages have all "
 "installable files available on PyPI itself (group A), which have all "
@@ -531,7 +523,7 @@ msgid ""
 "from external homepage/download HTML pages (group C)."
 msgstr ""
 
-#: ../../pep-0438.txt:317
+#: ../../pep-0438.txt:318
 msgid ""
 "Send mail to maintainers of projects in group A that their project will "
 "be automatically configured to ``pypi-explicit`` mode in one month, and "
@@ -542,7 +534,7 @@ msgid ""
 "Encourage them to set this mode themselves sooner to benefit their users."
 msgstr ""
 
-#: ../../pep-0438.txt:326
+#: ../../pep-0438.txt:327
 msgid ""
 "Send mail to maintainers of packages in group C that their package "
 "hosting mode is ``pypi-scrape-crawl``, list the URLs which currently are "
@@ -552,17 +544,17 @@ msgid ""
 "instructions and tools to help with these transitions."
 msgstr ""
 
-#: ../../pep-0438.txt:338
+#: ../../pep-0438.txt:339
 msgid "Second transition phase (installer tools)"
 msgstr ""
 
-#: ../../pep-0438.txt:340
+#: ../../pep-0438.txt:341
 msgid ""
 "For the second transition phase, maintainers of installation tools are "
 "asked to release two updates."
 msgstr ""
 
-#: ../../pep-0438.txt:343
+#: ../../pep-0438.txt:344
 msgid ""
 "The first update shall provide clear warnings if externally-hosted "
 "release files (that is, files whose link does not include "
@@ -571,7 +563,7 @@ msgid ""
 "hosted downloads will be disabled by default."
 msgstr ""
 
-#: ../../pep-0438.txt:349
+#: ../../pep-0438.txt:350
 msgid ""
 "The second update should change the default mode to allow only "
 "installation of ``rel=\"internal\"`` package files, and allow "
@@ -579,7 +571,7 @@ msgid ""
 " option."
 msgstr ""
 
-#: ../../pep-0438.txt:354
+#: ../../pep-0438.txt:355
 msgid ""
 "The installer should distinguish between verifiable and non-verifiable "
 "external links. A verifiable external link is a direct link to an "
@@ -592,7 +584,7 @@ msgid ""
 "``dependency_links`` feature)."
 msgstr ""
 
-#: ../../pep-0438.txt:364
+#: ../../pep-0438.txt:365
 msgid ""
 "Installers should provide a blanket option to allow installing any "
 "verifiable external link. Non-verifiable external links should only be "
@@ -601,7 +593,7 @@ msgid ""
 "can be used."
 msgstr ""
 
-#: ../../pep-0438.txt:370
+#: ../../pep-0438.txt:371
 msgid ""
 "When download of an externally-hosted package is disallowed by the "
 "default configuration, the user should be notified, with instructions for"
@@ -614,7 +606,7 @@ msgid ""
 "integrity can be verified by checksum."
 msgstr ""
 
-#: ../../pep-0438.txt:380
+#: ../../pep-0438.txt:381
 msgid ""
 "Alternative PyPI-compatible index implementations should upgrade to begin"
 " providing the ``rel=\"internal\"`` metadata and the ``<meta name=\"api-"
@@ -624,202 +616,214 @@ msgid ""
 "(treat links as internal as in pre-PEP times and provide a warning)."
 msgstr ""
 
-#: ../../pep-0438.txt:390
+#: ../../pep-0438.txt:391
 msgid "API For Submitting External Distribution URLs"
 msgstr ""
 
-#: ../../pep-0438.txt:392
+#: ../../pep-0438.txt:393
 msgid ""
 "New distribution URLs may be submitted by performing a HTTP POST to the "
 "URL:"
 msgstr ""
 
-#: ../../pep-0438.txt:395
+#: ../../pep-0438.txt:396
 msgid "https://pypi.python.org/pypi"
 msgstr ""
 
-#: ../../pep-0438.txt:397
+#: ../../pep-0438.txt:398
 msgid "With the following form-encoded data:"
 msgstr ""
 
-#: ../../pep-0438.txt:400
+#: ../../pep-0438.txt:401
 msgid "Name"
 msgstr ""
 
-#: ../../pep-0438.txt:400
+#: ../../pep-0438.txt:401
 msgid "Value"
 msgstr ""
 
-#: ../../pep-0438.txt:402
+#: ../../pep-0438.txt:403
 msgid ":action"
 msgstr ""
 
-#: ../../pep-0438.txt:402
+#: ../../pep-0438.txt:403
 msgid "The string \"urls\""
 msgstr ""
 
-#: ../../pep-0438.txt:403
+#: ../../pep-0438.txt:404
 msgid "name"
 msgstr ""
 
-#: ../../pep-0438.txt:403
+#: ../../pep-0438.txt:404
 msgid "The package name as a string"
 msgstr ""
 
-#: ../../pep-0438.txt:404
+#: ../../pep-0438.txt:405
 msgid "version"
 msgstr ""
 
-#: ../../pep-0438.txt:404
+#: ../../pep-0438.txt:405
 msgid "The release version as a string"
 msgstr ""
 
-#: ../../pep-0438.txt:405
+#: ../../pep-0438.txt:406
 msgid "new-url"
 msgstr ""
 
-#: ../../pep-0438.txt:405
+#: ../../pep-0438.txt:406
 msgid "The new URL to store"
 msgstr ""
 
-#: ../../pep-0438.txt:406
+#: ../../pep-0438.txt:407
 msgid "submit_new_url"
 msgstr ""
 
-#: ../../pep-0438.txt:406
+#: ../../pep-0438.txt:407
 msgid "The string \"yes\""
 msgstr ""
 
-#: ../../pep-0438.txt:409
+#: ../../pep-0438.txt:410
 msgid ""
 "The POST must be accompanied by an HTTP Basic Auth header encoding the "
 "username and password of the user authorized to maintain the package on "
 "PyPI."
 msgstr ""
 
-#: ../../pep-0438.txt:413
+#: ../../pep-0438.txt:414
 msgid "The HTTP response to this request will be one of:"
 msgstr ""
 
-#: ../../pep-0438.txt:416
+#: ../../pep-0438.txt:417
 msgid "Code"
 msgstr ""
 
-#: ../../pep-0438.txt:416
+#: ../../pep-0438.txt:417
 msgid "Meaning"
 msgstr ""
 
-#: ../../pep-0438.txt:416
+#: ../../pep-0438.txt:417
 msgid "URL submission implications"
 msgstr ""
 
-#: ../../pep-0438.txt:418
+#: ../../pep-0438.txt:419
 msgid "200"
 msgstr ""
 
-#: ../../pep-0438.txt:418
+#: ../../pep-0438.txt:419
 msgid "OK"
 msgstr ""
 
-#: ../../pep-0438.txt:418
+#: ../../pep-0438.txt:419
 msgid "Everything worked just fine"
 msgstr ""
 
-#: ../../pep-0438.txt:419
+#: ../../pep-0438.txt:420
 msgid "400"
 msgstr ""
 
-#: ../../pep-0438.txt:419
+#: ../../pep-0438.txt:420
 msgid "Bad request"
 msgstr ""
 
-#: ../../pep-0438.txt:419
+#: ../../pep-0438.txt:420
 msgid "Data provided for submission was malformed"
 msgstr ""
 
-#: ../../pep-0438.txt:420
+#: ../../pep-0438.txt:421
 msgid "401"
 msgstr ""
 
-#: ../../pep-0438.txt:420
+#: ../../pep-0438.txt:421
 msgid "Unauthorised"
 msgstr ""
 
-#: ../../pep-0438.txt:420
+#: ../../pep-0438.txt:421
 msgid "The username or password supplied were incorrect"
 msgstr ""
 
-#: ../../pep-0438.txt:421
+#: ../../pep-0438.txt:422
 msgid "403"
 msgstr ""
 
-#: ../../pep-0438.txt:421
+#: ../../pep-0438.txt:422
 msgid "Forbidden"
 msgstr ""
 
-#: ../../pep-0438.txt:421
+#: ../../pep-0438.txt:422
 msgid ""
 "User does not have permission to update the package information (not "
 "Owner or Maintainer)"
 msgstr ""
 
-#: ../../pep-0438.txt:427
+#: ../../pep-0438.txt:428
 msgid "References"
 msgstr ""
 
-#: ../../pep-0438.txt:429
+#: ../../pep-0438.txt:430
 msgid ""
 "Phillip Eby, easy_install 'Package Index \"API\"' documentation, "
 "http://peak.telecommunity.com/DevCenter/EasyInstall#package-index-api"
 msgstr ""
 
-#: ../../pep-0438.txt:432
+#: ../../pep-0438.txt:433
 msgid ""
 "Donald Stufft, automated analysis of PyPI project links, "
 "https://github.com/dstufft/pypi.linkcheck"
 msgstr ""
 
-#: ../../pep-0438.txt:435
+#: ../../pep-0438.txt:436
 msgid ""
 "Marc-Andre Lemburg, reasons for external hosting, "
 "https://mail.python.org/pipermail/catalog-sig/2013-March/005626.html"
 msgstr ""
 
-#: ../../pep-0438.txt:438
+#: ../../pep-0438.txt:439
 msgid ""
 "Holger Krekel, script to remove homepage/download metadata for all "
 "releases https://mail.python.org/pipermail/catalog-"
 "sig/2013-February/005423.html"
 msgstr ""
 
-#: ../../pep-0438.txt:444
+#: ../../pep-0438.txt:445
 msgid "Acknowledgments"
 msgstr ""
 
-#: ../../pep-0438.txt:446
+#: ../../pep-0438.txt:447
 msgid ""
 "Phillip Eby for precise information and the basic ideas to implement the "
 "transition via server-side changes only."
 msgstr ""
 
-#: ../../pep-0438.txt:449
+#: ../../pep-0438.txt:450
 msgid ""
 "Donald Stufft for pushing away from external hosting and offering to "
 "implement both a Pull Request for the necessary PyPI changes and the "
 "analysis tool to drive the transition phase 1."
 msgstr ""
 
-#: ../../pep-0438.txt:453
+#: ../../pep-0438.txt:454
 msgid ""
 "Marc-Andre Lemburg, Nick Coghlan and catalog-sig in general for thinking "
 "through issues regarding getting rid of \"external hosting\"."
 msgstr ""
 
-#: ../../pep-0438.txt:458
+#: ../../pep-0438.txt:459
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0438.txt:460
+#: ../../pep-0438.txt:461
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "438"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Transitioning to release-file hosting on PyPI"
+#~ msgstr ""
 

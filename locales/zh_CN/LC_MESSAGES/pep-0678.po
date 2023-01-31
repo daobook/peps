@@ -1,0 +1,539 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0678.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0678.rst:3
+msgid "Zac Hatfield-Dodds <zac@zhd.dev>"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0678.rst:4
+msgid "Irit Katriel"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0678.rst:5
+msgid "https://discuss.python.org/t/pep-678-enriching-exceptions-with-notes/13374"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0678.rst:6
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0678.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Requires"
+msgstr ""
+
+#: ../../pep-0678.rst:9
+msgid "654"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0678.rst:10
+msgid "20-Dec-2021"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0678.rst:11
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0678.rst:12
+msgid "27-Jan-2022"
+msgstr ""
+
+#: ../../pep-0678.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0678.rst:13
+msgid ""
+"https://discuss.python.org/t/pep-678-enriching-exceptions-with-"
+"notes/13374/100"
+msgstr ""
+
+#: ../../pep-0678.rst:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0678.rst:18
+msgid ""
+"Exception objects are typically initialized with a message that describes"
+" the error which has occurred.  Because further information may be "
+"available when the exception is caught and re-raised, or included in an "
+"``ExceptionGroup``, this PEP proposes to add "
+"``BaseException.add_note(note)``, a ``.__notes__`` attribute holding a "
+"list of notes so added, and to update the builtin traceback formatting "
+"code to include notes in the formatted traceback following the exception "
+"string."
+msgstr ""
+
+#: ../../pep-0678.rst:26
+msgid ""
+"This is particularly useful in relation to :pep:`654` "
+"``ExceptionGroup``\\ s, which make previous workarounds ineffective or "
+"confusing.  Use cases have been identified in the standard library, "
+"Hypothesis and ``cattrs`` packages, and common code patterns with "
+"retries."
+msgstr ""
+
+#: ../../pep-0678.rst:33
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0678.rst:34
+msgid ""
+"When an exception is created in order to be raised, it is usually "
+"initialized with information that describes the error that has occurred. "
+"There are cases where it is useful to add information after the exception"
+" was caught. For example,"
+msgstr ""
+
+#: ../../pep-0678.rst:39
+msgid ""
+"testing libraries may wish to show the values involved in a failing "
+"assertion, or the steps to reproduce a failure (e.g. ``pytest`` and "
+"``hypothesis``; example below)."
+msgstr ""
+
+#: ../../pep-0678.rst:42
+msgid ""
+"code which retries an operation on error may wish to associate an "
+"iteration, timestamp, or other explanation with each of several errors - "
+"especially if re-raising them in an ``ExceptionGroup``."
+msgstr ""
+
+#: ../../pep-0678.rst:45
+msgid ""
+"programming environments for novices can provide more detailed "
+"descriptions of various errors, and tips for resolving them."
+msgstr ""
+
+#: ../../pep-0678.rst:48
+msgid ""
+"Existing approaches must pass this additional information around while "
+"keeping it in sync with the state of raised, and potentially caught or "
+"chained, exceptions. This is already error-prone, and made more difficult"
+" by :pep:`654` ``ExceptionGroup``\\ s, so the time is right for a built-"
+"in solution.  We therefore propose to add:"
+msgstr ""
+
+#: ../../pep-0678.rst:54
+msgid "a new method ``BaseException.add_note(note: str)``,"
+msgstr ""
+
+#: ../../pep-0678.rst:55
+msgid ""
+"``BaseException.__notes__``, a list of note strings added using "
+"``.add_note()``, and"
+msgstr ""
+
+#: ../../pep-0678.rst:57
+msgid ""
+"support in the builtin traceback formatting code such that notes are "
+"displayed in the formatted traceback following the exception string."
+msgstr ""
+
+#: ../../pep-0678.rst:62
+msgid "Example usage"
+msgstr ""
+
+#: ../../pep-0678.rst:77
+msgid ""
+"When collecting exceptions into an exception group, we may want to add "
+"context information for the individual errors. In the following example "
+"with `Hypothesis' proposed support for ExceptionGroup "
+"<https://github.com/HypothesisWorks/hypothesis/pull/3191>`__, each "
+"exception includes a note of the minimal failing example::"
+msgstr ""
+
+#: ../../pep-0678.rst:123
+msgid "Non-goals"
+msgstr ""
+
+#: ../../pep-0678.rst:124
+msgid ""
+"Tracking multiple notes as a list, rather than by concatenating strings "
+"when notes are added, is intended to maintain the distinction between the"
+" individual notes. This might be required in specialized use cases, such "
+"as translation of the notes by packages like ``friendly-traceback``."
+msgstr ""
+
+#: ../../pep-0678.rst:129
+msgid ""
+"However, ``__notes__`` is *not* intended to carry structured data.  If "
+"your note is for use by a program rather than display to a human, `we "
+"recommend <https://discuss.python.org/t/accepting-pep-654-exception-"
+"groups-and-except/10813/26>`__ instead (or additionally) choosing a "
+"convention for an attribute, e.g. ``err._parse_errors = ...`` on the "
+"error or ``ExceptionGroup``."
+msgstr ""
+
+#: ../../pep-0678.rst:135
+msgid ""
+"As a rule of thumb, we suggest that you should prefer `exception chaining"
+" <https://docs.python.org/3/tutorial/errors.html#exception-chaining>`__ "
+"when the error is going to be re-raised or handled as an individual "
+"error, and prefer ``.add_note()`` when you want to avoid changing the "
+"exception type or are collecting multiple exception objects to handle "
+"together. [1]_"
+msgstr ""
+
+#: ../../pep-0678.rst:143
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0678.rst:145
+msgid ""
+"``BaseException`` gains a new method ``.add_note(note: str)``. If "
+"``note`` is a string, ``.add_note(note)`` appends it to the ``__notes__``"
+" list, creating the attribute if it does not already exist.  If ``note`` "
+"is not a string, ``.add_note()`` raises ``TypeError``."
+msgstr ""
+
+#: ../../pep-0678.rst:150
+msgid ""
+"Libraries may clear existing notes by modifying or deleting the "
+"``__notes__`` list, if it has been created, including clearing all notes "
+"with ``del err.__notes__``.  This allows full control over the attached "
+"notes, without overly complicating the API or adding multiple names to "
+"``BaseException.__dict__``."
+msgstr ""
+
+#: ../../pep-0678.rst:156
+msgid ""
+"When an exception is displayed by the interpreter's builtin traceback-"
+"rendering code, its notes (if there are any) appear immediately after the"
+" exception message, in the order in which they were added, with each note"
+" starting on a new line."
+msgstr ""
+
+#: ../../pep-0678.rst:160
+msgid ""
+"If ``__notes__`` has been created, ``BaseExceptionGroup.subgroup`` and "
+"``BaseExceptionGroup.split`` create a new list for each new instance, "
+"containing the same contents as the original exception group's "
+"``__notes__``."
+msgstr ""
+
+#: ../../pep-0678.rst:164
+msgid ""
+"We *do not* specify the expected behaviour when users have assigned a "
+"non-list value to ``__notes__``, or a list which contains non-string "
+"elements. Implementations might choose to emit warnings, discard or "
+"ignore bad values, convert them to strings, raise an exception, or do "
+"something else entirely."
+msgstr ""
+
+#: ../../pep-0678.rst:171
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0678.rst:173
+msgid ""
+"System-defined or \"dunder\" names (following the pattern ``__*__``) are "
+"part of the language specification, with `unassigned names reserved for "
+"future use and subject to breakage without warning "
+"<https://docs.python.org/3/reference/lexical_analysis.html#reserved-"
+"classes-of-identifiers>`__. We are also unaware of any code which *would*"
+" be broken by adding ``__notes__``."
+msgstr ""
+
+#: ../../pep-0678.rst:179
+msgid ""
+"We were also unable to find any code which would be broken by the "
+"addition of ``BaseException.add_note()``: while searching Google and "
+"`GitHub finds several definitions "
+"<https://grep.app/search?q=.add_note%28&filter[lang][0]=Python>`__ of an "
+"``.add_note()`` method, none of them are on a subclass of "
+"``BaseException``."
+msgstr ""
+
+#: ../../pep-0678.rst:187
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0678.rst:189
+msgid ""
+"The ``add_note()`` method and ``__notes__`` attribute will be documented "
+"as part of the language standard, and explained as part of `the \"Errors "
+"and Exceptions\" tutorial "
+"<https://github.com/python/cpython/pull/30441>`__."
+msgstr ""
+
+#: ../../pep-0678.rst:195
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0678.rst:197
+msgid ""
+"Following discussions related to :pep:`654` [2]_, an early version of "
+"this proposal was `implemented in "
+"<https://github.com/python/cpython/pull/29880>`__ and released in CPython"
+" 3.11.0a3, with a mutable string-or-none ``__note__`` attribute."
+msgstr ""
+
+#: ../../pep-0678.rst:202
+msgid ""
+"`CPython PR #31317 <https://github.com/python/cpython/pull/31317>`__ "
+"implements ``.add_note()`` and ``__notes__``."
+msgstr ""
+
+#: ../../pep-0678.rst:207
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0678.rst:212
+msgid "Use ``print()`` (or ``logging``, etc.)"
+msgstr ""
+
+#: ../../pep-0678.rst:213
+msgid ""
+"Reporting explanatory or contextual information about an error by "
+"printing or logging has historically been an acceptable workaround.  "
+"However, we dislike the way this separates the content from the exception"
+" object it refers to - which can lead to \"orphan\" reports if the error "
+"was caught and handled later, or merely significant difficulties working "
+"out which explanation corresponds to which error. The new "
+"``ExceptionGroup`` type intensifies these existing challenges."
+msgstr ""
+
+#: ../../pep-0678.rst:221
+msgid ""
+"Keeping the ``__notes__`` attached to the exception object, in the same "
+"way as the ``__traceback__`` attribute, eliminates these problems."
+msgstr ""
+
+#: ../../pep-0678.rst:226
+msgid "``raise Wrapper(explanation) from err``"
+msgstr ""
+
+#: ../../pep-0678.rst:227
+msgid ""
+"An alternative pattern is to use exception chaining: by raising a "
+"'wrapper' exception containing the context or explanation ``from`` the "
+"current exception, we avoid the separation challenges from ``print()``.  "
+"However, this has two key problems."
+msgstr ""
+
+#: ../../pep-0678.rst:232
+msgid ""
+"First, it changes the type of the exception, which is often a breaking "
+"change for downstream code.  We consider *always* raising a ``Wrapper`` "
+"exception unacceptably inelegant; but because custom exception types "
+"might have any number of required arguments we can't always create an "
+"instance of the *same* type with our explanation. In cases where the "
+"exact exception type is known this can work, such as the standard library"
+" ``http.client`` `code "
+"<https://github.com/python/cpython/blob/69ef1b59983065ddb0b712dac3b04107c5059735/Lib/http/client.py#L596-L597>`__,"
+" but not for libraries which call user code."
+msgstr ""
+
+#: ../../pep-0678.rst:241
+msgid ""
+"Second, exception chaining reports several lines of additional detail, "
+"which are distracting for experienced users and can be very confusing for"
+" beginners. For example, six of the eleven lines reported for this simple"
+" example relate to exception chaining, and are unnecessary with "
+"``BaseException.add_note()``:"
+msgstr ""
+
+#: ../../pep-0678.rst:273
+msgid ""
+"**In cases where these two problems do not apply, we encourage use of "
+"exception chaining rather than** ``__notes__``."
+msgstr ""
+
+#: ../../pep-0678.rst:278
+msgid "An assignable ``__note__`` attribute"
+msgstr ""
+
+#: ../../pep-0678.rst:279
+msgid ""
+"The first draft and implementation of this PEP defined a single attribute"
+" ``__note__``, which defaulted to ``None`` but could have a string "
+"assigned. This is substantially simpler if, and only if, there is at most"
+" one note."
+msgstr ""
+
+#: ../../pep-0678.rst:283
+msgid ""
+"To promote interoperability and support translation of error messages by "
+"libraries such as ``friendly-traceback``, without resorting to dubious "
+"parsing heuristics, we therefore settled on the "
+"``.add_note()``-and-``__notes__`` API."
+msgstr ""
+
+#: ../../pep-0678.rst:289
+msgid "Subclass Exception and add note support downstream"
+msgstr ""
+
+#: ../../pep-0678.rst:290
+msgid ""
+"Traceback printing is built into the C code, and reimplemented in pure "
+"Python in ``traceback.py``. To get ``err.__notes__`` printed from a "
+"downstream implementation would *also* require writing custom traceback-"
+"printing code; while this could be shared between projects and reuse some"
+" pieces of traceback.py [3]_ we prefer to implement this once, upstream."
+msgstr ""
+
+#: ../../pep-0678.rst:296
+msgid ""
+"Custom exception types could implement their ``__str__`` method to "
+"include our proposed ``__notes__`` semantics, but this would be rarely "
+"and inconsistently applicable."
+msgstr ""
+
+#: ../../pep-0678.rst:302
+msgid ""
+"Don't attach notes to ``Exception``\\ s, just store them in "
+"``ExceptionGroup``\\ s"
+msgstr ""
+
+#: ../../pep-0678.rst:303
+msgid ""
+"The initial motivation for this PEP was to associate a note with each "
+"error in an ``ExceptionGroup``.  At the cost of a remarkably awkward API "
+"and the cross-referencing problem discussed `above <print_idea>`__, this "
+"use-case could be supported by storing notes on the ``ExceptionGroup`` "
+"instance instead of on each exception it contains."
+msgstr ""
+
+#: ../../pep-0678.rst:309
+msgid ""
+"We believe that the cleaner interface, and other use-cases described "
+"above, are sufficient to justify the more general feature proposed by "
+"this PEP."
+msgstr ""
+
+#: ../../pep-0678.rst:314
+msgid "Add a helper function ``contextlib.add_exc_note()``"
+msgstr ""
+
+#: ../../pep-0678.rst:315
+msgid ""
+"It `was suggested "
+"<https://www.reddit.com/r/Python/comments/rmrvxv/pep_678_enriching_exceptions_with_notes/hptbul1/>`__"
+" that we add a utility such as the one below to the standard library. We "
+"do not see this idea as core to the proposal of this PEP, and thus leave "
+"it for later or downstream implementation - perhaps based on this example"
+" code:"
+msgstr ""
+
+#: ../../pep-0678.rst:336
+msgid "Augment the ``raise`` statement"
+msgstr ""
+
+#: ../../pep-0678.rst:337
+msgid ""
+"One discussion proposed ``raise Exception() with \"note contents\"``, but"
+" this does not address the original motivation of compatibility with "
+"``ExceptionGroup``."
+msgstr ""
+
+#: ../../pep-0678.rst:341
+msgid ""
+"Furthermore, we do not believe that the problem we are solving requires "
+"or justifies new language syntax."
+msgstr ""
+
+#: ../../pep-0678.rst:346
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0678.rst:347
+msgid ""
+"We wish to thank the many people who have assisted us through "
+"conversation, code review, design advice, and implementation: Adam "
+"Turner, Alex Grönholm, André Roberge, Barry Warsaw, Brett Cannon, CAM "
+"Gerlach, Carol Willing, Damian, Erlend Aasland, Etienne Pot, Gregory "
+"Smith, Guido van Rossum, Irit Katriel, Jelle Zijlstra, Ken Jin, Kumar "
+"Aditya, Mark Shannon, Matti Picus, Petr Viktorin, Will McGugan, and "
+"pseudonymous commenters on Discord and Reddit."
+msgstr ""
+
+#: ../../pep-0678.rst:356
+msgid "References"
+msgstr ""
+
+#: ../../pep-0678.rst:358
+msgid ""
+"this principle was established in the 2003 mail thread which led to "
+":pep:`3134`, and included a proposal for a group-of-exceptions type! "
+"https://mail.python.org/pipermail/python-dev/2003-January/032492.html"
+msgstr ""
+
+#: ../../pep-0678.rst:361
+msgid ""
+"particularly those at https://bugs.python.org/issue45607, "
+"https://discuss.python.org/t/accepting-pep-654-exception-groups-and-"
+"except/10813/9, "
+"https://github.com/python/cpython/pull/28569#discussion_r721768348, and"
+msgstr ""
+
+#: ../../pep-0678.rst:364
+msgid ""
+"We note that the ``exceptiongroup`` backport package maintains an "
+"exception hook and monkeypatch for ``TracebackException`` for Pythons "
+"older than 3.11, and encourage library authors to avoid creating "
+"additional and incompatible backports.  We also reiterate our preference "
+"for builtin support which makes such measures unnecessary."
+msgstr ""
+
+#: ../../pep-0678.rst:372
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0678.rst:374
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

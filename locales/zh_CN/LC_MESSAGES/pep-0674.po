@@ -1,0 +1,1155 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0674.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0674.rst:3
+msgid "Victor Stinner <vstinner@python.org>"
+msgstr ""
+
+#: ../../pep-0674.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0674.rst:4
+msgid "Deferred"
+msgstr ""
+
+#: ../../pep-0674.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0674.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0674.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0674.rst:7
+msgid "30-Nov-2021"
+msgstr ""
+
+#: ../../pep-0674.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0674.rst:8
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0674.rst:12
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0674.rst:14
+msgid ""
+"Disallow using macros as l-values. For example, ``Py_TYPE(obj) = "
+"new_type`` now fails with a compiler error."
+msgstr ""
+
+#: ../../pep-0674.rst:17
+msgid ""
+"In practice, the majority of affected projects only have to make two "
+"changes:"
+msgstr ""
+
+#: ../../pep-0674.rst:20 ../../pep-0674.rst:220
+msgid "Replace ``Py_TYPE(obj) = new_type`` with ``Py_SET_TYPE(obj, new_type)``."
+msgstr ""
+
+#: ../../pep-0674.rst:22 ../../pep-0674.rst:222
+msgid "Replace ``Py_SIZE(obj) = new_size`` with ``Py_SET_SIZE(obj, new_size)``."
+msgstr ""
+
+#: ../../pep-0674.rst:27
+msgid "PEP Deferral"
+msgstr ""
+
+#: ../../pep-0674.rst:29
+msgid ""
+"See `SC reply to PEP 674 -- Disallow using macros as l-values "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/message/CV6KWDRHV5WP6TIDK3Z46PW7HNSHYOWG/>`_ (February "
+"2022)."
+msgstr ""
+
+#: ../../pep-0674.rst:35
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0674.rst:38
+msgid "Using a macro as a an l-value"
+msgstr ""
+
+#: ../../pep-0674.rst:40
+msgid ""
+"In the Python C API, some functions are implemented as macro because "
+"writing a macro is simpler than writing a regular function. If a macro "
+"exposes directly a structure member, it is technically possible to use "
+"this macro to not only get the structure member but also set it."
+msgstr ""
+
+#: ../../pep-0674.rst:45
+msgid "Example with the Python 3.10 ``Py_TYPE()`` macro::"
+msgstr ""
+
+#: ../../pep-0674.rst:49
+msgid "This macro can be used as a **r-value** to **get** an object type::"
+msgstr ""
+
+#: ../../pep-0674.rst:53
+msgid "It can also be used as an **l-value** to **set** an object type::"
+msgstr ""
+
+#: ../../pep-0674.rst:57
+msgid ""
+"It is also possible to set an object reference count and an object size "
+"using ``Py_REFCNT()`` and ``Py_SIZE()`` macros."
+msgstr ""
+
+#: ../../pep-0674.rst:60
+msgid ""
+"Setting directly an object attribute relies on the current exact CPython "
+"implementation. Implementing this feature in other Python implementations"
+" can make their C API implementation less efficient."
+msgstr ""
+
+#: ../../pep-0674.rst:65
+msgid "CPython nogil fork"
+msgstr ""
+
+#: ../../pep-0674.rst:67
+msgid ""
+"Sam Gross forked Python 3.9 to remove the GIL: the `nogil branch "
+"<https://github.com/colesbury/nogil/>`_. This fork has no "
+"``PyObject.ob_refcnt`` member, but a more elaborated implementation for "
+"reference counting, and so the ``Py_REFCNT(obj) = new_refcnt;`` code "
+"fails with a compiler error."
+msgstr ""
+
+#: ../../pep-0674.rst:73
+msgid ""
+"Merging the nogil fork into the upstream CPython main branch requires "
+"first to fix this C API compatibility issue. It is a concrete example of "
+"a Python optimization blocked indirectly by the C API."
+msgstr ""
+
+#: ../../pep-0674.rst:77
+msgid ""
+"This issue was already fixed in Python 3.10: the ``Py_REFCNT()`` macro "
+"has been already modified to disallow using it as an l-value."
+msgstr ""
+
+#: ../../pep-0674.rst:80
+msgid "These statements are endorsed by Sam Gross (nogil developer)."
+msgstr ""
+
+#: ../../pep-0674.rst:83
+msgid "HPy project"
+msgstr ""
+
+#: ../../pep-0674.rst:85
+msgid ""
+"The `HPy project <https://hpyproject.org/>`_ is a brand new C API for "
+"Python using only handles and function calls: handles are opaque, "
+"structure members cannot be accessed directly, and pointers cannot be "
+"dereferenced."
+msgstr ""
+
+#: ../../pep-0674.rst:90
+msgid ""
+"Searching and replacing ``Py_SET_SIZE()`` is easier and safer than "
+"searching and replacing some strange macro uses of ``Py_SIZE()``. "
+"``Py_SIZE()`` can be semi-mechanically replaced by ``HPy_Length()``, "
+"whereas seeing ``Py_SET_SIZE()`` would immediately make clear that the "
+"code needs bigger changes in order to be ported to HPy (for example by "
+"using ``HPyTupleBuilder`` or ``HPyListBuilder``)."
+msgstr ""
+
+#: ../../pep-0674.rst:97
+msgid ""
+"The fewer internal details exposed via macros, the easier it will be for "
+"HPy to provide direct equivalents. Any macro that references \"non-"
+"public\" interfaces effectively exposes those interfaces publicly."
+msgstr ""
+
+#: ../../pep-0674.rst:101
+msgid "These statements are endorsed by Antonio Cuni (HPy developer)."
+msgstr ""
+
+#: ../../pep-0674.rst:104
+msgid "GraalVM Python"
+msgstr ""
+
+#: ../../pep-0674.rst:106
+msgid ""
+"In GraalVM, when a Python object is accessed by the Python C API, the C "
+"API emulation layer has to wrap the GraalVM objects into wrappers that "
+"expose the internal structure of the CPython structures (PyObject, "
+"PyLongObject, PyTypeObject, etc). This is because when the C code "
+"accesses it directly or via macros, all GraalVM can intercept is a read "
+"at the struct offset, which has to be mapped back to the representation "
+"in GraalVM. The smaller the \"effective\" number of exposed struct "
+"members (by replacing macros with functions), the simpler GraalVM "
+"wrappers can be."
+msgstr ""
+
+#: ../../pep-0674.rst:115
+msgid ""
+"This PEP alone is not enough to get rid of the wrappers in GraalVM, but "
+"it is a step towards this long term goal. GraalVM already supports HPy "
+"which is a better solution in the long term."
+msgstr ""
+
+#: ../../pep-0674.rst:119
+msgid ""
+"These statements are endorsed by Tim Felgentreff (GraalVM Python "
+"developer)."
+msgstr ""
+
+#: ../../pep-0674.rst:122
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0674.rst:125
+msgid "Disallow using macros as l-values"
+msgstr ""
+
+#: ../../pep-0674.rst:127
+msgid "The following 65 macros are modified to disallow using them as l-values."
+msgstr ""
+
+#: ../../pep-0674.rst:130
+msgid "PyObject and PyVarObject macros"
+msgstr ""
+
+#: ../../pep-0674.rst:132
+msgid "``Py_TYPE()``: ``Py_SET_TYPE()`` must be used instead"
+msgstr ""
+
+#: ../../pep-0674.rst:133
+msgid "``Py_SIZE()``: ``Py_SET_SIZE()`` must be used instead"
+msgstr ""
+
+#: ../../pep-0674.rst:136
+msgid "GET macros"
+msgstr ""
+
+#: ../../pep-0674.rst:138
+msgid "``PyByteArray_GET_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:139
+msgid "``PyBytes_GET_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:140
+msgid "``PyCFunction_GET_CLASS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:141
+msgid "``PyCFunction_GET_FLAGS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:142
+msgid "``PyCFunction_GET_FUNCTION()``"
+msgstr ""
+
+#: ../../pep-0674.rst:143
+msgid "``PyCFunction_GET_SELF()``"
+msgstr ""
+
+#: ../../pep-0674.rst:144
+msgid "``PyCell_GET()``"
+msgstr ""
+
+#: ../../pep-0674.rst:145
+msgid "``PyCode_GetNumFree()``"
+msgstr ""
+
+#: ../../pep-0674.rst:146
+msgid "``PyDict_GET_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:147
+msgid "``PyFunction_GET_ANNOTATIONS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:148
+msgid "``PyFunction_GET_CLOSURE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:149
+msgid "``PyFunction_GET_CODE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:150
+msgid "``PyFunction_GET_DEFAULTS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:151
+msgid "``PyFunction_GET_GLOBALS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:152
+msgid "``PyFunction_GET_KW_DEFAULTS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:153
+msgid "``PyFunction_GET_MODULE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:154
+msgid "``PyHeapType_GET_MEMBERS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:155
+msgid "``PyInstanceMethod_GET_FUNCTION()``"
+msgstr ""
+
+#: ../../pep-0674.rst:156
+msgid "``PyList_GET_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:157
+msgid "``PyMemoryView_GET_BASE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:158
+msgid "``PyMemoryView_GET_BUFFER()``"
+msgstr ""
+
+#: ../../pep-0674.rst:159
+msgid "``PyMethod_GET_FUNCTION()``"
+msgstr ""
+
+#: ../../pep-0674.rst:160
+msgid "``PyMethod_GET_SELF()``"
+msgstr ""
+
+#: ../../pep-0674.rst:161
+msgid "``PySet_GET_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:162
+msgid "``PyTuple_GET_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:163
+msgid "``PyUnicode_GET_DATA_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:164 ../../pep-0674.rst:165
+msgid "``PyUnicode_GET_LENGTH()``"
+msgstr ""
+
+#: ../../pep-0674.rst:166
+msgid "``PyUnicode_GET_SIZE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:167
+msgid "``PyWeakref_GET_OBJECT()``"
+msgstr ""
+
+#: ../../pep-0674.rst:170
+msgid "AS macros"
+msgstr ""
+
+#: ../../pep-0674.rst:172
+msgid "``PyByteArray_AS_STRING()``"
+msgstr ""
+
+#: ../../pep-0674.rst:173
+msgid "``PyBytes_AS_STRING()``"
+msgstr ""
+
+#: ../../pep-0674.rst:174
+msgid "``PyFloat_AS_DOUBLE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:175
+msgid "``PyUnicode_AS_DATA()``"
+msgstr ""
+
+#: ../../pep-0674.rst:176
+msgid "``PyUnicode_AS_UNICODE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:179
+msgid "PyUnicode macros"
+msgstr ""
+
+#: ../../pep-0674.rst:181
+msgid "``PyUnicode_1BYTE_DATA()``"
+msgstr ""
+
+#: ../../pep-0674.rst:182
+msgid "``PyUnicode_2BYTE_DATA()``"
+msgstr ""
+
+#: ../../pep-0674.rst:183
+msgid "``PyUnicode_4BYTE_DATA()``"
+msgstr ""
+
+#: ../../pep-0674.rst:184
+msgid "``PyUnicode_DATA()``"
+msgstr ""
+
+#: ../../pep-0674.rst:185
+msgid "``PyUnicode_IS_ASCII()``"
+msgstr ""
+
+#: ../../pep-0674.rst:186
+msgid "``PyUnicode_IS_COMPACT()``"
+msgstr ""
+
+#: ../../pep-0674.rst:187
+msgid "``PyUnicode_IS_READY()``"
+msgstr ""
+
+#: ../../pep-0674.rst:188
+msgid "``PyUnicode_KIND()``"
+msgstr ""
+
+#: ../../pep-0674.rst:189
+msgid "``PyUnicode_READ()``"
+msgstr ""
+
+#: ../../pep-0674.rst:190
+msgid "``PyUnicode_READ_CHAR()``"
+msgstr ""
+
+#: ../../pep-0674.rst:193
+msgid "PyDateTime GET macros"
+msgstr ""
+
+#: ../../pep-0674.rst:195
+msgid "``PyDateTime_DATE_GET_FOLD()``"
+msgstr ""
+
+#: ../../pep-0674.rst:196
+msgid "``PyDateTime_DATE_GET_HOUR()``"
+msgstr ""
+
+#: ../../pep-0674.rst:197
+msgid "``PyDateTime_DATE_GET_MICROSECOND()``"
+msgstr ""
+
+#: ../../pep-0674.rst:198
+msgid "``PyDateTime_DATE_GET_MINUTE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:199
+msgid "``PyDateTime_DATE_GET_SECOND()``"
+msgstr ""
+
+#: ../../pep-0674.rst:200
+msgid "``PyDateTime_DATE_GET_TZINFO()``"
+msgstr ""
+
+#: ../../pep-0674.rst:201
+msgid "``PyDateTime_DELTA_GET_DAYS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:202
+msgid "``PyDateTime_DELTA_GET_MICROSECONDS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:203
+msgid "``PyDateTime_DELTA_GET_SECONDS()``"
+msgstr ""
+
+#: ../../pep-0674.rst:204
+msgid "``PyDateTime_GET_DAY()``"
+msgstr ""
+
+#: ../../pep-0674.rst:205
+msgid "``PyDateTime_GET_MONTH()``"
+msgstr ""
+
+#: ../../pep-0674.rst:206
+msgid "``PyDateTime_GET_YEAR()``"
+msgstr ""
+
+#: ../../pep-0674.rst:207
+msgid "``PyDateTime_TIME_GET_FOLD()``"
+msgstr ""
+
+#: ../../pep-0674.rst:208
+msgid "``PyDateTime_TIME_GET_HOUR()``"
+msgstr ""
+
+#: ../../pep-0674.rst:209
+msgid "``PyDateTime_TIME_GET_MICROSECOND()``"
+msgstr ""
+
+#: ../../pep-0674.rst:210
+msgid "``PyDateTime_TIME_GET_MINUTE()``"
+msgstr ""
+
+#: ../../pep-0674.rst:211
+msgid "``PyDateTime_TIME_GET_SECOND()``"
+msgstr ""
+
+#: ../../pep-0674.rst:212
+msgid "``PyDateTime_TIME_GET_TZINFO()``"
+msgstr ""
+
+#: ../../pep-0674.rst:215
+msgid "Port C extensions to Python 3.11"
+msgstr ""
+
+#: ../../pep-0674.rst:217
+msgid ""
+"In practice, the majority of projects affected by these PEP only have to "
+"make two changes:"
+msgstr ""
+
+#: ../../pep-0674.rst:225
+msgid ""
+"The `pythoncapi_compat project "
+"<https://github.com/pythoncapi/pythoncapi_compat>`_ can be used to update"
+" automatically C extensions: add Python 3.11 support without losing "
+"support with older Python versions. The project provides a header file "
+"which provides ``Py_SET_REFCNT()``, ``Py_SET_TYPE()`` and "
+"``Py_SET_SIZE()`` functions to Python 3.8 and older."
+msgstr ""
+
+#: ../../pep-0674.rst:233
+msgid "PyTuple_GET_ITEM() and PyList_GET_ITEM() are left unchanged"
+msgstr ""
+
+#: ../../pep-0674.rst:235
+msgid ""
+"The ``PyTuple_GET_ITEM()`` and ``PyList_GET_ITEM()`` macros are left "
+"unchanged."
+msgstr ""
+
+#: ../../pep-0674.rst:238
+msgid ""
+"The code patterns ``&PyTuple_GET_ITEM(tuple, 0)`` and "
+"``&PyList_GET_ITEM(list, 0)`` are still commonly used to get access to "
+"the inner ``PyObject**`` array."
+msgstr ""
+
+#: ../../pep-0674.rst:242
+msgid "Changing these macros is out of the scope of this PEP."
+msgstr ""
+
+#: ../../pep-0674.rst:245
+msgid "PyDescr_NAME() and PyDescr_TYPE() are left unchanged"
+msgstr ""
+
+#: ../../pep-0674.rst:247
+msgid "The ``PyDescr_NAME()`` and ``PyDescr_TYPE()`` macros are left unchanged."
+msgstr ""
+
+#: ../../pep-0674.rst:249
+msgid ""
+"These macros give access to ``PyDescrObject.d_name`` and "
+"``PyDescrObject.d_type`` members. They can be used as l-values to set "
+"these members."
+msgstr ""
+
+#: ../../pep-0674.rst:253
+msgid ""
+"The SWIG project uses these macros as l-values to set these members. It "
+"would be possible to modify SWIG to prevent setting ``PyDescrObject`` "
+"structure members directly, but it is not really worth it since the "
+"``PyDescrObject`` structure is not performance critical and is unlikely "
+"to change soon."
+msgstr ""
+
+#: ../../pep-0674.rst:259
+msgid ""
+"See the `bpo-46538 <https://bugs.python.org/issue46538>`_ \"[C API] Make "
+"the PyDescrObject structure opaque: PyDescr_NAME() and PyDescr_TYPE()\" "
+"issue for more details."
+msgstr ""
+
+#: ../../pep-0674.rst:265
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0674.rst:267
+msgid ""
+"The implementation is tracked by `bpo-45476: [C API] PEP 674: Disallow "
+"using macros as l-values <https://bugs.python.org/issue45476>`_."
+msgstr ""
+
+#: ../../pep-0674.rst:271
+msgid "Py_TYPE() and Py_SIZE() macros"
+msgstr ""
+
+#: ../../pep-0674.rst:273
+msgid ""
+"In May 2020, the ``Py_TYPE()`` and ``Py_SIZE()`` macros have been "
+"modified to disallow using them as l-values (`Py_TYPE "
+"<https://github.com/python/cpython/commit/ad3252bad905d41635bcbb4b76db30d570cf0087>`_,"
+" `Py_SIZE "
+"<https://github.com/python/cpython/commit/fe2978b3b940fe2478335e3a2ca5ad22338cdf9c>`_)."
+msgstr ""
+
+#: ../../pep-0674.rst:279
+msgid ""
+"In November 2020, the change was `reverted "
+"<https://github.com/python/cpython/commit/0e2ac21dd4960574e89561243763eabba685296a>`__,"
+" since it broke too many third party projects."
+msgstr ""
+
+#: ../../pep-0674.rst:283
+msgid ""
+"In June 2021, once most third party projects were updated, a `second "
+"attempt "
+"<https://github.com/python/cpython/commit/f3fa63ec75fdbb4a08a10957a5c631bf0c4a5970>`_"
+" was done, but had to be `reverted again "
+"<https://github.com/python/cpython/commit/6d518bb3a11f9b16098f45b21a13ebe8f537f045>`__"
+" , since it broke test_exceptions on Windows."
+msgstr ""
+
+#: ../../pep-0674.rst:290
+msgid ""
+"In September 2021, once `test_exceptions has been fixed "
+"<https://github.com/python/cpython/commit/fb305092a5d7894b41f122c1a1117b3abf4c567e>`_,"
+" Py_TYPE() and Py_SIZE() were finally `changed "
+"<https://github.com/python/cpython/commit/f3fa63ec75fdbb4a08a10957a5c631bf0c4a5970>`_."
+msgstr ""
+
+#: ../../pep-0674.rst:295
+msgid ""
+"In November 2021, this backward incompatible change got a `Steering "
+"Council exception <https://github.com/python/steering-"
+"council/issues/79#issuecomment-981153173>`_."
+msgstr ""
+
+#: ../../pep-0674.rst:299
+msgid ""
+"In October 2022, Python 3.11 got released with Py_TYPE() and Py_SIZE() "
+"incompatible changes."
+msgstr ""
+
+#: ../../pep-0674.rst:303
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0674.rst:305
+msgid "The proposed C API changes are backward incompatible on purpose."
+msgstr ""
+
+#: ../../pep-0674.rst:307
+msgid ""
+"In practice, only ``Py_TYPE()`` and ``Py_SIZE()`` macros are used as "
+"l-values."
+msgstr ""
+
+#: ../../pep-0674.rst:310
+msgid ""
+"This change does not follow the :pep:`387` deprecation process. There is "
+"no known way to emit a deprecation warning only when a macro is used as "
+"an l-value, but not when it's used differently (ex: as a r-value)."
+msgstr ""
+
+#: ../../pep-0674.rst:314
+msgid ""
+"The following 4 macros are left unchanged to reduce the number of "
+"affected projects: ``PyDescr_NAME()``, ``PyDescr_TYPE()``, "
+"``PyList_GET_ITEM()`` and ``PyTuple_GET_ITEM()``."
+msgstr ""
+
+#: ../../pep-0674.rst:319
+msgid "Statistics"
+msgstr ""
+
+#: ../../pep-0674.rst:321
+msgid ""
+"In total (projects on PyPI and not on PyPI), 34 projects are known to be "
+"affected by this PEP:"
+msgstr ""
+
+#: ../../pep-0674.rst:324
+msgid "16 projects (47%) are already fixed"
+msgstr ""
+
+#: ../../pep-0674.rst:325
+msgid ""
+"18 projects (53%) are not fixed yet (pending fix or have to regenerate "
+"their Cython code)"
+msgstr ""
+
+#: ../../pep-0674.rst:328
+msgid ""
+"On September 1, 2022, the PEP affects 18 projects (0.4%) of the top 5000 "
+"PyPI projects:"
+msgstr ""
+
+#: ../../pep-0674.rst:331
+msgid "15 projects (0.3%) have to regenerate their Cython code"
+msgstr ""
+
+#: ../../pep-0674.rst:332
+msgid "3 projects (0.1%) have a pending fix"
+msgstr ""
+
+#: ../../pep-0674.rst:335
+msgid "Top 5000 PyPI"
+msgstr ""
+
+#: ../../pep-0674.rst:337
+msgid "Projects with a pending fix (3):"
+msgstr ""
+
+#: ../../pep-0674.rst:339
+msgid ""
+"datatable (1.0.0): `fixed "
+"<https://github.com/h2oai/datatable/commit/02f13114828ed4567e4410f5bac579895e20355a>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:341
+msgid ""
+"guppy3 (3.1.2): `fixed "
+"<https://github.com/zhuyifei1999/guppy3/commit/4cb9fcb5d75327544a6875b6caabfdffb70a7e29>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:343
+msgid "scipy (1.9.3): need to update boost python"
+msgstr ""
+
+#: ../../pep-0674.rst:345
+msgid "Moreover, 15 projects have to regenerate their Cython code."
+msgstr ""
+
+#: ../../pep-0674.rst:347
+msgid "Projects released with a fix (12):"
+msgstr ""
+
+#: ../../pep-0674.rst:349
+msgid ""
+"bitarray (1.6.2): `commit "
+"<https://github.com/ilanschnell/bitarray/commit/a0cca9f2986ec796df74ca8f42aff56c4c7103ba>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:351
+msgid ""
+"Cython (0.29.20): `commit "
+"<https://github.com/cython/cython/commit/d8e93b332fe7d15459433ea74cd29178c03186bd>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:352
+msgid ""
+"immutables (0.15): `commit "
+"<https://github.com/MagicStack/immutables/commit/45105ecd8b56a4d88dbcb380fcb8ff4b9cc7b19c>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:354
+msgid ""
+"mercurial (5.7): `commit <https://www.mercurial-"
+"scm.org/repo/hg/rev/e92ca942ddca>`__, `bug report <https://bz.mercurial-"
+"scm.org/show_bug.cgi?id=6451>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:357
+msgid ""
+"mypy (v0.930): `commit "
+"<https://github.com/python/mypy/commit/2b7e2df923f7e4a3a199915b3c8563f45bc69dfa>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:359
+msgid ""
+"numpy (1.22.1): `commit "
+"<https://github.com/numpy/numpy/commit/a96b18e3d4d11be31a321999cda4b795ea9eccaa>`__,"
+" `commit 2 "
+"<https://github.com/numpy/numpy/commit/f1671076c80bd972421751f2d48186ee9ac808aa>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:362
+msgid ""
+"pycurl (7.44.1): `commit "
+"<https://github.com/pycurl/pycurl/commit/e633f9a1ac4df5e249e78c218d5fbbd848219042>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:364
+msgid "PyGObject (3.42.0)"
+msgstr ""
+
+#: ../../pep-0674.rst:365
+msgid ""
+"pyside2 (5.15.1): `bug report "
+"<https://bugreports.qt.io/browse/PYSIDE-1436>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:367
+msgid ""
+"python-snappy (0.6.1): `fixed <https://github.com/andrix/python-"
+"snappy/commit/1a539d71d5b1ceaf9a2291f21f686cf53a46d707>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:369
+msgid ""
+"recordclass (0.17.2): `fixed "
+"<https://bitbucket.org/intellimath/recordclass/commits/d20d72fa3cdbdcf96c72941560041460adeecff1>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:371
+msgid ""
+"zstd (1.5.0.3): `commit <https://github.com/sergey-dryabzhinsky/python-"
+"zstd/commit/8aa6d7a4b250e1f0a4e27b4107c39dc516c87f96>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:374
+msgid "There are also two backport projects which are affected by this PEP:"
+msgstr ""
+
+#: ../../pep-0674.rst:376
+msgid "pickle5 (0.0.12): backport for Python <= 3.7"
+msgstr ""
+
+#: ../../pep-0674.rst:377
+msgid "pysha3 (1.0.2): backport for Python <= 3.5"
+msgstr ""
+
+#: ../../pep-0674.rst:379
+msgid "They must not be used and cannot be used on Python 3.11."
+msgstr ""
+
+#: ../../pep-0674.rst:382
+msgid "Other affected projects"
+msgstr ""
+
+#: ../../pep-0674.rst:384
+msgid "Other projects released with a fix (4):"
+msgstr ""
+
+#: ../../pep-0674.rst:386
+msgid ""
+"boost (1.78.0): `commit "
+"<https://github.com/boostorg/python/commit/500194edb7833d0627ce7a2595fec49d0aae2484>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:388
+msgid ""
+"breezy (3.2.1): `bug report "
+"<https://bugs.launchpad.net/brz/+bug/1904868>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:390
+msgid ""
+"duplicity (0.8.18): `commit "
+"<https://git.launchpad.net/duplicity/commit/duplicity/_librsyncmodule.c?id=bbaae91b5ac6ef7e295968e508522884609fbf84>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:392
+msgid ""
+"gobject-introspection (1.70.0): `MR <https://gitlab.gnome.org/GNOME"
+"/gobject-introspection/-/merge_requests/243>`__"
+msgstr ""
+
+#: ../../pep-0674.rst:397
+msgid "Relationship with the HPy project"
+msgstr ""
+
+#: ../../pep-0674.rst:400
+msgid "The HPy project"
+msgstr ""
+
+#: ../../pep-0674.rst:402
+msgid ""
+"The hope with the HPy project is to provide a C API that is close to the "
+"original API—to make porting easy—and have it perform as close to the "
+"existing API as possible. At the same time, HPy is sufficently removed to"
+" be a good \"C extension API\" (as opposed to a stable subset of the "
+"CPython implementation API) that does not leak implementation details. To"
+" ensure this latter property, the HPy project tries to develop everything"
+" in parallel for CPython, PyPy, and GraalVM Python."
+msgstr ""
+
+#: ../../pep-0674.rst:410
+msgid ""
+"HPy is still evolving very fast. Issues are still being solved while "
+"migrating NumPy, and work has begun on adding support for HPy to Cython. "
+"Work on pybind11 is starting soon. Tim Felgentreff believes by the time "
+"HPy has these users of the existing C API working, HPy should be in a "
+"state where it is generally useful and can be deemed stable enough that "
+"further development can follow a more stable process."
+msgstr ""
+
+#: ../../pep-0674.rst:417
+msgid ""
+"In the long run the HPy project would like to become a promoted API to "
+"write Python C extensions."
+msgstr ""
+
+#: ../../pep-0674.rst:420
+msgid ""
+"The HPy project is a good solution for the long term. It has the "
+"advantage of being developed outside Python and it doesn't require any C "
+"API change."
+msgstr ""
+
+#: ../../pep-0674.rst:425
+msgid "The C API is here is stay for a few more years"
+msgstr ""
+
+#: ../../pep-0674.rst:427
+msgid ""
+"The first concern about HPy is that right now, HPy is not mature nor "
+"widely used, and CPython still has to continue supporting a large amount "
+"of C extensions which are not likely to be ported to HPy soon."
+msgstr ""
+
+#: ../../pep-0674.rst:431
+msgid ""
+"The second concern is the inability to evolve CPython internals to "
+"implement new optimizations, and the inefficient implementation of the "
+"current C API in PyPy, GraalPython, etc. Sadly, HPy will only solve these"
+" problems when most C extensions will be fully ported to HPy: when it "
+"will become reasonable to consider dropping the \"legacy\" Python C API."
+msgstr ""
+
+#: ../../pep-0674.rst:438
+msgid ""
+"While porting a C extension to HPy can be done incrementally on CPython, "
+"it requires to modify a lot of code and takes time. Porting most C "
+"extensions to HPy is expected to take a few years."
+msgstr ""
+
+#: ../../pep-0674.rst:442
+msgid ""
+"This PEP proposes to make the C API \"less bad\" by fixing one problem "
+"which is clearily identified as causing practical issues: macros used as "
+"l-values.  This PEP only requires updating a minority of C extensions, "
+"and usually only a few lines need to be changed in impacted extensions."
+msgstr ""
+
+#: ../../pep-0674.rst:448
+msgid ""
+"For example, NumPy 1.22 is made of 307,300 lines of C code, and adapting "
+"NumPy to the this PEP only modified 11 lines (use Py_SET_TYPE and "
+"Py_SET_SIZE) and adding 4 lines (to define Py_SET_TYPE and Py_SET_SIZE "
+"for Python 3.8 and older). The beginnings of the NumPy port to HPy "
+"already required modifying more lines than that."
+msgstr ""
+
+#: ../../pep-0674.rst:454
+msgid ""
+"Right now, it's hard to bet which approach is the best: fixing the "
+"current C API, or focusing on HPy. It would be risky to only focus on "
+"HPy."
+msgstr ""
+
+#: ../../pep-0674.rst:460
+msgid "Rejected Idea: Leave the macros as they are"
+msgstr ""
+
+#: ../../pep-0674.rst:462
+msgid ""
+"The documentation of each function can discourage developers to use "
+"macros to modify Python objects."
+msgstr ""
+
+#: ../../pep-0674.rst:465
+msgid ""
+"If these is a need to make an assignment, a setter function can be added "
+"and the macro documentation can require to use the setter function. For "
+"example, a ``Py_SET_TYPE()`` function has been added to Python 3.9 and "
+"the ``Py_TYPE()`` documentation now requires to use the ``Py_SET_TYPE()``"
+" function to set an object type."
+msgstr ""
+
+#: ../../pep-0674.rst:471
+msgid ""
+"If developers use macros as an l-value, it's their responsibility when "
+"their code breaks, not Python's responsibility. We are operating under "
+"the consenting adults principle: we expect users of the Python C API to "
+"use it as documented and expect them to take care of the fallout, if "
+"things break when they don't."
+msgstr ""
+
+#: ../../pep-0674.rst:477
+msgid ""
+"This idea was rejected because only few developers read the "
+"documentation, and only a minority is tracking changes of the Python C "
+"API documentation. The majority of developers are only using CPython and "
+"so are not aware of compatibility issues with other Python "
+"implementations."
+msgstr ""
+
+#: ../../pep-0674.rst:483
+msgid ""
+"Moreover, continuing to allow using macros as an l-value does not help "
+"the HPy project, and leaves the burden of emulating them on GraalVM's "
+"Python implementation."
+msgstr ""
+
+#: ../../pep-0674.rst:489
+msgid "Macros already modified"
+msgstr ""
+
+#: ../../pep-0674.rst:491
+msgid ""
+"The following C API macros have already been modified to disallow using "
+"them as l-value:"
+msgstr ""
+
+#: ../../pep-0674.rst:494
+msgid "``PyCell_SET()``"
+msgstr ""
+
+#: ../../pep-0674.rst:495
+msgid "``PyList_SET_ITEM()``"
+msgstr ""
+
+#: ../../pep-0674.rst:496
+msgid "``PyTuple_SET_ITEM()``"
+msgstr ""
+
+#: ../../pep-0674.rst:497
+msgid "``Py_REFCNT()`` (Python 3.10): ``Py_SET_REFCNT()`` must be used"
+msgstr ""
+
+#: ../../pep-0674.rst:498
+msgid "``_PyGCHead_SET_FINALIZED()``"
+msgstr ""
+
+#: ../../pep-0674.rst:499
+msgid "``_PyGCHead_SET_NEXT()``"
+msgstr ""
+
+#: ../../pep-0674.rst:500
+msgid "``asdl_seq_GET()``"
+msgstr ""
+
+#: ../../pep-0674.rst:501
+msgid "``asdl_seq_GET_UNTYPED()``"
+msgstr ""
+
+#: ../../pep-0674.rst:502
+msgid "``asdl_seq_LEN()``"
+msgstr ""
+
+#: ../../pep-0674.rst:503
+msgid "``asdl_seq_SET()``"
+msgstr ""
+
+#: ../../pep-0674.rst:504
+msgid "``asdl_seq_SET_UNTYPED()``"
+msgstr ""
+
+#: ../../pep-0674.rst:506
+msgid ""
+"For example, ``PyList_SET_ITEM(list, 0, item) < 0`` now fails with a "
+"compiler error as expected."
+msgstr ""
+
+#: ../../pep-0674.rst:511
+msgid "Post History"
+msgstr ""
+
+#: ../../pep-0674.rst:513
+msgid ""
+"`PEP 674 \"Disallow using macros as l-values\" and Python 3.11 "
+"<https://discuss.python.org/t/pep-674-disallow-using-macros-as-l-values-"
+"and-python-3-11/18297>`__ (August 18, 2022)"
+msgstr ""
+
+#: ../../pep-0674.rst:515
+msgid ""
+"`SC reply to PEP 674 -- Disallow using macros as l-values "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/CV6KWDRHV5WP6TIDK3Z46PW7HNSHYOWG/>`__ (February 22,"
+" 2022)"
+msgstr ""
+
+#: ../../pep-0674.rst:517
+msgid ""
+"`PEP 674: Disallow using macros as l-value (version 2) "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/J7SXC2YQGP37UYIEULISLUTKW5FHN3Z7/>`_ (Jan 18, 2022)"
+msgstr ""
+
+#: ../../pep-0674.rst:520
+msgid ""
+"`PEP 674: Disallow using macros as l-value "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/KPIJPPJ6XVNOLGZQD2PFGMT7LBJMTTCO/>`_ (Nov 30, 2021)"
+msgstr ""
+
+#: ../../pep-0674.rst:526
+msgid "References"
+msgstr ""
+
+#: ../../pep-0674.rst:528
+msgid ""
+"`Python C API: Add functions to access PyObject "
+"<https://vstinner.github.io/c-api-abstract-pyobject.html>`_ (October "
+"2021) article by Victor Stinner"
+msgstr ""
+
+#: ../../pep-0674.rst:531
+msgid ""
+"`[capi-sig] Py_TYPE() and Py_SIZE() become static inline functions "
+"<https://mail.python.org/archives/list/capi-"
+"sig@python.org/thread/WGRLTHTHC32DQTACPPX36TPR2GLJAFRB/>`_ (September "
+"2021)"
+msgstr ""
+
+#: ../../pep-0674.rst:534
+msgid ""
+"`[C API] Avoid accessing PyObject and PyVarObject members directly: add "
+"Py_SET_TYPE() and Py_IS_TYPE(), disallow Py_TYPE(obj)=type "
+"<https://bugs.python.org/issue39573>`__ (February 2020)"
+msgstr ""
+
+#: ../../pep-0674.rst:536
+msgid ""
+"`bpo-30459: PyList_SET_ITEM  could be safer "
+"<https://bugs.python.org/issue30459>`_ (May 2017)"
+msgstr ""
+
+#: ../../pep-0674.rst:541
+msgid "Version History"
+msgstr ""
+
+#: ../../pep-0674.rst:543
+msgid "Version 3: No longer change PyDescr_TYPE() and PyDescr_NAME() macros"
+msgstr ""
+
+#: ../../pep-0674.rst:544
+msgid ""
+"Version 2: Add \"Relationship with the HPy project\" section, remove the "
+"PyPy section"
+msgstr ""
+
+#: ../../pep-0674.rst:546
+msgid "Version 1: First public version"
+msgstr ""
+
+#: ../../pep-0674.rst:550
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0674.rst:552
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0649.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0649.rst:1
-msgid "649"
-msgstr ""
-
-#: ../../pep-0649.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0649.rst:2
-msgid "Deferred Evaluation Of Annotations Using Descriptors"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0649.rst
 msgid "Author"
@@ -58,10 +42,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0649.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0649.rst:6
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0649.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0649.rst:7
+#: ../../pep-0649.rst:8
 msgid "11-Jan-2021"
 msgstr ""
 
@@ -69,48 +61,49 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0649.rst:8
+#: ../../pep-0649.rst:9
 msgid "11-Jan-2021, 11-Apr-2021"
 msgstr ""
 
-#: ../../pep-0649.rst:12
+#: ../../pep-0649.rst:13
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0649.rst:14
+#: ../../pep-0649.rst:15
 msgid "As of Python 3.9, Python supports two different behaviors for annotations:"
 msgstr ""
 
-#: ../../pep-0649.rst:17
+#: ../../pep-0649.rst:18
 msgid ""
 "original or \"stock\" Python semantics, in which annotations are "
 "evaluated at the time they are bound, and"
 msgstr ""
 
-#: ../../pep-0649.rst:19
+#: ../../pep-0649.rst:20
 msgid ""
-"PEP 563 semantics, currently enabled per-module by ``from __future__ "
+":pep:`563` semantics, currently enabled per-module by ``from __future__ "
 "import annotations``, in which annotations are converted back into "
 "strings and must be reparsed and executed by ``eval()`` to be used."
 msgstr ""
 
-#: ../../pep-0649.rst:24
+#: ../../pep-0649.rst:25
 msgid ""
 "Original Python semantics created a circular references problem for "
-"static typing analysis.  PEP 563 solved that problem--but its novel "
+"static typing analysis.  :pep:`563` solved that problem--but its novel "
 "semantics introduced new problems, including its restriction that "
 "annotations can only reference names at module-level scope."
 msgstr ""
 
-#: ../../pep-0649.rst:30
+#: ../../pep-0649.rst:31
 msgid ""
 "This PEP proposes a third way that embodies the best of both previous "
-"approaches.  It solves the same circular reference problems solved by PEP"
-" 563, while otherwise preserving Python's original annotation semantics, "
-"including allowing annotations to refer to local and class variables."
+"approaches.  It solves the same circular reference problems solved by "
+":pep:`563`, while otherwise preserving Python's original annotation "
+"semantics, including allowing annotations to refer to local and class "
+"variables."
 msgstr ""
 
-#: ../../pep-0649.rst:36
+#: ../../pep-0649.rst:37
 msgid ""
 "In this new approach, the code to generate the annotations dict is "
 "written to its own function which computes and returns the annotations "
@@ -122,7 +115,7 @@ msgid ""
 "the annotations are never computed."
 msgstr ""
 
-#: ../../pep-0649.rst:46
+#: ../../pep-0649.rst:47
 msgid ""
 "Annotations defined using this PEP's semantics have the same visibility "
 "into the symbol table as annotations under \"stock\" semantics--any name "
@@ -133,29 +126,29 @@ msgid ""
 "active:"
 msgstr ""
 
-#: ../../pep-0649.rst:55
+#: ../../pep-0649.rst:56
 msgid ""
 "An annotation can refer to a local variable defined in the current "
 "function scope."
 msgstr ""
 
-#: ../../pep-0649.rst:57
+#: ../../pep-0649.rst:58
 msgid ""
 "An annotation can refer to a local variable defined in an enclosing "
 "function scope."
 msgstr ""
 
-#: ../../pep-0649.rst:59
+#: ../../pep-0649.rst:60
 msgid ""
 "An annotation can refer to a class variable defined in the current class "
 "scope."
 msgstr ""
 
-#: ../../pep-0649.rst:61
+#: ../../pep-0649.rst:62
 msgid "An annotation can refer to a global variable."
 msgstr ""
 
-#: ../../pep-0649.rst:63
+#: ../../pep-0649.rst:64
 msgid ""
 "And in all four of these cases, the variable referenced by the annotation"
 " needn't be defined at the time the annotation is defined--it can be "
@@ -163,20 +156,20 @@ msgid ""
 " defined before the annotation is *evaluated.*"
 msgstr ""
 
-#: ../../pep-0649.rst:69
+#: ../../pep-0649.rst:70
 msgid ""
 "If accepted, these new semantics for annotations would initially be gated"
 " behind ``from __future__ import co_annotations``. However, these "
 "semantics would eventually be promoted to be Python's default behavior.  "
-"Thus this PEP would *supersede* PEP 563, and PEP 563's behavior would be "
-"deprecated and eventually removed."
+"Thus this PEP would *supersede* :pep:`563`, and :pep:`563`'s behavior "
+"would be deprecated and eventually removed."
 msgstr ""
 
-#: ../../pep-0649.rst:77
+#: ../../pep-0649.rst:78
 msgid "Overview"
 msgstr ""
 
-#: ../../pep-0649.rst:79
+#: ../../pep-0649.rst:80
 msgid ""
 "The code presented in this section is simplified for clarity.  The "
 "intention is to communicate the high-level concepts involved without "
@@ -185,11 +178,11 @@ msgid ""
 "more accurate description of how this PEP works."
 msgstr ""
 
-#: ../../pep-0649.rst:86
+#: ../../pep-0649.rst:87
 msgid "Consider this example code:"
 msgstr ""
 
-#: ../../pep-0649.rst:96
+#: ../../pep-0649.rst:97
 msgid ""
 "As we see here, annotations are available at runtime through an "
 "``__annotations__`` attribute on functions, classes, and modules. When "
@@ -198,7 +191,7 @@ msgid ""
 "that field's annotation."
 msgstr ""
 
-#: ../../pep-0649.rst:102
+#: ../../pep-0649.rst:103
 msgid ""
 "The default behavior in Python 3.9 is to evaluate the expressions for the"
 " annotations, and build the annotations dict, at the time the function, "
@@ -206,7 +199,7 @@ msgid ""
 "something like this:"
 msgstr ""
 
-#: ../../pep-0649.rst:117
+#: ../../pep-0649.rst:118
 msgid ""
 "The crucial detail here is that the values ``int``, ``MyType``, and "
 "``float`` are looked up at the time the function object is bound, and "
@@ -215,14 +208,14 @@ msgid ""
 "hasn't been defined yet."
 msgstr ""
 
-#: ../../pep-0649.rst:123
+#: ../../pep-0649.rst:124
 msgid ""
-"PEP 563's solution is to decompile the expressions back into strings, and"
-" store those *strings* in the annotations dict. The equivalent runtime "
-"code would look something like this:"
+":pep:`563`'s solution is to decompile the expressions back into strings, "
+"and store those *strings* in the annotations dict. The equivalent runtime"
+" code would look something like this:"
 msgstr ""
 
-#: ../../pep-0649.rst:137
+#: ../../pep-0649.rst:138
 msgid ""
 "This code now runs successfully.  However, ``foo_y_type`` is no longer a "
 "reference to ``MyType``, it is the *string* ``'MyType'``.  The code would"
@@ -231,14 +224,14 @@ msgid ""
 " to the actual ``MyType`` object."
 msgstr ""
 
-#: ../../pep-0649.rst:144
+#: ../../pep-0649.rst:145
 msgid ""
 "This PEP proposes a third approach, delaying the evaluation of the "
 "annotations by computing them in their own function.  If this PEP was "
 "active, the generated code would work something like this:"
 msgstr ""
 
-#: ../../pep-0649.rst:169
+#: ../../pep-0649.rst:170
 msgid ""
 "The important change is that the code constructing the annotations dict "
 "now lives in a function—here, called ``foo_annotations_fn()``.  But this "
@@ -250,26 +243,27 @@ msgid ""
 "defined."
 msgstr ""
 
-#: ../../pep-0649.rst:181
+#: ../../pep-0649.rst:182
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0649.rst:183
+#: ../../pep-0649.rst:184
 msgid ""
 "Python's original semantics for annotations made its use for static type "
 "analysis painful due to forward reference problems. This was the main "
-"justification for PEP 563, and we need not revisit those arguments here."
+"justification for :pep:`563`, and we need not revisit those arguments "
+"here."
 msgstr ""
 
-#: ../../pep-0649.rst:188
+#: ../../pep-0649.rst:189
 msgid ""
-"However, PEP 563's solution was to decompile code for Python annotations "
-"back into strings at compile time, requiring users of annotations to "
-"``eval()`` those strings to restore them to their actual Python values.  "
-"This has several drawbacks:"
+"However, :pep:`563`'s solution was to decompile code for Python "
+"annotations back into strings at compile time, requiring users of "
+"annotations to ``eval()`` those strings to restore them to their actual "
+"Python values.  This has several drawbacks:"
 msgstr ""
 
-#: ../../pep-0649.rst:193
+#: ../../pep-0649.rst:194
 msgid ""
 "It requires Python implementations to stringize their annotations.  This "
 "is surprising behavior—unprecedented for a language-level feature.  Also,"
@@ -278,39 +272,49 @@ msgid ""
 "implementation."
 msgstr ""
 
-#: ../../pep-0649.rst:199
+#: ../../pep-0649.rst:200
 msgid ""
 "It requires that all annotations be evaluated at module-level scope.  "
-"Annotations under PEP 563 can no longer refer to * class variables, * "
-"local variables in the current function, or * local variables in "
-"enclosing functions."
+"Annotations under :pep:`563` can no longer refer to"
+msgstr ""
+
+#: ../../pep-0649.rst:203
+msgid "class variables,"
 msgstr ""
 
 #: ../../pep-0649.rst:204
+msgid "local variables in the current function, or"
+msgstr ""
+
+#: ../../pep-0649.rst:205
+msgid "local variables in enclosing functions."
+msgstr ""
+
+#: ../../pep-0649.rst:207
 msgid ""
 "It requires a code change every time existing code uses an annotation, to"
 " handle converting the stringized annotation back into a useful value."
 msgstr ""
 
-#: ../../pep-0649.rst:207
+#: ../../pep-0649.rst:210
 msgid "``eval()`` is slow."
 msgstr ""
 
-#: ../../pep-0649.rst:208
+#: ../../pep-0649.rst:211
 msgid ""
 "``eval()`` isn't always available; it's sometimes removed from Python for"
 " space reasons."
 msgstr ""
 
-#: ../../pep-0649.rst:210
+#: ../../pep-0649.rst:213
 msgid ""
 "In order to evaluate the annotations on a class, it requires obtaining a "
-"reference to that class's globals, which PEP 563 suggests should be done "
-"by looking up that class by name in ``sys.modules``—another surprising "
-"requirement for a language-level feature."
+"reference to that class's globals, which :pep:`563` suggests should be "
+"done by looking up that class by name in ``sys.modules``—another "
+"surprising requirement for a language-level feature."
 msgstr ""
 
-#: ../../pep-0649.rst:215
+#: ../../pep-0649.rst:218
 msgid ""
 "It adds an ongoing maintenance burden to Python implementations. Every "
 "time the language adds a new feature available in expressions, the "
@@ -318,30 +322,39 @@ msgid ""
 "support decompiling it."
 msgstr ""
 
-#: ../../pep-0649.rst:220
+#: ../../pep-0649.rst:223
 msgid ""
-"This PEP also solves the forward reference problem outlined in PEP 563 "
-"while avoiding the problems listed above:"
+"This PEP also solves the forward reference problem outlined in :pep:`563`"
+" while avoiding the problems listed above:"
 msgstr ""
 
-#: ../../pep-0649.rst:223
+#: ../../pep-0649.rst:226
 msgid ""
 "Python implementations would generate annotations as code objects.  This "
 "is simpler than stringizing, and is something Python implementations are "
-"already quite good at.  This means: - alternate implementations would "
-"need to write less code to implement this feature, and - the "
-"implementation would be simpler overall, which should reduce its ongoing "
-"maintenance cost."
+"already quite good at.  This means:"
 msgstr ""
 
 #: ../../pep-0649.rst:230
+msgid ""
+"alternate implementations would need to write less code to implement this"
+" feature, and"
+msgstr ""
+
+#: ../../pep-0649.rst:232
+msgid ""
+"the implementation would be simpler overall, which should reduce its "
+"ongoing maintenance cost."
+msgstr ""
+
+#: ../../pep-0649.rst:235
 msgid ""
 "Existing annotations would not need to be changed to only use global "
 "scope.  Actually, annotations would become much easier to use, as they "
 "would now also handle forward references."
 msgstr ""
 
-#: ../../pep-0649.rst:234
+#: ../../pep-0649.rst:239
 msgid ""
 "Code examining annotations at runtime would no longer need to use "
 "``eval()`` or anything else—it would automatically see the correct "
@@ -349,19 +362,19 @@ msgid ""
 "``eval()``."
 msgstr ""
 
-#: ../../pep-0649.rst:241
+#: ../../pep-0649.rst:246
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0649.rst:243
+#: ../../pep-0649.rst:248
 msgid ""
-"PEP 563 changed the semantics of annotations.  When its semantics are "
+":pep:`563` changed the semantics of annotations.  When its semantics are "
 "active, annotations must assume they will be evaluated in *module-level* "
 "scope.  They may no longer refer directly to local variables or class "
 "attributes."
 msgstr ""
 
-#: ../../pep-0649.rst:248
+#: ../../pep-0649.rst:253
 msgid ""
 "This PEP removes that restriction; annotations may refer to globals, "
 "local variables inside functions, local variables defined in enclosing "
@@ -371,20 +384,20 @@ msgid ""
 "is created normally (in such a way that it is known to the symbol table "
 "for the relevant block, or is a global or class variable found using "
 "normal name resolution).  Thus, this PEP demonstrates *improved* "
-"backwards compatibility over PEP 563."
+"backwards compatibility over :pep:`563`."
 msgstr ""
 
-#: ../../pep-0649.rst:258
+#: ../../pep-0649.rst:263
 msgid ""
-"PEP 563 also requires using ``eval()`` or ``typing.get_type_hints()`` to "
-"examine annotations.  Code updated to work with PEP 563 that calls "
+":pep:`563` also requires using ``eval()`` or ``typing.get_type_hints()`` "
+"to examine annotations.  Code updated to work with :pep:`563` that calls "
 "``eval()`` directly would have to be updated simply to remove the "
 "``eval()`` call.  Code using ``typing.get_type_hints()`` would continue "
 "to work unchanged, though future use of that function would become "
 "optional in most cases."
 msgstr ""
 
-#: ../../pep-0649.rst:265
+#: ../../pep-0649.rst:270
 msgid ""
 "Because this PEP makes semantic changes to how annotations are evaluated,"
 " this PEP will be initially gated with a per-module ``from __future__ "
@@ -392,41 +405,41 @@ msgid ""
 "behavior."
 msgstr ""
 
-#: ../../pep-0649.rst:270
+#: ../../pep-0649.rst:275
 msgid ""
 "Apart from the delay in evaluating values stored in annotations dicts, "
 "this PEP preserves nearly all existing behavior of annotations dicts.  "
 "Specifically:"
 msgstr ""
 
-#: ../../pep-0649.rst:274
+#: ../../pep-0649.rst:279
 msgid "Annotations dicts are mutable, and any changes to them are preserved."
 msgstr ""
 
-#: ../../pep-0649.rst:276
+#: ../../pep-0649.rst:281
 msgid ""
 "The ``__annotations__`` attribute can be explicitly set, and any value "
 "set this way will be preserved."
 msgstr ""
 
-#: ../../pep-0649.rst:278
+#: ../../pep-0649.rst:283
 msgid ""
 "The ``__annotations__`` attribute can be deleted using the ``del`` "
 "statement."
 msgstr ""
 
-#: ../../pep-0649.rst:281
+#: ../../pep-0649.rst:286
 msgid ""
 "However, there are two uncommon interactions possible with class and "
 "module annotations that work today—both with stock semantics, and with "
-"PEP 563 semantics—that would no longer work when this PEP was active.  "
-"These two interactions would have to be prohibited. The good news is, "
+":pep:`563` semantics—that would no longer work when this PEP was active."
+"  These two interactions would have to be prohibited. The good news is, "
 "neither is common, and neither is considered good practice.  In fact, "
 "they're rarely seen outside of Python's own regression test suite.  They "
 "are:"
 msgstr ""
 
-#: ../../pep-0649.rst:289
+#: ../../pep-0649.rst:294
 msgid ""
 "*Code that sets annotations on module or class attributes from inside any"
 " kind of flow control statement.*   It's currently possible to set module"
@@ -435,7 +448,7 @@ msgid ""
 "this behavior when this PEP is active."
 msgstr ""
 
-#: ../../pep-0649.rst:295
+#: ../../pep-0649.rst:300
 msgid ""
 "*Code in module or class scope that references or modifies the local* "
 "``__annotations__`` *dict directly.*  Currently, when setting annotations"
@@ -447,7 +460,7 @@ msgid ""
 "would likely be surprising and wouldn't make anyone happy."
 msgstr ""
 
-#: ../../pep-0649.rst:305
+#: ../../pep-0649.rst:310
 msgid ""
 "Note that these are both also pain points for static type checkers, and "
 "are unsupported by those checkers.  It seems reasonable to declare that "
@@ -456,7 +469,7 @@ msgid ""
 "explicitly prohibit them with compile-time checks."
 msgstr ""
 
-#: ../../pep-0649.rst:311
+#: ../../pep-0649.rst:316
 msgid ""
 "In addition, there are a few operators that would no longer be valid for "
 "use in annotations, because their side effects would affect the "
@@ -464,25 +477,25 @@ msgid ""
 " was nominally defined in:"
 msgstr ""
 
-#: ../../pep-0649.rst:316
+#: ../../pep-0649.rst:321
 msgid "``:=`` (aka the \"walrus operator\"),"
 msgstr ""
 
-#: ../../pep-0649.rst:317
+#: ../../pep-0649.rst:322
 msgid "``yield`` and ``yield from``, and"
 msgstr ""
 
-#: ../../pep-0649.rst:318
+#: ../../pep-0649.rst:323
 msgid "``await``."
 msgstr ""
 
-#: ../../pep-0649.rst:320
+#: ../../pep-0649.rst:325
 msgid ""
 "Use of any of these operators in an annotation will result in a compile-"
 "time error."
 msgstr ""
 
-#: ../../pep-0649.rst:323
+#: ../../pep-0649.rst:328
 msgid ""
 "Since delaying the evaluation of annotations until they are evaluated "
 "changes the semantics of the language, it's observable from within the "
@@ -491,14 +504,14 @@ msgid ""
 "time, e.g."
 msgstr ""
 
-#: ../../pep-0649.rst:336
+#: ../../pep-0649.rst:341
 msgid ""
 "This will print ``<class 'str'>`` with stock semantics and ``<class "
 "'int'>`` when this PEP is active.  Since this is poor programming style "
 "to begin with, it seems acceptable that this PEP changes its behavior."
 msgstr ""
 
-#: ../../pep-0649.rst:341
+#: ../../pep-0649.rst:346
 msgid ""
 "Finally, there's a standard idiom that's actually somewhat common when "
 "accessing class annotations, and which will become more problematic when "
@@ -510,36 +523,36 @@ msgid ""
 "evolution of this PEP."
 msgstr ""
 
-#: ../../pep-0649.rst:353
+#: ../../pep-0649.rst:358
 msgid "Mistaken Rejection Of This Approach In November 2017"
 msgstr ""
 
-#: ../../pep-0649.rst:355
+#: ../../pep-0649.rst:360
 msgid ""
-"During the early days of discussion around PEP 563, using code to delay "
-"the evaluation of annotations was briefly discussed, in a November 2017 "
-"thread in ``comp.lang.python-dev``.  At the time the technique was termed"
-" an \"implicit lambda expression\"."
+"During the early days of discussion around :pep:`563`, using code to "
+"delay the evaluation of annotations was briefly discussed, in a November "
+"2017 thread in ``comp.lang.python-dev``.  At the time the technique was "
+"termed an \"implicit lambda expression\"."
 msgstr ""
 
-#: ../../pep-0649.rst:361
+#: ../../pep-0649.rst:366
 msgid ""
 "Guido van Rossum—Python's BDFL at the time—replied, asserting that these "
 "\"implicit lambda expression\" wouldn't work, because they'd only be able"
 " to resolve symbols at module-level scope:"
 msgstr ""
 
-#: ../../pep-0649.rst:366
+#: ../../pep-0649.rst:371
 msgid ""
 "IMO the inability of referencing class-level definitions from annotations"
 " on methods pretty much kills this idea."
 msgstr ""
 
-#: ../../pep-0649.rst:369
+#: ../../pep-0649.rst:374
 msgid "https://mail.python.org/pipermail/python-dev/2017-November/150109.html"
 msgstr ""
 
-#: ../../pep-0649.rst:371
+#: ../../pep-0649.rst:376
 msgid ""
 "This led to a short discussion about extending lambda-ized annotations "
 "for methods to be able to refer to class-level definitions, by "
@@ -547,19 +560,15 @@ msgid ""
 "quickly rejected."
 msgstr ""
 
-#: ../../pep-0649.rst:376
-msgid "PEP 563 summarizes the above discussion here:"
+#: ../../pep-0649.rst:381
+msgid ""
+":pep:`PEP 563 summarizes the above discussion <563#keeping-the-ability-"
+"to-use-function-local-state-when-defining-annotations>`"
 msgstr ""
 
-#: ../../pep-0649.rst:378
+#: ../../pep-0649.rst:384
 msgid ""
-"https://www.python.org/dev/peps/pep-0563/#keeping-the-ability-to-use-"
-"function-local-state-when-defining-annotations"
-msgstr ""
-
-#: ../../pep-0649.rst:380
-msgid ""
-"What's puzzling is PEP 563's own changes to the scoping rules of "
+"What's puzzling is :pep:`563`'s own changes to the scoping rules of "
 "annotations—it *also* doesn't permit annotations to reference class-level"
 " definitions.  It's not immediately clear why an inability to reference "
 "class-level definitions was enough to reject using \"implicit lambda "
@@ -567,35 +576,35 @@ msgid ""
 "annotations."
 msgstr ""
 
-#: ../../pep-0649.rst:387
+#: ../../pep-0649.rst:391
 msgid ""
-"In retrospect there was probably a pivot during the development of PEP "
-"563.  It seems that, early on, there was a prevailing assumption that PEP"
-" 563 would support references to class-level definitions.  But by the "
-"time PEP 563 was finalized, this assumption had apparently been "
-"abandoned.  And it looks like \"implicit lambda expressions\" were never "
-"reconsidered in this new light."
+"In retrospect there was probably a pivot during the development of "
+":pep:`563`.  It seems that, early on, there was a prevailing assumption "
+"that :pep:`563` would support references to class-level definitions.  But"
+" by the time :pep:`563` was finalized, this assumption had apparently "
+"been abandoned.  And it looks like \"implicit lambda expressions\" were "
+"never reconsidered in this new light."
 msgstr ""
 
-#: ../../pep-0649.rst:395
+#: ../../pep-0649.rst:399
 msgid ""
 "In any case, annotations are still able to refer to class-level "
 "definitions under this PEP, rendering the objection moot."
 msgstr ""
 
-#: ../../pep-0649.rst:401
+#: ../../pep-0649.rst:405
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0649.rst:403
+#: ../../pep-0649.rst:407
 msgid "There's a prototype implementation of this PEP, here:"
 msgstr ""
 
-#: ../../pep-0649.rst:405
+#: ../../pep-0649.rst:409
 msgid "https://github.com/larryhastings/co_annotations/"
 msgstr ""
 
-#: ../../pep-0649.rst:407
+#: ../../pep-0649.rst:411
 msgid ""
 "As of this writing, all features described in this PEP are implemented, "
 "and there are some rudimentary tests in the test suite.  There are still "
@@ -603,26 +612,26 @@ msgid ""
 "the CPython repo."
 msgstr ""
 
-#: ../../pep-0649.rst:415
+#: ../../pep-0649.rst:419
 msgid "from __future__ import co_annotations"
 msgstr ""
 
-#: ../../pep-0649.rst:417
+#: ../../pep-0649.rst:421
 msgid "In the prototype, the semantics presented in this PEP are gated with:"
 msgstr ""
 
-#: ../../pep-0649.rst:426
+#: ../../pep-0649.rst:430
 msgid "__co_annotations__"
 msgstr ""
 
-#: ../../pep-0649.rst:428
+#: ../../pep-0649.rst:432
 msgid ""
 "Python supports runtime metadata for annotations for three different "
 "types: function, classes, and modules.  The basic approach to implement "
 "this PEP is much the same for all three with only minor variations."
 msgstr ""
 
-#: ../../pep-0649.rst:433
+#: ../../pep-0649.rst:437
 msgid ""
 "With this PEP, each of these types adds a new attribute, "
 "``__co_annotations__``.  ``__co_annotations__`` is a function: it takes "
@@ -630,35 +639,35 @@ msgid ""
 "dict).  It adds the following semantics:"
 msgstr ""
 
-#: ../../pep-0649.rst:438
+#: ../../pep-0649.rst:442
 msgid ""
 "``__co_annotations__`` is always set, and may contain either ``None`` or "
 "a callable."
 msgstr ""
 
-#: ../../pep-0649.rst:440
+#: ../../pep-0649.rst:444
 msgid "``__co_annotations__`` cannot be deleted."
 msgstr ""
 
-#: ../../pep-0649.rst:441
+#: ../../pep-0649.rst:445
 msgid ""
 "``__annotations__`` and ``__co_annotations__`` can't both be set to a "
 "useful value simultaneously:"
 msgstr ""
 
-#: ../../pep-0649.rst:444
+#: ../../pep-0649.rst:448
 msgid ""
 "If you set ``__annotations__`` to a dict, this also sets "
 "``__co_annotations__`` to None."
 msgstr ""
 
-#: ../../pep-0649.rst:446
+#: ../../pep-0649.rst:450
 msgid ""
 "If you set ``__co_annotations__`` to a callable, this also deletes "
 "``__annotations__``"
 msgstr ""
 
-#: ../../pep-0649.rst:449
+#: ../../pep-0649.rst:453
 msgid ""
 "Internally, ``__co_annotations__`` is a \"data descriptor\", where "
 "functions are called whenever user code gets, sets, or deletes the "
@@ -666,18 +675,18 @@ msgid ""
 "for the current value of the ``__co_annotations__`` attribute."
 msgstr ""
 
-#: ../../pep-0649.rst:455
+#: ../../pep-0649.rst:459
 msgid ""
 "``__annotations__`` is also as a data descriptor, with its own separate "
 "internal storage for its internal value. The code implementing the "
 "\"get\" for ``__annotations__`` works something like this:"
 msgstr ""
 
-#: ../../pep-0649.rst:474
+#: ../../pep-0649.rst:478
 msgid "Unbound code objects"
 msgstr ""
 
-#: ../../pep-0649.rst:476
+#: ../../pep-0649.rst:480
 msgid ""
 "When Python code defines one of these three objects with annotations, the"
 " Python compiler generates a separate code object which builds and "
@@ -687,7 +696,7 @@ msgid ""
 " for ``__annotations__``."
 msgstr ""
 
-#: ../../pep-0649.rst:484
+#: ../../pep-0649.rst:488
 msgid ""
 "This is a useful optimization for both speed and memory consumption.  "
 "Python processes rarely examine annotations at runtime. Therefore, pre-"
@@ -695,24 +704,24 @@ msgid ""
 "of resources."
 msgstr ""
 
-#: ../../pep-0649.rst:489
+#: ../../pep-0649.rst:493
 msgid "When is this optimization not possible?"
 msgstr ""
 
-#: ../../pep-0649.rst:491
+#: ../../pep-0649.rst:495
 msgid ""
 "When an annotation function contains references to free variables, in the"
 " current function or in an outer function."
 msgstr ""
 
-#: ../../pep-0649.rst:494
+#: ../../pep-0649.rst:498
 msgid ""
 "When an annotation function is defined on a method (a function defined "
 "inside a class) and the annotations possibly refer directly to class "
 "variables."
 msgstr ""
 
-#: ../../pep-0649.rst:498
+#: ../../pep-0649.rst:502
 msgid ""
 "Note that user code isn't permitted to directly access these unbound code"
 " objects.  If the user \"gets\" the value of ``__co_annotations__``, and "
@@ -721,18 +730,18 @@ msgid ""
 "is stored as the new value of ``__co_annotations__`` and returned."
 msgstr ""
 
-#: ../../pep-0649.rst:506
+#: ../../pep-0649.rst:510
 msgid ""
 "(However, these unbound code objects *are* stored in the ``.pyc`` file.  "
 "So a determined user could examine them should that be necessary for some"
 " reason.)"
 msgstr ""
 
-#: ../../pep-0649.rst:514
+#: ../../pep-0649.rst:518
 msgid "Function Annotations"
 msgstr ""
 
-#: ../../pep-0649.rst:516
+#: ../../pep-0649.rst:520
 msgid ""
 "When compiling a function, the CPython bytecode compiler visits the "
 "annotations for the function all in one place, starting with "
@@ -741,9 +750,9 @@ msgid ""
 "demand, and ``compiler_visit_annotations()`` assembles it."
 msgstr ""
 
-#: ../../pep-0649.rst:523
+#: ../../pep-0649.rst:527
 msgid ""
-"The code object is passed in in place of the annotations dict for the "
+"The code object is passed in place of the annotations dict for the "
 "``MAKE_FUNCTION`` bytecode instruction. ``MAKE_FUNCTION`` supports a new "
 "bit in its oparg bitfield, ``0x10``, which tells it to expect a "
 "``co_annotations`` code object on the stack. The bitfields for "
@@ -751,13 +760,13 @@ msgid ""
 " exclusive."
 msgstr ""
 
-#: ../../pep-0649.rst:531
+#: ../../pep-0649.rst:535
 msgid ""
 "When binding an unbound annotation code object, a function will use its "
 "own ``__globals__`` as the new function's globals."
 msgstr ""
 
-#: ../../pep-0649.rst:534
+#: ../../pep-0649.rst:538
 msgid ""
 "One quirk of Python: you can't actually remove the annotations from a "
 "function object.  If you delete the ``__annotations__`` attribute of a "
@@ -766,11 +775,11 @@ msgid ""
 "of this PEP maintains this quirk for backwards compatibility."
 msgstr ""
 
-#: ../../pep-0649.rst:543
+#: ../../pep-0649.rst:547
 msgid "Class Annotations"
 msgstr ""
 
-#: ../../pep-0649.rst:545
+#: ../../pep-0649.rst:549
 msgid ""
 "When compiling a class body, the compiler maintains two scopes: one for "
 "the normal class body code, and one for annotations. (This is facilitated"
@@ -783,7 +792,7 @@ msgid ""
 " ``STORE_NAME``."
 msgstr ""
 
-#: ../../pep-0649.rst:556
+#: ../../pep-0649.rst:560
 msgid ""
 "It also sets a new ``__globals__`` attribute.  Currently it does this by "
 "calling ``globals()`` and storing the result. (Surely there's a more "
@@ -795,7 +804,7 @@ msgid ""
 "explicitly set--it also deletes its ``__globals__`` attribute."
 msgstr ""
 
-#: ../../pep-0649.rst:567
+#: ../../pep-0649.rst:571
 msgid ""
 "As discussed above, examination or modification of ``__annotations__`` "
 "from within the class body is no longer supported.  Also, any flow "
@@ -803,7 +812,7 @@ msgid ""
 "annotations is unsupported."
 msgstr ""
 
-#: ../../pep-0649.rst:572
+#: ../../pep-0649.rst:576
 msgid ""
 "If you delete the ``__annotations__`` attribute of a class, then get its "
 "``__annotations__`` member, it will return the annotations dict of the "
@@ -811,41 +820,41 @@ msgid ""
 "annotations set, it will raise ``AttributeError``."
 msgstr ""
 
-#: ../../pep-0649.rst:578
+#: ../../pep-0649.rst:582
 msgid ""
 "Although it's an implementation-specific detail, currently classes store "
 "the internal value of ``__co_annotations__`` in their ``tp_dict`` under "
 "the same name."
 msgstr ""
 
-#: ../../pep-0649.rst:584
+#: ../../pep-0649.rst:588
 msgid "Module Annotations"
 msgstr ""
 
-#: ../../pep-0649.rst:586
+#: ../../pep-0649.rst:590
 msgid ""
 "Module annotations work much the same as class annotations. The main "
 "difference is, a module uses its own dict as the ``__globals__`` when "
 "binding the function."
 msgstr ""
 
-#: ../../pep-0649.rst:590
+#: ../../pep-0649.rst:594
 msgid ""
 "If you delete the ``__annotations__`` attribute of a class, then get its "
 "``__annotations__`` member, the module will raise ``AttributeError``."
 msgstr ""
 
-#: ../../pep-0649.rst:595
+#: ../../pep-0649.rst:599
 msgid "Annotations With Closures"
 msgstr ""
 
-#: ../../pep-0649.rst:597
+#: ../../pep-0649.rst:601
 msgid ""
 "It's possible to write annotations that refer to free variables, and even"
 " free variables that have yet to be defined.  For example:"
 msgstr ""
 
-#: ../../pep-0649.rst:616
+#: ../../pep-0649.rst:620
 msgid ""
 "At the time ``fn`` is set, ``inner.__co_annotations__()`` hasn't been "
 "run.  So it has to retain a reference to the *future* definitions of "
@@ -853,7 +862,7 @@ msgid ""
 "annotations."
 msgstr ""
 
-#: ../../pep-0649.rst:621
+#: ../../pep-0649.rst:625
 msgid ""
 "If an annotation function refers to a local variable from the current "
 "function scope, or a free variable from an enclosing function scope--if, "
@@ -867,7 +876,7 @@ msgid ""
 "object."
 msgstr ""
 
-#: ../../pep-0649.rst:634
+#: ../../pep-0649.rst:638
 msgid ""
 "Note that, since the annotation function ``inner.__co_annotations__()`` "
 "is defined while parsing ``outer()``, from Python's perspective the "
@@ -877,17 +886,17 @@ msgid ""
 " thing."
 msgstr ""
 
-#: ../../pep-0649.rst:643
+#: ../../pep-0649.rst:647
 msgid "Annotations That Refer To Class Variables"
 msgstr ""
 
-#: ../../pep-0649.rst:645
+#: ../../pep-0649.rst:649
 msgid ""
 "It's possible to write annotations that refer to class variables, and "
 "even class variables that haven't yet been defined.  For example:"
 msgstr ""
 
-#: ../../pep-0649.rst:659
+#: ../../pep-0649.rst:663
 msgid ""
 "Internally, annotation functions are defined as a new type of \"block\" "
 "in CPython's symbol table called an ``AnnotationBlock``.  An "
@@ -899,23 +908,23 @@ msgid ""
 "inside ``C``.)"
 msgstr ""
 
-#: ../../pep-0649.rst:670
+#: ../../pep-0649.rst:674
 msgid ""
 "If it's possible that an annotation function refers to class variables--"
 "if all these conditions are true:"
 msgstr ""
 
-#: ../../pep-0649.rst:673
+#: ../../pep-0649.rst:677
 msgid "The annotation function is being defined inside a class scope."
 msgstr ""
 
-#: ../../pep-0649.rst:675
+#: ../../pep-0649.rst:679
 msgid ""
 "The generated code for the annotation function has at least one "
 "``LOAD_NAME`` instruction."
 msgstr ""
 
-#: ../../pep-0649.rst:678
+#: ../../pep-0649.rst:682
 msgid ""
 "Then the annotation function is bound at the time it's set on the "
 "class/function, and this binding includes a reference to the class dict."
@@ -925,7 +934,7 @@ msgid ""
 "the newly created function object."
 msgstr ""
 
-#: ../../pep-0649.rst:687
+#: ../../pep-0649.rst:691
 msgid ""
 "Then, at the time the function is executed, the ``f_locals`` field of the"
 " frame object is set to the function's ``__locals__``, if set. This "
@@ -934,11 +943,11 @@ msgid ""
 "for conventional Python functions."
 msgstr ""
 
-#: ../../pep-0649.rst:697
+#: ../../pep-0649.rst:701
 msgid "Interactive REPL Shell"
 msgstr ""
 
-#: ../../pep-0649.rst:699
+#: ../../pep-0649.rst:703
 msgid ""
 "Everything works the same inside Python's interactive REPL shell, except "
 "for module annotations in the interactive module (``__main__``) itself.  "
@@ -946,7 +955,7 @@ msgid ""
 "we can compile the ``__co_annotations__`` function."
 msgstr ""
 
-#: ../../pep-0649.rst:704
+#: ../../pep-0649.rst:708
 msgid ""
 "For the sake of simplicity, in this case we forego delayed evaluation. "
 "Module-level annotations in the REPL shell will continue to work exactly "
@@ -954,87 +963,87 @@ msgid ""
 "inside the ``__annotations__`` dict."
 msgstr ""
 
-#: ../../pep-0649.rst:709
+#: ../../pep-0649.rst:713
 msgid ""
 "(It might be possible to support delayed evaluation here. But it gets "
 "complicated quickly, and for a nearly-non-existent use case.)"
 msgstr ""
 
-#: ../../pep-0649.rst:715
+#: ../../pep-0649.rst:719
 msgid "Annotations On Local Variables Inside Functions"
 msgstr ""
 
-#: ../../pep-0649.rst:717
+#: ../../pep-0649.rst:721
 msgid ""
 "Python supports syntax for local variable annotations inside functions. "
 "However, these annotations have no runtime effect--they're discarded at "
 "compile-time.  Therefore, this PEP doesn't need to do anything to support"
-" them, the same as stock semantics and PEP 563."
+" them, the same as stock semantics and :pep:`563`."
 msgstr ""
 
-#: ../../pep-0649.rst:726
+#: ../../pep-0649.rst:730
 msgid "Performance Comparison"
 msgstr ""
 
-#: ../../pep-0649.rst:728
+#: ../../pep-0649.rst:732
 msgid ""
 "Performance with this PEP should be favorable, when compared with either "
-"stock behavior or PEP 563.  In general, resources are only consumed on "
-"demand—\"you only pay for what you use\"."
-msgstr ""
-
-#: ../../pep-0649.rst:732
-msgid "There are three scenarios to consider:"
-msgstr ""
-
-#: ../../pep-0649.rst:734
-msgid "the runtime cost when annotations aren't defined,"
-msgstr ""
-
-#: ../../pep-0649.rst:735
-msgid "the runtime cost when annotations are defined but *not* referenced, and"
+"stock behavior or :pep:`563`.  In general, resources are only consumed on"
+" demand—\"you only pay for what you use\"."
 msgstr ""
 
 #: ../../pep-0649.rst:736
-msgid "the runtime cost when annotations are defined *and* referenced."
+msgid "There are three scenarios to consider:"
 msgstr ""
 
 #: ../../pep-0649.rst:738
-msgid ""
-"We'll examine each of these scenarios in the context of all three "
-"semantics for annotations: stock, PEP 563, and this PEP."
+msgid "the runtime cost when annotations aren't defined,"
 msgstr ""
 
-#: ../../pep-0649.rst:741
+#: ../../pep-0649.rst:739
+msgid "the runtime cost when annotations are defined but *not* referenced, and"
+msgstr ""
+
+#: ../../pep-0649.rst:740
+msgid "the runtime cost when annotations are defined *and* referenced."
+msgstr ""
+
+#: ../../pep-0649.rst:742
+msgid ""
+"We'll examine each of these scenarios in the context of all three "
+"semantics for annotations: stock, :pep:`563`, and this PEP."
+msgstr ""
+
+#: ../../pep-0649.rst:745
 msgid ""
 "When there are no annotations, all three semantics have the same runtime "
 "cost: zero. No annotations dict is created and no code is generated for "
 "it.  This requires no runtime processor time and consumes no memory."
 msgstr ""
 
-#: ../../pep-0649.rst:746
+#: ../../pep-0649.rst:750
 msgid ""
 "When annotations are defined but not referenced, the runtime cost of "
 "Python with this PEP should be roughly equal to or slightly better than "
-"PEP 563 semantics, and slightly better than \"stock\" Python semantics.  "
-"The specifics depend on the object being annotated:"
+":pep:`563` semantics, and slightly better than \"stock\" Python "
+"semantics.  The specifics depend on the object being annotated:"
 msgstr ""
 
-#: ../../pep-0649.rst:751
+#: ../../pep-0649.rst:755
 msgid ""
 "With stock semantics, the annotations dict is always built, and set as an"
 " attribute of the object being annotated."
 msgstr ""
 
-#: ../../pep-0649.rst:753
+#: ../../pep-0649.rst:757
 msgid ""
-"In PEP 563 semantics, for function objects, a single constant (a tuple) "
-"is set as an attribute of the function.  For class and module objects, "
-"the annotations dict is always built and set as an attribute of the class"
-" or module."
+"In :pep:`563` semantics, for function objects, a single constant (a "
+"tuple) is set as an attribute of the function.  For class and module "
+"objects, the annotations dict is always built and set as an attribute of "
+"the class or module."
 msgstr ""
 
-#: ../../pep-0649.rst:757
+#: ../../pep-0649.rst:761
 msgid ""
 "With this PEP, a single object is set as an attribute of the object being"
 " annotated.  Most often, this object is a constant (a code object).  In "
@@ -1043,19 +1052,19 @@ msgid ""
 "object is set as the attribute of the object being annotated."
 msgstr ""
 
-#: ../../pep-0649.rst:764
+#: ../../pep-0649.rst:768
 msgid ""
 "When annotations are both defined and referenced, code using this PEP "
-"should be much faster than code using PEP 563 semantics, and equivalent "
-"to or slightly improved over original Python semantics.  PEP 563 "
-"semantics requires invoking ``eval()`` for every value inside an "
-"annotations dict, which is enormously slow. And, as already mentioned, "
-"this PEP generates measurably more efficient bytecode for class and "
+"should be much faster than code using :pep:`563` semantics, and "
+"equivalent to or slightly improved over original Python semantics.  "
+":pep:`563` semantics requires invoking ``eval()`` for every value inside "
+"an annotations dict, which is enormously slow. And, as already mentioned,"
+" this PEP generates measurably more efficient bytecode for class and "
 "module annotations than stock semantics; for function annotations, this "
 "PEP and stock semantics should be roughly equivalent."
 msgstr ""
 
-#: ../../pep-0649.rst:774
+#: ../../pep-0649.rst:778
 msgid ""
 "Memory use should also be comparable in all three scenarios across all "
 "three semantic contexts.  In the first and third scenarios, memory usage "
@@ -1066,21 +1075,21 @@ msgid ""
 "semantics, they'll store one unused dictionary (or constant tuple)."
 msgstr ""
 
-#: ../../pep-0649.rst:784
+#: ../../pep-0649.rst:788
 msgid "Bytecode Comparison"
 msgstr ""
 
-#: ../../pep-0649.rst:786
+#: ../../pep-0649.rst:790
 msgid ""
 "The bytecode generated for annotations functions with this PEP uses the "
 "efficient ``BUILD_CONST_KEY_MAP`` opcode to build the dict for all "
 "annotatable objects: functions, classes, and modules."
 msgstr ""
 
-#: ../../pep-0649.rst:791
+#: ../../pep-0649.rst:795
 msgid ""
 "Stock semantics also uses ``BUILD_CONST_KEY_MAP`` bytecode for function "
-"annotations. PEP 563 has an even more efficient method for building "
+"annotations. :pep:`563` has an even more efficient method for building "
 "annotations dicts on functions, leveraging the fact that its annotations "
 "dicts only contain strings for both keys and values.  At compile-time it "
 "constructs a tuple containing pairs of keys and values at compile-time, "
@@ -1091,32 +1100,32 @@ msgid ""
 "are examined, due to the overhead of ``eval()``."
 msgstr ""
 
-#: ../../pep-0649.rst:804
+#: ../../pep-0649.rst:808
 msgid ""
-"For class and module annotations, both stock semantics and PEP 563 "
+"For class and module annotations, both stock semantics and :pep:`563` "
 "generate a longer and slightly-less-efficient stanza of bytecode, "
 "creating the dict and setting the annotations individually."
 msgstr ""
 
-#: ../../pep-0649.rst:811
+#: ../../pep-0649.rst:815
 msgid "For Future Discussion"
 msgstr ""
 
-#: ../../pep-0649.rst:814
+#: ../../pep-0649.rst:818
 msgid "Circular Imports"
 msgstr ""
 
-#: ../../pep-0649.rst:816
+#: ../../pep-0649.rst:820
 msgid ""
-"There is one unfortunately-common scenario where PEP 563 currently "
+"There is one unfortunately-common scenario where :pep:`563` currently "
 "provides a better experience, and it has to do with large code bases, "
 "with circular dependencies and imports, that examine their annotations at"
 " run-time."
 msgstr ""
 
-#: ../../pep-0649.rst:821
+#: ../../pep-0649.rst:825
 msgid ""
-"PEP 563 permitted defining *and examining* invalid expressions as "
+":pep:`563` permitted defining *and examining* invalid expressions as "
 "annotations.  Its implementation requires annotations to be legal Python "
 "expressions, which it then converts into strings at compile-time.  But "
 "legal Python expressions may not be computable at runtime, if for example"
@@ -1127,12 +1136,12 @@ msgid ""
 "only examine it as a string."
 msgstr ""
 
-#: ../../pep-0649.rst:833
+#: ../../pep-0649.rst:837
 msgid ""
 "Some large organizations have code bases that unfortunately have circular"
 " dependency problems with their annotations--class A has methods "
 "annotated with class B, but class B has methods annotated with class A--"
-"that can be difficult to resolve. Since PEP 563 stringizes their "
+"that can be difficult to resolve. Since :pep:`563` stringizes their "
 "annotations, it allows them to leave these circular dependencies in "
 "place, and they can sidestep the circular import problem by never "
 "importing the module that defines the types used in the annotations.  "
@@ -1141,7 +1150,7 @@ msgid ""
 "annotations at runtime and this seems to be sufficient for their needs."
 msgstr ""
 
-#: ../../pep-0649.rst:846
+#: ../../pep-0649.rst:850
 msgid ""
 "This PEP allows for many of the same behaviors. Annotations must be legal"
 " Python expressions, which are compiled into a function at compile-time. "
@@ -1152,7 +1161,7 @@ msgid ""
 "bad will happen.)"
 msgstr ""
 
-#: ../../pep-0649.rst:856
+#: ../../pep-0649.rst:860
 msgid ""
 "But examining an annotation when this PEP is active means evaluating it, "
 "which means the names evaluated in that expression must be defined.  An "
@@ -1162,14 +1171,14 @@ msgid ""
 "where an expression is evaluated."
 msgstr ""
 
-#: ../../pep-0649.rst:864
+#: ../../pep-0649.rst:868
 msgid ""
 "In discussions we have yet to find a solution to this problem that makes "
 "all the participants in the conversation happy.  There are various "
 "avenues to explore here:"
 msgstr ""
 
-#: ../../pep-0649.rst:869
+#: ../../pep-0649.rst:873
 msgid ""
 "One workaround is to continue to stringize one's annotations, either by "
 "hand or done automatically by the Python compiler (as it does today with "
@@ -1180,7 +1189,7 @@ msgid ""
 "annotations``)."
 msgstr ""
 
-#: ../../pep-0649.rst:878
+#: ../../pep-0649.rst:882
 msgid ""
 "Another possible workaround involves importing the circularly-dependent "
 "modules separately, then externally adding (\"monkey-patching\") their "
@@ -1190,7 +1199,7 @@ msgid ""
 "effort."
 msgstr ""
 
-#: ../../pep-0649.rst:885
+#: ../../pep-0649.rst:889
 msgid ""
 "A third and more radical approach would be to change the semantics of "
 "annotations so that they don't raise a ``NameError`` when an unknown name"
@@ -1198,45 +1207,45 @@ msgid ""
 "object."
 msgstr ""
 
-#: ../../pep-0649.rst:889
+#: ../../pep-0649.rst:893
 msgid ""
-"Of course, even if we do deprecate PEP 563, it will be several releases "
-"before the before the functionality is removed, giving us several years "
-"in which to to research and innovate new solutions for this problem."
+"Of course, even if we do deprecate :pep:`563`, it will be several "
+"releases before the functionality is removed, giving us several years in "
+"which to research and innovate new solutions for this problem."
 msgstr ""
 
-#: ../../pep-0649.rst:894
+#: ../../pep-0649.rst:898
 msgid ""
 "In any case, the participants of the discussion agree that this PEP "
 "should still move forward, even as this issue remains currently "
 "unresolved [1]_."
 msgstr ""
 
-#: ../../pep-0649.rst:898
+#: ../../pep-0649.rst:902
 msgid "https://github.com/larryhastings/co_annotations/issues/1"
 msgstr ""
 
-#: ../../pep-0649.rst:902
+#: ../../pep-0649.rst:906
 msgid "cls.__globals__ and fn.__locals__"
 msgstr ""
 
-#: ../../pep-0649.rst:904
+#: ../../pep-0649.rst:908
 msgid ""
 "Is it permissible to add the ``__globals__`` reference to class objects "
-"as proposed here?  It's not clear why this hasn't already been done; PEP "
-"563 could have made use of class globals, but instead made do with "
-"looking up classes inside ``sys.modules``.  Python seems strangely "
+"as proposed here?  It's not clear why this hasn't already been done; "
+":pep:`563` could have made use of class globals, but instead made do with"
+" looking up classes inside ``sys.modules``.  Python seems strangely "
 "allergic to adding a ``__globals__`` reference to class objects."
 msgstr ""
 
-#: ../../pep-0649.rst:911
+#: ../../pep-0649.rst:915
 msgid ""
 "If adding ``__globals__`` to class objects is indeed a bad idea (for "
 "reasons I don't know), here are two alternatives as to how classes could "
 "get a reference to their globals for the implementation of this PEP:"
 msgstr ""
 
-#: ../../pep-0649.rst:916
+#: ../../pep-0649.rst:920
 msgid ""
 "The generate code for a class could bind its annotations code object to a"
 " function at the time the class is bound, rather than waiting for "
@@ -1250,15 +1259,16 @@ msgid ""
 "rarely used at runtime.)"
 msgstr ""
 
-#: ../../pep-0649.rst:927
+#: ../../pep-0649.rst:931
 msgid ""
 "Use the class's ``__module__`` attribute to look up its module by name in"
-" ``sys.modules``.  This is what PEP 563 advises. While this is passable "
-"for userspace or library code, it seems like a little bit of a code smell"
-" for this to be defined semantics baked into the language itself."
+" ``sys.modules``.  This is what :pep:`563` advises. While this is "
+"passable for userspace or library code, it seems like a little bit of a "
+"code smell for this to be defined semantics baked into the language "
+"itself."
 msgstr ""
 
-#: ../../pep-0649.rst:933
+#: ../../pep-0649.rst:937
 msgid ""
 "Also, the prototype gets globals for class objects by calling "
 "``globals()`` then storing the result.  I'm sure there's a much faster "
@@ -1269,18 +1279,18 @@ msgid ""
 "possibly already a good place to put it anyway--``ht_module``."
 msgstr ""
 
-#: ../../pep-0649.rst:942
+#: ../../pep-0649.rst:946
 msgid ""
 "Similarly, this PEP adds one new dunder member to functions, classes, and"
 " modules (``__co_annotations__``), and a second new dunder member to "
 "functions (``__locals__``).  This might be considered excessive."
 msgstr ""
 
-#: ../../pep-0649.rst:949
+#: ../../pep-0649.rst:953
 msgid "Bikeshedding the name"
 msgstr ""
 
-#: ../../pep-0649.rst:951
+#: ../../pep-0649.rst:955
 msgid ""
 "During most of the development of this PEP, user code actually could see "
 "the raw annotation code objects.  ``__co_annotations__`` could only be "
@@ -1291,11 +1301,11 @@ msgid ""
 "the ``from __future__ import`` needs a re-think."
 msgstr ""
 
-#: ../../pep-0649.rst:962
+#: ../../pep-0649.rst:966
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0649.rst:964
+#: ../../pep-0649.rst:968
 msgid ""
 "Thanks to Barry Warsaw, Eric V. Smith, Mark Shannon, and Guido van Rossum"
 " for feedback and encouragement. Thanks in particular to Mark Shannon for"
@@ -1309,13 +1319,438 @@ msgid ""
 "feedback--but code!"
 msgstr ""
 
-#: ../../pep-0649.rst:980
+#: ../../pep-0649.rst:984
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0649.rst:982
+#: ../../pep-0649.rst:986
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "649"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Deferred Evaluation Of Annotations Using Descriptors"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 563 semantics, currently enabled "
+#~ "per-module by ``from __future__ import "
+#~ "annotations``, in which annotations are "
+#~ "converted back into strings and must "
+#~ "be reparsed and executed by ``eval()``"
+#~ " to be used."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Original Python semantics created a "
+#~ "circular references problem for static "
+#~ "typing analysis.  PEP 563 solved that"
+#~ " problem--but its novel semantics "
+#~ "introduced new problems, including its "
+#~ "restriction that annotations can only "
+#~ "reference names at module-level scope."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP proposes a third way that"
+#~ " embodies the best of both previous"
+#~ " approaches.  It solves the same "
+#~ "circular reference problems solved by "
+#~ "PEP 563, while otherwise preserving "
+#~ "Python's original annotation semantics, "
+#~ "including allowing annotations to refer "
+#~ "to local and class variables."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If accepted, these new semantics for "
+#~ "annotations would initially be gated "
+#~ "behind ``from __future__ import "
+#~ "co_annotations``. However, these semantics "
+#~ "would eventually be promoted to be "
+#~ "Python's default behavior.  Thus this "
+#~ "PEP would *supersede* PEP 563, and "
+#~ "PEP 563's behavior would be deprecated"
+#~ " and eventually removed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 563's solution is to decompile "
+#~ "the expressions back into strings, and"
+#~ " store those *strings* in the "
+#~ "annotations dict. The equivalent runtime "
+#~ "code would look something like this:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Python's original semantics for annotations"
+#~ " made its use for static type "
+#~ "analysis painful due to forward "
+#~ "reference problems. This was the main"
+#~ " justification for PEP 563, and we"
+#~ " need not revisit those arguments "
+#~ "here."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "However, PEP 563's solution was to "
+#~ "decompile code for Python annotations "
+#~ "back into strings at compile time, "
+#~ "requiring users of annotations to "
+#~ "``eval()`` those strings to restore them"
+#~ " to their actual Python values.  This"
+#~ " has several drawbacks:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It requires that all annotations be "
+#~ "evaluated at module-level scope.  "
+#~ "Annotations under PEP 563 can no "
+#~ "longer refer to * class variables, "
+#~ "* local variables in the current "
+#~ "function, or * local variables in "
+#~ "enclosing functions."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In order to evaluate the annotations "
+#~ "on a class, it requires obtaining "
+#~ "a reference to that class's globals, "
+#~ "which PEP 563 suggests should be "
+#~ "done by looking up that class by"
+#~ " name in ``sys.modules``—another surprising "
+#~ "requirement for a language-level "
+#~ "feature."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP also solves the forward "
+#~ "reference problem outlined in PEP 563"
+#~ " while avoiding the problems listed "
+#~ "above:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Python implementations would generate "
+#~ "annotations as code objects.  This is"
+#~ " simpler than stringizing, and is "
+#~ "something Python implementations are already"
+#~ " quite good at.  This means: - "
+#~ "alternate implementations would need to "
+#~ "write less code to implement this "
+#~ "feature, and - the implementation would"
+#~ " be simpler overall, which should "
+#~ "reduce its ongoing maintenance cost."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 563 changed the semantics of "
+#~ "annotations.  When its semantics are "
+#~ "active, annotations must assume they "
+#~ "will be evaluated in *module-level* "
+#~ "scope.  They may no longer refer "
+#~ "directly to local variables or class "
+#~ "attributes."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP removes that restriction; "
+#~ "annotations may refer to globals, local"
+#~ " variables inside functions, local "
+#~ "variables defined in enclosing functions, "
+#~ "and class members in the current "
+#~ "class.  In addition, annotations may "
+#~ "refer to any of these that haven't"
+#~ " been defined yet at the time "
+#~ "the annotation is defined, as long "
+#~ "as the not-yet-defined name is "
+#~ "created normally (in such a way "
+#~ "that it is known to the symbol "
+#~ "table for the relevant block, or "
+#~ "is a global or class variable "
+#~ "found using normal name resolution).  "
+#~ "Thus, this PEP demonstrates *improved* "
+#~ "backwards compatibility over PEP 563."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 563 also requires using ``eval()``"
+#~ " or ``typing.get_type_hints()`` to examine "
+#~ "annotations.  Code updated to work with"
+#~ " PEP 563 that calls ``eval()`` "
+#~ "directly would have to be updated "
+#~ "simply to remove the ``eval()`` call."
+#~ "  Code using ``typing.get_type_hints()`` would"
+#~ " continue to work unchanged, though "
+#~ "future use of that function would "
+#~ "become optional in most cases."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "However, there are two uncommon "
+#~ "interactions possible with class and "
+#~ "module annotations that work today—both "
+#~ "with stock semantics, and with PEP "
+#~ "563 semantics—that would no longer work"
+#~ " when this PEP was active.  These "
+#~ "two interactions would have to be "
+#~ "prohibited. The good news is, neither"
+#~ " is common, and neither is considered"
+#~ " good practice.  In fact, they're "
+#~ "rarely seen outside of Python's own "
+#~ "regression test suite.  They are:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "During the early days of discussion "
+#~ "around PEP 563, using code to "
+#~ "delay the evaluation of annotations was"
+#~ " briefly discussed, in a November "
+#~ "2017 thread in ``comp.lang.python-dev``.  "
+#~ "At the time the technique was "
+#~ "termed an \"implicit lambda expression\"."
+#~ msgstr ""
+
+#~ msgid "PEP 563 summarizes the above discussion here:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "https://www.python.org/dev/peps/pep-0563/#keeping-the-"
+#~ "ability-to-use-function-local-state-"
+#~ "when-defining-annotations"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "What's puzzling is PEP 563's own "
+#~ "changes to the scoping rules of "
+#~ "annotations—it *also* doesn't permit "
+#~ "annotations to reference class-level "
+#~ "definitions.  It's not immediately clear "
+#~ "why an inability to reference class-"
+#~ "level definitions was enough to reject"
+#~ " using \"implicit lambda expressions\" for"
+#~ " annotations, but was acceptable for "
+#~ "stringized annotations."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In retrospect there was probably a "
+#~ "pivot during the development of PEP "
+#~ "563.  It seems that, early on, "
+#~ "there was a prevailing assumption that"
+#~ " PEP 563 would support references to"
+#~ " class-level definitions.  But by the"
+#~ " time PEP 563 was finalized, this "
+#~ "assumption had apparently been abandoned.  "
+#~ "And it looks like \"implicit lambda "
+#~ "expressions\" were never reconsidered in "
+#~ "this new light."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The code object is passed in in"
+#~ " place of the annotations dict for"
+#~ " the ``MAKE_FUNCTION`` bytecode instruction. "
+#~ "``MAKE_FUNCTION`` supports a new bit in"
+#~ " its oparg bitfield, ``0x10``, which "
+#~ "tells it to expect a ``co_annotations``"
+#~ " code object on the stack. The "
+#~ "bitfields for ``annotations`` (``0x04``) and"
+#~ " ``co_annotations`` (``0x10``) are mutually "
+#~ "exclusive."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Python supports syntax for local "
+#~ "variable annotations inside functions. "
+#~ "However, these annotations have no "
+#~ "runtime effect--they're discarded at "
+#~ "compile-time.  Therefore, this PEP doesn't"
+#~ " need to do anything to support "
+#~ "them, the same as stock semantics "
+#~ "and PEP 563."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Performance with this PEP should be "
+#~ "favorable, when compared with either "
+#~ "stock behavior or PEP 563.  In "
+#~ "general, resources are only consumed on"
+#~ " demand—\"you only pay for what you"
+#~ " use\"."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We'll examine each of these scenarios"
+#~ " in the context of all three "
+#~ "semantics for annotations: stock, PEP "
+#~ "563, and this PEP."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When annotations are defined but not "
+#~ "referenced, the runtime cost of Python"
+#~ " with this PEP should be roughly "
+#~ "equal to or slightly better than "
+#~ "PEP 563 semantics, and slightly better"
+#~ " than \"stock\" Python semantics.  The "
+#~ "specifics depend on the object being "
+#~ "annotated:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In PEP 563 semantics, for function "
+#~ "objects, a single constant (a tuple) "
+#~ "is set as an attribute of the "
+#~ "function.  For class and module objects,"
+#~ " the annotations dict is always built"
+#~ " and set as an attribute of the"
+#~ " class or module."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When annotations are both defined and"
+#~ " referenced, code using this PEP "
+#~ "should be much faster than code "
+#~ "using PEP 563 semantics, and equivalent"
+#~ " to or slightly improved over "
+#~ "original Python semantics.  PEP 563 "
+#~ "semantics requires invoking ``eval()`` for "
+#~ "every value inside an annotations dict,"
+#~ " which is enormously slow. And, as"
+#~ " already mentioned, this PEP generates "
+#~ "measurably more efficient bytecode for "
+#~ "class and module annotations than stock"
+#~ " semantics; for function annotations, this"
+#~ " PEP and stock semantics should be"
+#~ " roughly equivalent."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Stock semantics also uses "
+#~ "``BUILD_CONST_KEY_MAP`` bytecode for function "
+#~ "annotations. PEP 563 has an even "
+#~ "more efficient method for building "
+#~ "annotations dicts on functions, leveraging "
+#~ "the fact that its annotations dicts "
+#~ "only contain strings for both keys "
+#~ "and values.  At compile-time it "
+#~ "constructs a tuple containing pairs of"
+#~ " keys and values at compile-time, "
+#~ "then at runtime it converts that "
+#~ "tuple into a dict on demand. This"
+#~ " is a faster technique than either"
+#~ " stock semantics or this PEP can "
+#~ "employ, because in those two cases "
+#~ "annotations dicts can contain Python "
+#~ "values of any type. Of course, "
+#~ "this performance win is negated if "
+#~ "the annotations are examined, due to "
+#~ "the overhead of ``eval()``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For class and module annotations, both"
+#~ " stock semantics and PEP 563 generate"
+#~ " a longer and slightly-less-efficient"
+#~ " stanza of bytecode, creating the "
+#~ "dict and setting the annotations "
+#~ "individually."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There is one unfortunately-common "
+#~ "scenario where PEP 563 currently "
+#~ "provides a better experience, and it "
+#~ "has to do with large code bases,"
+#~ " with circular dependencies and imports,"
+#~ " that examine their annotations at "
+#~ "run-time."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 563 permitted defining *and "
+#~ "examining* invalid expressions as annotations."
+#~ "  Its implementation requires annotations "
+#~ "to be legal Python expressions, which"
+#~ " it then converts into strings at "
+#~ "compile-time.  But legal Python "
+#~ "expressions may not be computable at "
+#~ "runtime, if for example the expression"
+#~ " references a name that isn't "
+#~ "defined. This is a problem for "
+#~ "stringized annotations if they're evaluated,"
+#~ " e.g. with ``typing.get_type_hints()``.  But "
+#~ "any stringized annotation may be "
+#~ "examined harmlessly at any time--as "
+#~ "long as you don't evaluate it, and"
+#~ " only examine it as a string."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Some large organizations have code bases"
+#~ " that unfortunately have circular "
+#~ "dependency problems with their annotations"
+#~ "--class A has methods annotated with"
+#~ " class B, but class B has "
+#~ "methods annotated with class A--that "
+#~ "can be difficult to resolve. Since "
+#~ "PEP 563 stringizes their annotations, it"
+#~ " allows them to leave these circular"
+#~ " dependencies in place, and they can"
+#~ " sidestep the circular import problem "
+#~ "by never importing the module that "
+#~ "defines the types used in the "
+#~ "annotations.  Their annotations can no "
+#~ "longer be evaluated, but this appears"
+#~ " not to be a concern in "
+#~ "practice.  They can then examine the "
+#~ "stringized form of the annotations at"
+#~ " runtime and this seems to be "
+#~ "sufficient for their needs."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Of course, even if we do deprecate"
+#~ " PEP 563, it will be several "
+#~ "releases before the before the "
+#~ "functionality is removed, giving us "
+#~ "several years in which to to "
+#~ "research and innovate new solutions for"
+#~ " this problem."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Is it permissible to add the "
+#~ "``__globals__`` reference to class objects "
+#~ "as proposed here?  It's not clear "
+#~ "why this hasn't already been done; "
+#~ "PEP 563 could have made use of "
+#~ "class globals, but instead made do "
+#~ "with looking up classes inside "
+#~ "``sys.modules``.  Python seems strangely "
+#~ "allergic to adding a ``__globals__`` "
+#~ "reference to class objects."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Use the class's ``__module__`` attribute "
+#~ "to look up its module by name "
+#~ "in ``sys.modules``.  This is what PEP"
+#~ " 563 advises. While this is passable"
+#~ " for userspace or library code, it"
+#~ " seems like a little bit of a"
+#~ " code smell for this to be "
+#~ "defined semantics baked into the "
+#~ "language itself."
+#~ msgstr ""
 

@@ -8,36 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0357.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0357.txt:1
-msgid "357"
-msgstr ""
-
-#: ../../pep-0357.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0357.txt:2
-msgid "Allowing Any Object to be Used for Slicing"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0357.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0357.txt:5
+#: ../../pep-0357.txt:3
 msgid "Travis Oliphant <oliphant@ee.byu.edu>"
 msgstr ""
 
@@ -45,7 +29,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0357.txt:6
+#: ../../pep-0357.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0357.txt:7
+#: ../../pep-0357.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0357.txt:9
+#: ../../pep-0357.txt:7
 msgid "09-Feb-2006"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0357.txt:10
+#: ../../pep-0357.txt:8
 msgid "2.5"
 msgstr ""
 
@@ -77,11 +61,11 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0357.txt:15
+#: ../../pep-0357.txt:13
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0357.txt:17
+#: ../../pep-0357.txt:15
 msgid ""
 "This PEP proposes adding an ``nb_index`` slot in ``PyNumberMethods`` and "
 "an ``__index__`` special method so that arbitrary objects can be used "
@@ -89,11 +73,11 @@ msgid ""
 "syntax (from which the slot gets its name)."
 msgstr ""
 
-#: ../../pep-0357.txt:24
+#: ../../pep-0357.txt:22
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0357.txt:26
+#: ../../pep-0357.txt:24
 msgid ""
 "Currently integers and long integers play a special role in slicing in "
 "that they are the only objects allowed in slice syntax. In other words, "
@@ -104,7 +88,7 @@ msgid ""
 "This is an unnecessary limitation."
 msgstr ""
 
-#: ../../pep-0357.txt:34
+#: ../../pep-0357.txt:32
 msgid ""
 "In NumPy, for example, there are 8 different integer scalars "
 "corresponding to unsigned and signed integers of 8, 16, 32, and 64 bits."
@@ -114,7 +98,7 @@ msgid ""
 " way to be able to tell Python that an object can behave like an integer."
 msgstr ""
 
-#: ../../pep-0357.txt:42
+#: ../../pep-0357.txt:40
 msgid ""
 "It is not possible to use the ``nb_int`` (and ``__int__`` special method)"
 " for this purpose because that method is used to *coerce* objects to "
@@ -125,11 +109,11 @@ msgid ""
 "slicing and ``x[3.2:5.8]`` would not raise an error as it should."
 msgstr ""
 
-#: ../../pep-0357.txt:53
+#: ../../pep-0357.txt:51
 msgid "Proposal"
 msgstr ""
 
-#: ../../pep-0357.txt:55
+#: ../../pep-0357.txt:53
 msgid ""
 "Add an ``nb_index`` slot to ``PyNumberMethods``, and a corresponding "
 "``__index__`` special method.  Objects could define a function to place "
@@ -140,43 +124,43 @@ msgid ""
 "``PySequence_DelSlice``."
 msgstr ""
 
-#: ../../pep-0357.txt:65
+#: ../../pep-0357.txt:63
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0357.txt:67
+#: ../../pep-0357.txt:65
 msgid "The ``nb_index`` slot will have the following signature::"
 msgstr ""
 
-#: ../../pep-0357.txt:71
+#: ../../pep-0357.txt:69
 msgid ""
 "The returned object must be a Python ``IntType`` or Python ``LongType``. "
 "NULL should be returned on error with an appropriate error set."
 msgstr ""
 
-#: ../../pep-0357.txt:75
+#: ../../pep-0357.txt:73
 msgid "The ``__index__`` special method will have the signature::"
 msgstr ""
 
-#: ../../pep-0357.txt:80
+#: ../../pep-0357.txt:78
 msgid "where obj must be either an int or a long."
 msgstr ""
 
-#: ../../pep-0357.txt:82
+#: ../../pep-0357.txt:80
 msgid "3 new abstract C-API functions will be added"
 msgstr ""
 
-#: ../../pep-0357.txt:84
+#: ../../pep-0357.txt:82
 msgid ""
 "The first checks to see if the object supports the index slot and if it "
 "is filled in."
 msgstr ""
 
-#: ../../pep-0357.txt:91
+#: ../../pep-0357.txt:89
 msgid "This will return true if the object defines the ``nb_index`` slot."
 msgstr ""
 
-#: ../../pep-0357.txt:94
+#: ../../pep-0357.txt:92
 msgid ""
 "The second is a simple wrapper around the ``nb_index`` call that raises "
 "``PyExc_TypeError`` if the call is not available or if it doesn't return "
@@ -185,13 +169,13 @@ msgid ""
 "rather than check for compatibility first."
 msgstr ""
 
-#: ../../pep-0357.txt:105
+#: ../../pep-0357.txt:103
 msgid ""
 "The third call helps deal with the common situation of actually needing a"
 " ``Py_ssize_t`` value from the object to use for indexing or other needs."
 msgstr ""
 
-#: ../../pep-0357.txt:113
+#: ../../pep-0357.txt:111
 msgid ""
 "The function calls the ``nb_index`` slot of obj if it is available and "
 "then converts the returned Python integer into a ``Py_ssize_t`` value.  "
@@ -200,7 +184,7 @@ msgid ""
 "``nb_index`` cannot fit into a ``Py_ssize_t`` value."
 msgstr ""
 
-#: ../../pep-0357.txt:120
+#: ../../pep-0357.txt:118
 msgid ""
 "If exc is NULL, then the returned value will be clipped to "
 "``PY_SSIZE_T_MAX`` or ``PY_SSIZE_T_MIN`` depending on whether the "
@@ -210,77 +194,77 @@ msgid ""
 "was converted to ``Py_ssize_t``."
 msgstr ""
 
-#: ../../pep-0357.txt:127
+#: ../../pep-0357.txt:125
 msgid ""
 "A new ``operator.index(obj)`` function will be added that calls "
 "equivalent of ``obj.__index__()`` and raises an error if obj does not "
 "implement the special method."
 msgstr ""
 
-#: ../../pep-0357.txt:133
+#: ../../pep-0357.txt:131
 msgid "Implementation Plan"
 msgstr ""
 
-#: ../../pep-0357.txt:135
+#: ../../pep-0357.txt:133
 msgid ""
 "Add the ``nb_index`` slot in ``object.h`` and modify ``typeobject.c`` to "
 "create the ``__index__`` method"
 msgstr ""
 
-#: ../../pep-0357.txt:138
+#: ../../pep-0357.txt:136
 msgid ""
 "Change the ``ISINT`` macro in ``ceval.c`` to ``ISINDEX`` and alter it to "
 "accommodate objects with the index slot defined."
 msgstr ""
 
-#: ../../pep-0357.txt:141
+#: ../../pep-0357.txt:139
 msgid ""
 "Change the ``_PyEval_SliceIndex`` function to accommodate objects with "
 "the index slot defined."
 msgstr ""
 
-#: ../../pep-0357.txt:144
+#: ../../pep-0357.txt:142
 msgid ""
 "Change all builtin objects (e.g. lists) that use the ``as_mapping`` slots"
 " for subscript access and use a special-check for integers to check for "
 "the slot as well."
 msgstr ""
 
-#: ../../pep-0357.txt:148
+#: ../../pep-0357.txt:146
 msgid ""
 "Add the ``nb_index`` slot to integers and long_integers (which just "
 "return themselves)"
 msgstr ""
 
-#: ../../pep-0357.txt:151
+#: ../../pep-0357.txt:149
 msgid ""
 "Add ``PyNumber_Index`` C-API to return an integer from any Python Object "
 "that has the ``nb_index`` slot."
 msgstr ""
 
-#: ../../pep-0357.txt:154
+#: ../../pep-0357.txt:152
 msgid "Add the ``operator.index(x)`` function."
 msgstr ""
 
-#: ../../pep-0357.txt:156
+#: ../../pep-0357.txt:154
 msgid ""
 "Alter ``arrayobject.c`` and ``mmapmodule.c`` to use the new C-API for "
 "their sub-scripting and other needs."
 msgstr ""
 
-#: ../../pep-0357.txt:159
+#: ../../pep-0357.txt:157
 msgid "Add unit-tests"
 msgstr ""
 
-#: ../../pep-0357.txt:163
+#: ../../pep-0357.txt:161
 msgid "Discussion Questions"
 msgstr ""
 
-#: ../../pep-0357.txt:166
+#: ../../pep-0357.txt:164
 msgid "Speed"
 msgstr ""
 
-#: ../../pep-0357.txt:168
+#: ../../pep-0357.txt:166
 msgid ""
 "Implementation should not slow down Python because integers and long "
 "integers used as indexes will complete in the same number of "
@@ -288,11 +272,11 @@ msgid ""
 "error will now be acceptable."
 msgstr ""
 
-#: ../../pep-0357.txt:174
+#: ../../pep-0357.txt:172
 msgid "Why not use ``nb_int`` which is already there?"
 msgstr ""
 
-#: ../../pep-0357.txt:176
+#: ../../pep-0357.txt:174
 msgid ""
 "The ``nb_int`` method is used for coercion and so means something "
 "fundamentally different than what is requested here.  This PEP proposes a"
@@ -303,11 +287,11 @@ msgid ""
 "*should not* be used as indexes in a sequence."
 msgstr ""
 
-#: ../../pep-0357.txt:185
+#: ../../pep-0357.txt:183
 msgid "Why the name ``__index__``?"
 msgstr ""
 
-#: ../../pep-0357.txt:187
+#: ../../pep-0357.txt:185
 msgid ""
 "Some questions were raised regarding the name ``__index__`` when other "
 "interpretations of the slot are possible.  For example, the slot can be "
@@ -319,11 +303,11 @@ msgid ""
 "\"``__ordinal__``\"."
 msgstr ""
 
-#: ../../pep-0357.txt:197
+#: ../../pep-0357.txt:195
 msgid "Why return ``PyObject *`` from ``nb_index``?"
 msgstr ""
 
-#: ../../pep-0357.txt:199
+#: ../../pep-0357.txt:197
 msgid ""
 "Initially ``Py_ssize_t`` was selected as the return type for the "
 "``nb_index`` slot.  However, this led to an inability to track and "
@@ -341,46 +325,58 @@ msgid ""
 " order to handle overflow correctly."
 msgstr ""
 
-#: ../../pep-0357.txt:215
+#: ../../pep-0357.txt:213
 msgid "Why can't ``__index__`` return any object with the ``nb_index`` method?"
 msgstr ""
 
-#: ../../pep-0357.txt:217
+#: ../../pep-0357.txt:215
 msgid ""
 "This would allow infinite recursion in many different ways that are not "
 "easy to check for.  This restriction is similar to the requirement that "
 "``__nonzero__`` return an int or a bool."
 msgstr ""
 
-#: ../../pep-0357.txt:223
+#: ../../pep-0357.txt:221
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0357.txt:225
+#: ../../pep-0357.txt:223
 msgid "Submitted as patch 1436368 to SourceForge."
 msgstr ""
 
-#: ../../pep-0357.txt:229
+#: ../../pep-0357.txt:227
 msgid "References"
 msgstr ""
 
-#: ../../pep-0357.txt:231
+#: ../../pep-0357.txt:229
 msgid ""
 "Travis Oliphant, PEP for adding an sq_index slot so that any object, a or"
 " b, can be used in X[a:b] notation,"
 msgstr ""
 
-#: ../../pep-0357.txt:234
+#: ../../pep-0357.txt:232
 msgid ""
 "https://mail.python.org/pipermail/python-"
 "dev/2006-February/thread.html#60594"
 msgstr ""
 
-#: ../../pep-0357.txt:237
+#: ../../pep-0357.txt:235
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0357.txt:239
+#: ../../pep-0357.txt:237
 msgid "This document is placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "357"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Allowing Any Object to be Used for Slicing"
+#~ msgstr ""
 

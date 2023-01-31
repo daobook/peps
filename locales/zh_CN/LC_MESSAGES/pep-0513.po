@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0513.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0513.txt:1
-msgid "513"
-msgstr ""
-
-#: ../../pep-0513.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0513.txt:2
-msgid "A Platform Tag for Portable Linux Built Distributions"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0513.txt
 msgid "Author"
@@ -56,7 +40,7 @@ msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0513.txt:7
-msgid "Distutils SIG <distutils-sig@python.org>"
+msgid "distutils-sig@python.org"
 msgstr ""
 
 #: ../../pep-0513.txt
@@ -76,10 +60,18 @@ msgid "Informational"
 msgstr ""
 
 #: ../../pep-0513.txt
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0513.txt:10
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0513.txt
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0513.txt:11
+#: ../../pep-0513.txt:12
 msgid "19-Jan-2016"
 msgstr ""
 
@@ -87,7 +79,7 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0513.txt:12
+#: ../../pep-0513.txt:13
 msgid "19-Jan-2016, 25-Jan-2016, 29-Jan-2016"
 msgstr ""
 
@@ -95,7 +87,7 @@ msgstr ""
 msgid "Superseded-By"
 msgstr ""
 
-#: ../../pep-0513.txt:13
+#: ../../pep-0513.txt:14
 msgid "600"
 msgstr ""
 
@@ -103,15 +95,15 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0513.txt:14
+#: ../../pep-0513.txt:15
 msgid "https://mail.python.org/pipermail/distutils-sig/2016-January/028211.html"
 msgstr ""
 
-#: ../../pep-0513.txt:18
+#: ../../pep-0513.txt:19
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0513.txt:20
+#: ../../pep-0513.txt:21
 msgid ""
 "This PEP proposes the creation of a new platform tag for Python package "
 "built distributions, such as wheels, called ``manylinux1_{x86_64,i686}`` "
@@ -122,20 +114,20 @@ msgid ""
 "platforms."
 msgstr ""
 
-#: ../../pep-0513.txt:29
+#: ../../pep-0513.txt:30
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0513.txt:31
+#: ../../pep-0513.txt:32
 msgid ""
 "Currently, distribution of binary Python extensions for Windows and OS X "
-"is straightforward. Developers and packagers build wheels [1]_ [2]_, "
-"which are assigned platform tags such as ``win32`` or "
+"is straightforward. Developers and packagers build wheels (:pep:`427`, "
+":pep:`491`), which are assigned platform tags such as ``win32`` or "
 "``macosx_10_6_intel``, and upload these wheels to PyPI. Users can "
 "download and install these wheels using tools such as ``pip``."
 msgstr ""
 
-#: ../../pep-0513.txt:37
+#: ../../pep-0513.txt:39
 msgid ""
 "For Linux, the situation is much more delicate. In general, compiled "
 "Python extension modules built on one Linux distribution will not work on"
@@ -143,18 +135,18 @@ msgid ""
 "same Linux distribution with different system libraries installed."
 msgstr ""
 
-#: ../../pep-0513.txt:42
+#: ../../pep-0513.txt:44
 msgid ""
-"Build tools using PEP 425 platform tags [3]_ do not track information "
-"about the particular Linux distribution or installed system libraries, "
-"and instead assign all wheels the too-vague ``linux_i686`` or "
+"Build tools using :pep:`425` platform tags do not track information about"
+" the particular Linux distribution or installed system libraries, and "
+"instead assign all wheels the too-vague ``linux_i686`` or "
 "``linux_x86_64`` tags. Because of this ambiguity, there is no expectation"
 " that ``linux``-tagged built distributions compiled on one machine will "
 "work properly on another, and for this reason, PyPI has not permitted the"
 " uploading of wheels for Linux."
 msgstr ""
 
-#: ../../pep-0513.txt:49
+#: ../../pep-0513.txt:51
 msgid ""
 "It would be ideal if wheel packages could be compiled that would work on "
 "*any* linux system. But, because of the incredible diversity of Linux "
@@ -162,7 +154,7 @@ msgid ""
 "this cannot be guaranteed in general."
 msgstr ""
 
-#: ../../pep-0513.txt:54
+#: ../../pep-0513.txt:56
 msgid ""
 "Instead, we define a standard subset of the kernel+core userspace ABI "
 "that, in practice, is compatible enough that packages conforming to this "
@@ -173,7 +165,7 @@ msgid ""
 " [4]_ and Continuum Analytics with Anaconda [5]_."
 msgstr ""
 
-#: ../../pep-0513.txt:62
+#: ../../pep-0513.txt:64
 msgid ""
 "Building on the compatibility lessons learned from these companies, we "
 "thus define a baseline ``manylinux1`` platform tag for use by binary "
@@ -181,11 +173,11 @@ msgid ""
 "aid in the construction of these ``manylinux1`` wheels."
 msgstr ""
 
-#: ../../pep-0513.txt:69
+#: ../../pep-0513.txt:71
 msgid "Key Causes of Inter-Linux Binary Incompatibility"
 msgstr ""
 
-#: ../../pep-0513.txt:71
+#: ../../pep-0513.txt:73
 msgid ""
 "To properly define a standard that will guarantee that wheel packages "
 "meeting this specification will operate on *many* linux platforms, it is "
@@ -196,11 +188,11 @@ msgid ""
 "``glibc``."
 msgstr ""
 
-#: ../../pep-0513.txt:80
+#: ../../pep-0513.txt:82
 msgid "External Shared Libraries"
 msgstr ""
 
-#: ../../pep-0513.txt:82
+#: ../../pep-0513.txt:84
 msgid ""
 "Most desktop and server linux distributions come with a system package "
 "manager (examples include ``APT`` on Debian-based systems, ``yum`` on "
@@ -215,11 +207,11 @@ msgid ""
 " location of the depended-upon shared libraries."
 msgstr ""
 
-#: ../../pep-0513.txt:96
+#: ../../pep-0513.txt:98
 msgid "Versioning of Core Shared Libraries"
 msgstr ""
 
-#: ../../pep-0513.txt:98
+#: ../../pep-0513.txt:100
 msgid ""
 "Even if the developers a Python extension module wish to use no external "
 "shared libraries, the modules will generally have a dynamic runtime "
@@ -230,7 +222,7 @@ msgid ""
 "system-provided ``glibc`` is unavoidable in practice."
 msgstr ""
 
-#: ../../pep-0513.txt:106
+#: ../../pep-0513.txt:108
 msgid ""
 "The maintainers of the GNU C library follow a strict symbol versioning "
 "scheme for backward compatibility. This ensures that binaries compiled "
@@ -240,71 +232,71 @@ msgid ""
 "``glibc`` that are not available on older systems."
 msgstr ""
 
-#: ../../pep-0513.txt:113
+#: ../../pep-0513.txt:115
 msgid ""
 "This generally prevents wheels compiled on the latest Linux distributions"
 " from being portable."
 msgstr ""
 
-#: ../../pep-0513.txt:118
+#: ../../pep-0513.txt:120
 msgid "The ``manylinux1`` policy"
 msgstr ""
 
-#: ../../pep-0513.txt:120
+#: ../../pep-0513.txt:122
 msgid "For these reasons, to achieve broad portability, Python wheels"
 msgstr ""
 
-#: ../../pep-0513.txt:122
+#: ../../pep-0513.txt:124
 msgid ""
 "should depend only on an extremely limited set of external shared "
 "libraries; and"
 msgstr ""
 
-#: ../../pep-0513.txt:124
+#: ../../pep-0513.txt:126
 msgid ""
 "should depend only on \"old\" symbol versions in those external shared "
 "libraries; and"
 msgstr ""
 
-#: ../../pep-0513.txt:126
+#: ../../pep-0513.txt:128
 msgid "should depend only on a widely-compatible kernel ABI."
 msgstr ""
 
-#: ../../pep-0513.txt:128
+#: ../../pep-0513.txt:130
 msgid ""
 "To be eligible for the ``manylinux1`` platform tag, a Python wheel must "
 "therefore both (a) contain binary executables and compiled code that "
 "links *only* to libraries with SONAMEs included in the following list: ::"
 msgstr ""
 
-#: ../../pep-0513.txt:155
+#: ../../pep-0513.txt:157
 msgid ""
 "and, (b) work on a stock CentOS 5.11 [6]_ system that contains the system"
 " package manager's provided versions of these libraries."
 msgstr ""
 
-#: ../../pep-0513.txt:158
+#: ../../pep-0513.txt:160
 msgid ""
 "``libcrypt.so.1`` was retrospectively removed from the whitelist after "
 "Fedora 30 was released with ``libcrypt.so.2`` instead."
 msgstr ""
 
-#: ../../pep-0513.txt:161
+#: ../../pep-0513.txt:163
 msgid ""
 "Because CentOS 5 is only available for x86_64 and i686 architectures, "
 "these are the only architectures currently supported by the "
 "``manylinux1`` policy."
 msgstr ""
 
-#: ../../pep-0513.txt:165
+#: ../../pep-0513.txt:167
 msgid "On Debian-based systems, these libraries are provided by the packages ::"
 msgstr ""
 
-#: ../../pep-0513.txt:170
+#: ../../pep-0513.txt:172
 msgid "On RPM-based systems, these libraries are provided by the packages ::"
 msgstr ""
 
-#: ../../pep-0513.txt:175
+#: ../../pep-0513.txt:177
 msgid ""
 "This list was compiled by checking the external shared library "
 "dependencies of the Canopy [4]_ and Anaconda [5]_ distributions, which "
@@ -313,27 +305,27 @@ msgid ""
 "in the wild."
 msgstr ""
 
-#: ../../pep-0513.txt:180
+#: ../../pep-0513.txt:182
 msgid ""
 "Many of the permitted system libraries listed above use symbol versioning"
 " schemes for backward compatibility. The latest symbol versions provided "
 "with the CentOS 5.11 versions of these libraries are: ::"
 msgstr ""
 
-#: ../../pep-0513.txt:189
+#: ../../pep-0513.txt:191
 msgid ""
 "Therefore, as a consequence of requirement (b), any wheel that depends on"
 " versioned symbols from the above shared libraries may depend only on "
 "symbols with the following versions: ::"
 msgstr ""
 
-#: ../../pep-0513.txt:198
+#: ../../pep-0513.txt:200
 msgid ""
 "These recommendations are the outcome of the relevant discussions in "
 "January 2016 [7]_, [8]_."
 msgstr ""
 
-#: ../../pep-0513.txt:201
+#: ../../pep-0513.txt:203
 msgid ""
 "Note that in our recommendations below, we do not suggest that ``pip`` or"
 " PyPI should attempt to check for and enforce the details of this policy "
@@ -352,11 +344,11 @@ msgid ""
 "have turned out to be safe."
 msgstr ""
 
-#: ../../pep-0513.txt:219
+#: ../../pep-0513.txt:221
 msgid "libpythonX.Y.so.1"
 msgstr ""
 
-#: ../../pep-0513.txt:221
+#: ../../pep-0513.txt:223
 msgid ""
 "Note that ``libpythonX.Y.so.1`` is *not* on the list of libraries that a "
 "``manylinux1`` extension is allowed to link to. Explicitly linking to "
@@ -371,7 +363,7 @@ msgid ""
 " wheel that *did* depend on ``libpythonX.Y.so.1`` could fail to import."
 msgstr ""
 
-#: ../../pep-0513.txt:234
+#: ../../pep-0513.txt:236
 msgid ""
 "There is one situation where extensions that are linked in this way can "
 "fail to work: if a host program (e.g., ``apache2``) uses ``dlopen()`` to "
@@ -387,17 +379,17 @@ msgid ""
 "obscure corner case."
 msgstr ""
 
-#: ../../pep-0513.txt:247
+#: ../../pep-0513.txt:249
 msgid ""
 "This is a rather complex and subtle issue that extends beyond the scope "
 "of ``manylinux1``; for more discussion see: [9]_, [10]_, [11]_."
 msgstr ""
 
-#: ../../pep-0513.txt:253
+#: ../../pep-0513.txt:255
 msgid "UCS-2 vs UCS-4 builds"
 msgstr ""
 
-#: ../../pep-0513.txt:255
+#: ../../pep-0513.txt:257
 msgid ""
 "All versions of CPython 2.x, plus CPython 3.0-3.2 inclusive, can be built"
 " in two ABI-incompatible modes: builds using the ``--enable-"
@@ -409,7 +401,7 @@ msgid ""
 "vice-versa, then something must be done."
 msgstr ""
 
-#: ../../pep-0513.txt:265
+#: ../../pep-0513.txt:267
 msgid ""
 "An earlier version of this PEP included a requirement that ``manylinux1``"
 " wheels targeting these older CPython versions should always use the "
@@ -423,31 +415,31 @@ msgid ""
 " built against a ``ucs4`` CPython might have a name like::"
 msgstr ""
 
-#: ../../pep-0513.txt:280
+#: ../../pep-0513.txt:282
 msgid "While a wheel built against the ``ucs2`` ABI might have a name like::"
 msgstr ""
 
-#: ../../pep-0513.txt:285
+#: ../../pep-0513.txt:287
 msgid "But you should never have a wheel with a name like::"
 msgstr ""
 
-#: ../../pep-0513.txt:290
+#: ../../pep-0513.txt:292
 msgid ""
 "This wheel claims to be simultaneously compatible with *both* ucs2 and "
 "ucs4 builds, which is bad."
 msgstr ""
 
-#: ../../pep-0513.txt:293
+#: ../../pep-0513.txt:295
 msgid ""
 "We note for information that the ``ucs4`` ABI appears to be much more "
 "widespread among Linux CPython distributors."
 msgstr ""
 
-#: ../../pep-0513.txt:298
+#: ../../pep-0513.txt:300
 msgid "fpectl builds vs. no fpectl builds"
 msgstr ""
 
-#: ../../pep-0513.txt:300
+#: ../../pep-0513.txt:302
 msgid ""
 "All extant versions of CPython can be built either with or without the "
 "``--with-fpectl`` flag to ``configure``. It turns out that this changes "
@@ -457,18 +449,18 @@ msgid ""
 "complaining about ``undefined symbol: PyFPE_jbuf``.) See: [16]_."
 msgstr ""
 
-#: ../../pep-0513.txt:308
+#: ../../pep-0513.txt:310
 msgid ""
 "For maximum compatibility, therefore, the CPython used to build "
 "manylinux1 wheels must be compiled *without* the ``--with-fpectl`` flag, "
 "and manylinux1 extensions must not reference the symbol ``PyFPE_jbuf``."
 msgstr ""
 
-#: ../../pep-0513.txt:315
+#: ../../pep-0513.txt:317
 msgid "Compilation of Compliant Wheels"
 msgstr ""
 
-#: ../../pep-0513.txt:317
+#: ../../pep-0513.txt:319
 msgid ""
 "The way glibc, libgcc, and libstdc++ manage their symbol versioning means"
 " that in practice, the compiler toolchains that most developers use to do"
@@ -480,17 +472,17 @@ msgid ""
 "second post-processing step."
 msgstr ""
 
-#: ../../pep-0513.txt:326
+#: ../../pep-0513.txt:328
 msgid ""
 "To support the compilation of wheels meeting the ``manylinux1`` standard,"
 " we provide initial drafts of two tools."
 msgstr ""
 
-#: ../../pep-0513.txt:331
+#: ../../pep-0513.txt:333
 msgid "Docker Image"
 msgstr ""
 
-#: ../../pep-0513.txt:333
+#: ../../pep-0513.txt:335
 msgid ""
 "The first tool is a Docker image based on CentOS 5.11, which is "
 "recommended as an easy to use self-contained build box for compiling "
@@ -501,40 +493,40 @@ msgid ""
 " and ``pip``."
 msgstr ""
 
-#: ../../pep-0513.txt:341
+#: ../../pep-0513.txt:343
 msgid "Auditwheel"
 msgstr ""
 
-#: ../../pep-0513.txt:343
+#: ../../pep-0513.txt:345
 msgid ""
 "The second tool is a command line executable called ``auditwheel`` [13]_ "
 "that may aid in package maintainers in dealing with third-party external "
 "dependencies."
 msgstr ""
 
-#: ../../pep-0513.txt:347
+#: ../../pep-0513.txt:349
 msgid ""
 "There are at least three methods for building wheels that use third-party"
 " external libraries in a way that meets the above policy."
 msgstr ""
 
-#: ../../pep-0513.txt:350
+#: ../../pep-0513.txt:352
 msgid "The third-party libraries can be statically linked."
 msgstr ""
 
-#: ../../pep-0513.txt:351
+#: ../../pep-0513.txt:353
 msgid ""
 "The third-party shared libraries can be distributed in separate packages "
 "on PyPI which are depended upon by the wheel."
 msgstr ""
 
-#: ../../pep-0513.txt:353
+#: ../../pep-0513.txt:355
 msgid ""
 "The third-party shared libraries can be bundled inside the wheel "
 "libraries, linked with a relative path."
 msgstr ""
 
-#: ../../pep-0513.txt:356
+#: ../../pep-0513.txt:358
 msgid ""
 "All of these are valid option which may be effectively used by different "
 "packages and communities. Statically linking generally requires package-"
@@ -543,7 +535,7 @@ msgid ""
 "users of the package."
 msgstr ""
 
-#: ../../pep-0513.txt:362
+#: ../../pep-0513.txt:364
 msgid ""
 "As an often-automatic alternative to these options, we introduce "
 "``auditwheel``. The tool inspects all of the ELF files  inside a wheel to"
@@ -560,11 +552,11 @@ msgid ""
 "copyright concerns."
 msgstr ""
 
-#: ../../pep-0513.txt:377
+#: ../../pep-0513.txt:379
 msgid "Bundled Wheels on Linux"
 msgstr ""
 
-#: ../../pep-0513.txt:379
+#: ../../pep-0513.txt:381
 msgid ""
 "While we acknowledge many approaches for dealing with third-party library"
 " dependencies within ``manylinux1`` wheels, we recognize that the "
@@ -576,45 +568,45 @@ msgid ""
 "packages available through the system package manager."
 msgstr ""
 
-#: ../../pep-0513.txt:388
+#: ../../pep-0513.txt:390
 msgid ""
 "The decision in this PEP to encourage departure from general Linux "
 "distribution unbundling policies is informed by the following concerns:"
 msgstr ""
 
-#: ../../pep-0513.txt:391
+#: ../../pep-0513.txt:393
 msgid ""
 "In these days of automated continuous integration and deployment "
 "pipelines, publishing new versions and updating dependencies is easier "
 "than it was when those policies were defined."
 msgstr ""
 
-#: ../../pep-0513.txt:394
+#: ../../pep-0513.txt:396
 msgid ""
 "``pip`` users remain free to use the ``\"--no-binary\"`` option if they "
 "want to force local builds rather than using pre-built wheel files."
 msgstr ""
 
-#: ../../pep-0513.txt:396
+#: ../../pep-0513.txt:398
 msgid ""
 "The popularity of modern container based deployment and \"immutable "
 "infrastructure\" models involve substantial bundling at the application "
 "layer anyway."
 msgstr ""
 
-#: ../../pep-0513.txt:399
+#: ../../pep-0513.txt:401
 msgid ""
 "Distribution of bundled wheels through PyPI is currently the norm for "
 "Windows and OS X."
 msgstr ""
 
-#: ../../pep-0513.txt:401
+#: ../../pep-0513.txt:403
 msgid ""
 "This PEP doesn't rule out the idea of offering more targeted binaries for"
 " particular Linux distributions in the future."
 msgstr ""
 
-#: ../../pep-0513.txt:404
+#: ../../pep-0513.txt:406
 msgid ""
 "The model described in this PEP is most ideally suited for cross-platform"
 " Python packages, because it means they can reuse much of the work that "
@@ -625,11 +617,11 @@ msgid ""
 "distos."
 msgstr ""
 
-#: ../../pep-0513.txt:413
+#: ../../pep-0513.txt:415
 msgid "Security Implications"
 msgstr ""
 
-#: ../../pep-0513.txt:415
+#: ../../pep-0513.txt:417
 msgid ""
 "One of the advantages of dependencies on centralized libraries in Linux "
 "is that bugfixes and security updates can be deployed system-wide, and "
@@ -639,7 +631,7 @@ msgid ""
 " communication across the network or cryptography."
 msgstr ""
 
-#: ../../pep-0513.txt:422
+#: ../../pep-0513.txt:424
 msgid ""
 "``manylinux1`` wheels distributed through PyPI that bundle security-"
 "critical libraries like OpenSSL will thus assume responsibility for "
@@ -651,11 +643,11 @@ msgid ""
 "profile."
 msgstr ""
 
-#: ../../pep-0513.txt:433
+#: ../../pep-0513.txt:435
 msgid "Platform Detection for Installers"
 msgstr ""
 
-#: ../../pep-0513.txt:435
+#: ../../pep-0513.txt:437
 msgid ""
 "Above, we defined what it means for a *wheel* to be "
 "``manylinux1``-compatible. Here we discuss what it means for a *Python "
@@ -664,7 +656,7 @@ msgid ""
 "they should consider ``manylinux1``-tagged wheels for installation."
 msgstr ""
 
-#: ../../pep-0513.txt:441
+#: ../../pep-0513.txt:443
 msgid ""
 "Because the ``manylinux1`` profile is already known to work for the many "
 "thousands of users of popular commercial Python distributions, we suggest"
@@ -673,30 +665,30 @@ msgid ""
 "otherwise."
 msgstr ""
 
-#: ../../pep-0513.txt:447
+#: ../../pep-0513.txt:449
 msgid ""
 "We know of four main sources of potential incompatibility that are likely"
 " to arise in practice:"
 msgstr ""
 
-#: ../../pep-0513.txt:450
+#: ../../pep-0513.txt:452
 msgid ""
 "Eventually, in the future, there may exist distributions that break "
 "compatibility with this profile (e.g., if one of the libraries in the "
 "profile changes its ABI in a backwards-incompatible way)"
 msgstr ""
 
-#: ../../pep-0513.txt:453
+#: ../../pep-0513.txt:455
 msgid "A linux distribution that is too old (e.g. RHEL 4)"
 msgstr ""
 
-#: ../../pep-0513.txt:454
+#: ../../pep-0513.txt:456
 msgid ""
 "A linux distribution that does not use ``glibc`` (e.g. Alpine Linux, "
 "which is based on musl ``libc``, or Android)"
 msgstr ""
 
-#: ../../pep-0513.txt:457
+#: ../../pep-0513.txt:459
 msgid ""
 "To address these we propose a two-pronged approach. To handle potential "
 "future incompatibilities, we standardize a mechanism for a Python "
@@ -712,7 +704,7 @@ msgid ""
 "not."
 msgstr ""
 
-#: ../../pep-0513.txt:471
+#: ../../pep-0513.txt:473
 msgid ""
 "Then, to handle the last two cases for existing Python distributions, we "
 "suggest a simple and reliable method to check for the presence and "
@@ -720,11 +712,11 @@ msgid ""
 "age of the distribution)."
 msgstr ""
 
-#: ../../pep-0513.txt:476
+#: ../../pep-0513.txt:478
 msgid "Specifically, the algorithm we propose is::"
 msgstr ""
 
-#: ../../pep-0513.txt:522
+#: ../../pep-0513.txt:524
 msgid ""
 "**Rejected alternatives:** We also considered using a configuration file,"
 " e.g. ``/etc/python/compatibility.cfg``. The problem with this is that a "
@@ -737,7 +729,7 @@ msgid ""
 "simplifies lookup code."
 msgstr ""
 
-#: ../../pep-0513.txt:532
+#: ../../pep-0513.txt:534
 msgid ""
 "We also considered using a more elaborate structure, like a list of all "
 "platform tags that should be considered compatible, together with their "
@@ -754,7 +746,7 @@ msgid ""
 "Linux gets more platform tags."
 msgstr ""
 
-#: ../../pep-0513.txt:546
+#: ../../pep-0513.txt:548
 msgid ""
 "For the library compatibility check, we also considered much more "
 "elaborate checks (e.g. checking the kernel version, searching for and "
@@ -766,11 +758,11 @@ msgid ""
 " then it could easily return incorrect answers.)"
 msgstr ""
 
-#: ../../pep-0513.txt:559
+#: ../../pep-0513.txt:561
 msgid "PyPI Support"
 msgstr ""
 
-#: ../../pep-0513.txt:561
+#: ../../pep-0513.txt:563
 msgid ""
 "PyPI should permit wheels containing the ``manylinux1`` platform tag to "
 "be uploaded. PyPI should not attempt to formally verify that wheels "
@@ -779,11 +771,11 @@ msgid ""
 " to other tools, like ``auditwheel``, that are developed separately."
 msgstr ""
 
-#: ../../pep-0513.txt:569
+#: ../../pep-0513.txt:571
 msgid "Rejected Alternatives"
 msgstr ""
 
-#: ../../pep-0513.txt:571
+#: ../../pep-0513.txt:573
 msgid ""
 "One alternative would be to provide separate platform tags for each Linux"
 " distribution (and each version thereof), e.g. ``RHEL6``, "
@@ -798,11 +790,11 @@ msgid ""
 "we consider such proposals to be out-of-scope for this PEP."
 msgstr ""
 
-#: ../../pep-0513.txt:584
+#: ../../pep-0513.txt:586
 msgid "Future updates"
 msgstr ""
 
-#: ../../pep-0513.txt:586
+#: ../../pep-0513.txt:588
 msgid ""
 "We anticipate that at some point in the future there will be a "
 "``manylinux2`` specifying a more modern baseline environment (perhaps "
@@ -811,106 +803,149 @@ msgid ""
 "``manylinux1`` proposal."
 msgstr ""
 
-#: ../../pep-0513.txt:594
+#: ../../pep-0513.txt:596
 msgid "References"
 msgstr ""
 
-#: ../../pep-0513.txt:596
-msgid ""
-"PEP 427 -- The Wheel Binary Package Format 1.0 "
-"(https://www.python.org/dev/peps/pep-0427/)"
-msgstr ""
-
 #: ../../pep-0513.txt:598
-msgid ""
-"PEP 491 -- The Wheel Binary Package Format 1.9 "
-"(https://www.python.org/dev/peps/pep-0491/)"
-msgstr ""
-
-#: ../../pep-0513.txt:600
-msgid ""
-"PEP 425 -- Compatibility Tags for Built Distributions "
-"(https://www.python.org/dev/peps/pep-0425/)"
-msgstr ""
-
-#: ../../pep-0513.txt:602
 msgid ""
 "Enthought Canopy Python Distribution "
 "(https://store.enthought.com/downloads/)"
 msgstr ""
 
-#: ../../pep-0513.txt:604
+#: ../../pep-0513.txt:600
 msgid ""
 "Continuum Analytics Anaconda Python Distribution "
 "(https://www.continuum.io/downloads)"
 msgstr ""
 
-#: ../../pep-0513.txt:606
+#: ../../pep-0513.txt:602
 msgid ""
 "CentOS 5.11 Release Notes "
 "(https://wiki.centos.org/Manuals/ReleaseNotes/CentOS5.11)"
 msgstr ""
 
-#: ../../pep-0513.txt:608
+#: ../../pep-0513.txt:604
 msgid ""
 "manylinux-discuss mailing list discussion "
 "(https://groups.google.com/forum/#!topic/manylinux-discuss/-4l3rrjfr9U)"
 msgstr ""
 
-#: ../../pep-0513.txt:610
+#: ../../pep-0513.txt:606
 msgid ""
 "distutils-sig discussion (https://mail.python.org/pipermail/distutils-"
 "sig/2016-January/027997.html)"
 msgstr ""
 
-#: ../../pep-0513.txt:612
+#: ../../pep-0513.txt:608
 msgid ""
 "distutils-sig discussion (https://mail.python.org/pipermail/distutils-"
 "sig/2016-February/028275.html)"
 msgstr ""
 
-#: ../../pep-0513.txt:614
+#: ../../pep-0513.txt:610
 msgid "github issue discussion (https://github.com/pypa/manylinux/issues/30)"
 msgstr ""
 
-#: ../../pep-0513.txt:616
+#: ../../pep-0513.txt:612
 msgid "python bug tracker discussion (https://bugs.python.org/issue21536)"
 msgstr ""
 
-#: ../../pep-0513.txt:618
+#: ../../pep-0513.txt:614
 msgid ""
 "manylinux1 docker images (Source: https://github.com/pypa/manylinux; "
 "x86-64: https://quay.io/repository/pypa/manylinux1_x86_64; x86-32: "
 "https://quay.io/repository/pypa/manylinux1_i686)"
 msgstr ""
 
-#: ../../pep-0513.txt:622
+#: ../../pep-0513.txt:618
 msgid "auditwheel tool (https://pypi.python.org/pypi/auditwheel)"
 msgstr ""
 
-#: ../../pep-0513.txt:624
+#: ../../pep-0513.txt:620
 msgid ""
 "Fedora Bundled Software Policy "
 "(https://fedoraproject.org/wiki/Bundled_Software_policy)"
 msgstr ""
 
-#: ../../pep-0513.txt:626
+#: ../../pep-0513.txt:622
 msgid ""
 "Debian Policy Manual -- 4.13: Convenience copies of code "
 "(https://www.debian.org/doc/debian-policy/ch-source.html#s-embeddedfiles)"
 msgstr ""
 
-#: ../../pep-0513.txt:628
+#: ../../pep-0513.txt:624
 msgid ""
 "numpy bug report: "
 "https://github.com/numpy/numpy/issues/8415#issuecomment-269095235"
 msgstr ""
 
-#: ../../pep-0513.txt:633
+#: ../../pep-0513.txt:629
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0513.txt:635
+#: ../../pep-0513.txt:631
 msgid "This document has been placed into the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "513"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "A Platform Tag for Portable Linux Built Distributions"
+#~ msgstr ""
+
+#~ msgid "Distutils SIG <distutils-sig@python.org>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Currently, distribution of binary Python "
+#~ "extensions for Windows and OS X is"
+#~ " straightforward. Developers and packagers "
+#~ "build wheels [1]_ [2]_, which are "
+#~ "assigned platform tags such as ``win32``"
+#~ " or ``macosx_10_6_intel``, and upload these"
+#~ " wheels to PyPI. Users can download"
+#~ " and install these wheels using tools"
+#~ " such as ``pip``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build tools using PEP 425 platform "
+#~ "tags [3]_ do not track information "
+#~ "about the particular Linux distribution "
+#~ "or installed system libraries, and "
+#~ "instead assign all wheels the too-"
+#~ "vague ``linux_i686`` or ``linux_x86_64`` tags."
+#~ " Because of this ambiguity, there is"
+#~ " no expectation that ``linux``-tagged built"
+#~ " distributions compiled on one machine "
+#~ "will work properly on another, and "
+#~ "for this reason, PyPI has not "
+#~ "permitted the uploading of wheels for"
+#~ " Linux."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 427 -- The Wheel Binary "
+#~ "Package Format 1.0 "
+#~ "(https://www.python.org/dev/peps/pep-0427/)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 491 -- The Wheel Binary "
+#~ "Package Format 1.9 "
+#~ "(https://www.python.org/dev/peps/pep-0491/)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 425 -- Compatibility Tags for "
+#~ "Built Distributions "
+#~ "(https://www.python.org/dev/peps/pep-0425/)"
+#~ msgstr ""
 

@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0252.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0252.txt:1
-msgid "252"
-msgstr ""
-
-#: ../../pep-0252.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0252.txt:2
-msgid "Making Types Look More Like Classes"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0252.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0252.txt:5
-msgid "guido@python.org (Guido van Rossum)"
+#: ../../pep-0252.txt:3
+msgid "Guido van Rossum <guido@python.org>"
 msgstr ""
 
 #: ../../pep-0252.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0252.txt:6
+#: ../../pep-0252.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0252.txt:7
+#: ../../pep-0252.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0252.txt:9
+#: ../../pep-0252.txt:7
 msgid "19-Apr-2001"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0252.txt:10
+#: ../../pep-0252.txt:8
 msgid "2.2"
 msgstr ""
 
@@ -77,11 +61,11 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0252.txt:14
+#: ../../pep-0252.txt:12
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0252.txt:16
+#: ../../pep-0252.txt:14
 msgid ""
 "This PEP proposes changes to the introspection API for types that makes "
 "them look more like classes, and their instances more like class "
@@ -91,7 +75,7 @@ msgid ""
 "``C.__dict__`` contains x's methods and other attributes."
 msgstr ""
 
-#: ../../pep-0252.txt:23
+#: ../../pep-0252.txt:21
 msgid ""
 "This PEP also introduces a new approach to specifying attributes, using "
 "attribute descriptors, or descriptors for short. Descriptors unify and "
@@ -101,23 +85,23 @@ msgid ""
 "setter functions."
 msgstr ""
 
-#: ../../pep-0252.txt:30
+#: ../../pep-0252.txt:28
 msgid ""
 "Based on the generalized descriptor API, this PEP also introduces a way "
 "to declare class methods and static methods."
 msgstr ""
 
-#: ../../pep-0252.txt:33
+#: ../../pep-0252.txt:31
 msgid ""
 "[Editor's note: the ideas described in this PEP have been incorporated "
 "into Python.  The PEP no longer accurately describes the implementation.]"
 msgstr ""
 
-#: ../../pep-0252.txt:38
+#: ../../pep-0252.txt:36
 msgid "Introduction"
 msgstr ""
 
-#: ../../pep-0252.txt:40
+#: ../../pep-0252.txt:38
 msgid ""
 "One of Python's oldest language warts is the difference between classes "
 "and types.  For example, you can't directly subclass the dictionary type,"
@@ -125,7 +109,7 @@ msgid ""
 "instance variables an object has is different for types and for classes."
 msgstr ""
 
-#: ../../pep-0252.txt:46
+#: ../../pep-0252.txt:44
 msgid ""
 "Healing the class/type split is a big effort, because it affects many "
 "aspects of how Python is implemented.  This PEP concerns itself with "
@@ -135,11 +119,11 @@ msgid ""
 "this PEP."
 msgstr ""
 
-#: ../../pep-0252.txt:55
+#: ../../pep-0252.txt:53
 msgid "Introspection APIs"
 msgstr ""
 
-#: ../../pep-0252.txt:57
+#: ../../pep-0252.txt:55
 msgid ""
 "Introspection concerns itself with finding out what attributes an object "
 "has.  Python's very general getattr/setattr API makes it impossible to "
@@ -150,7 +134,7 @@ msgid ""
 " API and type API for short."
 msgstr ""
 
-#: ../../pep-0252.txt:65
+#: ../../pep-0252.txt:63
 msgid ""
 "The class-based introspection API is used primarily for class instances; "
 "it is also used by Jim Fulton's ExtensionClasses.  It assumes that all "
@@ -163,33 +147,33 @@ msgid ""
 "recursively.  Some assumptions here are:"
 msgstr ""
 
-#: ../../pep-0252.txt:76
+#: ../../pep-0252.txt:74
 msgid ""
 "attributes defined in the instance dict override attributes defined by "
 "the object's class;"
 msgstr ""
 
-#: ../../pep-0252.txt:79
+#: ../../pep-0252.txt:77
 msgid ""
 "attributes defined in a derived class override attributes defined in a "
 "base class;"
 msgstr ""
 
-#: ../../pep-0252.txt:82
+#: ../../pep-0252.txt:80
 msgid ""
 "attributes in an earlier base class (meaning occurring earlier in "
 "``__bases__``) override attributes in a later base class."
 msgstr ""
 
-#: ../../pep-0252.txt:85
+#: ../../pep-0252.txt:83
 msgid ""
 "(The last two rules together are often summarized as the left-to-right, "
 "depth-first rule for attribute search.  This is the classic Python "
-"attribute lookup rule.  Note that PEP 253 will propose to change the "
+"attribute lookup rule.  Note that :pep:`253` will propose to change the "
 "attribute lookup order, and if accepted, this PEP will follow suit.)"
 msgstr ""
 
-#: ../../pep-0252.txt:91
+#: ../../pep-0252.txt:89
 msgid ""
 "The type-based introspection API is supported in one form or another by "
 "most built-in objects.  It uses two special attributes, ``__members__`` "
@@ -199,7 +183,7 @@ msgid ""
 " object."
 msgstr ""
 
-#: ../../pep-0252.txt:98
+#: ../../pep-0252.txt:96
 msgid ""
 "The type API is sometimes combined with a ``__dict__`` that works the "
 "same as for instances (for example for function objects in Python 2.1, "
@@ -207,7 +191,7 @@ msgid ""
 "lists the names of f's statically defined attributes)."
 msgstr ""
 
-#: ../../pep-0252.txt:104
+#: ../../pep-0252.txt:102
 msgid ""
 "Some caution must be exercised: some objects don't list their "
 "\"intrinsic\" attributes (like ``__dict__`` and ``__doc__``) in "
@@ -217,7 +201,7 @@ msgid ""
 "used or not."
 msgstr ""
 
-#: ../../pep-0252.txt:111
+#: ../../pep-0252.txt:109
 msgid ""
 "The type API has never been carefully specified.  It is part of Python "
 "folklore, and most third party extensions support it because they follow "
@@ -227,14 +211,14 @@ msgid ""
 "``__members__``, respectively."
 msgstr ""
 
-#: ../../pep-0252.txt:118
+#: ../../pep-0252.txt:116
 msgid ""
 "Jim Fulton's ExtensionClasses ignore the type API, and instead emulate "
 "the class API, which is more powerful.  In this PEP, I propose to phase "
 "out the type API in favor of supporting the class API for all types."
 msgstr ""
 
-#: ../../pep-0252.txt:123
+#: ../../pep-0252.txt:121
 msgid ""
 "One argument in favor of the class API is that it doesn't require you to "
 "create an instance in order to find out which attributes a type supports;"
@@ -247,11 +231,11 @@ msgid ""
 "docstring extraction isn't feasible in this case.)"
 msgstr ""
 
-#: ../../pep-0252.txt:136
+#: ../../pep-0252.txt:134
 msgid "Specification of the class-based introspection API"
 msgstr ""
 
-#: ../../pep-0252.txt:138
+#: ../../pep-0252.txt:136
 msgid ""
 "Objects may have two kinds of attributes: static and dynamic.  The names "
 "and sometimes other properties of static attributes are knowable by "
@@ -261,7 +245,7 @@ msgid ""
 "object\".)"
 msgstr ""
 
-#: ../../pep-0252.txt:145
+#: ../../pep-0252.txt:143
 msgid ""
 "(XXX static and dynamic are not great terms to use here, because "
 "\"static\" attributes may actually behave quite dynamically, and because "
@@ -271,7 +255,7 @@ msgid ""
 "think that would still be confusing.)"
 msgstr ""
 
-#: ../../pep-0252.txt:153
+#: ../../pep-0252.txt:151
 msgid ""
 "Examples of dynamic attributes are instance variables of class instances,"
 " module attributes, etc.  Examples of static attributes are the methods "
@@ -281,7 +265,7 @@ msgid ""
 "attribute, ``__dict__`` is a static attribute."
 msgstr ""
 
-#: ../../pep-0252.txt:161
+#: ../../pep-0252.txt:159
 msgid ""
 "The names and values of dynamic properties are typically stored in a "
 "dictionary, and this dictionary is typically accessible as "
@@ -291,7 +275,7 @@ msgid ""
 "``obj.__dict__``."
 msgstr ""
 
-#: ../../pep-0252.txt:168
+#: ../../pep-0252.txt:166
 msgid ""
 "In the discussion below, I distinguish two kinds of objects: regular "
 "objects (like lists, ints, functions) and meta-objects. Types and classes"
@@ -301,38 +285,38 @@ msgid ""
 "attribute of other meta-objects)."
 msgstr ""
 
-#: ../../pep-0252.txt:175
+#: ../../pep-0252.txt:173
 msgid "The class introspection API consists of the following elements:"
 msgstr ""
 
-#: ../../pep-0252.txt:177
+#: ../../pep-0252.txt:175
 msgid "the ``__class__`` and ``__dict__`` attributes on regular objects;"
 msgstr ""
 
-#: ../../pep-0252.txt:179
+#: ../../pep-0252.txt:177
 msgid "the ``__bases__`` and ``__dict__`` attributes on meta-objects;"
 msgstr ""
 
-#: ../../pep-0252.txt:181
+#: ../../pep-0252.txt:179
 msgid "precedence rules;"
 msgstr ""
 
-#: ../../pep-0252.txt:183
+#: ../../pep-0252.txt:181
 msgid "attribute descriptors."
 msgstr ""
 
-#: ../../pep-0252.txt:185
+#: ../../pep-0252.txt:183
 msgid ""
 "Together, these not only tell us about **all** attributes defined by a "
 "meta-object, but they also help us calculate the value of a specific "
 "attribute of a given object."
 msgstr ""
 
-#: ../../pep-0252.txt:189
+#: ../../pep-0252.txt:187
 msgid "The ``__dict__`` attribute on regular objects"
 msgstr ""
 
-#: ../../pep-0252.txt:191
+#: ../../pep-0252.txt:189
 msgid ""
 "A regular object may have a ``__dict__`` attribute.  If it does, this "
 "should be a mapping (not necessarily a dictionary) supporting at least "
@@ -341,7 +325,7 @@ msgid ""
 " and the corresponding values give their values."
 msgstr ""
 
-#: ../../pep-0252.txt:198
+#: ../../pep-0252.txt:196
 msgid ""
 "Typically, the value of an attribute with a given name is the same object"
 " as the value corresponding to that name as a key in the ``__dict__``.  "
@@ -350,11 +334,11 @@ msgid ""
 "override the dictionary item.)"
 msgstr ""
 
-#: ../../pep-0252.txt:204
+#: ../../pep-0252.txt:202
 msgid "The ``__class__`` attribute on regular objects"
 msgstr ""
 
-#: ../../pep-0252.txt:206
+#: ../../pep-0252.txt:204
 msgid ""
 "A regular object usually has a ``__class__`` attribute.  If it does, this"
 " references a meta-object.  A meta-object can define static attributes "
@@ -362,11 +346,11 @@ msgid ""
 "through the following mechanism:"
 msgstr ""
 
-#: ../../pep-0252.txt:211
+#: ../../pep-0252.txt:209
 msgid "The ``__dict__`` attribute on meta-objects"
 msgstr ""
 
-#: ../../pep-0252.txt:213
+#: ../../pep-0252.txt:211
 msgid ""
 "A meta-object may have a ``__dict__`` attribute, of the same form as the "
 "``__dict__`` attribute for regular objects (a mapping but not necessarily"
@@ -376,7 +360,7 @@ msgid ""
 " method is a special case of an attribute descriptor."
 msgstr ""
 
-#: ../../pep-0252.txt:221
+#: ../../pep-0252.txt:219
 msgid ""
 "Because a meta-object is also a regular object, the items in a meta-"
 "object's ``__dict__`` correspond to attributes of the meta-object; "
@@ -387,11 +371,11 @@ msgid ""
 "is an unbound method object.)"
 msgstr ""
 
-#: ../../pep-0252.txt:230
+#: ../../pep-0252.txt:228
 msgid "The ``__bases__`` attribute on meta-objects"
 msgstr ""
 
-#: ../../pep-0252.txt:232
+#: ../../pep-0252.txt:230
 msgid ""
 "A meta-object may have a ``__bases__`` attribute.  If it does, this "
 "should be a sequence (not necessarily a tuple) of other meta-objects, the"
@@ -411,21 +395,21 @@ msgid ""
 "next paragraph)."
 msgstr ""
 
-#: ../../pep-0252.txt:251
+#: ../../pep-0252.txt:249
 msgid "Precedence rules"
 msgstr ""
 
-#: ../../pep-0252.txt:253
+#: ../../pep-0252.txt:251
 msgid ""
 "When two meta-objects in the inheritance graph for a given regular object"
 " both define an attribute descriptor with the same name, the search order"
 " is up to the meta-object.  This allows different meta-objects to define "
 "different search orders.  In particular, classic classes use the old "
 "left-to-right depth-first rule, while new-style classes use a more "
-"advanced rule (see the section on method resolution order in PEP 253)."
+"advanced rule (see the section on method resolution order in :pep:`253`)."
 msgstr ""
 
-#: ../../pep-0252.txt:262
+#: ../../pep-0252.txt:260
 msgid ""
 "When a dynamic attribute (one defined in a regular object's ``__dict__``)"
 " has the same name as a static attribute (one defined by a meta-object in"
@@ -438,7 +422,7 @@ msgid ""
 "overrides static."
 msgstr ""
 
-#: ../../pep-0252.txt:273
+#: ../../pep-0252.txt:271
 msgid ""
 "Rationale: we can't have a simple rule like \"static overrides dynamic\" "
 "or \"dynamic overrides static\", because some static attributes indeed "
@@ -455,11 +439,11 @@ msgid ""
 "deleted."
 msgstr ""
 
-#: ../../pep-0252.txt:288
+#: ../../pep-0252.txt:286
 msgid "Attribute descriptors"
 msgstr ""
 
-#: ../../pep-0252.txt:290
+#: ../../pep-0252.txt:288
 msgid ""
 "This is where it gets interesting -- and messy.  Attribute descriptors "
 "(descriptors for short) are stored in the meta-object's ``__dict__`` (or "
@@ -469,7 +453,7 @@ msgid ""
 "describes the attribute for documentation and introspection purposes."
 msgstr ""
 
-#: ../../pep-0252.txt:299
+#: ../../pep-0252.txt:297
 msgid ""
 "There is little prior art in Python for designing the descriptor's "
 "interface, neither for getting/setting the value nor for describing the "
@@ -478,7 +462,7 @@ msgid ""
 "and docstring).  I will propose such an API below."
 msgstr ""
 
-#: ../../pep-0252.txt:306
+#: ../../pep-0252.txt:304
 msgid ""
 "If an object found in the meta-object's ``__dict__`` is not an attribute "
 "descriptor, backward compatibility dictates certain minimal semantics.  "
@@ -492,7 +476,7 @@ msgid ""
 "regular classes."
 msgstr ""
 
-#: ../../pep-0252.txt:318
+#: ../../pep-0252.txt:316
 msgid ""
 "The introspection API is a read-only API.  We don't define the effect of "
 "assignment to any of the special attributes (``__dict__``, ``__class__`` "
@@ -504,11 +488,11 @@ msgid ""
 "``__bases__`` and ``__dict__``.)"
 msgstr ""
 
-#: ../../pep-0252.txt:329
+#: ../../pep-0252.txt:327
 msgid "Specification of the attribute descriptor API"
 msgstr ""
 
-#: ../../pep-0252.txt:331
+#: ../../pep-0252.txt:329
 msgid ""
 "Attribute descriptors may have the following attributes.  In the "
 "examples, x is an object, C is ``x.__class__``, ``x.meth()`` is a method,"
@@ -519,7 +503,7 @@ msgid ""
 "implemented."
 msgstr ""
 
-#: ../../pep-0252.txt:339
+#: ../../pep-0252.txt:337
 msgid ""
 "``__name__``: the attribute name.  Because of aliasing and renaming, the "
 "attribute may (additionally or exclusively) be known under a different "
@@ -527,18 +511,18 @@ msgid ""
 "``C.meth.__name__ == 'meth'``."
 msgstr ""
 
-#: ../../pep-0252.txt:344
+#: ../../pep-0252.txt:342
 msgid "``__doc__``: the attribute's documentation string.  This may be None."
 msgstr ""
 
-#: ../../pep-0252.txt:347
+#: ../../pep-0252.txt:345
 msgid ""
 "``__objclass__``: the class that declared this attribute.  The descriptor"
 " only applies to objects that are instances of this class (this includes "
 "instances of its subclasses).  Example: ``C.meth.__objclass__ is C``."
 msgstr ""
 
-#: ../../pep-0252.txt:352
+#: ../../pep-0252.txt:350
 msgid ""
 "``__get__()``: a function callable with one or two arguments that "
 "retrieves the attribute value from an object.  This is also referred to "
@@ -554,7 +538,7 @@ msgid ""
 "instead."
 msgstr ""
 
-#: ../../pep-0252.txt:366
+#: ../../pep-0252.txt:364
 msgid ""
 "``__set__()``: a function of two arguments that sets the attribute value "
 "on the object.  If the attribute is read-only, this method may raise a "
@@ -563,18 +547,18 @@ msgid ""
 "Example: ``C.ivar.set(x, y) ~~ x.ivar = y``."
 msgstr ""
 
-#: ../../pep-0252.txt:375
+#: ../../pep-0252.txt:373
 msgid "Static methods and class methods"
 msgstr ""
 
-#: ../../pep-0252.txt:377
+#: ../../pep-0252.txt:375
 msgid ""
 "The descriptor API makes it possible to add static methods and class "
 "methods.  Static methods are easy to describe: they behave pretty much "
 "like static methods in C++ or Java.  Here's an example::"
 msgstr ""
 
-#: ../../pep-0252.txt:392
+#: ../../pep-0252.txt:390
 msgid ""
 "Both the call ``C.foo(1, 2)`` and the call ``c.foo(1, 2)`` call ``foo()``"
 " with two arguments, and print \"staticmethod 1 2\".  No \"self\" is "
@@ -582,7 +566,7 @@ msgid ""
 "the call."
 msgstr ""
 
-#: ../../pep-0252.txt:396
+#: ../../pep-0252.txt:394
 msgid ""
 "The line \"foo = staticmethod(foo)\" in the class statement is the "
 "crucial element: this makes ``foo()`` a static method.  The built-in "
@@ -593,14 +577,14 @@ msgid ""
 "unbound method object for 'C.foo'."
 msgstr ""
 
-#: ../../pep-0252.txt:404
+#: ../../pep-0252.txt:402
 msgid ""
 "(XXX Barry suggests to use \"sharedmethod\" instead of \"staticmethod\", "
 "because the word static is being overloaded in so many ways already.  But"
 " I'm not sure if shared conveys the right meaning.)"
 msgstr ""
 
-#: ../../pep-0252.txt:409
+#: ../../pep-0252.txt:407
 msgid ""
 "Class methods use a similar pattern to declare methods that receive an "
 "implicit first argument that is the *class* for which they are invoked.  "
@@ -613,7 +597,7 @@ msgid ""
 "metaclasses.) Here's an example::"
 msgstr ""
 
-#: ../../pep-0252.txt:430
+#: ../../pep-0252.txt:428
 msgid ""
 "Both the call ``C.foo(1)`` and the call ``c.foo(1)`` end up calling "
 "``foo()`` with **two** arguments, and print \"classmethod __main__.C 1\"."
@@ -622,18 +606,18 @@ msgid ""
 "example::"
 msgstr ""
 
-#: ../../pep-0252.txt:443
+#: ../../pep-0252.txt:441
 msgid ""
 "This prints \"classmethod __main__.D 1\" both times; in other words, the "
 "class passed as the first argument of ``foo()`` is the class involved in "
 "the call, not the class involved in the definition of ``foo()``."
 msgstr ""
 
-#: ../../pep-0252.txt:448
+#: ../../pep-0252.txt:446
 msgid "But notice this::"
 msgstr ""
 
-#: ../../pep-0252.txt:460
+#: ../../pep-0252.txt:458
 msgid ""
 "In this example, the call to ``C.foo()`` from ``E.foo()`` will see class "
 "C as its first argument, not class E.  This is to be expected, since the "
@@ -643,23 +627,23 @@ msgid ""
 "(If you don't understand this, don't worry, you're not alone.)  Note that"
 " calling ``cls.foo(y)`` would be a mistake -- it would cause infinite "
 "recursion.  Also note that you can't specify an explicit 'cls' argument "
-"to a class method.  If you want this (e.g. the ``__new__`` method in PEP "
-"253 requires this), use a static method with a class as its explicit "
-"first argument instead."
+"to a class method.  If you want this (e.g. the ``__new__`` method in "
+":pep:`253` requires this), use a static method with a class as its "
+"explicit first argument instead."
 msgstr ""
 
-#: ../../pep-0252.txt:475
+#: ../../pep-0252.txt:473
 msgid "C API"
 msgstr ""
 
-#: ../../pep-0252.txt:477
+#: ../../pep-0252.txt:475
 msgid ""
 "XXX The following is VERY rough text that I wrote with a different "
 "audience in mind; I'll have to go through this to edit it more. XXX It "
 "also doesn't go into enough detail for the C API."
 msgstr ""
 
-#: ../../pep-0252.txt:481
+#: ../../pep-0252.txt:479
 msgid ""
 "A built-in type can declare special data attributes in two ways: using a "
 "struct memberlist (defined in structmember.h) or a struct getsetlist "
@@ -670,7 +654,7 @@ msgid ""
 "only flag."
 msgstr ""
 
-#: ../../pep-0252.txt:489
+#: ../../pep-0252.txt:487
 msgid ""
 "The struct getsetlist mechanism is new, and intended for cases that don't"
 " fit in that mold, because they either require additional checking, or "
@@ -682,14 +666,14 @@ msgid ""
 "getter/setter functions, but I haven't found a need for this yet."
 msgstr ""
 
-#: ../../pep-0252.txt:499
+#: ../../pep-0252.txt:497
 msgid ""
 "Note that there is also a similar mechanism to declare built-in methods: "
 "these are ``PyMethodDef`` structures, which contain a name and a C "
 "function pointer (and some flags for the calling convention)."
 msgstr ""
 
-#: ../../pep-0252.txt:504
+#: ../../pep-0252.txt:502
 msgid ""
 "Traditionally, built-in types have had to define their own "
 "``tp_getattro`` and ``tp_setattro`` slot functions to make these "
@@ -704,27 +688,27 @@ msgid ""
 "attribute."
 msgstr ""
 
-#: ../../pep-0252.txt:516
+#: ../../pep-0252.txt:514
 msgid ""
 "I now have a brand spanking new generic mechanism that improves this "
 "situation substantially."
 msgstr ""
 
-#: ../../pep-0252.txt:519
+#: ../../pep-0252.txt:517
 msgid ""
 "Pointers to arrays of ``PyMethodDef``, memberlist, getsetlist structures "
 "are part of the new type object (``tp_methods``, ``tp_members``, "
 "``tp_getset``)."
 msgstr ""
 
-#: ../../pep-0252.txt:523
+#: ../../pep-0252.txt:521
 msgid ""
 "At type initialization time (in ``PyType_InitDict()``), for each entry in"
 " those three arrays, a descriptor object is created and placed in a "
 "dictionary that belongs to the type (``tp_dict``)."
 msgstr ""
 
-#: ../../pep-0252.txt:527
+#: ../../pep-0252.txt:525
 msgid ""
 "Descriptors are very lean objects that mostly point to the corresponding "
 "structure.  An implementation detail is that all descriptors share the "
@@ -732,17 +716,17 @@ msgid ""
 " it is (method, member, or getset)."
 msgstr ""
 
-#: ../../pep-0252.txt:533
+#: ../../pep-0252.txt:531
 msgid ""
-"As explained in PEP 252, descriptors have a ``get()`` method that takes "
-"an object argument and returns that object's attribute; descriptors for "
-"writable attributes also have a ``set()`` method that takes an object and"
-" a value and set that object's attribute.  Note that the ``get()`` object"
-" also serves as a ``bind()`` operation for methods, binding the unbound "
-"method implementation to the object."
+"As explained in :pep:`252`, descriptors have a ``get()`` method that "
+"takes an object argument and returns that object's attribute; descriptors"
+" for writable attributes also have a ``set()`` method that takes an "
+"object and a value and set that object's attribute.  Note that the "
+"``get()`` object also serves as a ``bind()`` operation for methods, "
+"binding the unbound method implementation to the object."
 msgstr ""
 
-#: ../../pep-0252.txt:541
+#: ../../pep-0252.txt:539
 msgid ""
 "Instead of providing their own tp_getattro and tp_setattro "
 "implementation, almost all built-in objects now place "
@@ -753,7 +737,7 @@ msgid ""
 "``PyType_InitDict()`` for the type before the first instance is created.)"
 msgstr ""
 
-#: ../../pep-0252.txt:550
+#: ../../pep-0252.txt:548
 msgid ""
 "In the simplest case, ``PyObject_GenericGetAttr()`` does exactly one "
 "dictionary lookup: it looks up the attribute name in the type's "
@@ -768,7 +752,7 @@ msgid ""
 "values)."
 msgstr ""
 
-#: ../../pep-0252.txt:562
+#: ../../pep-0252.txt:560
 msgid ""
 "``PyObject_GenericSetAttr()`` works very similar but uses the "
 "``tp_descr_set`` slot and calls it with the object and the new attribute "
@@ -776,7 +760,7 @@ msgid ""
 " raised."
 msgstr ""
 
-#: ../../pep-0252.txt:567
+#: ../../pep-0252.txt:565
 msgid ""
 "But now for a more complicated case.  The approach described above is "
 "suitable for most built-in objects such as lists, strings, numbers.  "
@@ -788,7 +772,7 @@ msgid ""
 "distinguish it from the type dict."
 msgstr ""
 
-#: ../../pep-0252.txt:577
+#: ../../pep-0252.txt:575
 msgid ""
 "In the more complicated case, there's a conflict between names stored in "
 "the instance dict and names stored in the type dict. If both dicts have "
@@ -799,27 +783,27 @@ msgid ""
 "priority over the instance dict."
 msgstr ""
 
-#: ../../pep-0252.txt:586
+#: ../../pep-0252.txt:584
 msgid ""
 "I resolved this with the following set of rules, implemented in "
 "``PyObject_GenericGetAttr()``:"
 msgstr ""
 
-#: ../../pep-0252.txt:589
+#: ../../pep-0252.txt:587
 msgid ""
 "Look in the type dict.  If you find a **data** descriptor, use its "
 "``get()`` method to produce the result.  This takes care of special "
 "attributes like ``__dict__`` and ``__class__``."
 msgstr ""
 
-#: ../../pep-0252.txt:593
+#: ../../pep-0252.txt:591
 msgid ""
 "Look in the instance dict.  If you find anything, that's it. (This takes "
 "care of the requirement that normally the instance dict overrides the "
 "class dict.)"
 msgstr ""
 
-#: ../../pep-0252.txt:597
+#: ../../pep-0252.txt:595
 msgid ""
 "Look in the type dict again (in reality this uses the saved result from "
 "step 1, of course).  If you find a descriptor, use its ``get()`` method; "
@@ -827,7 +811,7 @@ msgid ""
 "``AttributeError``."
 msgstr ""
 
-#: ../../pep-0252.txt:602
+#: ../../pep-0252.txt:600
 msgid ""
 "This requires a classification of descriptors as data and nondata "
 "descriptors.  The current implementation quite sensibly classifies member"
@@ -836,7 +820,7 @@ msgid ""
 " values) are also classified as non-data (!)."
 msgstr ""
 
-#: ../../pep-0252.txt:609
+#: ../../pep-0252.txt:607
 msgid ""
 "This scheme has one drawback: in what I assume to be the most common "
 "case, referencing an instance variable stored in the instance dict, it "
@@ -850,46 +834,46 @@ msgid ""
 " speed up Python 2.2, if we weren't going to rip it all out. :-)"
 msgstr ""
 
-#: ../../pep-0252.txt:621
+#: ../../pep-0252.txt:619
 msgid ""
 "A benchmark verifies that in fact this is as fast as classic instance "
 "variable lookup, so I'm no longer worried."
 msgstr ""
 
-#: ../../pep-0252.txt:624
+#: ../../pep-0252.txt:622
 msgid ""
 "Modification for dynamic types: step 1 and 3 look in the dictionary of "
 "the type and all its base classes (in MRO sequence, or course)."
 msgstr ""
 
-#: ../../pep-0252.txt:630
+#: ../../pep-0252.txt:628
 msgid "Discussion"
 msgstr ""
 
-#: ../../pep-0252.txt:632 ../../pep-0252.txt:692 ../../pep-0252.txt:698
-#: ../../pep-0252.txt:720
+#: ../../pep-0252.txt:630 ../../pep-0252.txt:690 ../../pep-0252.txt:696
+#: ../../pep-0252.txt:718
 msgid "XXX"
 msgstr ""
 
-#: ../../pep-0252.txt:636
+#: ../../pep-0252.txt:634
 msgid "Examples"
 msgstr ""
 
-#: ../../pep-0252.txt:638
+#: ../../pep-0252.txt:636
 msgid ""
 "Let's look at lists.  In classic Python, the method names of lists were "
 "available as the __methods__ attribute of list objects::"
 msgstr ""
 
-#: ../../pep-0252.txt:646
+#: ../../pep-0252.txt:644
 msgid "Under the new proposal, the __methods__ attribute no longer exists::"
 msgstr ""
 
-#: ../../pep-0252.txt:654
+#: ../../pep-0252.txt:652
 msgid "Instead, you can get the same information from the list type::"
 msgstr ""
 
-#: ../../pep-0252.txt:669
+#: ../../pep-0252.txt:667
 msgid ""
 "The new introspection API gives more information than the old one: in "
 "addition to the regular methods, it also shows the methods that are "
@@ -898,29 +882,29 @@ msgid ""
 "from this list directly::"
 msgstr ""
 
-#: ../../pep-0252.txt:683
+#: ../../pep-0252.txt:681
 msgid "This is just like it is for user-defined classes."
 msgstr ""
 
-#: ../../pep-0252.txt:685
+#: ../../pep-0252.txt:683
 msgid ""
 "Notice a familiar yet surprising name in the list: ``__init__``.  This is"
-" the domain of PEP 253."
+" the domain of :pep:`253`."
 msgstr ""
 
-#: ../../pep-0252.txt:690
+#: ../../pep-0252.txt:688
 msgid "Backwards compatibility"
 msgstr ""
 
-#: ../../pep-0252.txt:696
+#: ../../pep-0252.txt:694
 msgid "Warnings and Errors"
 msgstr ""
 
-#: ../../pep-0252.txt:702
+#: ../../pep-0252.txt:700
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0252.txt:704
+#: ../../pep-0252.txt:702
 msgid ""
 "A partial implementation of this PEP is available from CVS as a branch "
 "named \"descr-branch\".  To experiment with this implementation, proceed "
@@ -932,21 +916,116 @@ msgid ""
 "Lib/test/test_descr.py."
 msgstr ""
 
-#: ../../pep-0252.txt:713
+#: ../../pep-0252.txt:711
 msgid ""
 "Note: the code in this branch goes way beyond this PEP; it is also the "
-"experimentation area for PEP 253 (Subtyping Built-in Types)."
+"experimentation area for :pep:`253` (Subtyping Built-in Types)."
 msgstr ""
 
-#: ../../pep-0252.txt:718
+#: ../../pep-0252.txt:716
 msgid "References"
 msgstr ""
 
-#: ../../pep-0252.txt:724
+#: ../../pep-0252.txt:722
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0252.txt:726
+#: ../../pep-0252.txt:724
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "252"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Making Types Look More Like Classes"
+#~ msgstr ""
+
+#~ msgid "guido@python.org (Guido van Rossum)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "(The last two rules together are "
+#~ "often summarized as the left-to-"
+#~ "right, depth-first rule for attribute"
+#~ " search.  This is the classic Python"
+#~ " attribute lookup rule.  Note that "
+#~ "PEP 253 will propose to change the"
+#~ " attribute lookup order, and if "
+#~ "accepted, this PEP will follow suit.)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When two meta-objects in the "
+#~ "inheritance graph for a given regular"
+#~ " object both define an attribute "
+#~ "descriptor with the same name, the "
+#~ "search order is up to the meta-"
+#~ "object.  This allows different meta-"
+#~ "objects to define different search "
+#~ "orders.  In particular, classic classes "
+#~ "use the old left-to-right "
+#~ "depth-first rule, while new-style "
+#~ "classes use a more advanced rule "
+#~ "(see the section on method resolution"
+#~ " order in PEP 253)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In this example, the call to "
+#~ "``C.foo()`` from ``E.foo()`` will see "
+#~ "class C as its first argument, not"
+#~ " class E.  This is to be "
+#~ "expected, since the call specifies the"
+#~ " class C.  But it stresses the "
+#~ "difference between these class methods "
+#~ "and methods defined in metaclasses, "
+#~ "where an upcall to a metamethod "
+#~ "would pass the target class as an"
+#~ " explicit first argument.  (If you "
+#~ "don't understand this, don't worry, "
+#~ "you're not alone.)  Note that calling"
+#~ " ``cls.foo(y)`` would be a mistake --"
+#~ " it would cause infinite recursion.  "
+#~ "Also note that you can't specify "
+#~ "an explicit 'cls' argument to a "
+#~ "class method.  If you want this "
+#~ "(e.g. the ``__new__`` method in PEP "
+#~ "253 requires this), use a static "
+#~ "method with a class as its "
+#~ "explicit first argument instead."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "As explained in PEP 252, descriptors "
+#~ "have a ``get()`` method that takes "
+#~ "an object argument and returns that "
+#~ "object's attribute; descriptors for writable"
+#~ " attributes also have a ``set()`` "
+#~ "method that takes an object and a"
+#~ " value and set that object's "
+#~ "attribute.  Note that the ``get()`` "
+#~ "object also serves as a ``bind()`` "
+#~ "operation for methods, binding the "
+#~ "unbound method implementation to the "
+#~ "object."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Notice a familiar yet surprising name"
+#~ " in the list: ``__init__``.  This is"
+#~ " the domain of PEP 253."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note: the code in this branch goes"
+#~ " way beyond this PEP; it is "
+#~ "also the experimentation area for PEP"
+#~ " 253 (Subtyping Built-in Types)."
+#~ msgstr ""
 

@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0518.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0518.txt:1
-msgid "518"
-msgstr ""
-
-#: ../../pep-0518.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0518.txt:2
-msgid "Specifying Minimum Build System Requirements for Python Projects"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0518.txt
 msgid "Author"
@@ -56,7 +40,7 @@ msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0518.txt:9
-msgid "distutils-sig <distutils-sig at python.org>"
+msgid "distutils-sig@python.org"
 msgstr ""
 
 #: ../../pep-0518.txt
@@ -76,10 +60,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0518.txt
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0518.txt:12
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0518.txt
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0518.txt:13
+#: ../../pep-0518.txt:14
 msgid "10-May-2016"
 msgstr ""
 
@@ -87,7 +79,7 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0518.txt:14
+#: ../../pep-0518.txt:15
 msgid "10-May-2016, 11-May-2016, 13-May-2016"
 msgstr ""
 
@@ -95,15 +87,15 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0518.txt:17
+#: ../../pep-0518.txt:18
 msgid "https://mail.python.org/pipermail/distutils-sig/2016-May/028969.html"
 msgstr ""
 
-#: ../../pep-0518.txt:21
+#: ../../pep-0518.txt:22
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0518.txt:23
+#: ../../pep-0518.txt:24
 msgid ""
 "This PEP specifies how Python software packages should specify what build"
 " dependencies they have in order to execute their chosen build system. As"
@@ -113,11 +105,11 @@ msgid ""
 "configuration details)."
 msgstr ""
 
-#: ../../pep-0518.txt:32
+#: ../../pep-0518.txt:33
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0518.txt:34
+#: ../../pep-0518.txt:35
 msgid ""
 "When Python first developed its tooling for building distributions of "
 "software for projects, distutils [#distutils]_ was the chosen solution. "
@@ -127,7 +119,7 @@ msgid ""
 "software (as well as users to install said distribution)."
 msgstr ""
 
-#: ../../pep-0518.txt:42
+#: ../../pep-0518.txt:43
 msgid ""
 "Using an executable file to specify build requirements under distutils "
 "isn't an issue as distutils is part of Python's standard library. Having "
@@ -137,7 +129,7 @@ msgid ""
 "dependency information as the only dependency is Python."
 msgstr ""
 
-#: ../../pep-0518.txt:49
+#: ../../pep-0518.txt:50
 msgid ""
 "But when a project chooses to use setuptools, the use of an executable "
 "file like ``setup.py`` becomes an issue. You can't execute a ``setup.py``"
@@ -148,21 +140,21 @@ msgid ""
 "contents which can't be known programmatically unless you run the file."
 msgstr ""
 
-#: ../../pep-0518.txt:58
+#: ../../pep-0518.txt:59
 msgid ""
 "Setuptools tried to solve this with a ``setup_requires`` argument to its "
 "``setup()`` function [#setup_args]_. This solution has a number of "
 "issues, such as:"
 msgstr ""
 
-#: ../../pep-0518.txt:62
+#: ../../pep-0518.txt:63
 msgid ""
 "No tooling (besides setuptools itself) can access this information "
 "without executing the ``setup.py``, but ``setup.py`` can't be executed "
 "without having these items installed."
 msgstr ""
 
-#: ../../pep-0518.txt:65
+#: ../../pep-0518.txt:66
 msgid ""
 "While setuptools itself will install anything listed in this, they won't "
 "be installed until *during* the execution of the ``setup()`` function, "
@@ -172,7 +164,7 @@ msgid ""
 "function."
 msgstr ""
 
-#: ../../pep-0518.txt:71
+#: ../../pep-0518.txt:72
 msgid ""
 "This cannot include ``setuptools`` itself nor can it include a "
 "replacement to ``setuptools``, which means that projects such as "
@@ -181,7 +173,7 @@ msgid ""
 "naturally upgrade the version of setuptools to a newer one."
 msgstr ""
 
-#: ../../pep-0518.txt:77
+#: ../../pep-0518.txt:78
 msgid ""
 "The items listed in ``setup_requires`` get implicitly installed whenever "
 "you execute the ``setup.py`` but one of the common ways that the "
@@ -196,7 +188,7 @@ msgid ""
 "differently."
 msgstr ""
 
-#: ../../pep-0518.txt:90
+#: ../../pep-0518.txt:91
 msgid ""
 "This has culminated in a situation where use of ``setup_requires`` is "
 "rare, where projects tend to either simply copy and paste snippets "
@@ -205,7 +197,7 @@ msgid ""
 "installed prior to attempting to build or install their project."
 msgstr ""
 
-#: ../../pep-0518.txt:97
+#: ../../pep-0518.txt:98
 msgid ""
 "All of this has led pip [#pip]_ to simply assume that setuptools is "
 "necessary when executing a ``setup.py`` file. The problem with this, "
@@ -216,7 +208,7 @@ msgid ""
 "required."
 msgstr ""
 
-#: ../../pep-0518.txt:105
+#: ../../pep-0518.txt:106
 msgid ""
 "This PEP attempts to rectify the situation by specifying a way to list "
 "the minimal dependencies of the build system of a project in a "
@@ -229,48 +221,48 @@ msgid ""
 "order to run the build system to build the project."
 msgstr ""
 
-#: ../../pep-0518.txt:115
+#: ../../pep-0518.txt:116
 msgid ""
 "To provide more context and motivation for this PEP, think of the (rough)"
 " steps required to produce a built artifact for a project:"
 msgstr ""
 
-#: ../../pep-0518.txt:118
+#: ../../pep-0518.txt:119
 msgid "The source checkout of the project."
 msgstr ""
 
-#: ../../pep-0518.txt:119
+#: ../../pep-0518.txt:120
 msgid "Installation of the build system."
 msgstr ""
 
-#: ../../pep-0518.txt:120
+#: ../../pep-0518.txt:121
 msgid "Execute the build system."
 msgstr ""
 
-#: ../../pep-0518.txt:122
+#: ../../pep-0518.txt:123
 msgid ""
-"This PEP covers step #2. PEP 517 covers step #3, including how to have "
-"the build system dynamically specify more dependencies that the build "
+"This PEP covers step #2. :pep:`517` covers step #3, including how to have"
+" the build system dynamically specify more dependencies that the build "
 "system requires to perform its job. The purpose of this PEP though, is to"
 " specify the minimal set of requirements for the build system to simply "
 "begin execution."
 msgstr ""
 
-#: ../../pep-0518.txt:130
+#: ../../pep-0518.txt:131
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0518.txt:133
+#: ../../pep-0518.txt:134
 msgid "File Format"
 msgstr ""
 
-#: ../../pep-0518.txt:135
+#: ../../pep-0518.txt:136
 msgid ""
 "The build system dependencies will be stored in a file named "
 "``pyproject.toml`` that is written in the TOML format [#toml]_."
 msgstr ""
 
-#: ../../pep-0518.txt:138
+#: ../../pep-0518.txt:139
 msgid ""
 "This format was chosen as it is human-usable (unlike JSON [#json]_), it "
 "is flexible enough (unlike configparser [#configparser]_), stems from a "
@@ -285,34 +277,34 @@ msgid ""
 "TOML for this situation."
 msgstr ""
 
-#: ../../pep-0518.txt:150
+#: ../../pep-0518.txt:151
 msgid ""
 "Below we list the tables that tools are expected to recognize/respect. "
 "Tables not specified in this PEP are reserved for future use by other "
 "PEPs."
 msgstr ""
 
-#: ../../pep-0518.txt:155
+#: ../../pep-0518.txt:156
 msgid "build-system table"
 msgstr ""
 
-#: ../../pep-0518.txt:157
+#: ../../pep-0518.txt:158
 msgid ""
 "The ``[build-system]`` table is used to store build-related data. "
 "Initially only one key of the table will be valid and is mandatory for "
 "the table: ``requires``. This key must have a value of a list of strings "
-"representing PEP 508 dependencies required to execute the build system "
-"(currently that means what dependencies are required to execute a "
+"representing :pep:`508` dependencies required to execute the build system"
+" (currently that means what dependencies are required to execute a "
 "``setup.py`` file)."
 msgstr ""
 
-#: ../../pep-0518.txt:164
+#: ../../pep-0518.txt:165
 msgid ""
 "For the vast majority of Python projects that rely upon setuptools, the "
 "``pyproject.toml`` file will be::"
 msgstr ""
 
-#: ../../pep-0518.txt:171
+#: ../../pep-0518.txt:172
 msgid ""
 "Because the use of setuptools and wheel are so expansive in the community"
 " at the moment, build tools are expected to use the example configuration"
@@ -320,7 +312,7 @@ msgid ""
 "not present."
 msgstr ""
 
-#: ../../pep-0518.txt:176
+#: ../../pep-0518.txt:177
 msgid ""
 "Tools should not require the existence of the ``[build-system]`` table. A"
 " ``pyproject.toml`` file may be used to store configuration details other"
@@ -331,11 +323,11 @@ msgid ""
 "consider it an error."
 msgstr ""
 
-#: ../../pep-0518.txt:186
+#: ../../pep-0518.txt:187
 msgid "tool table"
 msgstr ""
 
-#: ../../pep-0518.txt:188
+#: ../../pep-0518.txt:189
 msgid ""
 "The ``[tool]`` table is where any tool related to your Python project, "
 "not just build tools, can have users specify configuration data as long "
@@ -344,7 +336,7 @@ msgid ""
 "in ``[tool.flit]``."
 msgstr ""
 
-#: ../../pep-0518.txt:194
+#: ../../pep-0518.txt:195
 msgid ""
 "We need some mechanism to allocate names within the ``tool.*`` namespace,"
 " to make sure that different projects don't attempt to use the same sub-"
@@ -353,26 +345,26 @@ msgid ""
 "Cheeseshop/PyPI."
 msgstr ""
 
-#: ../../pep-0518.txt:201
+#: ../../pep-0518.txt:202
 msgid "JSON Schema"
 msgstr ""
 
-#: ../../pep-0518.txt:203
+#: ../../pep-0518.txt:204
 msgid ""
 "To provide a type-specific representation of the resulting data from the "
 "TOML file for illustrative purposes only, the following JSON Schema "
 "[#jsonschema]_ would match the data format::"
 msgstr ""
 
-#: ../../pep-0518.txt:237
+#: ../../pep-0518.txt:238
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0518.txt:240
+#: ../../pep-0518.txt:241
 msgid "A semantic version key"
 msgstr ""
 
-#: ../../pep-0518.txt:242
+#: ../../pep-0518.txt:243
 msgid ""
 "For future-proofing the structure of the configuration file, a "
 "``semantics-version`` key was initially proposed. Defaulting to ``1``, "
@@ -381,7 +373,7 @@ msgid ""
 "``semantics-version`` would be incremented to a new number."
 msgstr ""
 
-#: ../../pep-0518.txt:248
+#: ../../pep-0518.txt:249
 msgid ""
 "In the end, though, it was decided that this was a premature "
 "optimization. The expectation is that changes to what is pre-defined "
@@ -391,11 +383,11 @@ msgid ""
 "breaking older tools."
 msgstr ""
 
-#: ../../pep-0518.txt:257
+#: ../../pep-0518.txt:258
 msgid "A more nested namespace"
 msgstr ""
 
-#: ../../pep-0518.txt:259
+#: ../../pep-0518.txt:260
 msgid ""
 "An earlier draft of this PEP had a top-level ``[package]`` table. The "
 "idea was to impose some scoping for a semantics versioning scheme (see `A"
@@ -404,23 +396,23 @@ msgid ""
 "superfluous."
 msgstr ""
 
-#: ../../pep-0518.txt:267
+#: ../../pep-0518.txt:268
 msgid "Other table names"
 msgstr ""
 
-#: ../../pep-0518.txt:269
+#: ../../pep-0518.txt:270
 msgid ""
 "Another name proposed for the ``[build-system]`` table was ``[build]``. "
 "The alternative name is shorter, but doesn't convey as much of the "
-"intention of what information is store in the table. After a vote on the "
-"distutils-sig mailing list, the current name won out."
+"intention of what information is stored in the table. After a vote on the"
+" distutils-sig mailing list, the current name won out."
 msgstr ""
 
-#: ../../pep-0518.txt:276
+#: ../../pep-0518.txt:277
 msgid "Other file formats"
 msgstr ""
 
-#: ../../pep-0518.txt:278
+#: ../../pep-0518.txt:279
 msgid ""
 "Several other file formats were put forward for consideration, all "
 "rejected for various reasons. Key requirements were that the format be "
@@ -430,91 +422,91 @@ msgid ""
 "discussed."
 msgstr ""
 
-#: ../../pep-0518.txt:286
+#: ../../pep-0518.txt:287
 msgid "Overview of file formats considered"
 msgstr ""
 
-#: ../../pep-0518.txt:288
+#: ../../pep-0518.txt:289
 msgid ""
 "The key reasons for rejecting the other alternatives considered are "
 "summarised in the following sections, while the full review (including "
 "positive arguments in favour of TOML) can be found at [#file_formats]_."
 msgstr ""
 
-#: ../../pep-0518.txt:292
+#: ../../pep-0518.txt:293
 msgid ""
 "TOML was ultimately selected as it provided all the features we were "
 "interested in, while avoiding the downsides introduced by the "
 "alternatives."
 msgstr ""
 
-#: ../../pep-0518.txt:297
+#: ../../pep-0518.txt:298
 msgid "Feature"
 msgstr ""
 
-#: ../../pep-0518.txt:297
+#: ../../pep-0518.txt:298
 msgid "TOML"
 msgstr ""
 
-#: ../../pep-0518.txt:297 ../../pep-0518.txt:346
+#: ../../pep-0518.txt:298 ../../pep-0518.txt:347
 msgid "YAML"
 msgstr ""
 
-#: ../../pep-0518.txt:297 ../../pep-0518.txt:325
+#: ../../pep-0518.txt:298 ../../pep-0518.txt:326
 msgid "JSON"
 msgstr ""
 
-#: ../../pep-0518.txt:297
+#: ../../pep-0518.txt:298
 msgid "CFG/INI"
 msgstr ""
 
-#: ../../pep-0518.txt:299
+#: ../../pep-0518.txt:300
 msgid "Well-defined"
 msgstr ""
 
-#: ../../pep-0518.txt:299 ../../pep-0518.txt:300 ../../pep-0518.txt:301
-#: ../../pep-0518.txt:302 ../../pep-0518.txt:303 ../../pep-0518.txt:304
-#: ../../pep-0518.txt:305 ../../pep-0518.txt:306
+#: ../../pep-0518.txt:300 ../../pep-0518.txt:301 ../../pep-0518.txt:302
+#: ../../pep-0518.txt:303 ../../pep-0518.txt:304 ../../pep-0518.txt:305
+#: ../../pep-0518.txt:306 ../../pep-0518.txt:307
 msgid "yes"
 msgstr ""
 
-#: ../../pep-0518.txt:300
+#: ../../pep-0518.txt:301
 msgid "Real data types"
 msgstr ""
 
-#: ../../pep-0518.txt:301
+#: ../../pep-0518.txt:302
 msgid "Reliable Unicode"
 msgstr ""
 
-#: ../../pep-0518.txt:302
+#: ../../pep-0518.txt:303
 msgid "Reliable comments"
 msgstr ""
 
-#: ../../pep-0518.txt:303
+#: ../../pep-0518.txt:304
 msgid "Easy for humans to edit"
 msgstr ""
 
-#: ../../pep-0518.txt:303 ../../pep-0518.txt:304
+#: ../../pep-0518.txt:304 ../../pep-0518.txt:305
 msgid "??"
 msgstr ""
 
-#: ../../pep-0518.txt:304
+#: ../../pep-0518.txt:305
 msgid "Easy for tools to edit"
 msgstr ""
 
-#: ../../pep-0518.txt:305
+#: ../../pep-0518.txt:306
 msgid "In standard library"
 msgstr ""
 
-#: ../../pep-0518.txt:306
+#: ../../pep-0518.txt:307
 msgid "Easy for pip to vendor"
 msgstr ""
 
-#: ../../pep-0518.txt:306
+#: ../../pep-0518.txt:307
 msgid "n/a"
 msgstr ""
 
-#: ../../pep-0518.txt:309
+#: ../../pep-0518.txt:310
 msgid ""
 "(\"??\" in the table indicates items where most folks would be inclined "
 "to answer \"yes\", but there turn out to be a lot of quirks and edge "
@@ -523,20 +515,20 @@ msgid ""
 "surprisingly complicated)"
 msgstr ""
 
-#: ../../pep-0518.txt:315
+#: ../../pep-0518.txt:316
 msgid ""
 "The ``pytoml`` TOML parser is ~300 lines of pure Python code, so being "
 "outside the standard library didn't count heavily against it."
 msgstr ""
 
-#: ../../pep-0518.txt:319
+#: ../../pep-0518.txt:320
 msgid ""
 "Python literals were also discussed as a potential format, but weren't "
 "considered in the file format review (since they're not a common pre-"
 "existing file format)."
 msgstr ""
 
-#: ../../pep-0518.txt:327
+#: ../../pep-0518.txt:328
 msgid ""
 "The JSON format [#json]_ was initially considered but quickly rejected. "
 "While great as a human-readable, string-based data exchange format, the "
@@ -544,18 +536,18 @@ msgid ""
 "syntax is more verbose than necessary while not allowing for comments)."
 msgstr ""
 
-#: ../../pep-0518.txt:333
+#: ../../pep-0518.txt:334
 msgid "An example JSON file for the proposed data would be::"
 msgstr ""
 
-#: ../../pep-0518.txt:348
+#: ../../pep-0518.txt:349
 msgid ""
 "The YAML format [#yaml]_ was designed to be a superset of JSON [#json]_ "
 "while being easier to work with by hand. There are three main issues with"
 " YAML."
 msgstr ""
 
-#: ../../pep-0518.txt:352
+#: ../../pep-0518.txt:353
 msgid ""
 "One is that the specification is large: 86 pages if printed on letter-"
 "sized paper. That leaves the possibility that someone may use a feature "
@@ -564,7 +556,7 @@ msgid ""
 "standard specific to this file which is not tractable long-term."
 msgstr ""
 
-#: ../../pep-0518.txt:359
+#: ../../pep-0518.txt:360
 msgid ""
 "Two is that YAML itself is not safe by default. The specification allows "
 "for the arbitrary execution of code which is best avoided when dealing "
@@ -577,7 +569,7 @@ msgid ""
 "someday where arbitrary code execution is not desired."
 msgstr ""
 
-#: ../../pep-0518.txt:370
+#: ../../pep-0518.txt:371
 msgid ""
 "And finally, the most popular Python implementation of YAML is PyYAML "
 "[#pyyaml]_ which is a large project of a few thousand lines of code and "
@@ -590,15 +582,15 @@ msgid ""
 "simpler version of the library which shows it is a possibility."
 msgstr ""
 
-#: ../../pep-0518.txt:381
+#: ../../pep-0518.txt:382
 msgid "An example YAML file is::"
 msgstr ""
 
-#: ../../pep-0518.txt:390
+#: ../../pep-0518.txt:391
 msgid "configparser"
 msgstr ""
 
-#: ../../pep-0518.txt:392
+#: ../../pep-0518.txt:393
 msgid ""
 "An INI-style configuration file based on what configparser "
 "[#configparser]_ accepts was considered. Unfortunately there is no "
@@ -613,15 +605,15 @@ msgid ""
 "version of configparser is expected."
 msgstr ""
 
-#: ../../pep-0518.txt:405
+#: ../../pep-0518.txt:406
 msgid "An example INI file is::"
 msgstr ""
 
-#: ../../pep-0518.txt:414
+#: ../../pep-0518.txt:415
 msgid "Python literals"
 msgstr ""
 
-#: ../../pep-0518.txt:416
+#: ../../pep-0518.txt:417
 msgid ""
 "Someone proposed using Python literals as the configuration format. The "
 "file would contain one dict at the top level, with the data all inside "
@@ -635,22 +627,22 @@ msgid ""
 "point vs. integer values)."
 msgstr ""
 
-#: ../../pep-0518.txt:427
+#: ../../pep-0518.txt:428
 msgid ""
 "On the other hand, python literals are a Python-specific format, and it "
 "is anticipated that these data may need to be read by packaging tools, "
 "etc. that are not written in Python."
 msgstr ""
 
-#: ../../pep-0518.txt:431
+#: ../../pep-0518.txt:432
 msgid "An example Python literal file for the proposed data would be::"
 msgstr ""
 
-#: ../../pep-0518.txt:444
+#: ../../pep-0518.txt:445
 msgid "Sticking with ``setup.cfg``"
 msgstr ""
 
-#: ../../pep-0518.txt:446
+#: ../../pep-0518.txt:447
 msgid ""
 "There are two issues with ``setup.cfg`` used by setuptools as a general "
 "format. One is that they are ``.ini`` files which have issues as "
@@ -660,206 +652,258 @@ msgid ""
 "potentially confusing setuptools installations."
 msgstr ""
 
-#: ../../pep-0518.txt:456
+#: ../../pep-0518.txt:457
 msgid "Other file names"
 msgstr ""
 
-#: ../../pep-0518.txt:458
+#: ../../pep-0518.txt:459
 msgid ""
 "Several other file names were considered and rejected (although this is "
 "very much a bikeshedding topic, and so the decision comes down to mostly "
 "taste)."
 msgstr ""
 
-#: ../../pep-0518.txt:463
+#: ../../pep-0518.txt:464
 msgid "pysettings.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:463
+#: ../../pep-0518.txt:464
 msgid "Most reasonable alternative."
 msgstr ""
 
-#: ../../pep-0518.txt:468
+#: ../../pep-0518.txt:469
 msgid "pypa.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:466
+#: ../../pep-0518.txt:467
 msgid ""
 "While it makes sense to reference the PyPA [#pypa]_, it is a somewhat "
 "niche term. It's better to have the file name make sense without having "
 "domain-specific knowledge."
 msgstr ""
 
-#: ../../pep-0518.txt:473
+#: ../../pep-0518.txt:474
 msgid "pybuild.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:471
+#: ../../pep-0518.txt:472
 msgid ""
 "From the restrictive perspective of this PEP this filename makes sense, "
 "but if any non-build metadata ever gets added to the file then the name "
 "ceases to make sense."
 msgstr ""
 
-#: ../../pep-0518.txt:476
+#: ../../pep-0518.txt:477
 msgid "pip.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:476
+#: ../../pep-0518.txt:477
 msgid "Too tool-specific."
 msgstr ""
 
-#: ../../pep-0518.txt:479
+#: ../../pep-0518.txt:480
 msgid "meta.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:479
+#: ../../pep-0518.txt:480
 msgid "Too generic; project may want to have its own metadata file."
 msgstr ""
 
-#: ../../pep-0518.txt:484
+#: ../../pep-0518.txt:485
 msgid "setup.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:482
+#: ../../pep-0518.txt:483
 msgid ""
 "While keeping with traditional thanks to ``setup.py``, it does not "
 "necessarily match what the file may contain in the future (e.g. is "
 "knowing the name of a project inherently part of its setup?)."
 msgstr ""
 
-#: ../../pep-0518.txt:487
+#: ../../pep-0518.txt:488
 msgid "pymeta.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:487
+#: ../../pep-0518.txt:488
 msgid "Not obvious to newcomers to programming and/or Python."
 msgstr ""
 
-#: ../../pep-0518.txt:490
+#: ../../pep-0518.txt:491
 msgid "pypackage.toml & pypackaging.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:490
+#: ../../pep-0518.txt:491
 msgid "Name conflation of what a \"package\" is (project versus namespace)."
 msgstr ""
 
-#: ../../pep-0518.txt:493
+#: ../../pep-0518.txt:494
 msgid "pydevelop.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:493
+#: ../../pep-0518.txt:494
 msgid "The file may contain details not specific to development."
 msgstr ""
 
-#: ../../pep-0518.txt:496
+#: ../../pep-0518.txt:497
 msgid "pysource.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:496
+#: ../../pep-0518.txt:497
 msgid "Not directly related to source code."
 msgstr ""
 
-#: ../../pep-0518.txt:499
+#: ../../pep-0518.txt:500
 msgid "pytools.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:499
+#: ../../pep-0518.txt:500
 msgid "Misleading as the file is (currently) aimed at project management."
 msgstr ""
 
-#: ../../pep-0518.txt:503
+#: ../../pep-0518.txt:504
 msgid "dstufft.toml"
 msgstr ""
 
-#: ../../pep-0518.txt:502
+#: ../../pep-0518.txt:503
 msgid "Too person-specific. ;)"
 msgstr ""
 
-#: ../../pep-0518.txt:506
+#: ../../pep-0518.txt:507
 msgid "References"
 msgstr ""
 
-#: ../../pep-0518.txt:508
+#: ../../pep-0518.txt:509
 msgid ""
 "distutils (https://docs.python.org/3/library/distutils.html#module-"
 "distutils)"
 msgstr ""
 
-#: ../../pep-0518.txt:511
+#: ../../pep-0518.txt:512
 msgid "setuptools (https://pypi.python.org/pypi/setuptools)"
 msgstr ""
 
-#: ../../pep-0518.txt:514
+#: ../../pep-0518.txt:515
 msgid ""
 "setuptools: New and Changed setup() Keywords "
 "(http://pythonhosted.org/setuptools/setuptools.html#new-and-changed-"
 "setup-keywords)"
 msgstr ""
 
-#: ../../pep-0518.txt:517
+#: ../../pep-0518.txt:518
 msgid "pip (https://pypi.python.org/pypi/pip)"
 msgstr ""
 
-#: ../../pep-0518.txt:520
+#: ../../pep-0518.txt:521
 msgid "wheel (https://pypi.python.org/pypi/wheel)"
 msgstr ""
 
-#: ../../pep-0518.txt:523
+#: ../../pep-0518.txt:524
 msgid "TOML (https://github.com/toml-lang/toml)"
 msgstr ""
 
-#: ../../pep-0518.txt:526
+#: ../../pep-0518.txt:527
 msgid "JSON (http://json.org/)"
 msgstr ""
 
-#: ../../pep-0518.txt:529
+#: ../../pep-0518.txt:530
 msgid "YAML (http://yaml.org/)"
 msgstr ""
 
-#: ../../pep-0518.txt:532
+#: ../../pep-0518.txt:533
 msgid ""
 "configparser (https://docs.python.org/3/library/configparser.html#module-"
 "configparser)"
 msgstr ""
 
-#: ../../pep-0518.txt:535
+#: ../../pep-0518.txt:536
 msgid "PyYAML (https://pypi.python.org/pypi/PyYAML)"
 msgstr ""
 
-#: ../../pep-0518.txt:538
+#: ../../pep-0518.txt:539
 msgid "PyPA (https://www.pypa.io)"
 msgstr ""
 
-#: ../../pep-0518.txt:541
+#: ../../pep-0518.txt:542
 msgid "Bazel (http://bazel.io/)"
 msgstr ""
 
-#: ../../pep-0518.txt:544
+#: ../../pep-0518.txt:545
 msgid ""
 "``ast.literal_eval()`` "
 "(https://docs.python.org/3/library/ast.html#ast.literal_eval)"
 msgstr ""
 
-#: ../../pep-0518.txt:547
+#: ../../pep-0518.txt:548
 msgid "Cargo, Rust's package manager (http://doc.crates.io/)"
 msgstr ""
 
-#: ../../pep-0518.txt:550
+#: ../../pep-0518.txt:551
 msgid "JSON Schema (http://json-schema.org/)"
 msgstr ""
 
-#: ../../pep-0518.txt:553
+#: ../../pep-0518.txt:554
 msgid ""
 "Nathaniel J. Smith's file format review "
 "(https://gist.github.com/njsmith/78f68204c5d969f8c8bc645ef77d4a8f)"
 msgstr ""
 
-#: ../../pep-0518.txt:558
+#: ../../pep-0518.txt:559
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0518.txt:560
+#: ../../pep-0518.txt:561
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "518"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Specifying Minimum Build System Requirements for Python Projects"
+#~ msgstr ""
+
+#~ msgid "distutils-sig <distutils-sig at python.org>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP covers step #2. PEP 517"
+#~ " covers step #3, including how to "
+#~ "have the build system dynamically "
+#~ "specify more dependencies that the build"
+#~ " system requires to perform its job."
+#~ " The purpose of this PEP though, "
+#~ "is to specify the minimal set of"
+#~ " requirements for the build system to"
+#~ " simply begin execution."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``[build-system]`` table is used "
+#~ "to store build-related data. Initially"
+#~ " only one key of the table will"
+#~ " be valid and is mandatory for "
+#~ "the table: ``requires``. This key must"
+#~ " have a value of a list of "
+#~ "strings representing PEP 508 dependencies "
+#~ "required to execute the build system "
+#~ "(currently that means what dependencies "
+#~ "are required to execute a ``setup.py``"
+#~ " file)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Another name proposed for the "
+#~ "``[build-system]`` table was ``[build]``. "
+#~ "The alternative name is shorter, but "
+#~ "doesn't convey as much of the "
+#~ "intention of what information is store"
+#~ " in the table. After a vote on"
+#~ " the distutils-sig mailing list, the"
+#~ " current name won out."
+#~ msgstr ""
 

@@ -8,36 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0011.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0011.txt:1
-msgid "11"
-msgstr ""
-
-#: ../../pep-0011.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0011.txt:2
-msgid "Removing support for little used platforms"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0011.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0011.txt:5
+#: ../../pep-0011.txt:3
 msgid "Martin von Löwis <martin@v.loewis.de>, Brett Cannon <brett@python.org>"
 msgstr ""
 
@@ -45,7 +29,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0011.txt:7
+#: ../../pep-0011.txt:5
 msgid "Active"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0011.txt:8
+#: ../../pep-0011.txt:6
 msgid "Process"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0011.txt:10
+#: ../../pep-0011.txt:8
 msgid "07-Jul-2002"
 msgstr ""
 
@@ -69,18 +53,27 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0011.txt:11
-msgid "18-Aug-2007 16-May-2014 20-Feb-2015"
+#: ../../pep-0011.txt:9
+msgid ""
+"`18-Aug-2007 <https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/DSSGXU5LBCMKYMZBRVB6RF3YAB6ST5AV/>`__, `14-May-2014"
+" <https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/T7WTUJ6TD3IGYGWV3M4PHJWNLM2WPZAW/>`__, `20-Feb-2015"
+" <https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/OEQHRR2COYZDL6LZ42RBZOMIUB32WI34/#L3K7IKGVT4ND45SKAJPJ3Q2ADVK5KP52>`__,"
+" `10-Mar-2022 <https://mail.python.org/archives/list/python-"
+"committers@python.org/thread/K757345KX6W5ZLTWYBUXOXQTJJTL7GW5/>`__,"
 msgstr ""
 
-#: ../../pep-0011.txt:17
+#: ../../pep-0011.txt:16
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0011.txt:19
+#: ../../pep-0011.txt:18
 msgid ""
 "This PEP documents how an operating system (platform) becomes supported "
-"in CPython and documents past support."
+"in CPython, what platforms are currently supported, and documents past "
+"support."
 msgstr ""
 
 #: ../../pep-0011.txt:24
@@ -91,157 +84,315 @@ msgstr ""
 msgid ""
 "Over time, the CPython source code has collected various pieces of "
 "platform-specific code, which, at some point in time, was considered "
-"necessary to use Python on a specific platform. Without access to this "
+"necessary to use CPython on a specific platform. Without access to this "
 "platform, it is not possible to determine whether this code is still "
-"needed.  As a result, this code may either break during Python's "
+"needed.  As a result, this code may either break during CPython's "
 "evolution, or it may become unnecessary as the platforms evolve as well."
 msgstr ""
 
 #: ../../pep-0011.txt:34
 msgid ""
-"The growing amount of these fragments poses the risk of "
-"unmaintainability: without having experts for a large number of "
-"platforms, it is not possible to determine whether a certain change to "
-"the CPython source code will work on all supported platforms."
+"Allowing these fragments to grow poses the risk of unmaintainability: "
+"without having experts for a large number of platforms, it is not "
+"possible to determine whether a certain change to the CPython source code"
+" will work on all supported platforms."
 msgstr ""
 
 #: ../../pep-0011.txt:40
 msgid ""
 "To reduce this risk, this PEP specifies what is required for a platform "
-"to be considered supported by Python as well as providing a procedure to "
-"remove code for platforms with few or no Python users."
+"to be considered supported by CPython as well as providing a procedure to"
+" remove code for platforms with few or no CPython users."
 msgstr ""
 
-#: ../../pep-0011.txt:46
-msgid "Supporting platforms"
-msgstr ""
-
-#: ../../pep-0011.txt:48
+#: ../../pep-0011.txt:45
 msgid ""
-"Gaining official platform support requires two things. First, a core "
-"developer needs to volunteer to maintain platform-specific code. This "
-"core developer can either already be a member of the Python development "
-"team or be given contributor rights on the basis of maintaining platform "
-"support (it is at the discretion of the Python development team to decide"
-" if a person is ready to have such rights even if it is just for "
-"supporting a specific platform)."
+"This PEP also lists what plaforms *are* supported by the CPython "
+"interpreter. This lets people know what platforms are directly supported "
+"by the CPython development team."
 msgstr ""
 
-#: ../../pep-0011.txt:56
-msgid ""
-"Second, a stable buildbot must be provided [2]_. This guarantees that "
-"platform support will not be accidentally broken by a Python core "
-"developer who does not have personal access to the platform. For a "
-"buildbot to be considered stable it requires that the machine be reliably"
-" up and functioning (but it is up to the Python core developers to decide"
-" whether to promote a buildbot to being considered stable)."
+#: ../../pep-0011.txt:51
+msgid "Support tiers"
 msgstr ""
 
-#: ../../pep-0011.txt:64
+#: ../../pep-0011.txt:53
 msgid ""
-"This policy does not disqualify supporting other platforms indirectly. "
-"Patches which are not platform-specific but still done to add platform "
-"support will be considered for inclusion. For example, if platform-"
-"independent changes were necessary in the configure script which were "
-"motivated to support a specific platform that could be accepted. Patches "
-"which add platform-specific code such as the name of a specific platform "
-"to the configure script will generally not be accepted without the "
-"platform having official support."
+"Platform support is broken down into *tiers*. Each tier comes with "
+"different requirements which lead to different promises being made about "
+"support."
+msgstr ""
+
+#: ../../pep-0011.txt:57
+msgid ""
+"To be promoted to a tier, steering council support is required and is "
+"expected to be driven by team consensus. Demotion to a lower tier occurs "
+"when the requirements of the current tier are no longer met for a "
+"platform for an extended period of time based on the judgment of the "
+"release manager or steering council. For platforms which no longer meet "
+"the requirements of any tier by b1 of a new feature release, an "
+"announcement will be made to warn the community of the pending removal of"
+" support for the platform (e.g. in the b1 announcement). If the platform "
+"is not brought into line for at least one of the tiers by the first "
+"release candidate, it will be listed as unsupported in this PEP."
+msgstr ""
+
+#: ../../pep-0011.txt:69
+msgid "Tier 1"
+msgstr ""
+
+#: ../../pep-0011.txt:72
+msgid ""
+"`STATUS "
+"<https://github.com/python/cpython/actions/workflows/build.yml?query=branch%3Amain+is%3Acompleted>`__"
 msgstr ""
 
 #: ../../pep-0011.txt:73
-msgid ""
-"CPU architecture and compiler support are viewed in a similar manner as "
-"platforms. For example, to consider the ARM architecture supported a "
-"buildbot running on ARM would be required along with support from the "
-"Python development team. In general it is not required to have a CPU "
-"architecture run under every possible platform in order to be considered "
-"supported."
+msgid "CI failures block releases."
 msgstr ""
 
-#: ../../pep-0011.txt:81
-msgid "Unsupporting platforms"
+#: ../../pep-0011.txt:74
+msgid ""
+"Changes which would break the ``main`` branch are not allowed to be "
+"merged; any breakage should be fixed or reverted immediately."
+msgstr ""
+
+#: ../../pep-0011.txt:76
+msgid ""
+"All core developers are responsible to keep ``main``, and thus these "
+"platforms, working."
+msgstr ""
+
+#: ../../pep-0011.txt:78 ../../pep-0011.txt:98
+msgid "Failures on these platforms **block a release**."
+msgstr ""
+
+#: ../../pep-0011.txt:81 ../../pep-0011.txt:101 ../../pep-0011.txt:122
+msgid "Target Triple"
+msgstr ""
+
+#: ../../pep-0011.txt:81 ../../pep-0011.txt:101 ../../pep-0011.txt:122
+#: ../../pep-0011.txt:150
+msgid "Notes"
 msgstr ""
 
 #: ../../pep-0011.txt:83
+msgid "i686-pc-windows-msvc"
+msgstr ""
+
+#: ../../pep-0011.txt:84
+msgid "x86_64-pc-windows-msvc"
+msgstr ""
+
+#: ../../pep-0011.txt:85
+msgid "x86_64-apple-darwin"
+msgstr ""
+
+#: ../../pep-0011.txt:85 ../../pep-0011.txt:130
+msgid "BSD libc, clang"
+msgstr ""
+
+#: ../../pep-0011.txt:86 ../../pep-0011.txt:108
+msgid "x86_64-unknown-linux-gnu"
+msgstr ""
+
+#: ../../pep-0011.txt:86 ../../pep-0011.txt:104 ../../pep-0011.txt:107
+#: ../../pep-0011.txt:127
+msgid "glibc, gcc"
+msgstr ""
+
+#: ../../pep-0011.txt:91
+msgid "Tier 2"
+msgstr ""
+
+#: ../../pep-0011.txt:93
 msgid ""
-"If a certain platform that currently has special code in CPython is "
-"deemed to be without enough Python users or lacks proper support from the"
-" Python development team and/or a buildbot, a note must be posted in this"
-" PEP that this platform is no longer actively supported.  This note must "
-"include:"
+"`STATUS "
+"<https://buildbot.python.org/all/#/builders?tags=%2B3.x&tags=%2Btier-2>`__"
 msgstr ""
 
-#: ../../pep-0011.txt:89
-msgid "the name of the system"
-msgstr ""
-
-#: ../../pep-0011.txt:90
-msgid "the first release number that does not support this platform anymore, and"
-msgstr ""
-
-#: ../../pep-0011.txt:92
-msgid "the first release where the historical support code is actively removed"
+#: ../../pep-0011.txt:94 ../../pep-0011.txt:116
+msgid "Must have a reliable buildbot."
 msgstr ""
 
 #: ../../pep-0011.txt:95
-msgid ""
-"In some cases, it is not possible to identify the specific list of "
-"systems for which some code is used (e.g. when autoconf tests for absence"
-" of some feature which is considered present on all supported systems).  "
-"In this case, the name will give the precise condition (usually a "
-"preprocessor symbol) that will become unsupported."
+msgid "At least **two** core developers are signed up to support the platform."
 msgstr ""
 
-#: ../../pep-0011.txt:102
+#: ../../pep-0011.txt:96
 msgid ""
-"At the same time, the CPython source code must be changed to produce a "
-"build-time error if somebody tries to install Python on this platform.  "
-"On platforms using autoconf, configure must fail. This gives potential "
-"users of the platform a chance to step forward and offer maintenance."
+"Changes which break any of these platforms are to be **fixed or reverted "
+"within 24 hours**."
 msgstr ""
 
-#: ../../pep-0011.txt:110
-msgid "Re-supporting platforms"
+#: ../../pep-0011.txt:101 ../../pep-0011.txt:122
+msgid "Contacts"
 msgstr ""
 
-#: ../../pep-0011.txt:112
+#: ../../pep-0011.txt:103
+msgid "aarch64-apple-darwin"
+msgstr ""
+
+#: ../../pep-0011.txt:103
+msgid "clang"
+msgstr ""
+
+#: ../../pep-0011.txt:103
+msgid "Ned Deily, Ronald Oussoren, Dong-hee Na"
+msgstr ""
+
+#: ../../pep-0011.txt:104
+msgid "aarch64-unknown-linux-gnu"
+msgstr ""
+
+#: ../../pep-0011.txt:106 ../../pep-0011.txt:108 ../../pep-0011.txt:126
+msgid "glibc, clang"
+msgstr ""
+
+#: ../../pep-0011.txt:104 ../../pep-0011.txt:107
+msgid "Petr Viktorin, Victor Stinner"
+msgstr ""
+
+#: ../../pep-0011.txt:106 ../../pep-0011.txt:108
+msgid "Victor Stinner, Gregory P. Smith"
+msgstr ""
+
+#: ../../pep-0011.txt:107 ../../pep-0011.txt:126
+msgid "powerpc64le-unknown-linux-gnu"
+msgstr ""
+
+#: ../../pep-0011.txt:113
+msgid "Tier 3"
+msgstr ""
+
+#: ../../pep-0011.txt:115
 msgid ""
-"If a user of a platform wants to see this platform supported again, he "
-"may volunteer to maintain the platform support.  Such an offer must be "
-"recorded in the PEP, and the user can submit patches to remove the build-"
-"time errors, and perform any other maintenance work for the platform."
+"`STATUS "
+"<https://buildbot.python.org/all/#/builders?tags=%2B3.x&tags=%2Btier-3>`__"
+msgstr ""
+
+#: ../../pep-0011.txt:117
+msgid "At least **one** core developer is signed up to support the platform."
+msgstr ""
+
+#: ../../pep-0011.txt:118
+msgid "No response SLA to failures."
 msgstr ""
 
 #: ../../pep-0011.txt:119
-msgid "Microsoft Windows"
+msgid "Failures on these platforms do **not** block a release."
 msgstr ""
 
-#: ../../pep-0011.txt:121
-msgid ""
-"Microsoft has established a policy called product support lifecycle [1]_."
-" Each product's lifecycle has a mainstream support phase, where the "
-"product is generally commercially available, and an extended support "
-"phase, where paid support is still available, and certain bug fixes are "
-"released (in particular security fixes)."
+#: ../../pep-0011.txt:124
+msgid "aarch64-pc-windows-msvc"
+msgstr ""
+
+#: ../../pep-0011.txt:124
+msgid "Steve Dower"
+msgstr ""
+
+#: ../../pep-0011.txt:125
+msgid "armv7l-unknown-linux-gnueabihf"
+msgstr ""
+
+#: ../../pep-0011.txt:125
+msgid "Raspberry Pi OS, glibc, gcc"
+msgstr ""
+
+#: ../../pep-0011.txt:125
+msgid "Gregory P. Smith"
+msgstr ""
+
+#: ../../pep-0011.txt:126 ../../pep-0011.txt:127 ../../pep-0011.txt:130
+msgid "Victor Stinner"
 msgstr ""
 
 #: ../../pep-0011.txt:127
-msgid ""
-"CPython's Windows support now follows this lifecycle. A new feature "
-"release X.Y.0 will support all Windows releases whose extended support "
-"phase is not yet expired. Subsequent bug fix releases will support the "
-"same Windows releases as the original feature release (even if the "
-"extended support phase has ended)."
+msgid "s390x-unknown-linux-gnu"
 msgstr ""
 
-#: ../../pep-0011.txt:133
-msgid ""
-"Because of this policy, no further Windows releases need to be listed in "
-"this PEP."
+#: ../../pep-0011.txt:128
+msgid "wasm32-unknown-emscripten"
 msgstr ""
 
-#: ../../pep-0011.txt:136
+#: ../../pep-0011.txt:128 ../../pep-0011.txt:129
+msgid "Christian Heimes, Brett Cannon"
+msgstr ""
+
+#: ../../pep-0011.txt:129
+msgid "wasm32-unknown-wasi"
+msgstr ""
+
+#: ../../pep-0011.txt:130
+msgid "x86_64-unknown-freebsd"
+msgstr ""
+
+#: ../../pep-0011.txt:135
+msgid "All other platforms"
+msgstr ""
+
+#: ../../pep-0011.txt:137
+msgid ""
+"Support for a platform may be partial within the code base, such as from "
+"active development around platform support or accidentally. Code changes "
+"to platforms not listed in the above tiers may be rejected or removed "
+"from the code base without a deprecation process if they cause a "
+"maintenance burden or obstruct general improvements."
+msgstr ""
+
+#: ../../pep-0011.txt:143
+msgid ""
+"Platforms not listed here may be supported by the wider Python community "
+"in some way. If your desired platform is not listed above, please perform"
+" a search online to see if someone is already providing support in some "
+"form."
+msgstr ""
+
+#: ../../pep-0011.txt:153
+msgid "Microsoft Windows"
+msgstr ""
+
+#: ../../pep-0011.txt:155
+msgid ""
+"Windows versions prior to Windows 10 follow Microsoft's `Fixed Lifecycle "
+"Policy <https://learn.microsoft.com/en-us/lifecycle/policies/fixed>`__, "
+"with a mainstream support phase for 5 years after release, where the "
+"product is generally commercially available, and an additional 5 year "
+"extended support phase, where paid support is still available and certain"
+" bug fixes are released. `Extended Security Updates (ESU) "
+"<https://learn.microsoft.com/en-us/lifecycle/faq/extended-security-"
+"updates>`_ is a paid program available to high-volume enterprise "
+"customers as a \"last resort\" option to receive certain security updates"
+" after extended support ends. ESU is considered a distinct phase that "
+"follows the expiration of extended support."
+msgstr ""
+
+#: ../../pep-0011.txt:167
+msgid ""
+"Windows 10 and later follow Microsoft's `Modern Lifecycle Policy "
+"<https://learn.microsoft.com/en-us/lifecycle/policies/modern>`__, which "
+"varies per-product, per-version, per-edition and per-channel. Generally, "
+"feature updates (1709, 22H2) occur every 6-12 months and are supported "
+"for 18-36 months; Server and IoT editions, and LTSC channel releases are "
+"supported for 5-10 years, and the latest feature release of a major "
+"version (Windows 10, Windows 11) generally receives new updates for at "
+"least 10 years following release. Microsoft's `Windows Lifecycle FAQ "
+"<https://learn.microsoft.com/en-us/lifecycle/faq/windows>`_ has more "
+"specific and up-to-date guidance."
+msgstr ""
+
+#: ../../pep-0011.txt:179
+msgid ""
+"CPython's Windows support currently follows Microsoft's lifecycles. A new"
+" feature release X.Y.0 will support all Windows versions whose *extended "
+"support* phase has not yet expired. Subsequent bug fix releases will "
+"support the same Windows versions as the original feature release, even "
+"if no longer supported by Microsoft. New versions of Windows released "
+"while CPython is in maintenance mode may be supported at the discretion "
+"of the core team and release manager."
+msgstr ""
+
+#: ../../pep-0011.txt:187
 msgid ""
 "Each feature release is built by a specific version of Microsoft Visual "
 "Studio. That version should have mainstream support when the release is "
@@ -255,11 +406,11 @@ msgid ""
 "available in revision control)."
 msgstr ""
 
-#: ../../pep-0011.txt:148
+#: ../../pep-0011.txt:200
 msgid "Legacy C Locale"
 msgstr ""
 
-#: ../../pep-0011.txt:150
+#: ../../pep-0011.txt:202
 msgid ""
 "Starting with CPython 3.7.0, \\*nix platforms are expected to provide at "
 "least one of ``C.UTF-8`` (full locale), ``C.utf8`` (full locale) or "
@@ -267,14 +418,54 @@ msgid ""
 "``C`` locale."
 msgstr ""
 
-#: ../../pep-0011.txt:155
+#: ../../pep-0011.txt:207
 msgid ""
 "Any Unicode-related integration problems that occur only in the legacy "
 "``C`` locale and cannot be reproduced in an appropriately configured non-"
 "ASCII locale will be closed as \"won't fix\"."
 msgstr ""
 
-#: ../../pep-0011.txt:160
+#: ../../pep-0011.txt:213
+msgid "Unsupporting platforms"
+msgstr ""
+
+#: ../../pep-0011.txt:215
+msgid ""
+"If a platform drops out of tiered support, a note must be posted in this "
+"PEP that the platform is no longer actively supported.  This note must "
+"include:"
+msgstr ""
+
+#: ../../pep-0011.txt:219
+msgid "the name of the system"
+msgstr ""
+
+#: ../../pep-0011.txt:220
+msgid "the first release number that does not support this platform anymore, and"
+msgstr ""
+
+#: ../../pep-0011.txt:222
+msgid "the first release where the historical support code is actively removed"
+msgstr ""
+
+#: ../../pep-0011.txt:225
+msgid ""
+"In some cases, it is not possible to identify the specific list of "
+"systems for which some code is used (e.g. when autoconf tests for absence"
+" of some feature which is considered present on all supported systems).  "
+"In this case, the name will give the precise condition (usually a "
+"preprocessor symbol) that will become unsupported."
+msgstr ""
+
+#: ../../pep-0011.txt:232
+msgid ""
+"At the same time, the CPython source code must be changed to produce a "
+"build-time error if somebody tries to install CPython on this platform.  "
+"On platforms using autoconf, configure must fail. This gives potential "
+"users of the platform a chance to step forward and offer maintenance."
+msgstr ""
+
+#: ../../pep-0011.txt:240
 msgid "No-longer-supported platforms"
 msgstr ""
 
@@ -377,7 +568,7 @@ msgid "Unsupported in:   Python 2.6 (with \"AtheOS\" changed to \"Syllable\")"
 msgstr ""
 
 #: ../../pep-0011.txt
-msgid "Build broken in:  Python 2.7 (edit configure to reenable)"
+msgid "Build broken in:  Python 2.7 (edit configure to re-enable)"
 msgstr ""
 
 #: ../../pep-0011.txt
@@ -472,23 +663,261 @@ msgstr ""
 msgid "Name:             Systems without multithreading support"
 msgstr ""
 
-#: ../../pep-0011.txt:279
-msgid "References"
+#: ../../pep-0011.txt:360
+msgid "Discussions"
 msgstr ""
 
-#: ../../pep-0011.txt:281
-msgid "http://support.microsoft.com/lifecycle/"
+#: ../../pep-0011.txt:362
+msgid ""
+"April 2022: `Consider adding a Tier 3 to tiered platform support "
+"<https://mail.python.org/archives/list/python-"
+"committers@python.org/thread/V3OZPJGA5VJFYM6XYGPZIVPOIYKX6KTD/>`_ (Victor"
+" Stinner)"
 msgstr ""
 
-#: ../../pep-0011.txt:282
-msgid "http://buildbot.python.org/3.x.stable/"
+#: ../../pep-0011.txt:365
+msgid ""
+"March 2022: `Proposed tiered platform support "
+"<https://mail.python.org/archives/list/python-"
+"committers@python.org/thread/K757345KX6W5ZLTWYBUXOXQTJJTL7GW5/>`_ (Brett "
+"Cannon)"
 msgstr ""
 
-#: ../../pep-0011.txt:285
+#: ../../pep-0011.txt:368
+msgid ""
+"February 2015: `Update to PEP 11 to clarify garnering platform support "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/OEQHRR2COYZDL6LZ42RBZOMIUB32WI34/>`_ (Brett Cannon)"
+msgstr ""
+
+#: ../../pep-0011.txt:371
+msgid ""
+"May 2014: `Where is our official policy of what platforms we do support? "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/T7WTUJ6TD3IGYGWV3M4PHJWNLM2WPZAW/>`_ (Brett Cannon)"
+msgstr ""
+
+#: ../../pep-0011.txt:374
+msgid ""
+"August 2007: `PEP 11 update - Call for port maintainers to step forward "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/DSSGXU5LBCMKYMZBRVB6RF3YAB6ST5AV/>`_ (Skip "
+"Montanaro)"
+msgstr ""
+
+#: ../../pep-0011.txt:380
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0011.txt:287
-msgid "This document has been placed in the public domain."
+#: ../../pep-0011.txt:382
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "11"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Removing support for little used platforms"
+#~ msgstr ""
+
+#~ msgid "18-Aug-2007 16-May-2014 20-Feb-2015"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP documents how an operating "
+#~ "system (platform) becomes supported in "
+#~ "CPython and documents past support."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Over time, the CPython source code "
+#~ "has collected various pieces of "
+#~ "platform-specific code, which, at some "
+#~ "point in time, was considered necessary"
+#~ " to use Python on a specific "
+#~ "platform. Without access to this "
+#~ "platform, it is not possible to "
+#~ "determine whether this code is still "
+#~ "needed.  As a result, this code "
+#~ "may either break during Python's "
+#~ "evolution, or it may become unnecessary"
+#~ " as the platforms evolve as well."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The growing amount of these fragments"
+#~ " poses the risk of unmaintainability: "
+#~ "without having experts for a large "
+#~ "number of platforms, it is not "
+#~ "possible to determine whether a certain"
+#~ " change to the CPython source code"
+#~ " will work on all supported "
+#~ "platforms."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To reduce this risk, this PEP "
+#~ "specifies what is required for a "
+#~ "platform to be considered supported by"
+#~ " Python as well as providing a "
+#~ "procedure to remove code for platforms"
+#~ " with few or no Python users."
+#~ msgstr ""
+
+#~ msgid "Supporting platforms"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Gaining official platform support requires "
+#~ "two things. First, a core developer "
+#~ "needs to volunteer to maintain "
+#~ "platform-specific code. This core developer"
+#~ " can either already be a member "
+#~ "of the Python development team or "
+#~ "be given contributor rights on the "
+#~ "basis of maintaining platform support "
+#~ "(it is at the discretion of the"
+#~ " Python development team to decide if"
+#~ " a person is ready to have such"
+#~ " rights even if it is just for"
+#~ " supporting a specific platform)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Second, a stable buildbot must be "
+#~ "provided [2]_. This guarantees that "
+#~ "platform support will not be "
+#~ "accidentally broken by a Python core "
+#~ "developer who does not have personal "
+#~ "access to the platform. For a "
+#~ "buildbot to be considered stable it "
+#~ "requires that the machine be reliably"
+#~ " up and functioning (but it is "
+#~ "up to the Python core developers "
+#~ "to decide whether to promote a "
+#~ "buildbot to being considered stable)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This policy does not disqualify "
+#~ "supporting other platforms indirectly. Patches"
+#~ " which are not platform-specific but"
+#~ " still done to add platform support"
+#~ " will be considered for inclusion. "
+#~ "For example, if platform-independent "
+#~ "changes were necessary in the configure"
+#~ " script which were motivated to "
+#~ "support a specific platform that could"
+#~ " be accepted. Patches which add "
+#~ "platform-specific code such as the "
+#~ "name of a specific platform to the"
+#~ " configure script will generally not "
+#~ "be accepted without the platform having"
+#~ " official support."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "CPU architecture and compiler support "
+#~ "are viewed in a similar manner as"
+#~ " platforms. For example, to consider "
+#~ "the ARM architecture supported a "
+#~ "buildbot running on ARM would be "
+#~ "required along with support from the "
+#~ "Python development team. In general it"
+#~ " is not required to have a CPU"
+#~ " architecture run under every possible "
+#~ "platform in order to be considered "
+#~ "supported."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If a certain platform that currently "
+#~ "has special code in CPython is "
+#~ "deemed to be without enough Python "
+#~ "users or lacks proper support from "
+#~ "the Python development team and/or a "
+#~ "buildbot, a note must be posted in"
+#~ " this PEP that this platform is "
+#~ "no longer actively supported.  This note"
+#~ " must include:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "At the same time, the CPython "
+#~ "source code must be changed to "
+#~ "produce a build-time error if "
+#~ "somebody tries to install Python on "
+#~ "this platform.  On platforms using "
+#~ "autoconf, configure must fail. This "
+#~ "gives potential users of the platform"
+#~ " a chance to step forward and "
+#~ "offer maintenance."
+#~ msgstr ""
+
+#~ msgid "Re-supporting platforms"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If a user of a platform wants "
+#~ "to see this platform supported again,"
+#~ " he may volunteer to maintain the "
+#~ "platform support.  Such an offer must"
+#~ " be recorded in the PEP, and "
+#~ "the user can submit patches to "
+#~ "remove the build-time errors, and "
+#~ "perform any other maintenance work for"
+#~ " the platform."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Microsoft has established a policy "
+#~ "called product support lifecycle [1]_. "
+#~ "Each product's lifecycle has a "
+#~ "mainstream support phase, where the "
+#~ "product is generally commercially available,"
+#~ " and an extended support phase, where"
+#~ " paid support is still available, and"
+#~ " certain bug fixes are released (in"
+#~ " particular security fixes)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "CPython's Windows support now follows "
+#~ "this lifecycle. A new feature release"
+#~ " X.Y.0 will support all Windows "
+#~ "releases whose extended support phase is"
+#~ " not yet expired. Subsequent bug fix"
+#~ " releases will support the same "
+#~ "Windows releases as the original feature"
+#~ " release (even if the extended "
+#~ "support phase has ended)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Because of this policy, no further "
+#~ "Windows releases need to be listed "
+#~ "in this PEP."
+#~ msgstr ""
+
+#~ msgid "Build broken in:  Python 2.7 (edit configure to reenable)"
+#~ msgstr ""
+
+#~ msgid "References"
+#~ msgstr ""
+
+#~ msgid "http://support.microsoft.com/lifecycle/"
+#~ msgstr ""
+
+#~ msgid "http://buildbot.python.org/3.x.stable/"
+#~ msgstr ""
+
+#~ msgid "This document has been placed in the public domain."
+#~ msgstr ""
 

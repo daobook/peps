@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0266.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0266.txt:1
-msgid "266"
-msgstr ""
-
-#: ../../pep-0266.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0266.txt:2
-msgid "Optimizing Global Variable/Attribute Access"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0266.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0266.txt:5
-msgid "skip@pobox.com (Skip Montanaro)"
+#: ../../pep-0266.txt:3
+msgid "Skip Montanaro <skip@pobox.com>"
 msgstr ""
 
 #: ../../pep-0266.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0266.txt:6
+#: ../../pep-0266.txt:4
 msgid "Withdrawn"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0266.txt:7
+#: ../../pep-0266.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0266.txt:9
+#: ../../pep-0266.txt:7
 msgid "13-Aug-2001"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0266.txt:10
+#: ../../pep-0266.txt:8
 msgid "2.3"
 msgstr ""
 
@@ -77,11 +61,11 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0266.txt:15
+#: ../../pep-0266.txt:13
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0266.txt:17
+#: ../../pep-0266.txt:15
 msgid ""
 "The bindings for most global variables and attributes of other modules "
 "typically never change during the execution of a Python program, but "
@@ -92,11 +76,11 @@ msgid ""
 "references on the code that changes the name bindings of such objects."
 msgstr ""
 
-#: ../../pep-0266.txt:27
+#: ../../pep-0266.txt:25
 msgid "Introduction"
 msgstr ""
 
-#: ../../pep-0266.txt:29
+#: ../../pep-0266.txt:27
 msgid ""
 "Consider the workhorse function ``sre_compile._compile``.  It is the "
 "internal compilation function for the ``sre`` module.  It consists almost"
@@ -111,7 +95,7 @@ msgid ""
 "up anew."
 msgstr ""
 
-#: ../../pep-0266.txt:40
+#: ../../pep-0266.txt:38
 msgid ""
 "Most global accesses are actually to objects that are \"almost "
 "constants\". This includes global variables in the current module as well"
@@ -128,7 +112,7 @@ msgid ""
 "fairly large."
 msgstr ""
 
-#: ../../pep-0266.txt:53
+#: ../../pep-0266.txt:51
 msgid ""
 "In an attempt to gauge the effect of this proposal, I modified the "
 "Pystone benchmark program included in the Python distribution to cache "
@@ -144,11 +128,11 @@ msgid ""
 "PEP."
 msgstr ""
 
-#: ../../pep-0266.txt:67
+#: ../../pep-0266.txt:65
 msgid "Proposed Change"
 msgstr ""
 
-#: ../../pep-0266.txt:69
+#: ../../pep-0266.txt:67
 msgid ""
 "I propose that the Python virtual machine be modified to include "
 "``TRACK_OBJECT`` and ``UNTRACK_OBJECT`` opcodes.  ``TRACK_OBJECT`` would "
@@ -161,11 +145,11 @@ msgid ""
 "and the local variable slot."
 msgstr ""
 
-#: ../../pep-0266.txt:80
+#: ../../pep-0266.txt:78
 msgid "Threads"
 msgstr ""
 
-#: ../../pep-0266.txt:82
+#: ../../pep-0266.txt:80
 msgid ""
 "Operation of this code in threaded programs will be no different than in "
 "unthreaded programs.  If you need to lock an object to access it, you "
@@ -173,15 +157,15 @@ msgid ""
 "executed and retain that lock until after you stop using it."
 msgstr ""
 
-#: ../../pep-0266.txt:87
+#: ../../pep-0266.txt:85
 msgid "FIXME: I suspect I need more here."
 msgstr ""
 
-#: ../../pep-0266.txt:91
+#: ../../pep-0266.txt:89
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0266.txt:93
+#: ../../pep-0266.txt:91
 msgid ""
 "Global variables and attributes rarely change.  For example, once a "
 "function imports the math module, the binding between the name *math* and"
@@ -191,26 +175,26 @@ msgid ""
 "``math.sin`` function, it must first execute a pair of instructions::"
 msgstr ""
 
-#: ../../pep-0266.txt:103
+#: ../../pep-0266.txt:101
 msgid ""
 "If the client module always assumed that ``math.sin`` was a local "
 "constant and it was the responsibility of \"external forces\" outside the"
 " function to keep the reference correct, we might have code like this::"
 msgstr ""
 
-#: ../../pep-0266.txt:113
+#: ../../pep-0266.txt:111
 msgid ""
 "If the ``LOAD_FAST`` was in a loop the payoff in reduced global loads and"
 " attribute lookups could be significant."
 msgstr ""
 
-#: ../../pep-0266.txt:116
+#: ../../pep-0266.txt:114
 msgid ""
 "This technique could, in theory, be applied to any global variable access"
 " or attribute lookup.  Consider this code::"
 msgstr ""
 
-#: ../../pep-0266.txt:124
+#: ../../pep-0266.txt:122
 msgid ""
 "Even though *l* is a local variable, you still pay the cost of loading "
 "``l.append`` ten times in the loop.  The compiler (or an optimizer) could"
@@ -222,7 +206,7 @@ msgid ""
 "``math.sin``."
 msgstr ""
 
-#: ../../pep-0266.txt:132
+#: ../../pep-0266.txt:130
 #, python-format
 msgid ""
 "According to a post to python-dev by Marc-Andre Lemburg [1]_, "
@@ -235,7 +219,7 @@ msgid ""
 "instructions."
 msgstr ""
 
-#: ../../pep-0266.txt:140
+#: ../../pep-0266.txt:138
 msgid ""
 "Code that uses global variables heavily often resorts to various tricks "
 "to avoid global variable and attribute lookup.  The aforementioned "
@@ -249,15 +233,15 @@ msgid ""
 "``sre_constants.py``."
 msgstr ""
 
-#: ../../pep-0266.txt:152
+#: ../../pep-0266.txt:150
 msgid "Questions"
 msgstr ""
 
-#: ../../pep-0266.txt:155
+#: ../../pep-0266.txt:153
 msgid "What about threads?  What if ``math.sin`` changes while in cache?"
 msgstr ""
 
-#: ../../pep-0266.txt:157
+#: ../../pep-0266.txt:155
 msgid ""
 "I believe the global interpreter lock will protect values from being "
 "corrupted.  In any case, the situation would be no worse than it is "
@@ -266,7 +250,7 @@ msgid ""
 " sin``, the client thread would see the old value of ``math.sin``."
 msgstr ""
 
-#: ../../pep-0266.txt:163
+#: ../../pep-0266.txt:161
 msgid ""
 "The idea is this.  I use a multi-attribute load below as an example, not "
 "because it would happen very often, but because by demonstrating the "
@@ -276,13 +260,13 @@ msgid ""
 "module level in ``foo``::"
 msgstr ""
 
-#: ../../pep-0266.txt:176
+#: ../../pep-0266.txt:174
 msgid ""
 "Upon entry to ``somefunc``, a ``TRACK_GLOBAL`` instruction will be "
 "executed::"
 msgstr ""
 
-#: ../../pep-0266.txt:180
+#: ../../pep-0266.txt:178
 msgid ""
 "*spam.eggs.ham* is a string literal stored in the function's constants "
 "array.  *n* is a fastlocals index.  ``&fastlocals[n]`` is a reference to "
@@ -291,18 +275,18 @@ msgid ""
 "envision happening:"
 msgstr ""
 
-#: ../../pep-0266.txt:186
+#: ../../pep-0266.txt:184
 msgid ""
 "The ``TRACK_GLOBAL`` instruction locates the object referred to by the "
 "name *spam* and finds it in its module scope.  It then executes a C "
 "function like::"
 msgstr ""
 
-#: ../../pep-0266.txt:192
+#: ../../pep-0266.txt:190
 msgid "where ``m`` is the module object with an attribute ``spam``."
 msgstr ""
 
-#: ../../pep-0266.txt:194
+#: ../../pep-0266.txt:192
 msgid ""
 "The module object strips the leading *spam.* and  stores the necessary "
 "information (*eggs.ham* and ``&fastlocals[n]``) in case its binding for "
@@ -310,21 +294,21 @@ msgid ""
 "key *eggs* in its dict and recursively calls::"
 msgstr ""
 
-#: ../../pep-0266.txt:201
+#: ../../pep-0266.txt:199
 msgid ""
 "The ``eggs`` object strips the leading *eggs.*, stores the (*ham*, "
 "&fastlocals[n]) info, locates the object in its namespace called ``ham`` "
 "and calls ``_PyObject_TrackName`` once again::"
 msgstr ""
 
-#: ../../pep-0266.txt:207
+#: ../../pep-0266.txt:205
 msgid ""
 "The ``ham`` object strips the leading string (no \".\" this time, but "
 "that's a minor point), sees that the result is empty, then uses its own "
 "value (``self``, probably) to update the location it was handed::"
 msgstr ""
 
-#: ../../pep-0266.txt:215
+#: ../../pep-0266.txt:213
 msgid ""
 "At this point, each object involved in resolving ``spam.eggs.ham`` knows "
 "which entry in its namespace needs to be tracked and what location to "
@@ -336,7 +320,7 @@ msgid ""
 "been passed."
 msgstr ""
 
-#: ../../pep-0266.txt:224
+#: ../../pep-0266.txt:222
 msgid ""
 "When the object referred to by the dotted expression ``spam.eggs.ham`` is"
 " going to go out of scope, an ``UNTRACK_GLOBAL spam.eggs.ham n`` "
@@ -344,7 +328,7 @@ msgid ""
 "information that ``TRACK_GLOBAL`` established."
 msgstr ""
 
-#: ../../pep-0266.txt:229
+#: ../../pep-0266.txt:227
 msgid ""
 "The tracking operation may seem expensive, but recall that the objects "
 "being tracked are assumed to be \"almost constant\", so the setup cost "
@@ -362,19 +346,19 @@ msgid ""
 "will want to associate that name with one of its fast locals slots."
 msgstr ""
 
-#: ../../pep-0266.txt:246
+#: ../../pep-0266.txt:244
 msgid "Unresolved Issues"
 msgstr ""
 
-#: ../../pep-0266.txt:249
+#: ../../pep-0266.txt:247
 msgid "Threading"
 msgstr ""
 
-#: ../../pep-0266.txt:251
+#: ../../pep-0266.txt:249
 msgid "What about this (dumb) code?::"
 msgstr ""
 
-#: ../../pep-0266.txt:270
+#: ../../pep-0266.txt:268
 msgid ""
 "It's not clear from a static analysis of the code what the lock is "
 "protecting. (You can't tell at compile-time that threads are even "
@@ -382,34 +366,34 @@ msgid ""
 "``l.append`` or ``math.sin`` in the ``fill_l`` function?"
 msgstr ""
 
-#: ../../pep-0266.txt:275
+#: ../../pep-0266.txt:273
 msgid ""
 "If we annotate the code with mythical ``track_object`` and "
 "``untrack_object`` builtins (I'm not proposing this, just illustrating "
 "where stuff would go!), we get::"
 msgstr ""
 
-#: ../../pep-0266.txt:300
+#: ../../pep-0266.txt:298
 msgid ""
 "Is that correct both with and without threads (or at least equally "
 "incorrect with and without threads)?"
 msgstr ""
 
-#: ../../pep-0266.txt:304
+#: ../../pep-0266.txt:302
 msgid "Nested Scopes"
 msgstr ""
 
-#: ../../pep-0266.txt:306
+#: ../../pep-0266.txt:304
 msgid ""
 "The presence of nested scopes will affect where ``TRACK_GLOBAL`` finds a "
 "global variable, but shouldn't affect anything after that.  (I think.)"
 msgstr ""
 
-#: ../../pep-0266.txt:310
+#: ../../pep-0266.txt:308
 msgid "Missing Attributes"
 msgstr ""
 
-#: ../../pep-0266.txt:312
+#: ../../pep-0266.txt:310
 msgid ""
 "Suppose I am tracking the object referred to by ``spam.eggs.ham`` and "
 "``spam.eggs`` is rebound to an object that does not have a ``ham`` "
@@ -418,7 +402,7 @@ msgid ""
 "virtual machine, but suppose the programmer has anticipated this case::"
 msgstr ""
 
-#: ../../pep-0266.txt:325
+#: ../../pep-0266.txt:323
 msgid ""
 "You can't raise an ``AttributeError`` when the tracking information is "
 "recalculated.  If it does not raise ``AttributeError`` and instead lets "
@@ -426,7 +410,7 @@ msgid ""
 " error."
 msgstr ""
 
-#: ../../pep-0266.txt:329
+#: ../../pep-0266.txt:327
 msgid ""
 "One solution to this problem would be to track the shortest possible root"
 " of each dotted expression the function refers to directly.  In the above"
@@ -434,11 +418,11 @@ msgid ""
 "``spam.eggs.bacon`` would not."
 msgstr ""
 
-#: ../../pep-0266.txt:335
+#: ../../pep-0266.txt:333
 msgid "Who does the dirty work?"
 msgstr ""
 
-#: ../../pep-0266.txt:337
+#: ../../pep-0266.txt:335
 msgid ""
 "In the Questions section I postulated the existence of a "
 "``_PyObject_TrackName`` function.  While the API is fairly easy to "
@@ -448,7 +432,7 @@ msgid ""
 "accommodate this new functionality."
 msgstr ""
 
-#: ../../pep-0266.txt:344
+#: ../../pep-0266.txt:342
 msgid ""
 "If all types used the ``PyObject_GenericSetAttr`` function to set "
 "attributes that would localize the update code somewhat.  They don't "
@@ -459,7 +443,7 @@ msgid ""
 "(``PyObject_TrackUpdate``?)."
 msgstr ""
 
-#: ../../pep-0266.txt:351
+#: ../../pep-0266.txt:349
 msgid ""
 "Finally, it's quite possible that some attributes will be set by side "
 "effect and not by any direct call to a ``setattr`` method of some sort.  "
@@ -477,11 +461,11 @@ msgid ""
 "that the author has not explicitly said was safe for tracking."
 msgstr ""
 
-#: ../../pep-0266.txt:367
+#: ../../pep-0266.txt:365
 msgid "Discussion"
 msgstr ""
 
-#: ../../pep-0266.txt:369
+#: ../../pep-0266.txt:367
 msgid ""
 "Jeremy Hylton has an alternate proposal on the table [2]_.  His proposal "
 "seeks to create a hybrid dictionary/list object for use in global name "
@@ -493,11 +477,11 @@ msgid ""
 "situations if potential performance burdens could be addressed."
 msgstr ""
 
-#: ../../pep-0266.txt:380
+#: ../../pep-0266.txt:378
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0266.txt:382
+#: ../../pep-0266.txt:380
 msgid ""
 "I don't believe there will be any serious issues of backward "
 "compatibility. Obviously, Python bytecode that contains ``TRACK_OBJECT`` "
@@ -505,11 +489,11 @@ msgid ""
 " breakage at the bytecode level is often assumed between versions."
 msgstr ""
 
-#: ../../pep-0266.txt:389
+#: ../../pep-0266.txt:387
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0266.txt:391
+#: ../../pep-0266.txt:389
 msgid ""
 "TBD.  This is where I need help.  I believe there should be either a "
 "central name/location registry or the code that modifies object "
@@ -526,11 +510,11 @@ msgid ""
 "variable's name binding changes.)"
 msgstr ""
 
-#: ../../pep-0266.txt:406
+#: ../../pep-0266.txt:404
 msgid "Performance"
 msgstr ""
 
-#: ../../pep-0266.txt:408
+#: ../../pep-0266.txt:406
 msgid ""
 "I believe (though I have no code to prove it at this point), that "
 "implementing ``TRACK_OBJECT`` will generally not be much more expensive "
@@ -543,7 +527,7 @@ msgid ""
 "instructions as well."
 msgstr ""
 
-#: ../../pep-0266.txt:417
+#: ../../pep-0266.txt:415
 msgid ""
 "The number of tracked objects should be relatively small.  All active "
 "frames of all active threads could conceivably be tracking objects, but "
@@ -551,27 +535,42 @@ msgid ""
 "application."
 msgstr ""
 
-#: ../../pep-0266.txt:423
+#: ../../pep-0266.txt:421
 msgid "References"
 msgstr ""
 
-#: ../../pep-0266.txt:425
+#: ../../pep-0266.txt:423
 msgid "https://mail.python.org/pipermail/python-dev/2000-July/007609.html"
 msgstr ""
 
-#: ../../pep-0266.txt:427
+#: ../../pep-0266.txt:425
 msgid "http://www.zope.org/Members/jeremy/CurrentAndFutureProjects/FastGlobalsPEP"
 msgstr ""
 
-#: ../../pep-0266.txt:429
+#: ../../pep-0266.txt:427
 msgid "http://www.musi-cal.com/~skip/python/rattlesnake20010813.tar.gz"
 msgstr ""
 
-#: ../../pep-0266.txt:433
+#: ../../pep-0266.txt:431
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0266.txt:435
+#: ../../pep-0266.txt:433
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "266"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Optimizing Global Variable/Attribute Access"
+#~ msgstr ""
+
+#~ msgid "skip@pobox.com (Skip Montanaro)"
+#~ msgstr ""
 

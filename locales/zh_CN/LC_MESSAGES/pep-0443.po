@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0443.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0443.txt:1
-msgid "443"
-msgstr ""
-
-#: ../../pep-0443.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0443.txt:2
-msgid "Single-dispatch generic functions"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0443.txt
 msgid "Author"
@@ -46,7 +30,7 @@ msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0443.txt:6
-msgid "Python-Dev <python-dev@python.org>"
+msgid "python-dev@python.org"
 msgstr ""
 
 #: ../../pep-0443.txt
@@ -74,10 +58,18 @@ msgid "22-May-2013"
 msgstr ""
 
 #: ../../pep-0443.txt
-msgid "Post-History"
+msgid "Python-Version"
 msgstr ""
 
 #: ../../pep-0443.txt:11
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0443.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0443.txt:12
 msgid "22-May-2013, 25-May-2013, 31-May-2013"
 msgstr ""
 
@@ -85,22 +77,22 @@ msgstr ""
 msgid "Replaces"
 msgstr ""
 
-#: ../../pep-0443.txt:12
+#: ../../pep-0443.txt:13
 msgid "245, 246, 3124"
 msgstr ""
 
-#: ../../pep-0443.txt:16
+#: ../../pep-0443.txt:17
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0443.txt:18
+#: ../../pep-0443.txt:19
 msgid ""
 "This PEP proposes a new mechanism in the ``functools`` standard library "
 "module that provides a simple form of generic programming known as "
 "single-dispatch generic functions."
 msgstr ""
 
-#: ../../pep-0443.txt:22
+#: ../../pep-0443.txt:23
 msgid ""
 "A **generic function** is composed of multiple functions implementing the"
 " same operation for different types. Which implementation should be used "
@@ -109,11 +101,11 @@ msgid ""
 "known as **single dispatch**."
 msgstr ""
 
-#: ../../pep-0443.txt:30
+#: ../../pep-0443.txt:31
 msgid "Rationale and Goals"
 msgstr ""
 
-#: ../../pep-0443.txt:32
+#: ../../pep-0443.txt:33
 msgid ""
 "Python has always provided a variety of built-in and standard-library "
 "generic functions, such as ``len()``, ``iter()``, ``pprint.pprint()``, "
@@ -121,34 +113,34 @@ msgid ""
 "However, it currently:"
 msgstr ""
 
-#: ../../pep-0443.txt:37
+#: ../../pep-0443.txt:38
 msgid ""
 "does not have a simple or straightforward way for developers to create "
 "new generic functions,"
 msgstr ""
 
-#: ../../pep-0443.txt:40
+#: ../../pep-0443.txt:41
 msgid ""
 "does not have a standard way for methods to be added to existing generic "
 "functions (i.e., some are added using registration functions, others "
 "require defining ``__special__`` methods, possibly by monkeypatching)."
 msgstr ""
 
-#: ../../pep-0443.txt:45
+#: ../../pep-0443.txt:46
 msgid ""
 "In addition, it is currently a common anti-pattern for Python code to "
 "inspect the types of received arguments, in order to decide what to do "
 "with the objects."
 msgstr ""
 
-#: ../../pep-0443.txt:49
+#: ../../pep-0443.txt:50
 msgid ""
 "For example, code may wish to accept either an object of some type, or a "
 "sequence of objects of that type. Currently, the \"obvious way\" to do "
 "this is by type inspection, but this is brittle and closed to extension."
 msgstr ""
 
-#: ../../pep-0443.txt:54
+#: ../../pep-0443.txt:55
 msgid ""
 "Abstract Base Classes make it easier to discover present behaviour, but "
 "don't help adding new behaviour. A developer using an already-written "
@@ -157,24 +149,24 @@ msgid ""
 "party."
 msgstr ""
 
-#: ../../pep-0443.txt:60
+#: ../../pep-0443.txt:61
 msgid ""
 "Therefore, this PEP proposes a uniform API to address dynamic overloading"
 " using decorators."
 msgstr ""
 
-#: ../../pep-0443.txt:65
+#: ../../pep-0443.txt:66
 msgid "User API"
 msgstr ""
 
-#: ../../pep-0443.txt:67
+#: ../../pep-0443.txt:68
 msgid ""
 "To define a generic function, decorate it with the ``@singledispatch`` "
 "decorator. Note that the dispatch happens on the type of the first "
 "argument. Create your function accordingly::"
 msgstr ""
 
-#: ../../pep-0443.txt:78
+#: ../../pep-0443.txt:79
 msgid ""
 "To add overloaded implementations to the function, use the ``register()``"
 " attribute of the generic function. This is a decorator, taking a type "
@@ -182,26 +174,26 @@ msgid ""
 "type::"
 msgstr ""
 
-#: ../../pep-0443.txt:96
+#: ../../pep-0443.txt:97
 msgid ""
 "To enable registering lambdas and pre-existing functions, the "
 "``register()`` attribute can be used in a functional form::"
 msgstr ""
 
-#: ../../pep-0443.txt:104
+#: ../../pep-0443.txt:105
 msgid ""
 "The ``register()`` attribute returns the undecorated function. This "
 "enables decorator stacking, pickling, as well as creating unit tests for "
 "each variant independently::"
 msgstr ""
 
-#: ../../pep-0443.txt:118
+#: ../../pep-0443.txt:119
 msgid ""
 "When called, the generic function dispatches on the type of the first "
 "argument::"
 msgstr ""
 
-#: ../../pep-0443.txt:138
+#: ../../pep-0443.txt:139
 msgid ""
 "Where there is no registered implementation for a specific type, its "
 "method resolution order is used to find a more generic implementation. "
@@ -210,30 +202,30 @@ msgid ""
 "implementation is found."
 msgstr ""
 
-#: ../../pep-0443.txt:144
+#: ../../pep-0443.txt:145
 msgid ""
 "To check which implementation will the generic function choose for a "
 "given type, use the ``dispatch()`` attribute::"
 msgstr ""
 
-#: ../../pep-0443.txt:152
+#: ../../pep-0443.txt:153
 msgid ""
 "To access all registered implementations, use the read-only ``registry`` "
 "attribute::"
 msgstr ""
 
-#: ../../pep-0443.txt:164
+#: ../../pep-0443.txt:165
 msgid ""
 "The proposed API is intentionally limited and opinionated, as to ensure "
 "it is easy to explain and use, as well as to maintain consistency with "
 "existing members in the ``functools`` module."
 msgstr ""
 
-#: ../../pep-0443.txt:170
+#: ../../pep-0443.txt:171
 msgid "Implementation Notes"
 msgstr ""
 
-#: ../../pep-0443.txt:172
+#: ../../pep-0443.txt:173
 msgid ""
 "The functionality described in this PEP is already implemented in the "
 "``pkgutil`` standard library module as ``simplegeneric``. Because this "
@@ -241,7 +233,7 @@ msgid ""
 "reference implementation is available on hg.python.org [#ref-impl]_."
 msgstr ""
 
-#: ../../pep-0443.txt:177
+#: ../../pep-0443.txt:178
 msgid ""
 "The dispatch type is specified as a decorator argument. An alternative "
 "form using function annotations was considered but its inclusion has been"
@@ -250,18 +242,18 @@ msgid ""
 "usage are still debated."
 msgstr ""
 
-#: ../../pep-0443.txt:183
+#: ../../pep-0443.txt:184
 msgid ""
 "Based on the current ``pkgutil.simplegeneric`` implementation, and "
 "following the convention on registering virtual subclasses on Abstract "
 "Base Classes, the dispatch registry will not be thread-safe."
 msgstr ""
 
-#: ../../pep-0443.txt:188
+#: ../../pep-0443.txt:189
 msgid "Abstract Base Classes"
 msgstr ""
 
-#: ../../pep-0443.txt:190
+#: ../../pep-0443.txt:191
 msgid ""
 "The ``pkgutil.simplegeneric`` implementation relied on several forms of "
 "method resolution order (MRO). ``@singledispatch`` removes special "
@@ -269,7 +261,7 @@ msgid ""
 "importantly, it introduces support for Abstract Base Classes (ABC)."
 msgstr ""
 
-#: ../../pep-0443.txt:195
+#: ../../pep-0443.txt:196
 msgid ""
 "When a generic function implementation is registered for an ABC, the "
 "dispatch algorithm switches to an extended form of C3 linearization, "
@@ -282,19 +274,19 @@ msgid ""
 "explicitly listed in the MRO of said class."
 msgstr ""
 
-#: ../../pep-0443.txt:205
+#: ../../pep-0443.txt:206
 msgid ""
 "In its most basic form, this linearization returns the MRO for the given "
 "type::"
 msgstr ""
 
-#: ../../pep-0443.txt:211
+#: ../../pep-0443.txt:212
 msgid ""
 "When the second argument contains ABCs that the specified type is a "
 "subclass of, they are inserted in a predictable order::"
 msgstr ""
 
-#: ../../pep-0443.txt:221
+#: ../../pep-0443.txt:222
 msgid ""
 "While this mode of operation is significantly slower, all dispatch "
 "decisions are cached. The cache is invalidated on registering new "
@@ -304,36 +296,36 @@ msgid ""
 "instance::"
 msgstr ""
 
-#: ../../pep-0443.txt:236
+#: ../../pep-0443.txt:237
 msgid ""
 "Faced with ambiguity, ``@singledispatch`` refuses the temptation to "
 "guess::"
 msgstr ""
 
-#: ../../pep-0443.txt:253
+#: ../../pep-0443.txt:254
 msgid ""
 "Note that this exception would not be raised if one or more ABCs had been"
 " provided explicitly as base classes during class definition. In this "
 "case dispatch happens in the MRO order::"
 msgstr ""
 
-#: ../../pep-0443.txt:267
+#: ../../pep-0443.txt:268
 msgid ""
 "A similar conflict arises when subclassing an ABC is inferred from the "
 "presence of a special method like ``__len__()`` or ``__contains__()``::"
 msgstr ""
 
-#: ../../pep-0443.txt:283
+#: ../../pep-0443.txt:284
 msgid ""
 "An early version of the PEP contained a custom approach that was simpler "
 "but created a number of edge cases with surprising results [#why-c3]_."
 msgstr ""
 
-#: ../../pep-0443.txt:287
+#: ../../pep-0443.txt:288
 msgid "Usage Patterns"
 msgstr ""
 
-#: ../../pep-0443.txt:289
+#: ../../pep-0443.txt:290
 msgid ""
 "This PEP proposes extending behaviour only of functions specifically "
 "marked as generic. Just as a base class method may be overridden by a "
@@ -341,7 +333,7 @@ msgid ""
 "functionality for a given type."
 msgstr ""
 
-#: ../../pep-0443.txt:294
+#: ../../pep-0443.txt:295
 msgid ""
 "Universal overloading does not equal *arbitrary* overloading, in the "
 "sense that we need not expect people to randomly redefine the behavior of"
@@ -351,7 +343,7 @@ msgid ""
 "common case."
 msgstr ""
 
-#: ../../pep-0443.txt:301
+#: ../../pep-0443.txt:302
 msgid ""
 "If a module is defining a new generic operation, it will usually also "
 "define any required implementations for existing types in the same place."
@@ -363,7 +355,7 @@ msgid ""
 "adding support."
 msgstr ""
 
-#: ../../pep-0443.txt:310
+#: ../../pep-0443.txt:311
 msgid ""
 "It is only in rather infrequent cases that one will have implementations "
 "registered in a module that contains neither the function nor the type(s)"
@@ -375,7 +367,7 @@ msgid ""
 "modules\" case, where best practice suggests naming them accordingly.)"
 msgstr ""
 
-#: ../../pep-0443.txt:320
+#: ../../pep-0443.txt:321
 msgid ""
 "As mentioned earlier, single-dispatch generics are already prolific "
 "throughout the standard library. A clean, standard way of doing them "
@@ -383,20 +375,20 @@ msgid ""
 "common one, opening them up for user extensibility at the same time."
 msgstr ""
 
-#: ../../pep-0443.txt:327
+#: ../../pep-0443.txt:328
 msgid "Alternative approaches"
 msgstr ""
 
-#: ../../pep-0443.txt:329
+#: ../../pep-0443.txt:330
 msgid ""
-"In PEP 3124 [#pep-3124]_ Phillip J. Eby proposes a full-grown solution "
-"with overloading based on arbitrary rule sets (with the default "
-"implementation dispatching on argument types), as well as interfaces, "
-"adaptation and method combining. PEAK-Rules [#peak-rules]_ is a reference"
-" implementation of the concepts described in PJE's PEP."
+"In :pep:`3124` Phillip J. Eby proposes a full-grown solution with "
+"overloading based on arbitrary rule sets (with the default implementation"
+" dispatching on argument types), as well as interfaces, adaptation and "
+"method combining. PEAK-Rules [#peak-rules]_ is a reference implementation"
+" of the concepts described in PJE's PEP."
 msgstr ""
 
-#: ../../pep-0443.txt:335
+#: ../../pep-0443.txt:336
 msgid ""
 "Such a broad approach is inherently complex, which makes reaching a "
 "consensus hard. In contrast, this PEP focuses on a single piece of "
@@ -404,7 +396,7 @@ msgid ""
 " does not preclude the use of other approaches now or in the future."
 msgstr ""
 
-#: ../../pep-0443.txt:340
+#: ../../pep-0443.txt:341
 msgid ""
 "In a 2005 article on Artima [#artima2005]_ Guido van Rossum presents a "
 "generic function implementation that dispatches on types of all arguments"
@@ -413,7 +405,7 @@ msgid ""
 "``gnosis.magic.multimethods`` [#gnosis-multimethods]_."
 msgstr ""
 
-#: ../../pep-0443.txt:346
+#: ../../pep-0443.txt:347
 msgid ""
 "While this seems desirable at first, I agree with Fredrik Lundh's comment"
 " that \"if you design APIs with pages of logic just to sort out what code"
@@ -427,7 +419,7 @@ msgid ""
 "(object-oriented methods) or the algorithm (single-dispatch overloading)."
 msgstr ""
 
-#: ../../pep-0443.txt:358
+#: ../../pep-0443.txt:359
 msgid ""
 "PyPy's RPython offers ``extendabletype`` [#pairtype]_, a metaclass which "
 "enables classes to be externally extended. In combination with "
@@ -435,14 +427,14 @@ msgid ""
 "dispatch generics."
 msgstr ""
 
-#: ../../pep-0443.txt:365
+#: ../../pep-0443.txt:366
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0443.txt:367
+#: ../../pep-0443.txt:368
 msgid ""
-"Apart from Phillip J. Eby's work on PEP 3124 [#pep-3124]_ and PEAK-Rules,"
-" influences include Paul Moore's original issue [#issue-5135]_ that "
+"Apart from Phillip J. Eby's work on :pep:`3124` and PEAK-Rules, "
+"influences include Paul Moore's original issue [#issue-5135]_ that "
 "proposed exposing ``pkgutil.simplegeneric`` as part of the ``functools`` "
 "API, Guido van Rossum's article on multimethods [#artima2005]_, and "
 "discussions with Raymond Hettinger on a general pprint rewrite. Huge "
@@ -450,20 +442,19 @@ msgid ""
 "providing initial feedback."
 msgstr ""
 
-#: ../../pep-0443.txt:377
+#: ../../pep-0443.txt:378
 msgid "References"
 msgstr ""
 
-#: ../../pep-0443.txt:380
+#: ../../pep-0443.txt:381
 msgid "http://hg.python.org/features/pep-443/file/tip/Lib/functools.py#l359"
 msgstr ""
 
-#: ../../pep-0443.txt:382
+#: ../../pep-0443.txt:383
 msgid ""
-"PEP 8 states in the \"Programming Recommendations\" section that \"the "
-"Python standard library will not use function annotations as that would "
-"result in a premature commitment to a particular annotation style\". "
-"(http://www.python.org/dev/peps/pep-0008)"
+":pep:`8` states in the \"Programming Recommendations\" section that \"the"
+" Python standard library will not use function annotations as that would "
+"result in a premature commitment to a particular annotation style\"."
 msgstr ""
 
 #: ../../pep-0443.txt:388
@@ -471,38 +462,89 @@ msgid "http://bugs.python.org/issue18244"
 msgstr ""
 
 #: ../../pep-0443.txt:390
-msgid "http://www.python.org/dev/peps/pep-3124/"
-msgstr ""
-
-#: ../../pep-0443.txt:392
 msgid "http://peak.telecommunity.com/DevCenter/PEAK_2dRules"
 msgstr ""
 
-#: ../../pep-0443.txt:395
+#: ../../pep-0443.txt:393
 msgid "http://www.artima.com/weblogs/viewpost.jsp?thread=101605"
 msgstr ""
 
-#: ../../pep-0443.txt:397
+#: ../../pep-0443.txt:395
 msgid "http://pypi.python.org/pypi/generic"
 msgstr ""
 
-#: ../../pep-0443.txt:400
+#: ../../pep-0443.txt:398
 msgid "http://gnosis.cx/publish/programming/charming_python_b12.html"
 msgstr ""
 
-#: ../../pep-0443.txt:403
+#: ../../pep-0443.txt:401
 msgid "https://bitbucket.org/pypy/pypy/raw/default/rpython/tool/pairtype.py"
 msgstr ""
 
-#: ../../pep-0443.txt:405
+#: ../../pep-0443.txt:403
 msgid "http://bugs.python.org/issue5135"
 msgstr ""
 
-#: ../../pep-0443.txt:409
+#: ../../pep-0443.txt:407
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0443.txt:411
+#: ../../pep-0443.txt:409
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "443"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Single-dispatch generic functions"
+#~ msgstr ""
+
+#~ msgid "Python-Dev <python-dev@python.org>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In PEP 3124 [#pep-3124]_ Phillip J. "
+#~ "Eby proposes a full-grown solution "
+#~ "with overloading based on arbitrary rule"
+#~ " sets (with the default implementation "
+#~ "dispatching on argument types), as well"
+#~ " as interfaces, adaptation and method "
+#~ "combining. PEAK-Rules [#peak-rules]_ is"
+#~ " a reference implementation of the "
+#~ "concepts described in PJE's PEP."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Apart from Phillip J. Eby's work "
+#~ "on PEP 3124 [#pep-3124]_ and PEAK-"
+#~ "Rules, influences include Paul Moore's "
+#~ "original issue [#issue-5135]_ that proposed"
+#~ " exposing ``pkgutil.simplegeneric`` as part "
+#~ "of the ``functools`` API, Guido van "
+#~ "Rossum's article on multimethods "
+#~ "[#artima2005]_, and discussions with Raymond"
+#~ " Hettinger on a general pprint "
+#~ "rewrite. Huge thanks to Nick Coghlan "
+#~ "for encouraging me to create this "
+#~ "PEP and providing initial feedback."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 8 states in the \"Programming "
+#~ "Recommendations\" section that \"the Python"
+#~ " standard library will not use "
+#~ "function annotations as that would "
+#~ "result in a premature commitment to "
+#~ "a particular annotation style\". "
+#~ "(http://www.python.org/dev/peps/pep-0008)"
+#~ msgstr ""
+
+#~ msgid "http://www.python.org/dev/peps/pep-3124/"
+#~ msgstr ""
 

@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0286.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0286.txt:1
-msgid "286"
-msgstr ""
-
-#: ../../pep-0286.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0286.txt:2
-msgid "Enhanced Argument Tuples"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0286.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0286.txt:5
-msgid "martin@v.loewis.de (Martin von Löwis)"
+#: ../../pep-0286.txt:3
+msgid "Martin von Löwis <martin@v.loewis.de>"
 msgstr ""
 
 #: ../../pep-0286.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0286.txt:6
+#: ../../pep-0286.txt:4
 msgid "Deferred"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0286.txt:7
+#: ../../pep-0286.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0286.txt:9
+#: ../../pep-0286.txt:7
 msgid "03-Mar-2002"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0286.txt:10
+#: ../../pep-0286.txt:8
 msgid "2.3"
 msgstr ""
 
@@ -77,22 +61,22 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0286.txt:15
+#: ../../pep-0286.txt:13
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0286.txt:17
+#: ../../pep-0286.txt:15
 msgid ""
 "``PyArg_ParseTuple`` is confronted with difficult memory management if an"
 " argument converter creates new memory.  To deal with these cases, a "
 "specialized argument type is proposed."
 msgstr ""
 
-#: ../../pep-0286.txt:23
+#: ../../pep-0286.txt:21
 msgid "PEP Deferral"
 msgstr ""
 
-#: ../../pep-0286.txt:25
+#: ../../pep-0286.txt:23
 msgid ""
 "Further exploration of the concepts covered in this PEP has been deferred"
 " for lack of a current champion interested in promoting the goals of the "
@@ -100,31 +84,31 @@ msgid ""
 "available time to do so effectively."
 msgstr ""
 
-#: ../../pep-0286.txt:30
+#: ../../pep-0286.txt:28
 msgid ""
-"The resolution of this PEP may also be affected by the resolution of PEP "
-"426, which proposes the use of a preprocessing step to generate some "
-"aspects of C API interface code."
+"The resolution of this PEP may also be affected by the resolution of "
+":pep:`426`, which proposes the use of a preprocessing step to generate "
+"some aspects of C API interface code."
 msgstr ""
 
-#: ../../pep-0286.txt:36
+#: ../../pep-0286.txt:34
 msgid "Problem description"
 msgstr ""
 
-#: ../../pep-0286.txt:38
+#: ../../pep-0286.txt:36
 msgid ""
 "Today, argument tuples keep references to the function arguments, which "
 "are guaranteed to live as long as the argument tuple exists which is at "
 "least as long as the function call is being executed."
 msgstr ""
 
-#: ../../pep-0286.txt:42
+#: ../../pep-0286.txt:40
 msgid ""
 "In some cases, parsing an argument will allocate new memory, which is "
 "then to be released by the caller.  This has two problems:"
 msgstr ""
 
-#: ../../pep-0286.txt:45
+#: ../../pep-0286.txt:43
 msgid ""
 "In case of failure, the application cannot know what memory to release; "
 "most callers don't even know that they have the responsibility to release"
@@ -132,7 +116,7 @@ msgid ""
 "[1]_) and the ``es#`` converter (bug #501716 [2]_)."
 msgstr ""
 
-#: ../../pep-0286.txt:51
+#: ../../pep-0286.txt:49
 msgid ""
 "Even for successful argument parsing, it is still inconvenient for the "
 "caller to be responsible for releasing the memory.  In some cases, this "
@@ -141,60 +125,60 @@ msgid ""
 "object that has the right contents."
 msgstr ""
 
-#: ../../pep-0286.txt:60
+#: ../../pep-0286.txt:58
 msgid "Proposed solution"
 msgstr ""
 
-#: ../../pep-0286.txt:62
+#: ../../pep-0286.txt:60
 msgid ""
 "A new type 'argument tuple' is introduced.  This type derives from tuple,"
 " adding an ``__dict__`` member (at ``tp_dictoffset`` -4).  Instances of "
 "this type might get the following attributes:"
 msgstr ""
 
-#: ../../pep-0286.txt:66
+#: ../../pep-0286.txt:64
 msgid ""
 "'failobjects', a list of objects which need to be deallocated in case of "
 "success"
 msgstr ""
 
-#: ../../pep-0286.txt:69
+#: ../../pep-0286.txt:67
 msgid ""
 "'okobjects', a list of object which will be released when the argument "
 "tuple is released"
 msgstr ""
 
-#: ../../pep-0286.txt:72
+#: ../../pep-0286.txt:70
 msgid ""
 "To manage this type, the following functions will be added, and used "
 "appropriately in ``ceval.c`` and ``getargs.c``:"
 msgstr ""
 
-#: ../../pep-0286.txt:75
+#: ../../pep-0286.txt:73
 msgid "``PyArgTuple_New(int);``"
 msgstr ""
 
-#: ../../pep-0286.txt:76
+#: ../../pep-0286.txt:74
 msgid "``PyArgTuple_AddFailObject(PyObject*, PyObject*);``"
 msgstr ""
 
-#: ../../pep-0286.txt:77
+#: ../../pep-0286.txt:75
 msgid "``PyArgTuple_AddFailMemory(PyObject*, void*);``"
 msgstr ""
 
-#: ../../pep-0286.txt:78
+#: ../../pep-0286.txt:76
 msgid "``PyArgTuple_AddOkObject(PyObject*, PyObject*);``"
 msgstr ""
 
-#: ../../pep-0286.txt:79
+#: ../../pep-0286.txt:77
 msgid "``PyArgTuple_AddOkMemory(PyObject*, void*);``"
 msgstr ""
 
-#: ../../pep-0286.txt:80
+#: ../../pep-0286.txt:78
 msgid "``PyArgTuple_ClearFailed(PyObject*);``"
 msgstr ""
 
-#: ../../pep-0286.txt:82
+#: ../../pep-0286.txt:80
 msgid ""
 "When argument parsing fails, all fail objects will be released through "
 "``Py_DECREF``, and all fail memory will be released through "
@@ -202,35 +186,35 @@ msgid ""
 "and fail memory are dropped, without releasing anything."
 msgstr ""
 
-#: ../../pep-0286.txt:87
+#: ../../pep-0286.txt:85
 msgid ""
 "When the argument tuple is released, all ok objects and memory will be "
 "released."
 msgstr ""
 
-#: ../../pep-0286.txt:90
+#: ../../pep-0286.txt:88
 msgid ""
 "If those functions are called with an object of a different type, a "
 "warning is issued and no further action is taken; usage of the affected "
 "converters without using argument tuples is deprecated."
 msgstr ""
 
-#: ../../pep-0286.txt:96
+#: ../../pep-0286.txt:94
 msgid "Affected converters"
 msgstr ""
 
-#: ../../pep-0286.txt:98
+#: ../../pep-0286.txt:96
 msgid ""
 "The following converters will add fail memory and fail objects: ``N``, "
 "``es``, ``et``, ``es#``, ``et#`` (unless memory is passed into the "
 "converter)"
 msgstr ""
 
-#: ../../pep-0286.txt:103
+#: ../../pep-0286.txt:101
 msgid "New converters"
 msgstr ""
 
-#: ../../pep-0286.txt:105
+#: ../../pep-0286.txt:103
 msgid ""
 "To simplify Unicode conversion, the ``e*`` converters are duplicated as "
 "``E*`` converters (``Es``, ``Et``, ``Es#``, ``Et#``).  The usage of the "
@@ -240,23 +224,47 @@ msgid ""
 "tuple.  The ``e*`` converters are deprecated."
 msgstr ""
 
-#: ../../pep-0286.txt:114
+#: ../../pep-0286.txt:112
 msgid "References"
 msgstr ""
 
-#: ../../pep-0286.txt:116
+#: ../../pep-0286.txt:114
 msgid "infrequent memory leak in pyexpat (http://bugs.python.org/issue416288)"
 msgstr ""
 
-#: ../../pep-0286.txt:119
+#: ../../pep-0286.txt:117
 msgid "\"es#\" parser marker leaks memory (http://bugs.python.org/issue501716)"
 msgstr ""
 
-#: ../../pep-0286.txt:124
+#: ../../pep-0286.txt:122
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0286.txt:126
+#: ../../pep-0286.txt:124
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "286"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Enhanced Argument Tuples"
+#~ msgstr ""
+
+#~ msgid "martin@v.loewis.de (Martin von Löwis)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The resolution of this PEP may "
+#~ "also be affected by the resolution "
+#~ "of PEP 426, which proposes the use"
+#~ " of a preprocessing step to generate"
+#~ " some aspects of C API interface "
+#~ "code."
+#~ msgstr ""
 

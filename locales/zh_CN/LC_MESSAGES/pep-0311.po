@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0311.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0311.txt:1
-msgid "311"
-msgstr ""
-
-#: ../../pep-0311.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0311.txt:2
-msgid "Simplified Global Interpreter Lock Acquisition for Extensions"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0311.txt
 msgid "Author"
@@ -66,18 +50,26 @@ msgid "05-Feb-2003"
 msgstr ""
 
 #: ../../pep-0311.txt
-msgid "Post-History"
+msgid "Python-Version"
 msgstr ""
 
 #: ../../pep-0311.txt:10
-msgid "05-Feb-2003 14-Feb-2003 19-Apr-2003"
+msgid "2.3"
 msgstr ""
 
-#: ../../pep-0311.txt:14
+#: ../../pep-0311.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0311.txt:11
+msgid "05-Feb-2003, 14-Feb-2003, 19-Apr-2003"
+msgstr ""
+
+#: ../../pep-0311.txt:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0311.txt:16
+#: ../../pep-0311.txt:17
 msgid ""
 "This PEP proposes a simplified API for access to the Global Interpreter "
 "Lock (GIL) for Python extension modules. Specifically, it provides a "
@@ -85,29 +77,29 @@ msgid ""
 "current state of Python (i.e., the state of the GIL is unknown."
 msgstr ""
 
-#: ../../pep-0311.txt:22
+#: ../../pep-0311.txt:23
 msgid ""
 "This PEP proposes a new API, for platforms built with threading support, "
 "to manage the Python thread state.  An implementation strategy is "
 "proposed, along with an initial, platform independent implementation."
 msgstr ""
 
-#: ../../pep-0311.txt:29
+#: ../../pep-0311.txt:30
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0311.txt:31
+#: ../../pep-0311.txt:32
 msgid ""
 "The current Python interpreter state API is suitable for simple, single-"
 "threaded extensions, but quickly becomes incredibly complex for non-"
 "trivial, multi-threaded extensions."
 msgstr ""
 
-#: ../../pep-0311.txt:35
+#: ../../pep-0311.txt:36
 msgid "Currently Python provides two mechanisms for dealing with the GIL:"
 msgstr ""
 
-#: ../../pep-0311.txt:37
+#: ../../pep-0311.txt:38
 msgid ""
 "``Py_BEGIN_ALLOW_THREADS`` and ``Py_END_ALLOW_THREADS`` macros. These "
 "macros are provided primarily to allow a simple Python extension that "
@@ -119,7 +111,7 @@ msgid ""
 "Python when the thread state is unknown."
 msgstr ""
 
-#: ../../pep-0311.txt:47
+#: ../../pep-0311.txt:48
 msgid ""
 "``PyThreadState`` and ``PyInterpreterState`` APIs. These API functions "
 "allow an extension/embedded application to acquire the GIL, but suffer "
@@ -132,7 +124,7 @@ msgid ""
 "GIL, and therefore can reliably interact with this API."
 msgstr ""
 
-#: ../../pep-0311.txt:59
+#: ../../pep-0311.txt:60
 msgid ""
 "For these reasons, the question of how such extensions should interact "
 "with Python is quickly becoming a FAQ.  The main impetus for this PEP, a "
@@ -140,39 +132,39 @@ msgid ""
 "with this exact issue:"
 msgstr ""
 
-#: ../../pep-0311.txt:64
+#: ../../pep-0311.txt:65
 msgid "The win32all extensions"
 msgstr ""
 
-#: ../../pep-0311.txt:65
+#: ../../pep-0311.txt:66
 msgid "Boost"
 msgstr ""
 
-#: ../../pep-0311.txt:66
+#: ../../pep-0311.txt:67
 msgid "ctypes"
 msgstr ""
 
-#: ../../pep-0311.txt:67
+#: ../../pep-0311.txt:68
 msgid "Python-GTK bindings"
 msgstr ""
 
-#: ../../pep-0311.txt:68
+#: ../../pep-0311.txt:69
 msgid "Uno"
 msgstr ""
 
-#: ../../pep-0311.txt:69
+#: ../../pep-0311.txt:70
 msgid "PyObjC"
 msgstr ""
 
-#: ../../pep-0311.txt:70
+#: ../../pep-0311.txt:71
 msgid "Mac toolbox"
 msgstr ""
 
-#: ../../pep-0311.txt:71
+#: ../../pep-0311.txt:72
 msgid "PyXPCOM"
 msgstr ""
 
-#: ../../pep-0311.txt:73
+#: ../../pep-0311.txt:74
 msgid ""
 "Currently, there is no reasonable, portable solution to this problem, "
 "forcing each extension author to implement their own hand-rolled version."
@@ -181,7 +173,7 @@ msgid ""
 "manifest simply as \"Python has hung\"."
 msgstr ""
 
-#: ../../pep-0311.txt:80
+#: ../../pep-0311.txt:81
 msgid ""
 "While the biggest problem in the existing thread-state API is the lack of"
 " the ability to query the current state of the lock, it is felt that a "
@@ -191,11 +183,11 @@ msgid ""
 " mechanisms."
 msgstr ""
 
-#: ../../pep-0311.txt:89
+#: ../../pep-0311.txt:90
 msgid "Limitations and Exclusions"
 msgstr ""
 
-#: ../../pep-0311.txt:91
+#: ../../pep-0311.txt:92
 msgid ""
 "This proposal identifies a solution for extension authors with complex "
 "multi-threaded requirements, but that only require a single "
@@ -206,7 +198,7 @@ msgid ""
 "itself."
 msgstr ""
 
-#: ../../pep-0311.txt:99
+#: ../../pep-0311.txt:100
 msgid ""
 "This API will not perform automatic initialization of Python, or "
 "initialize Python for multi-threaded operation.  Extension authors must "
@@ -214,14 +206,14 @@ msgid ""
 "applications, ``PyEval_InitThreads()``.  The reason for this is that the "
 "first thread to call ``PyEval_InitThreads()`` is nominated as the \"main "
 "thread\" by Python, and so forcing the extension author to specify the "
-"main thread (by forcing her to make this first call) removes ambiguity.  "
-"As ``Py_Initialize()`` must be called before ``PyEval_InitThreads()``, "
-"and as both of these functions currently support being called multiple "
-"times, the burden this places on extension authors is considered "
-"reasonable."
+"main thread (by requiring them to make this first call) removes "
+"ambiguity.  As ``Py_Initialize()`` must be called before "
+"``PyEval_InitThreads()``, and as both of these functions currently "
+"support being called multiple times, the burden this places on extension "
+"authors is considered reasonable."
 msgstr ""
 
-#: ../../pep-0311.txt:111
+#: ../../pep-0311.txt:112
 msgid ""
 "It is intended that this API be all that is necessary to acquire the "
 "Python GIL.  Apart from the existing, standard ``Py_BEGIN_ALLOW_THREADS``"
@@ -231,18 +223,18 @@ msgid ""
 "existing thread state API."
 msgstr ""
 
-#: ../../pep-0311.txt:120
+#: ../../pep-0311.txt:121
 msgid "Proposal"
 msgstr ""
 
-#: ../../pep-0311.txt:122
+#: ../../pep-0311.txt:123
 msgid ""
 "This proposal recommends a new API be added to Python to simplify the "
 "management of the GIL.  This API will be available on all platforms built"
 " with ``WITH_THREAD`` defined."
 msgstr ""
 
-#: ../../pep-0311.txt:126
+#: ../../pep-0311.txt:127
 msgid ""
 "The intent is that assuming Python has correctly been initialized, an "
 "extension author be able to use a small, well-defined \"prologue dance\","
@@ -253,79 +245,79 @@ msgid ""
 "line."
 msgstr ""
 
-#: ../../pep-0311.txt:134
+#: ../../pep-0311.txt:135
 msgid "Specifically, the following new APIs are proposed::"
 msgstr ""
 
-#: ../../pep-0311.txt:169
+#: ../../pep-0311.txt:170
 msgid "Common usage will be::"
 msgstr ""
 
-#: ../../pep-0311.txt:183
+#: ../../pep-0311.txt:184
 msgid "Design and Implementation"
 msgstr ""
 
-#: ../../pep-0311.txt:185
+#: ../../pep-0311.txt:186
 msgid "The general operation of ``PyGILState_Ensure()`` will be:"
 msgstr ""
 
-#: ../../pep-0311.txt:187
+#: ../../pep-0311.txt:188
 msgid "assert Python is initialized."
 msgstr ""
 
-#: ../../pep-0311.txt:189
+#: ../../pep-0311.txt:190
 msgid ""
 "Get a ``PyThreadState`` for the current thread, creating and saving if "
 "necessary."
 msgstr ""
 
-#: ../../pep-0311.txt:192
+#: ../../pep-0311.txt:193
 msgid "remember the current state of the lock (owned/not owned)"
 msgstr ""
 
-#: ../../pep-0311.txt:194
+#: ../../pep-0311.txt:195
 msgid "If the current state does not own the GIL, acquire it."
 msgstr ""
 
-#: ../../pep-0311.txt:196
+#: ../../pep-0311.txt:197
 msgid ""
 "Increment a counter for how many calls to ``PyGILState_Ensure`` have been"
 " made on the current thread."
 msgstr ""
 
-#: ../../pep-0311.txt:199 ../../pep-0311.txt:215
+#: ../../pep-0311.txt:200 ../../pep-0311.txt:216
 msgid "return"
 msgstr ""
 
-#: ../../pep-0311.txt:201
+#: ../../pep-0311.txt:202
 msgid "The general operation of ``PyGILState_Release()`` will be:"
 msgstr ""
 
-#: ../../pep-0311.txt:203
+#: ../../pep-0311.txt:204
 msgid "assert our thread currently holds the lock."
 msgstr ""
 
-#: ../../pep-0311.txt:205
+#: ../../pep-0311.txt:206
 msgid "If old state indicates lock was previously unlocked, release GIL."
 msgstr ""
 
-#: ../../pep-0311.txt:207
+#: ../../pep-0311.txt:208
 msgid "Decrement the ``PyGILState_Ensure`` counter for the thread."
 msgstr ""
 
-#: ../../pep-0311.txt:209
+#: ../../pep-0311.txt:210
 msgid "If counter == 0:"
 msgstr ""
 
-#: ../../pep-0311.txt:211
+#: ../../pep-0311.txt:212
 msgid "release and delete the ``PyThreadState``."
 msgstr ""
 
-#: ../../pep-0311.txt:213
+#: ../../pep-0311.txt:214
 msgid "forget the ``ThreadState`` as being owned by the thread."
 msgstr ""
 
-#: ../../pep-0311.txt:217
+#: ../../pep-0311.txt:218
 msgid ""
 "It is assumed that it is an error if two discrete ``PyThreadStates`` are "
 "used for a single thread.  Comments in ``pystate.h`` (\"State unique per "
@@ -338,31 +330,69 @@ msgid ""
 "implementation if desired."
 msgstr ""
 
-#: ../../pep-0311.txt:230
+#: ../../pep-0311.txt:231
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0311.txt:232
+#: ../../pep-0311.txt:233
 msgid ""
 "An implementation of this proposal can be found at "
 "https://bugs.python.org/issue684256"
 msgstr ""
 
-#: ../../pep-0311.txt:237
+#: ../../pep-0311.txt:238
 msgid "References"
 msgstr ""
 
-#: ../../pep-0311.txt:239
+#: ../../pep-0311.txt:240
 msgid ""
 "David Abrahams, Extension modules, Threading, and the GIL "
 "https://mail.python.org/pipermail/python-dev/2002-December/031424.html"
 msgstr ""
 
-#: ../../pep-0311.txt:244
+#: ../../pep-0311.txt:245
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0311.txt:246
+#: ../../pep-0311.txt:247
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "311"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Simplified Global Interpreter Lock Acquisition for Extensions"
+#~ msgstr ""
+
+#~ msgid "05-Feb-2003 14-Feb-2003 19-Apr-2003"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This API will not perform automatic "
+#~ "initialization of Python, or initialize "
+#~ "Python for multi-threaded operation.  "
+#~ "Extension authors must continue to call"
+#~ " ``Py_Initialize()``, and for multi-"
+#~ "threaded applications, ``PyEval_InitThreads()``.  "
+#~ "The reason for this is that the"
+#~ " first thread to call "
+#~ "``PyEval_InitThreads()`` is nominated as the"
+#~ " \"main thread\" by Python, and so"
+#~ " forcing the extension author to "
+#~ "specify the main thread (by forcing "
+#~ "her to make this first call) "
+#~ "removes ambiguity.  As ``Py_Initialize()`` "
+#~ "must be called before "
+#~ "``PyEval_InitThreads()``, and as both of "
+#~ "these functions currently support being "
+#~ "called multiple times, the burden this"
+#~ " places on extension authors is "
+#~ "considered reasonable."
+#~ msgstr ""
 

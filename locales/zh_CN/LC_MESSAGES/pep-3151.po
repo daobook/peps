@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-3151.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-3151.txt:1
-msgid "3151"
-msgstr ""
-
-#: ../../pep-3151.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-3151.txt:2
-msgid "Reworking the OS and IO exception hierarchy"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-3151.txt
 msgid "Author"
@@ -647,7 +631,7 @@ msgid ""
 "``winerror``)."
 msgstr ""
 
-#: ../../pep-3151.txt:452 ../../pep-3151.txt:508
+#: ../../pep-3151.txt:452 ../../pep-3151.txt:509
 msgid "Implementation"
 msgstr ""
 
@@ -723,12 +707,12 @@ msgstr ""
 #: ../../pep-3151.txt:501
 msgid ""
 "The removal of WindowsError alone has been discussed and rejected as part"
-" of another PEP [2]_, but there seemed to be a consensus that the "
-"distinction with OSError wasn't meaningful.  This supports at least its "
-"aliasing with OSError."
+" of :pep:`another PEP <348#removing-windowserror>`, but there seemed to "
+"be a consensus that the distinction with OSError wasn't meaningful.  This"
+" supports at least its aliasing with OSError."
 msgstr ""
 
-#: ../../pep-3151.txt:510
+#: ../../pep-3151.txt:511
 msgid ""
 "The reference implementation has been integrated into Python 3.3. It was "
 "formerly developed in http://hg.python.org/features/pep-3151/ in branch "
@@ -737,7 +721,7 @@ msgid ""
 "variety of systems: Linux, Windows, OpenIndiana and FreeBSD buildbots."
 msgstr ""
 
-#: ../../pep-3151.txt:517
+#: ../../pep-3151.txt:518
 msgid ""
 "One source of trouble has been with the respective constructors of "
 "``OSError`` and ``WindowsError``, which were incompatible.  The way it is"
@@ -749,7 +733,7 @@ msgid ""
 " constructor call."
 msgstr ""
 
-#: ../../pep-3151.txt:525
+#: ../../pep-3151.txt:526
 msgid ""
 "A slight complication is when the ``PyErr_SetExcFromWindowsErr*`` "
 "functions are called with ``OSError`` rather than ``WindowsError``: the "
@@ -760,7 +744,7 @@ msgid ""
 "for which there is no compatibility concern."
 msgstr ""
 
-#: ../../pep-3151.txt:534
+#: ../../pep-3151.txt:535
 msgid ""
 "For socket errors, the \"POSIX errno\" as reflected by the ``errno`` "
 "module is numerically equal to the `Windows Socket error code "
@@ -768,45 +752,45 @@ msgid ""
 "returned by the ``WSAGetLastError`` system call::"
 msgstr ""
 
-#: ../../pep-3151.txt:546
+#: ../../pep-3151.txt:547
 msgid "Possible alternative"
 msgstr ""
 
-#: ../../pep-3151.txt:549
+#: ../../pep-3151.txt:550
 msgid "Pattern matching"
 msgstr ""
 
-#: ../../pep-3151.txt:551
+#: ../../pep-3151.txt:552
 msgid ""
 "Another possibility would be to introduce an advanced pattern matching "
 "syntax when catching exceptions.  For example::"
 msgstr ""
 
-#: ../../pep-3151.txt:559
+#: ../../pep-3151.txt:560
 msgid "Several problems with this proposal:"
 msgstr ""
 
-#: ../../pep-3151.txt:561
+#: ../../pep-3151.txt:562
 msgid ""
 "it introduces new syntax, which is perceived by the author to be a "
 "heavier change compared to reworking the exception hierarchy"
 msgstr ""
 
-#: ../../pep-3151.txt:563
+#: ../../pep-3151.txt:564
 msgid "it doesn't decrease typing effort significantly"
 msgstr ""
 
-#: ../../pep-3151.txt:564
+#: ../../pep-3151.txt:565
 msgid ""
 "it doesn't relieve the programmer from the burden of having to remember "
 "errno mnemonics"
 msgstr ""
 
-#: ../../pep-3151.txt:569
+#: ../../pep-3151.txt:570
 msgid "Exceptions ignored by this PEP"
 msgstr ""
 
-#: ../../pep-3151.txt:571
+#: ../../pep-3151.txt:572
 msgid ""
 "This PEP ignores ``EOFError``, which signals a truncated input stream in "
 "various protocol and file format implementations (for example "
@@ -814,7 +798,7 @@ msgid ""
 "error raised at a higher level."
 msgstr ""
 
-#: ../../pep-3151.txt:576
+#: ../../pep-3151.txt:577
 msgid ""
 "This PEP also ignores ``SSLError``, which is raised by the ``ssl`` module"
 " in order to propagate errors signalled by the ``OpenSSL`` library.  "
@@ -825,164 +809,164 @@ msgid ""
 " (see `issue 10272 <http://bugs.python.org/issue10272>`_)."
 msgstr ""
 
-#: ../../pep-3151.txt:583
+#: ../../pep-3151.txt:584
 msgid ""
 "Endly, the fate of ``socket.gaierror`` and ``socket.herror`` is not "
 "settled. While they would deserve less cryptic names, this can be handled"
 " separately from the exception hierarchy reorganization effort."
 msgstr ""
 
-#: ../../pep-3151.txt:591
+#: ../../pep-3151.txt:592
 msgid "Appendix A: Survey of common errnos"
 msgstr ""
 
-#: ../../pep-3151.txt:593
+#: ../../pep-3151.txt:594
 msgid ""
 "This is a quick inventory of the various errno mnemonics checked for in "
 "the standard library and its tests, as part of ``except`` clauses."
 msgstr ""
 
-#: ../../pep-3151.txt:597
+#: ../../pep-3151.txt:598
 msgid "Common errnos with OSError"
 msgstr ""
 
-#: ../../pep-3151.txt:599
+#: ../../pep-3151.txt:600
 msgid ""
 "``EBADF``: bad file descriptor (usually means the file descriptor was "
 "closed)"
 msgstr ""
 
-#: ../../pep-3151.txt:602
+#: ../../pep-3151.txt:603
 msgid "``EEXIST``: file or directory exists"
 msgstr ""
 
-#: ../../pep-3151.txt:604 ../../pep-3151.txt:649 ../../pep-3151.txt:668
+#: ../../pep-3151.txt:605 ../../pep-3151.txt:650 ../../pep-3151.txt:669
 msgid "``EINTR``: interrupted function call"
 msgstr ""
 
-#: ../../pep-3151.txt:606
+#: ../../pep-3151.txt:607
 msgid "``EISDIR``: is a directory"
 msgstr ""
 
-#: ../../pep-3151.txt:608
+#: ../../pep-3151.txt:609
 msgid "``ENOTDIR``: not a directory"
 msgstr ""
 
-#: ../../pep-3151.txt:610
+#: ../../pep-3151.txt:611
 msgid "``ENOENT``: no such file or directory"
 msgstr ""
 
-#: ../../pep-3151.txt:612
+#: ../../pep-3151.txt:613
 msgid ""
 "``EOPNOTSUPP``: operation not supported on socket (possible confusion "
 "with the existing io.UnsupportedOperation)"
 msgstr ""
 
-#: ../../pep-3151.txt:615
+#: ../../pep-3151.txt:616
 msgid "``EPERM``: operation not permitted (when using e.g. os.setuid())"
 msgstr ""
 
-#: ../../pep-3151.txt:618
+#: ../../pep-3151.txt:619
 msgid "Common errnos with IOError"
 msgstr ""
 
-#: ../../pep-3151.txt:620
+#: ../../pep-3151.txt:621
 msgid "``EACCES``: permission denied (for filesystem operations)"
 msgstr ""
 
-#: ../../pep-3151.txt:622
+#: ../../pep-3151.txt:623
 msgid ""
 "``EBADF``: bad file descriptor (with select.epoll); read operation on a "
 "write-only GzipFile, or vice-versa"
 msgstr ""
 
-#: ../../pep-3151.txt:625
+#: ../../pep-3151.txt:626
 msgid "``EBUSY``: device or resource busy"
 msgstr ""
 
-#: ../../pep-3151.txt:627
+#: ../../pep-3151.txt:628
 msgid "``EISDIR``: is a directory (when trying to open())"
 msgstr ""
 
-#: ../../pep-3151.txt:629
+#: ../../pep-3151.txt:630
 msgid "``ENODEV``: no such device"
 msgstr ""
 
-#: ../../pep-3151.txt:631
+#: ../../pep-3151.txt:632
 msgid "``ENOENT``: no such file or directory (when trying to open())"
 msgstr ""
 
-#: ../../pep-3151.txt:633
+#: ../../pep-3151.txt:634
 msgid "``ETIMEDOUT``: connection timed out"
 msgstr ""
 
-#: ../../pep-3151.txt:636
+#: ../../pep-3151.txt:637
 msgid "Common errnos with socket.error"
 msgstr ""
 
-#: ../../pep-3151.txt:638
+#: ../../pep-3151.txt:639
 msgid ""
 "All these errors may also be associated with a plain IOError, for example"
 " when calling read() on a socket's file descriptor."
 msgstr ""
 
-#: ../../pep-3151.txt:641
+#: ../../pep-3151.txt:642
 msgid ""
 "``EAGAIN``: resource temporarily unavailable (during a non-blocking "
 "socket call except connect())"
 msgstr ""
 
-#: ../../pep-3151.txt:644
+#: ../../pep-3151.txt:645
 msgid ""
 "``EALREADY``: connection already in progress (during a non-blocking "
 "connect())"
 msgstr ""
 
-#: ../../pep-3151.txt:647
+#: ../../pep-3151.txt:648
 msgid "``EINPROGRESS``: operation in progress (during a non-blocking connect())"
 msgstr ""
 
-#: ../../pep-3151.txt:651
+#: ../../pep-3151.txt:652
 msgid "``EISCONN``: the socket is connected"
 msgstr ""
 
-#: ../../pep-3151.txt:653
+#: ../../pep-3151.txt:654
 msgid "``ECONNABORTED``: connection aborted by peer (during an accept() call)"
 msgstr ""
 
-#: ../../pep-3151.txt:655
+#: ../../pep-3151.txt:656
 msgid "``ECONNREFUSED``: connection refused by peer"
 msgstr ""
 
-#: ../../pep-3151.txt:657
+#: ../../pep-3151.txt:658
 msgid "``ECONNRESET``: connection reset by peer"
 msgstr ""
 
-#: ../../pep-3151.txt:659
+#: ../../pep-3151.txt:660
 msgid "``ENOTCONN``: socket not connected"
 msgstr ""
 
-#: ../../pep-3151.txt:661
+#: ../../pep-3151.txt:662
 msgid "``ESHUTDOWN``: cannot send after transport endpoint shutdown"
 msgstr ""
 
-#: ../../pep-3151.txt:663
+#: ../../pep-3151.txt:664
 msgid "``EWOULDBLOCK``: same reasons as ``EAGAIN``"
 msgstr ""
 
-#: ../../pep-3151.txt:666
+#: ../../pep-3151.txt:667
 msgid "Common errnos with select.error"
 msgstr ""
 
-#: ../../pep-3151.txt:674
+#: ../../pep-3151.txt:675
 msgid "Appendix B: Survey of raised OS and IO errors"
 msgstr ""
 
-#: ../../pep-3151.txt:677
+#: ../../pep-3151.txt:678
 msgid "About VMSError"
 msgstr ""
 
-#: ../../pep-3151.txt:679
+#: ../../pep-3151.txt:680
 msgid ""
 "VMSError is completely unused by the interpreter core and the standard "
 "library.  It was added as part of the OpenVMS patches submitted in 2002 "
@@ -990,239 +974,233 @@ msgid ""
 " that it could be raised by third-party packages."
 msgstr ""
 
-#: ../../pep-3151.txt:685
+#: ../../pep-3151.txt:686
 msgid "Interpreter core"
 msgstr ""
 
-#: ../../pep-3151.txt:687
+#: ../../pep-3151.txt:688
 msgid "Handling of PYTHONSTARTUP raises IOError (but the error gets discarded)::"
 msgstr ""
 
-#: ../../pep-3151.txt:696
+#: ../../pep-3151.txt:697
 msgid ""
 "``PyObject_Print()`` raises IOError when ferror() signals an error on the"
 " `FILE *` parameter (which, in the source tree, is always either stdout "
 "or stderr)."
 msgstr ""
 
-#: ../../pep-3151.txt:700
+#: ../../pep-3151.txt:701
 msgid ""
 "Unicode encoding and decoding using the ``mbcs`` encoding can raise "
 "WindowsError for some error conditions."
 msgstr ""
 
-#: ../../pep-3151.txt:704
+#: ../../pep-3151.txt:705
 msgid "Standard library"
 msgstr ""
 
-#: ../../pep-3151.txt:707
+#: ../../pep-3151.txt:708
 msgid "bz2"
 msgstr ""
 
-#: ../../pep-3151.txt:709 ../../pep-3151.txt:857
+#: ../../pep-3151.txt:710 ../../pep-3151.txt:858
 msgid "Raises IOError throughout (OSError is unused)::"
 msgstr ""
 
-#: ../../pep-3151.txt:725
+#: ../../pep-3151.txt:726
 msgid "curses"
 msgstr ""
 
-#: ../../pep-3151.txt:727 ../../pep-3151.txt:846
+#: ../../pep-3151.txt:728 ../../pep-3151.txt:847
 msgid "Not examined."
 msgstr ""
 
-#: ../../pep-3151.txt:730
+#: ../../pep-3151.txt:731
 msgid "dbm.gnu, dbm.ndbm"
 msgstr ""
 
-#: ../../pep-3151.txt:732
+#: ../../pep-3151.txt:733
 msgid "_dbm.error and _gdbm.error inherit from IOError::"
 msgstr ""
 
-#: ../../pep-3151.txt:740
+#: ../../pep-3151.txt:741
 msgid "fcntl"
 msgstr ""
 
-#: ../../pep-3151.txt:742
+#: ../../pep-3151.txt:743
 msgid "Raises IOError throughout (OSError is unused)."
 msgstr ""
 
-#: ../../pep-3151.txt:745
+#: ../../pep-3151.txt:746
 msgid "imp module"
 msgstr ""
 
-#: ../../pep-3151.txt:747
+#: ../../pep-3151.txt:748
 msgid "Raises IOError for bad file descriptors::"
 msgstr ""
 
-#: ../../pep-3151.txt:755
+#: ../../pep-3151.txt:756
 msgid "io module"
 msgstr ""
 
-#: ../../pep-3151.txt:757
+#: ../../pep-3151.txt:758
 msgid "Raises IOError when trying to open a directory under Unix::"
 msgstr ""
 
-#: ../../pep-3151.txt:764
+#: ../../pep-3151.txt:765
 msgid ""
 "Raises IOError or io.UnsupportedOperation (which inherits from the "
 "former) for unsupported operations::"
 msgstr ""
 
-#: ../../pep-3151.txt:780
+#: ../../pep-3151.txt:781
 msgid ""
 "Raises either IOError or TypeError when the inferior I/O layer misbehaves"
 " (i.e. violates the API it is expected to implement)."
 msgstr ""
 
-#: ../../pep-3151.txt:783
+#: ../../pep-3151.txt:784
 msgid "Raises IOError when the underlying OS resource becomes invalid::"
 msgstr ""
 
-#: ../../pep-3151.txt:792
+#: ../../pep-3151.txt:793
 msgid "...or for implementation-specific optimizations::"
 msgstr ""
 
-#: ../../pep-3151.txt:802
+#: ../../pep-3151.txt:803
 msgid ""
 "Raises BlockingIOError (inheriting from IOError) when a call on a non-"
 "blocking object would block."
 msgstr ""
 
-#: ../../pep-3151.txt:806
+#: ../../pep-3151.txt:807
 msgid "mmap"
 msgstr ""
 
-#: ../../pep-3151.txt:808
+#: ../../pep-3151.txt:809
 msgid ""
 "Under Unix, raises its own ``mmap.error`` (inheriting from "
 "EnvironmentError) throughout::"
 msgstr ""
 
-#: ../../pep-3151.txt:820
+#: ../../pep-3151.txt:821
 msgid ""
 "Under Windows, however, it mostly raises WindowsError (the source code "
 "also shows a few occurrences of ``mmap.error``)::"
 msgstr ""
 
-#: ../../pep-3151.txt:844
+#: ../../pep-3151.txt:845
 msgid "multiprocessing"
 msgstr ""
 
-#: ../../pep-3151.txt:849
+#: ../../pep-3151.txt:850
 msgid "os / posix"
 msgstr ""
 
-#: ../../pep-3151.txt:851
+#: ../../pep-3151.txt:852
 msgid ""
 "The ``os`` (or ``posix``) module raises OSError throughout, except under "
 "Windows where WindowsError can be raised instead."
 msgstr ""
 
-#: ../../pep-3151.txt:855
+#: ../../pep-3151.txt:856
 msgid "ossaudiodev"
 msgstr ""
 
-#: ../../pep-3151.txt:865
+#: ../../pep-3151.txt:866
 msgid "readline"
 msgstr ""
 
-#: ../../pep-3151.txt:867
+#: ../../pep-3151.txt:868
 msgid "Raises IOError in various file-handling functions::"
 msgstr ""
 
-#: ../../pep-3151.txt:883
+#: ../../pep-3151.txt:884
 msgid "select"
 msgstr ""
 
-#: ../../pep-3151.txt:885
+#: ../../pep-3151.txt:886
 msgid ""
 "select() and poll objects raise ``select.error``, which doesn't inherit "
 "from anything (but poll.modify() raises IOError);"
 msgstr ""
 
-#: ../../pep-3151.txt:887
+#: ../../pep-3151.txt:888
 msgid "epoll objects raise IOError;"
 msgstr ""
 
-#: ../../pep-3151.txt:888
+#: ../../pep-3151.txt:889
 msgid "kqueue objects raise both OSError and IOError."
 msgstr ""
 
-#: ../../pep-3151.txt:890
+#: ../../pep-3151.txt:891
 msgid ""
 "As a side-note, not deriving from ``EnvironmentError`` means "
 "``select.error`` does not get the useful ``errno`` attribute.  User code "
 "must check ``args[0]`` instead::"
 msgstr ""
 
-#: ../../pep-3151.txt:910
+#: ../../pep-3151.txt:911
 msgid "signal"
 msgstr ""
 
-#: ../../pep-3151.txt:912
+#: ../../pep-3151.txt:913
 msgid "``signal.ItimerError`` inherits from IOError."
 msgstr ""
 
-#: ../../pep-3151.txt:915
+#: ../../pep-3151.txt:916
 msgid "socket"
 msgstr ""
 
-#: ../../pep-3151.txt:917
+#: ../../pep-3151.txt:918
 msgid "``socket.error`` inherits from IOError."
 msgstr ""
 
-#: ../../pep-3151.txt:920
+#: ../../pep-3151.txt:921
 msgid "sys"
 msgstr ""
 
-#: ../../pep-3151.txt:922
+#: ../../pep-3151.txt:923
 msgid ""
 "``sys.getwindowsversion()`` raises WindowsError with a bogus error number"
 " if the ``GetVersionEx()`` call fails."
 msgstr ""
 
-#: ../../pep-3151.txt:926
+#: ../../pep-3151.txt:927
 msgid "time"
 msgstr ""
 
-#: ../../pep-3151.txt:928
+#: ../../pep-3151.txt:929
 msgid "Raises IOError for internal errors in time.time() and time.sleep()."
 msgstr ""
 
-#: ../../pep-3151.txt:931
+#: ../../pep-3151.txt:932
 msgid "zipimport"
 msgstr ""
 
-#: ../../pep-3151.txt:933
+#: ../../pep-3151.txt:934
 msgid "zipimporter.get_data() can raise IOError."
 msgstr ""
 
-#: ../../pep-3151.txt:937
+#: ../../pep-3151.txt:938
 msgid "Acknowledgments"
 msgstr ""
 
-#: ../../pep-3151.txt:939
+#: ../../pep-3151.txt:940
 msgid "Significant input has been received from Nick Coghlan."
 msgstr ""
 
-#: ../../pep-3151.txt:942
+#: ../../pep-3151.txt:943
 msgid "References"
 msgstr ""
 
-#: ../../pep-3151.txt:944
+#: ../../pep-3151.txt:945
 msgid ""
 "\"IO module precisions and exception hierarchy\": "
 "https://mail.python.org/pipermail/python-dev/2009-September/092130.html"
 msgstr ""
 
-#: ../../pep-3151.txt:947
-msgid ""
-"Discussion of \"Removing WindowsError\" in PEP 348: "
-"http://www.python.org/dev/peps/pep-0348/#removing-windowserror"
-msgstr ""
-
-#: ../../pep-3151.txt:950
+#: ../../pep-3151.txt:948
 #, python-format
 msgid ""
 "Google Code Search of ``IOError`` in Python code: `around 40000 results "
@@ -1233,15 +1211,43 @@ msgid ""
 "<http://www.google.com/codesearch?q=lang%3Apython%20EnvironmentError>`_"
 msgstr ""
 
-#: ../../pep-3151.txt:957
+#: ../../pep-3151.txt:955
 msgid "http://bugs.python.org/issue614055"
 msgstr ""
 
-#: ../../pep-3151.txt:960
+#: ../../pep-3151.txt:958
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-3151.txt:962
+#: ../../pep-3151.txt:960
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "3151"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Reworking the OS and IO exception hierarchy"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The removal of WindowsError alone has"
+#~ " been discussed and rejected as part"
+#~ " of another PEP [2]_, but there "
+#~ "seemed to be a consensus that the"
+#~ " distinction with OSError wasn't "
+#~ "meaningful.  This supports at least its"
+#~ " aliasing with OSError."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Discussion of \"Removing WindowsError\" in "
+#~ "PEP 348: http://www.python.org/dev/peps/pep-0348"
+#~ "/#removing-windowserror"
+#~ msgstr ""
 

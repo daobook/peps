@@ -8,36 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0523.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0523.txt:1
-msgid "523"
-msgstr ""
-
-#: ../../pep-0523.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0523.txt:2
-msgid "Adding a frame evaluation API to CPython"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0523.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0523.txt:5
+#: ../../pep-0523.txt:3
 msgid "Brett Cannon <brett@python.org>, Dino Viehland <dinov@microsoft.com>"
 msgstr ""
 
@@ -45,7 +29,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0523.txt:7
+#: ../../pep-0523.txt:5
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0523.txt:8
+#: ../../pep-0523.txt:6
 msgid "Standards Track"
 msgstr ""
 
@@ -61,8 +45,16 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0523.txt:10 ../../pep-0523.txt:11
+#: ../../pep-0523.txt:8 ../../pep-0523.txt:10
 msgid "16-May-2016"
+msgstr ""
+
+#: ../../pep-0523.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0523.txt:9
+msgid "3.6"
 msgstr ""
 
 #: ../../pep-0523.txt
@@ -73,15 +65,15 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0523.txt:12
+#: ../../pep-0523.txt:11
 msgid "https://mail.python.org/pipermail/python-dev/2016-August/145937.html"
 msgstr ""
 
-#: ../../pep-0523.txt:16
+#: ../../pep-0523.txt:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0523.txt:18
+#: ../../pep-0523.txt:17
 msgid ""
 "This PEP proposes to expand CPython's C API [#c-api]_ to allow for the "
 "specification of a per-interpreter function pointer to handle the "
@@ -90,11 +82,11 @@ msgid ""
 "data for use by the frame evaluation function."
 msgstr ""
 
-#: ../../pep-0523.txt:26
+#: ../../pep-0523.txt:25
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0523.txt:28
+#: ../../pep-0523.txt:27
 msgid ""
 "One place where flexibility has been lacking in Python is in the direct "
 "execution of Python code. While CPython's C API [#c-api]_ allows for "
@@ -104,7 +96,7 @@ msgid ""
 "holistic control of execution at the frame level."
 msgstr ""
 
-#: ../../pep-0523.txt:35
+#: ../../pep-0523.txt:34
 msgid ""
 "While wanting to have influence over frame evaluation may seem a bit too "
 "low-level, it does open the possibility for things such as a method-level"
@@ -120,7 +112,7 @@ msgid ""
 "environment of the code for the JIT."
 msgstr ""
 
-#: ../../pep-0523.txt:48
+#: ../../pep-0523.txt:47
 msgid ""
 "This ability to specify a frame evaluation function also allows for other"
 " use-cases beyond just opening CPython up to a JIT. For instance, it "
@@ -131,7 +123,7 @@ msgid ""
 "faster for tracing by simply skipping per-line tracing support."
 msgstr ""
 
-#: ../../pep-0523.txt:57
+#: ../../pep-0523.txt:56
 msgid ""
 "It also opens up the possibility of debugging where the frame evaluation "
 "function only performs special debugging work when it detects it is about"
@@ -141,7 +133,7 @@ msgid ""
 "handed approach as required by ``sys.settrace()``."
 msgstr ""
 
-#: ../../pep-0523.txt:65
+#: ../../pep-0523.txt:64
 msgid ""
 "To help facilitate these use-cases, we are also proposing the adding of a"
 " \"scratch space\" on code objects via a new field. This will allow per-"
@@ -151,23 +143,23 @@ msgid ""
 "field will participate in normal object memory management."
 msgstr ""
 
-#: ../../pep-0523.txt:74
+#: ../../pep-0523.txt:73
 msgid "Proposal"
 msgstr ""
 
-#: ../../pep-0523.txt:76
+#: ../../pep-0523.txt:75
 msgid "All proposed C API changes below will not be part of the stable ABI."
 msgstr ""
 
-#: ../../pep-0523.txt:80
+#: ../../pep-0523.txt:79
 msgid "Expanding ``PyCodeObject``"
 msgstr ""
 
-#: ../../pep-0523.txt:82
+#: ../../pep-0523.txt:81
 msgid "One field is to be added to the ``PyCodeObject`` struct [#pycodeobject]_::"
 msgstr ""
 
-#: ../../pep-0523.txt:90
+#: ../../pep-0523.txt:89
 msgid ""
 "The ``co_extra`` will be ``NULL`` by default and only filled in as "
 "needed. Values stored in the field are expected to not be required in "
@@ -175,11 +167,11 @@ msgid ""
 "the field to be acceptable."
 msgstr ""
 
-#: ../../pep-0523.txt:95
+#: ../../pep-0523.txt:94
 msgid "A private API has been introduced to work with the field::"
 msgstr ""
 
-#: ../../pep-0523.txt:103
+#: ../../pep-0523.txt:102
 msgid ""
 "Users of the field are expected to call "
 "``_PyEval_RequestCodeExtraIndex()`` to receive (what should be "
@@ -190,7 +182,7 @@ msgid ""
 "guarantees of the API between Python releases."
 msgstr ""
 
-#: ../../pep-0523.txt:111
+#: ../../pep-0523.txt:110
 msgid ""
 "Using a list and tuple were considered but was found to be less "
 "performant, and with a key use-case being JIT usage the performance "
@@ -198,7 +190,7 @@ msgid ""
 "object."
 msgstr ""
 
-#: ../../pep-0523.txt:116
+#: ../../pep-0523.txt:115
 msgid ""
 "A dict was also considered, but once again performance was more "
 "important. While a dict will have constant overhead in looking up data, "
@@ -208,15 +200,15 @@ msgid ""
 "hashing and looking up an object in a dict)."
 msgstr ""
 
-#: ../../pep-0523.txt:125
+#: ../../pep-0523.txt:124
 msgid "Expanding ``PyInterpreterState``"
 msgstr ""
 
-#: ../../pep-0523.txt:127
+#: ../../pep-0523.txt:126
 msgid "The entrypoint for the frame evaluation function is per-interpreter::"
 msgstr ""
 
-#: ../../pep-0523.txt:137
+#: ../../pep-0523.txt:136
 msgid ""
 "By default, the ``eval_frame`` field will be initialized to a function "
 "pointer that represents what ``PyEval_EvalFrameEx()`` currently is "
@@ -227,29 +219,29 @@ msgid ""
 "thus has not been mutated yet."
 msgstr ""
 
-#: ../../pep-0523.txt:147
+#: ../../pep-0523.txt:146
 msgid "Changes to ``Python/ceval.c``"
 msgstr ""
 
-#: ../../pep-0523.txt:149
+#: ../../pep-0523.txt:148
 msgid ""
 "``PyEval_EvalFrameEx()`` [#pyeval_evalframeex]_ as it currently stands "
 "will be renamed to ``_PyEval_EvalFrameDefault()``. The new "
 "``PyEval_EvalFrameEx()`` will then become::"
 msgstr ""
 
-#: ../../pep-0523.txt:160
+#: ../../pep-0523.txt:159
 msgid ""
 "This allows third-party code to place themselves directly in the path of "
 "Python code execution while being backwards-compatible with code already "
 "using the pre-existing C API."
 msgstr ""
 
-#: ../../pep-0523.txt:166
+#: ../../pep-0523.txt:165
 msgid "Updating ``python-gdb.py``"
 msgstr ""
 
-#: ../../pep-0523.txt:168
+#: ../../pep-0523.txt:167
 msgid ""
 "The generated ``python-gdb.py`` file used for Python support in GDB makes"
 " some hard-coded assumptions about ``PyEval_EvalFrameEx()``, e.g. the "
@@ -257,30 +249,30 @@ msgid ""
 "proposed changes."
 msgstr ""
 
-#: ../../pep-0523.txt:175
+#: ../../pep-0523.txt:174
 msgid "Performance impact"
 msgstr ""
 
-#: ../../pep-0523.txt:177
+#: ../../pep-0523.txt:176
 msgid ""
 "As this PEP is proposing an API to add pluggability, performance impact "
 "is considered only in the case where no third-party code has made any "
 "changes."
 msgstr ""
 
-#: ../../pep-0523.txt:181
+#: ../../pep-0523.txt:180
 msgid ""
 "Several runs of pybench [#pybench]_ consistently showed no performance "
 "cost from the API change alone."
 msgstr ""
 
-#: ../../pep-0523.txt:184
+#: ../../pep-0523.txt:183
 msgid ""
 "A run of the Python benchmark suite [#py-benchmarks]_ showed no "
 "measurable cost in performance."
 msgstr ""
 
-#: ../../pep-0523.txt:187
+#: ../../pep-0523.txt:186
 msgid ""
 "In terms of memory impact, since there are typically not many CPython "
 "interpreters executing in a single process that means the impact of "
@@ -291,19 +283,19 @@ msgid ""
 "were alive at once and had nothing set in their ``co_extra`` fields."
 msgstr ""
 
-#: ../../pep-0523.txt:198
+#: ../../pep-0523.txt:197
 msgid "Example Usage"
 msgstr ""
 
-#: ../../pep-0523.txt:201
+#: ../../pep-0523.txt:200
 msgid "A JIT for CPython"
 msgstr ""
 
-#: ../../pep-0523.txt:204
+#: ../../pep-0523.txt:203
 msgid "Pyjion"
 msgstr ""
 
-#: ../../pep-0523.txt:206
+#: ../../pep-0523.txt:205
 msgid ""
 "The Pyjion project [#pyjion]_ has used this proposed API to implement a "
 "JIT for CPython using the CoreCLR's JIT [#coreclr]_. Each code object has"
@@ -311,27 +303,27 @@ msgid ""
 " four pieces of information:"
 msgstr ""
 
-#: ../../pep-0523.txt:211
+#: ../../pep-0523.txt:210
 msgid "Execution count"
 msgstr ""
 
-#: ../../pep-0523.txt:212
+#: ../../pep-0523.txt:211
 msgid "A boolean representing whether a previous attempt to JIT failed"
 msgstr ""
 
-#: ../../pep-0523.txt:213
+#: ../../pep-0523.txt:212
 msgid "A function pointer to a trampoline (which can be type tracing or not)"
 msgstr ""
 
-#: ../../pep-0523.txt:214
+#: ../../pep-0523.txt:213
 msgid "A void pointer to any JIT-compiled machine code"
 msgstr ""
 
-#: ../../pep-0523.txt:216
+#: ../../pep-0523.txt:215
 msgid "The frame evaluation function has (roughly) the following algorithm::"
 msgstr ""
 
-#: ../../pep-0523.txt:233
+#: ../../pep-0523.txt:232
 msgid ""
 "The key point, though, is that all of this work and logic is separate "
 "from CPython and yet with the proposed API changes it is able to provide "
@@ -341,11 +333,11 @@ msgid ""
 "their own JITs for CPython by utilizing the proposed API."
 msgstr ""
 
-#: ../../pep-0523.txt:242
+#: ../../pep-0523.txt:241
 msgid "Other JITs"
 msgstr ""
 
-#: ../../pep-0523.txt:244
+#: ../../pep-0523.txt:243
 msgid ""
 "It should be mentioned that the Pyston team was consulted on an earlier "
 "version of this PEP that was more JIT-specific and they were not "
@@ -355,14 +347,14 @@ msgid ""
 " similar comment."
 msgstr ""
 
-#: ../../pep-0523.txt:251
+#: ../../pep-0523.txt:250
 msgid ""
 "Numba [#numba]_, on the other hand, suggested that they would be "
 "interested in the proposed change in a post-1.0 future for themselves "
 "[#numba-interest]_."
 msgstr ""
 
-#: ../../pep-0523.txt:255
+#: ../../pep-0523.txt:254
 msgid ""
 "The experimental Coconut JIT [#coconut]_ could have benefitted from this "
 "PEP. In private conversations with Coconut's creator we were told that "
@@ -370,11 +362,11 @@ msgid ""
 "add JIT support to CPython."
 msgstr ""
 
-#: ../../pep-0523.txt:262
+#: ../../pep-0523.txt:261
 msgid "Debugging"
 msgstr ""
 
-#: ../../pep-0523.txt:264
+#: ../../pep-0523.txt:263
 msgid ""
 "In conversations with the Python Tools for Visual Studio team (PTVS) "
 "[#ptvs]_, they thought they would find these API changes useful for "
@@ -386,17 +378,17 @@ msgid ""
 "breakpoints in the bytecode."
 msgstr ""
 
-#: ../../pep-0523.txt:273
+#: ../../pep-0523.txt:272
 msgid ""
 "It also turns out that Google provides a very similar API internally. It "
 "has been used for performant debugging purposes."
 msgstr ""
 
-#: ../../pep-0523.txt:278
+#: ../../pep-0523.txt:277
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0523.txt:280
+#: ../../pep-0523.txt:279
 msgid ""
 "A set of patches implementing the proposed API is available through the "
 "Pyjion project [#pyjion]_. In its current form it has more changes to "
@@ -404,15 +396,15 @@ msgid ""
 "instead of strict requirements to accomplish its goals."
 msgstr ""
 
-#: ../../pep-0523.txt:287
+#: ../../pep-0523.txt:286
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-0523.txt:290
+#: ../../pep-0523.txt:289
 msgid "Allow ``eval_frame`` to be ``NULL``"
 msgstr ""
 
-#: ../../pep-0523.txt:292
+#: ../../pep-0523.txt:291
 msgid ""
 "Currently the frame evaluation function is expected to always be set. It "
 "could very easily simply default to ``NULL`` instead which would signal "
@@ -422,15 +414,15 @@ msgid ""
 "occur."
 msgstr ""
 
-#: ../../pep-0523.txt:301
+#: ../../pep-0523.txt:300
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0523.txt:304
+#: ../../pep-0523.txt:303
 msgid "A JIT-specific C API"
 msgstr ""
 
-#: ../../pep-0523.txt:306
+#: ../../pep-0523.txt:305
 msgid ""
 "Originally this PEP was going to propose a much larger API change which "
 "was more JIT-specific. After soliciting feedback from the Numba team "
@@ -444,11 +436,11 @@ msgid ""
 "was changed to its current form."
 msgstr ""
 
-#: ../../pep-0523.txt:319
+#: ../../pep-0523.txt:318
 msgid "Is co_extra needed?"
 msgstr ""
 
-#: ../../pep-0523.txt:321
+#: ../../pep-0523.txt:320
 msgid ""
 "While discussing this PEP at PyCon US 2016, some core developers "
 "expressed their worry of the ``co_extra`` field making code objects "
@@ -457,7 +449,7 @@ msgid ""
 "though no other aspect of code objects changed."
 msgstr ""
 
-#: ../../pep-0523.txt:327
+#: ../../pep-0523.txt:326
 msgid ""
 "The view of this PEP is that the `co_extra` field doesn't change the fact"
 " that code objects are immutable. The field is specified in this PEP to "
@@ -467,7 +459,7 @@ msgid ""
 "immutable even though they have a field that is conditionally set."
 msgstr ""
 
-#: ../../pep-0523.txt:335
+#: ../../pep-0523.txt:334
 msgid ""
 "Performance measurements were also made where the field was not available"
 " for JIT workloads. The loss of the field was deemed too costly to "
@@ -475,39 +467,39 @@ msgid ""
 "associated a code object with JIT-specific data objects."
 msgstr ""
 
-#: ../../pep-0523.txt:342
+#: ../../pep-0523.txt:341
 msgid "References"
 msgstr ""
 
-#: ../../pep-0523.txt:344
+#: ../../pep-0523.txt:343
 msgid "Pyjion project (https://github.com/microsoft/pyjion)"
 msgstr ""
 
-#: ../../pep-0523.txt:347
+#: ../../pep-0523.txt:346
 msgid "CPython's C API (https://docs.python.org/3/c-api/index.html)"
 msgstr ""
 
-#: ../../pep-0523.txt:350
+#: ../../pep-0523.txt:349
 msgid ""
 "``PyCodeObject`` "
 "(https://docs.python.org/3/c-api/code.html#c.PyCodeObject)"
 msgstr ""
 
-#: ../../pep-0523.txt:353
+#: ../../pep-0523.txt:352
 msgid ".NET Core Runtime (CoreCLR) (https://github.com/dotnet/coreclr)"
 msgstr ""
 
-#: ../../pep-0523.txt:356
+#: ../../pep-0523.txt:355
 msgid ""
 "``PyEval_EvalFrameEx()`` "
 "(https://docs.python.org/3/c-api/veryhigh.html?highlight=pyframeobject#c.PyEval_EvalFrameEx)"
 msgstr ""
 
-#: ../../pep-0523.txt:359
+#: ../../pep-0523.txt:358
 msgid "Numba (http://numba.pydata.org/)"
 msgstr ""
 
-#: ../../pep-0523.txt:362
+#: ../../pep-0523.txt:361
 msgid ""
 "numba-users mailing list: \"Would the C API for a JIT entrypoint being "
 "proposed by Pyjion help out Numba?\" "
@@ -515,41 +507,53 @@ msgid ""
 "users/yRl_0t8-m1g)"
 msgstr ""
 
-#: ../../pep-0523.txt:366
+#: ../../pep-0523.txt:365
 msgid ""
 "[Python-Dev] Opcode cache in ceval loop "
 "(https://mail.python.org/pipermail/python-dev/2016-February/143025.html)"
 msgstr ""
 
-#: ../../pep-0523.txt:369
+#: ../../pep-0523.txt:368
 msgid "Python benchmark suite (https://hg.python.org/benchmarks)"
 msgstr ""
 
-#: ../../pep-0523.txt:372
+#: ../../pep-0523.txt:371
 msgid "Pyston (http://pyston.org)"
 msgstr ""
 
-#: ../../pep-0523.txt:375
+#: ../../pep-0523.txt:374
 msgid "PyPy (http://pypy.org/)"
 msgstr ""
 
-#: ../../pep-0523.txt:378
+#: ../../pep-0523.txt:377
 msgid "Python Tools for Visual Studio (http://microsoft.github.io/PTVS/)"
 msgstr ""
 
-#: ../../pep-0523.txt:381
+#: ../../pep-0523.txt:380
 msgid "Coconut (https://github.com/davidmalcolm/coconut)"
 msgstr ""
 
-#: ../../pep-0523.txt:384
+#: ../../pep-0523.txt:383
 msgid "pybench (https://hg.python.org/cpython/file/default/Tools/pybench)"
 msgstr ""
 
-#: ../../pep-0523.txt:389
+#: ../../pep-0523.txt:388
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0523.txt:391
+#: ../../pep-0523.txt:390
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "523"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Adding a frame evaluation API to CPython"
+#~ msgstr ""
 

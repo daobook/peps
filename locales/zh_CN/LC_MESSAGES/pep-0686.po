@@ -1,0 +1,382 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0686.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0686.rst:3
+msgid "Inada Naoki <songofacandy@gmail.com>"
+msgstr ""
+
+#: ../../pep-0686.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0686.rst:4
+msgid "https://discuss.python.org/t/14737"
+msgstr ""
+
+#: ../../pep-0686.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0686.rst:5
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0686.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0686.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0686.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0686.rst:8
+msgid "18-Mar-2022"
+msgstr ""
+
+#: ../../pep-0686.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0686.rst:9
+msgid "3.15"
+msgstr ""
+
+#: ../../pep-0686.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0686.rst:10
+msgid ""
+"`18-Mar-2022 <https://discuss.python.org/t/14435>`__, `31-Mar-2022 "
+"<https://discuss.python.org/t/14737>`__"
+msgstr ""
+
+#: ../../pep-0686.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0686.rst:12
+msgid "https://discuss.python.org/t/14737/9"
+msgstr ""
+
+#: ../../pep-0686.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0686.rst:18
+msgid "This PEP proposes enabling :pep:`UTF-8 mode <540>` by default."
+msgstr ""
+
+#: ../../pep-0686.rst:20
+msgid ""
+"With this change, Python consistently uses UTF-8 for default encoding of "
+"files, stdio, and pipes."
+msgstr ""
+
+#: ../../pep-0686.rst:25
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0686.rst:27
+msgid "UTF-8 becomes de facto standard text encoding."
+msgstr ""
+
+#: ../../pep-0686.rst:29
+msgid "The default encoding of Python source files is UTF-8."
+msgstr ""
+
+#: ../../pep-0686.rst:30
+msgid "JSON, TOML, YAML use UTF-8."
+msgstr ""
+
+#: ../../pep-0686.rst:31
+msgid ""
+"Most text editors, including Visual Studio Code and Windows Notepad use "
+"UTF-8 by default."
+msgstr ""
+
+#: ../../pep-0686.rst:33
+msgid "Most websites and text data on the internet use UTF-8."
+msgstr ""
+
+#: ../../pep-0686.rst:34
+msgid ""
+"And many other popular programming languages, including Node.js, Go, "
+"Rust, and Java uses UTF-8 by default."
+msgstr ""
+
+#: ../../pep-0686.rst:37
+msgid ""
+"Changing the default encoding to UTF-8 makes it easier for Python to "
+"interoperate with them."
+msgstr ""
+
+#: ../../pep-0686.rst:40
+msgid ""
+"Additionally, many Python developers using Unix forget that the default "
+"encoding is platform dependent. They omit to specify "
+"``encoding=\"utf-8\"`` when they read text files encoded in UTF-8 (e.g. "
+"JSON, TOML, Markdown, and Python source files). Inconsistent default "
+"encoding causes many bugs."
+msgstr ""
+
+#: ../../pep-0686.rst:48
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0686.rst:51
+msgid "Enable UTF-8 mode by default"
+msgstr ""
+
+#: ../../pep-0686.rst:53
+msgid "Python will enable UTF-8 mode by default from Python 3.15."
+msgstr ""
+
+#: ../../pep-0686.rst:55
+msgid ""
+"Users can still disable UTF-8 mode by setting ``PYTHONUTF8=0`` or ``-X "
+"utf8=0``."
+msgstr ""
+
+#: ../../pep-0686.rst:60
+msgid "``locale.getencoding()``"
+msgstr ""
+
+#: ../../pep-0686.rst:62
+msgid ""
+"Since UTF-8 mode affects ``locale.getpreferredencoding(False)``, we need "
+"an API to get locale encoding regardless of UTF-8 mode."
+msgstr ""
+
+#: ../../pep-0686.rst:65
+msgid ""
+"``locale.getencoding()`` will be added for this purpose. It returns "
+"locale encoding too, but ignores UTF-8 mode."
+msgstr ""
+
+#: ../../pep-0686.rst:68
+msgid ""
+"When ``warn_default_encoding`` option is specified, "
+"``locale.getpreferredencoding()`` will emit ``EncodingWarning`` like "
+"``open()`` (see also :pep:`597`)."
+msgstr ""
+
+#: ../../pep-0686.rst:72
+msgid "This API was added in Python 3.11."
+msgstr ""
+
+#: ../../pep-0686.rst:76
+msgid "Fixing ``encoding=\"locale\"`` option"
+msgstr ""
+
+#: ../../pep-0686.rst:78
+msgid ""
+":pep:`597` added the ``encoding=\"locale\"`` option to the "
+"``TextIOWrapper``. This option is used to specify the locale encoding "
+"explicitly. ``TextIOWrapper`` should use locale encoding when the option "
+"is specified, regardless of default text encoding."
+msgstr ""
+
+#: ../../pep-0686.rst:83
+msgid ""
+"But ``TextIOWrapper`` uses ``\"UTF-8\"`` in UTF-8 mode even if "
+"``encoding=\"locale\"`` is specified for now. This behavior is "
+"inconsistent with the :pep:`597` motivation. It is because we didn't "
+"expect making UTF-8 mode default when Python changes its default text "
+"encoding."
+msgstr ""
+
+#: ../../pep-0686.rst:89
+msgid ""
+"This inconsistency should be fixed before making UTF-8 mode default. "
+"``TextIOWrapper`` should use locale encoding when ``encoding=\"locale\"``"
+" is passed even in UTF-8 mode."
+msgstr ""
+
+#: ../../pep-0686.rst:93
+msgid "This issue was fixed in Python 3.11."
+msgstr ""
+
+#: ../../pep-0686.rst:97
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-0686.rst:99
+msgid ""
+"Most Unix systems use UTF-8 locale and Python enables UTF-8 mode when its"
+" locale is C or POSIX. So this change mostly affects Windows users."
+msgstr ""
+
+#: ../../pep-0686.rst:103
+msgid ""
+"When a Python program depends on the default encoding, this change may "
+"cause ``UnicodeError``, mojibake, or even silent data corruption. So this"
+" change should be announced loudly."
+msgstr ""
+
+#: ../../pep-0686.rst:107
+msgid "This is the guideline to fix this backward compatibility issue:"
+msgstr ""
+
+#: ../../pep-0686.rst:109
+msgid "Disable UTF-8 mode."
+msgstr ""
+
+#: ../../pep-0686.rst:110
+msgid ""
+"Use ``EncodingWarning`` (:pep:`597`) to find every places UTF-8 mode "
+"affects."
+msgstr ""
+
+#: ../../pep-0686.rst:113
+msgid ""
+"If ``encoding`` option is omitted, consider using ``encoding=\"utf-8\"`` "
+"or ``encoding=\"locale\"``."
+msgstr ""
+
+#: ../../pep-0686.rst:115
+msgid ""
+"If ``locale.getpreferredencoding()`` is used, consider using "
+"``\"utf-8\"`` or ``locale.getencoding()``."
+msgstr ""
+
+#: ../../pep-0686.rst:118
+msgid "Test the application with UTF-8 mode."
+msgstr ""
+
+#: ../../pep-0686.rst:122
+msgid "Preceding examples"
+msgstr ""
+
+#: ../../pep-0686.rst:124
+msgid ""
+"Ruby `changed <Feature #16604_>`__ the default ``external_encoding`` to "
+"UTF-8 on Windows in Ruby 3.0 (2020)."
+msgstr ""
+
+#: ../../pep-0686.rst:126
+msgid ""
+"Java `changed <JEP 400_>`__ the default text encoding to UTF-8 in JDK 18."
+" (2022)."
+msgstr ""
+
+#: ../../pep-0686.rst:129
+msgid ""
+"Both Ruby and Java have an option for backward compatibility. They don't "
+"provide any warning like :pep:`597`'s ``EncodingWarning`` in Python for "
+"use of the default encoding."
+msgstr ""
+
+#: ../../pep-0686.rst:135
+msgid "Rejected Alternative"
+msgstr ""
+
+#: ../../pep-0686.rst:138
+msgid "Deprecate implicit encoding"
+msgstr ""
+
+#: ../../pep-0686.rst:140
+msgid "Deprecating the use of the default encoding is considered."
+msgstr ""
+
+#: ../../pep-0686.rst:142
+msgid ""
+"But there are many cases that the default encoding is used for "
+"reading/writing only ASCII text. Additionally, such warnings are not "
+"useful for non-cross platform applications run on Unix."
+msgstr ""
+
+#: ../../pep-0686.rst:147
+msgid ""
+"So forcing users to specify the ``encoding`` everywhere is too painful. "
+"Emitting a lot of ``DeprecationWarning`` will lead users ignore warnings."
+msgstr ""
+
+#: ../../pep-0686.rst:150
+msgid ""
+":pep:`387` requires adding a warning for backward incompatible changes. "
+"But it doesn't require using ``DeprecationWarning``. So using optional "
+"``EncodingWarning`` doesn't violate the :pep:`387`."
+msgstr ""
+
+#: ../../pep-0686.rst:154
+msgid "Java also rejected this idea in `JEP 400`_."
+msgstr ""
+
+#: ../../pep-0686.rst:158
+msgid "Use ``PYTHONIOENCODING`` for PIPEs"
+msgstr ""
+
+#: ../../pep-0686.rst:160
+msgid ""
+"To ease backward compatibility issue, using ``PYTHONIOENCODING`` as the "
+"default encoding of PIPEs in the ``subprocess`` module is considered."
+msgstr ""
+
+#: ../../pep-0686.rst:163
+msgid ""
+"With this idea, users can use legacy encoding for "
+"``subprocess.Popen(text=True)`` even in UTF-8 mode."
+msgstr ""
+
+#: ../../pep-0686.rst:166
+msgid ""
+"But this idea makes \"default encoding\" complicated. And this idea is "
+"also backward incompatible."
+msgstr ""
+
+#: ../../pep-0686.rst:169
+msgid ""
+"So this idea is rejected. Users can disable UTF-8 mode until they replace"
+" ``text=True`` with ``encoding=\"utf-8\"`` or ``encoding=\"locale\"``."
+msgstr ""
+
+#: ../../pep-0686.rst:174
+msgid "How to teach this"
+msgstr ""
+
+#: ../../pep-0686.rst:176
+msgid ""
+"For new users, this change reduces things that need to teach. Users don't"
+" need to learn about text encoding in their first year. They should learn"
+" it when they need to use non-UTF-8 text files."
+msgstr ""
+
+#: ../../pep-0686.rst:180
+msgid "For existing users, see the `Backward compatibility`_ section."
+msgstr ""
+
+#: ../../pep-0686.rst:192
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0686.rst:194
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

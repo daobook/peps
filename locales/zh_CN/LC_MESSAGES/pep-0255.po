@@ -8,54 +8,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0255.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0255.txt:1
-msgid "255"
-msgstr ""
-
-#: ../../pep-0255.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0255.txt:2
-msgid "Simple Generators"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0255.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0255.txt:5
+#: ../../pep-0255.txt:3
 msgid ""
-"nas@arctrix.com (Neil Schemenauer), tim.peters@gmail.com (Tim Peters), "
-"magnus@hetland.org (Magnus Lie Hetland)"
-msgstr ""
-
-#: ../../pep-0255.txt
-msgid "Discussions-To"
-msgstr ""
-
-#: ../../pep-0255.txt:8
-msgid "python-iterators@lists.sourceforge.net"
+"Neil Schemenauer <nas@arctrix.com>, Tim Peters <tim.peters@gmail.com>, "
+"Magnus Lie Hetland <magnus@hetland.org>"
 msgstr ""
 
 #: ../../pep-0255.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0255.txt:9
+#: ../../pep-0255.txt:6
 msgid "Final"
 msgstr ""
 
@@ -63,7 +39,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0255.txt:10
+#: ../../pep-0255.txt:7
 msgid "Standards Track"
 msgstr ""
 
@@ -71,7 +47,7 @@ msgstr ""
 msgid "Requires"
 msgstr ""
 
-#: ../../pep-0255.txt:12
+#: ../../pep-0255.txt:9
 msgid "234"
 msgstr ""
 
@@ -79,7 +55,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0255.txt:13
+#: ../../pep-0255.txt:10
 msgid "18-May-2001"
 msgstr ""
 
@@ -87,7 +63,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0255.txt:14
+#: ../../pep-0255.txt:11
 msgid "2.2"
 msgstr ""
 
@@ -95,25 +71,25 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0255.txt:15
+#: ../../pep-0255.txt:12
 msgid "14-Jun-2001, 23-Jun-2001"
 msgstr ""
 
-#: ../../pep-0255.txt:19
+#: ../../pep-0255.txt:16
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0255.txt:21
+#: ../../pep-0255.txt:18
 msgid ""
 "This PEP introduces the concept of generators to Python, as well as a new"
 " statement used in conjunction with them, the ``yield`` statement."
 msgstr ""
 
-#: ../../pep-0255.txt:26
+#: ../../pep-0255.txt:23
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0255.txt:28
+#: ../../pep-0255.txt:25
 msgid ""
 "When a producer function has a hard enough job that it requires "
 "maintaining state between values produced, most programming languages "
@@ -122,7 +98,7 @@ msgid ""
 "produced."
 msgstr ""
 
-#: ../../pep-0255.txt:33
+#: ../../pep-0255.txt:30
 msgid ""
 "For example, ``tokenize.py`` in the standard library takes this approach:"
 " the caller must pass a *tokeneater* function to ``tokenize()``, called "
@@ -137,7 +113,7 @@ msgid ""
 "this approach."
 msgstr ""
 
-#: ../../pep-0255.txt:44
+#: ../../pep-0255.txt:41
 msgid ""
 "An alternative would have been for tokenize to produce an entire parse of"
 " the Python program at once, in a large list.  Then tokenize clients "
@@ -151,22 +127,22 @@ msgid ""
 " whole program first is a severe waste of time."
 msgstr ""
 
-#: ../../pep-0255.txt:54
+#: ../../pep-0255.txt:51
 msgid ""
-"Another alternative would be to make tokenize an iterator [1], delivering"
-" the next token whenever its ``.next()`` method is invoked.  This is "
-"pleasant for the caller in the same way a large list of results would be,"
-" but without the memory and \"what if I want to get out early?\" "
-"drawbacks.  However, this shifts the burden on tokenize to remember *its*"
-" state between ``.next()`` invocations, and the reader need only glance "
-"at ``tokenize.tokenize_loop()`` to realize what a horrid chore that would"
-" be.  Or picture a recursive algorithm for producing the nodes of a "
-"general tree structure:  to cast that into an iterator framework requires"
-" removing the recursion manually and maintaining the state of the "
-"traversal by hand."
+"Another alternative would be to make tokenize an :pep:`iterator <234>`, "
+"delivering the next token whenever its ``.next()`` method is invoked.  "
+"This is pleasant for the caller in the same way a large list of results "
+"would be, but without the memory and \"what if I want to get out early?\""
+" drawbacks.  However, this shifts the burden on tokenize to remember "
+"*its* state between ``.next()`` invocations, and the reader need only "
+"glance at ``tokenize.tokenize_loop()`` to realize what a horrid chore "
+"that would be.  Or picture a recursive algorithm for producing the nodes "
+"of a general tree structure:  to cast that into an iterator framework "
+"requires removing the recursion manually and maintaining the state of the"
+" traversal by hand."
 msgstr ""
 
-#: ../../pep-0255.txt:65
+#: ../../pep-0255.txt:63
 msgid ""
 "A fourth option is to run the producer and consumer in separate threads."
 "  This allows both to maintain their states in natural ways, and so is "
@@ -177,25 +153,25 @@ msgid ""
 "is achievable without threads)."
 msgstr ""
 
-#: ../../pep-0255.txt:72
+#: ../../pep-0255.txt:70
 msgid ""
-"A final option is to use the Stackless [2] [3] variant implementation of "
-"Python instead, which supports lightweight coroutines.  This has much the"
-" same programmatic benefits as the thread option, but is much more "
-"efficient. However, Stackless is a controversial rethinking of the Python"
-" core, and it may not be possible for Jython to implement the same "
-"semantics.  This PEP isn't the place to debate that, so suffice it to say"
-" here that generators provide a useful subset of Stackless functionality "
-"in a way that fits easily into the current CPython implementation, and is"
-" believed to be relatively straightforward for other Python "
-"implementations."
+"A final option is to use the Stackless [1]_ (:pep:`219`) variant "
+"implementation of Python instead, which supports lightweight coroutines."
+"  This has much the same programmatic benefits as the thread option, but "
+"is much more efficient. However, Stackless is a controversial rethinking "
+"of the Python core, and it may not be possible for Jython to implement "
+"the same semantics.  This PEP isn't the place to debate that, so suffice "
+"it to say here that generators provide a useful subset of Stackless "
+"functionality in a way that fits easily into the current CPython "
+"implementation, and is believed to be relatively straightforward for "
+"other Python implementations."
 msgstr ""
 
-#: ../../pep-0255.txt:82
+#: ../../pep-0255.txt:80
 msgid ""
 "That exhausts the current alternatives.  Some other high-level languages "
-"provide pleasant solutions, notably iterators in Sather [4], which were "
-"inspired by iterators in CLU; and generators in Icon [5], a novel "
+"provide pleasant solutions, notably iterators in Sather [2]_, which were "
+"inspired by iterators in CLU; and generators in Icon [3]_, a novel "
 "language where every expression *is a generator*.  There are differences "
 "among these, but the basic idea is the same:  provide a kind of function "
 "that can return an intermediate result (\"the next value\") to its "
@@ -203,7 +179,7 @@ msgid ""
 "can be resumed again right where it left off.  A very simple example::"
 msgstr ""
 
-#: ../../pep-0255.txt:97
+#: ../../pep-0255.txt:95
 msgid ""
 "When ``fib()`` is first invoked, it sets *a* to 0 and *b* to 1, then "
 "yields *b* back to its caller.  The caller sees 1.  When ``fib`` is "
@@ -220,39 +196,39 @@ msgid ""
 " than a function call."
 msgstr ""
 
-#: ../../pep-0255.txt:110
+#: ../../pep-0255.txt:108
 msgid ""
 "The same kind of approach applies to many producer/consumer functions. "
 "For example, ``tokenize.py`` could yield the next token instead of "
 "invoking a callback function with it as argument, and tokenize clients "
 "could iterate over the tokens in a natural way:  a Python generator is a "
-"kind of Python iterator [1]_, but of an especially powerful kind."
+"kind of Python :pep:`iterator <234>`, but of an especially powerful kind."
 msgstr ""
 
-#: ../../pep-0255.txt:118
+#: ../../pep-0255.txt:116
 msgid "Specification:  Yield"
 msgstr ""
 
-#: ../../pep-0255.txt:120
+#: ../../pep-0255.txt:118
 msgid "A new statement is introduced::"
 msgstr ""
 
-#: ../../pep-0255.txt:124
+#: ../../pep-0255.txt:122
 msgid ""
-"``yield`` is a new keyword, so a ``future`` statement [8]_ is needed to "
-"phase this in: in the initial release, a module desiring to use "
-"generators must include the line::"
+"``yield`` is a new keyword, so a ``future`` statement (:pep:`236`) is "
+"needed to phase this in: in the initial release, a module desiring to use"
+" generators must include the line::"
 msgstr ""
 
-#: ../../pep-0255.txt:130
+#: ../../pep-0255.txt:128
 msgid ""
-"near the top (see PEP 236 [8]_) for details).  Modules using the "
-"identifier ``yield`` without a ``future`` statement will trigger "
-"warnings. In the following release, ``yield`` will be a language keyword "
-"and the ``future`` statement will no longer be needed."
+"near the top (see :pep:`236`) for details).  Modules using the identifier"
+" ``yield`` without a ``future`` statement will trigger warnings. In the "
+"following release, ``yield`` will be a language keyword and the "
+"``future`` statement will no longer be needed."
 msgstr ""
 
-#: ../../pep-0255.txt:135
+#: ../../pep-0255.txt:133
 msgid ""
 "The ``yield`` statement may only be used inside functions.  A function "
 "that contains a ``yield`` statement is called a generator function.  A "
@@ -261,18 +237,18 @@ msgid ""
 "member."
 msgstr ""
 
-#: ../../pep-0255.txt:140
+#: ../../pep-0255.txt:138
 msgid ""
 "When a generator function is called, the actual arguments are bound to "
 "function-local formal argument names in the usual way, but no code in the"
 " body of the function is executed.  Instead a generator-iterator object "
-"is returned; this conforms to the iterator protocol [6]_, so in "
+"is returned; this conforms to the :pep:`iterator protocol <234>`, so in "
 "particular can be used in for-loops in a natural way.  Note that when the"
 " intent is clear from context, the unqualified name \"generator\" may be "
 "used to refer either to a generator-function or a generator-iterator."
 msgstr ""
 
-#: ../../pep-0255.txt:148
+#: ../../pep-0255.txt:146
 msgid ""
 "Each time the ``.next()`` method of a generator-iterator is invoked, the "
 "code in the body of the generator-function is executed until a ``yield`` "
@@ -280,7 +256,7 @@ msgid ""
 "the body is reached."
 msgstr ""
 
-#: ../../pep-0255.txt:153
+#: ../../pep-0255.txt:151
 msgid ""
 "If a ``yield`` statement is encountered, the state of the function is "
 "frozen, and the value of *expression_list* is returned to ``.next()``'s "
@@ -291,7 +267,7 @@ msgid ""
 "exactly as if the ``yield`` statement were just another external call."
 msgstr ""
 
-#: ../../pep-0255.txt:161
+#: ../../pep-0255.txt:159
 msgid ""
 "Restriction:  A ``yield`` statement is not allowed in the ``try`` clause "
 "of a ``try/finally`` construct.  The difficulty is that there's no "
@@ -300,26 +276,26 @@ msgid ""
 "finally's purpose to bear."
 msgstr ""
 
-#: ../../pep-0255.txt:166
+#: ../../pep-0255.txt:164
 msgid "Restriction:  A generator cannot be resumed while it is actively running::"
 msgstr ""
 
-#: ../../pep-0255.txt:180
+#: ../../pep-0255.txt:178
 msgid "Specification:  Return"
 msgstr ""
 
-#: ../../pep-0255.txt:182
+#: ../../pep-0255.txt:180
 msgid "A generator function can also contain return statements of the form::"
 msgstr ""
 
-#: ../../pep-0255.txt:186
+#: ../../pep-0255.txt:184
 msgid ""
 "Note that an *expression_list* is not allowed on return statements in the"
 " body of a generator (although, of course, they may appear in the bodies "
 "of non-generator functions nested within the generator)."
 msgstr ""
 
-#: ../../pep-0255.txt:190
+#: ../../pep-0255.txt:188
 msgid ""
 "When a return statement is encountered, control proceeds as in any "
 "function return, executing the appropriate ``finally`` clauses (if any "
@@ -328,34 +304,34 @@ msgid ""
 "if control flows off the end of the generator without an explicit return."
 msgstr ""
 
-#: ../../pep-0255.txt:196
+#: ../../pep-0255.txt:194
 msgid ""
 "Note that return means \"I'm done, and have nothing interesting to "
 "return\", for both generator functions and non-generator functions."
 msgstr ""
 
-#: ../../pep-0255.txt:199
+#: ../../pep-0255.txt:197
 msgid ""
 "Note that return isn't always equivalent to raising ``StopIteration``:  "
 "the difference lies in how enclosing ``try/except`` constructs are "
 "treated. For example,::"
 msgstr ""
 
-#: ../../pep-0255.txt:211
+#: ../../pep-0255.txt:209
 msgid "because, as in any function, ``return`` simply exits, but::"
 msgstr ""
 
-#: ../../pep-0255.txt:221
+#: ../../pep-0255.txt:219
 msgid ""
 "because ``StopIteration`` is captured by a bare ``except``, as is any "
 "exception."
 msgstr ""
 
-#: ../../pep-0255.txt:226
+#: ../../pep-0255.txt:224
 msgid "Specification:  Generators and Exception Propagation"
 msgstr ""
 
-#: ../../pep-0255.txt:228
+#: ../../pep-0255.txt:226
 msgid ""
 "If an unhandled exception-- including, but not limited to, "
 "``StopIteration`` --is raised by, or passes through, a generator "
@@ -365,15 +341,15 @@ msgid ""
 "generator's useful life."
 msgstr ""
 
-#: ../../pep-0255.txt:234
+#: ../../pep-0255.txt:232
 msgid "Example (not idiomatic but to illustrate the point)::"
 msgstr ""
 
-#: ../../pep-0255.txt:256
+#: ../../pep-0255.txt:254
 msgid "Specification:  Try/Except/Finally"
 msgstr ""
 
-#: ../../pep-0255.txt:258
+#: ../../pep-0255.txt:256
 msgid ""
 "As noted earlier, ``yield`` is not allowed in the ``try`` clause of a "
 "``try/finally`` construct.  A consequence is that generators should "
@@ -382,31 +358,31 @@ msgid ""
 " or in the ``try`` clause of a ``try/except`` construct::"
 msgstr ""
 
-#: ../../pep-0255.txt:292
+#: ../../pep-0255.txt:290
 msgid "Example"
 msgstr ""
 
-#: ../../pep-0255.txt:360
+#: ../../pep-0255.txt:358
 msgid "Both output blocks display::"
 msgstr ""
 
-#: ../../pep-0255.txt:366
+#: ../../pep-0255.txt:364
 msgid "Q & A"
 msgstr ""
 
-#: ../../pep-0255.txt:369
+#: ../../pep-0255.txt:367
 msgid "Why not a new keyword instead of reusing ``def``?"
 msgstr ""
 
-#: ../../pep-0255.txt:371
+#: ../../pep-0255.txt:369
 msgid "See BDFL Pronouncements section below."
 msgstr ""
 
-#: ../../pep-0255.txt:374
+#: ../../pep-0255.txt:372
 msgid "Why a new keyword for ``yield``?  Why not a builtin function instead?"
 msgstr ""
 
-#: ../../pep-0255.txt:376
+#: ../../pep-0255.txt:374
 msgid ""
 "Control flow is much better expressed via keyword in Python, and yield is"
 " a control construct.  It's also believed that efficient implementation "
@@ -418,15 +394,15 @@ msgid ""
 "\"why a new keyword?\" question don't want any new keyword)."
 msgstr ""
 
-#: ../../pep-0255.txt:386
+#: ../../pep-0255.txt:384
 msgid "Then why not some other special syntax without a new keyword?"
 msgstr ""
 
-#: ../../pep-0255.txt:388
+#: ../../pep-0255.txt:386
 msgid "For example, one of these instead of ``yield 3``::"
 msgstr ""
 
-#: ../../pep-0255.txt:402
+#: ../../pep-0255.txt:400
 msgid ""
 "Did I miss one <wink>?  Out of hundreds of messages, I counted three "
 "suggesting such an alternative, and extracted the above from them. It "
@@ -437,13 +413,13 @@ msgid ""
 "settle on a single consensus suggestion, and Guido will Pronounce on it."
 msgstr ""
 
-#: ../../pep-0255.txt:411
+#: ../../pep-0255.txt:409
 msgid ""
 "Why allow ``return`` at all?  Why not force termination to be spelled "
 "``raise StopIteration``?"
 msgstr ""
 
-#: ../../pep-0255.txt:413
+#: ../../pep-0255.txt:411
 msgid ""
 "The mechanics of ``StopIteration`` are low-level details, much like the "
 "mechanics of ``IndexError`` in Python 2.1:  the implementation needs to "
@@ -455,11 +431,11 @@ msgid ""
 "try/except construct, either (see the \"Specification: Return\" section)."
 msgstr ""
 
-#: ../../pep-0255.txt:423
+#: ../../pep-0255.txt:421
 msgid "Then why not allow an expression on ``return`` too?"
 msgstr ""
 
-#: ../../pep-0255.txt:425
+#: ../../pep-0255.txt:423
 msgid ""
 "Perhaps we will someday.  In Icon, ``return expr`` means both \"I'm "
 "done\", and \"but I have one final useful value to return too, and this "
@@ -468,26 +444,26 @@ msgid ""
 "delivering values."
 msgstr ""
 
-#: ../../pep-0255.txt:432
+#: ../../pep-0255.txt:430
 msgid "BDFL Pronouncements"
 msgstr ""
 
-#: ../../pep-0255.txt:435
+#: ../../pep-0255.txt:433
 msgid "Issue"
 msgstr ""
 
-#: ../../pep-0255.txt:437
+#: ../../pep-0255.txt:435
 msgid ""
 "Introduce another new keyword (say, ``gen`` or ``generator``) in place of"
 " ``def``, or otherwise alter the syntax, to distinguish generator-"
 "functions from non-generator functions."
 msgstr ""
 
-#: ../../pep-0255.txt:442
+#: ../../pep-0255.txt:440
 msgid "Con"
 msgstr ""
 
-#: ../../pep-0255.txt:444
+#: ../../pep-0255.txt:442
 msgid ""
 "In practice (how you think about them), generators *are* functions, but "
 "with the twist that they're resumable.  The mechanics of how they're set "
@@ -496,11 +472,11 @@ msgid ""
 "get started (a vital but tiny part of a generator's life)."
 msgstr ""
 
-#: ../../pep-0255.txt:451
+#: ../../pep-0255.txt:449
 msgid "Pro"
 msgstr ""
 
-#: ../../pep-0255.txt:453
+#: ../../pep-0255.txt:451
 msgid ""
 "In reality (how you think about them), generator-functions are actually "
 "factory functions that produce generator-iterators as if by magic.  In "
@@ -510,11 +486,11 @@ msgid ""
 "warning that the semantics are so different."
 msgstr ""
 
-#: ../../pep-0255.txt:461
+#: ../../pep-0255.txt:459
 msgid "BDFL"
 msgstr ""
 
-#: ../../pep-0255.txt:463
+#: ../../pep-0255.txt:461
 msgid ""
 "``def`` it stays.  No argument on either side is totally convincing, so I"
 " have consulted my language designer's intuition.  It tells me that the "
@@ -527,66 +503,44 @@ msgid ""
 "Warts\" page."
 msgstr ""
 
-#: ../../pep-0255.txt:474
+#: ../../pep-0255.txt:472
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0255.txt:476
+#: ../../pep-0255.txt:474
 msgid ""
 "The current implementation, in a preliminary state (no docs, but well "
-"tested and solid), is part of Python's CVS development tree [9]_.  Using "
+"tested and solid), is part of Python's CVS development tree [5]_.  Using "
 "this requires that you build Python from source."
 msgstr ""
 
-#: ../../pep-0255.txt:480
-msgid "This was derived from an earlier patch by Neil Schemenauer [7]_."
+#: ../../pep-0255.txt:478
+msgid "This was derived from an earlier patch by Neil Schemenauer [4]_."
 msgstr ""
 
-#: ../../pep-0255.txt:484
+#: ../../pep-0255.txt:482
 msgid "Footnotes and References"
 msgstr ""
 
-#: ../../pep-0255.txt:486
-msgid ""
-"PEP 234, Iterators, Yee, Van Rossum "
-"http://www.python.org/dev/peps/pep-0234/"
-msgstr ""
-
-#: ../../pep-0255.txt:489
+#: ../../pep-0255.txt:484
 msgid "http://www.stackless.com/"
 msgstr ""
 
-#: ../../pep-0255.txt:491
-msgid ""
-"PEP 219, Stackless Python, McMillan "
-"http://www.python.org/dev/peps/pep-0219/"
-msgstr ""
-
-#: ../../pep-0255.txt:494
+#: ../../pep-0255.txt:486
 msgid ""
 "\"Iteration Abstraction in Sather\" Murer, Omohundro, Stoutamire and "
 "Szyperski http://www.icsi.berkeley.edu/~sather/Publications/toplas.html"
 msgstr ""
 
-#: ../../pep-0255.txt:498
+#: ../../pep-0255.txt:490
 msgid "http://www.cs.arizona.edu/icon/"
 msgstr ""
 
-#: ../../pep-0255.txt:500
-msgid "The concept of iterators is described in PEP 234.  See [1] above."
-msgstr ""
-
-#: ../../pep-0255.txt:502
+#: ../../pep-0255.txt:492
 msgid "http://python.ca/nas/python/generator.diff"
 msgstr ""
 
-#: ../../pep-0255.txt:504
-msgid ""
-"PEP 236, Back to the __future__, Peters "
-"http://www.python.org/dev/peps/pep-0236/"
-msgstr ""
-
-#: ../../pep-0255.txt:507
+#: ../../pep-0255.txt:494
 msgid ""
 "To experiment with this implementation, check out Python from CVS "
 "according to the instructions at http://sf.net/cvs/?group_id=5470 Note "
@@ -594,11 +548,179 @@ msgid ""
 " including all those in this PEP."
 msgstr ""
 
-#: ../../pep-0255.txt:514
+#: ../../pep-0255.txt:501
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0255.txt:516
+#: ../../pep-0255.txt:503
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "255"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Simple Generators"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "nas@arctrix.com (Neil Schemenauer), "
+#~ "tim.peters@gmail.com (Tim Peters), "
+#~ "magnus@hetland.org (Magnus Lie Hetland)"
+#~ msgstr ""
+
+#~ msgid "Discussions-To"
+#~ msgstr ""
+
+#~ msgid "python-iterators@lists.sourceforge.net"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Another alternative would be to make "
+#~ "tokenize an iterator [1], delivering the"
+#~ " next token whenever its ``.next()`` "
+#~ "method is invoked.  This is pleasant "
+#~ "for the caller in the same way "
+#~ "a large list of results would be,"
+#~ " but without the memory and \"what"
+#~ " if I want to get out early?\""
+#~ " drawbacks.  However, this shifts the "
+#~ "burden on tokenize to remember *its* "
+#~ "state between ``.next()`` invocations, and "
+#~ "the reader need only glance at "
+#~ "``tokenize.tokenize_loop()`` to realize what a"
+#~ " horrid chore that would be.  Or "
+#~ "picture a recursive algorithm for "
+#~ "producing the nodes of a general "
+#~ "tree structure:  to cast that into "
+#~ "an iterator framework requires removing "
+#~ "the recursion manually and maintaining "
+#~ "the state of the traversal by "
+#~ "hand."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A final option is to use the "
+#~ "Stackless [2] [3] variant implementation "
+#~ "of Python instead, which supports "
+#~ "lightweight coroutines.  This has much "
+#~ "the same programmatic benefits as the"
+#~ " thread option, but is much more "
+#~ "efficient. However, Stackless is a "
+#~ "controversial rethinking of the Python "
+#~ "core, and it may not be possible"
+#~ " for Jython to implement the same "
+#~ "semantics.  This PEP isn't the place "
+#~ "to debate that, so suffice it to"
+#~ " say here that generators provide a"
+#~ " useful subset of Stackless functionality"
+#~ " in a way that fits easily into"
+#~ " the current CPython implementation, and"
+#~ " is believed to be relatively "
+#~ "straightforward for other Python "
+#~ "implementations."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "That exhausts the current alternatives.  "
+#~ "Some other high-level languages provide"
+#~ " pleasant solutions, notably iterators in"
+#~ " Sather [4], which were inspired by"
+#~ " iterators in CLU; and generators in"
+#~ " Icon [5], a novel language where "
+#~ "every expression *is a generator*.  "
+#~ "There are differences among these, but"
+#~ " the basic idea is the same:  "
+#~ "provide a kind of function that "
+#~ "can return an intermediate result (\"the"
+#~ " next value\") to its caller, but "
+#~ "maintaining the function's local state "
+#~ "so that the function can be "
+#~ "resumed again right where it left "
+#~ "off.  A very simple example::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The same kind of approach applies "
+#~ "to many producer/consumer functions. For "
+#~ "example, ``tokenize.py`` could yield the "
+#~ "next token instead of invoking a "
+#~ "callback function with it as argument,"
+#~ " and tokenize clients could iterate "
+#~ "over the tokens in a natural way:"
+#~ "  a Python generator is a kind "
+#~ "of Python iterator [1]_, but of an"
+#~ " especially powerful kind."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "``yield`` is a new keyword, so a"
+#~ " ``future`` statement [8]_ is needed "
+#~ "to phase this in: in the initial"
+#~ " release, a module desiring to use"
+#~ " generators must include the line::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "near the top (see PEP 236 [8]_)"
+#~ " for details).  Modules using the "
+#~ "identifier ``yield`` without a ``future`` "
+#~ "statement will trigger warnings. In the"
+#~ " following release, ``yield`` will be "
+#~ "a language keyword and the ``future``"
+#~ " statement will no longer be needed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When a generator function is called, "
+#~ "the actual arguments are bound to "
+#~ "function-local formal argument names in "
+#~ "the usual way, but no code in "
+#~ "the body of the function is "
+#~ "executed.  Instead a generator-iterator "
+#~ "object is returned; this conforms to "
+#~ "the iterator protocol [6]_, so in "
+#~ "particular can be used in for-"
+#~ "loops in a natural way.  Note that"
+#~ " when the intent is clear from "
+#~ "context, the unqualified name \"generator\""
+#~ " may be used to refer either to"
+#~ " a generator-function or a "
+#~ "generator-iterator."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The current implementation, in a "
+#~ "preliminary state (no docs, but well "
+#~ "tested and solid), is part of "
+#~ "Python's CVS development tree [9]_.  "
+#~ "Using this requires that you build "
+#~ "Python from source."
+#~ msgstr ""
+
+#~ msgid "This was derived from an earlier patch by Neil Schemenauer [7]_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 234, Iterators, Yee, Van Rossum "
+#~ "http://www.python.org/dev/peps/pep-0234/"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 219, Stackless Python, McMillan "
+#~ "http://www.python.org/dev/peps/pep-0219/"
+#~ msgstr ""
+
+#~ msgid "The concept of iterators is described in PEP 234.  See [1] above."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 236, Back to the __future__, "
+#~ "Peters http://www.python.org/dev/peps/pep-0236/"
+#~ msgstr ""
 

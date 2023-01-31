@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0436.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0436.txt:1
-msgid "436"
-msgstr ""
-
-#: ../../pep-0436.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0436.txt:2
-msgid "The Argument Clinic DSL"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0436.txt
 msgid "Author"
@@ -46,7 +30,7 @@ msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0436.txt:6
-msgid "Python-Dev <python-dev@python.org>"
+msgid "python-dev@python.org"
 msgstr ""
 
 #: ../../pep-0436.txt
@@ -73,21 +57,29 @@ msgstr ""
 msgid "22-Feb-2013"
 msgstr ""
 
-#: ../../pep-0436.txt:14
+#: ../../pep-0436.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0436.txt:11
+msgid "3.4"
+msgstr ""
+
+#: ../../pep-0436.txt:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0436.txt:16
+#: ../../pep-0436.txt:17
 msgid ""
 "This document proposes \"Argument Clinic\", a DSL to facilitate argument "
 "processing for built-in functions in the implementation of CPython."
 msgstr ""
 
-#: ../../pep-0436.txt:22
+#: ../../pep-0436.txt:23
 msgid "Rationale and Goals"
 msgstr ""
 
-#: ../../pep-0436.txt:24
+#: ../../pep-0436.txt:25
 msgid ""
 "The primary implementation of Python, \"CPython\", is written in a "
 "mixture of Python and C.  One implementation detail of CPython is what "
@@ -98,7 +90,7 @@ msgid ""
 "arguments\"."
 msgstr ""
 
-#: ../../pep-0436.txt:32
+#: ../../pep-0436.txt:33
 msgid ""
 "As of CPython 3.3, builtin functions nearly always parse their arguments "
 "with one of two functions: the original ``PyArg_ParseTuple()``, [1]_ and "
@@ -107,7 +99,7 @@ msgid ""
 "keyword-only parameters, and is preferred for new code."
 msgstr ""
 
-#: ../../pep-0436.txt:38
+#: ../../pep-0436.txt:39
 msgid ""
 "With either function, the caller specifies the translation for parsing "
 "arguments in a \"format string\": [3]_ each parameter corresponds to a "
@@ -116,7 +108,7 @@ msgid ""
 "appropriate C value for that parameter."
 msgstr ""
 
-#: ../../pep-0436.txt:45
+#: ../../pep-0436.txt:46
 msgid ""
 "``PyArg_ParseTuple()`` was reasonable when it was first conceived. There "
 "were only a dozen or so of these \"format units\"; each one was distinct,"
@@ -126,7 +118,7 @@ msgid ""
 "Consider:"
 msgstr ""
 
-#: ../../pep-0436.txt:52
+#: ../../pep-0436.txt:53
 msgid ""
 "There are now forty different \"format units\"; a few are even three "
 "characters long.  This makes it difficult for the programmer to "
@@ -134,13 +126,13 @@ msgid ""
 "without constantly cross-indexing it with the documentation."
 msgstr ""
 
-#: ../../pep-0436.txt:56
+#: ../../pep-0436.txt:57
 msgid ""
 "There are also six meta-format units that may be buried in the format "
 "string.  (They are: ``\"()|$:;\"``.)"
 msgstr ""
 
-#: ../../pep-0436.txt:58
+#: ../../pep-0436.txt:59
 msgid ""
 "The more format units are added, the less likely it is the implementer "
 "can pick an easy-to-use mnemonic for the format unit, because the "
@@ -148,7 +140,7 @@ msgid ""
 " format units we have, the more obtuse the format units become."
 msgstr ""
 
-#: ../../pep-0436.txt:63
+#: ../../pep-0436.txt:64
 msgid ""
 "Several format units are nearly identical to others, having only subtle "
 "differences.  This makes understanding the exact semantics of the format "
@@ -156,49 +148,49 @@ msgid ""
 " format unit you want."
 msgstr ""
 
-#: ../../pep-0436.txt:67
+#: ../../pep-0436.txt:68
 msgid ""
 "The docstring is specified as a static C string, making it mildly "
 "bothersome to read and edit since it must obey C string quoting rules."
 msgstr ""
 
-#: ../../pep-0436.txt:69
+#: ../../pep-0436.txt:70
 msgid ""
 "When adding a new parameter to a function using "
 "``PyArg_ParseTupleAndKeywords()``, it's necessary to touch six different "
 "places in the code: [4]_"
 msgstr ""
 
-#: ../../pep-0436.txt:73
+#: ../../pep-0436.txt:74
 msgid "Declaring the variable to store the argument."
 msgstr ""
 
-#: ../../pep-0436.txt:74
+#: ../../pep-0436.txt:75
 msgid ""
 "Passing in a pointer to that variable in the correct spot in "
 "``PyArg_ParseTupleAndKeywords()``, also passing in any \"length\" or "
 "\"converter\" arguments in the correct order."
 msgstr ""
 
-#: ../../pep-0436.txt:77
+#: ../../pep-0436.txt:78
 msgid ""
 "Adding the name of the argument in the correct spot of the \"keywords\" "
 "array passed in to ``PyArg_ParseTupleAndKeywords()``."
 msgstr ""
 
-#: ../../pep-0436.txt:80
+#: ../../pep-0436.txt:81
 msgid "Adding the format unit to the correct spot in the format string."
 msgstr ""
 
-#: ../../pep-0436.txt:82
+#: ../../pep-0436.txt:83
 msgid "Adding the parameter to the prototype in the docstring."
 msgstr ""
 
-#: ../../pep-0436.txt:83
+#: ../../pep-0436.txt:84
 msgid "Documenting the parameter in the docstring."
 msgstr ""
 
-#: ../../pep-0436.txt:85
+#: ../../pep-0436.txt:86
 msgid ""
 "There is currently no mechanism for builtin functions to provide their "
 "\"signature\" information (see ``inspect.getfullargspec`` and "
@@ -207,39 +199,39 @@ msgid ""
 " ourselves yet again."
 msgstr ""
 
-#: ../../pep-0436.txt:91
+#: ../../pep-0436.txt:92
 msgid ""
 "The goal of Argument Clinic is to replace this API with a mechanism "
 "inheriting none of these downsides:"
 msgstr ""
 
-#: ../../pep-0436.txt:94
+#: ../../pep-0436.txt:95
 msgid "You need specify each parameter only once."
 msgstr ""
 
-#: ../../pep-0436.txt:95
+#: ../../pep-0436.txt:96
 msgid "All information about a parameter is kept together in one place."
 msgstr ""
 
-#: ../../pep-0436.txt:96
+#: ../../pep-0436.txt:97
 msgid ""
 "For each parameter, you specify a conversion function; Argument Clinic "
 "handles the translation from Python value into C value for you."
 msgstr ""
 
-#: ../../pep-0436.txt:99
+#: ../../pep-0436.txt:100
 msgid ""
 "Argument Clinic also allows for fine-tuning of argument processing "
 "behavior with parameterized conversion functions."
 msgstr ""
 
-#: ../../pep-0436.txt:101
+#: ../../pep-0436.txt:102
 msgid ""
 "Docstrings are written in plain text.  Function docstrings are required; "
 "per-parameter docstrings are encouraged."
 msgstr ""
 
-#: ../../pep-0436.txt:103
+#: ../../pep-0436.txt:104
 msgid ""
 "From this, Argument Clinic generates for you all the mundane, repetitious"
 " code and data structures CPython needs internally. Once you've specified"
@@ -248,7 +240,7 @@ msgid ""
 "you."
 msgstr ""
 
-#: ../../pep-0436.txt:109
+#: ../../pep-0436.txt:110
 msgid ""
 "Argument Clinic is implemented as a preprocessor.  It draws inspiration "
 "for its workflow directly from [Cog]_ by Ned Batchelder.  To use Clinic, "
@@ -264,29 +256,29 @@ msgid ""
 "interpreter."
 msgstr ""
 
-#: ../../pep-0436.txt:122
+#: ../../pep-0436.txt:123
 msgid "Future goals of Argument Clinic include:"
 msgstr ""
 
-#: ../../pep-0436.txt:124
+#: ../../pep-0436.txt:125
 msgid "providing signature information for builtins,"
 msgstr ""
 
-#: ../../pep-0436.txt:125
+#: ../../pep-0436.txt:126
 msgid ""
 "enabling alternative implementations of Python to create automated "
 "library compatibility tests, and"
 msgstr ""
 
-#: ../../pep-0436.txt:127
+#: ../../pep-0436.txt:128
 msgid "speeding up argument parsing with improvements to the generated code."
 msgstr ""
 
-#: ../../pep-0436.txt:132
+#: ../../pep-0436.txt:133
 msgid "DSL Syntax Summary"
 msgstr ""
 
-#: ../../pep-0436.txt:134
+#: ../../pep-0436.txt:135
 msgid ""
 "The Argument Clinic DSL is specified as a comment embedded in a C file, "
 "as follows.  The \"Example\" column on the right shows you sample input "
@@ -294,13 +286,13 @@ msgid ""
 "specifies what each line represents in turn."
 msgstr ""
 
-#: ../../pep-0436.txt:139
+#: ../../pep-0436.txt:140
 msgid ""
 "Argument Clinic's DSL syntax mirrors the Python ``def`` statement, "
 "lending it some familiarity to Python core developers."
 msgstr ""
 
-#: ../../pep-0436.txt:161
+#: ../../pep-0436.txt:162
 msgid ""
 "To give some flavor of the proposed DSL syntax, here are some sample "
 "Clinic code blocks.  This first block reflects the normally preferred "
@@ -309,29 +301,29 @@ msgid ""
 "created locally::"
 msgstr ""
 
-#: ../../pep-0436.txt:198
+#: ../../pep-0436.txt:199
 msgid ""
 "This second example shows a minimal Clinic code block, omitting all "
 "parameter docstrings and non-significant blank lines::"
 msgstr ""
 
-#: ../../pep-0436.txt:224
+#: ../../pep-0436.txt:225
 msgid ""
 "This final example shows a Clinic code block handling groups of optional "
 "parameters, including parameters on the left::"
 msgstr ""
 
-#: ../../pep-0436.txt:256
+#: ../../pep-0436.txt:257
 msgid "General Behavior Of the Argument Clinic DSL"
 msgstr ""
 
-#: ../../pep-0436.txt:258
+#: ../../pep-0436.txt:259
 msgid ""
 "All lines support ``#`` as a line comment delimiter *except* docstrings."
 "  Blank lines are always ignored."
 msgstr ""
 
-#: ../../pep-0436.txt:261
+#: ../../pep-0436.txt:262
 msgid ""
 "Like Python itself, leading whitespace is significant in the Argument "
 "Clinic DSL.  The first line of the \"function\" section is the function "
@@ -342,54 +334,54 @@ msgid ""
 "docstring."
 msgstr ""
 
-#: ../../pep-0436.txt:268
+#: ../../pep-0436.txt:269
 msgid ""
 "Parameter docstrings are optional; function docstrings are not. Functions"
 " that specify no arguments may simply specify the function declaration "
 "followed by the docstring."
 msgstr ""
 
-#: ../../pep-0436.txt:273
+#: ../../pep-0436.txt:274
 msgid "Module and Class Declarations"
 msgstr ""
 
-#: ../../pep-0436.txt:275
+#: ../../pep-0436.txt:276
 msgid ""
 "When a C file implements a module or class, this should be declared to "
 "Clinic.  The syntax is simple::"
 msgstr ""
 
-#: ../../pep-0436.txt:280
+#: ../../pep-0436.txt:281
 msgid "or ::"
 msgstr ""
 
-#: ../../pep-0436.txt:284
+#: ../../pep-0436.txt:285
 msgid ""
 "(Note that these are not actually special syntax; they are implemented as"
 " `Directives`_.)"
 msgstr ""
 
-#: ../../pep-0436.txt:287
+#: ../../pep-0436.txt:288
 msgid ""
 "The module name or class name should always be the full dotted path from "
 "the top-level module.  Nested modules and classes are supported."
 msgstr ""
 
-#: ../../pep-0436.txt:292
+#: ../../pep-0436.txt:293
 msgid "Function Declaration"
 msgstr ""
 
-#: ../../pep-0436.txt:294
+#: ../../pep-0436.txt:295
 msgid "The full form of the function declaration is as follows::"
 msgstr ""
 
-#: ../../pep-0436.txt:298
+#: ../../pep-0436.txt:299
 msgid ""
 "The dotted name should be the full name of the function, starting with "
 "the highest-level package (e.g. \"os.stat\" or \"curses.window.addch\")."
 msgstr ""
 
-#: ../../pep-0436.txt:301
+#: ../../pep-0436.txt:302
 msgid ""
 "The \"as legal_c_id\" syntax is optional. Argument Clinic uses the name "
 "of the function to create the names of the generated C functions.  In "
@@ -400,7 +392,7 @@ msgid ""
 "keyword must also be omitted."
 msgstr ""
 
-#: ../../pep-0436.txt:309
+#: ../../pep-0436.txt:310
 msgid ""
 "The return annotation is also optional.  If skipped, the arrow "
 "(\"``->``\") must also be omitted.  If specified, the value for the "
@@ -408,15 +400,15 @@ msgid ""
 " interpreted as a *return converter*."
 msgstr ""
 
-#: ../../pep-0436.txt:316
+#: ../../pep-0436.txt:317
 msgid "Parameter Declaration"
 msgstr ""
 
-#: ../../pep-0436.txt:318
+#: ../../pep-0436.txt:319
 msgid "The full form of the parameter declaration line as follows::"
 msgstr ""
 
-#: ../../pep-0436.txt:322
+#: ../../pep-0436.txt:323
 msgid ""
 "The \"name\" must be a legal C identifier.  Whitespace is permitted "
 "between the name and the colon (though this is not the preferred style)."
@@ -424,7 +416,7 @@ msgid ""
 "converter."
 msgstr ""
 
-#: ../../pep-0436.txt:326
+#: ../../pep-0436.txt:327
 msgid ""
 "The \"converter\" is the name of one of the \"converter functions\" "
 "registered with Argument Clinic.  Clinic will ship with a number of "
@@ -436,7 +428,7 @@ msgid ""
 "converter may be any legal Python identifier."
 msgstr ""
 
-#: ../../pep-0436.txt:334
+#: ../../pep-0436.txt:335
 msgid ""
 "If the converter is followed by parentheses, these parentheses enclose "
 "parameter to the conversion function.  The syntax mirrors providing "
@@ -450,7 +442,7 @@ msgid ""
 " with ``ast.literal_eval``."
 msgstr ""
 
-#: ../../pep-0436.txt:344
+#: ../../pep-0436.txt:345
 msgid ""
 "The \"default\" is a Python literal value.  Default values are optional; "
 "if not specified you must omit the equals sign too.  Parameters which "
@@ -461,7 +453,7 @@ msgid ""
 "manual translation step."
 msgstr ""
 
-#: ../../pep-0436.txt:352
+#: ../../pep-0436.txt:353
 msgid ""
 "If this were a Python function declaration, a parameter declaration would"
 " be delimited by either a trailing comma or an ending parenthesis. "
@@ -470,18 +462,18 @@ msgid ""
 "permitted."
 msgstr ""
 
-#: ../../pep-0436.txt:358
+#: ../../pep-0436.txt:359
 msgid ""
 "The first parameter declaration establishes the indent for all parameter "
 "declarations in a particular Clinic code block.  All subsequent "
 "parameters must be indented to the same level."
 msgstr ""
 
-#: ../../pep-0436.txt:364
+#: ../../pep-0436.txt:365
 msgid "Legacy Converters"
 msgstr ""
 
-#: ../../pep-0436.txt:366
+#: ../../pep-0436.txt:367
 msgid ""
 "For convenience's sake in converting existing code to Argument Clinic, "
 "Clinic provides a set of legacy converters that match "
@@ -490,20 +482,20 @@ msgid ""
 "as taking a Python \"int\" and emitting a C int, you could specify::"
 msgstr ""
 
-#: ../../pep-0436.txt:374
+#: ../../pep-0436.txt:375
 msgid ""
 "(To more closely resemble a C string, these must always use double "
 "quotes.)"
 msgstr ""
 
-#: ../../pep-0436.txt:376
+#: ../../pep-0436.txt:377
 msgid ""
 "Although these resemble ``PyArg_ParseTuple`` format units, no guarantee "
 "is made that the implementation will call a ``PyArg_Parse`` function for "
 "parsing."
 msgstr ""
 
-#: ../../pep-0436.txt:379
+#: ../../pep-0436.txt:380
 msgid ""
 "This syntax does not support parameters.  Therefore, it doesn't support "
 "any of the format units that require input parameters (``\"O!\", \"O&\", "
@@ -512,41 +504,41 @@ msgid ""
 "supply a default value.)"
 msgstr ""
 
-#: ../../pep-0436.txt:386
+#: ../../pep-0436.txt:387
 msgid "Parameter Docstrings"
 msgstr ""
 
-#: ../../pep-0436.txt:388
+#: ../../pep-0436.txt:389
 msgid ""
 "All lines that appear below and are indented further than a parameter "
 "declaration are the docstring for that parameter.  All such lines are "
 "\"dedented\" until the first line is flush left."
 msgstr ""
 
-#: ../../pep-0436.txt:393
+#: ../../pep-0436.txt:394
 msgid "Special Syntax For Parameter Lines"
 msgstr ""
 
-#: ../../pep-0436.txt:395
+#: ../../pep-0436.txt:396
 msgid ""
 "There are four special symbols that may be used in the parameter section."
 "  Each of these must appear on a line by itself, indented to the same "
 "level as parameter declarations.  The four symbols are:"
 msgstr ""
 
-#: ../../pep-0436.txt:400
+#: ../../pep-0436.txt:401
 msgid "``*``"
 msgstr ""
 
-#: ../../pep-0436.txt:400
+#: ../../pep-0436.txt:401
 msgid "Establishes that all subsequent parameters are keyword-only."
 msgstr ""
 
-#: ../../pep-0436.txt:408
+#: ../../pep-0436.txt:409
 msgid "``[``"
 msgstr ""
 
-#: ../../pep-0436.txt:403
+#: ../../pep-0436.txt:404
 msgid ""
 "Establishes the start of an optional \"group\" of parameters. Note that "
 "\"groups\" may nest inside other \"groups\". See `Functions With "
@@ -555,19 +547,19 @@ msgid ""
 "only, see ``/`` below."
 msgstr ""
 
-#: ../../pep-0436.txt:411
+#: ../../pep-0436.txt:412
 msgid "``]``"
 msgstr ""
 
-#: ../../pep-0436.txt:411
+#: ../../pep-0436.txt:412
 msgid "Ends an optional \"group\" of parameters."
 msgstr ""
 
-#: ../../pep-0436.txt:421
+#: ../../pep-0436.txt:422
 msgid "``/``"
 msgstr ""
 
-#: ../../pep-0436.txt:414
+#: ../../pep-0436.txt:415
 msgid ""
 "Establishes that all the *proceeding* arguments are positional-only.  For"
 " now, Argument Clinic does not support functions with both positional-"
@@ -577,17 +569,17 @@ msgid ""
 "positional-only parameters."
 msgstr ""
 
-#: ../../pep-0436.txt:423
+#: ../../pep-0436.txt:424
 msgid ""
 "(The semantics of ``/`` follow a syntax for positional-only parameters in"
 " Python once proposed by Guido. [5]_ )"
 msgstr ""
 
-#: ../../pep-0436.txt:428
+#: ../../pep-0436.txt:429
 msgid "Function Docstring"
 msgstr ""
 
-#: ../../pep-0436.txt:430
+#: ../../pep-0436.txt:431
 msgid ""
 "The first line with no leading whitespace after the function declaration "
 "is the first line of the function docstring.  All subsequent lines of the"
@@ -595,7 +587,7 @@ msgid ""
 "whitespace is preserved."
 msgstr ""
 
-#: ../../pep-0436.txt:434
+#: ../../pep-0436.txt:435
 msgid ""
 "If the string ``{parameters}`` appears on a line by itself inside the "
 "function docstring, Argument Clinic will insert a list of all parameters "
@@ -607,7 +599,7 @@ msgid ""
 "before the ``{parameters}`` token."
 msgstr ""
 
-#: ../../pep-0436.txt:442
+#: ../../pep-0436.txt:443
 msgid ""
 "If the string ``{parameters}`` doesn't appear in the docstring, Argument "
 "Clinic will append one to the end of the docstring, inserting a blank "
@@ -615,61 +607,61 @@ msgid ""
 "the parameter list at column 0."
 msgstr ""
 
-#: ../../pep-0436.txt:448
+#: ../../pep-0436.txt:449
 msgid "Converters"
 msgstr ""
 
-#: ../../pep-0436.txt:450
+#: ../../pep-0436.txt:451
 msgid ""
 "Argument Clinic contains a pre-initialized registry of converter "
 "functions. Example converter functions:"
 msgstr ""
 
-#: ../../pep-0436.txt:454
+#: ../../pep-0436.txt:455
 msgid "``int``"
 msgstr ""
 
-#: ../../pep-0436.txt:454
+#: ../../pep-0436.txt:455
 msgid "Accepts a Python object implementing ``__int__``; emits a C ``int``."
 msgstr ""
 
-#: ../../pep-0436.txt:458
+#: ../../pep-0436.txt:459
 msgid "``byte``"
 msgstr ""
 
-#: ../../pep-0436.txt:457
+#: ../../pep-0436.txt:458
 msgid ""
 "Accepts a Python int; emits an ``unsigned char``.  The integer must be in"
 " the range [0, 256)."
 msgstr ""
 
-#: ../../pep-0436.txt:462
+#: ../../pep-0436.txt:463
 msgid "``str``"
 msgstr ""
 
-#: ../../pep-0436.txt:461
+#: ../../pep-0436.txt:462
 msgid ""
 "Accepts a Python str object; emits a C ``char *``.  Automatically encodes"
 " the string using the ``ascii`` codec."
 msgstr ""
 
-#: ../../pep-0436.txt:465
+#: ../../pep-0436.txt:466
 msgid "``PyObject``"
 msgstr ""
 
-#: ../../pep-0436.txt:465
+#: ../../pep-0436.txt:466
 msgid "Accepts any object; emits a C ``PyObject *`` without any conversion."
 msgstr ""
 
-#: ../../pep-0436.txt:467
+#: ../../pep-0436.txt:468
 msgid "All converters accept the following parameters:"
 msgstr ""
 
-#: ../../pep-0436.txt:476
+#: ../../pep-0436.txt:477
 msgid "``doc_default``"
 msgstr ""
 
-#: ../../pep-0436.txt:470
+#: ../../pep-0436.txt:471
 msgid ""
 "The Python value to use in place of the parameter's actual default in "
 "Python contexts.  In other words: when specified, this value will be used"
@@ -680,11 +672,11 @@ msgid ""
 "``Signature``.)  Ignored if there is no default."
 msgstr ""
 
-#: ../../pep-0436.txt:483
+#: ../../pep-0436.txt:484
 msgid "``required``"
 msgstr ""
 
-#: ../../pep-0436.txt:479
+#: ../../pep-0436.txt:480
 msgid ""
 "Normally any parameter that has a default value is automatically "
 "optional.  A parameter that has \"required\" set will be considered "
@@ -692,56 +684,56 @@ msgid ""
 "documentation will also not show any default value."
 msgstr ""
 
-#: ../../pep-0436.txt:485
+#: ../../pep-0436.txt:486
 msgid ""
 "Additionally, converters may accept one or more of these optional "
 "parameters, on an individual basis:"
 msgstr ""
 
-#: ../../pep-0436.txt:491
+#: ../../pep-0436.txt:492
 msgid "``annotation``"
 msgstr ""
 
-#: ../../pep-0436.txt:489
+#: ../../pep-0436.txt:490
 msgid ""
 "Explicitly specifies the per-parameter annotation for this parameter.  "
 "Normally it's the responsibility of the conversion function to generate "
 "the annotation (if any)."
 msgstr ""
 
-#: ../../pep-0436.txt:495
+#: ../../pep-0436.txt:496
 msgid "``bitwise``"
 msgstr ""
 
-#: ../../pep-0436.txt:494
+#: ../../pep-0436.txt:495
 msgid ""
 "For converters that accept unsigned integers.  If the Python integer "
 "passed in is signed, copy the bits directly even if it is negative."
 msgstr ""
 
-#: ../../pep-0436.txt:499
+#: ../../pep-0436.txt:500
 msgid "``encoding``"
 msgstr ""
 
-#: ../../pep-0436.txt:498
+#: ../../pep-0436.txt:499
 msgid ""
 "For converters that accept str.  Encoding to use when encoding a Unicode "
 "string to a ``char *``."
 msgstr ""
 
-#: ../../pep-0436.txt:502
+#: ../../pep-0436.txt:503
 msgid "``immutable``"
 msgstr ""
 
-#: ../../pep-0436.txt:502
+#: ../../pep-0436.txt:503
 msgid "Only accept immutable values."
 msgstr ""
 
-#: ../../pep-0436.txt:508
+#: ../../pep-0436.txt:509
 msgid "``length``"
 msgstr ""
 
-#: ../../pep-0436.txt:505
+#: ../../pep-0436.txt:506
 msgid ""
 "For converters that accept iterable types.  Requests that the converter "
 "also emit the length of the iterable, passed in to the ``_impl`` function"
@@ -749,11 +741,11 @@ msgid ""
 "appended with \"``_length``\"."
 msgstr ""
 
-#: ../../pep-0436.txt:514
+#: ../../pep-0436.txt:515
 msgid "``nullable``"
 msgstr ""
 
-#: ../../pep-0436.txt:511
+#: ../../pep-0436.txt:512
 msgid ""
 "This converter normally does not accept ``None``, but in this case it "
 "should.  If ``None`` is supplied on the Python side, the equivalent C "
@@ -761,121 +753,121 @@ msgid ""
 "converter will presumably be a pointer type.)"
 msgstr ""
 
-#: ../../pep-0436.txt:523
+#: ../../pep-0436.txt:524
 msgid "``types``"
 msgstr ""
 
-#: ../../pep-0436.txt:517
+#: ../../pep-0436.txt:518
 msgid ""
 "A list of strings representing acceptable Python types for this object. "
 "There are also four strings which represent Python protocols:"
 msgstr ""
 
-#: ../../pep-0436.txt:520
+#: ../../pep-0436.txt:521
 msgid "\"buffer\""
 msgstr ""
 
-#: ../../pep-0436.txt:521
+#: ../../pep-0436.txt:522
 msgid "\"mapping\""
 msgstr ""
 
-#: ../../pep-0436.txt:522
+#: ../../pep-0436.txt:523
 msgid "\"number\""
 msgstr ""
 
-#: ../../pep-0436.txt:523
+#: ../../pep-0436.txt:524
 msgid "\"sequence\""
 msgstr ""
 
-#: ../../pep-0436.txt:528
+#: ../../pep-0436.txt:529
 msgid "``zeroes``"
 msgstr ""
 
-#: ../../pep-0436.txt:526
+#: ../../pep-0436.txt:527
 msgid ""
 "For converters that accept string types.  The converted value should be "
 "allowed to have embedded zeroes."
 msgstr ""
 
-#: ../../pep-0436.txt:531
+#: ../../pep-0436.txt:532
 msgid "Return Converters"
 msgstr ""
 
-#: ../../pep-0436.txt:533
+#: ../../pep-0436.txt:534
 msgid ""
 "A *return converter* conceptually performs the inverse operation of a "
 "converter: it converts a native C value into its equivalent Python value."
 msgstr ""
 
-#: ../../pep-0436.txt:539
+#: ../../pep-0436.txt:540
 msgid "Directives"
 msgstr ""
 
-#: ../../pep-0436.txt:541
+#: ../../pep-0436.txt:542
 msgid ""
 "Argument Clinic also permits \"directives\" in Clinic code blocks. "
 "Directives are similar to *pragmas* in C; they are statements that modify"
 " Argument Clinic's behavior."
 msgstr ""
 
-#: ../../pep-0436.txt:545
+#: ../../pep-0436.txt:546
 msgid "The format of a directive is as follows::"
 msgstr ""
 
-#: ../../pep-0436.txt:549
+#: ../../pep-0436.txt:550
 msgid "Directives only take positional arguments."
 msgstr ""
 
-#: ../../pep-0436.txt:551
+#: ../../pep-0436.txt:552
 msgid ""
 "A Clinic code block must contain either one or more directives, or a "
 "function declaration.  It may contain both, in which case all directives "
 "must come before the function declaration."
 msgstr ""
 
-#: ../../pep-0436.txt:555
+#: ../../pep-0436.txt:556
 msgid ""
 "Internally directives map directly to Python callables. The directive's "
 "arguments are passed directly to the callable as positional arguments of "
 "type ``str()``."
 msgstr ""
 
-#: ../../pep-0436.txt:559
+#: ../../pep-0436.txt:560
 msgid ""
 "Example possible directives include the production, suppression, or "
 "redirection of Clinic output.  Also, the \"module\" and \"class\" "
 "keywords are implemented as directives in the prototype."
 msgstr ""
 
-#: ../../pep-0436.txt:566
+#: ../../pep-0436.txt:567
 msgid "Python Code"
 msgstr ""
 
-#: ../../pep-0436.txt:568
+#: ../../pep-0436.txt:569
 msgid ""
 "Argument Clinic also permits embedding Python code inside C files, which "
 "is executed in-place when Argument Clinic processes the file. Embedded "
 "code looks like this::"
 msgstr ""
 
-#: ../../pep-0436.txt:581
+#: ../../pep-0436.txt:582
 msgid ""
 "The ``\"/* Hello world! */\"`` line above was generated by running the "
 "Python code in the preceding comment."
 msgstr ""
 
-#: ../../pep-0436.txt:584
+#: ../../pep-0436.txt:585
 msgid ""
 "Any Python code is valid.  Python code sections in Argument Clinic can "
 "also be used to directly interact with Clinic; see `Argument Clinic "
 "Programmatic Interfaces`_."
 msgstr ""
 
-#: ../../pep-0436.txt:590
+#: ../../pep-0436.txt:591
 msgid "Output"
 msgstr ""
 
-#: ../../pep-0436.txt:592
+#: ../../pep-0436.txt:593
 msgid ""
 "Argument Clinic writes its output inline in the C file, immediately after"
 " the section of Clinic code.  For \"python\" sections, the output is "
@@ -883,33 +875,33 @@ msgid ""
 "the output is valid C code, including:"
 msgstr ""
 
-#: ../../pep-0436.txt:597
+#: ../../pep-0436.txt:598
 msgid ""
 "a ``#define`` providing the correct ``methoddef`` structure for the "
 "function"
 msgstr ""
 
-#: ../../pep-0436.txt:599
+#: ../../pep-0436.txt:600
 msgid ""
 "a prototype for the \"impl\" function -- this is what you'll write to "
 "implement this function"
 msgstr ""
 
-#: ../../pep-0436.txt:601
+#: ../../pep-0436.txt:602
 msgid ""
 "a function that handles all argument processing, which calls your "
 "\"impl\" function"
 msgstr ""
 
-#: ../../pep-0436.txt:603
+#: ../../pep-0436.txt:604
 msgid "the definition line of the \"impl\" function"
 msgstr ""
 
-#: ../../pep-0436.txt:604
+#: ../../pep-0436.txt:605
 msgid "and a comment indicating the end of output."
 msgstr ""
 
-#: ../../pep-0436.txt:606
+#: ../../pep-0436.txt:607
 msgid ""
 "The intention is that you write the body of your impl function "
 "immediately after the output -- as in, you write a left-curly-brace "
@@ -917,7 +909,7 @@ msgid ""
 "body there. (It's a bit strange at first, but oddly convenient.)"
 msgstr ""
 
-#: ../../pep-0436.txt:611
+#: ../../pep-0436.txt:612
 msgid ""
 "Argument Clinic will define the parameters of the impl function for you."
 "  The function will take the \"self\" parameter passed in originally, all"
@@ -925,7 +917,7 @@ msgid ""
 "(\"length\" parameters; also \"group\" parameters, see next section)."
 msgstr ""
 
-#: ../../pep-0436.txt:617
+#: ../../pep-0436.txt:618
 msgid ""
 "Argument Clinic also writes a checksum for the output section.  This is a"
 " valuable safety feature: if you modify the output by hand, Clinic will "
@@ -935,17 +927,17 @@ msgid ""
 "\"``-o``\" command-line argument.)"
 msgstr ""
 
-#: ../../pep-0436.txt:624
+#: ../../pep-0436.txt:625
 msgid ""
 "Finally, Argument Clinic can also emit the boilerplate definition of the "
 "PyMethodDef array for the defined classes and modules."
 msgstr ""
 
-#: ../../pep-0436.txt:629
+#: ../../pep-0436.txt:630
 msgid "Functions With Positional-Only Parameters"
 msgstr ""
 
-#: ../../pep-0436.txt:631
+#: ../../pep-0436.txt:632
 msgid ""
 "A significant fraction of Python builtins implemented in C use the older "
 "positional-only API for processing arguments (``PyArg_ParseTuple()``).  "
@@ -957,7 +949,7 @@ msgid ""
 "``curses.window.addch()``.)"
 msgstr ""
 
-#: ../../pep-0436.txt:640
+#: ../../pep-0436.txt:641
 msgid ""
 "Argument Clinic supports these legacy use-cases by allowing you to "
 "specify parameters in groups.  Each optional group of parameters is "
@@ -965,7 +957,7 @@ msgid ""
 " right *or left* of any required parameters!"
 msgstr ""
 
-#: ../../pep-0436.txt:645
+#: ../../pep-0436.txt:646
 msgid ""
 "The impl function generated by Clinic will add an extra parameter for "
 "every group, \"``int group_{left|right}_<x>``\", where x is a "
@@ -974,13 +966,13 @@ msgid ""
 "was specified on this call, and zero if it was not."
 msgstr ""
 
-#: ../../pep-0436.txt:651
+#: ../../pep-0436.txt:652
 msgid ""
 "Note that when operating in this mode, you cannot specify default "
 "arguments."
 msgstr ""
 
-#: ../../pep-0436.txt:654
+#: ../../pep-0436.txt:655
 msgid ""
 "Also, note that it's possible to specify a set of groups to a function "
 "such that there are several valid mappings from the number of arguments "
@@ -990,11 +982,11 @@ msgid ""
 "functions using this quirky behavior have unambiguous mappings."
 msgstr ""
 
-#: ../../pep-0436.txt:664
+#: ../../pep-0436.txt:665
 msgid "Current Status"
 msgstr ""
 
-#: ../../pep-0436.txt:666
+#: ../../pep-0436.txt:667
 msgid ""
 "As of this writing, there is a working prototype implementation of "
 "Argument Clinic available online (though the syntax may be out of date as"
@@ -1005,18 +997,18 @@ msgid ""
 "parsing."
 msgstr ""
 
-#: ../../pep-0436.txt:676
+#: ../../pep-0436.txt:677
 msgid "Argument Clinic Programmatic Interfaces"
 msgstr ""
 
-#: ../../pep-0436.txt:678
+#: ../../pep-0436.txt:679
 msgid ""
 "The prototype also currently provides an experimental extension "
 "mechanism, allowing adding support for new types on-the-fly.  See "
 "``Modules/posixmodule.c`` in the prototype for an example of its use."
 msgstr ""
 
-#: ../../pep-0436.txt:682
+#: ../../pep-0436.txt:683
 msgid ""
 "In the future, Argument Clinic is expected to be automatable enough to "
 "allow querying, modification, or outright new construction of function "
@@ -1024,18 +1016,18 @@ msgid ""
 "your own custom DSL!"
 msgstr ""
 
-#: ../../pep-0436.txt:689
+#: ../../pep-0436.txt:690
 msgid "Notes / TBD"
 msgstr ""
 
-#: ../../pep-0436.txt:691
+#: ../../pep-0436.txt:692
 msgid ""
 "The API for supplying inspect.Signature metadata for builtins is "
 "currently under discussion.  Argument Clinic will add support for the "
 "prototype when it becomes viable."
 msgstr ""
 
-#: ../../pep-0436.txt:695
+#: ../../pep-0436.txt:696
 msgid ""
 "Nick Coghlan suggests that we a) only support at most one left-optional "
 "group per function, and b) in the face of ambiguity, prefer the left "
@@ -1043,7 +1035,7 @@ msgid ""
 "including range()."
 msgstr ""
 
-#: ../../pep-0436.txt:700
+#: ../../pep-0436.txt:701
 msgid ""
 "Optimally we'd want Argument Clinic run automatically as part of the "
 "normal Python build process.  But this presents a bootstrapping problem; "
@@ -1053,7 +1045,7 @@ msgid ""
 "parallel solution for Windows.)"
 msgstr ""
 
-#: ../../pep-0436.txt:707
+#: ../../pep-0436.txt:708
 msgid ""
 "On a related note: inspect.Signature has no way of representing blocks of"
 " arguments, like the left-optional block of ``y`` and ``x`` for "
@@ -1061,7 +1053,7 @@ msgid ""
 "admittedly aberrant parameter paradigm?"
 msgstr ""
 
-#: ../../pep-0436.txt:712
+#: ../../pep-0436.txt:713
 msgid ""
 "During the PyCon US 2013 Language Summit, there was discussion of having "
 "Argument Clinic also generate the actual documentation (in ReST, "
@@ -1072,26 +1064,26 @@ msgid ""
 "CPython source tree to using Clinic."
 msgstr ""
 
-#: ../../pep-0436.txt:720
+#: ../../pep-0436.txt:721
 msgid ""
 "Guido proposed having the \"function docstring\" be hand-written inline, "
 "in the middle of the output, something like this:"
 msgstr ""
 
-#: ../../pep-0436.txt:735
+#: ../../pep-0436.txt:736
 msgid ""
 "I tried it this way and don't like it -- I think it's clumsy.  I prefer "
 "that everything you write goes in one place, rather than having an island"
 " of hand-edited stuff in the middle of the DSL output."
 msgstr ""
 
-#: ../../pep-0436.txt:740
+#: ../../pep-0436.txt:741
 msgid ""
 "Argument Clinic does not support automatic tuple unpacking (the "
 "\"``(OOO)``\" style format string for ``PyArg_ParseTuple()``.)"
 msgstr ""
 
-#: ../../pep-0436.txt:743
+#: ../../pep-0436.txt:744
 msgid ""
 "Argument Clinic removes some dynamism / flexibility.  With "
 "``PyArg_ParseTuple()`` one could theoretically pass in different "
@@ -1103,11 +1095,11 @@ msgid ""
 "``\"idna\"``.)"
 msgstr ""
 
-#: ../../pep-0436.txt:753
+#: ../../pep-0436.txt:754
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0436.txt:755
+#: ../../pep-0436.txt:756
 msgid ""
 "The PEP author wishes to thank Ned Batchelder for permission to "
 "shamelessly rip off his clever design for Cog--\"my favorite tool that "
@@ -1117,40 +1109,40 @@ msgid ""
 "dive on the topic at PyCon US 2013."
 msgstr ""
 
-#: ../../pep-0436.txt:764
+#: ../../pep-0436.txt:765
 msgid "References"
 msgstr ""
 
-#: ../../pep-0436.txt:766
+#: ../../pep-0436.txt:767
 msgid "``Cog``: http://nedbatchelder.com/code/cog/"
 msgstr ""
 
-#: ../../pep-0436.txt:772
+#: ../../pep-0436.txt:773
 msgid ""
 "``PyArg_ParseTuple()``: "
 "http://docs.python.org/3/c-api/arg.html#PyArg_ParseTuple"
 msgstr ""
 
-#: ../../pep-0436.txt:775
+#: ../../pep-0436.txt:776
 msgid ""
 "``PyArg_ParseTupleAndKeywords()``: "
 "http://docs.python.org/3/c-api/arg.html#PyArg_ParseTupleAndKeywords"
 msgstr ""
 
-#: ../../pep-0436.txt:778
+#: ../../pep-0436.txt:779
 msgid ""
 "``PyArg_`` format units: http://docs.python.org/3/c-api/arg.html#strings-"
 "and-buffers"
 msgstr ""
 
-#: ../../pep-0436.txt:781
+#: ../../pep-0436.txt:782
 msgid ""
 "Keyword parameters for extension functions: "
 "http://docs.python.org/3/extending/extending.html#keyword-parameters-for-"
 "extension-functions"
 msgstr ""
 
-#: ../../pep-0436.txt:784
+#: ../../pep-0436.txt:785
 msgid ""
 "Guido van Rossum, posting to python-ideas, March 2012: "
 "https://mail.python.org/pipermail/python-ideas/2012-March/014364.html and"
@@ -1158,15 +1150,30 @@ msgid ""
 "and https://mail.python.org/pipermail/python-ideas/2012-March/014417.html"
 msgstr ""
 
-#: ../../pep-0436.txt:791
+#: ../../pep-0436.txt:792
 msgid "Argument Clinic prototype: https://bitbucket.org/larry/python-clinic/"
 msgstr ""
 
-#: ../../pep-0436.txt:796
+#: ../../pep-0436.txt:797
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0436.txt:798
+#: ../../pep-0436.txt:799
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "436"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "The Argument Clinic DSL"
+#~ msgstr ""
+
+#~ msgid "Python-Dev <python-dev@python.org>"
+#~ msgstr ""
 

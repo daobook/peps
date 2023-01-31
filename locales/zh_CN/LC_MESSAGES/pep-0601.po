@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0601.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0601.txt:1
-msgid "601"
-msgstr ""
-
-#: ../../pep-0601.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0601.txt:2
-msgid "Forbid return/break/continue breaking out of finally"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0601.txt
 msgid "Author"
@@ -96,7 +80,7 @@ msgid "Post-History"
 msgstr ""
 
 #: ../../pep-0601.txt:11
-msgid "26-Aug-2019 23-Sep-2019"
+msgid "26-Aug-2019, 23-Sep-2019"
 msgstr ""
 
 #: ../../pep-0601.txt
@@ -121,10 +105,10 @@ msgstr ""
 msgid ""
 "Guido's arguments for rejecting the PEP are: \"it seems to me that most "
 "languages implement this kind of construct but have style guides and/or "
-"linters that reject it.  I would support a proposal to add this to PEP "
-"8\", and \"I note that the toy examples are somewhat misleading – the "
-"functionality that may be useful is a conditional return (or break etc.) "
-"inside a finally block.\"."
+"linters that reject it.  I would support a proposal to add this to "
+":pep:`8`\", and \"I note that the toy examples are somewhat misleading – "
+"the functionality that may be useful is a conditional return (or break "
+"etc.) inside a finally block.\"."
 msgstr ""
 
 #: ../../pep-0601.txt:26
@@ -133,19 +117,20 @@ msgstr ""
 
 #: ../../pep-0601.txt:28
 msgid ""
-"This PEP proposes to forbid return, break and continue statements within "
-"a finally suite where they would break out of the finally.  Their use in "
-"such a location silently cancels any active exception being raised "
-"through the finally, leading to unclear code and possible bugs."
+"This PEP proposes to forbid ``return``, ``break`` and ``continue`` "
+"statements within a ``finally`` suite where they would break out of the "
+"``finally``.  Their use in such a location silently cancels any active "
+"exception being raised through the ``finally``, leading to unclear code "
+"and possible bugs."
 msgstr ""
 
 #: ../../pep-0601.txt:33
 msgid ""
-"Continue is currently not supported in a finally in Python 3.7 (due to "
-"implementation issues) and the proposal is to not add support for it in "
-"Python 3.8.  For return and break the proposal is to deprecate their use "
-"in Python 3.9, emit a compilation warning in Python 3.10 and then forbid "
-"their use after that."
+"``continue`` is currently not supported in a ``finally`` in Python 3.7 "
+"(due to implementation issues) and the proposal is to not add support for"
+" it in Python 3.8.  For ``return`` and ``break`` the proposal is to "
+"deprecate their use in Python 3.9, emit a compilation warning in Python "
+"3.10 and then forbid their use after that."
 msgstr ""
 
 #: ../../pep-0601.txt:40
@@ -154,23 +139,26 @@ msgstr ""
 
 #: ../../pep-0601.txt:42
 msgid ""
-"The use of return, break and continue within a finally suite leads to "
-"behaviour which is not at all obvious.  Consider the following function::"
+"The use of ``return``, ``break`` and ``continue`` within a ``finally`` "
+"suite leads to behaviour which is not at all obvious.  Consider the "
+"following function::"
 msgstr ""
 
 #: ../../pep-0601.txt:51
 msgid ""
 "This will return cleanly (without an exception) even though it has "
-"infinite recursion and raises an exception within the try.  The reason is"
-" that the return within the finally will silently cancel any exception "
-"that propagates through the finally suite.  Such behaviour is unexpected "
-"and not at all obvious. This function is equivalent to::"
+"infinite recursion and raises an exception within the ``try``.  The "
+"reason is that the ``return`` within the ``finally`` will silently cancel"
+" any exception that propagates through the ``finally`` suite.  Such "
+"behaviour is unexpected and not at all obvious. This function is "
+"equivalent to::"
 msgstr ""
 
 #: ../../pep-0601.txt:64
 msgid ""
-"Break and continue have similar behaviour (they silence exceptions) if "
-"they jump to code outside the finally suite.  For example::"
+"``break`` and ``continue`` have similar behaviour (they silence "
+"exceptions) if they jump to code outside the ``finally`` suite.  For "
+"example::"
 msgstr ""
 
 #: ../../pep-0601.txt:74
@@ -200,14 +188,15 @@ msgstr ""
 
 #: ../../pep-0601.txt:86
 msgid ""
-"Independent to the semantics, implementing return/break/continue within a"
-" finally suite is non-trivial as it requires to correctly track any "
-"active exceptions at runtime (an executing finally suite may or may not "
-"have an active exception) and cancel them as appropriate.  CPython did "
-"have a bug in this for the case of continue and so originally disallowed "
-"it [1].  Requiring correct behaviour for return/break/continue within a "
-"finally puts an unnecessary burden on alternative implementations of "
-"Python."
+"Independent to the semantics, implementing "
+"``return``/``break``/``continue`` within a ``finally`` suite is non-"
+"trivial as it requires to correctly track any active exceptions at "
+"runtime (an executing ``finally`` suite may or may not have an active "
+"exception) and cancel them as appropriate.  CPython did have a bug in "
+"this for the case of ``continue`` and so originally disallowed it [1]_.  "
+"Requiring correct behaviour for ``return``/``break``/``continue`` within "
+"a ``finally`` puts an unnecessary burden on alternative implementations "
+"of Python."
 msgstr ""
 
 #: ../../pep-0601.txt:95
@@ -216,30 +205,31 @@ msgstr ""
 
 #: ../../pep-0601.txt:97
 msgid ""
-"Java allows to return from within a finally block, but its use is "
-"discouraged according to [2], [3], [4].  The Java compiler later on "
-"included a linting option -Xlint:finally to warn against the use of "
-"return within a finally block. The Eclipse editor also warns about this "
-"use."
+"Java allows to return from within a ``finally`` block, but its use is "
+"discouraged according to [2]_, [3]_, [4]_.  The Java compiler later on "
+"included a linting option ``-Xlint:finally`` to warn against the use of "
+"return within a ``finally`` block. The Eclipse editor also warns about "
+"this use."
 msgstr ""
 
 #: ../../pep-0601.txt:102
 msgid ""
 "Ruby allows return from inside ensure (Python's finally), but it should "
-"be an explicit return.  It is discouraged and handled by linters [5], "
-"[6]."
+"be an explicit return.  It is discouraged and handled by linters [5]_, "
+"[6]_."
 msgstr ""
 
 #: ../../pep-0601.txt:105
 msgid ""
-"Like Ruby, JavaScript also allows use of return/break/continue within a "
-"finally but it is seen as unsafe and it is handled by eslint [7]."
+"Like Ruby, JavaScript also allows use of "
+"``return``/``break``/``continue`` within a ``finally`` but it is seen as "
+"unsafe and it is handled by eslint [7]_."
 msgstr ""
 
 #: ../../pep-0601.txt:108
 msgid ""
-"C# forbids the use of ending statements like return/goto/break within a "
-"finally [8], [9]."
+"C# forbids the use of ending statements like "
+"``return``/``goto``/``break`` within a ``finally`` [8]_, [9]_."
 msgstr ""
 
 #: ../../pep-0601.txt:112
@@ -248,10 +238,10 @@ msgstr ""
 
 #: ../../pep-0601.txt:114
 msgid ""
-"Since the behaviour of return/break/continue within a finally is unclear,"
-" the pattern is rarely used, and there is a simple alternative to writing"
-" equivalent code (which is more explicit), forbidding the syntax is the "
-"most straightforward approach."
+"Since the behaviour of ``return``/``break``/``continue`` within a "
+"``finally`` is unclear, the pattern is rarely used, and there is a simple"
+" alternative to writing equivalent code (which is more explicit), "
+"forbidding the syntax is the most straightforward approach."
 msgstr ""
 
 #: ../../pep-0601.txt:120
@@ -261,17 +251,17 @@ msgstr ""
 #: ../../pep-0601.txt:122
 msgid ""
 "This is a change to the compiler, not the grammar.  The compiler should "
-"check for the following in a finally suite:"
+"check for the following in a ``finally`` suite:"
 msgstr ""
 
 #: ../../pep-0601.txt:125
-msgid "A return in any statement, at any level of nesting."
+msgid "A ``return`` in any statement, at any level of nesting."
 msgstr ""
 
 #: ../../pep-0601.txt:127
 msgid ""
-"A break/continue in any statement, at any level of nesting, that would "
-"transfer control flow outside the finally suite."
+"A ``break``/``continue`` in any statement, at any level of nesting, that "
+"would transfer control flow outside the ``finally`` suite."
 msgstr ""
 
 #: ../../pep-0601.txt:130
@@ -279,11 +269,15 @@ msgid "Upon finding such a case it should emit the appropriate exception:"
 msgstr ""
 
 #: ../../pep-0601.txt:132
-msgid "For continue, a SyntaxError (this is the current behaviour of 3.7)."
+msgid ""
+"For ``continue``, a ``SyntaxError`` (this is the current behaviour of "
+"3.7)."
 msgstr ""
 
 #: ../../pep-0601.txt:134
-msgid "For return/break, a SyntaxWarning in 3.10, and a SyntaxError after that."
+msgid ""
+"For ``return``/``break``, a ``SyntaxWarning`` in 3.10, and a "
+"``SyntaxError`` after that."
 msgstr ""
 
 #: ../../pep-0601.txt:136
@@ -292,15 +286,16 @@ msgstr ""
 
 #: ../../pep-0601.txt:163
 msgid ""
-"The following is still allowed because the continue doesn't escape the "
-"finally::"
+"The following is still allowed because the ``continue`` doesn't escape "
+"the ``finally``::"
 msgstr ""
 
 #: ../../pep-0601.txt:172
 msgid ""
-"Note that yielding from within a finally remains acceptable by this PEP "
-"because resuming the generator will resume the finally and eventually "
-"raise any active exceptions (so they are never silenced by yielding)."
+"Note that yielding from within a ``finally`` remains acceptable by this "
+"PEP because resuming the generator will resume the ``finally`` and "
+"eventually raise any active exceptions (so they are never silenced by "
+"yielding)."
 msgstr ""
 
 #: ../../pep-0601.txt:177
@@ -308,13 +303,13 @@ msgid "Backwards Compatibility"
 msgstr ""
 
 #: ../../pep-0601.txt:179
-msgid "This is a backwards incompatible change, for return and break."
+msgid "This is a backwards incompatible change, for ``return`` and ``break``."
 msgstr ""
 
 #: ../../pep-0601.txt:181
 msgid ""
 "The following locations in the CPython standard library (at "
-"v3.8.0b1-651-g7fcc2088a5) use return within finally:"
+"v3.8.0b1-651-g7fcc2088a5) use ``return`` within ``finally``:"
 msgstr ""
 
 #: ../../pep-0601.txt:184
@@ -334,17 +329,21 @@ msgid ""
 msgstr ""
 
 #: ../../pep-0601.txt:192
-msgid "Lib/test/test_sys_settrace.py:837 - a test for return within finally"
+msgid ""
+"Lib/test/test_sys_settrace.py:837 - a test for ``return`` within "
+"``finally``"
 msgstr ""
 
 #: ../../pep-0601.txt:194
-msgid "Lib/test/test_sys_settrace.py:1346 - a test for return within finally"
+msgid ""
+"Lib/test/test_sys_settrace.py:1346 - a test for ``return`` within "
+"``finally``"
 msgstr ""
 
 #: ../../pep-0601.txt:196
 msgid ""
-"There are no uses of break within a finally (that break out of the "
-"finally) in the standard library."
+"There are no uses of ``break`` within a ``finally`` (that break out of "
+"the ``finally``) in the standard library."
 msgstr ""
 
 #: ../../pep-0601.txt:200
@@ -366,7 +365,7 @@ msgid ""
 "This feature is very rarely used so forbidding it will likely only impact"
 " advanced users, not beginners and probably not any existing teaching "
 "material.  Since this is the removal of a feature teaching users will be "
-"one by the raising of a SyntaxError if/when the forbidden feature is "
+"one by the raising of a ``SyntaxError`` if/when the forbidden feature is "
 "used."
 msgstr ""
 
@@ -377,8 +376,8 @@ msgstr ""
 #: ../../pep-0601.txt:216
 msgid ""
 "There is currently no reference implementation, although the way continue"
-" is currently handled in a finally (raising a SyntaxError) can be "
-"extended to return and break."
+" is currently handled in a ``finally`` (raising a ``SyntaxError``) can be"
+" extended to ``return`` and ``break``."
 msgstr ""
 
 #: ../../pep-0601.txt:221
@@ -386,7 +385,7 @@ msgid "References"
 msgstr ""
 
 #: ../../pep-0601.txt:223
-msgid "https://bugs.python.org/issue37830"
+msgid "https://github.com/python/cpython/issues/82011"
 msgstr ""
 
 #: ../../pep-0601.txt:225
@@ -404,11 +403,11 @@ msgid "https://wiki.sei.cmu.edu/confluence/display/java/ERR04-J.+Do+not+complete
 msgstr ""
 
 #: ../../pep-0601.txt:231
-msgid "https://github.com/rubocop-hq/rubocop/issues/5949"
+msgid "https://github.com/rubocop/rubocop/issues/5949"
 msgstr ""
 
 #: ../../pep-0601.txt:233
-msgid "https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Lint/EnsureReturn"
+msgid "https://www.rubydoc.info/gems/rubocop/0.74.0/RuboCop/Cop/Lint/EnsureReturn"
 msgstr ""
 
 #: ../../pep-0601.txt:235
@@ -434,4 +433,235 @@ msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "601"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Forbid return/break/continue breaking out of finally"
+#~ msgstr ""
+
+#~ msgid "26-Aug-2019 23-Sep-2019"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Guido's arguments for rejecting the PEP"
+#~ " are: \"it seems to me that "
+#~ "most languages implement this kind of"
+#~ " construct but have style guides "
+#~ "and/or linters that reject it.  I "
+#~ "would support a proposal to add "
+#~ "this to PEP 8\", and \"I note "
+#~ "that the toy examples are somewhat "
+#~ "misleading – the functionality that may"
+#~ " be useful is a conditional return"
+#~ " (or break etc.) inside a finally "
+#~ "block.\"."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP proposes to forbid return, "
+#~ "break and continue statements within a"
+#~ " finally suite where they would break"
+#~ " out of the finally.  Their use "
+#~ "in such a location silently cancels "
+#~ "any active exception being raised "
+#~ "through the finally, leading to unclear"
+#~ " code and possible bugs."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Continue is currently not supported in"
+#~ " a finally in Python 3.7 (due "
+#~ "to implementation issues) and the "
+#~ "proposal is to not add support for"
+#~ " it in Python 3.8.  For return "
+#~ "and break the proposal is to "
+#~ "deprecate their use in Python 3.9, "
+#~ "emit a compilation warning in Python "
+#~ "3.10 and then forbid their use "
+#~ "after that."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The use of return, break and "
+#~ "continue within a finally suite leads"
+#~ " to behaviour which is not at "
+#~ "all obvious.  Consider the following "
+#~ "function::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This will return cleanly (without an "
+#~ "exception) even though it has infinite"
+#~ " recursion and raises an exception "
+#~ "within the try.  The reason is "
+#~ "that the return within the finally "
+#~ "will silently cancel any exception that"
+#~ " propagates through the finally suite.  "
+#~ "Such behaviour is unexpected and not "
+#~ "at all obvious. This function is "
+#~ "equivalent to::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Break and continue have similar "
+#~ "behaviour (they silence exceptions) if "
+#~ "they jump to code outside the "
+#~ "finally suite.  For example::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Independent to the semantics, implementing "
+#~ "return/break/continue within a finally suite"
+#~ " is non-trivial as it requires "
+#~ "to correctly track any active exceptions"
+#~ " at runtime (an executing finally "
+#~ "suite may or may not have an "
+#~ "active exception) and cancel them as "
+#~ "appropriate.  CPython did have a bug "
+#~ "in this for the case of continue"
+#~ " and so originally disallowed it [1]."
+#~ "  Requiring correct behaviour for "
+#~ "return/break/continue within a finally puts"
+#~ " an unnecessary burden on alternative "
+#~ "implementations of Python."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Java allows to return from within "
+#~ "a finally block, but its use is"
+#~ " discouraged according to [2], [3], "
+#~ "[4].  The Java compiler later on "
+#~ "included a linting option -Xlint:finally "
+#~ "to warn against the use of return"
+#~ " within a finally block. The Eclipse"
+#~ " editor also warns about this use."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ruby allows return from inside ensure"
+#~ " (Python's finally), but it should be"
+#~ " an explicit return.  It is "
+#~ "discouraged and handled by linters [5],"
+#~ " [6]."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Like Ruby, JavaScript also allows use"
+#~ " of return/break/continue within a finally"
+#~ " but it is seen as unsafe and"
+#~ " it is handled by eslint [7]."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "C# forbids the use of ending "
+#~ "statements like return/goto/break within a "
+#~ "finally [8], [9]."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Since the behaviour of return/break/continue"
+#~ " within a finally is unclear, the "
+#~ "pattern is rarely used, and there "
+#~ "is a simple alternative to writing "
+#~ "equivalent code (which is more "
+#~ "explicit), forbidding the syntax is the"
+#~ " most straightforward approach."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This is a change to the compiler,"
+#~ " not the grammar.  The compiler "
+#~ "should check for the following in "
+#~ "a finally suite:"
+#~ msgstr ""
+
+#~ msgid "A return in any statement, at any level of nesting."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A break/continue in any statement, at"
+#~ " any level of nesting, that would "
+#~ "transfer control flow outside the "
+#~ "finally suite."
+#~ msgstr ""
+
+#~ msgid "For continue, a SyntaxError (this is the current behaviour of 3.7)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For return/break, a SyntaxWarning in "
+#~ "3.10, and a SyntaxError after that."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The following is still allowed because"
+#~ " the continue doesn't escape the "
+#~ "finally::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note that yielding from within a "
+#~ "finally remains acceptable by this PEP"
+#~ " because resuming the generator will "
+#~ "resume the finally and eventually raise"
+#~ " any active exceptions (so they are"
+#~ " never silenced by yielding)."
+#~ msgstr ""
+
+#~ msgid "This is a backwards incompatible change, for return and break."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The following locations in the CPython"
+#~ " standard library (at v3.8.0b1-651-g7fcc2088a5)"
+#~ " use return within finally:"
+#~ msgstr ""
+
+#~ msgid "Lib/test/test_sys_settrace.py:837 - a test for return within finally"
+#~ msgstr ""
+
+#~ msgid "Lib/test/test_sys_settrace.py:1346 - a test for return within finally"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There are no uses of break within"
+#~ " a finally (that break out of "
+#~ "the finally) in the standard library."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This feature is very rarely used "
+#~ "so forbidding it will likely only "
+#~ "impact advanced users, not beginners and"
+#~ " probably not any existing teaching "
+#~ "material.  Since this is the removal "
+#~ "of a feature teaching users will "
+#~ "be one by the raising of a "
+#~ "SyntaxError if/when the forbidden feature "
+#~ "is used."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There is currently no reference "
+#~ "implementation, although the way continue "
+#~ "is currently handled in a finally "
+#~ "(raising a SyntaxError) can be extended"
+#~ " to return and break."
+#~ msgstr ""
+
+#~ msgid "https://bugs.python.org/issue37830"
+#~ msgstr ""
+
+#~ msgid "https://github.com/rubocop-hq/rubocop/issues/5949"
+#~ msgstr ""
+
+#~ msgid "https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Lint/EnsureReturn"
+#~ msgstr ""
 

@@ -1,0 +1,894 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0680.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0680.rst:3
+msgid "Taneli Hukkinen, Shantanu Jain <hauntsaninja at gmail.com>"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0680.rst:4
+msgid "Petr Viktorin <encukou@gmail.com>"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0680.rst:5
+msgid "https://discuss.python.org/t/13040"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0680.rst:6
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0680.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0680.rst:9
+msgid "01-Jan-2022"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0680.rst:10
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0680.rst:11
+msgid "11-Jan-2022"
+msgstr ""
+
+#: ../../pep-0680.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0680.rst:12
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/3AHGWYY562HHO55L4Z2OVYUFZP5W73IS/"
+msgstr ""
+
+#: ../../pep-0680.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0680.rst:18
+msgid ""
+"This PEP proposes adding the ``tomllib`` module to the standard library "
+"for parsing TOML (Tom's Obvious Minimal Language, `https://toml.io "
+"<https://toml.io/en/>`_)."
+msgstr ""
+
+#: ../../pep-0680.rst:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0680.rst:26
+msgid ""
+"TOML is the format of choice for Python packaging, as evidenced by "
+":pep:`517`, :pep:`518` and :pep:`621`. This creates a bootstrapping "
+"problem for Python build tools, forcing them to vendor a TOML parsing "
+"package or employ other undesirable workarounds, and causes serious "
+"issues for repackagers and other downstream consumers. Including TOML "
+"support in the standard library would neatly solve all of these issues."
+msgstr ""
+
+#: ../../pep-0680.rst:33
+msgid ""
+"Further, many Python tools are now configurable via TOML, such as "
+"``black``, ``mypy``, ``pytest``, ``tox``, ``pylint`` and ``isort``. Many "
+"that are not, such as ``flake8``, cite the lack of standard library "
+"support as a `main reason why "
+"<https://github.com/PyCQA/flake8/issues/234#issuecomment-812800722>`__. "
+"Given the special place TOML already has in the Python ecosystem, it "
+"makes sense for it to be an included battery."
+msgstr ""
+
+#: ../../pep-0680.rst:41
+msgid ""
+"Finally, TOML as a format is increasingly popular (for the reasons "
+"outlined in :pep:`518`), with various Python TOML libraries having about "
+"2000 reverse dependencies on PyPI (for comparison, ``requests`` has about"
+" 28000 reverse dependencies). Hence, this is likely to be a generally "
+"useful addition, even looking beyond the needs of Python packaging and "
+"related tools."
+msgstr ""
+
+#: ../../pep-0680.rst:49
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0680.rst:51
+msgid ""
+"This PEP proposes basing the standard library support for reading TOML on"
+" the third-party library ``tomli`` (`github.com/hukkin/tomli "
+"<https://github.com/hukkin/tomli>`_)."
+msgstr ""
+
+#: ../../pep-0680.rst:55
+msgid ""
+"Many projects have recently switched to using ``tomli``, such as ``pip``,"
+" ``build``, ``pytest``, ``mypy``, ``black``, ``flit``, ``coverage``, "
+"``setuptools-scm`` and ``cibuildwheel``."
+msgstr ""
+
+#: ../../pep-0680.rst:59
+msgid ""
+"``tomli`` is actively maintained and well-tested. It is about 800 lines "
+"of code with 100% test coverage, and passes all tests in the `proposed "
+"official TOML compliance test suite <https://github.com/toml-"
+"lang/compliance/pull/8>`_, as well as `the more established BurntSushi"
+"/toml-test suite <https://github.com/BurntSushi/toml-test>`_."
+msgstr ""
+
+#: ../../pep-0680.rst:68
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0680.rst:70
+msgid ""
+"A new module ``tomllib`` will be added to the Python standard library, "
+"exposing the following public functions:"
+msgstr ""
+
+#: ../../pep-0680.rst:89
+msgid ""
+"``tomllib.load`` deserializes a binary file-like object containing a TOML"
+" document to a Python ``dict``. The ``fp`` argument must have a "
+"``read()`` method with the same API as ``io.RawIOBase.read()``."
+msgstr ""
+
+#: ../../pep-0680.rst:94
+msgid ""
+"``tomllib.loads`` deserializes a ``str`` instance containing a TOML "
+"document to a Python ``dict``."
+msgstr ""
+
+#: ../../pep-0680.rst:97
+msgid ""
+"The ``parse_float`` argument is a callable object that takes as input the"
+" original string representation of a TOML float, and returns a "
+"corresponding Python object (similar to ``parse_float`` in "
+"``json.load``). For example, the user may pass a function returning a "
+"``decimal.Decimal``, for use cases where exact precision is important. By"
+" default, TOML floats are parsed as instances of the Python ``float`` "
+"type."
+msgstr ""
+
+#: ../../pep-0680.rst:104
+msgid ""
+"The returned object contains only basic Python objects (``str``, ``int``,"
+" ``bool``, ``float``, ``datetime.{datetime,date,time}``, ``list``, "
+"``dict`` with string keys), and the results of ``parse_float``."
+msgstr ""
+
+#: ../../pep-0680.rst:108
+msgid "``tomllib.TOMLDecodeError`` is raised in the case of invalid TOML."
+msgstr ""
+
+#: ../../pep-0680.rst:110
+msgid ""
+"Note that this PEP does not propose ``tomllib.dump`` or ``tomllib.dumps``"
+" functions; see `Including an API for writing TOML`_ for details."
+msgstr ""
+
+#: ../../pep-0680.rst:115
+msgid "Maintenance Implications"
+msgstr ""
+
+#: ../../pep-0680.rst:118
+msgid "Stability of TOML"
+msgstr ""
+
+#: ../../pep-0680.rst:120
+msgid ""
+"The release of TOML 1.0.0 in January 2021 indicates the TOML format "
+"should now be officially considered stable. Empirically, TOML has proven "
+"to be a stable format even prior to the release of TOML 1.0.0. From the "
+"`changelog <https://github.com/toml-"
+"lang/toml/blob/master/CHANGELOG.md>`__, we can see that TOML has had no "
+"major changes since April 2020, and has had two releases in the past five"
+" years (2017-2021)."
+msgstr ""
+
+#: ../../pep-0680.rst:127
+msgid ""
+"In the event of changes to the TOML specification, we can treat minor "
+"revisions as bug fixes and update the implementation in place. In the "
+"event of major breaking changes, we should preserve support for TOML 1.x."
+msgstr ""
+
+#: ../../pep-0680.rst:133
+msgid "Maintainability of proposed implementation"
+msgstr ""
+
+#: ../../pep-0680.rst:135
+msgid ""
+"The proposed implementation (``tomli``) is pure Python, well tested and "
+"weighs in at under 1000 lines of code. It is minimalist, offering a "
+"smaller API surface area than other TOML implementations."
+msgstr ""
+
+#: ../../pep-0680.rst:139
+msgid ""
+"The author of ``tomli`` is willing to help integrate ``tomli`` into the "
+"standard library and help maintain it, `as per this post "
+"<https://github.com/hukkin/tomli/issues/141#issuecomment-998018972>`__. "
+"Furthermore, Python core developer Petr Viktorin has indicated a "
+"willingness to maintain a read API, `as per this post "
+"<https://discuss.python.org/t/adopting-recommending-a-toml-"
+"parser/4068/88>`__."
+msgstr ""
+
+#: ../../pep-0680.rst:146
+msgid ""
+"Rewriting the parser in C is not deemed necessary at this time. It is "
+"rare for TOML parsing to be a bottleneck in applications, and users with "
+"higher performance needs can use a third-party library (as is already "
+"often the case with JSON, despite Python offering a standard library "
+"C-extension module)."
+msgstr ""
+
+#: ../../pep-0680.rst:153
+msgid "TOML support a slippery slope for other things"
+msgstr ""
+
+#: ../../pep-0680.rst:155
+msgid ""
+"As discussed in the `Motivation`_ section, TOML holds a special place in "
+"the Python ecosystem, for reading :pep:`518` ``pyproject.toml`` packaging"
+" and tool configuration files. This chief reason to include TOML in the "
+"standard library does not apply to other formats, such as YAML or "
+"MessagePack."
+msgstr ""
+
+#: ../../pep-0680.rst:161
+msgid ""
+"In addition, the simplicity of TOML distinguishes it from other formats "
+"like YAML, which are highly complicated to construct and parse."
+msgstr ""
+
+#: ../../pep-0680.rst:164
+msgid "An API for writing TOML may, however, be added in a future PEP."
+msgstr ""
+
+#: ../../pep-0680.rst:168
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0680.rst:170
+msgid ""
+"This proposal has no backwards compatibility issues within the standard "
+"library, as it describes a new module. Any existing third-party module "
+"named ``tomllib`` will break, as ``import tomllib`` will import the "
+"standard library module. However, ``tomllib`` is not registered on PyPI, "
+"so it is unlikely that any module with this name is widely used."
+msgstr ""
+
+#: ../../pep-0680.rst:177
+msgid ""
+"Note that we avoid using the more straightforward name ``toml`` to avoid "
+"backwards compatibility implications for users who have pinned versions "
+"of the current ``toml`` PyPI package. For more details, see the "
+"`Alternative names for the module`_ section."
+msgstr ""
+
+#: ../../pep-0680.rst:184
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0680.rst:186
+msgid ""
+"Errors in the implementation could cause potential security issues. "
+"However, the parser's output is limited to simple data types; inability "
+"to load arbitrary classes avoids security issues common in more "
+"\"powerful\" formats like pickle and YAML. Also, the implementation will "
+"be in pure Python, which reduces security issues endemic to C, such as "
+"buffer overflows."
+msgstr ""
+
+#: ../../pep-0680.rst:194
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0680.rst:196
+msgid ""
+"The API of ``tomllib`` mimics that of other well-established file format "
+"libraries, such as ``json`` and ``pickle``. The lack of a ``dump`` "
+"function will be explained in the documentation, with a link to relevant "
+"third-party libraries (e.g. ``tomlkit``, ``tomli-w``, ``pytomlpp``)."
+msgstr ""
+
+#: ../../pep-0680.rst:203
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0680.rst:205
+msgid ""
+"The proposed implementation can be found at "
+"https://github.com/hukkin/tomli"
+msgstr ""
+
+#: ../../pep-0680.rst:209
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0680.rst:212
+msgid "Basing on another TOML implementation"
+msgstr ""
+
+#: ../../pep-0680.rst:214
+msgid "Several potential alternative implementations exist:"
+msgstr ""
+
+#: ../../pep-0680.rst:216
+msgid ""
+"``tomlkit`` is well established, actively maintained and supports TOML "
+"1.0.0. An important difference is that ``tomlkit`` supports style "
+"roundtripping. As a result, it has a more complex API and implementation "
+"(about 5x as much code as ``tomli``). Its author does not believe that "
+"``tomlkit`` is a good choice for the standard library."
+msgstr ""
+
+#: ../../pep-0680.rst:222
+msgid ""
+"``toml`` is a very widely used library. However, it is not actively "
+"maintained, does not support TOML 1.0.0 and has a number of known bugs. "
+"Its API is more complex than that of ``tomli``. It allows customising "
+"output style through a complicated encoder API, and some very limited and"
+" mostly unused functionality to preserve input style through an "
+"undocumented decoder API. For more details on its API differences from "
+"this PEP, refer to `Appendix A`_."
+msgstr ""
+
+#: ../../pep-0680.rst:229
+msgid ""
+"``pytomlpp`` is a Python wrapper for the C++ project ``toml++``. Pure "
+"Python libraries are easier to maintain than extension modules."
+msgstr ""
+
+#: ../../pep-0680.rst:232
+msgid ""
+"``rtoml`` is a Python wrapper for the Rust project ``toml-rs`` and hence "
+"has similar shortcomings to ``pytomlpp``. In addition, it does not "
+"support TOML 1.0.0."
+msgstr ""
+
+#: ../../pep-0680.rst:236
+msgid ""
+"Writing an implementation from scratch. It's unclear what we would get "
+"from this; ``tomli`` meets our needs and the author is willing to help "
+"with its inclusion in the standard library."
+msgstr ""
+
+#: ../../pep-0680.rst:242
+msgid "Including an API for writing TOML"
+msgstr ""
+
+#: ../../pep-0680.rst:244
+msgid "There are several reasons to not include an API for writing TOML."
+msgstr ""
+
+#: ../../pep-0680.rst:246
+msgid ""
+"The ability to write TOML is not needed for the use cases that motivate "
+"this PEP: core Python packaging tools, and projects that need to read "
+"TOML configuration files."
+msgstr ""
+
+#: ../../pep-0680.rst:250
+msgid ""
+"Use cases that involve editing an existing TOML file (as opposed to "
+"writing a brand new one) are better served by a style preserving library."
+" TOML is intended as a human-readable and -editable configuration format,"
+" so it's important to preserve comments, formatting and other markup. "
+"This requires a parser whose output includes style-related metadata, "
+"making it impractical to output plain Python types like ``str`` and "
+"``dict``. Furthermore, it substantially complicates the design of the "
+"API."
+msgstr ""
+
+#: ../../pep-0680.rst:258
+msgid ""
+"Even without considering style preservation, there are too many degrees "
+"of freedom in how to design a write API. For example, what default style "
+"(indentation, vertical and horizontal spacing, quotes, etc) should the "
+"library use for the output, and how much control should users be given "
+"over it? How should the library handle input and output validation? "
+"Should it support serialization of custom types, and if so, how? While "
+"there are reasonable options for resolving these issues, the nature of "
+"the standard library is such that we only get \"one chance to get it "
+"right\"."
+msgstr ""
+
+#: ../../pep-0680.rst:267
+msgid ""
+"Currently, no CPython core developers have expressed willingness to "
+"maintain a write API, or sponsor a PEP that includes one. Since it is "
+"hard to change or remove something in the standard library, it is safer "
+"to err on the side of exclusion for now, and potentially revisit this "
+"later."
+msgstr ""
+
+#: ../../pep-0680.rst:272
+msgid ""
+"Therefore, writing TOML is left to third-party libraries. If a good API "
+"and relevant use cases for it are found later, write support can be added"
+" in a future PEP."
+msgstr ""
+
+#: ../../pep-0680.rst:278
+msgid "Assorted API details"
+msgstr ""
+
+#: ../../pep-0680.rst:281
+msgid "Types accepted as the first argument of ``tomllib.load``"
+msgstr ""
+
+#: ../../pep-0680.rst:283
+msgid ""
+"The ``toml`` library on PyPI allows passing paths (and lists of path-like"
+" objects, ignoring missing files and merging the documents into a single "
+"object) to its ``load`` function. However, allowing this here would be "
+"inconsistent with the behavior of ``json.load``, ``pickle.load`` and "
+"other standard library functions. If we agree that consistency here is "
+"desirable, allowing paths is out of scope for this PEP. This can easily "
+"and explicitly be worked around in user code, or by using a third-party "
+"library."
+msgstr ""
+
+#: ../../pep-0680.rst:291
+msgid ""
+"The proposed API takes a binary file, while ``toml.load`` takes a text "
+"file and ``json.load`` takes either. Using a binary file allows us to "
+"ensure UTF-8 is the encoding used (ensuring correct parsing on platforms "
+"with other default encodings, such as Windows), and avoid incorrectly "
+"parsing files containing single carriage returns as valid TOML due to "
+"universal newlines in text mode."
+msgstr ""
+
+#: ../../pep-0680.rst:299
+msgid "Type accepted as the first argument of ``tomllib.loads``"
+msgstr ""
+
+#: ../../pep-0680.rst:301
+msgid ""
+"While ``tomllib.load`` takes a binary file, ``tomllib.loads`` takes a "
+"text string. This may seem inconsistent at first."
+msgstr ""
+
+#: ../../pep-0680.rst:304
+msgid "Quoting the `TOML v1.0.0 specification <https://toml.io/en/v1.0.0#spec>`_:"
+msgstr ""
+
+#: ../../pep-0680.rst:306
+msgid "A TOML file must be a valid UTF-8 encoded Unicode document."
+msgstr ""
+
+#: ../../pep-0680.rst:308
+msgid ""
+"``tomllib.loads`` does not intend to load a TOML file, but rather the "
+"document that the file stores. The most natural representation of a "
+"Unicode document in Python is ``str``, not ``bytes``."
+msgstr ""
+
+#: ../../pep-0680.rst:312
+msgid ""
+"It is possible to add ``bytes`` support in the future if needed, but we "
+"are not aware of any use cases for it."
+msgstr ""
+
+#: ../../pep-0680.rst:317
+msgid "Controlling the type of mappings returned by ``tomllib.load[s]``"
+msgstr ""
+
+#: ../../pep-0680.rst:319
+msgid ""
+"The ``toml`` library on PyPI accepts a ``_dict`` argument in its "
+"``load[s]`` functions, which works similarly to the ``object_hook`` "
+"argument in ``json.load[s]``. There are several uses of ``_dict`` found "
+"on https://grep.app; however, almost all of them are passing "
+"``_dict=OrderedDict``, which should be unnecessary as of Python 3.7. We "
+"found two instances of relevant use: in one case, a custom class was "
+"passed for friendlier KeyErrors; in the other, the custom class had "
+"several additional lookup and mutation methods (e.g. to help resolve "
+"dotted keys)."
+msgstr ""
+
+#: ../../pep-0680.rst:328
+msgid ""
+"Such a parameter is not necessary for the core use cases outlined in the "
+"`Motivation`_ section. The absence of this can be pretty easily worked "
+"around using a wrapper class, transformer function, or a third-party "
+"library. Finally, support could be added later in a backward-compatible "
+"way."
+msgstr ""
+
+#: ../../pep-0680.rst:335
+msgid "Removing support for ``parse_float`` in ``tomllib.load[s]``"
+msgstr ""
+
+#: ../../pep-0680.rst:337
+msgid ""
+"This option is not strictly necessary, since TOML floats should be "
+"implemented as \"IEEE 754 binary64 values\", which is equivalent to a "
+"Python ``float`` on most architectures."
+msgstr ""
+
+#: ../../pep-0680.rst:341
+msgid ""
+"The TOML specification uses the word \"SHOULD\", however, implying a "
+"recommendation that can be ignored for valid reasons. Parsing floats "
+"differently, such as to ``decimal.Decimal``, allows users extra precision"
+" beyond that promised by the TOML format. In the author of ``tomli``'s "
+"experience, this is particularly useful in scientific and financial "
+"applications. This is also useful for other cases that need greater "
+"precision, or where end-users include non-developers who may not be aware"
+" of the limits of binary64 floats."
+msgstr ""
+
+#: ../../pep-0680.rst:349
+msgid ""
+"There are also niche architectures where the Python ``float`` is not a "
+"IEEE 754 binary64 value. The ``parse_float`` argument allows users to "
+"achieve correct TOML semantics even on such architectures."
+msgstr ""
+
+#: ../../pep-0680.rst:355
+msgid "Alternative names for the module"
+msgstr ""
+
+#: ../../pep-0680.rst:357
+msgid "Ideally, we would be able to use the ``toml`` module name."
+msgstr ""
+
+#: ../../pep-0680.rst:359
+msgid ""
+"However, the ``toml`` package on PyPI is widely used, so there are "
+"backward compatibility concerns. Since the standard library takes "
+"precedence over third party packages, libraries and applications who "
+"current depend on the ``toml`` package would likely break when upgrading "
+"Python versions due to the many API incompatibilities listed in `Appendix"
+" A`_, even if they pin their dependency versions."
+msgstr ""
+
+#: ../../pep-0680.rst:366
+msgid ""
+"To further clarify, applications with pinned dependencies are of greatest"
+" concern here. Even if we were able to obtain control of the ``toml`` "
+"PyPI package name and repurpose it for a backport of the proposed new "
+"module, we would still break users on new Python versions that included "
+"it in the standard library, regardless of whether they have pinned an "
+"older version of the existing ``toml`` package. This is unfortunate, "
+"since pinning would likely be a common response to breaking changes "
+"introduced by repurposing the ``toml`` package as a backport (that is "
+"incompatible with today's ``toml``)."
+msgstr ""
+
+#: ../../pep-0680.rst:375
+msgid ""
+"Finally, the ``toml`` package on PyPI is not actively maintained, but as "
+"of yet, efforts to request that the author add other maintainers `have "
+"been unsuccessful <https://github.com/uiri/toml/issues/361>`__, so action"
+" here would likely have to be taken without the author's consent."
+msgstr ""
+
+#: ../../pep-0680.rst:380
+msgid ""
+"Instead, this PEP proposes the name ``tomllib``. This mirrors "
+"``plistlib`` and ``xdrlib``, two other file format modules in the "
+"standard library, as well as other modules, such as ``pathlib``, "
+"``contextlib`` and ``graphlib``."
+msgstr ""
+
+#: ../../pep-0680.rst:384
+msgid "Other names considered but rejected include:"
+msgstr ""
+
+#: ../../pep-0680.rst:386
+msgid ""
+"``tomlparser``. This mirrors ``configparser``, but is perhaps somewhat "
+"less appropriate if we include a write API in the future."
+msgstr ""
+
+#: ../../pep-0680.rst:388
+msgid "``tomli``. This assumes we use ``tomli`` as the basis for implementation."
+msgstr ""
+
+#: ../../pep-0680.rst:389
+msgid ""
+"``toml`` under some namespace, such as ``parser.toml``. However, this is "
+"awkward, especially so since existing parsing libraries like ``json``, "
+"``pickle``, ``xml``, ``html`` etc. would not be included in the "
+"namespace."
+msgstr ""
+
+#: ../../pep-0680.rst:395
+msgid "Previous Discussion"
+msgstr ""
+
+#: ../../pep-0680.rst:397
+msgid ""
+"`bpo-40059: Provide a toml module in the standard library "
+"<https://bugs.python.org/issue40059>`_"
+msgstr ""
+
+#: ../../pep-0680.rst:399
+msgid ""
+"`[Python-Dev] Adding a toml module to the standard lib? "
+"<https://mail.python.org/pipermail/python-dev/2019-May/157405.html>`_"
+msgstr ""
+
+#: ../../pep-0680.rst:401
+msgid ""
+"`[Python-Ideas] Python standard library TOML module "
+"<https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/IWJ3I32A4TY6CIVQ6ONPEBPWP4TOV2V7/>`_"
+msgstr ""
+
+#: ../../pep-0680.rst:403
+msgid ""
+"`[Packaging] Adopting/recommending a toml parser? "
+"<https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068>`_"
+msgstr ""
+
+#: ../../pep-0680.rst:405
+msgid ""
+"`hukkin/tomli#141: Please consider pushing tomli into the stdlib "
+"<https://github.com/hukkin/tomli/issues/141>`_"
+msgstr ""
+
+#: ../../pep-0680.rst:412
+msgid "Appendix A: Differences between proposed API and ``toml``"
+msgstr ""
+
+#: ../../pep-0680.rst:414
+msgid ""
+"This appendix covers the differences between the API proposed in this PEP"
+" and that of the third-party package ``toml``. These differences are "
+"relevant to understanding the amount of breakage we could expect if we "
+"used the ``toml`` name for the standard library module, as well as to "
+"better understand the design space. Note that this list might not be "
+"exhaustive."
+msgstr ""
+
+#: ../../pep-0680.rst:420
+msgid "No proposed inclusion of a write API (no ``toml.dump[s]``)"
+msgstr ""
+
+#: ../../pep-0680.rst:422
+msgid ""
+"This PEP currently proposes not including a write API; that is, there "
+"will be no equivalent of ``toml.dump`` or ``toml.dumps``, as discussed at"
+" `Including an API for writing TOML`_."
+msgstr ""
+
+#: ../../pep-0680.rst:426
+msgid ""
+"If we included a write API, it would be relatively straightforward to "
+"convert most code that uses ``toml`` to the new standard library module "
+"(acknowledging that this is very different from a compatible API, as it "
+"would still require code changes)."
+msgstr ""
+
+#: ../../pep-0680.rst:431
+msgid ""
+"A significant fraction of ``toml`` users rely on this, based on comparing"
+" `occurrences of \"toml.load\" "
+"<https://grep.app/search?q=toml.load&filter[lang][0]=Python>`__ to "
+"`occurrences of \"toml.dump\" "
+"<https://grep.app/search?q=toml.dump&filter[lang][0]=Python>`__."
+msgstr ""
+
+#: ../../pep-0680.rst:435
+msgid "Different first argument of ``toml.load``"
+msgstr ""
+
+#: ../../pep-0680.rst:437
+msgid "``toml.load`` has the following signature:"
+msgstr ""
+
+#: ../../pep-0680.rst:447
+msgid ""
+"This is quite different from the first argument proposed in this PEP: "
+"``SupportsRead[bytes]``."
+msgstr ""
+
+#: ../../pep-0680.rst:450
+msgid ""
+"Recapping the reasons for this, previously mentioned at `Types accepted "
+"as the first argument of tomllib.load`_:"
+msgstr ""
+
+#: ../../pep-0680.rst:453
+msgid ""
+"Allowing paths (and even lists of paths) as arguments is inconsistent "
+"with other similar functions in the standard library."
+msgstr ""
+
+#: ../../pep-0680.rst:455
+msgid ""
+"Using ``SupportsRead[bytes]`` allows us to ensure UTF-8 is the encoding "
+"used, and avoid incorrectly parsing single carriage returns as valid "
+"TOML."
+msgstr ""
+
+#: ../../pep-0680.rst:458
+msgid ""
+"A significant fraction of ``toml`` users rely on this, based on manual "
+"inspection of `occurrences of \"toml.load\" "
+"<https://grep.app/search?q=toml.load&filter[lang][0]=Python>`__."
+msgstr ""
+
+#: ../../pep-0680.rst:462
+msgid "Errors"
+msgstr ""
+
+#: ../../pep-0680.rst:464
+msgid ""
+"``toml`` raises ``TomlDecodeError``, vs. the proposed :pep:`8`-compliant "
+"``TOMLDecodeError``."
+msgstr ""
+
+#: ../../pep-0680.rst:467
+msgid ""
+"A significant fraction of ``toml`` users rely on this, based on "
+"`occurrences of \"TomlDecodeError\" "
+"<https://grep.app/search?q=TomlDecodeError&case=true&filter[lang][0]=Python>`__."
+msgstr ""
+
+#: ../../pep-0680.rst:471
+msgid "``toml.load[s]`` accepts a ``_dict`` argument"
+msgstr ""
+
+#: ../../pep-0680.rst:473
+msgid ""
+"Discussed at `Controlling the type of mappings returned by "
+"tomllib.load[s]`_."
+msgstr ""
+
+#: ../../pep-0680.rst:475
+msgid ""
+"As mentioned there, almost all usage consists of ``_dict=OrderedDict``, "
+"which is not necessary in Python 3.7 and later."
+msgstr ""
+
+#: ../../pep-0680.rst:478
+msgid "``toml.load[s]`` support an undocumented ``decoder`` argument"
+msgstr ""
+
+#: ../../pep-0680.rst:480
+msgid ""
+"It seems the intended use case is for an implementation of comment "
+"preservation. The information recorded is not sufficient to roundtrip the"
+" TOML document preserving style, the implementation has known bugs, the "
+"feature is undocumented and we could only find one instance of its use on"
+" https://grep.app."
+msgstr ""
+
+#: ../../pep-0680.rst:486
+msgid ""
+"The `toml.TomlDecoder interface "
+"<https://github.com/uiri/toml/blob/3f637dba5f68db63d4b30967fedda51c82459471/toml/decoder.pyi#L36>`__"
+" exposed is far from simple, containing nine methods."
+msgstr ""
+
+#: ../../pep-0680.rst:490
+msgid ""
+"Users are likely better served by a more complete implementation of "
+"style-preserving parsing and writing."
+msgstr ""
+
+#: ../../pep-0680.rst:493
+msgid "``toml.dump[s]`` support an ``encoder`` argument"
+msgstr ""
+
+#: ../../pep-0680.rst:495
+msgid ""
+"Note that we currently propose to not include a write API; however, if "
+"that were to change, these differences would likely become relevant."
+msgstr ""
+
+#: ../../pep-0680.rst:498
+msgid "The ``encoder`` argument enables two use cases:"
+msgstr ""
+
+#: ../../pep-0680.rst:500
+msgid "control over how custom types should be serialized, and"
+msgstr ""
+
+#: ../../pep-0680.rst:501
+msgid "control over how output should be formatted."
+msgstr ""
+
+#: ../../pep-0680.rst:503
+msgid ""
+"The first is reasonable; however, we could only find two instances of "
+"this on https://grep.app. One of these two used this ability to add "
+"support for dumping ``decimal.Decimal``, which a potential standard "
+"library implementation would support out of the box. If needed for other "
+"types, this use case could be well served by the equivalent of the "
+"``default`` argument in ``json.dump``."
+msgstr ""
+
+#: ../../pep-0680.rst:510
+msgid ""
+"The second use case is enabled by allowing users to specify subclasses of"
+" `toml.TomlEncoder "
+"<https://github.com/uiri/toml/blob/3f637dba5f68db63d4b30967fedda51c82459471/toml/encoder.pyi#L9>`__"
+" and overriding methods to specify parts of the TOML writing process. The"
+" API consists of five methods and exposes substantial implementation "
+"detail."
+msgstr ""
+
+#: ../../pep-0680.rst:516
+msgid ""
+"There is some usage of the ``encoder`` API on https://grep.app; however, "
+"it appears to account for a tiny fraction of the overall usage of "
+"``toml``."
+msgstr ""
+
+#: ../../pep-0680.rst:519
+msgid "Timezones"
+msgstr ""
+
+#: ../../pep-0680.rst:521
+msgid ""
+"``toml`` uses and exposes custom ``toml.tz.TomlTz`` timezone objects. The"
+" proposed implementation uses ``datetime.timezone`` objects from the "
+"standard library."
+msgstr ""
+
+#: ../../pep-0680.rst:527
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0680.rst:529
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

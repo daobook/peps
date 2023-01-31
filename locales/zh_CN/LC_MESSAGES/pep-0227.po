@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0227.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0227.txt:1
-msgid "227"
-msgstr ""
-
-#: ../../pep-0227.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0227.txt:2
-msgid "Statically Nested Scopes"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0227.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0227.txt:5
-msgid "jeremy@alum.mit.edu (Jeremy Hylton)"
+#: ../../pep-0227.txt:3
+msgid "Jeremy Hylton <jeremy@alum.mit.edu>"
 msgstr ""
 
 #: ../../pep-0227.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0227.txt:6
+#: ../../pep-0227.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0227.txt:7
+#: ../../pep-0227.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0227.txt:9
+#: ../../pep-0227.txt:7
 msgid "01-Nov-2000"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0227.txt:10
+#: ../../pep-0227.txt:8
 msgid "2.1"
 msgstr ""
 
@@ -77,11 +61,11 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0227.txt:14
+#: ../../pep-0227.txt:12
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0227.txt:16
+#: ../../pep-0227.txt:14
 msgid ""
 "This PEP describes the addition of statically nested scoping (lexical "
 "scoping) for Python 2.2, and as a source level option for python 2.1.  In"
@@ -89,7 +73,7 @@ msgid ""
 "may change when this feature is enabled."
 msgstr ""
 
-#: ../../pep-0227.txt:21
+#: ../../pep-0227.txt:19
 msgid ""
 "The old language definition (2.0 and before) defines exactly three "
 "namespaces that are used to resolve names -- the local, global, and "
@@ -97,7 +81,7 @@ msgid ""
 "unbound local names in enclosing functions' namespaces."
 msgstr ""
 
-#: ../../pep-0227.txt:27
+#: ../../pep-0227.txt:25
 msgid ""
 "The most visible consequence of this change is that lambdas (and other "
 "nested functions) can reference variables defined in the surrounding "
@@ -105,20 +89,20 @@ msgid ""
 "explicitly creating bindings in the lambda's namespace."
 msgstr ""
 
-#: ../../pep-0227.txt:34
+#: ../../pep-0227.txt:32
 msgid "Introduction"
 msgstr ""
 
-#: ../../pep-0227.txt:36
+#: ../../pep-0227.txt:34
 msgid ""
 "This proposal changes the rules for resolving free variables in Python "
 "functions.  The new name resolution semantics will take effect with "
 "Python 2.2.  These semantics will also be available in Python 2.1 by "
 "adding \"from __future__ import nested_scopes\" to the top of a module.  "
-"(See PEP 236.)"
+"(See :pep:`236`.)"
 msgstr ""
 
-#: ../../pep-0227.txt:42
+#: ../../pep-0227.txt:40
 msgid ""
 "The Python 2.0 definition specifies exactly three namespaces to check for"
 " each name -- the local namespace, the global namespace, and the builtin "
@@ -128,14 +112,14 @@ msgid ""
 "(unless A contains a name binding that hides the binding in B)."
 msgstr ""
 
-#: ../../pep-0227.txt:50
+#: ../../pep-0227.txt:48
 msgid ""
 "This specification introduces rules for lexical scoping that are common "
 "in Algol-like languages.  The combination of lexical scoping and existing"
 " support for first-class functions is reminiscent of Scheme."
 msgstr ""
 
-#: ../../pep-0227.txt:55
+#: ../../pep-0227.txt:53
 msgid ""
 "The changed scoping rules address two problems -- the limited utility of "
 "lambda expressions (and nested functions in general), and the frequent "
@@ -144,7 +128,7 @@ msgid ""
 "at the module level."
 msgstr ""
 
-#: ../../pep-0227.txt:61
+#: ../../pep-0227.txt:59
 msgid ""
 "The lambda expression yields an unnamed function that evaluates a single "
 "expression.  It is often used for callback functions.  In the example "
@@ -152,7 +136,7 @@ msgid ""
 "the lambda must be explicitly passed as a default argument to the lambda."
 msgstr ""
 
-#: ../../pep-0227.txt:74
+#: ../../pep-0227.txt:72
 msgid ""
 "This approach is cumbersome, particularly when there are several names "
 "used in the body of the lambda.  The long list of default arguments "
@@ -161,7 +145,7 @@ msgid ""
 "\"root=root\" argument can be omitted."
 msgstr ""
 
-#: ../../pep-0227.txt:80
+#: ../../pep-0227.txt:78
 msgid ""
 "The new name resolution semantics will cause some programs to behave "
 "differently than they did under Python 2.0.  In some cases, programs will"
@@ -171,25 +155,25 @@ msgid ""
 "statements that will behave differently."
 msgstr ""
 
-#: ../../pep-0227.txt:89
+#: ../../pep-0227.txt:87
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0227.txt:91
+#: ../../pep-0227.txt:89
 msgid ""
 "Python is a statically scoped language with block structure, in the "
 "traditional of Algol.  A code block or region, such as a module, class "
 "definition, or function body, is the basic unit of a program."
 msgstr ""
 
-#: ../../pep-0227.txt:96
+#: ../../pep-0227.txt:94
 msgid ""
 "Names refer to objects.  Names are introduced by name binding operations."
 "  Each occurrence of a name in the program text refers to the binding of "
 "that name established in the innermost function block containing the use."
 msgstr ""
 
-#: ../../pep-0227.txt:101
+#: ../../pep-0227.txt:99
 msgid ""
 "The name binding operations are argument declaration, assignment, class "
 "and function definition, import statements, for statements, and except "
@@ -197,7 +181,7 @@ msgid ""
 "function definition or at the module level (the top-level code block)."
 msgstr ""
 
-#: ../../pep-0227.txt:107
+#: ../../pep-0227.txt:105
 msgid ""
 "If a name is bound anywhere within a code block, all uses of the name "
 "within the block are treated as references to the current block.  (Note: "
@@ -205,7 +189,7 @@ msgid ""
 "bound.)"
 msgstr ""
 
-#: ../../pep-0227.txt:112
+#: ../../pep-0227.txt:110
 msgid ""
 "If the global statement occurs within a block, all uses of the name "
 "specified in the statement refer to the binding of that name in the top-"
@@ -217,7 +201,7 @@ msgid ""
 " searched.  The global statement must precede all uses of the name."
 msgstr ""
 
-#: ../../pep-0227.txt:122
+#: ../../pep-0227.txt:120
 msgid ""
 "If a name is used within a code block, but it is not bound there and is "
 "not declared global, the use is treated as a reference to the nearest "
@@ -226,7 +210,7 @@ msgid ""
 " visible to enclosed functions.)"
 msgstr ""
 
-#: ../../pep-0227.txt:128
+#: ../../pep-0227.txt:126
 msgid ""
 "A class definition is an executable statement that may contain uses and "
 "definitions of names.  These references follow the normal rules for name "
@@ -234,34 +218,34 @@ msgid ""
 "dictionary of the class."
 msgstr ""
 
-#: ../../pep-0227.txt:133
+#: ../../pep-0227.txt:131
 msgid ""
 "The following operations are name binding operations.  If they occur "
 "within a block, they introduce new local names in the current block "
 "unless there is also a global declaration."
 msgstr ""
 
-#: ../../pep-0227.txt:148
+#: ../../pep-0227.txt:146
 msgid ""
 "There are several cases where Python statements are illegal when used in "
 "conjunction with nested scopes that contain free variables."
 msgstr ""
 
-#: ../../pep-0227.txt:152
+#: ../../pep-0227.txt:150
 msgid ""
 "If a variable is referenced in an enclosed scope, it is an error to "
 "delete the name.  The compiler will raise a ``SyntaxError`` for 'del "
 "name'."
 msgstr ""
 
-#: ../../pep-0227.txt:156
+#: ../../pep-0227.txt:154
 msgid ""
 "If the wild card form of import (``import *``) is used in a function and "
 "the function contains a nested block with free variables, the compiler "
 "will raise a ``SyntaxError``."
 msgstr ""
 
-#: ../../pep-0227.txt:160
+#: ../../pep-0227.txt:158
 msgid ""
 "If exec is used in a function and the function contains a nested block "
 "with free variables, the compiler will raise a ``SyntaxError`` unless the"
@@ -270,7 +254,7 @@ msgid ""
 "legal.)"
 msgstr ""
 
-#: ../../pep-0227.txt:166
+#: ../../pep-0227.txt:164
 msgid ""
 "If a name bound in a function scope is also the name of a module global "
 "name or a standard builtin name, and the function contains a nested "
@@ -280,11 +264,11 @@ msgid ""
 "program may not run correctly with all versions of Python."
 msgstr ""
 
-#: ../../pep-0227.txt:175
+#: ../../pep-0227.txt:173
 msgid "Discussion"
 msgstr ""
 
-#: ../../pep-0227.txt:177
+#: ../../pep-0227.txt:175
 msgid ""
 "The specified rules allow names defined in a function to be referenced in"
 " any nested function defined with that function.  The name resolution "
@@ -292,19 +276,19 @@ msgid ""
 "exceptions:"
 msgstr ""
 
-#: ../../pep-0227.txt:182
+#: ../../pep-0227.txt:180
 msgid "Names in class scope are not accessible."
 msgstr ""
 
-#: ../../pep-0227.txt:183
+#: ../../pep-0227.txt:181
 msgid "The global statement short-circuits the normal rules."
 msgstr ""
 
-#: ../../pep-0227.txt:184
+#: ../../pep-0227.txt:182
 msgid "Variables are not declared."
 msgstr ""
 
-#: ../../pep-0227.txt:186
+#: ../../pep-0227.txt:184
 msgid ""
 "Names in class scope are not accessible.  Names are resolved in the "
 "innermost enclosing function scope.  If a class definition occurs in a "
@@ -317,7 +301,7 @@ msgid ""
 "class name."
 msgstr ""
 
-#: ../../pep-0227.txt:196
+#: ../../pep-0227.txt:194
 msgid ""
 "An alternative would have been to allow name binding in class scope to "
 "behave exactly like name binding in function scope.  This rule would "
@@ -328,7 +312,7 @@ msgid ""
 "would have been obscure."
 msgstr ""
 
-#: ../../pep-0227.txt:204
+#: ../../pep-0227.txt:202
 msgid ""
 "The global statement short-circuits the normal rules.  Under the "
 "proposal, the global statement has exactly the same effect that it does "
@@ -337,7 +321,7 @@ msgid ""
 "(the module)."
 msgstr ""
 
-#: ../../pep-0227.txt:210
+#: ../../pep-0227.txt:208
 msgid ""
 "Variables are not declared.  If a name binding operation occurs anywhere "
 "in a function, then that name is treated as local to the function and all"
@@ -353,32 +337,32 @@ msgid ""
 "change the bindings (set! in Scheme)."
 msgstr ""
 
-#: ../../pep-0227.txt:226
+#: ../../pep-0227.txt:224
 msgid "Examples"
 msgstr ""
 
-#: ../../pep-0227.txt:228
+#: ../../pep-0227.txt:226
 msgid "A few examples are included to illustrate the way the rules work."
 msgstr ""
 
-#: ../../pep-0227.txt:270
+#: ../../pep-0227.txt:268
 msgid ""
 "An example from Tim Peters demonstrates the potential pitfalls of nested "
 "scopes in the absence of declarations::"
 msgstr ""
 
-#: ../../pep-0227.txt:284
+#: ../../pep-0227.txt:282
 msgid ""
 "The call to ``g()`` will refer to the variable i bound in ``f()`` by the "
 "for loop.  If ``g()`` is called before the loop is executed, a NameError "
 "will be raised."
 msgstr ""
 
-#: ../../pep-0227.txt:289
+#: ../../pep-0227.txt:287
 msgid "Backwards compatibility"
 msgstr ""
 
-#: ../../pep-0227.txt:291
+#: ../../pep-0227.txt:289
 msgid ""
 "There are two kinds of compatibility problems caused by nested scopes.  "
 "In one case, code that behaved one way in earlier versions behaves "
@@ -387,13 +371,13 @@ msgid ""
 "SyntaxErrors at compile time."
 msgstr ""
 
-#: ../../pep-0227.txt:297
+#: ../../pep-0227.txt:295
 msgid ""
 "The following example from Skip Montanaro illustrates the first kind of "
 "problem::"
 msgstr ""
 
-#: ../../pep-0227.txt:307
+#: ../../pep-0227.txt:305
 msgid ""
 "Under the Python 2.0 rules, the print statement inside ``inner()`` refers"
 " to the global variable x and will print 1 if ``f1()`` is called.  Under "
@@ -401,7 +385,7 @@ msgid ""
 "enclosing scope with a binding."
 msgstr ""
 
-#: ../../pep-0227.txt:312
+#: ../../pep-0227.txt:310
 msgid ""
 "The problem occurs only when a global variable and a local variable share"
 " the same name and a nested function uses that name to refer to the "
@@ -411,20 +395,20 @@ msgid ""
 "nested scopes."
 msgstr ""
 
-#: ../../pep-0227.txt:319
+#: ../../pep-0227.txt:317
 msgid ""
 "To address this problem, which is unlikely to occur often, the Python 2.1"
 " compiler (when nested scopes are not enabled) issues a warning."
 msgstr ""
 
-#: ../../pep-0227.txt:323
+#: ../../pep-0227.txt:321
 msgid ""
 "The other compatibility problem is caused by the use of ``import *`` and "
 "'exec' in a function body, when that function contains a nested scope and"
 " the contained scope has free variables.  For example::"
 msgstr ""
 
-#: ../../pep-0227.txt:335
+#: ../../pep-0227.txt:333
 msgid ""
 "At compile-time, the compiler cannot tell whether an exec that operates "
 "on the local namespace or an ``import *`` will introduce name bindings "
@@ -433,7 +417,7 @@ msgid ""
 "in ``f()``."
 msgstr ""
 
-#: ../../pep-0227.txt:341
+#: ../../pep-0227.txt:339
 msgid ""
 "In discussion of the python-list, people argued for both possible "
 "interpretations.  On the one hand, some thought that the reference in "
@@ -448,14 +432,14 @@ msgid ""
 "versions of Python."
 msgstr ""
 
-#: ../../pep-0227.txt:354
+#: ../../pep-0227.txt:352
 msgid ""
 "Since each interpretation is problematic and the exact meaning ambiguous,"
 " the compiler raises an exception.  The Python 2.1 compiler issues a "
 "warning when nested scopes are not enabled."
 msgstr ""
 
-#: ../../pep-0227.txt:358
+#: ../../pep-0227.txt:356
 msgid ""
 "A brief review of three Python projects (the standard library, Zope, and "
 "a beta version of PyXPCOM) found four backwards compatibility issues in "
@@ -464,7 +448,7 @@ msgid ""
 " standard library."
 msgstr ""
 
-#: ../../pep-0227.txt:364
+#: ../../pep-0227.txt:362
 msgid ""
 "(The interpretation of the ``import *`` and exec restriction that was "
 "implemented in Python 2.1a2 was much more restrictive, based on language "
@@ -472,22 +456,22 @@ msgid ""
 "restrictions were relaxed following the release.)"
 msgstr ""
 
-#: ../../pep-0227.txt:370
+#: ../../pep-0227.txt:368
 msgid "Compatibility of C API"
 msgstr ""
 
-#: ../../pep-0227.txt:372
+#: ../../pep-0227.txt:370
 msgid ""
 "The implementation causes several Python C API functions to change, "
 "including ``PyCode_New()``.  As a result, C extensions may need to be "
 "updated to work correctly with Python 2.1."
 msgstr ""
 
-#: ../../pep-0227.txt:377
+#: ../../pep-0227.txt:375
 msgid "locals() / vars()"
 msgstr ""
 
-#: ../../pep-0227.txt:379
+#: ../../pep-0227.txt:377
 msgid ""
 "These functions return a dictionary containing the current scope's local "
 "variables.  Modifications to the dictionary do not affect the values of "
@@ -496,18 +480,18 @@ msgid ""
 "which names are resolved."
 msgstr ""
 
-#: ../../pep-0227.txt:385
+#: ../../pep-0227.txt:383
 msgid ""
 "An analogous function will not be provided for nested scopes. Under this "
 "proposal, it will not be possible to gain dictionary-style access to all "
 "visible scopes."
 msgstr ""
 
-#: ../../pep-0227.txt:390
+#: ../../pep-0227.txt:388
 msgid "Warnings and Errors"
 msgstr ""
 
-#: ../../pep-0227.txt:392
+#: ../../pep-0227.txt:390
 msgid ""
 "The compiler will issue warnings in Python 2.1 to help identify programs "
 "that may not compile or run correctly under future versions of Python.  "
@@ -516,7 +500,7 @@ msgid ""
 "this section, the compiler will issue SyntaxErrors in some cases."
 msgstr ""
 
-#: ../../pep-0227.txt:399
+#: ../../pep-0227.txt:397
 msgid ""
 "The warnings typically apply when a function that contains a nested "
 "function that has free variables.  For example, if function F contains a "
@@ -525,58 +509,58 @@ msgid ""
 "\"free-in-nested\" will be used to describe these functions."
 msgstr ""
 
-#: ../../pep-0227.txt:407
+#: ../../pep-0227.txt:405
 msgid "import * used in function scope"
 msgstr ""
 
-#: ../../pep-0227.txt:409
+#: ../../pep-0227.txt:407
 msgid ""
 "The language reference specifies that ``import *`` may only occur in a "
 "module scope.  (Sec. 6.11)  The implementation of C Python has supported "
 "``import *`` at the function scope."
 msgstr ""
 
-#: ../../pep-0227.txt:413
+#: ../../pep-0227.txt:411
 msgid ""
 "If ``import *`` is used in the body of a free-in-nested function, the "
 "compiler will issue a warning.  Under future semantics, the compiler will"
 " raise a ``SyntaxError``."
 msgstr ""
 
-#: ../../pep-0227.txt:418
+#: ../../pep-0227.txt:416
 msgid "bare exec in function scope"
 msgstr ""
 
-#: ../../pep-0227.txt:420
+#: ../../pep-0227.txt:418
 msgid ""
 "The exec statement allows two optional expressions following the keyword "
 "\"in\" that specify the namespaces used for locals and globals.  An exec "
 "statement that omits both of these namespaces is a bare exec."
 msgstr ""
 
-#: ../../pep-0227.txt:425
+#: ../../pep-0227.txt:423
 msgid ""
 "If a bare exec is used in the body of a free-in-nested function, the "
 "compiler will issue a warning.  Under future semantics, the compiler will"
 " raise a ``SyntaxError``."
 msgstr ""
 
-#: ../../pep-0227.txt:430
+#: ../../pep-0227.txt:428
 msgid "local shadows global"
 msgstr ""
 
-#: ../../pep-0227.txt:432
+#: ../../pep-0227.txt:430
 msgid ""
 "If a free-in-nested function has a binding for a local variable that (1) "
 "is used in a nested function and (2) is the same as a global variable, "
 "the compiler will issue a warning."
 msgstr ""
 
-#: ../../pep-0227.txt:437
+#: ../../pep-0227.txt:435
 msgid "Rebinding names in enclosing scopes"
 msgstr ""
 
-#: ../../pep-0227.txt:439
+#: ../../pep-0227.txt:437
 msgid ""
 "There are technical issues that make it difficult to support rebinding of"
 " names in enclosing scopes, but the primary reason that it is not allowed"
@@ -590,7 +574,7 @@ msgid ""
 "make this possible (in Guido's opinion)."
 msgstr ""
 
-#: ../../pep-0227.txt:451
+#: ../../pep-0227.txt:449
 msgid ""
 "The proposed rules allow programmers to achieve the effect of rebinding, "
 "albeit awkwardly.  The name that will be effectively rebound by enclosed "
@@ -599,7 +583,7 @@ msgid ""
 "effect::"
 msgstr ""
 
-#: ../../pep-0227.txt:467
+#: ../../pep-0227.txt:465
 msgid ""
 "Support for rebinding in nested scopes would make this code clearer.  A "
 "class that defines ``deposit()`` and ``withdraw()`` methods and the "
@@ -608,11 +592,11 @@ msgid ""
 "are preferred."
 msgstr ""
 
-#: ../../pep-0227.txt:474
+#: ../../pep-0227.txt:472
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0227.txt:476
+#: ../../pep-0227.txt:474
 msgid ""
 "The implementation for C Python uses flat closures [1]_.  Each def or "
 "lambda expression that is executed will create a closure if the body of "
@@ -621,7 +605,7 @@ msgid ""
 "cheap."
 msgstr ""
 
-#: ../../pep-0227.txt:482
+#: ../../pep-0227.txt:480
 msgid ""
 "The implementation adds several new opcodes and two new kinds of names in"
 " code objects.  A variable can be either a cell variable or a free "
@@ -631,7 +615,7 @@ msgid ""
 "referenced via a function's closure."
 msgstr ""
 
-#: ../../pep-0227.txt:490
+#: ../../pep-0227.txt:488
 msgid ""
 "The choice of free closures was made based on three factors. First, "
 "nested functions are presumed to be used infrequently, deeply nested "
@@ -642,18 +626,53 @@ msgid ""
 "garbage collector."
 msgstr ""
 
-#: ../../pep-0227.txt:500
+#: ../../pep-0227.txt:498
 msgid "References"
 msgstr ""
 
-#: ../../pep-0227.txt:502
+#: ../../pep-0227.txt:500
 msgid ""
 "Luca Cardelli.  Compiling a functional language.  In Proc. of the 1984 "
 "ACM Conference on Lisp and Functional Programming, pp. 208-217, Aug. 1984"
-" http://citeseer.ist.psu.edu/cardelli84compiling.html"
+" https://dl.acm.org/doi/10.1145/800055.802037"
 msgstr ""
 
-#: ../../pep-0227.txt:508
+#: ../../pep-0227.txt:506
 msgid "Copyright"
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "227"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Statically Nested Scopes"
+#~ msgstr ""
+
+#~ msgid "jeremy@alum.mit.edu (Jeremy Hylton)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This proposal changes the rules for "
+#~ "resolving free variables in Python "
+#~ "functions.  The new name resolution "
+#~ "semantics will take effect with Python"
+#~ " 2.2.  These semantics will also be"
+#~ " available in Python 2.1 by adding"
+#~ " \"from __future__ import nested_scopes\" "
+#~ "to the top of a module.  (See "
+#~ "PEP 236.)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Luca Cardelli.  Compiling a functional "
+#~ "language.  In Proc. of the 1984 "
+#~ "ACM Conference on Lisp and Functional"
+#~ " Programming, pp. 208-217, Aug. 1984 "
+#~ "http://citeseer.ist.psu.edu/cardelli84compiling.html"
+#~ msgstr ""
 

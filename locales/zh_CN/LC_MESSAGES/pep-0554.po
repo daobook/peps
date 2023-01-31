@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0554.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0554.rst:1
-msgid "554"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0554.rst:2
-msgid "Multiple Interpreters in the Stdlib"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0554.rst
 msgid "Author"
@@ -78,7 +62,7 @@ msgid "Python-Version"
 msgstr ""
 
 #: ../../pep-0554.rst:9
-msgid "3.10"
+msgid "3.12"
 msgstr ""
 
 #: ../../pep-0554.rst
@@ -99,17 +83,18 @@ msgstr ""
 msgid ""
 "CPython has supported multiple interpreters in the same process (AKA "
 "\"subinterpreters\") since version 1.5 (1997).  The feature has been "
-"available via the C-API. [c-api]_  Subinterpreters operate in `relative "
-"isolation from one another <Interpreter Isolation_>`_, which facilitates "
-"novel alternative approaches to `concurrency <Concurrency_>`_."
+"available via the C-API. [c-api]_  Multiple interpreters operate in "
+"`relative isolation from one another <Interpreter Isolation_>`_, which "
+"facilitates novel alternative approaches to `concurrency "
+"<Concurrency_>`_."
 msgstr ""
 
 #: ../../pep-0554.rst:24
 msgid ""
-"This proposal introduces the stdlib ``interpreters`` module.  The module "
-"will be `provisional <Provisional Status_>`_.  It exposes the basic "
-"functionality of subinterpreters already provided by the C-API, along "
-"with new (basic) functionality for sharing data between interpreters."
+"This proposal introduces the stdlib ``interpreters`` module.  It exposes "
+"the basic functionality of multiple interpreters already provided by the "
+"C-API, along with a *very* basic way to communicate (i.e. pass data "
+"between interpreters)."
 msgstr ""
 
 #: ../../pep-0554.rst:31
@@ -118,218 +103,229 @@ msgstr ""
 
 #: ../../pep-0554.rst:33
 msgid ""
-"To avoid any confusion up front:  This PEP is unrelated to any efforts to"
-" stop sharing the GIL between subinterpreters.  At most this proposal "
-"will allow users to take advantage of any results of work on the GIL. The"
-" position here is that exposing subinterpreters to Python code is worth "
-"doing, even if they still share the GIL."
+"To avoid any confusion up front:  This PEP is meant to be independent of "
+"any efforts to stop sharing the GIL between interpreters (:pep:`684`). At"
+" most this proposal will allow users to take advantage of any GIL-related"
+" work."
 msgstr ""
 
-#: ../../pep-0554.rst:41
+#: ../../pep-0554.rst:38
+msgid ""
+"The author's position here is that exposing multiple interpreters to "
+"Python code is worth doing, even if they still share the GIL. "
+"Conversations with past steering councils indicates they do not "
+"necessarily agree."
+msgstr ""
+
+#: ../../pep-0554.rst:45
 msgid "Proposal"
 msgstr ""
 
-#: ../../pep-0554.rst:43
-msgid ""
-"The ``interpreters`` module will be added to the stdlib.  To help authors"
-" of extension modules, a new page will be added to the `Extending Python "
-"<extension-docs_>`_ docs.  More information on both is found in the "
-"immediately following sections."
-msgstr ""
-
-#: ../../pep-0554.rst:49
+#: ../../pep-0554.rst:48
 msgid "The \"interpreters\" Module"
 msgstr ""
 
-#: ../../pep-0554.rst:51
+#: ../../pep-0554.rst:50
 msgid ""
-"The ``interpreters`` module will provide a high-level interface to "
-"subinterpreters and wrap a new low-level ``_interpreters`` (in the same "
-"way as the ``threading`` module).  See the `Examples`_ section for "
-"concrete usage and use cases."
+"The ``interpreters`` module will provide a high-level interface to the "
+"multiple interpreter functionality, and wrap a new low-level "
+"``_interpreters`` (in the same way as the ``threading`` module). See the "
+"`Examples`_ section for concrete usage and use cases."
 msgstr ""
 
-#: ../../pep-0554.rst:56
+#: ../../pep-0554.rst:55
 msgid ""
-"Along with exposing the existing (in CPython) subinterpreter support, the"
-" module will also provide a mechanism for sharing data between "
-"interpreters.  This mechanism centers around \"channels\", which are "
-"similar to queues and pipes."
+"Along with exposing the existing (in CPython) multiple interpreter "
+"support, the module will also support a very basic mechanism for passing "
+"data between interpreters.  That involves setting simple objects in the "
+"``__main__`` module of a target subinterpreter.  If one end of an "
+"``os.pipe()`` is passed this way then that pipe can be used to send bytes"
+" between the two interpreters."
 msgstr ""
 
-#: ../../pep-0554.rst:61
+#: ../../pep-0554.rst:62
 msgid ""
 "Note that *objects* are not shared between interpreters since they are "
 "tied to the interpreter in which they were created.  Instead, the "
-"objects' *data* is passed between interpreters.  See the `Shared data`_ "
-"section for more details about sharing between interpreters."
+"objects' *data* is passed between interpreters.  See the `Shared Data`_ "
+"and `API For Sharing Data`_ sections for more details about "
+"sharing/communicating between interpreters."
 msgstr ""
 
-#: ../../pep-0554.rst:66
-msgid "At first only the following types will be supported for sharing:"
-msgstr ""
-
-#: ../../pep-0554.rst:68 ../../pep-0554.rst:622
-msgid "None"
-msgstr ""
-
-#: ../../pep-0554.rst:69 ../../pep-0554.rst:623
-msgid "bytes"
-msgstr ""
-
-#: ../../pep-0554.rst:70 ../../pep-0554.rst:624
-msgid "str"
-msgstr ""
-
-#: ../../pep-0554.rst:71 ../../pep-0554.rst:625
-msgid "int"
-msgstr ""
-
-#: ../../pep-0554.rst:72
-msgid "PEP 554 channels"
-msgstr ""
-
-#: ../../pep-0554.rst:74
-msgid ""
-"Support for other basic types (e.g. bool, float, Ellipsis) will be added "
-"later."
-msgstr ""
-
-#: ../../pep-0554.rst:77
+#: ../../pep-0554.rst:69
 msgid "API summary for interpreters module"
 msgstr ""
 
-#: ../../pep-0554.rst:79
+#: ../../pep-0554.rst:71
 msgid ""
 "Here is a summary of the API for the ``interpreters`` module.  For a more"
 " in-depth explanation of the proposed classes and functions, see the "
 "`\"interpreters\" Module API`_ section below."
 msgstr ""
 
-#: ../../pep-0554.rst:83
+#: ../../pep-0554.rst:75
 msgid "For creating and using interpreters:"
 msgstr ""
 
-#: ../../pep-0554.rst:86 ../../pep-0554.rst:100 ../../pep-0554.rst:127
-#: ../../pep-0554.rst:141 ../../pep-0554.rst:157
+#: ../../pep-0554.rst:78 ../../pep-0554.rst:92 ../../pep-0554.rst:122
+#: ../../pep-0554.rst:142
 msgid "signature"
 msgstr ""
 
-#: ../../pep-0554.rst:86 ../../pep-0554.rst:100 ../../pep-0554.rst:119
-#: ../../pep-0554.rst:127 ../../pep-0554.rst:141 ../../pep-0554.rst:157
-#: ../../pep-0554.rst:172
+#: ../../pep-0554.rst:78 ../../pep-0554.rst:92 ../../pep-0554.rst:112
+#: ../../pep-0554.rst:122 ../../pep-0554.rst:134 ../../pep-0554.rst:142
 msgid "description"
 msgstr ""
 
-#: ../../pep-0554.rst:88
+#: ../../pep-0554.rst:80
 msgid "``list_all() -> [Interpreter]``"
 msgstr ""
 
-#: ../../pep-0554.rst:88
+#: ../../pep-0554.rst:80
 msgid "Get all existing interpreters."
 msgstr ""
 
-#: ../../pep-0554.rst:90
+#: ../../pep-0554.rst:82
 msgid "``get_current() -> Interpreter``"
 msgstr ""
 
-#: ../../pep-0554.rst:90
+#: ../../pep-0554.rst:82
 msgid "Get the currently running interpreter."
 msgstr ""
 
-#: ../../pep-0554.rst:92
+#: ../../pep-0554.rst:84
 msgid "``get_main() -> Interpreter``"
 msgstr ""
 
-#: ../../pep-0554.rst:92
+#: ../../pep-0554.rst:84
 msgid "Get the main interpreter."
 msgstr ""
 
-#: ../../pep-0554.rst:94
-msgid "``create(*, isolated=True) -> Interpreter``"
+#: ../../pep-0554.rst:86
+msgid "``create() -> Interpreter``"
 msgstr ""
 
-#: ../../pep-0554.rst:94
+#: ../../pep-0554.rst:86
 msgid "Initialize a new (idle) Python interpreter."
 msgstr ""
 
-#: ../../pep-0554.rst:102
-msgid "``class Interpreter(id)``"
+#: ../../pep-0554.rst:94
+msgid "``class Interpreter``"
 msgstr ""
 
-#: ../../pep-0554.rst:102
+#: ../../pep-0554.rst:94
 msgid "A single interpreter."
 msgstr ""
 
-#: ../../pep-0554.rst:104 ../../pep-0554.rst:145 ../../pep-0554.rst:161
+#: ../../pep-0554.rst:96
 msgid "``.id``"
 msgstr ""
 
-#: ../../pep-0554.rst:104
+#: ../../pep-0554.rst:96
 msgid "The interpreter's ID (read-only)."
 msgstr ""
 
-#: ../../pep-0554.rst:106
-msgid "``.isolated``"
-msgstr ""
-
-#: ../../pep-0554.rst:106
-msgid "The interpreter's mode (read-only)."
-msgstr ""
-
-#: ../../pep-0554.rst:108
+#: ../../pep-0554.rst:98
 msgid "``.is_running() -> bool``"
 msgstr ""
 
-#: ../../pep-0554.rst:108
+#: ../../pep-0554.rst:98
 msgid "Is the interpreter currently executing code?"
 msgstr ""
 
-#: ../../pep-0554.rst:110
+#: ../../pep-0554.rst:100
 msgid "``.close()``"
 msgstr ""
 
-#: ../../pep-0554.rst:110
+#: ../../pep-0554.rst:100
 msgid "Finalize and destroy the interpreter."
 msgstr ""
 
-#: ../../pep-0554.rst:112
-msgid "``.run(src_str, /, *, channels=None)``"
+#: ../../pep-0554.rst:102
+msgid "``.run(src_str, /, *, shared=None) -> Status``"
 msgstr ""
 
 #: ../../pep-0554.rst
-msgid "Run the given source code in the interpreter."
+msgid "Run the given source code in the interpreter"
 msgstr ""
 
 #: ../../pep-0554.rst
-msgid "(This blocks the current thread until done.)"
+msgid "(in its own thread)."
 msgstr ""
 
-#: ../../pep-0554.rst:119 ../../pep-0554.rst:172
+#: ../../pep-0554.rst:112 ../../pep-0554.rst:134
 msgid "exception"
 msgstr ""
 
-#: ../../pep-0554.rst:119 ../../pep-0554.rst:172
+#: ../../pep-0554.rst:112 ../../pep-0554.rst:134
 msgid "base"
 msgstr ""
 
-#: ../../pep-0554.rst:121
+#: ../../pep-0554.rst:114
 msgid "``RunFailedError``"
 msgstr ""
 
-#: ../../pep-0554.rst:121
+#: ../../pep-0554.rst:114
 msgid "``RuntimeError``"
 msgstr ""
 
-#: ../../pep-0554.rst:121
+#: ../../pep-0554.rst:114
 msgid "Interpreter.run() resulted in an uncaught exception."
 msgstr ""
 
+#: ../../pep-0554.rst:119
+msgid "Asynchronous results:"
+msgstr ""
+
 #: ../../pep-0554.rst:124
+msgid "``class Status``"
+msgstr ""
+
+#: ../../pep-0554.rst:124
+msgid "Tracks if a request is complete."
+msgstr ""
+
+#: ../../pep-0554.rst:126
+msgid "``.wait(timeout=None)``"
+msgstr ""
+
+#: ../../pep-0554.rst:126
+msgid "Block until the requested work is done."
+msgstr ""
+
+#: ../../pep-0554.rst:128
+msgid "``.done() -> bool``"
+msgstr ""
+
+#: ../../pep-0554.rst:128
+msgid "Has the requested work completed (or failed)?"
+msgstr ""
+
+#: ../../pep-0554.rst:130
+msgid "``.exception() -> Exception | None``"
+msgstr ""
+
+#: ../../pep-0554.rst:130
+msgid "Return any exception from the requested work."
+msgstr ""
+
+#: ../../pep-0554.rst:136
+msgid "``NotFinishedError``"
+msgstr ""
+
+#: ../../pep-0554.rst:136
+msgid "``Exception``"
+msgstr ""
+
+#: ../../pep-0554.rst:136
+msgid "The request has not completed yet."
+msgstr ""
+
+#: ../../pep-0554.rst:139
 msgid "For sharing data between interpreters:"
 msgstr ""
 
-#: ../../pep-0554.rst:129
+#: ../../pep-0554.rst:144
 msgid "``is_shareable(obj) -> Bool``"
 msgstr ""
 
@@ -341,289 +337,161 @@ msgstr ""
 msgid "between interpreters?"
 msgstr ""
 
-#: ../../pep-0554.rst:132
-msgid "``create_channel() -> (RecvChannel, SendChannel)``"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "Create a new channel for passing"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "data between interpreters."
-msgstr ""
-
-#: ../../pep-0554.rst:135
-msgid "``list_all_channels() -> [(RecvChannel, SendChannel)]``"
-msgstr ""
-
-#: ../../pep-0554.rst:135
-msgid "Get all open channels."
-msgstr ""
-
-#: ../../pep-0554.rst:143
-msgid "``class RecvChannel(id)``"
-msgstr ""
-
-#: ../../pep-0554.rst:143
-msgid "The receiving end of a channel."
-msgstr ""
-
-#: ../../pep-0554.rst:145 ../../pep-0554.rst:161
-msgid "The channel's unique ID."
-msgstr ""
-
-#: ../../pep-0554.rst:147
-msgid "``.recv() -> object``"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "Get the next object from the channel,"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "and wait if none have been sent."
-msgstr ""
-
-#: ../../pep-0554.rst:150
-msgid "``.recv_nowait(default=None) -> object``"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "Like recv(), but return the default"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "instead of waiting."
-msgstr ""
-
-#: ../../pep-0554.rst:159
-msgid "``class SendChannel(id)``"
-msgstr ""
-
-#: ../../pep-0554.rst:159
-msgid "The sending end of a channel."
-msgstr ""
-
-#: ../../pep-0554.rst:163
-msgid "``.send(obj)``"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "Send the object (i.e. its data) to the"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "receiving end of the channel and wait."
-msgstr ""
-
-#: ../../pep-0554.rst:166
-msgid "``.send_nowait(obj)``"
-msgstr ""
-
-#: ../../pep-0554.rst
-msgid "Like send(), but return False if not received."
-msgstr ""
-
-#: ../../pep-0554.rst:174 ../../pep-0554.rst:176 ../../pep-0554.rst:178
-#: ../../pep-0554.rst:180 ../../pep-0554.rst:182
-msgid "``ChannelError``"
-msgstr ""
-
-#: ../../pep-0554.rst:174
-msgid "``Exception``"
-msgstr ""
-
-#: ../../pep-0554.rst:174
-msgid "The base class for channel-related exceptions."
-msgstr ""
-
-#: ../../pep-0554.rst:176
-msgid "``ChannelNotFoundError``"
-msgstr ""
-
-#: ../../pep-0554.rst:176
-msgid "The identified channel was not found."
-msgstr ""
-
-#: ../../pep-0554.rst:178
-msgid "``ChannelEmptyError``"
-msgstr ""
-
-#: ../../pep-0554.rst:178
-msgid "The channel was unexpectedly empty."
-msgstr ""
-
-#: ../../pep-0554.rst:180
-msgid "``ChannelNotEmptyError``"
-msgstr ""
-
-#: ../../pep-0554.rst:180
-msgid "The channel was unexpectedly not empty."
-msgstr ""
-
-#: ../../pep-0554.rst:182
-msgid "``NotReceivedError``"
-msgstr ""
-
-#: ../../pep-0554.rst:182
-msgid "Nothing was waiting to receive a sent object."
-msgstr ""
-
-#: ../../pep-0554.rst:186
+#: ../../pep-0554.rst:149
 msgid "Help for Extension Module Maintainers"
 msgstr ""
 
-#: ../../pep-0554.rst:188
+#: ../../pep-0554.rst:151
 msgid ""
-"Many extension modules do not support use in subinterpreters yet.  The "
-"maintainers and users of such extension modules will both benefit when "
-"they are updated to support subinterpreters.  In the meantime users may "
-"become confused by failures when using subinterpreters, which could "
+"In practice, an extension that implements multi-phase init (:pep:`489`) "
+"is considered isolated and thus compatible with multiple interpreters. "
+"Otherwise it is \"incompatible\"."
+msgstr ""
+
+#: ../../pep-0554.rst:155
+msgid ""
+"Many extension modules are still incompatible.  The maintainers and users"
+" of such extension modules will both benefit when they are updated to "
+"support multiple interpreters.  In the meantime, users may become "
+"confused by failures when using multiple interpreters, which could "
 "negatively impact extension maintainers.  See `Concerns`_ below."
 msgstr ""
 
-#: ../../pep-0554.rst:194
+#: ../../pep-0554.rst:161
 msgid ""
 "To mitigate that impact and accelerate compatibility, we will do the "
 "following:"
 msgstr ""
 
-#: ../../pep-0554.rst:197
+#: ../../pep-0554.rst:164
 msgid ""
 "be clear that extension modules are *not* required to support use in "
-"subinterpreters"
+"multiple interpreters"
 msgstr ""
 
-#: ../../pep-0554.rst:199
+#: ../../pep-0554.rst:166
 msgid ""
-"raise ``ImportError`` when an incompatible (no PEP 489 support) module is"
-" imported in a subinterpreter"
+"raise ``ImportError`` when an incompatible module is imported in a "
+"subinterpreter"
 msgstr ""
 
-#: ../../pep-0554.rst:201
+#: ../../pep-0554.rst:168
 msgid "provide resources (e.g. docs) to help maintainers reach compatibility"
 msgstr ""
 
-#: ../../pep-0554.rst:202
+#: ../../pep-0554.rst:169
 msgid ""
 "reach out to the maintainers of Cython and of the most used extension "
 "modules (on PyPI) to get feedback and possibly provide assistance"
 msgstr ""
 
-#: ../../pep-0554.rst:207
+#: ../../pep-0554.rst:174
 msgid "Examples"
 msgstr ""
 
-#: ../../pep-0554.rst:210
+#: ../../pep-0554.rst:177
 msgid "Run isolated code"
 msgstr ""
 
-#: ../../pep-0554.rst:220
-msgid "Run in a thread"
-msgstr ""
-
-#: ../../pep-0554.rst:233
+#: ../../pep-0554.rst:187
 msgid "Pre-populate an interpreter"
 msgstr ""
 
-#: ../../pep-0554.rst:249
+#: ../../pep-0554.rst:204
 msgid "Handling an exception"
 msgstr ""
 
-#: ../../pep-0554.rst:262
+#: ../../pep-0554.rst:217
 msgid "Re-raising an exception"
 msgstr ""
 
-#: ../../pep-0554.rst:277
+#: ../../pep-0554.rst:232
 msgid "Note that this pattern is a candidate for later improvement."
 msgstr ""
 
-#: ../../pep-0554.rst:280
-msgid "Synchronize using a channel"
+#: ../../pep-0554.rst:235
+msgid "Synchronize using an OS pipe"
 msgstr ""
 
-#: ../../pep-0554.rst:302
+#: ../../pep-0554.rst:255
 msgid "Sharing a file descriptor"
 msgstr ""
 
-#: ../../pep-0554.rst:330
-msgid "Passing objects via marshal"
-msgstr ""
-
-#: ../../pep-0554.rst:359
+#: ../../pep-0554.rst:281
 msgid "Passing objects via pickle"
 msgstr ""
 
-#: ../../pep-0554.rst:388
+#: ../../pep-0554.rst:313
 msgid "Running a module"
 msgstr ""
 
-#: ../../pep-0554.rst:397
+#: ../../pep-0554.rst:322
 msgid "Running as script (including zip archives & directories)"
 msgstr ""
 
-#: ../../pep-0554.rst:406
-msgid "Running in a thread pool executor"
-msgstr ""
-
-#: ../../pep-0554.rst:419
+#: ../../pep-0554.rst:332
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0554.rst:421
+#: ../../pep-0554.rst:334
 msgid ""
 "Running code in multiple interpreters provides a useful level of "
 "isolation within the same process.  This can be leveraged in a number of "
 "ways.  Furthermore, subinterpreters provide a well-defined framework in "
-"which such isolation may extended."
+"which such isolation may extended.  (See :pep:`684`.)"
 msgstr ""
 
-#: ../../pep-0554.rst:426
+#: ../../pep-0554.rst:339
 msgid ""
 "Nick Coghlan explained some of the benefits through a comparison with "
 "multi-processing [benefits]_::"
 msgstr ""
 
-#: ../../pep-0554.rst:447
+#: ../../pep-0554.rst:360
 msgid ""
-"CPython has supported subinterpreters, with increasing levels of support,"
-" since version 1.5.  While the feature has the potential to be a powerful"
-" tool, subinterpreters have suffered from neglect because they are not "
-"available directly from Python.  Exposing the existing functionality in "
-"the stdlib will help reverse the situation."
+"CPython has supported multiple interpreters, with increasing levels of "
+"support, since version 1.5.  While the feature has the potential to be a "
+"powerful tool, it has suffered from neglect because the multiple "
+"interpreter capabilities are not readily available directly from Python."
+"  Exposing the existing functionality in the stdlib will help reverse the"
+" situation."
 msgstr ""
 
-#: ../../pep-0554.rst:453
+#: ../../pep-0554.rst:367
 msgid ""
 "This proposal is focused on enabling the fundamental capability of "
-"multiple isolated interpreters in the same Python process.  This is a new"
-" area for Python so there is relative uncertainly about the best tools to"
-" provide as companions to subinterpreters.  Thus we minimize the "
-"functionality we add in the proposal as much as possible."
+"multiple interpreters, isolated from each other, in the same Python "
+"process.  This is a new area for Python so there is relative uncertainly "
+"about the best tools to provide as companions to interpreters.  Thus we "
+"minimize the functionality we add in the proposal as much as possible."
 msgstr ""
 
-#: ../../pep-0554.rst:460
+#: ../../pep-0554.rst:375
 msgid "Concerns"
 msgstr ""
 
-#: ../../pep-0554.rst:462
+#: ../../pep-0554.rst:377
 msgid "\"subinterpreters are not worth the trouble\""
 msgstr ""
 
-#: ../../pep-0554.rst:464
+#: ../../pep-0554.rst:379
 msgid ""
 "Some have argued that subinterpreters do not add sufficient benefit to "
 "justify making them an official part of Python.  Adding features to the "
 "language (or stdlib) has a cost in increasing the size of the language.  "
-"So an addition must pay for itself.  In this case, subinterpreters "
-"provide a novel concurrency model focused on isolated threads of "
-"execution.  Furthermore, they provide an opportunity for changes in "
-"CPython that will allow simultaneous use of multiple CPU cores (currently"
-" prevented by the GIL)."
+"So an addition must pay for itself."
 msgstr ""
 
-#: ../../pep-0554.rst:473
+#: ../../pep-0554.rst:384
+msgid ""
+"In this case, multiple interpreter support provide a novel concurrency "
+"model focused on isolated threads of execution.  Furthermore, they "
+"provide an opportunity for changes in CPython that will allow "
+"simultaneous use of multiple CPU cores (currently prevented by the GIL--"
+"see :pep:`684`)."
+msgstr ""
+
+#: ../../pep-0554.rst:390
 msgid ""
 "Alternatives to subinterpreters include threading, async, and "
 "multiprocessing.  Threading is limited by the GIL and async isn't the "
@@ -633,7 +501,7 @@ msgid ""
 "the same caveat."
 msgstr ""
 
-#: ../../pep-0554.rst:480
+#: ../../pep-0554.rst:397
 msgid ""
 "Notably, subinterpreters are not intended as a replacement for any of the"
 " above.  Certainly they overlap in some areas, but the benefits of "
@@ -644,23 +512,24 @@ msgid ""
 "``interpreters`` module will provide."
 msgstr ""
 
-#: ../../pep-0554.rst:488
+#: ../../pep-0554.rst:405
 msgid ""
-"\"stdlib support for subinterpreters adds extra burden on C extension "
-"authors\""
+"\"stdlib support for multiple interpreters adds extra burden on C "
+"extension authors\""
 msgstr ""
 
-#: ../../pep-0554.rst:491
+#: ../../pep-0554.rst:408
 msgid ""
 "In the `Interpreter Isolation`_ section below we identify ways in which "
 "isolation in CPython's subinterpreters is incomplete.  Most notable is "
-"extension modules that use C globals to store internal state.  PEP 3121 "
-"and PEP 489 provide a solution for most of the problem, but one still "
-"remains. [petr-c-ext]_  Until that is resolved (see PEP 573), C extension"
-" authors will face extra difficulty to support subinterpreters."
+"extension modules that use C globals to store internal state.  "
+":pep:`3121` and :pep:`489` provide a solution for most of the problem, "
+"but one still remains. [petr-c-ext]_  Until that is resolved (see "
+":pep:`573`), C extension authors will face extra difficulty to support "
+"subinterpreters."
 msgstr ""
 
-#: ../../pep-0554.rst:499
+#: ../../pep-0554.rst:416
 msgid ""
 "Consequently, projects that publish extension modules may face an "
 "increased maintenance burden as their users start using subinterpreters, "
@@ -670,7 +539,7 @@ msgid ""
 "rate]_"
 msgstr ""
 
-#: ../../pep-0554.rst:506
+#: ../../pep-0554.rst:423
 msgid ""
 "Ultimately this comes down to a question of how often it will be a "
 "problem in practice: how many projects would be affected, how often their"
@@ -681,178 +550,154 @@ msgid ""
 "subinterpreters are worth it."
 msgstr ""
 
-#: ../../pep-0554.rst:514
+#: ../../pep-0554.rst:431
 msgid ""
 "\"creating a new concurrency API deserves much more thought and "
 "experimentation, so the new module shouldn't go into the stdlib right "
 "away, if ever\""
 msgstr ""
 
-#: ../../pep-0554.rst:518
+#: ../../pep-0554.rst:435
 msgid ""
 "Introducing an API for a new concurrency model, like happened with "
 "asyncio, is an extremely large project that requires a lot of careful "
 "consideration.  It is not something that can be done a simply as this PEP"
 " proposes and likely deserves significant time on PyPI to mature. (See "
-"`Nathaniel's post <nathaniel-asyncio>`_ on python-dev.)"
+"`Nathaniel's post <nathaniel-asyncio_>`_ on python-dev.)"
 msgstr ""
 
-#: ../../pep-0554.rst:524
+#: ../../pep-0554.rst:441
 msgid ""
-"However, this PEP does not propose any new concurrency API.  At most it "
-"exposes minimal tools (e.g. subinterpreters, channels) which may be used "
-"to write code that follows patterns associated with (relatively) new-to-"
-"Python `concurrency models <Concurrency_>`_.  Those tools could also be "
-"used as the basis for APIs for such concurrency models. Again, this PEP "
-"does not propose any such API."
+"However, this PEP does not propose any new concurrency API. At most it "
+"exposes minimal tools (e.g. subinterpreters, simple \"sharing\") which "
+"may be used to write code that follows patterns associated with "
+"(relatively) new-to-Python `concurrency models <Concurrency_>`_. Those "
+"tools could also be used as the basis for APIs for such concurrency "
+"models.  Again, this PEP does not propose any such API."
 msgstr ""
 
-#: ../../pep-0554.rst:531
+#: ../../pep-0554.rst:448
 msgid ""
 "\"there is no point to exposing subinterpreters if they still share the "
 "GIL\""
 msgstr ""
 
-#: ../../pep-0554.rst:533
+#: ../../pep-0554.rst:450
 msgid "\"the effort to make the GIL per-interpreter is disruptive and risky\""
 msgstr ""
 
-#: ../../pep-0554.rst:535
+#: ../../pep-0554.rst:452
 msgid ""
 "A common misconception is that this PEP also includes a promise that "
-"subinterpreters will no longer share the GIL.  When that is clarified, "
-"the next question is \"what is the point?\".  This is already answered at"
-" length in this PEP.  Just to be clear, the value lies in::"
+"interpreters will no longer share the GIL.  When that is clarified, the "
+"next question is \"what is the point?\".  This is already answered at "
+"length in this PEP.  Just to be clear, the value lies in::"
 msgstr ""
 
-#: ../../pep-0554.rst:546
+#: ../../pep-0554.rst:463
 msgid ""
 "\"data sharing can have a negative impact on cache performance in multi-"
 "core scenarios\""
 msgstr ""
 
-#: ../../pep-0554.rst:549
+#: ../../pep-0554.rst:466
 msgid "(See [cache-line-ping-pong]_.)"
 msgstr ""
 
-#: ../../pep-0554.rst:551
+#: ../../pep-0554.rst:468
 msgid ""
 "This shouldn't be a problem for now as we have no immediate plans to "
 "actually share data between interpreters, instead focusing on copying."
 msgstr ""
 
-#: ../../pep-0554.rst:557
+#: ../../pep-0554.rst:474
 msgid "About Subinterpreters"
 msgstr ""
 
-#: ../../pep-0554.rst:560
+#: ../../pep-0554.rst:477
 msgid "Concurrency"
 msgstr ""
 
-#: ../../pep-0554.rst:562
+#: ../../pep-0554.rst:479
 msgid ""
 "Concurrency is a challenging area of software development.  Decades of "
 "research and practice have led to a wide variety of concurrency models, "
 "each with different goals.  Most center on correctness and usability."
 msgstr ""
 
-#: ../../pep-0554.rst:566
+#: ../../pep-0554.rst:483
 msgid ""
 "One class of concurrency models focuses on isolated threads of execution "
 "that interoperate through some message passing scheme.  A notable example"
-" is `Communicating Sequential Processes`_ (CSP) (upon which Go's "
-"concurrency is roughly based).  The isolation inherent to subinterpreters"
-" makes them well-suited to this approach."
+" is Communicating Sequential Processes [CSP]_ (upon which Go's "
+"concurrency is roughly based).  The inteded isolation inherent to "
+"CPython's interpreters makes them well-suited to this approach."
 msgstr ""
 
-#: ../../pep-0554.rst:573
-msgid "Shared data"
+#: ../../pep-0554.rst:491
+msgid "Shared Data"
 msgstr ""
 
-#: ../../pep-0554.rst:575
+#: ../../pep-0554.rst:493
 msgid ""
-"Subinterpreters are inherently isolated (with caveats explained below), "
-"in contrast to threads.  So the same communicate-via-shared-memory "
-"approach doesn't work.  Without an alternative, effective use of "
-"concurrency via subinterpreters is significantly limited."
+"CPython's interpreters are inherently isolated (with caveats explained "
+"below), in contrast to threads.  So the same communicate-via-shared-"
+"memory approach doesn't work.  Without an alternative, effective use of "
+"concurrency via multiple interpreters is significantly limited."
 msgstr ""
 
-#: ../../pep-0554.rst:580
+#: ../../pep-0554.rst:499
 msgid ""
 "The key challenge here is that sharing objects between interpreters faces"
 " complexity due to various constraints on object ownership, visibility, "
 "and mutability.  At a conceptual level it's easier to reason about "
 "concurrency when objects only exist in one interpreter at a time.  At a "
 "technical level, CPython's current memory model limits how Python "
-"*objects* may be shared safely between interpreters; effectively objects "
-"are bound to the interpreter in which they were created.  Furthermore, "
-"the complexity of *object* sharing increases as subinterpreters become "
-"more isolated, e.g. after GIL removal."
+"*objects* may be shared safely between interpreters; effectively, objects"
+" are bound to the interpreter in which they were created.  Furthermore, "
+"the complexity of *object* sharing increases as interpreters become more "
+"isolated, e.g. after GIL removal (though this is mitigated somewhat for "
+"some \"immortal\" objects (see :pep:`683`)."
 msgstr ""
 
-#: ../../pep-0554.rst:590
+#: ../../pep-0554.rst:510
 msgid ""
 "Consequently,the mechanism for sharing needs to be carefully considered. "
 "There are a number of valid solutions, several of which may be "
-"appropriate to support in Python.  This proposal provides a single basic "
-"solution: \"channels\".  Ultimately, any other solution will look similar"
-" to the proposed one, which will set the precedent.  Note that the "
-"implementation of ``Interpreter.run()`` will be done in a way that allows"
-" for multiple solutions to coexist, but doing so is not technically a "
-"part of the proposal here."
+"appropriate to support in Python.  Earlier versions of this proposal "
+"included a basic capability (\"channels\"), though most of the options "
+"were quite similar."
 msgstr ""
 
-#: ../../pep-0554.rst:599
+#: ../../pep-0554.rst:516
 msgid ""
-"Regarding the proposed solution, \"channels\", it is a basic, opt-in data"
-" sharing mechanism that draws inspiration from pipes, queues, and CSP's "
-"channels. [fifo]_"
+"Note that the implementation of ``Interpreter.run()`` will be done in a "
+"way that allows for may of these solutions to be implemented "
+"independently and to coexist, but doing so is not technically a part of "
+"the proposal here."
 msgstr ""
 
-#: ../../pep-0554.rst:603
+#: ../../pep-0554.rst:521
 msgid ""
-"As simply described earlier by the API summary, channels have two "
-"operations: send and receive.  A key characteristic of those operations "
-"is that channels transmit data derived from Python objects rather than "
-"the objects themselves.  When objects are sent, their data is extracted."
-"  When the \"object\" is received in the other interpreter, the data is "
-"converted back into an object owned by that interpreter."
+"The fundamental enabling feature for communication is that most objects "
+"can be converted to some encoding of underlying raw data, which is safe "
+"to be passed between interpreters.  For example, an ``int`` object can be"
+" turned into a C ``long`` value, send to another interpreter, and turned "
+"back into an ``int`` object there."
 msgstr ""
 
-#: ../../pep-0554.rst:611
+#: ../../pep-0554.rst:527
 msgid ""
-"To make this work, the mutable shared state will be managed by the Python"
-" runtime, not by any of the interpreters.  Initially we will support only"
-" one type of objects for shared state: the channels provided by "
-"``create_channel()``.  Channels, in turn, will carefully manage passing "
-"objects between interpreters."
+"Regardless, the effort to determine the best way forward here is outside "
+"the scope of this PEP.  In the meantime, this proposal provides a basic "
+"interim solution, described in `API For Sharing Data`_ below."
 msgstr ""
 
-#: ../../pep-0554.rst:617
-msgid ""
-"This approach, including keeping the API minimal, helps us avoid further "
-"exposing any underlying complexity to Python users.  Along those same "
-"lines, we will initially restrict the types that may be passed through "
-"channels to the following:"
-msgstr ""
-
-#: ../../pep-0554.rst:626
-msgid "channels"
-msgstr ""
-
-#: ../../pep-0554.rst:628
-msgid ""
-"Limiting the initial shareable types is a practical matter, reducing the "
-"potential complexity of the initial implementation.  There are a number "
-"of strategies we may pursue in the future to expand supported objects and"
-" object sharing strategies."
-msgstr ""
-
-#: ../../pep-0554.rst:634
+#: ../../pep-0554.rst:532
 msgid "Interpreter Isolation"
 msgstr ""
 
-#: ../../pep-0554.rst:636
+#: ../../pep-0554.rst:534
 msgid ""
 "CPython's interpreters are intended to be strictly isolated from each "
 "other.  Each interpreter has its own copy of all modules, classes, "
@@ -860,35 +705,35 @@ msgid ""
 "extension modules.  The CPython C-API docs explain more. [caveats]_"
 msgstr ""
 
-#: ../../pep-0554.rst:641
+#: ../../pep-0554.rst:539
 msgid ""
 "However, there are ways in which interpreters share some state.  First of"
 " all, some process-global state remains shared:"
 msgstr ""
 
-#: ../../pep-0554.rst:644
+#: ../../pep-0554.rst:542
 msgid "file descriptors"
 msgstr ""
 
-#: ../../pep-0554.rst:645
+#: ../../pep-0554.rst:543
 msgid "builtin types (e.g. dict, bytes)"
 msgstr ""
 
-#: ../../pep-0554.rst:646
+#: ../../pep-0554.rst:544
 msgid "singletons (e.g. None)"
 msgstr ""
 
-#: ../../pep-0554.rst:647
+#: ../../pep-0554.rst:545
 msgid ""
 "underlying static module data (e.g. functions) for "
 "builtin/extension/frozen modules"
 msgstr ""
 
-#: ../../pep-0554.rst:650
+#: ../../pep-0554.rst:548
 msgid "There are no plans to change this."
 msgstr ""
 
-#: ../../pep-0554.rst:652
+#: ../../pep-0554.rst:550
 msgid ""
 "Second, some isolation is faulty due to bugs or implementations that did "
 "not take subinterpreters into account.  This includes things like "
@@ -896,372 +741,416 @@ msgid ""
 " bugs should be opened (some are already):"
 msgstr ""
 
-#: ../../pep-0554.rst:657
+#: ../../pep-0554.rst:555
 msgid "readline module hook functions (http://bugs.python.org/issue4202)"
 msgstr ""
 
-#: ../../pep-0554.rst:658
+#: ../../pep-0554.rst:556
 msgid "memory leaks on re-init (http://bugs.python.org/issue21387)"
 msgstr ""
 
-#: ../../pep-0554.rst:660
+#: ../../pep-0554.rst:558
 msgid ""
 "Finally, some potential isolation is missing due to the current design of"
 " CPython.  Improvements are currently going on to address gaps in this "
 "area:"
 msgstr ""
 
-#: ../../pep-0554.rst:664
+#: ../../pep-0554.rst:562
 msgid "GC is not run per-interpreter [global-gc]_"
 msgstr ""
 
-#: ../../pep-0554.rst:665
+#: ../../pep-0554.rst:563
 msgid "at-exit handlers are not run per-interpreter [global-atexit]_"
 msgstr ""
 
-#: ../../pep-0554.rst:666
+#: ../../pep-0554.rst:564
 msgid "extensions using the ``PyGILState_*`` API are incompatible [gilstate]_"
 msgstr ""
 
-#: ../../pep-0554.rst:667
+#: ../../pep-0554.rst:565
 msgid "interpreters share memory management (e.g. allocators, gc)"
 msgstr ""
 
-#: ../../pep-0554.rst:668
+#: ../../pep-0554.rst:566
 msgid "interpreters share the GIL"
 msgstr ""
 
-#: ../../pep-0554.rst:671
+#: ../../pep-0554.rst:569
 msgid "Existing Usage"
 msgstr ""
 
-#: ../../pep-0554.rst:673
+#: ../../pep-0554.rst:571
 msgid ""
-"Subinterpreters are not a widely used feature.  In fact, the only "
-"documented cases of widespread usage are `mod_wsgi "
+"Multiple interpreter support is not a widely used feature.  In fact, the "
+"only documented cases of widespread usage are `mod_wsgi "
 "<https://github.com/GrahamDumpleton/mod_wsgi>`_, `OpenStack Ceph "
 "<https://github.com/ceph/ceph/pull/14971>`_, and `JEP "
 "<https://github.com/ninia/jep>`_.  On the one hand, these cases provide "
-"confidence that existing subinterpreter support is relatively stable.  On"
-" the other hand, there isn't much of a sample size from which to judge "
-"the utility of the feature."
+"confidence that existing multiple interpreter support is relatively "
+"stable.  On the other hand, there isn't much of a sample size from which "
+"to judge the utility of the feature."
 msgstr ""
 
-#: ../../pep-0554.rst:684
-msgid "Provisional Status"
-msgstr ""
-
-#: ../../pep-0554.rst:686
-msgid ""
-"The new ``interpreters`` module will be added with \"provisional\" status"
-" (see PEP 411).  This allows Python users to experiment with the feature "
-"and provide feedback while still allowing us to adjust to that feedback. "
-"The module will be provisional in Python 3.9 and we will make a decision "
-"before the 3.10 release whether to keep it provisional, graduate it, or "
-"remove it.  This PEP will be updated accordingly."
-msgstr ""
-
-#: ../../pep-0554.rst:693
-msgid ""
-"While the module is provisional, any changes to the API (or to behavior) "
-"do not need to be reflected here, nor get approval by the BDFL-delegate. "
-"However, such changes will still need to go through the normal processes "
-"(BPO for smaller changes and python-dev/PEP for substantial ones)."
-msgstr ""
-
-#: ../../pep-0554.rst:700
+#: ../../pep-0554.rst:582
 msgid "Alternate Python Implementations"
 msgstr ""
 
-#: ../../pep-0554.rst:702
+#: ../../pep-0554.rst:584
 msgid ""
 "I've solicited feedback from various Python implementors about support "
 "for subinterpreters.  Each has indicated that they would be able to "
-"support subinterpreters (if they choose to) without a lot of trouble.  "
-"Here are the projects I contacted:"
+"support multiple interpreters in the same process (if they choose to) "
+"without a lot of trouble.  Here are the projects I contacted:"
 msgstr ""
 
-#: ../../pep-0554.rst:707
+#: ../../pep-0554.rst:589
 msgid "jython  ([jython]_)"
 msgstr ""
 
-#: ../../pep-0554.rst:708
+#: ../../pep-0554.rst:590
 msgid "ironpython  (personal correspondence)"
 msgstr ""
 
-#: ../../pep-0554.rst:709
+#: ../../pep-0554.rst:591
 msgid "pypy  (personal correspondence)"
 msgstr ""
 
-#: ../../pep-0554.rst:710
+#: ../../pep-0554.rst:592
 msgid "micropython  (personal correspondence)"
 msgstr ""
 
-#: ../../pep-0554.rst:719
+#: ../../pep-0554.rst:601
 msgid "\"interpreters\" Module API"
 msgstr ""
 
-#: ../../pep-0554.rst:721
+#: ../../pep-0554.rst:603
 msgid "The module provides the following functions::"
 msgstr ""
 
-#: ../../pep-0554.rst:746
-msgid "The module also provides the following class::"
+#: ../../pep-0554.rst:625
+msgid "The module also provides the following classes::"
+msgstr ""
+
+#: ../../pep-0554.rst:707
+msgid "Uncaught Exceptions"
+msgstr ""
+
+#: ../../pep-0554.rst:709
+msgid ""
+"Regarding uncaught exceptions in ``Interpreter.run()``, we noted that "
+"they are exposed via the returned ``Status`` object.  To prevent leaking "
+"exceptions (and tracebacks) between interpreters, we create a surrogate "
+"of the exception and its traceback (see "
+"``traceback.TracebackException``).  This is returned by "
+"``Status.exception()``.  ``Status.wait()`` set it to ``__cause__`` on a "
+"new ``RunFailedError``, and raise that."
+msgstr ""
+
+#: ../../pep-0554.rst:717
+msgid ""
+"Raising (a proxy of) the exception directly is problematic since it's "
+"harder to distinguish between an error in the ``wait()`` call and an "
+"uncaught exception from the subinterpreter."
+msgstr ""
+
+#: ../../pep-0554.rst:722
+msgid "API For Sharing Data"
+msgstr ""
+
+#: ../../pep-0554.rst:724
+msgid ""
+"As discussed in `Shared Data`_ above, multiple interpreter support is "
+"less useful without a mechanism for sharing data (communicating) between "
+"them.  Sharing actual Python objects between interpreters, however, has "
+"enough potential problems that we are avoiding support for that in this "
+"proposal.  Nor, as mentioned earlier, are we adding anything more than "
+"the most minimal mechanism for communication."
+msgstr ""
+
+#: ../../pep-0554.rst:731
+msgid ""
+"That very basic mechanism, using pipes (see ``os.pipe()``), will allow "
+"users to send data (bytes) from one interpreter to another.  We'll take a"
+" closer look in a moment.  Fundamentally, it's a simple application of "
+"the underlying sharing capability proposed here."
+msgstr ""
+
+#: ../../pep-0554.rst:736
+msgid ""
+"The various aspects of the approach, including keeping the API minimal, "
+"helps us avoid further exposing any underlying complexity to Python "
+"users."
+msgstr ""
+
+#: ../../pep-0554.rst:743
+msgid "Shareable Objects"
+msgstr ""
+
+#: ../../pep-0554.rst:745
+msgid ""
+"A \"shareable\" object is one that the runtime knows how to safely "
+"\"share\" between interpreters.  For now this actually means that a copy "
+"of the object is provided to the second interpreter.  Legitimate sharing "
+"is feasible but beyond the scope of this proposal."
+msgstr ""
+
+#: ../../pep-0554.rst:750
+msgid ""
+"In fact, this proposal only covers very minimal \"sharing\" of a handful "
+"of simple, immutable object types.  We will initially limit the types "
+"that are shareable to the following:"
+msgstr ""
+
+#: ../../pep-0554.rst:754
+msgid "``None``"
+msgstr ""
+
+#: ../../pep-0554.rst:755
+msgid "``bytes``"
+msgstr ""
+
+#: ../../pep-0554.rst:756
+msgid "``str``"
+msgstr ""
+
+#: ../../pep-0554.rst:757
+msgid "``int``"
+msgstr ""
+
+#: ../../pep-0554.rst:759
+msgid ""
+"Support for other basic types (e.g. ``bool``, ``float``, ``Ellipsis``) "
+"will be added later, separately."
+msgstr ""
+
+#: ../../pep-0554.rst:762
+msgid ""
+"Limiting the initial shareable types is a practical matter, reducing the "
+"potential complexity of the initial implementation.  There are a number "
+"of solutions we may pursue in the future to expand supported objects and "
+"object sharing strategies."
+msgstr ""
+
+#: ../../pep-0554.rst:767
+msgid ""
+"However, this PEP does provide one concrete addition related to shareable"
+" objects.  The ``interpreters`` module provides a function that users may"
+" call to determine whether an object is shareable or not::"
+msgstr ""
+
+#: ../../pep-0554.rst:780
+msgid "How Sharing Works"
+msgstr ""
+
+#: ../../pep-0554.rst:782
+msgid ""
+"In this propsal, shareable objects are used with ``Interpreter.run()``. "
+"The steps look something like this:"
+msgstr ""
+
+#: ../../pep-0554.rst:785
+msgid "a \"shareable\" object is mapped to an identifier in some container"
+msgstr ""
+
+#: ../../pep-0554.rst:786
+msgid ""
+"that mapping is passed as the \"shared\" argument in the "
+"``Interpreter.run()`` call"
+msgstr ""
+
+#: ../../pep-0554.rst:788
+msgid ""
+"the mapped object is converted to an object that the target interpreter "
+"may safely use"
+msgstr ""
+
+#: ../../pep-0554.rst:790
+msgid ""
+"that object is bound to the mapped name in the target interpreter's "
+"``__main__`` module, where the running code has access to it"
+msgstr ""
+
+#: ../../pep-0554.rst:793
+msgid ""
+"The critical part is what happens in step 3.  The object must be "
+"converted to some cross-interpreter-safe data (its raw data or even a "
+"pointer).  Then that data must be converted back into an object for the "
+"target interpreter to use, likely a new object.  For example, an ``int`` "
+"object could be converted to the underlying C ``long`` value and then "
+"back into a Python ``int`` object."
+msgstr ""
+
+#: ../../pep-0554.rst:800
+msgid ""
+"To make this work, the intermediate data (and any associated mutable "
+"shared state) will be managed by the Python runtime, not by any of the "
+"interpreters."
+msgstr ""
+
+#: ../../pep-0554.rst:804
+msgid ""
+"The underlying runtime capability that ``Interpreter.run()`` uses is what"
+" enables data/object \"sharing\", and is available for use elsewhere in "
+"the runtime.  In fact, it was used in the implementation of the "
+"\"channels\" that were part of an earlier version of this PEP. Likewise, "
+"this runtime functionality facilitates most of the possible solutions to "
+"which `Shared Data`_ alluded.  Thus any separate effort to introduce "
+"effective means for communicating and sharing data will be well served by"
+" the underlying functionality proposed here."
+msgstr ""
+
+#: ../../pep-0554.rst:816
+msgid "Communicating Through OS Pipes"
+msgstr ""
+
+#: ../../pep-0554.rst:818
+msgid ""
+"As noted, this proposal enables a very basic mechanism for communicating "
+"between interpreters, which makes use of ``Interpreter.run()`` and "
+"shareable objects:"
 msgstr ""
 
 #: ../../pep-0554.rst:822
-msgid "Uncaught Exceptions"
+msgid ""
+"interpreter A calls ``os.pipe()`` to get a read/write pair of file "
+"descriptors (both shareable ``int`` objects)"
 msgstr ""
 
 #: ../../pep-0554.rst:824
 msgid ""
-"Regarding uncaught exceptions in ``Interpreter.run()``, we noted that "
-"they are \"effectively\" propagated into the code where ``run()`` was "
-"called.  To prevent leaking exceptions (and tracebacks) between "
-"interpreters, we create a surrogate of the exception and its traceback "
-"(see ``traceback.TracebackException``), set it to ``__cause__`` on a new "
-"``RunFailedError``, and raise that."
+"interpreter A calls ``run()`` on interpreter B, passing the read FD via "
+"the \"shared\" argument"
 msgstr ""
 
-#: ../../pep-0554.rst:831
+#: ../../pep-0554.rst:826
+msgid "interpreter A writes some bytes to the write FD"
+msgstr ""
+
+#: ../../pep-0554.rst:827
+msgid "interpreter B reads those bytes"
+msgstr ""
+
+#: ../../pep-0554.rst:829
 msgid ""
-"Raising (a proxy of) the exception directly is problematic since it's "
-"harder to distinguish between an error in the ``run()`` call and an "
-"uncaught exception from the subinterpreter."
+"Several of the earlier examples demonstrate this, such as `Synchronize "
+"using an OS pipe`_."
+msgstr ""
+
+#: ../../pep-0554.rst:834
+msgid "Interpreter Restrictions"
+msgstr ""
+
+#: ../../pep-0554.rst:836
+msgid ""
+"Every new interpreter created by ``interpreters.create()`` now has "
+"specific restrictions on any code it runs.  This includes the following:"
+msgstr ""
+
+#: ../../pep-0554.rst:840
+msgid ""
+"importing an extension module fails if it does not implement multi-phase "
+"init"
 msgstr ""
 
 #: ../../pep-0554.rst:842
-msgid "API for sharing data"
+msgid "daemon threads may not be created"
+msgstr ""
+
+#: ../../pep-0554.rst:843
+msgid "``os.fork()`` is not allowed (so no ``multiprocessing``)"
 msgstr ""
 
 #: ../../pep-0554.rst:844
 msgid ""
-"Subinterpreters are less useful without a mechanism for sharing data "
-"between them.  Sharing actual Python objects between interpreters, "
-"however, has enough potential problems that we are avoiding support for "
-"that here.  Instead, only minimum set of types will be supported. "
-"Initially this will include ``None``, ``bytes``, ``str``, ``int``, and "
-"channels.  Further types may be supported later."
+"``os.exec*()`` is not allowed (but \"fork+exec\", a la ``subprocess`` is "
+"okay)"
 msgstr ""
 
-#: ../../pep-0554.rst:851
+#: ../../pep-0554.rst:847
 msgid ""
-"The ``interpreters`` module provides a function that users may call to "
-"determine whether an object is shareable or not::"
+"Note that interpreters created with the existing C-API do not have these "
+"restrictions.  The same is true for the \"main\" interpreter, so existing"
+" use of Python will not change."
 msgstr ""
 
-#: ../../pep-0554.rst:862
-msgid ""
-"This proposal provides two ways to share such objects between "
-"interpreters."
-msgstr ""
-
-#: ../../pep-0554.rst:865
-msgid ""
-"First, channels may be passed to ``run()`` via the ``channels`` keyword "
-"argument, where they are effectively injected into the target "
-"interpreter's ``__main__`` module.  While passing arbitrary shareable "
-"objects this way is possible, doing so is mainly intended for sharing "
-"meta-objects (e.g. channels) between interpreters.  It is less useful to "
-"pass other objects (like ``bytes``) to ``run`` directly."
-msgstr ""
-
-#: ../../pep-0554.rst:872
-msgid ""
-"Second, the main mechanism for sharing objects (i.e. their data) between "
-"interpreters is through channels.  A channel is a simplex FIFO similar to"
-" a pipe.  The main difference is that channels can be associated with "
-"zero or more interpreters on either end.  Like queues, which are also "
-"many-to-many, channels are buffered (though they also offer methods with "
-"unbuffered semantics)."
-msgstr ""
-
-#: ../../pep-0554.rst:879
-msgid ""
-"Python objects are not shared between interpreters.  However, in some "
-"cases data those objects wrap is actually shared and not just copied. One"
-" example might be PEP 3118 buffers.  In those cases the object in the "
-"original interpreter is kept alive until the shared data in the other "
-"interpreter is no longer used.  Then object destruction can happen like "
-"normal in the original interpreter, along with the previously shared "
-"data."
-msgstr ""
-
-#: ../../pep-0554.rst:887
-msgid ""
-"The ``interpreters`` module provides the following functions related to "
-"channels::"
-msgstr ""
-
-#: ../../pep-0554.rst:903
-msgid "The module also provides the following channel-related classes::"
-msgstr ""
-
-#: ../../pep-0554.rst:957
-msgid "Channel Lifespan"
-msgstr ""
-
-#: ../../pep-0554.rst:959
-msgid ""
-"A channel is automatically closed and destroyed once there are no more "
-"Python objects (e.g. ``RecvChannel`` and ``SendChannel``) referring to "
-"it.  So it is effectively triggered via garbage-collection of those "
-"objects.."
-msgstr ""
-
-#: ../../pep-0554.rst:968
-msgid "Interpreter \"Isolated\" Mode"
-msgstr ""
-
-#: ../../pep-0554.rst:970
-msgid ""
-"By default, every new interpreter created by ``interpreters.create()`` "
-"has specific restrictions on any code it runs.  This includes the "
-"following:"
-msgstr ""
-
-#: ../../pep-0554.rst:974
-msgid ""
-"importing an extension module fails if it does not implement the PEP 489 "
-"API"
-msgstr ""
-
-#: ../../pep-0554.rst:976
-msgid "new threads of any kind are not allowed"
-msgstr ""
-
-#: ../../pep-0554.rst:977
-msgid "``os.fork()`` is not allowed (so no ``multiprocessing``)"
-msgstr ""
-
-#: ../../pep-0554.rst:978
-msgid "``os.exec*()``, AKA \"fork+exec\", is not allowed (so no ``subprocess``)"
-msgstr ""
-
-#: ../../pep-0554.rst:980
-msgid ""
-"This represents the full \"isolated\" mode of subinterpreters.  It is "
-"applied when ``interpreters.create()`` is called with the \"isolated\" "
-"keyword-only argument set to ``True`` (the default).  If "
-"``interpreters.create(isolated=False)`` is called then none of those "
-"restrictions is applied."
-msgstr ""
-
-#: ../../pep-0554.rst:986
-msgid ""
-"One advantage of this approach is that it allows extension maintainers to"
-" check subinterpreter compatibility before they implement the PEP 489 "
-"API.  Also note that ``isolated=False`` represents the historical "
-"behavior when using the existing subinterpreters C-API, thus providing "
-"backward compatibility.  For the existing C-API itself, the default "
-"remains ``isolated=False``.  The same is true for the \"main\" module, so"
-" existing use of Python will not change."
-msgstr ""
-
-#: ../../pep-0554.rst:994
+#: ../../pep-0554.rst:853
 msgid ""
 "We may choose to later loosen some of the above restrictions or provide a"
 " way to enable/disable granular restrictions individually.  Regardless, "
-"requiring PEP 489 support from extension modules will always be a default"
-" restriction."
+"requiring multi-phase init from extension modules will always be a "
+"default restriction."
 msgstr ""
 
-#: ../../pep-0554.rst:1001
+#: ../../pep-0554.rst:860
 msgid "Documentation"
 msgstr ""
 
-#: ../../pep-0554.rst:1003
+#: ../../pep-0554.rst:862
 msgid ""
 "The new stdlib docs page for the ``interpreters`` module will include the"
 " following:"
 msgstr ""
 
-#: ../../pep-0554.rst:1006
+#: ../../pep-0554.rst:865
 msgid ""
-"(at the top) a clear note that subinterpreter support in extension "
-"modules is not required"
+"(at the top) a clear note that support for multiple interpreters is not "
+"required from extension modules"
 msgstr ""
 
-#: ../../pep-0554.rst:1008
+#: ../../pep-0554.rst:867
 msgid "some explanation about what subinterpreters are"
 msgstr ""
 
-#: ../../pep-0554.rst:1009
-msgid "brief examples of how to use subinterpreters and channels"
-msgstr ""
-
-#: ../../pep-0554.rst:1010
-msgid "a summary of the limitations of subinterpreters"
-msgstr ""
-
-#: ../../pep-0554.rst:1011
+#: ../../pep-0554.rst:868
 msgid ""
-"(for extension maintainers) a link to the resources for ensuring "
-"subinterpreter compatibility"
+"brief examples of how to use multiple interpreters (and communicating "
+"between them)"
 msgstr ""
 
-#: ../../pep-0554.rst:1013
+#: ../../pep-0554.rst:870
+msgid "a summary of the limitations of using multiple interpreters"
+msgstr ""
+
+#: ../../pep-0554.rst:871
+msgid ""
+"(for extension maintainers) a link to the resources for ensuring multiple"
+" interpreters compatibility"
+msgstr ""
+
+#: ../../pep-0554.rst:873
 msgid "much of the API information in this PEP"
 msgstr ""
 
-#: ../../pep-0554.rst:1015
+#: ../../pep-0554.rst:875
 msgid ""
-"A separate page will be added to the docs for resources to help extension"
-" maintainers ensure their modules can be used safely in subinterpreters, "
-"under `Extending Python <extension-docs>`_.  The page will include the "
-"following information:"
+"Docs about resources for extension maintainers already exist on the "
+"`Isolating Extension Modules <isolation-howto_>`_ howto page.  Any extra "
+"help will be added there.  For example, it may prove helpful to discuss "
+"strategies for dealing with linked libraries that keep their own "
+"subinterpreter-incompatible global state."
 msgstr ""
 
-#: ../../pep-0554.rst:1020
-msgid ""
-"a summary about subinterpreters (similar to the same in the new "
-"``interpreters`` module page and in the C-API docs)"
-msgstr ""
-
-#: ../../pep-0554.rst:1022
-msgid "an explanation of how extension modules can be impacted"
-msgstr ""
-
-#: ../../pep-0554.rst:1023
-msgid "how to implement PEP 489 support"
-msgstr ""
-
-#: ../../pep-0554.rst:1024
-msgid "how to move from global module state to per-interpreter"
-msgstr ""
-
-#: ../../pep-0554.rst:1025
-msgid ""
-"how to take advantage of PEP 384 (heap types), PEP 3121 (module state), "
-"and PEP 573"
-msgstr ""
-
-#: ../../pep-0554.rst:1027
-msgid ""
-"strategies for dealing with 3rd party C libraries that keep their own "
-"subinterpreter-incompatible global state"
-msgstr ""
-
-#: ../../pep-0554.rst:1030
+#: ../../pep-0554.rst:884
 msgid ""
 "Note that the documentation will play a large part in mitigating any "
 "negative impact that the new ``interpreters`` module might have on "
 "extension module maintainers."
 msgstr ""
 
-#: ../../pep-0554.rst:1034
+#: ../../pep-0554.rst:888
 msgid ""
-"Also, the ``ImportError`` for incompatible extgension modules will have a"
-" message that clearly says it is due to missing subinterpreter "
+"Also, the ``ImportError`` for incompatible extension modules will have a "
+"message that clearly says it is due to missing multiple interpreters "
 "compatibility and that extensions are not required to provide it.  This "
 "will help set user expectations properly."
 msgstr ""
 
-#: ../../pep-0554.rst:1041
+#: ../../pep-0554.rst:895
 msgid "Deferred Functionality"
 msgstr ""
 
-#: ../../pep-0554.rst:1043
+#: ../../pep-0554.rst:897
 msgid ""
 "In the interest of keeping this proposal minimal, the following "
 "functionality has been left out for future consideration.  Note that this"
@@ -1269,123 +1158,112 @@ msgid ""
 "deferment.  That said, each is arguably valid."
 msgstr ""
 
-#: ../../pep-0554.rst:1049
+#: ../../pep-0554.rst:903
 msgid "Interpreter.call()"
 msgstr ""
 
-#: ../../pep-0554.rst:1051
+#: ../../pep-0554.rst:905
 msgid ""
 "It would be convenient to run existing functions in subinterpreters "
 "directly.  ``Interpreter.run()`` could be adjusted to support this or a "
 "``call()`` method could be added::"
 msgstr ""
 
-#: ../../pep-0554.rst:1057
+#: ../../pep-0554.rst:911
 msgid ""
 "This suffers from the same problem as sharing objects between "
 "interpreters via queues.  The minimal solution (running a source string) "
 "is sufficient for us to get the feature out where it can be explored."
 msgstr ""
 
-#: ../../pep-0554.rst:1062
-msgid "timeout arg to recv() and send()"
-msgstr ""
-
-#: ../../pep-0554.rst:1064
-msgid ""
-"Typically functions that have a ``block`` argument also have a "
-"``timeout`` argument.  It sometimes makes sense to do likewise for "
-"functions that otherwise block, like the channel ``recv()`` and "
-"``send()`` methods.  We can add it later if needed."
-msgstr ""
-
-#: ../../pep-0554.rst:1070
+#: ../../pep-0554.rst:916
 msgid "Interpreter.run_in_thread()"
 msgstr ""
 
-#: ../../pep-0554.rst:1072
+#: ../../pep-0554.rst:918
 msgid ""
 "This method would make a ``run()`` call for you in a thread.  Doing this "
 "using only ``threading.Thread`` and ``run()`` is relatively trivial so "
 "we've left it out."
 msgstr ""
 
-#: ../../pep-0554.rst:1077
+#: ../../pep-0554.rst:923
 msgid "Synchronization Primitives"
 msgstr ""
 
-#: ../../pep-0554.rst:1079
+#: ../../pep-0554.rst:925
 msgid ""
 "The ``threading`` module provides a number of synchronization primitives "
 "for coordinating concurrent operations.  This is especially necessary due"
-" to the shared-state nature of threading.  In contrast, subinterpreters "
-"do not share state.  Data sharing is restricted to channels, which do "
-"away with the need for explicit synchronization.  If any sort of opt-in "
-"shared state support is added to subinterpreters in the future, that same"
-" effort can introduce synchronization primitives to meet that need."
+" to the shared-state nature of threading.  In contrast, interpreters do "
+"not share state.  Data sharing is restricted to the runtime's shareable "
+"objects capability, which does away with the need for explicit "
+"synchronization.  If any sort of opt-in shared state support is added to "
+"CPython's interpreters in the future, that same effort can introduce "
+"synchronization primitives to meet that need."
 msgstr ""
 
-#: ../../pep-0554.rst:1089
+#: ../../pep-0554.rst:935
 msgid "CSP Library"
 msgstr ""
 
-#: ../../pep-0554.rst:1091
+#: ../../pep-0554.rst:937
 msgid ""
 "A ``csp`` module would not be a large step away from the functionality "
 "provided by this PEP.  However, adding such a module is outside the "
 "minimalist goals of this proposal."
 msgstr ""
 
-#: ../../pep-0554.rst:1096
+#: ../../pep-0554.rst:942
 msgid "Syntactic Support"
 msgstr ""
 
-#: ../../pep-0554.rst:1098
+#: ../../pep-0554.rst:944
 msgid ""
 "The ``Go`` language provides a concurrency model based on CSP, so it's "
-"similar to the concurrency model that subinterpreters support. However, "
-"``Go`` also provides syntactic support, as well several builtin "
-"concurrency primitives, to make concurrency a first-class feature. "
-"Conceivably, similar syntactic (and builtin) support could be added to "
-"Python using subinterpreters.  However, that is *way* outside the scope "
-"of this PEP!"
+"similar to the concurrency model that multiple interpreters support.  "
+"However, ``Go`` also provides syntactic support, as well as several "
+"builtin concurrency primitives, to make concurrency a first-class "
+"feature.  Conceivably, similar syntactic (and builtin) support could be "
+"added to Python using interpreters.  However, that is *way* outside the "
+"scope of this PEP!"
 msgstr ""
 
-#: ../../pep-0554.rst:1107
+#: ../../pep-0554.rst:953
 msgid "Multiprocessing"
 msgstr ""
 
-#: ../../pep-0554.rst:1109
+#: ../../pep-0554.rst:955
 msgid ""
-"The ``multiprocessing`` module could support subinterpreters in the same "
-"way it supports threads and processes.  In fact, the module's maintainer,"
-" Davin Potts, has indicated this is a reasonable feature request.  "
+"The ``multiprocessing`` module could support interpreters in the same way"
+" it supports threads and processes.  In fact, the module's maintainer, "
+"Davin Potts, has indicated this is a reasonable feature request.  "
 "However, it is outside the narrow scope of this PEP."
 msgstr ""
 
-#: ../../pep-0554.rst:1115
+#: ../../pep-0554.rst:961
 msgid "C-extension opt-in/opt-out"
 msgstr ""
 
-#: ../../pep-0554.rst:1117
+#: ../../pep-0554.rst:963
 msgid ""
-"By using the ``PyModuleDef_Slot`` introduced by PEP 489, we could easily "
-"add a mechanism by which C-extension modules could opt out of support for"
-" subinterpreters.  Then the import machinery, when operating in a "
-"subinterpreter, would need to check the module for support.  It would "
-"raise an ImportError if unsupported."
+"By using the ``PyModuleDef_Slot`` introduced by :pep:`489`, we could "
+"easily add a mechanism by which C-extension modules could opt out of "
+"multiple interpreter support.  Then the import machinery, when operating "
+"in a subinterpreter, would need to check the module for support. It would"
+" raise an ImportError if unsupported."
 msgstr ""
 
-#: ../../pep-0554.rst:1123
+#: ../../pep-0554.rst:969
 msgid ""
-"Alternately we could support opting in to subinterpreter support. "
+"Alternately we could support opting in to multiple interpreters support. "
 "However, that would probably exclude many more modules (unnecessarily) "
-"than the opt-out approach.  Also, note that PEP 489 defined that an "
-"extension's use of the PEP's machinery implies support for "
-"subinterpreters."
+"than the opt-out approach.  Also, note that :pep:`489` defined that an "
+"extension's use of the PEP's machinery implies multiple interpreters "
+"support."
 msgstr ""
 
-#: ../../pep-0554.rst:1129
+#: ../../pep-0554.rst:975
 msgid ""
 "The scope of adding the ModuleDef slot and fixing up the import machinery"
 " is non-trivial, but could be worth it.  It all depends on how many "
@@ -1394,30 +1272,11 @@ msgid ""
 "later."
 msgstr ""
 
-#: ../../pep-0554.rst:1136
-msgid "Poisoning channels"
-msgstr ""
-
-#: ../../pep-0554.rst:1138
-msgid ""
-"CSP has the concept of poisoning a channel.  Once a channel has been "
-"poisoned, any ``send()`` or ``recv()`` call on it would raise a special "
-"exception, effectively ending execution in the interpreter that tried to "
-"use the poisoned channel."
-msgstr ""
-
-#: ../../pep-0554.rst:1143
-msgid ""
-"This could be accomplished by adding a ``poison()`` method to both ends "
-"of the channel.  The ``close()`` method can be used in this way (mostly),"
-" but these semantics are relatively specialized and can wait."
-msgstr ""
-
-#: ../../pep-0554.rst:1148
+#: ../../pep-0554.rst:982
 msgid "Resetting __main__"
 msgstr ""
 
-#: ../../pep-0554.rst:1150
+#: ../../pep-0554.rst:984
 msgid ""
 "As proposed, every call to ``Interpreter.run()`` will execute in the "
 "namespace of the interpreter's existing ``__main__`` module.  This means "
@@ -1427,37 +1286,37 @@ msgid ""
 "more."
 msgstr ""
 
-#: ../../pep-0554.rst:1157
+#: ../../pep-0554.rst:991
 msgid ""
 "Note that the following won't work right because it will clear too much "
 "(e.g. ``__name__`` and the other \"__dunder__\" attributes::"
 msgstr ""
 
-#: ../../pep-0554.rst:1162
+#: ../../pep-0554.rst:996
 msgid "Possible solutions include:"
 msgstr ""
 
-#: ../../pep-0554.rst:1164
+#: ../../pep-0554.rst:998
 msgid ""
 "a ``create()`` arg to indicate resetting ``__main__`` after each ``run`` "
 "call"
 msgstr ""
 
-#: ../../pep-0554.rst:1166
+#: ../../pep-0554.rst:1000
 msgid ""
 "an ``Interpreter.reset_main`` flag to support opting in or out after the "
 "fact"
 msgstr ""
 
-#: ../../pep-0554.rst:1168
+#: ../../pep-0554.rst:1002
 msgid "an ``Interpreter.reset_main()`` method to opt in when desired"
 msgstr ""
 
-#: ../../pep-0554.rst:1169
+#: ../../pep-0554.rst:1003
 msgid "``importlib.util.reset_globals()`` [reset_globals]_"
 msgstr ""
 
-#: ../../pep-0554.rst:1171
+#: ../../pep-0554.rst:1005
 msgid ""
 "Also note that resetting ``__main__`` does nothing about state stored in "
 "other modules.  So any solution would have to be clear about the scope of"
@@ -1470,17 +1329,17 @@ msgid ""
 "prove unnecessary."
 msgstr ""
 
-#: ../../pep-0554.rst:1181
+#: ../../pep-0554.rst:1015
 msgid ""
 "This isn't a critical feature initially.  It can wait until later if "
 "desirable."
 msgstr ""
 
-#: ../../pep-0554.rst:1185
+#: ../../pep-0554.rst:1019
 msgid "Resetting an interpreter's state"
 msgstr ""
 
-#: ../../pep-0554.rst:1187
+#: ../../pep-0554.rst:1021
 msgid ""
 "It may be nice to re-use an existing subinterpreter instead of spinning "
 "up a new one.  Since an interpreter has substantially more state than "
@@ -1489,17 +1348,17 @@ msgid ""
 " that cannot be reset from Python code."
 msgstr ""
 
-#: ../../pep-0554.rst:1193
+#: ../../pep-0554.rst:1027
 msgid ""
 "A possible solution is to add an ``Interpreter.reset()`` method.  This "
 "would put the interpreter back into the state it was in when newly "
 "created.  If called on a running interpreter it would fail (hence the "
 "main interpreter could never be reset).  This would likely be more "
-"efficient than creating a new subinterpreter, though that depends on what"
-" optimizations will be made later to subinterpreter creation."
+"efficient than creating a new interpreter, though that depends on what "
+"optimizations will be made later to interpreter creation."
 msgstr ""
 
-#: ../../pep-0554.rst:1200
+#: ../../pep-0554.rst:1034
 msgid ""
 "While this would potentially provide functionality that is not otherwise "
 "available from Python code, it isn't a fundamental functionality.  So in "
@@ -1507,89 +1366,58 @@ msgid ""
 "would be controversial to add it post-PEP."
 msgstr ""
 
-#: ../../pep-0554.rst:1206
-msgid "File descriptors and sockets in channels"
+#: ../../pep-0554.rst:1040
+msgid "Shareable file descriptors and sockets"
 msgstr ""
 
-#: ../../pep-0554.rst:1208
+#: ../../pep-0554.rst:1042
 msgid ""
 "Given that file descriptors and sockets are process-global resources, "
-"support for passing them through channels is a reasonable idea.  They "
-"would be a good candidate for the first effort at expanding the types "
-"that channels support.  They aren't strictly necessary for the initial "
-"API."
+"making them shareable is a reasonable idea.  They would be a good "
+"candidate for the first effort at expanding the supported shareable "
+"types.  They aren't strictly necessary for the initial API."
 msgstr ""
 
-#: ../../pep-0554.rst:1215
+#: ../../pep-0554.rst:1048
 msgid "Integration with async"
 msgstr ""
 
-#: ../../pep-0554.rst:1217
+#: ../../pep-0554.rst:1050
 msgid "Per Antoine Pitrou [async]_::"
 msgstr ""
 
-#: ../../pep-0554.rst:1227
+#: ../../pep-0554.rst:1060
 msgid ""
-"A possible solution is to provide async implementations of the blocking "
-"channel methods (``recv()``, and ``send()``).  However, the basic "
-"functionality of subinterpreters does not depend on async and can be "
-"added later."
+"The basic functionality of multiple interpreters support does not depend "
+"on async and can be added later."
 msgstr ""
 
-#: ../../pep-0554.rst:1232
+#: ../../pep-0554.rst:1064
+msgid "channels"
+msgstr ""
+
+#: ../../pep-0554.rst:1066
 msgid ""
-"Alternately, \"readiness callbacks\" could be used to simplify use in "
-"async scenarios.  This would mean adding an optional ``callback`` (kw-"
-"only) parameter to the ``recv_nowait()`` and ``send_nowait()`` channel "
-"methods.  The callback would be called once the object was sent or "
-"received (respectively)."
+"We could introduce some relatively efficient, native data types for "
+"passing data between interpreters, to use instead of OS pipes.  Earlier "
+"versions of this PEP introduced one such mechanism, called \"channels\". "
+"This can be pursued later."
 msgstr ""
 
-#: ../../pep-0554.rst:1238
-msgid ""
-"(Note that making channels buffered makes readiness callbacks less "
-"important.)"
-msgstr ""
-
-#: ../../pep-0554.rst:1242
-msgid "Support for iteration"
-msgstr ""
-
-#: ../../pep-0554.rst:1244
-msgid ""
-"Supporting iteration on ``RecvChannel`` (via ``__iter__()`` or "
-"``_next__()``) may be useful.  A trivial implementation would use the "
-"``recv()`` method, similar to how files do iteration.  Since this isn't a"
-" fundamental capability and has a simple analog, adding iteration support"
-" can wait until later."
-msgstr ""
-
-#: ../../pep-0554.rst:1251
-msgid "Channel context managers"
-msgstr ""
-
-#: ../../pep-0554.rst:1253
-msgid ""
-"Context manager support on ``RecvChannel`` and ``SendChannel`` may be "
-"helpful.  The implementation would be simple, wrapping a call to "
-"``close()`` (or maybe ``release()``) like files do.  As with iteration, "
-"this can wait."
-msgstr ""
-
-#: ../../pep-0554.rst:1259
+#: ../../pep-0554.rst:1072
 msgid "Pipes and Queues"
 msgstr ""
 
-#: ../../pep-0554.rst:1261
+#: ../../pep-0554.rst:1074
 msgid ""
-"With the proposed object passing mechanism of \"channels\", other similar"
-" basic types aren't required to achieve the minimal useful functionality "
-"of subinterpreters.  Such types include pipes (like unbuffered channels, "
-"but one-to-one) and queues (like channels, but more generic).  See below "
-"in `Rejected Ideas`_ for more information."
+"With the proposed object passing mechanism of \"os.pipe()\", other "
+"similar basic types aren't strictly required to achieve the minimal "
+"useful functionality of multiple interpreters.  Such types include pipes "
+"(like unbuffered channels, but one-to-one) and queues (like channels, but"
+" more generic).  See below in `Rejected Ideas`_ for more information."
 msgstr ""
 
-#: ../../pep-0554.rst:1267
+#: ../../pep-0554.rst:1080
 msgid ""
 "Even though these types aren't part of this proposal, they may still be "
 "useful in the context of concurrency.  Adding them later is entirely "
@@ -1598,53 +1426,20 @@ msgid ""
 "same low level as channels."
 msgstr ""
 
-#: ../../pep-0554.rst:1274
-msgid "Return a lock from send()"
-msgstr ""
-
-#: ../../pep-0554.rst:1276
-msgid ""
-"When sending an object through a channel, you don't have a way of knowing"
-" when the object gets received on the other end.  One way to work around "
-"this is to return a locked ``threading.Lock`` from ``SendChannel.send()``"
-" that unlocks once the object is received."
-msgstr ""
-
-#: ../../pep-0554.rst:1281
-msgid ""
-"Alternately, the proposed ``SendChannel.send()`` (blocking) and "
-"``SendChannel.send_nowait()`` provide an explicit distinction that is "
-"less likely to confuse users."
-msgstr ""
-
-#: ../../pep-0554.rst:1285
-msgid ""
-"Note that returning a lock would matter for buffered channels (i.e. "
-"queues).  For unbuffered channels it is a non-issue."
-msgstr ""
-
-#: ../../pep-0554.rst:1289
-msgid "Support prioritization in channels"
-msgstr ""
-
-#: ../../pep-0554.rst:1291
-msgid "A simple example is ``queue.PriorityQueue`` in the stdlib."
-msgstr ""
-
-#: ../../pep-0554.rst:1294
+#: ../../pep-0554.rst:1087
 msgid "Support inheriting settings (and more?)"
 msgstr ""
 
-#: ../../pep-0554.rst:1296
+#: ../../pep-0554.rst:1089
 msgid ""
-"Folks might find it useful, when creating a new subinterpreter, to be "
-"able to indicate that they would like some things \"inherited\" by the "
-"new interpreter.  The mechanism could be a strict copy or it could be "
-"copy-on-write.  The motivating example is with the warnings module (e.g. "
-"copy the filters)."
+"Folks might find it useful, when creating a new interpreter, to be able "
+"to indicate that they would like some things \"inherited\" by the new "
+"interpreter.  The mechanism could be a strict copy or it could be copy-"
+"on-write.  The motivating example is with the warnings module (e.g. copy "
+"the filters)."
 msgstr ""
 
-#: ../../pep-0554.rst:1302
+#: ../../pep-0554.rst:1095
 msgid ""
 "The feature isn't critical, nor would it be widely useful, so it can wait"
 " until there's interest.  Notably, both suggested solutions will require "
@@ -1652,22 +1447,22 @@ msgid ""
 "especially for mutable containers of mutable complex objects."
 msgstr ""
 
-#: ../../pep-0554.rst:1309
+#: ../../pep-0554.rst:1102
 msgid "Make exceptions shareable"
 msgstr ""
 
-#: ../../pep-0554.rst:1311
+#: ../../pep-0554.rst:1104
 msgid ""
 "Exceptions are propagated out of ``run()`` calls, so it isn't a big leap "
-"to make them shareable in channels.  However, as noted elsewhere, it "
-"isn't essential or (particularly common) so we can wait on doing that."
+"to make them shareable.  However, as noted elsewhere, it isn't essential "
+"or (particularly common) so we can wait on doing that."
 msgstr ""
 
-#: ../../pep-0554.rst:1317
+#: ../../pep-0554.rst:1110
 msgid "Make RunFailedError.__cause__ lazy"
 msgstr ""
 
-#: ../../pep-0554.rst:1319
+#: ../../pep-0554.rst:1112
 msgid ""
 "An uncaught exception in a subinterpreter (from ``run()``) is copied to "
 "the calling interpreter and set as ``__cause__`` on a ``RunFailedError`` "
@@ -1676,7 +1471,7 @@ msgid ""
 "due to imports) yet is not always necessary."
 msgstr ""
 
-#: ../../pep-0554.rst:1325
+#: ../../pep-0554.rst:1118
 msgid ""
 "So it may be useful to use an ``ExceptionProxy`` type to wrap the "
 "serialized exception and only deserialize it when needed.  That could be "
@@ -1685,30 +1480,30 @@ msgid ""
 "exception and set ``RunFailedError.__cause__`` to the exception."
 msgstr ""
 
-#: ../../pep-0554.rst:1331
+#: ../../pep-0554.rst:1124
 msgid ""
 "It may also make sense to have ``RunFailedError.__cause__`` be a "
 "descriptor that does the lazy deserialization (and set ``__cause__``) on "
 "the ``RunFailedError`` instance."
 msgstr ""
 
-#: ../../pep-0554.rst:1336
-msgid "Serialize everything through channels"
+#: ../../pep-0554.rst:1129
+msgid "Make everything shareable through serialization"
 msgstr ""
 
-#: ../../pep-0554.rst:1338
+#: ../../pep-0554.rst:1131
 msgid ""
-"We could use pickle (or marshal) to serialize everything sent through "
-"channels.  Doing this is potentially inefficient, but it may be a matter "
-"of convenience in the end.  We can add it later, but trying to remove it "
-"later would be significantly more painful."
+"We could use pickle (or marshal) to serialize everything and thus make "
+"them shareable.  Doing this is potentially inefficient, but it may be a "
+"matter of convenience in the end. We can add it later, but trying to "
+"remove it later would be significantly more painful."
 msgstr ""
 
-#: ../../pep-0554.rst:1344
+#: ../../pep-0554.rst:1138
 msgid "Return a value from ``run()``"
 msgstr ""
 
-#: ../../pep-0554.rst:1346
+#: ../../pep-0554.rst:1140
 msgid ""
 "Currently ``run()`` always returns None.  One idea is to return the "
 "return value from whatever the subinterpreter ran.  However, for now it "
@@ -1718,52 +1513,35 @@ msgid ""
 " revisit this once ``run()`` supports functions, etc."
 msgstr ""
 
-#: ../../pep-0554.rst:1354
+#: ../../pep-0554.rst:1148
 msgid "Add a \"tp_share\" type slot"
 msgstr ""
 
-#: ../../pep-0554.rst:1356
+#: ../../pep-0554.rst:1150
 msgid "This would replace the current global registry for shareable types."
 msgstr ""
 
-#: ../../pep-0554.rst:1359
-msgid "Expose which interpreters have actually *used* a channel end."
-msgstr ""
-
-#: ../../pep-0554.rst:1361
-msgid ""
-"Currently we associate interpreters upon access to a channel.  We would "
-"keep a separate association list for \"upon use\" and expose that."
-msgstr ""
-
-#: ../../pep-0554.rst:1365
+#: ../../pep-0554.rst:1153
 msgid "Add a shareable synchronization primitive"
 msgstr ""
 
-#: ../../pep-0554.rst:1367
+#: ../../pep-0554.rst:1155
 msgid ""
 "This would be ``_threading.Lock`` (or something like it) where "
-"interpreters would actually share the underlying mutex.  This would "
-"provide much better efficiency than blocking channel ops.  The main "
-"concern is that locks and channels don't mix well (as learned in Go)."
+"interpreters would actually share the underlying mutex.  The main concern"
+" is that locks and isolated interpreters may not mix well (as learned in "
+"Go)."
 msgstr ""
 
-#: ../../pep-0554.rst:1372
-msgid ""
-"Note that the same functionality as a lock can be achieved by passing "
-"some sort of \"token\" object through a channel.  \"send()\" would be "
-"equivalent to releasing the lock and \"recv()\" to acquiring the lock."
-msgstr ""
-
-#: ../../pep-0554.rst:1376
+#: ../../pep-0554.rst:1160
 msgid "We can add this later if it proves desirable without much trouble."
 msgstr ""
 
-#: ../../pep-0554.rst:1379
+#: ../../pep-0554.rst:1163
 msgid "Propagate SystemExit and KeyboardInterrupt Differently"
 msgstr ""
 
-#: ../../pep-0554.rst:1381
+#: ../../pep-0554.rst:1165
 msgid ""
 "The exception types that inherit from ``BaseException`` (aside from "
 "``Exception``) are usually treated specially.  These types are: "
@@ -1772,63 +1550,25 @@ msgid ""
 "``run()``.  Here are some options::"
 msgstr ""
 
-#: ../../pep-0554.rst:1392
+#: ../../pep-0554.rst:1176
 msgid ""
 "We aren't going to worry about handling them differently.  Threads "
 "already ignore ``SystemExit``, so for now we will follow that pattern."
 msgstr ""
 
-#: ../../pep-0554.rst:1396
-msgid "Add an explicit release() and close() to channel end classes"
-msgstr ""
-
-#: ../../pep-0554.rst:1398
-msgid ""
-"It can be convenient to have an explicit way to close a channel against "
-"further global use.  Likewise it could be useful to have an explicit way "
-"to release one of the channel ends relative to the current interpreter.  "
-"Among other reasons, such a mechanism is useful for communicating overall"
-" state between interpreters without the extra boilerplate that passing "
-"objects through a channel directly would require."
-msgstr ""
-
-#: ../../pep-0554.rst:1406
-msgid ""
-"The challenge is getting automatic release/close right without making it "
-"hard to understand.  This is especially true when dealing with a non-"
-"empty channel.  We should be able to get by without release/close for "
-"now."
-msgstr ""
-
-#: ../../pep-0554.rst:1412
-msgid "Add SendChannel.send_buffer()"
-msgstr ""
-
-#: ../../pep-0554.rst:1414
-msgid ""
-"This method would allow no-copy sending of an object through a channel if"
-" it supports the PEP 3118 buffer protocol (e.g. memoryview)."
-msgstr ""
-
-#: ../../pep-0554.rst:1417
-msgid ""
-"Support for this is not fundamental to channels and can be added on later"
-" without much disruption."
-msgstr ""
-
-#: ../../pep-0554.rst:1421
+#: ../../pep-0554.rst:1180
 msgid "Auto-run in a thread"
 msgstr ""
 
-#: ../../pep-0554.rst:1423
+#: ../../pep-0554.rst:1182
 msgid ""
-"The PEP proposes a hard separation between subinterpreters and threads: "
-"if you want to run in a thread you must create the thread yourself and "
-"call ``run()`` in it.  However, it might be convenient if ``run()`` could"
-" do that for you, meaning there would be less boilerplate."
+"The PEP proposes a hard separation between interpreters and threads: if "
+"you want to run in a thread you must create the thread yourself and call "
+"``run()`` in it.  However, it might be convenient if ``run()`` could do "
+"that for you, meaning there would be less boilerplate."
 msgstr ""
 
-#: ../../pep-0554.rst:1428
+#: ../../pep-0554.rst:1187
 msgid ""
 "Furthermore, we anticipate that users will want to run in a thread much "
 "more often than not.  So it would make sense to make this the default "
@@ -1836,34 +1576,15 @@ msgid ""
 "to ``run()`` to allow the run-in-the-current-thread operation."
 msgstr ""
 
-#: ../../pep-0554.rst:1435
+#: ../../pep-0554.rst:1194
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0554.rst:1438
-msgid "Explicit channel association"
-msgstr ""
-
-#: ../../pep-0554.rst:1440
-msgid ""
-"Interpreters are implicitly associated with channels upon ``recv()`` and "
-"``send()`` calls.  They are de-associated with ``release()`` calls.  The "
-"alternative would be explicit methods.  It would be either "
-"``add_channel()`` and ``remove_channel()`` methods on ``Interpreter`` "
-"objects or something similar on channel objects."
-msgstr ""
-
-#: ../../pep-0554.rst:1446
-msgid ""
-"In practice, this level of management shouldn't be necessary for users. "
-"So adding more explicit support would only add clutter to the API."
-msgstr ""
-
-#: ../../pep-0554.rst:1450
+#: ../../pep-0554.rst:1197
 msgid "Use pipes instead of channels"
 msgstr ""
 
-#: ../../pep-0554.rst:1452
+#: ../../pep-0554.rst:1199
 msgid ""
 "A pipe would be a simplex FIFO between exactly two interpreters.  For "
 "most use cases this would be sufficient.  It could potentially simplify "
@@ -1872,28 +1593,28 @@ msgid ""
 "up being slightly more complicated, requiring naming the pipes."
 msgstr ""
 
-#: ../../pep-0554.rst:1459
+#: ../../pep-0554.rst:1206
 msgid "Use queues instead of channels"
 msgstr ""
 
-#: ../../pep-0554.rst:1461
+#: ../../pep-0554.rst:1208
 msgid ""
 "Queues and buffered channels are almost the same thing.  The main "
 "difference is that channels have a stronger relationship with context "
 "(i.e. the associated interpreter)."
 msgstr ""
 
-#: ../../pep-0554.rst:1465
+#: ../../pep-0554.rst:1212
 msgid ""
 "The name \"Channel\" was used instead of \"Queue\" to avoid confusion "
 "with the stdlib ``queue.Queue``."
 msgstr ""
 
-#: ../../pep-0554.rst:1469
+#: ../../pep-0554.rst:1216
 msgid "\"enumerate\""
 msgstr ""
 
-#: ../../pep-0554.rst:1471
+#: ../../pep-0554.rst:1218
 msgid ""
 "The ``list_all()`` function provides the list of all interpreters. In the"
 " threading module, which partly inspired the proposed API, the function "
@@ -1902,11 +1623,11 @@ msgid ""
 "them \"enumerate\" is rather unclear, whereas \"list_all\" is clear."
 msgstr ""
 
-#: ../../pep-0554.rst:1479
+#: ../../pep-0554.rst:1226
 msgid "Alternate solutions to prevent leaking exceptions across interpreters"
 msgstr ""
 
-#: ../../pep-0554.rst:1481
+#: ../../pep-0554.rst:1228
 msgid ""
 "In function calls, uncaught exceptions propagate to the calling frame. "
 "The same approach could be taken with ``run()``.  However, this would "
@@ -1914,7 +1635,7 @@ msgid ""
 "boundary.  Likewise, the frames in the traceback would potentially leak."
 msgstr ""
 
-#: ../../pep-0554.rst:1486
+#: ../../pep-0554.rst:1233
 msgid ""
 "While that might not be a problem currently, it would be a problem once "
 "interpreters get better isolation relative to memory management (which is"
@@ -1924,97 +1645,97 @@ msgid ""
 "for the original exception and traceback."
 msgstr ""
 
-#: ../../pep-0554.rst:1493
+#: ../../pep-0554.rst:1240
 msgid "Rejected possible solutions:"
 msgstr ""
 
-#: ../../pep-0554.rst:1495
+#: ../../pep-0554.rst:1242
 msgid ""
 "reproduce the exception and traceback in the original interpreter and "
 "raise that."
 msgstr ""
 
-#: ../../pep-0554.rst:1497
+#: ../../pep-0554.rst:1244
 msgid ""
 "raise a subclass of RunFailedError that proxies the original exception "
 "and traceback."
 msgstr ""
 
-#: ../../pep-0554.rst:1499
+#: ../../pep-0554.rst:1246
 msgid "raise RuntimeError instead of RunFailedError"
 msgstr ""
 
-#: ../../pep-0554.rst:1500
+#: ../../pep-0554.rst:1247
 msgid ""
 "convert at the boundary (a la ``subprocess.CalledProcessError``) "
 "(requires a cross-interpreter representation)"
 msgstr ""
 
-#: ../../pep-0554.rst:1502
+#: ../../pep-0554.rst:1249
 msgid ""
 "support customization via ``Interpreter.excepthook`` (requires a cross-"
 "interpreter representation)"
 msgstr ""
 
-#: ../../pep-0554.rst:1504
+#: ../../pep-0554.rst:1251
 msgid ""
 "wrap in a proxy at the boundary (including with support for something "
 "like ``err.raise()`` to propagate the traceback)."
 msgstr ""
 
-#: ../../pep-0554.rst:1506
+#: ../../pep-0554.rst:1253
 msgid "return the exception (or its proxy) from ``run()`` instead of raising it"
 msgstr ""
 
-#: ../../pep-0554.rst:1508
+#: ../../pep-0554.rst:1255
 msgid ""
 "return a result object (like ``subprocess`` does) [result-object]_ "
 "(unnecessary complexity?)"
 msgstr ""
 
-#: ../../pep-0554.rst:1510
+#: ../../pep-0554.rst:1257
 msgid ""
 "throw the exception away and expect users to deal with unhandled "
 "exceptions explicitly in the script they pass to ``run()`` (they can pass"
-" error info out via channels); with threads you have to do something "
-"similar"
+" error info out via ``os.pipe()``); with threads you have to do something"
+" similar"
 msgstr ""
 
-#: ../../pep-0554.rst:1516
+#: ../../pep-0554.rst:1263
 msgid "Always associate each new interpreter with its own thread"
 msgstr ""
 
-#: ../../pep-0554.rst:1518
+#: ../../pep-0554.rst:1265
 msgid ""
-"As implemented in the C-API, a subinterpreter is not inherently tied to "
-"any thread.  Furthermore, it will run in any existing thread, whether "
+"As implemented in the C-API, an interpreter is not inherently tied to any"
+" thread.  Furthermore, it will run in any existing thread, whether "
 "created by Python or not.  You only have to activate one of its thread "
 "states (``PyThreadState``) in the thread first.  This means that the same"
 " thread may run more than one interpreter (though obviously not at the "
 "same time)."
 msgstr ""
 
-#: ../../pep-0554.rst:1525
+#: ../../pep-0554.rst:1272
 msgid ""
-"The proposed module maintains this behavior.  Subinterpreters are not "
-"tied to threads.  Only calls to ``Interpreter.run()`` are.  However, one "
-"of the key objectives of this PEP is to provide a more human- centric "
+"The proposed module maintains this behavior.  Interpreters are not tied "
+"to threads.  Only calls to ``Interpreter.run()`` are.  However, one of "
+"the key objectives of this PEP is to provide a more human- centric "
 "concurrency model.  With that in mind, from a conceptual standpoint the "
-"module *might* be easier to understand if each subinterpreter were "
+"module *might* be easier to understand if each interpreter were "
 "associated with its own thread."
 msgstr ""
 
-#: ../../pep-0554.rst:1532
+#: ../../pep-0554.rst:1279
 msgid ""
 "That would mean ``interpreters.create()`` would create a new thread and "
 "``Interpreter.run()`` would only execute in that thread (and nothing else"
 " would).  The benefit is that users would not have to wrap "
 "``Interpreter.run()`` calls in a new ``threading.Thread``.  Nor would "
 "they be in a position to accidentally pause the current interpreter (in "
-"the current thread) while their subinterpreter executes."
+"the current thread) while their interpreter executes."
 msgstr ""
 
-#: ../../pep-0554.rst:1540
+#: ../../pep-0554.rst:1287
 msgid ""
 "The idea is rejected because the benefit is small and the cost is high. "
 "The difference from the capability in the C-API would be potentially "
@@ -2027,28 +1748,11 @@ msgid ""
 "module easier to understand."
 msgstr ""
 
-#: ../../pep-0554.rst:1551
-msgid "Only associate interpreters upon use"
-msgstr ""
-
-#: ../../pep-0554.rst:1553
-msgid ""
-"Associate interpreters with channel ends only once ``recv()``, "
-"``send()``, etc. are called."
-msgstr ""
-
-#: ../../pep-0554.rst:1556
-msgid ""
-"Doing this is potentially confusing and also can lead to unexpected races"
-" where a channel is auto-closed before it can be used in the original "
-"(creating) interpreter."
-msgstr ""
-
-#: ../../pep-0554.rst:1561
+#: ../../pep-0554.rst:1298
 msgid "Add a \"reraise\" method to RunFailedError"
 msgstr ""
 
-#: ../../pep-0554.rst:1563
+#: ../../pep-0554.rst:1300
 msgid ""
 "While having ``__cause__`` set on ``RunFailedError`` helps produce a more"
 " useful traceback, it's less helpful when handling the original error.  "
@@ -2056,201 +1760,1469 @@ msgid ""
 " method would enable the following pattern::"
 msgstr ""
 
-#: ../../pep-0554.rst:1577
+#: ../../pep-0554.rst:1314
 msgid ""
 "This would be made even simpler if there existed a ``__reraise__`` "
 "protocol."
 msgstr ""
 
-#: ../../pep-0554.rst:1580
+#: ../../pep-0554.rst:1317
 msgid ""
 "All that said, this is completely unnecessary.  Using ``__cause__`` is "
 "good enough::"
 msgstr ""
 
-#: ../../pep-0554.rst:1591
+#: ../../pep-0554.rst:1328
 msgid "Note that in extreme cases it may require a little extra boilerplate::"
 msgstr ""
 
-#: ../../pep-0554.rst:1605
+#: ../../pep-0554.rst:1342
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0554.rst:1607
+#: ../../pep-0554.rst:1344
 msgid "The implementation of the PEP has 4 parts:"
 msgstr ""
 
-#: ../../pep-0554.rst:1609
+#: ../../pep-0554.rst:1346
 msgid ""
 "the high-level module described in this PEP (mostly a light wrapper "
 "around a low-level C extension"
 msgstr ""
 
-#: ../../pep-0554.rst:1611
+#: ../../pep-0554.rst:1348
 msgid "the low-level C extension module"
 msgstr ""
 
-#: ../../pep-0554.rst:1612
+#: ../../pep-0554.rst:1349
 msgid "additions to the (\"private\") C=API needed by the low-level module"
 msgstr ""
 
-#: ../../pep-0554.rst:1613
+#: ../../pep-0554.rst:1350
 msgid ""
 "secondary fixes/changes in the CPython runtime that facilitate the low-"
 "level module (among other benefits)"
 msgstr ""
 
-#: ../../pep-0554.rst:1616
+#: ../../pep-0554.rst:1353
 msgid ""
 "These are at various levels of completion, with more done the lower you "
 "go:"
 msgstr ""
 
-#: ../../pep-0554.rst:1619
+#: ../../pep-0554.rst:1356
 msgid ""
 "the high-level module has been, at best, roughly implemented. However, "
 "fully implementing it will be almost trivial."
 msgstr ""
 
-#: ../../pep-0554.rst:1621
+#: ../../pep-0554.rst:1358
 msgid ""
 "the low-level module is mostly complete.  The bulk of the implementation "
 "was merged into master in December 2018 as the \"_xxsubinterpreters\" "
-"module (for the sake of testing subinterpreter functionality).  Only 3 "
-"parts of the implementation remain: \"send_wait()\", \"send_buffer()\", "
-"and exception propagation.  All three have been mostly finished, but were"
-" blocked by work related to ceval. That blocker is basically resolved now"
-" and finishing the low-level will not require extensive work."
+"module (for the sake of testing multiple interpreters functionality).  "
+"Only 3 parts of the implementation remain: \"send_wait()\", "
+"\"send_buffer()\", and exception propagation. All three have been mostly "
+"finished, but were blocked by work related to ceval.  That blocker is "
+"basically resolved now and finishing the low-level will not require "
+"extensive work."
 msgstr ""
 
-#: ../../pep-0554.rst:1629
+#: ../../pep-0554.rst:1366
 msgid "all necessary C-API work has been finished"
 msgstr ""
 
-#: ../../pep-0554.rst:1630
+#: ../../pep-0554.rst:1367
 msgid "all anticipated work in the runtime has been finished"
 msgstr ""
 
-#: ../../pep-0554.rst:1632
+#: ../../pep-0554.rst:1369
 msgid ""
-"The implementation effort for PEP 554 is being tracked as part of a "
+"The implementation effort for :pep:`554` is being tracked as part of a "
 "larger project aimed at improving multi-core support in CPython. [multi-"
 "core-project]_"
 msgstr ""
 
-#: ../../pep-0554.rst:1638
+#: ../../pep-0554.rst:1375
 msgid "References"
 msgstr ""
 
-#: ../../pep-0554.rst:1641
+#: ../../pep-0554.rst:1378
 msgid "https://docs.python.org/3/c-api/init.html#sub-interpreter-support"
 msgstr ""
 
-#: ../../pep-0554.rst:1646
+#: ../../pep-0554.rst:1381
 msgid ""
 "https://en.wikipedia.org/wiki/Communicating_sequential_processes "
 "https://github.com/futurecore/python-csp"
 msgstr ""
 
-#: ../../pep-0554.rst:1650
-msgid ""
-"https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Pipe"
-" "
-"https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue"
-" https://docs.python.org/3/library/queue.html#module-queue "
-"http://stackless.readthedocs.io/en/2.7-slp/library/stackless/channels.html"
-" https://golang.org/doc/effective_go.html#sharing "
-"http://www.jtolds.com/writing/2016/03/go-channels-are-bad-and-you-should-"
-"feel-bad/"
-msgstr ""
-
-#: ../../pep-0554.rst:1658
+#: ../../pep-0554.rst:1385
 msgid "https://docs.python.org/3/c-api/init.html#bugs-and-caveats"
 msgstr ""
 
-#: ../../pep-0554.rst:1661
+#: ../../pep-0554.rst:1388
 msgid ""
 "https://mail.python.org/pipermail/import-sig/2016-June/001062.html "
 "https://mail.python.org/pipermail/python-ideas/2016-April/039748.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1665
+#: ../../pep-0554.rst:1392
 msgid "https://github.com/pyca/cryptography/issues/2299"
 msgstr ""
 
-#: ../../pep-0554.rst:1668
+#: ../../pep-0554.rst:1395
 msgid "http://bugs.python.org/issue24554"
 msgstr ""
 
-#: ../../pep-0554.rst:1671
+#: ../../pep-0554.rst:1398
 msgid "https://bugs.python.org/issue10915 http://bugs.python.org/issue15751"
 msgstr ""
 
-#: ../../pep-0554.rst:1675
+#: ../../pep-0554.rst:1402
 msgid "https://bugs.python.org/issue6531"
 msgstr ""
 
-#: ../../pep-0554.rst:1678
-msgid "https://docs.python.org/3/library/multiprocessing.html#connection-objects"
-msgstr ""
-
-#: ../../pep-0554.rst:1681
+#: ../../pep-0554.rst:1405
 msgid "https://mail.python.org/pipermail/python-ideas/2017-September/047094.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1684
+#: ../../pep-0554.rst:1408
 msgid "https://mail.python.org/pipermail/python-ideas/2017-September/047122.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1687
-msgid ""
-"https://mail.python.org/pipermail/python-ideas/2017-September/047144.html"
-" https://mail.python.org/pipermail/python-dev/2017-September/149566.html"
-msgstr ""
-
-#: ../../pep-0554.rst:1691
+#: ../../pep-0554.rst:1411
 msgid "https://mail.python.org/pipermail/python-dev/2017-September/149545.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1694
+#: ../../pep-0554.rst:1414
 msgid ""
 "https://mail.python.org/pipermail/python-dev/2017-September/149420.html "
 "https://mail.python.org/pipermail/python-dev/2017-September/149585.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1698
+#: ../../pep-0554.rst:1418
 msgid "https://mail.python.org/pipermail/python-dev/2017-September/149562.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1701
+#: ../../pep-0554.rst:1421
 msgid "https://mail.python.org/pipermail/python-ideas/2017-May/045771.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1704
+#: ../../pep-0554.rst:1424
 msgid "https://github.com/ericsnowcurrently/multi-core-python"
 msgstr ""
 
-#: ../../pep-0554.rst:1707
+#: ../../pep-0554.rst:1427
 msgid ""
 "https://mail.python.org/archives/list/python-"
 "dev@python.org/message/3HVRFWHDMWPNR367GXBILZ4JJAUQ2STZ/"
 msgstr ""
 
-#: ../../pep-0554.rst:1710
+#: ../../pep-0554.rst:1433
+msgid "mp-conn"
+msgstr ""
+
+#: ../../pep-0554.rst:1433
+msgid "https://docs.python.org/3/library/multiprocessing.html#connection-objects"
+msgstr ""
+
+#: ../../pep-0554.rst:1437
+msgid "main-thread"
+msgstr ""
+
+#: ../../pep-0554.rst:1436
 msgid ""
-"https://mail.python.org/archives/list/python-"
-"dev@python.org/message/TUEAZNZHVJGGLL4OFD32OW6JJDKM6FAS/"
+"https://mail.python.org/pipermail/python-ideas/2017-September/047144.html"
+" https://mail.python.org/pipermail/python-dev/2017-September/149566.html"
 msgstr ""
 
-#: ../../pep-0554.rst:1713
-msgid "https://docs.python.org/3/extending/index.html"
-msgstr ""
-
-#: ../../pep-0554.rst:1717
+#: ../../pep-0554.rst:1440
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0554.rst:1719
+#: ../../pep-0554.rst:1442
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "554"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Multiple Interpreters in the Stdlib"
+#~ msgstr ""
+
+#~ msgid "3.10"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "CPython has supported multiple interpreters"
+#~ " in the same process (AKA "
+#~ "\"subinterpreters\") since version 1.5 (1997)."
+#~ "  The feature has been available via"
+#~ " the C-API. [c-api]_  Subinterpreters "
+#~ "operate in `relative isolation from one"
+#~ " another <Interpreter Isolation_>`_, which "
+#~ "facilitates novel alternative approaches to"
+#~ " `concurrency <Concurrency_>`_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This proposal introduces the stdlib "
+#~ "``interpreters`` module.  The module will "
+#~ "be `provisional <Provisional Status_>`_.  It"
+#~ " exposes the basic functionality of "
+#~ "subinterpreters already provided by the "
+#~ "C-API, along with new (basic) "
+#~ "functionality for sharing data between "
+#~ "interpreters."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To avoid any confusion up front:  "
+#~ "This PEP is unrelated to any "
+#~ "efforts to stop sharing the GIL "
+#~ "between subinterpreters.  At most this "
+#~ "proposal will allow users to take "
+#~ "advantage of any results of work "
+#~ "on the GIL. The position here is"
+#~ " that exposing subinterpreters to Python"
+#~ " code is worth doing, even if "
+#~ "they still share the GIL."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``interpreters`` module will be "
+#~ "added to the stdlib.  To help "
+#~ "authors of extension modules, a new "
+#~ "page will be added to the "
+#~ "`Extending Python <extension-docs_>`_ docs."
+#~ "  More information on both is found"
+#~ " in the immediately following sections."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``interpreters`` module will provide "
+#~ "a high-level interface to "
+#~ "subinterpreters and wrap a new low-"
+#~ "level ``_interpreters`` (in the same way"
+#~ " as the ``threading`` module).  See "
+#~ "the `Examples`_ section for concrete "
+#~ "usage and use cases."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Along with exposing the existing (in "
+#~ "CPython) subinterpreter support, the module"
+#~ " will also provide a mechanism for"
+#~ " sharing data between interpreters.  This"
+#~ " mechanism centers around \"channels\", "
+#~ "which are similar to queues and "
+#~ "pipes."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note that *objects* are not shared "
+#~ "between interpreters since they are tied"
+#~ " to the interpreter in which they "
+#~ "were created.  Instead, the objects' "
+#~ "*data* is passed between interpreters.  "
+#~ "See the `Shared data`_ section for "
+#~ "more details about sharing between "
+#~ "interpreters."
+#~ msgstr ""
+
+#~ msgid "At first only the following types will be supported for sharing:"
+#~ msgstr ""
+
+#~ msgid "None"
+#~ msgstr ""
+
+#~ msgid "bytes"
+#~ msgstr ""
+
+#~ msgid "str"
+#~ msgstr ""
+
+#~ msgid "int"
+#~ msgstr ""
+
+#~ msgid "PEP 554 channels"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Support for other basic types (e.g. "
+#~ "bool, float, Ellipsis) will be added "
+#~ "later."
+#~ msgstr ""
+
+#~ msgid "``create(*, isolated=True) -> Interpreter``"
+#~ msgstr ""
+
+#~ msgid "``class Interpreter(id)``"
+#~ msgstr ""
+
+#~ msgid "``.isolated``"
+#~ msgstr ""
+
+#~ msgid "The interpreter's mode (read-only)."
+#~ msgstr ""
+
+#~ msgid "``.run(src_str, /, *, channels=None)``"
+#~ msgstr ""
+
+#~ msgid "Run the given source code in the interpreter."
+#~ msgstr ""
+
+#~ msgid "(This blocks the current thread until done.)"
+#~ msgstr ""
+
+#~ msgid "``create_channel() -> (RecvChannel, SendChannel)``"
+#~ msgstr ""
+
+#~ msgid "Create a new channel for passing"
+#~ msgstr ""
+
+#~ msgid "data between interpreters."
+#~ msgstr ""
+
+#~ msgid "``list_all_channels() -> [(RecvChannel, SendChannel)]``"
+#~ msgstr ""
+
+#~ msgid "Get all open channels."
+#~ msgstr ""
+
+#~ msgid "``class RecvChannel(id)``"
+#~ msgstr ""
+
+#~ msgid "The receiving end of a channel."
+#~ msgstr ""
+
+#~ msgid "The channel's unique ID."
+#~ msgstr ""
+
+#~ msgid "``.recv() -> object``"
+#~ msgstr ""
+
+#~ msgid "Get the next object from the channel,"
+#~ msgstr ""
+
+#~ msgid "and wait if none have been sent."
+#~ msgstr ""
+
+#~ msgid "``.recv_nowait(default=None) -> object``"
+#~ msgstr ""
+
+#~ msgid "Like recv(), but return the default"
+#~ msgstr ""
+
+#~ msgid "instead of waiting."
+#~ msgstr ""
+
+#~ msgid "``class SendChannel(id)``"
+#~ msgstr ""
+
+#~ msgid "The sending end of a channel."
+#~ msgstr ""
+
+#~ msgid "``.send(obj)``"
+#~ msgstr ""
+
+#~ msgid "Send the object (i.e. its data) to the"
+#~ msgstr ""
+
+#~ msgid "receiving end of the channel and wait."
+#~ msgstr ""
+
+#~ msgid "``.send_nowait(obj)``"
+#~ msgstr ""
+
+#~ msgid "Like send(), but return False if not received."
+#~ msgstr ""
+
+#~ msgid "``ChannelError``"
+#~ msgstr ""
+
+#~ msgid "The base class for channel-related exceptions."
+#~ msgstr ""
+
+#~ msgid "``ChannelNotFoundError``"
+#~ msgstr ""
+
+#~ msgid "The identified channel was not found."
+#~ msgstr ""
+
+#~ msgid "``ChannelEmptyError``"
+#~ msgstr ""
+
+#~ msgid "The channel was unexpectedly empty."
+#~ msgstr ""
+
+#~ msgid "``ChannelNotEmptyError``"
+#~ msgstr ""
+
+#~ msgid "The channel was unexpectedly not empty."
+#~ msgstr ""
+
+#~ msgid "``NotReceivedError``"
+#~ msgstr ""
+
+#~ msgid "Nothing was waiting to receive a sent object."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Many extension modules do not support"
+#~ " use in subinterpreters yet.  The "
+#~ "maintainers and users of such extension"
+#~ " modules will both benefit when they"
+#~ " are updated to support subinterpreters."
+#~ "  In the meantime users may become"
+#~ " confused by failures when using "
+#~ "subinterpreters, which could negatively impact"
+#~ " extension maintainers.  See `Concerns`_ "
+#~ "below."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "be clear that extension modules are "
+#~ "*not* required to support use in "
+#~ "subinterpreters"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "raise ``ImportError`` when an incompatible "
+#~ "(no PEP 489 support) module is "
+#~ "imported in a subinterpreter"
+#~ msgstr ""
+
+#~ msgid "Run in a thread"
+#~ msgstr ""
+
+#~ msgid "Synchronize using a channel"
+#~ msgstr ""
+
+#~ msgid "Passing objects via marshal"
+#~ msgstr ""
+
+#~ msgid "Running in a thread pool executor"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Running code in multiple interpreters "
+#~ "provides a useful level of isolation "
+#~ "within the same process.  This can "
+#~ "be leveraged in a number of ways."
+#~ "  Furthermore, subinterpreters provide a "
+#~ "well-defined framework in which such "
+#~ "isolation may extended."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "CPython has supported subinterpreters, with"
+#~ " increasing levels of support, since "
+#~ "version 1.5.  While the feature has "
+#~ "the potential to be a powerful "
+#~ "tool, subinterpreters have suffered from "
+#~ "neglect because they are not available"
+#~ " directly from Python.  Exposing the "
+#~ "existing functionality in the stdlib "
+#~ "will help reverse the situation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This proposal is focused on enabling "
+#~ "the fundamental capability of multiple "
+#~ "isolated interpreters in the same Python"
+#~ " process.  This is a new area "
+#~ "for Python so there is relative "
+#~ "uncertainly about the best tools to "
+#~ "provide as companions to subinterpreters.  "
+#~ "Thus we minimize the functionality we"
+#~ " add in the proposal as much as"
+#~ " possible."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Some have argued that subinterpreters do"
+#~ " not add sufficient benefit to "
+#~ "justify making them an official part "
+#~ "of Python.  Adding features to the "
+#~ "language (or stdlib) has a cost in"
+#~ " increasing the size of the language."
+#~ "  So an addition must pay for "
+#~ "itself.  In this case, subinterpreters "
+#~ "provide a novel concurrency model "
+#~ "focused on isolated threads of "
+#~ "execution.  Furthermore, they provide an "
+#~ "opportunity for changes in CPython that"
+#~ " will allow simultaneous use of "
+#~ "multiple CPU cores (currently prevented "
+#~ "by the GIL)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\"stdlib support for subinterpreters adds "
+#~ "extra burden on C extension authors\""
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In the `Interpreter Isolation`_ section "
+#~ "below we identify ways in which "
+#~ "isolation in CPython's subinterpreters is "
+#~ "incomplete.  Most notable is extension "
+#~ "modules that use C globals to "
+#~ "store internal state.  PEP 3121 and "
+#~ "PEP 489 provide a solution for "
+#~ "most of the problem, but one still"
+#~ " remains. [petr-c-ext]_  Until that is "
+#~ "resolved (see PEP 573), C extension "
+#~ "authors will face extra difficulty to"
+#~ " support subinterpreters."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Introducing an API for a new "
+#~ "concurrency model, like happened with "
+#~ "asyncio, is an extremely large project"
+#~ " that requires a lot of careful "
+#~ "consideration.  It is not something that"
+#~ " can be done a simply as this"
+#~ " PEP proposes and likely deserves "
+#~ "significant time on PyPI to mature. "
+#~ "(See `Nathaniel's post <nathaniel-asyncio>`_"
+#~ " on python-dev.)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "However, this PEP does not propose "
+#~ "any new concurrency API.  At most "
+#~ "it exposes minimal tools (e.g. "
+#~ "subinterpreters, channels) which may be "
+#~ "used to write code that follows "
+#~ "patterns associated with (relatively) new-"
+#~ "to-Python `concurrency models "
+#~ "<Concurrency_>`_.  Those tools could also "
+#~ "be used as the basis for APIs "
+#~ "for such concurrency models. Again, this"
+#~ " PEP does not propose any such "
+#~ "API."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A common misconception is that this "
+#~ "PEP also includes a promise that "
+#~ "subinterpreters will no longer share the"
+#~ " GIL.  When that is clarified, the"
+#~ " next question is \"what is the "
+#~ "point?\".  This is already answered at"
+#~ " length in this PEP.  Just to "
+#~ "be clear, the value lies in::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "One class of concurrency models focuses"
+#~ " on isolated threads of execution "
+#~ "that interoperate through some message "
+#~ "passing scheme.  A notable example is"
+#~ " `Communicating Sequential Processes`_ (CSP) "
+#~ "(upon which Go's concurrency is roughly"
+#~ " based).  The isolation inherent to "
+#~ "subinterpreters makes them well-suited "
+#~ "to this approach."
+#~ msgstr ""
+
+#~ msgid "Shared data"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Subinterpreters are inherently isolated (with"
+#~ " caveats explained below), in contrast "
+#~ "to threads.  So the same communicate-"
+#~ "via-shared-memory approach doesn't work."
+#~ "  Without an alternative, effective use "
+#~ "of concurrency via subinterpreters is "
+#~ "significantly limited."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The key challenge here is that "
+#~ "sharing objects between interpreters faces "
+#~ "complexity due to various constraints on"
+#~ " object ownership, visibility, and "
+#~ "mutability.  At a conceptual level it's"
+#~ " easier to reason about concurrency "
+#~ "when objects only exist in one "
+#~ "interpreter at a time.  At a "
+#~ "technical level, CPython's current memory "
+#~ "model limits how Python *objects* may"
+#~ " be shared safely between interpreters; "
+#~ "effectively objects are bound to the "
+#~ "interpreter in which they were created."
+#~ "  Furthermore, the complexity of *object*"
+#~ " sharing increases as subinterpreters "
+#~ "become more isolated, e.g. after GIL "
+#~ "removal."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Consequently,the mechanism for sharing needs"
+#~ " to be carefully considered. There "
+#~ "are a number of valid solutions, "
+#~ "several of which may be appropriate "
+#~ "to support in Python.  This proposal "
+#~ "provides a single basic solution: "
+#~ "\"channels\".  Ultimately, any other solution"
+#~ " will look similar to the proposed"
+#~ " one, which will set the precedent."
+#~ "  Note that the implementation of "
+#~ "``Interpreter.run()`` will be done in a"
+#~ " way that allows for multiple "
+#~ "solutions to coexist, but doing so "
+#~ "is not technically a part of the"
+#~ " proposal here."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Regarding the proposed solution, \"channels\","
+#~ " it is a basic, opt-in data "
+#~ "sharing mechanism that draws inspiration "
+#~ "from pipes, queues, and CSP's channels."
+#~ " [fifo]_"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "As simply described earlier by the "
+#~ "API summary, channels have two "
+#~ "operations: send and receive.  A key "
+#~ "characteristic of those operations is "
+#~ "that channels transmit data derived from"
+#~ " Python objects rather than the "
+#~ "objects themselves.  When objects are "
+#~ "sent, their data is extracted.  When "
+#~ "the \"object\" is received in the "
+#~ "other interpreter, the data is converted"
+#~ " back into an object owned by "
+#~ "that interpreter."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To make this work, the mutable "
+#~ "shared state will be managed by "
+#~ "the Python runtime, not by any of"
+#~ " the interpreters.  Initially we will "
+#~ "support only one type of objects "
+#~ "for shared state: the channels provided"
+#~ " by ``create_channel()``.  Channels, in "
+#~ "turn, will carefully manage passing "
+#~ "objects between interpreters."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This approach, including keeping the API"
+#~ " minimal, helps us avoid further "
+#~ "exposing any underlying complexity to "
+#~ "Python users.  Along those same lines,"
+#~ " we will initially restrict the types"
+#~ " that may be passed through channels"
+#~ " to the following:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Limiting the initial shareable types is"
+#~ " a practical matter, reducing the "
+#~ "potential complexity of the initial "
+#~ "implementation.  There are a number of"
+#~ " strategies we may pursue in the "
+#~ "future to expand supported objects and"
+#~ " object sharing strategies."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Subinterpreters are not a widely used"
+#~ " feature.  In fact, the only "
+#~ "documented cases of widespread usage are"
+#~ " `mod_wsgi <https://github.com/GrahamDumpleton/mod_wsgi>`_,"
+#~ " `OpenStack Ceph "
+#~ "<https://github.com/ceph/ceph/pull/14971>`_, and `JEP "
+#~ "<https://github.com/ninia/jep>`_.  On the one "
+#~ "hand, these cases provide confidence "
+#~ "that existing subinterpreter support is "
+#~ "relatively stable.  On the other hand,"
+#~ " there isn't much of a sample "
+#~ "size from which to judge the "
+#~ "utility of the feature."
+#~ msgstr ""
+
+#~ msgid "Provisional Status"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The new ``interpreters`` module will be"
+#~ " added with \"provisional\" status (see "
+#~ "PEP 411).  This allows Python users "
+#~ "to experiment with the feature and "
+#~ "provide feedback while still allowing us"
+#~ " to adjust to that feedback. The "
+#~ "module will be provisional in Python "
+#~ "3.9 and we will make a decision"
+#~ " before the 3.10 release whether to"
+#~ " keep it provisional, graduate it, or"
+#~ " remove it.  This PEP will be "
+#~ "updated accordingly."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "While the module is provisional, any "
+#~ "changes to the API (or to "
+#~ "behavior) do not need to be "
+#~ "reflected here, nor get approval by "
+#~ "the BDFL-delegate. However, such changes"
+#~ " will still need to go through "
+#~ "the normal processes (BPO for smaller"
+#~ " changes and python-dev/PEP for "
+#~ "substantial ones)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "I've solicited feedback from various "
+#~ "Python implementors about support for "
+#~ "subinterpreters.  Each has indicated that "
+#~ "they would be able to support "
+#~ "subinterpreters (if they choose to) "
+#~ "without a lot of trouble.  Here "
+#~ "are the projects I contacted:"
+#~ msgstr ""
+
+#~ msgid "The module also provides the following class::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Regarding uncaught exceptions in "
+#~ "``Interpreter.run()``, we noted that they "
+#~ "are \"effectively\" propagated into the "
+#~ "code where ``run()`` was called.  To "
+#~ "prevent leaking exceptions (and tracebacks)"
+#~ " between interpreters, we create a "
+#~ "surrogate of the exception and its "
+#~ "traceback (see ``traceback.TracebackException``), "
+#~ "set it to ``__cause__`` on a new"
+#~ " ``RunFailedError``, and raise that."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Raising (a proxy of) the exception "
+#~ "directly is problematic since it's "
+#~ "harder to distinguish between an error"
+#~ " in the ``run()`` call and an "
+#~ "uncaught exception from the subinterpreter."
+#~ msgstr ""
+
+#~ msgid "API for sharing data"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Subinterpreters are less useful without "
+#~ "a mechanism for sharing data between "
+#~ "them.  Sharing actual Python objects "
+#~ "between interpreters, however, has enough "
+#~ "potential problems that we are avoiding"
+#~ " support for that here.  Instead, "
+#~ "only minimum set of types will be"
+#~ " supported. Initially this will include "
+#~ "``None``, ``bytes``, ``str``, ``int``, and "
+#~ "channels.  Further types may be "
+#~ "supported later."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``interpreters`` module provides a "
+#~ "function that users may call to "
+#~ "determine whether an object is shareable"
+#~ " or not::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This proposal provides two ways to "
+#~ "share such objects between interpreters."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "First, channels may be passed to "
+#~ "``run()`` via the ``channels`` keyword "
+#~ "argument, where they are effectively "
+#~ "injected into the target interpreter's "
+#~ "``__main__`` module.  While passing arbitrary"
+#~ " shareable objects this way is "
+#~ "possible, doing so is mainly intended"
+#~ " for sharing meta-objects (e.g. "
+#~ "channels) between interpreters.  It is "
+#~ "less useful to pass other objects "
+#~ "(like ``bytes``) to ``run`` directly."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Second, the main mechanism for sharing"
+#~ " objects (i.e. their data) between "
+#~ "interpreters is through channels.  A "
+#~ "channel is a simplex FIFO similar "
+#~ "to a pipe.  The main difference is"
+#~ " that channels can be associated with"
+#~ " zero or more interpreters on either"
+#~ " end.  Like queues, which are also"
+#~ " many-to-many, channels are buffered"
+#~ " (though they also offer methods with"
+#~ " unbuffered semantics)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Python objects are not shared between"
+#~ " interpreters.  However, in some cases "
+#~ "data those objects wrap is actually "
+#~ "shared and not just copied. One "
+#~ "example might be PEP 3118 buffers.  "
+#~ "In those cases the object in the"
+#~ " original interpreter is kept alive "
+#~ "until the shared data in the other"
+#~ " interpreter is no longer used.  Then"
+#~ " object destruction can happen like "
+#~ "normal in the original interpreter, "
+#~ "along with the previously shared data."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``interpreters`` module provides the "
+#~ "following functions related to channels::"
+#~ msgstr ""
+
+#~ msgid "The module also provides the following channel-related classes::"
+#~ msgstr ""
+
+#~ msgid "Channel Lifespan"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A channel is automatically closed and"
+#~ " destroyed once there are no more "
+#~ "Python objects (e.g. ``RecvChannel`` and "
+#~ "``SendChannel``) referring to it.  So it"
+#~ " is effectively triggered via garbage-"
+#~ "collection of those objects.."
+#~ msgstr ""
+
+#~ msgid "Interpreter \"Isolated\" Mode"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "By default, every new interpreter "
+#~ "created by ``interpreters.create()`` has "
+#~ "specific restrictions on any code it "
+#~ "runs.  This includes the following:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "importing an extension module fails if"
+#~ " it does not implement the PEP "
+#~ "489 API"
+#~ msgstr ""
+
+#~ msgid "new threads of any kind are not allowed"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "``os.exec*()``, AKA \"fork+exec\", is not "
+#~ "allowed (so no ``subprocess``)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This represents the full \"isolated\" "
+#~ "mode of subinterpreters.  It is applied"
+#~ " when ``interpreters.create()`` is called "
+#~ "with the \"isolated\" keyword-only "
+#~ "argument set to ``True`` (the default)."
+#~ "  If ``interpreters.create(isolated=False)`` is "
+#~ "called then none of those restrictions"
+#~ " is applied."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "One advantage of this approach is "
+#~ "that it allows extension maintainers to"
+#~ " check subinterpreter compatibility before "
+#~ "they implement the PEP 489 API.  "
+#~ "Also note that ``isolated=False`` represents"
+#~ " the historical behavior when using "
+#~ "the existing subinterpreters C-API, thus "
+#~ "providing backward compatibility.  For the "
+#~ "existing C-API itself, the default "
+#~ "remains ``isolated=False``.  The same is "
+#~ "true for the \"main\" module, so "
+#~ "existing use of Python will not "
+#~ "change."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We may choose to later loosen some"
+#~ " of the above restrictions or provide"
+#~ " a way to enable/disable granular "
+#~ "restrictions individually.  Regardless, requiring"
+#~ " PEP 489 support from extension "
+#~ "modules will always be a default "
+#~ "restriction."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "(at the top) a clear note that "
+#~ "subinterpreter support in extension modules"
+#~ " is not required"
+#~ msgstr ""
+
+#~ msgid "brief examples of how to use subinterpreters and channels"
+#~ msgstr ""
+
+#~ msgid "a summary of the limitations of subinterpreters"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "(for extension maintainers) a link to"
+#~ " the resources for ensuring subinterpreter"
+#~ " compatibility"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A separate page will be added to"
+#~ " the docs for resources to help "
+#~ "extension maintainers ensure their modules "
+#~ "can be used safely in subinterpreters,"
+#~ " under `Extending Python <extension-"
+#~ "docs>`_.  The page will include the "
+#~ "following information:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "a summary about subinterpreters (similar "
+#~ "to the same in the new "
+#~ "``interpreters`` module page and in the"
+#~ " C-API docs)"
+#~ msgstr ""
+
+#~ msgid "an explanation of how extension modules can be impacted"
+#~ msgstr ""
+
+#~ msgid "how to implement PEP 489 support"
+#~ msgstr ""
+
+#~ msgid "how to move from global module state to per-interpreter"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "how to take advantage of PEP 384"
+#~ " (heap types), PEP 3121 (module "
+#~ "state), and PEP 573"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "strategies for dealing with 3rd party"
+#~ " C libraries that keep their own "
+#~ "subinterpreter-incompatible global state"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Also, the ``ImportError`` for incompatible "
+#~ "extgension modules will have a message"
+#~ " that clearly says it is due to"
+#~ " missing subinterpreter compatibility and "
+#~ "that extensions are not required to "
+#~ "provide it.  This will help set "
+#~ "user expectations properly."
+#~ msgstr ""
+
+#~ msgid "timeout arg to recv() and send()"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Typically functions that have a "
+#~ "``block`` argument also have a "
+#~ "``timeout`` argument.  It sometimes makes "
+#~ "sense to do likewise for functions "
+#~ "that otherwise block, like the channel"
+#~ " ``recv()`` and ``send()`` methods.  We "
+#~ "can add it later if needed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``threading`` module provides a "
+#~ "number of synchronization primitives for "
+#~ "coordinating concurrent operations.  This is"
+#~ " especially necessary due to the "
+#~ "shared-state nature of threading.  In "
+#~ "contrast, subinterpreters do not share "
+#~ "state.  Data sharing is restricted to"
+#~ " channels, which do away with the "
+#~ "need for explicit synchronization.  If "
+#~ "any sort of opt-in shared state"
+#~ " support is added to subinterpreters "
+#~ "in the future, that same effort "
+#~ "can introduce synchronization primitives to"
+#~ " meet that need."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``Go`` language provides a "
+#~ "concurrency model based on CSP, so "
+#~ "it's similar to the concurrency model"
+#~ " that subinterpreters support. However, "
+#~ "``Go`` also provides syntactic support, "
+#~ "as well several builtin concurrency "
+#~ "primitives, to make concurrency a "
+#~ "first-class feature. Conceivably, similar "
+#~ "syntactic (and builtin) support could be"
+#~ " added to Python using subinterpreters."
+#~ "  However, that is *way* outside the"
+#~ " scope of this PEP!"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The ``multiprocessing`` module could support"
+#~ " subinterpreters in the same way it"
+#~ " supports threads and processes.  In "
+#~ "fact, the module's maintainer, Davin "
+#~ "Potts, has indicated this is a "
+#~ "reasonable feature request.  However, it "
+#~ "is outside the narrow scope of "
+#~ "this PEP."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "By using the ``PyModuleDef_Slot`` introduced"
+#~ " by PEP 489, we could easily "
+#~ "add a mechanism by which C-extension "
+#~ "modules could opt out of support "
+#~ "for subinterpreters.  Then the import "
+#~ "machinery, when operating in a "
+#~ "subinterpreter, would need to check the"
+#~ " module for support.  It would raise"
+#~ " an ImportError if unsupported."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Alternately we could support opting in"
+#~ " to subinterpreter support. However, that"
+#~ " would probably exclude many more "
+#~ "modules (unnecessarily) than the opt-out"
+#~ " approach.  Also, note that PEP 489"
+#~ " defined that an extension's use of"
+#~ " the PEP's machinery implies support "
+#~ "for subinterpreters."
+#~ msgstr ""
+
+#~ msgid "Poisoning channels"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "CSP has the concept of poisoning a"
+#~ " channel.  Once a channel has been"
+#~ " poisoned, any ``send()`` or ``recv()`` "
+#~ "call on it would raise a special"
+#~ " exception, effectively ending execution in"
+#~ " the interpreter that tried to use"
+#~ " the poisoned channel."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This could be accomplished by adding "
+#~ "a ``poison()`` method to both ends "
+#~ "of the channel.  The ``close()`` method"
+#~ " can be used in this way "
+#~ "(mostly), but these semantics are "
+#~ "relatively specialized and can wait."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A possible solution is to add an"
+#~ " ``Interpreter.reset()`` method.  This would "
+#~ "put the interpreter back into the "
+#~ "state it was in when newly "
+#~ "created.  If called on a running "
+#~ "interpreter it would fail (hence the "
+#~ "main interpreter could never be reset)."
+#~ "  This would likely be more efficient"
+#~ " than creating a new subinterpreter, "
+#~ "though that depends on what "
+#~ "optimizations will be made later to "
+#~ "subinterpreter creation."
+#~ msgstr ""
+
+#~ msgid "File descriptors and sockets in channels"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Given that file descriptors and sockets"
+#~ " are process-global resources, support "
+#~ "for passing them through channels is "
+#~ "a reasonable idea.  They would be "
+#~ "a good candidate for the first "
+#~ "effort at expanding the types that "
+#~ "channels support.  They aren't strictly "
+#~ "necessary for the initial API."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A possible solution is to provide "
+#~ "async implementations of the blocking "
+#~ "channel methods (``recv()``, and ``send()``)."
+#~ "  However, the basic functionality of "
+#~ "subinterpreters does not depend on async"
+#~ " and can be added later."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Alternately, \"readiness callbacks\" could be"
+#~ " used to simplify use in async "
+#~ "scenarios.  This would mean adding an"
+#~ " optional ``callback`` (kw-only) parameter"
+#~ " to the ``recv_nowait()`` and "
+#~ "``send_nowait()`` channel methods.  The "
+#~ "callback would be called once the "
+#~ "object was sent or received "
+#~ "(respectively)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "(Note that making channels buffered "
+#~ "makes readiness callbacks less important.)"
+#~ msgstr ""
+
+#~ msgid "Support for iteration"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Supporting iteration on ``RecvChannel`` (via"
+#~ " ``__iter__()`` or ``_next__()``) may be"
+#~ " useful.  A trivial implementation would"
+#~ " use the ``recv()`` method, similar "
+#~ "to how files do iteration.  Since "
+#~ "this isn't a fundamental capability and"
+#~ " has a simple analog, adding "
+#~ "iteration support can wait until later."
+#~ msgstr ""
+
+#~ msgid "Channel context managers"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Context manager support on ``RecvChannel`` "
+#~ "and ``SendChannel`` may be helpful.  The"
+#~ " implementation would be simple, wrapping"
+#~ " a call to ``close()`` (or maybe "
+#~ "``release()``) like files do.  As with"
+#~ " iteration, this can wait."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "With the proposed object passing "
+#~ "mechanism of \"channels\", other similar "
+#~ "basic types aren't required to achieve"
+#~ " the minimal useful functionality of "
+#~ "subinterpreters.  Such types include pipes "
+#~ "(like unbuffered channels, but one-"
+#~ "to-one) and queues (like channels, "
+#~ "but more generic).  See below in "
+#~ "`Rejected Ideas`_ for more information."
+#~ msgstr ""
+
+#~ msgid "Return a lock from send()"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When sending an object through a "
+#~ "channel, you don't have a way of"
+#~ " knowing when the object gets "
+#~ "received on the other end.  One "
+#~ "way to work around this is to "
+#~ "return a locked ``threading.Lock`` from "
+#~ "``SendChannel.send()`` that unlocks once the"
+#~ " object is received."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Alternately, the proposed ``SendChannel.send()`` "
+#~ "(blocking) and ``SendChannel.send_nowait()`` provide"
+#~ " an explicit distinction that is less"
+#~ " likely to confuse users."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note that returning a lock would "
+#~ "matter for buffered channels (i.e. "
+#~ "queues).  For unbuffered channels it is"
+#~ " a non-issue."
+#~ msgstr ""
+
+#~ msgid "Support prioritization in channels"
+#~ msgstr ""
+
+#~ msgid "A simple example is ``queue.PriorityQueue`` in the stdlib."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Folks might find it useful, when "
+#~ "creating a new subinterpreter, to be "
+#~ "able to indicate that they would "
+#~ "like some things \"inherited\" by the"
+#~ " new interpreter.  The mechanism could "
+#~ "be a strict copy or it could "
+#~ "be copy-on-write.  The motivating "
+#~ "example is with the warnings module "
+#~ "(e.g. copy the filters)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Exceptions are propagated out of "
+#~ "``run()`` calls, so it isn't a big"
+#~ " leap to make them shareable in "
+#~ "channels.  However, as noted elsewhere, "
+#~ "it isn't essential or (particularly "
+#~ "common) so we can wait on doing"
+#~ " that."
+#~ msgstr ""
+
+#~ msgid "Serialize everything through channels"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We could use pickle (or marshal) "
+#~ "to serialize everything sent through "
+#~ "channels.  Doing this is potentially "
+#~ "inefficient, but it may be a "
+#~ "matter of convenience in the end.  "
+#~ "We can add it later, but trying"
+#~ " to remove it later would be "
+#~ "significantly more painful."
+#~ msgstr ""
+
+#~ msgid "Expose which interpreters have actually *used* a channel end."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Currently we associate interpreters upon "
+#~ "access to a channel.  We would "
+#~ "keep a separate association list for "
+#~ "\"upon use\" and expose that."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This would be ``_threading.Lock`` (or "
+#~ "something like it) where interpreters "
+#~ "would actually share the underlying "
+#~ "mutex.  This would provide much better"
+#~ " efficiency than blocking channel ops.  "
+#~ "The main concern is that locks and"
+#~ " channels don't mix well (as learned"
+#~ " in Go)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note that the same functionality as "
+#~ "a lock can be achieved by passing"
+#~ " some sort of \"token\" object "
+#~ "through a channel.  \"send()\" would be"
+#~ " equivalent to releasing the lock and"
+#~ " \"recv()\" to acquiring the lock."
+#~ msgstr ""
+
+#~ msgid "Add an explicit release() and close() to channel end classes"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It can be convenient to have an"
+#~ " explicit way to close a channel "
+#~ "against further global use.  Likewise it"
+#~ " could be useful to have an "
+#~ "explicit way to release one of the"
+#~ " channel ends relative to the current"
+#~ " interpreter.  Among other reasons, such"
+#~ " a mechanism is useful for "
+#~ "communicating overall state between "
+#~ "interpreters without the extra boilerplate "
+#~ "that passing objects through a channel"
+#~ " directly would require."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The challenge is getting automatic "
+#~ "release/close right without making it "
+#~ "hard to understand.  This is especially"
+#~ " true when dealing with a non-"
+#~ "empty channel.  We should be able "
+#~ "to get by without release/close for "
+#~ "now."
+#~ msgstr ""
+
+#~ msgid "Add SendChannel.send_buffer()"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This method would allow no-copy "
+#~ "sending of an object through a "
+#~ "channel if it supports the PEP "
+#~ "3118 buffer protocol (e.g. memoryview)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Support for this is not fundamental "
+#~ "to channels and can be added on"
+#~ " later without much disruption."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The PEP proposes a hard separation "
+#~ "between subinterpreters and threads: if "
+#~ "you want to run in a thread "
+#~ "you must create the thread yourself "
+#~ "and call ``run()`` in it.  However, "
+#~ "it might be convenient if ``run()`` "
+#~ "could do that for you, meaning "
+#~ "there would be less boilerplate."
+#~ msgstr ""
+
+#~ msgid "Explicit channel association"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Interpreters are implicitly associated with"
+#~ " channels upon ``recv()`` and ``send()``"
+#~ " calls.  They are de-associated with"
+#~ " ``release()`` calls.  The alternative "
+#~ "would be explicit methods.  It would "
+#~ "be either ``add_channel()`` and "
+#~ "``remove_channel()`` methods on ``Interpreter`` "
+#~ "objects or something similar on channel"
+#~ " objects."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In practice, this level of management"
+#~ " shouldn't be necessary for users. So"
+#~ " adding more explicit support would "
+#~ "only add clutter to the API."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "throw the exception away and expect "
+#~ "users to deal with unhandled exceptions"
+#~ " explicitly in the script they pass"
+#~ " to ``run()`` (they can pass error"
+#~ " info out via channels); with threads"
+#~ " you have to do something similar"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "As implemented in the C-API, a "
+#~ "subinterpreter is not inherently tied to"
+#~ " any thread.  Furthermore, it will "
+#~ "run in any existing thread, whether "
+#~ "created by Python or not.  You "
+#~ "only have to activate one of its"
+#~ " thread states (``PyThreadState``) in the"
+#~ " thread first.  This means that the"
+#~ " same thread may run more than "
+#~ "one interpreter (though obviously not at"
+#~ " the same time)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The proposed module maintains this "
+#~ "behavior.  Subinterpreters are not tied "
+#~ "to threads.  Only calls to "
+#~ "``Interpreter.run()`` are.  However, one of"
+#~ " the key objectives of this PEP "
+#~ "is to provide a more human- "
+#~ "centric concurrency model.  With that in"
+#~ " mind, from a conceptual standpoint "
+#~ "the module *might* be easier to "
+#~ "understand if each subinterpreter were "
+#~ "associated with its own thread."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "That would mean ``interpreters.create()`` "
+#~ "would create a new thread and "
+#~ "``Interpreter.run()`` would only execute in"
+#~ " that thread (and nothing else "
+#~ "would).  The benefit is that users "
+#~ "would not have to wrap "
+#~ "``Interpreter.run()`` calls in a new "
+#~ "``threading.Thread``.  Nor would they be "
+#~ "in a position to accidentally pause "
+#~ "the current interpreter (in the current"
+#~ " thread) while their subinterpreter "
+#~ "executes."
+#~ msgstr ""
+
+#~ msgid "Only associate interpreters upon use"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Associate interpreters with channel ends "
+#~ "only once ``recv()``, ``send()``, etc. "
+#~ "are called."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Doing this is potentially confusing and"
+#~ " also can lead to unexpected races"
+#~ " where a channel is auto-closed "
+#~ "before it can be used in the "
+#~ "original (creating) interpreter."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the low-level module is mostly "
+#~ "complete.  The bulk of the "
+#~ "implementation was merged into master in"
+#~ " December 2018 as the "
+#~ "\"_xxsubinterpreters\" module (for the sake"
+#~ " of testing subinterpreter functionality).  "
+#~ "Only 3 parts of the implementation "
+#~ "remain: \"send_wait()\", \"send_buffer()\", and "
+#~ "exception propagation.  All three have "
+#~ "been mostly finished, but were blocked"
+#~ " by work related to ceval. That "
+#~ "blocker is basically resolved now and"
+#~ " finishing the low-level will not "
+#~ "require extensive work."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The implementation effort for PEP 554"
+#~ " is being tracked as part of a"
+#~ " larger project aimed at improving "
+#~ "multi-core support in CPython. [multi-"
+#~ "core-project]_"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Pipe"
+#~ " "
+#~ "https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue"
+#~ " https://docs.python.org/3/library/queue.html#module-queue"
+#~ " "
+#~ "http://stackless.readthedocs.io/en/2.7-slp/library/stackless/channels.html"
+#~ " https://golang.org/doc/effective_go.html#sharing "
+#~ "http://www.jtolds.com/writing/2016/03/go-channels-are-"
+#~ "bad-and-you-should-feel-bad/"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "https://mail.python.org/archives/list/python-"
+#~ "dev@python.org/message/TUEAZNZHVJGGLL4OFD32OW6JJDKM6FAS/"
+#~ msgstr ""
+
+#~ msgid "https://docs.python.org/3/extending/index.html"
+#~ msgstr ""
 

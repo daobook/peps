@@ -1,0 +1,537 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0696.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0696.rst:3
+msgid "James Hilton-Balfe <gobot1234yt@gmail.com>"
+msgstr ""
+
+#: ../../pep-0696.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0696.rst:4
+msgid "Jelle Zijlstra <jelle.zijlstra@gmail.com>"
+msgstr ""
+
+#: ../../pep-0696.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0696.rst:5
+msgid "typing-sig@python.org"
+msgstr ""
+
+#: ../../pep-0696.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0696.rst:6
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0696.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0696.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0696.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0696.rst:8
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0696.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0696.rst:10
+msgid "14-Jul-2022"
+msgstr ""
+
+#: ../../pep-0696.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0696.rst:11
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0696.rst:14
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0696.rst:16
+msgid ""
+"This PEP introduces the concept of type defaults for ``TypeVarLike``\\ s "
+"(``TypeVar``, ``ParamSpec`` and ``TypeVarTuple``), which act as defaults "
+"for a type parameter when one is not specified or the constraint solver "
+"isn't able to solve a type parameter to anything."
+msgstr ""
+
+#: ../../pep-0696.rst:21
+msgid ""
+"Default type argument support is available in some popular languages such"
+" as C++, TypeScript, and Rust. A survey of type parameter syntax in some "
+"common languages has been conducted by the author of :pep:`695` and can "
+"be found in its :pep:`Appendix A <695#appendix-a-survey-of-type-"
+"parameter-syntax>`."
+msgstr ""
+
+#: ../../pep-0696.rst:29
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0696.rst:42
+msgid ""
+"One place this `regularly comes up "
+"<https://github.com/python/typing/issues/975>`__ is ``Generator``. I "
+"propose changing the *stub definition* to something like:"
+msgstr ""
+
+#: ../../pep-0696.rst:56
+msgid "This is also useful for a ``Generic`` that is commonly over one type."
+msgstr ""
+
+#: ../../pep-0696.rst:72
+msgid ""
+"Not only does this improve typing for those who explicitly use it, it "
+"also helps non-typing users who rely on auto-complete to speed up their "
+"development."
+msgstr ""
+
+#: ../../pep-0696.rst:85
+msgid "This design pattern is common in projects like:"
+msgstr ""
+
+#: ../../pep-0696.rst:77
+msgid ""
+"`discord.py <https://github.com/Rapptz/discord.py>`__ — where the example"
+" above was taken from."
+msgstr ""
+
+#: ../../pep-0696.rst:79
+msgid ""
+"`NumPy <https://github.com/numpy/numpy>`__ — the default for types like "
+"``ndarray``'s ``dtype`` would be ``float64``. Currently it's ``Unknown`` "
+"or ``Any``."
+msgstr ""
+
+#: ../../pep-0696.rst:82
+msgid ""
+"`TensorFlow <https://github.com/tensorflow/tensorflow>`__ — this could be"
+" used for Tensor similarly to ``numpy.ndarray`` and would be useful to "
+"simplify the definition of ``Layer``."
+msgstr ""
+
+#: ../../pep-0696.rst:88
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0696.rst:91
+msgid "Default Ordering and Subscription Rules"
+msgstr ""
+
+#: ../../pep-0696.rst:93
+msgid ""
+"The order for defaults should follow the standard function parameter "
+"rules, so a ``TypeVarLike`` with no ``default`` cannot follow one with a "
+"``default`` value. Doing so should ideally raise a ``TypeError`` in "
+"``typing._GenericAlias``/``types.GenericAlias``, and a type checker "
+"should flag this an error."
+msgstr ""
+
+#: ../../pep-0696.rst:138
+msgid ""
+"This cannot be enforced at runtime for functions, for now, but in the "
+"future, this might be possible (see `Interaction with PEP 695 "
+"<#interaction-with-pep-695>`__)."
+msgstr ""
+
+#: ../../pep-0696.rst:143
+msgid "``ParamSpec`` Defaults"
+msgstr ""
+
+#: ../../pep-0696.rst:145
+msgid ""
+"``ParamSpec`` defaults are defined using the same syntax as ``TypeVar`` "
+"\\ s but use a ``list`` or ``tuple`` of types or an ellipsis literal "
+"\"``...``\" or another in-scope ``ParamSpec`` (see :ref:`696-scoping-"
+"rules`)."
+msgstr ""
+
+#: ../../pep-0696.rst:160
+msgid "``TypeVarTuple`` Defaults"
+msgstr ""
+
+#: ../../pep-0696.rst:162
+msgid ""
+"``TypeVarTuple`` defaults are defined using the same syntax as "
+"``TypeVar`` \\ s but use an unpacked tuple of types instead of a single "
+"type or another in-scope ``TypeVarTuple`` (see :ref:`696-scoping-rules`)."
+msgstr ""
+
+#: ../../pep-0696.rst:177
+msgid "Using Another ``TypeVarLike`` as ``default``"
+msgstr ""
+
+#: ../../pep-0696.rst:179
+msgid ""
+"This allows for a value to be used again when the constraints solver "
+"fails to solve a constraint for a type, or the type parameter to a "
+"generic is missing but another type parameter is specified."
+msgstr ""
+
+#: ../../pep-0696.rst:183
+msgid ""
+"To use another ``TypeVarLike`` as a default the ``default`` and the "
+"``TypeVarLike`` must be the same type (a ``TypeVar``'s default must be a "
+"``TypeVar``, etc.)."
+msgstr ""
+
+#: ../../pep-0696.rst:187
+msgid ""
+"`This could be used on builtins.slice "
+"<https://github.com/python/typing/issues/159>`__ where the ``start`` "
+"parameter should default to ``int``, ``stop`` default to the type of "
+"``start`` and step default to ``int | None``."
+msgstr ""
+
+#: ../../pep-0696.rst:213
+msgid ""
+"When using a ``TypeVarLike`` as the default to another ``TypeVarLike``. "
+"Where ``T1`` is the default for ``T2`` the following rules apply."
+msgstr ""
+
+#: ../../pep-0696.rst:216
+msgid "``TypeVarTuple``\\s are not supported because:"
+msgstr ""
+
+#: ../../pep-0696.rst:218
+msgid ""
+":ref:`696-scoping-rules` does not allow usage of ``TypeVarLikes`` from "
+"outer scopes."
+msgstr ""
+
+#: ../../pep-0696.rst:220
+msgid ""
+"Multiple ``TypeVarTuple``\\s cannot appear in the type parameter list for"
+" a single class, as specified in :pep:`646#multiple-type-variable-tuples-"
+"not-allowed`."
+msgstr ""
+
+#: ../../pep-0696.rst:223
+msgid "``TypeVarLike`` defaults in functions are not supported."
+msgstr ""
+
+#: ../../pep-0696.rst:225
+msgid ""
+"These reasons leave no current valid location where a ``TypeVarTuple`` "
+"could have a default."
+msgstr ""
+
+#: ../../pep-0696.rst:231
+msgid "Scoping Rules"
+msgstr ""
+
+#: ../../pep-0696.rst:233
+msgid "``T1`` must be used before ``T2`` in the parameter list of the generic."
+msgstr ""
+
+#: ../../pep-0696.rst:248
+msgid "Using a ``TypeVarLike`` from an outer scope as a default is not supported."
+msgstr ""
+
+#: ../../pep-0696.rst:251
+msgid "Bound Rules"
+msgstr ""
+
+#: ../../pep-0696.rst:253
+msgid "``T2``'s bound must be a subtype of ``T1``'s bound."
+msgstr ""
+
+#: ../../pep-0696.rst:263
+msgid "Constraint Rules"
+msgstr ""
+
+#: ../../pep-0696.rst:265
+msgid "The constraints of ``T2`` must be a superset of the constraints of ``T1``."
+msgstr ""
+
+#: ../../pep-0696.rst:278
+msgid "``TypeVarLike``\\s as Parameters to Generics"
+msgstr ""
+
+#: ../../pep-0696.rst:280
+msgid ""
+"``TypeVarLike``\\ s are valid as parameters to generics inside of a "
+"``default`` when the first parameter is in scope as determined by the "
+":ref:`previous section <696-scoping-rules>`."
+msgstr ""
+
+#: ../../pep-0696.rst:299
+msgid "Specialisation Rules"
+msgstr ""
+
+#: ../../pep-0696.rst:301
+msgid ""
+"``TypeVarLike``\\ s currently cannot be further subscripted. This might "
+"change if `Higher Kinded TypeVars "
+"<https://github.com/python/typing/issues/548>`__ are implemented."
+msgstr ""
+
+#: ../../pep-0696.rst:307
+msgid "``Generic`` ``TypeAlias``\\ es"
+msgstr ""
+
+#: ../../pep-0696.rst:309
+msgid ""
+"``Generic`` ``TypeAlias``\\ es should be able to be further subscripted "
+"following normal subscription rules. If a ``TypeVarLike`` has a default "
+"that hasn't been overridden it should be treated like it was substituted "
+"into the ``TypeAlias``. However, it can be specialised further down the "
+"line."
+msgstr ""
+
+#: ../../pep-0696.rst:326
+msgid "Subclassing"
+msgstr ""
+
+#: ../../pep-0696.rst:328
+msgid ""
+"Subclasses of ``Generic``\\ s with ``TypeVarLike``\\ s that have defaults"
+" behave similarly to ``Generic`` ``TypeAlias``\\ es."
+msgstr ""
+
+#: ../../pep-0696.rst:353
+msgid "Using ``bound`` and ``default``"
+msgstr ""
+
+#: ../../pep-0696.rst:355
+msgid ""
+"If both ``bound`` and ``default`` are passed ``default`` must be a "
+"subtype of ``bound``. Otherwise the type checker should generate an "
+"error."
+msgstr ""
+
+#: ../../pep-0696.rst:365
+msgid "Constraints"
+msgstr ""
+
+#: ../../pep-0696.rst:367
+msgid ""
+"For constrained ``TypeVar``\\ s, the default needs to be one of the "
+"constraints. A type checker should generate an error even if it is a "
+"subtype of one of the constraints."
+msgstr ""
+
+#: ../../pep-0696.rst:379
+msgid "Function Defaults"
+msgstr ""
+
+#: ../../pep-0696.rst:381
+msgid ""
+"``TypeVarLike``\\ s currently are not supported in the signatures of "
+"functions as ensuring the ``default`` is returned in every code path "
+"where the ``TypeVarLike`` can go unsolved is too hard to implement."
+msgstr ""
+
+#: ../../pep-0696.rst:386
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0696.rst:388
+msgid ""
+"At runtime, this would involve the following changes to the ``typing`` "
+"module."
+msgstr ""
+
+#: ../../pep-0696.rst:391
+msgid ""
+"The classes ``TypeVar``, ``ParamSpec``, and ``TypeVarTuple`` should "
+"expose the type passed to ``default``. This would be available as a "
+"``__default__`` attribute, which would be ``None`` if no argument is "
+"passed and ``NoneType`` if ``default=None``."
+msgstr ""
+
+#: ../../pep-0696.rst:396
+msgid "The following changes would be required to both ``GenericAlias``\\ es:"
+msgstr ""
+
+#: ../../pep-0696.rst:398
+msgid "logic to determine the defaults required for a subscription."
+msgstr ""
+
+#: ../../pep-0696.rst:399
+msgid ""
+"ideally, logic to determine if subscription (like ``Generic[T, "
+"DefaultT]``) would be valid."
+msgstr ""
+
+#: ../../pep-0696.rst:402
+msgid ""
+"A reference implementation of the type checker can be found at "
+"https://github.com/Gobot1234/mypy/tree/TypeVar-defaults"
+msgstr ""
+
+#: ../../pep-0696.rst:405
+msgid "Pyright currently supports this functionality."
+msgstr ""
+
+#: ../../pep-0696.rst:409
+msgid "Interaction with PEP 695"
+msgstr ""
+
+#: ../../pep-0696.rst:411
+msgid ""
+"If this PEP is accepted, the syntax proposed in :pep:`695` will be "
+"extended to introduce a way to specify defaults for type parameters using"
+" the \"=\" operator inside of the square brackets like so:"
+msgstr ""
+
+#: ../../pep-0696.rst:432
+msgid ""
+"This functionality was included in the initial draft of :pep:`695` but "
+"was removed due to scope creep."
+msgstr ""
+
+#: ../../pep-0696.rst:436
+msgid "Grammar Changes"
+msgstr ""
+
+#: ../../pep-0696.rst:450
+msgid ""
+"This would mean that ``TypeVarLike``\\ s with defaults proceeding those "
+"with non-defaults can be checked at compile time."
+msgstr ""
+
+#: ../../pep-0696.rst:455
+msgid "Rejected Alternatives"
+msgstr ""
+
+#: ../../pep-0696.rst:458
+msgid ""
+"Allowing the ``TypeVarLike``\\s Defaults to Be Passed to "
+"``type.__new__``'s ``**kwargs``"
+msgstr ""
+
+#: ../../pep-0696.rst:468
+msgid ""
+"While this is much easier to read and follows a similar rationale to the "
+"``TypeVar`` `unary syntax "
+"<https://github.com/python/typing/issues/813>`__, it would not be "
+"backwards compatible as ``T`` might already be passed to a "
+"metaclass/superclass or support classes that don't subclass ``Generic`` "
+"at runtime."
+msgstr ""
+
+#: ../../pep-0696.rst:475
+msgid "Ideally, if :pep:`637` wasn't rejected, the following would be acceptable:"
+msgstr ""
+
+#: ../../pep-0696.rst:486
+msgid "Allowing Non-defaults to Follow Defaults"
+msgstr ""
+
+#: ../../pep-0696.rst:498
+msgid ""
+"Allowing non-defaults to follow defaults would alleviate the issues with "
+"returning types like ``Coroutine`` from functions where the most used "
+"type argument is the last (the return). Allowing non-defaults to follow "
+"defaults is too confusing and potentially ambiguous, even if only the "
+"above two forms were valid. Changing the argument order now would also "
+"break a lot of codebases. This is also solvable in most cases using a "
+"``TypeAlias``."
+msgstr ""
+
+#: ../../pep-0696.rst:512
+msgid "Having ``default`` Implicitly Be ``bound``"
+msgstr ""
+
+#: ../../pep-0696.rst:514
+msgid ""
+"In an earlier version of this PEP, the ``default`` was implicitly set to "
+"``bound`` if no value was passed for ``default``. This while convenient, "
+"could have a ``TypeVarLike`` with no default follow a ``TypeVarLike`` "
+"with a default. Consider:"
+msgstr ""
+
+#: ../../pep-0696.rst:535
+msgid ""
+"This would have also been a breaking change for a small number of cases "
+"where the code relied on ``Any`` being the implicit default."
+msgstr ""
+
+#: ../../pep-0696.rst:539
+msgid ""
+"Allowing ``TypeVarLike``\\s with defaults to be used in function "
+"signatures"
+msgstr ""
+
+#: ../../pep-0696.rst:541
+msgid ""
+"A previous version of this PEP allowed ``TypeVarLike``\\s with defaults "
+"to be used in function signatures. This was removed for the reasons "
+"described in :ref:`696-function-defaults`. Hopefully, this can be added "
+"in the future if a way to get the runtime value of a type parameter is "
+"added."
+msgstr ""
+
+#: ../../pep-0696.rst:547
+msgid "Allowing ``TypeVarLikes`` from outer scopes in ``default``"
+msgstr ""
+
+#: ../../pep-0696.rst:549
+msgid ""
+"This was deemed too niche a feature to be worth the added complexity. If "
+"any cases arise where this is needed, it can be added in a future PEP."
+msgstr ""
+
+#: ../../pep-0696.rst:553
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0696.rst:555
+msgid "Thanks to the following people for their feedback on the PEP:"
+msgstr ""
+
+#: ../../pep-0696.rst:557
+msgid ""
+"Eric Traut, Jelle Zijlstra, Joshua Butt, Danny Yamamoto, Kaylynn Morgan "
+"and Jakub Kuczys"
+msgstr ""
+
+#: ../../pep-0696.rst:562
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0696.rst:563
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

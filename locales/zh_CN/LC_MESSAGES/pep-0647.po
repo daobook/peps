@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0647.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0647.rst:1
-msgid "647"
-msgstr ""
-
-#: ../../pep-0647.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0647.rst:2
-msgid "User-Defined Type Guards"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0647.rst
 msgid "Author"
@@ -54,7 +38,7 @@ msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0647.rst:7
-msgid "Typing-Sig <typing-sig@python.org>"
+msgid "typing-sig@python.org"
 msgstr ""
 
 #: ../../pep-0647.rst
@@ -74,10 +58,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0647.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0647.rst:10
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0647.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0647.rst:11
+#: ../../pep-0647.rst:12
 msgid "07-Oct-2020"
 msgstr ""
 
@@ -85,7 +77,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0647.rst:12
+#: ../../pep-0647.rst:13
 msgid "3.10"
 msgstr ""
 
@@ -93,35 +85,35 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0647.rst:13
-msgid "28-Dec-2020, 9-Apr-2021"
+#: ../../pep-0647.rst:14
+msgid "28-Dec-2020, 09-Apr-2021"
 msgstr ""
 
 #: ../../pep-0647.rst
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0647.rst:14
+#: ../../pep-0647.rst:15
 msgid ""
 "https://mail.python.org/archives/list/python-"
 "dev@python.org/thread/2ME6F6YUVKHOQYKSHTVQQU5WD4CVAZU4/"
 msgstr ""
 
-#: ../../pep-0647.rst:18
+#: ../../pep-0647.rst:19
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0647.rst:20
+#: ../../pep-0647.rst:21
 msgid ""
 "This PEP specifies a way for programs to influence conditional type "
 "narrowing employed by a type checker based on runtime checks."
 msgstr ""
 
-#: ../../pep-0647.rst:25
+#: ../../pep-0647.rst:26
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0647.rst:27
+#: ../../pep-0647.rst:28
 msgid ""
 "Static type checkers commonly employ a technique called \"type "
 "narrowing\" to determine a more precise type of an expression within a "
@@ -132,13 +124,13 @@ msgid ""
 "forms of type guards expressions."
 msgstr ""
 
-#: ../../pep-0647.rst:72
+#: ../../pep-0647.rst:73
 msgid ""
 "There are cases where type narrowing cannot be applied based on static "
 "information only. Consider the following example:"
 msgstr ""
 
-#: ../../pep-0647.rst:86
+#: ../../pep-0647.rst:87
 msgid ""
 "This code is correct, but a type checker will report a type error because"
 " the value ``val`` passed to the ``join`` method is understood to be of "
@@ -147,14 +139,14 @@ msgid ""
 "point."
 msgstr ""
 
-#: ../../pep-0647.rst:91
+#: ../../pep-0647.rst:92
 msgid ""
 "This PEP introduces a way for a function like ``is_str_list`` to be "
 "defined as a \"user-defined type guard\". This allows code to extend the "
 "type guards that are supported by type checkers."
 msgstr ""
 
-#: ../../pep-0647.rst:95
+#: ../../pep-0647.rst:96
 msgid ""
 "Using this new mechanism, the ``is_str_list`` function in the above "
 "example would be modified slightly. Its return type would be changed from"
@@ -163,21 +155,21 @@ msgid ""
 "function was of the specified type."
 msgstr ""
 
-#: ../../pep-0647.rst:110
+#: ../../pep-0647.rst:111
 msgid ""
 "User-defined type guards can also be used to determine whether a "
 "dictionary conforms to the type requirements of a TypedDict."
 msgstr ""
 
-#: ../../pep-0647.rst:134
+#: ../../pep-0647.rst:135
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0647.rst:137
+#: ../../pep-0647.rst:138
 msgid "TypeGuard Type"
 msgstr ""
 
-#: ../../pep-0647.rst:139
+#: ../../pep-0647.rst:140
 msgid ""
 "This PEP introduces the symbol ``TypeGuard`` exported from the ``typing``"
 " module. ``TypeGuard`` is a special form that accepts a single type "
@@ -187,14 +179,14 @@ msgid ""
 " return a bool."
 msgstr ""
 
-#: ../../pep-0647.rst:145
+#: ../../pep-0647.rst:146
 msgid ""
 "In all other respects, TypeGuard is a distinct type from bool. It is not "
 "a subtype of bool. Therefore, ``Callable[..., TypeGuard[int]]`` is not "
 "assignable to ``Callable[..., bool]``."
 msgstr ""
 
-#: ../../pep-0647.rst:149
+#: ../../pep-0647.rst:150
 msgid ""
 "When ``TypeGuard`` is used to annotate the return type of a function or "
 "method that accepts at least one parameter, that function or method is "
@@ -203,13 +195,13 @@ msgid ""
 "the function."
 msgstr ""
 
-#: ../../pep-0647.rst:155
+#: ../../pep-0647.rst:156
 msgid ""
 "User-defined type guards can be generic functions, as shown in this "
 "example:"
 msgstr ""
 
-#: ../../pep-0647.rst:171
+#: ../../pep-0647.rst:172
 msgid ""
 "Type checkers should assume that type narrowing should be applied to the "
 "expression that is passed as the first positional argument to a user-"
@@ -218,20 +210,20 @@ msgid ""
 "expressions."
 msgstr ""
 
-#: ../../pep-0647.rst:176
+#: ../../pep-0647.rst:177
 msgid ""
 "If a type guard function is implemented as an instance method or class "
 "method, the first positional argument maps to the second parameter (after"
 " \"self\" or \"cls\")."
 msgstr ""
 
-#: ../../pep-0647.rst:180
+#: ../../pep-0647.rst:181
 msgid ""
 "Here are some examples of user-defined type guard functions that accept "
 "more than one argument:"
 msgstr ""
 
-#: ../../pep-0647.rst:196
+#: ../../pep-0647.rst:197
 msgid ""
 "The return type of a user-defined type guard function will normally refer"
 " to a type that is strictly \"narrower\" than the type of the first "
@@ -241,7 +233,7 @@ msgid ""
 "``List[str]`` is not assignable to ``List[object]``."
 msgstr ""
 
-#: ../../pep-0647.rst:203
+#: ../../pep-0647.rst:204
 msgid ""
 "When a conditional statement includes a call to a user-defined type guard"
 " function, and that function returns true, the expression passed as the "
@@ -251,7 +243,7 @@ msgid ""
 "conditional code block."
 msgstr ""
 
-#: ../../pep-0647.rst:209
+#: ../../pep-0647.rst:210
 msgid ""
 "Some built-in type guards provide narrowing for both positive and "
 "negative tests (in both the ``if`` and ``else`` clauses). For example, "
@@ -263,52 +255,52 @@ msgid ""
 "negative case."
 msgstr ""
 
-#: ../../pep-0647.rst:237
+#: ../../pep-0647.rst:238
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0647.rst:238
+#: ../../pep-0647.rst:239
 msgid "Existing code that does not use this new functionality will be unaffected."
 msgstr ""
 
-#: ../../pep-0647.rst:240
+#: ../../pep-0647.rst:241
 msgid ""
 "Notably, code which uses annotations in a manner incompatible with the "
 "stdlib typing library should simply not import TypeGuard."
 msgstr ""
 
-#: ../../pep-0647.rst:245
+#: ../../pep-0647.rst:246
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0647.rst:247
+#: ../../pep-0647.rst:248
 msgid "The Pyright type checker supports the behavior described in this PEP."
 msgstr ""
 
-#: ../../pep-0647.rst:251
+#: ../../pep-0647.rst:252
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0647.rst:254
+#: ../../pep-0647.rst:255
 msgid "Decorator Syntax"
 msgstr ""
 
-#: ../../pep-0647.rst:256
+#: ../../pep-0647.rst:257
 msgid "The use of a decorator was considered for defining type guards."
 msgstr ""
 
-#: ../../pep-0647.rst:264
+#: ../../pep-0647.rst:265
 msgid ""
 "The decorator approach is inferior because it requires runtime evaluation"
 " of the type, precluding forward references. The proposed approach was "
 "also deemed to be easier to understand and simpler to implement."
 msgstr ""
 
-#: ../../pep-0647.rst:270
+#: ../../pep-0647.rst:271
 msgid "Enforcing Strict Narrowing"
 msgstr ""
 
-#: ../../pep-0647.rst:272
+#: ../../pep-0647.rst:273
 msgid ""
 "Strict type narrowing enforcement (requiring that the type specified in "
 "the TypeGuard type argument is a narrower form of the type specified for "
@@ -318,7 +310,7 @@ msgid ""
 "of ``List[object]`` because of invariance rules."
 msgstr ""
 
-#: ../../pep-0647.rst:279
+#: ../../pep-0647.rst:280
 msgid ""
 "One variation that was considered was to require a strict narrowing "
 "requirement by default but allow the type guard function to specify some "
@@ -326,7 +318,7 @@ msgid ""
 "rejected because it was deemed cumbersome and unnecessary."
 msgstr ""
 
-#: ../../pep-0647.rst:284
+#: ../../pep-0647.rst:285
 msgid ""
 "Another consideration was to define some less-strict check that ensures "
 "that there is some overlap between the value type and the narrowed type "
@@ -340,14 +332,14 @@ msgid ""
 "checks."
 msgstr ""
 
-#: ../../pep-0647.rst:294
+#: ../../pep-0647.rst:295
 msgid ""
 "It was noted that without enforcing strict narrowing, it would be "
 "possible to break type safety. A poorly-written type guard function could"
 " produce unsafe or even nonsensical results. For example:"
 msgstr ""
 
-#: ../../pep-0647.rst:303
+#: ../../pep-0647.rst:304
 msgid ""
 "However, there are many ways a determined or uninformed developer can "
 "subvert type safety -- most commonly by using ``cast`` or ``Any``. If a "
@@ -357,11 +349,11 @@ msgid ""
 "in a way that will undermine type safety or produce nonsensical results."
 msgstr ""
 
-#: ../../pep-0647.rst:312
+#: ../../pep-0647.rst:313
 msgid "Conditionally Applying TypeGuard Type"
 msgstr ""
 
-#: ../../pep-0647.rst:314
+#: ../../pep-0647.rst:315
 msgid ""
 "It was suggested that the expression passed as the first argument to a "
 "type guard function should retain its existing type if the type of the "
@@ -378,11 +370,11 @@ msgid ""
 "added value."
 msgstr ""
 
-#: ../../pep-0647.rst:329
+#: ../../pep-0647.rst:330
 msgid "Narrowing of Arbitrary Parameters"
 msgstr ""
 
-#: ../../pep-0647.rst:331
+#: ../../pep-0647.rst:332
 msgid ""
 "TypeScript's formulation of user-defined type guards allows for any input"
 " parameter to be used as the value tested for narrowing. The TypeScript "
@@ -392,14 +384,14 @@ msgid ""
 " user-defined type guards with additional complexity to support a "
 "contrived use case. If such use cases are identified in the future, there"
 " are ways the TypeGuard mechanism could be extended. This could involve "
-"the use of keyword indexing, as proposed in PEP 637."
+"the use of keyword indexing, as proposed in :pep:`637`."
 msgstr ""
 
-#: ../../pep-0647.rst:343
+#: ../../pep-0647.rst:344
 msgid "Narrowing of Implicit \"self\" and \"cls\" Parameters"
 msgstr ""
 
-#: ../../pep-0647.rst:345
+#: ../../pep-0647.rst:346
 msgid ""
 "The proposal states that the first positional argument is assumed to be "
 "the value that is tested for narrowing. If the type guard function is "
@@ -414,13 +406,52 @@ msgid ""
 " function."
 msgstr ""
 
-#: ../../pep-0647.rst:358
+#: ../../pep-0647.rst:359
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0647.rst:360
+#: ../../pep-0647.rst:361
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "647"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "User-Defined Type Guards"
+#~ msgstr ""
+
+#~ msgid "Typing-Sig <typing-sig@python.org>"
+#~ msgstr ""
+
+#~ msgid "28-Dec-2020, 9-Apr-2021"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "TypeScript's formulation of user-defined "
+#~ "type guards allows for any input "
+#~ "parameter to be used as the value"
+#~ " tested for narrowing. The TypeScript "
+#~ "language authors could not recall any"
+#~ " real-world examples in TypeScript "
+#~ "where the parameter being tested was "
+#~ "not the first parameter. For this "
+#~ "reason, it was decided unnecessary to"
+#~ " burden the Python implementation of "
+#~ "user-defined type guards with additional"
+#~ " complexity to support a contrived "
+#~ "use case. If such use cases are"
+#~ " identified in the future, there are"
+#~ " ways the TypeGuard mechanism could "
+#~ "be extended. This could involve the "
+#~ "use of keyword indexing, as proposed "
+#~ "in PEP 637."
+#~ msgstr ""
 

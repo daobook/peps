@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0668.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0668.rst:1
-msgid "668"
-msgstr ""
-
-#: ../../pep-0668.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0668.rst:2
-msgid "Graceful cooperation between external and Python package managers"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0668.rst
 msgid "Author"
@@ -46,36 +30,50 @@ msgid ""
 msgstr ""
 
 #: ../../pep-0668.rst
-msgid "Discussions-To"
+msgid "PEP-Delegate"
 msgstr ""
 
 #: ../../pep-0668.rst:11
-msgid ""
-"https://discuss.python.org/t/graceful-cooperation-between-external-and-"
-"python-package-managers-pep-668/10302"
+msgid "Paul Moore <p.f.moore@gmail.com>"
+msgstr ""
+
+#: ../../pep-0668.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0668.rst:12
+msgid "https://discuss.python.org/t/10302"
 msgstr ""
 
 #: ../../pep-0668.rst
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0668.rst:12
-msgid "Draft"
+#: ../../pep-0668.rst:13
+msgid "Accepted"
 msgstr ""
 
 #: ../../pep-0668.rst
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0668.rst:13
-msgid "Informational"
+#: ../../pep-0668.rst:14
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0668.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0668.rst:15
+msgid "Packaging"
 msgstr ""
 
 #: ../../pep-0668.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0668.rst:15
+#: ../../pep-0668.rst:17
 msgid "18-May-2021"
 msgstr ""
 
@@ -83,15 +81,23 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0668.rst:16
+#: ../../pep-0668.rst:18
 msgid "28-May-2021"
 msgstr ""
 
+#: ../../pep-0668.rst
+msgid "Resolution"
+msgstr ""
+
 #: ../../pep-0668.rst:19
+msgid "https://discuss.python.org/t/10302/44"
+msgstr ""
+
+#: ../../pep-0668.rst:22
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0668.rst:21
+#: ../../pep-0668.rst:24
 msgid ""
 "A long-standing practical problem for Python users has been conflicts "
 "between OS package managers and Python-specific package management tools "
@@ -99,7 +105,7 @@ msgid ""
 " and conflicts over file ownership."
 msgstr ""
 
-#: ../../pep-0668.rst:26
+#: ../../pep-0668.rst:29
 msgid ""
 "Historically, Python-specific package management tools have defaulted to "
 "installing packages into an implicit global context. With the "
@@ -108,7 +114,7 @@ msgid ""
 "management tools only within a virtual environment."
 msgstr ""
 
-#: ../../pep-0668.rst:32
+#: ../../pep-0668.rst:35
 msgid ""
 "This PEP proposes a mechanism for a Python installation to communicate to"
 " tools like pip that its global package installation context is managed "
@@ -119,7 +125,7 @@ msgid ""
 "environment."
 msgstr ""
 
-#: ../../pep-0668.rst:40
+#: ../../pep-0668.rst:43
 msgid ""
 "It also standardizes an interpretation of the ``sysconfig`` schemes so "
 "that, if a Python-specific package manager is about to install a package "
@@ -128,22 +134,22 @@ msgid ""
 "breaking software shipped by the external package manager."
 msgstr ""
 
-#: ../../pep-0668.rst:47
+#: ../../pep-0668.rst:50
 msgid "Terminology"
 msgstr ""
 
-#: ../../pep-0668.rst:49
+#: ../../pep-0668.rst:52
 msgid ""
 "A few terms used in this PEP have multiple meanings in the contexts that "
 "it spans. For clarity, this PEP uses the following terms in specific "
 "ways:"
 msgstr ""
 
-#: ../../pep-0668.rst:76
+#: ../../pep-0668.rst:79
 msgid "distro"
 msgstr ""
 
-#: ../../pep-0668.rst:54
+#: ../../pep-0668.rst:57
 msgid ""
 "Short for \"distribution,\" a collection of various sorts of software, "
 "ideally designed to work properly together, including (in contexts "
@@ -153,14 +159,14 @@ msgid ""
 "Software Distribution.\""
 msgstr ""
 
-#: ../../pep-0668.rst:61
+#: ../../pep-0668.rst:64
 msgid ""
 "A distro can be an operating system (OS) of its own, such as Debian, "
 "Fedora, or FreeBSD. It can also be an overlay distribution that installs "
 "on top of an existing OS, such as Homebrew or MacPorts."
 msgstr ""
 
-#: ../../pep-0668.rst:66
+#: ../../pep-0668.rst:69
 msgid ""
 "This document uses the short term \"distro,\" because the term "
 "\"distribution\" has another meaning in Python packaging contexts: a "
@@ -172,18 +178,18 @@ msgid ""
 "or just \"package\" (see below)."
 msgstr ""
 
-#: ../../pep-0668.rst:75
+#: ../../pep-0668.rst:78
 msgid ""
 "The provider of a distro - the team or company that collects and "
 "publishes the software and makes any needed modifications - is its "
 "**distributor**."
 msgstr ""
 
-#: ../../pep-0668.rst:96
+#: ../../pep-0668.rst:99
 msgid "package"
 msgstr ""
 
-#: ../../pep-0668.rst:79
+#: ../../pep-0668.rst:82
 msgid ""
 "A unit of software that can be installed and used within Python. That is,"
 " this refers to what Python-specific packaging tools tend to call a "
@@ -192,14 +198,14 @@ msgid ""
 "Index."
 msgstr ""
 
-#: ../../pep-0668.rst:87
+#: ../../pep-0668.rst:90
 msgid ""
 "This document does not use \"package\" in the sense of an importable name"
 " that contains Python modules, though in many cases, a distribution "
 "package consists of a single importable package of the same name."
 msgstr ""
 
-#: ../../pep-0668.rst:92
+#: ../../pep-0668.rst:95
 msgid ""
 "This document generally does not use the term \"package\" to refer to "
 "units of installation by a distro's package manager (such as ``.deb`` or "
@@ -209,20 +215,20 @@ msgid ""
 " name.)"
 msgstr ""
 
-#: ../../pep-0668.rst:110
+#: ../../pep-0668.rst:113
 msgid "Python-specific package manager"
 msgstr ""
 
-#: ../../pep-0668.rst:99
+#: ../../pep-0668.rst:102
 msgid ""
 "A tool for installing, upgrading, and/or removing Python packages in a "
-"manner that conforms to Python packaging standards (such as PEP 376 and "
-"PEP 427). The most popular Python-specific package manager is pip "
+"manner that conforms to Python packaging standards (such as :pep:`376` "
+"and :pep:`427`). The most popular Python-specific package manager is pip "
 "[#pip]_; other examples include the old Easy Install command [#easy-"
 "install]_ as well as direct usage of a ``setup.py`` command."
 msgstr ""
 
-#: ../../pep-0668.rst:106
+#: ../../pep-0668.rst:109
 msgid ""
 "(Conda [#conda]_ is a bit of a special case, as the ``conda`` command can"
 " install much more than just Python packages, making it more like a "
@@ -232,35 +238,35 @@ msgid ""
 "Python-specific package manager.)"
 msgstr ""
 
-#: ../../pep-0668.rst:125
+#: ../../pep-0668.rst:128
 msgid "distro package manager"
 msgstr ""
 
-#: ../../pep-0668.rst:113
+#: ../../pep-0668.rst:116
 msgid ""
 "A tool for installing, upgrading, and/or removing a distro's packages in "
 "an installed instance of that distro, which is capable of installing "
 "Python packages as well as non-Python packages, and therefore generally "
-"has its own database of installed software unrelated to PEP 376. Examples"
-" include ``apt``, ``dpkg``, ``dnf``, ``rpm``, ``pacman``, and ``brew``. "
-"The salient feature is that if a package was installed by a distro "
-"package manager, removing or upgrading it in a way that would satisfy a "
-"Python-specific package manager will generally leave a distro package "
-"manager in an inconsistent state."
+"has its own database of installed software unrelated to :pep:`376`. "
+"Examples include ``apt``, ``dpkg``, ``dnf``, ``rpm``, ``pacman``, and "
+"``brew``. The salient feature is that if a package was installed by a "
+"distro package manager, removing or upgrading it in a way that would "
+"satisfy a Python-specific package manager will generally leave a distro "
+"package manager in an inconsistent state."
 msgstr ""
 
-#: ../../pep-0668.rst:124
+#: ../../pep-0668.rst:127
 msgid ""
 "This document also uses phrases like \"external package manager\" or "
 "\"system's package manager\" to refer to a distro package manager in "
 "certain contexts."
 msgstr ""
 
-#: ../../pep-0668.rst:134
+#: ../../pep-0668.rst:137
 msgid "shadow"
 msgstr ""
 
-#: ../../pep-0668.rst:128
+#: ../../pep-0668.rst:131
 msgid ""
 "To shadow an installed Python package is to cause some other package to "
 "be preferred for imports without removing any files from the shadowed "
@@ -270,11 +276,11 @@ msgid ""
 " returns the module from the former, and we say that A 2.0 shadows A 1.0."
 msgstr ""
 
-#: ../../pep-0668.rst:137
+#: ../../pep-0668.rst:140
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0668.rst:139
+#: ../../pep-0668.rst:142
 msgid ""
 "Thanks to Python's immense popularity, software distros (by which we mean"
 " Linux and other OS distros as well as overlay distros like Homebrew and "
@@ -283,7 +289,7 @@ msgid ""
 "for other software in the distro."
 msgstr ""
 
-#: ../../pep-0668.rst:145
+#: ../../pep-0668.rst:148
 msgid ""
 "For example, Fedora and Debian (and their downstream distros, as well as "
 "many others) ship a ``/usr/bin/python3`` binary which provides the "
@@ -294,7 +300,7 @@ msgid ""
 "interpreter built and shipped with their distro."
 msgstr ""
 
-#: ../../pep-0668.rst:153
+#: ../../pep-0668.rst:156
 msgid ""
 "The ``python3`` executable available to the users of the distro and the "
 "``python3`` executable available as a dependency for other software in "
@@ -307,7 +313,7 @@ msgid ""
 "shipped by the distro."
 msgstr ""
 
-#: ../../pep-0668.rst:163
+#: ../../pep-0668.rst:166
 msgid ""
 "This may pose a critical problem for the integrity of distros, which "
 "often have package-management tools that are themselves written in "
@@ -316,14 +322,14 @@ msgid ""
 "recover."
 msgstr ""
 
-#: ../../pep-0668.rst:169
+#: ../../pep-0668.rst:172
 msgid ""
 "This applies both to system-wide installs (``sudo pip install``) as well "
 "as user home directory installs (``pip install --user``), since packages "
 "in either location show up on the ``sys.path`` of ``/usr/bin/python3``."
 msgstr ""
 
-#: ../../pep-0668.rst:174
+#: ../../pep-0668.rst:177
 msgid ""
 "There is a worse problem with system-wide installs: if you attempt to "
 "recover from this situation with ``sudo pip uninstall``, you may end up "
@@ -334,7 +340,7 @@ msgid ""
 "using just the software remaining on the system."
 msgstr ""
 
-#: ../../pep-0668.rst:182
+#: ../../pep-0668.rst:185
 msgid ""
 "Over the past many years, a consensus has emerged that the best way to "
 "install Python libraries or applications (when not using a distro's "
@@ -346,7 +352,7 @@ msgid ""
 " software."
 msgstr ""
 
-#: ../../pep-0668.rst:193
+#: ../../pep-0668.rst:196
 msgid ""
 "In some cases, however, it's useful and intentional to install a Python "
 "package from outside of the distro that influences the behavior of "
@@ -358,7 +364,7 @@ msgid ""
 "importable by the software in their base system."
 msgstr ""
 
-#: ../../pep-0668.rst:202
+#: ../../pep-0668.rst:205
 msgid ""
 "While this continues to carry the risk of installing a newer version of a"
 " dependency than the operating system expects or otherwise negatively "
@@ -369,11 +375,11 @@ msgid ""
 "the system's package manager."
 msgstr ""
 
-#: ../../pep-0668.rst:210
+#: ../../pep-0668.rst:213
 msgid "Therefore, this PEP proposes two things."
 msgstr ""
 
-#: ../../pep-0668.rst:212
+#: ../../pep-0668.rst:215
 msgid ""
 "First, it proposes **a way for distributors of a Python interpreter to "
 "mark that interpreter as having its packages managed by means external to"
@@ -384,7 +390,7 @@ msgid ""
 "virtual environment as an alternative."
 msgstr ""
 
-#: ../../pep-0668.rst:220
+#: ../../pep-0668.rst:223
 msgid ""
 "This is an opt-in mechanism: by default, the Python interpreter compiled "
 "from upstream sources will not be so marked, and so running ``pip "
@@ -392,7 +398,7 @@ msgid ""
 " explicitly marked its interpreter, will work as it always has worked."
 msgstr ""
 
-#: ../../pep-0668.rst:226
+#: ../../pep-0668.rst:229
 msgid ""
 "Second, it sets the rule that when installing packages to an "
 "interpreter's global context (either to an unmarked interpreter, or if "
@@ -405,11 +411,11 @@ msgid ""
 " by the external package manager."
 msgstr ""
 
-#: ../../pep-0668.rst:237
+#: ../../pep-0668.rst:240
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0668.rst:239
+#: ../../pep-0668.rst:242
 msgid ""
 "As described in detail in the next section, the first behavior change "
 "involves creating a marker file named ``EXTERNALLY-MANAGED``, whose "
@@ -429,7 +435,7 @@ msgid ""
 "possible locations."
 msgstr ""
 
-#: ../../pep-0668.rst:256
+#: ../../pep-0668.rst:259
 msgid ""
 "The second behavior change takes advantage of the existing ``sysconfig`` "
 "setup in distros that have already encountered this class of problem, and"
@@ -438,11 +444,11 @@ msgid ""
 "manager."
 msgstr ""
 
-#: ../../pep-0668.rst:263
+#: ../../pep-0668.rst:266
 msgid "Use cases"
 msgstr ""
 
-#: ../../pep-0668.rst:265
+#: ../../pep-0668.rst:268
 msgid ""
 "The changed behavior in this PEP is intended to \"do the right thing\" "
 "for as many use cases as possible. In this section, we consider the "
@@ -451,186 +457,180 @@ msgid ""
 "changed by this PEP:"
 msgstr ""
 
-#: ../../pep-0668.rst:271
+#: ../../pep-0668.rst:274
 msgid ""
 "Will a Python-specific installer tool like ``pip install`` permit "
 "installations by default, after implementation of this PEP?"
 msgstr ""
 
-#: ../../pep-0668.rst:274
+#: ../../pep-0668.rst:277
 msgid ""
 "If you do run such a tool, should it be willing to delete packages "
 "shipped by the external (non-Python-specific) package manager for that "
 "context, such as a distro package manager?"
 msgstr ""
 
-#: ../../pep-0668.rst:278
+#: ../../pep-0668.rst:281
 msgid ""
 "(For simplicity, this section discusses pip as the Python-specific "
 "installer tool, though the analysis should apply equally to any other "
 "Python-specific package management tool.)"
 msgstr ""
 
-#: ../../pep-0668.rst:282
+#: ../../pep-0668.rst:285
 msgid "This table summarizes the use cases discussed in detail below:"
 msgstr ""
 
-#: ../../pep-0668.rst:285
+#: ../../pep-0668.rst:288
 msgid "Case"
 msgstr ""
 
-#: ../../pep-0668.rst:285
+#: ../../pep-0668.rst:288
 msgid "Description"
 msgstr ""
 
-#: ../../pep-0668.rst:285
+#: ../../pep-0668.rst:288
 msgid "``pip install`` permitted"
 msgstr ""
 
-#: ../../pep-0668.rst:285
+#: ../../pep-0668.rst:288
 msgid "Deleting externally-installed packages permitted"
 msgstr ""
 
-#: ../../pep-0668.rst:287
+#: ../../pep-0668.rst:290
 msgid "1"
 msgstr ""
 
-#: ../../pep-0668.rst:287
+#: ../../pep-0668.rst:290
 msgid "Unpatched CPython"
 msgstr ""
 
-#: ../../pep-0668.rst:287 ../../pep-0668.rst:291 ../../pep-0668.rst:292
-#: ../../pep-0668.rst:297 ../../pep-0668.rst:304
+#: ../../pep-0668.rst:290 ../../pep-0668.rst:294 ../../pep-0668.rst:295
+#: ../../pep-0668.rst:300 ../../pep-0668.rst:307
 msgid "Currently yes; stays yes"
 msgstr ""
 
-#: ../../pep-0668.rst:288
+#: ../../pep-0668.rst:291
 msgid "2"
 msgstr ""
 
-#: ../../pep-0668.rst:288
+#: ../../pep-0668.rst:291
 msgid "Distro ``/usr/bin/python3``"
 msgstr ""
 
-#: ../../pep-0668.rst:288
+#: ../../pep-0668.rst:291 ../../pep-0668.rst:297
 msgid "Currently yes; becomes no (assuming the distro adds a marker file)"
 msgstr ""
 
-#: ../../pep-0668.rst:288
+#: ../../pep-0668.rst:291
 msgid "Currently yes (except on Debian); becomes no"
 msgstr ""
 
-#: ../../pep-0668.rst:291
+#: ../../pep-0668.rst:294
 msgid "3"
 msgstr ""
 
-#: ../../pep-0668.rst:291
+#: ../../pep-0668.rst:294
 msgid "Distro Python in venv"
 msgstr ""
 
-#: ../../pep-0668.rst:291
+#: ../../pep-0668.rst:294
 msgid "There are no externally-installed packages"
 msgstr ""
 
-#: ../../pep-0668.rst:292
+#: ../../pep-0668.rst:295
 msgid "4"
 msgstr ""
 
-#: ../../pep-0668.rst:292
+#: ../../pep-0668.rst:295
 msgid "Distro Python in venv with ``--system-site-packages``"
 msgstr ""
 
-#: ../../pep-0668.rst:292
+#: ../../pep-0668.rst:295
 msgid "Currently no; stays no"
 msgstr ""
 
-#: ../../pep-0668.rst:294
+#: ../../pep-0668.rst:297
 msgid "5"
 msgstr ""
 
-#: ../../pep-0668.rst:294
+#: ../../pep-0668.rst:297
 msgid "Distro Python in Docker"
 msgstr ""
 
-#: ../../pep-0668.rst:294
-msgid ""
-"Currently yes; stays yes (assuming the Docker image removes the marker "
-"file)"
-msgstr ""
-
-#: ../../pep-0668.rst:294 ../../pep-0668.rst:301 ../../pep-0668.rst:302
+#: ../../pep-0668.rst:297 ../../pep-0668.rst:304 ../../pep-0668.rst:305
 msgid "Currently yes; becomes no"
 msgstr ""
 
-#: ../../pep-0668.rst:297
+#: ../../pep-0668.rst:300
 msgid "6"
 msgstr ""
 
-#: ../../pep-0668.rst:297
+#: ../../pep-0668.rst:300
 msgid "Conda environment"
 msgstr ""
 
-#: ../../pep-0668.rst:298
+#: ../../pep-0668.rst:301
 msgid "7"
 msgstr ""
 
-#: ../../pep-0668.rst:298
+#: ../../pep-0668.rst:301
 msgid "Dev-facing distro"
 msgstr ""
 
-#: ../../pep-0668.rst:298
+#: ../../pep-0668.rst:301
 msgid "Currently yes; becomes no (assuming they add a marker file)"
 msgstr ""
 
-#: ../../pep-0668.rst:298
+#: ../../pep-0668.rst:301
 msgid ""
 "Currently often yes; becomes no (assuming they configure ``sysconfig`` as"
 " needed)"
 msgstr ""
 
-#: ../../pep-0668.rst:301
+#: ../../pep-0668.rst:304
 msgid "8"
 msgstr ""
 
-#: ../../pep-0668.rst:301
+#: ../../pep-0668.rst:304
 msgid "Distro building packages"
 msgstr ""
 
-#: ../../pep-0668.rst:301
+#: ../../pep-0668.rst:304
 msgid "Currently yes; can stay yes"
 msgstr ""
 
-#: ../../pep-0668.rst:302
+#: ../../pep-0668.rst:305
 msgid "9"
 msgstr ""
 
-#: ../../pep-0668.rst:302
+#: ../../pep-0668.rst:305
 msgid "``PYTHONHOME`` copied from a distro Python stdlib"
 msgstr ""
 
-#: ../../pep-0668.rst:304
+#: ../../pep-0668.rst:307
 msgid "10"
 msgstr ""
 
-#: ../../pep-0668.rst:304
+#: ../../pep-0668.rst:307
 msgid "``PYTHONHOME`` copied from upstream Python stdlib"
 msgstr ""
 
-#: ../../pep-0668.rst:308
+#: ../../pep-0668.rst:311
 msgid "In more detail, the use cases above are:"
 msgstr ""
 
-#: ../../pep-0668.rst:310
+#: ../../pep-0668.rst:313
 msgid ""
 "A standard unpatched CPython, without any special configuration of or "
 "patches to ``sysconfig`` and without a marker file. This PEP does not "
 "change its behavior."
 msgstr ""
 
-#: ../../pep-0668.rst:314
+#: ../../pep-0668.rst:317
 msgid ""
 "Such a CPython should (regardless of this PEP) not be installed in a way "
-"that that overlaps any distro-installed Python on the same system. For "
+"that overlaps any distro-installed Python on the same system. For "
 "instance, on an OS that ships Python in ``/usr/bin``, you should not "
 "install a custom CPython built with ``./configure --prefix=/usr``, or it "
 "will overwrite some files from the distro and the distro will eventually "
@@ -639,7 +639,7 @@ msgid ""
 "your home directory)."
 msgstr ""
 
-#: ../../pep-0668.rst:324
+#: ../../pep-0668.rst:327
 msgid ""
 "Therefore, we can assume that such a CPython has its own ``stdlib`` "
 "directory and its own ``sysconfig`` schemes that do not overlap any "
@@ -647,7 +647,7 @@ msgid ""
 "relevant here."
 msgstr ""
 
-#: ../../pep-0668.rst:329
+#: ../../pep-0668.rst:332
 msgid ""
 "If there is a concept of \"externally-installed\" packages in this case, "
 "it's something outside the OS and generally managed by whoever built and "
@@ -657,14 +657,14 @@ msgid ""
 "CPython."
 msgstr ""
 
-#: ../../pep-0668.rst:336
+#: ../../pep-0668.rst:339
 msgid ""
 "A distro's ``/usr/bin/python3``, either when running ``pip install`` as "
 "root or ``pip install --user``, following our `Recommendations for "
 "distros`_."
 msgstr ""
 
-#: ../../pep-0668.rst:340
+#: ../../pep-0668.rst:343
 msgid ""
 "These recommendations include shipping a marker file in the ``stdlib`` "
 "directory, to prevent ``pip install`` by default, and placing distro-"
@@ -672,13 +672,13 @@ msgid ""
 "scheme, so that ``pip`` as root does not write to that location."
 msgstr ""
 
-#: ../../pep-0668.rst:346
+#: ../../pep-0668.rst:349
 msgid ""
 "Many distros (including Debian, Fedora, and their derivatives) are "
 "already doing the latter."
 msgstr ""
 
-#: ../../pep-0668.rst:349
+#: ../../pep-0668.rst:352
 msgid ""
 "On Debian and derivatives, ``pip install`` does not currently delete "
 "distro-installed packages, because Debian carries a `patch to pip to "
@@ -687,7 +687,7 @@ msgid ""
 "Debian-specific and can be included into upstream pip."
 msgstr ""
 
-#: ../../pep-0668.rst:357
+#: ../../pep-0668.rst:360
 msgid ""
 "(We have seen user reports of externally-installed packages being deleted"
 " on Debian or a derivative. We suspect this is because the user has "
@@ -696,13 +696,13 @@ msgid ""
 " behavior in upstream package installers would address this problem.)"
 msgstr ""
 
-#: ../../pep-0668.rst:364
+#: ../../pep-0668.rst:367
 msgid ""
 "A distro Python when used inside a virtual environment (either from "
 "``venv`` or ``virtualenv``)."
 msgstr ""
 
-#: ../../pep-0668.rst:367
+#: ../../pep-0668.rst:370
 msgid ""
 "Inside a virtual environment, all packages are owned by that environment."
 " Even when ``pip``, ``setuptools``, etc. are installed into the "
@@ -710,24 +710,24 @@ msgid ""
 "environment; they are not system-managed."
 msgstr ""
 
-#: ../../pep-0668.rst:372
+#: ../../pep-0668.rst:375
 msgid ""
 "A distro Python when used inside a virtual environment with ``--system-"
 "site-packages``. This is like the previous case, but worth calling out "
 "explicitly, because anything on the global ``sys.path`` is visible."
 msgstr ""
 
-#: ../../pep-0668.rst:377
+#: ../../pep-0668.rst:380
 msgid ""
-"Currently, the answer to \"Will ``pip` delete externally-installed "
-"packages`` is no, because pip has a special case for running in a virtual"
+"Currently, the answer to \"Will ``pip`` delete externally-installed "
+"packages\" is no, because pip has a special case for running in a virtual"
 " environment and attempting to delete packages outside it. After this "
 "PEP, the answer remains no, but the reasoning becomes more general: "
 "system site packages will be outside any of the ``sysconfig`` schemes "
 "used for package management in the environment."
 msgstr ""
 
-#: ../../pep-0668.rst:385
+#: ../../pep-0668.rst:388
 msgid ""
 "A distro Python when used in a single-application container image (e.g., "
 "a Docker container). In this use case, the risk of breaking system "
@@ -740,7 +740,7 @@ msgid ""
 "file is not present, even if the underlying OS ships one by default."
 msgstr ""
 
-#: ../../pep-0668.rst:396
+#: ../../pep-0668.rst:399
 msgid ""
 "There is a small behavior change: currently, ``pip`` run as root will "
 "delete externally-installed packages, but after this PEP it will not. We "
@@ -755,7 +755,7 @@ msgid ""
 "statement will still get you the newly-installed package."
 msgstr ""
 
-#: ../../pep-0668.rst:409
+#: ../../pep-0668.rst:412
 msgid ""
 "If it becomes necessary to have a way to do this, we suggest that the "
 "distro should document a way for the installer tool to access the "
@@ -763,7 +763,7 @@ msgid ""
 "for distros`_ section for more discussion."
 msgstr ""
 
-#: ../../pep-0668.rst:414
+#: ../../pep-0668.rst:417
 msgid ""
 "It is the view of the authors of this PEP that it's still a good idea to "
 "use virtual environments with distro-installed Python interpreters, even "
@@ -774,7 +774,7 @@ msgid ""
 "break."
 msgstr ""
 
-#: ../../pep-0668.rst:422
+#: ../../pep-0668.rst:425
 msgid ""
 "Conda specifically supports the use of non-``conda`` tools like pip to "
 "install software not available in the Conda repositories. In this "
@@ -782,13 +782,13 @@ msgid ""
 "the Python-specific one."
 msgstr ""
 
-#: ../../pep-0668.rst:427
+#: ../../pep-0668.rst:430
 msgid ""
 "In some sense, this is similar to the first case, since Conda provides "
 "its own installation of the Python interpreter."
 msgstr ""
 
-#: ../../pep-0668.rst:430
+#: ../../pep-0668.rst:433
 msgid ""
 "We don't believe this PEP requires any changes to Conda, and versions of "
 "pip that have implemented the changes in this PEP will continue to behave"
@@ -798,7 +798,7 @@ msgid ""
 "idea for other distros.)"
 msgstr ""
 
-#: ../../pep-0668.rst:437
+#: ../../pep-0668.rst:440
 msgid ""
 "By a \"developer-facing distro,\" we mean a specific type of distro where"
 " direct users of Python or other languages in the distro are expected or "
@@ -812,14 +812,14 @@ msgid ""
 " their software for Nix`__."
 msgstr ""
 
-#: ../../pep-0668.rst:448
+#: ../../pep-0668.rst:451
 msgid ""
 "In these cases, the distro may want to respond to an attempted ``pip "
 "install`` with guidance encouraging use of the distro's own facilities "
 "for adding new packages, along with a link to documentation."
 msgstr ""
 
-#: ../../pep-0668.rst:453
+#: ../../pep-0668.rst:456
 msgid ""
 "If the distro supports/encourages creating a virtual environment from the"
 " distro's Python interpreter, there may also be custom instructions for "
@@ -827,7 +827,7 @@ msgid ""
 "does)."
 msgstr ""
 
-#: ../../pep-0668.rst:462
+#: ../../pep-0668.rst:465
 msgid ""
 "When building distro Python packages for a distro Python (case 2), it may"
 " be useful to have ``pip install`` be usable as part of the distro's "
@@ -837,7 +837,7 @@ msgid ""
 "Python-specific installation tool such as installer_."
 msgstr ""
 
-#: ../../pep-0668.rst:472
+#: ../../pep-0668.rst:475
 msgid ""
 "For this case, the build process will need to find some way to suppress "
 "the marker file to allow ``pip install`` to work, and will probably need "
@@ -846,7 +846,7 @@ msgid ""
 "section for more discussion on how to implement this."
 msgstr ""
 
-#: ../../pep-0668.rst:479
+#: ../../pep-0668.rst:482
 msgid ""
 "As a result of this PEP, pip will no longer be able to remove packages "
 "already on the system. However, this behavior change is fine because a "
@@ -855,7 +855,7 @@ msgid ""
 "package up its own files."
 msgstr ""
 
-#: ../../pep-0668.rst:485
+#: ../../pep-0668.rst:488
 msgid ""
 "A distro Python used with ``PYTHONHOME`` to set up an alternative Python "
 "environment (as opposed to a virtual environment), where ``PYTHONHOME`` "
@@ -863,7 +863,7 @@ msgid ""
 "``cp -a /usr/lib/python3.x pyhome/lib``)."
 msgstr ""
 
-#: ../../pep-0668.rst:490
+#: ../../pep-0668.rst:493
 msgid ""
 "Assuming there are no modifications, then the behavior is just like the "
 "underlying distro Python (case 2). So there are behavior changes - you "
@@ -873,20 +873,20 @@ msgid ""
 "entry)."
 msgstr ""
 
-#: ../../pep-0668.rst:497
+#: ../../pep-0668.rst:500
 msgid ""
 "This behavior change seems to be defensible, in that if your "
 "``PYTHONHOME`` is a straight copy of the distro's Python, it should "
 "behave like the distro's Python."
 msgstr ""
 
-#: ../../pep-0668.rst:501
+#: ../../pep-0668.rst:504
 msgid ""
 "A distro Python (or any Python interpreter) used with a ``PYTHONHOME`` "
 "taken from a compatible unmodified upstream Python."
 msgstr ""
 
-#: ../../pep-0668.rst:504
+#: ../../pep-0668.rst:507
 msgid ""
 "Because the behavior changes in this PEP are keyed off of files in the "
 "standard library (the marker file in ``stdlib`` and the behavior of the "
@@ -894,42 +894,42 @@ msgid ""
 "CPython (case 1)."
 msgstr ""
 
-#: ../../pep-0668.rst:510
+#: ../../pep-0668.rst:513
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0668.rst:513
+#: ../../pep-0668.rst:516
 msgid "Marking an interpreter as using an external package manager"
 msgstr ""
 
-#: ../../pep-0668.rst:515
+#: ../../pep-0668.rst:518
 msgid ""
 "Before a Python-specific package installer (that is, a tool such as pip -"
 " not an external tool such as apt) installs a package into a certain "
 "Python context, it should make the following checks by default:"
 msgstr ""
 
-#: ../../pep-0668.rst:520
+#: ../../pep-0668.rst:523
 msgid ""
 "Is it running outside of a virtual environment? It can determine this by "
 "whether ``sys.prefix == sys.base_prefix`` (but see `Backwards "
 "Compatibility`_)."
 msgstr ""
 
-#: ../../pep-0668.rst:524
+#: ../../pep-0668.rst:527
 msgid ""
 "Is there an ``EXTERNALLY-MANAGED`` file in the directory identified by "
 "``sysconfig.get_path(\"stdlib\", sysconfig.get_default_scheme())``?"
 msgstr ""
 
-#: ../../pep-0668.rst:528
+#: ../../pep-0668.rst:531
 msgid ""
 "If both of these conditions are true, the installer should exit with an "
 "error message indicating that package installation into this Python "
 "interpreter's directory are disabled outside of a virtual environment."
 msgstr ""
 
-#: ../../pep-0668.rst:532
+#: ../../pep-0668.rst:535
 msgid ""
 "The installer should have a way for the user to override these rules, "
 "such as a command-line flag ``--break-system-packages``. This option "
@@ -937,7 +937,7 @@ msgid ""
 "its use is risky."
 msgstr ""
 
-#: ../../pep-0668.rst:537
+#: ../../pep-0668.rst:540
 msgid ""
 "The ``EXTERNALLY-MANAGED`` file is an INI-style metadata file intended to"
 " be parsable by the standard library configparser_ module. If the file "
@@ -955,7 +955,7 @@ msgid ""
 "simply named ``Error``."
 msgstr ""
 
-#: ../../pep-0668.rst:555
+#: ../../pep-0668.rst:558
 msgid ""
 "If the installer cannot find an error message in the file (either because"
 " the file cannot be parsed or because no suitable error key exists), then"
@@ -964,7 +964,7 @@ msgid ""
 "install packages."
 msgstr ""
 
-#: ../../pep-0668.rst:561
+#: ../../pep-0668.rst:564
 msgid ""
 "Software distributors who have a non-Python-specific package manager that"
 " manages libraries in the ``sys.path`` of their Python package should, in"
@@ -973,14 +973,14 @@ msgid ""
 "/EXTERNALLY-MANAGED`` consisting of something like"
 msgstr ""
 
-#: ../../pep-0668.rst:585
+#: ../../pep-0668.rst:588
 msgid ""
 "which provides useful and distro-relevant information to a user trying to"
 " install a package. Optionally, translations can be provided in the same "
 "file:"
 msgstr ""
 
-#: ../../pep-0668.rst:595
+#: ../../pep-0668.rst:598
 msgid ""
 "In certain contexts, such as single-application container images that "
 "aren't updated after creation, a distributor may choose not to ship an "
@@ -988,11 +988,11 @@ msgid ""
 " (as they can today) without having to manually override this rule."
 msgstr ""
 
-#: ../../pep-0668.rst:602
+#: ../../pep-0668.rst:605
 msgid "Writing to only the target ``sysconfig`` scheme"
 msgstr ""
 
-#: ../../pep-0668.rst:604
+#: ../../pep-0668.rst:607
 msgid ""
 "Usually, a Python package installer installs to directories in a scheme "
 "returned by the ``sysconfig`` standard library package. Ordinarily, this "
@@ -1001,7 +1001,7 @@ msgid ""
 "scheme."
 msgstr ""
 
-#: ../../pep-0668.rst:610
+#: ../../pep-0668.rst:613
 msgid ""
 "Whenever the installer is installing to a ``sysconfig`` scheme, this PEP "
 "specifies that the installer should never modify or delete files outside "
@@ -1011,44 +1011,44 @@ msgid ""
 "alone."
 msgstr ""
 
-#: ../../pep-0668.rst:617
+#: ../../pep-0668.rst:620
 msgid ""
 "If the installer does end up shadowing an existing installation during an"
 " upgrade, we recommend that it produces a warning at the end of its run."
 msgstr ""
 
-#: ../../pep-0668.rst:621
+#: ../../pep-0668.rst:624
 msgid ""
 "If the installer is installing to a location outside of a ``sysconfig`` "
 "scheme (e.g., ``pip install --target``), then this subsection does not "
 "apply."
 msgstr ""
 
-#: ../../pep-0668.rst:626
+#: ../../pep-0668.rst:629
 msgid "Recommendations for distros"
 msgstr ""
 
-#: ../../pep-0668.rst:628
+#: ../../pep-0668.rst:631
 msgid ""
 "This section is non-normative. It provides best practices we believe "
 "distros should follow unless they have a specific reason otherwise."
 msgstr ""
 
-#: ../../pep-0668.rst:632
+#: ../../pep-0668.rst:635
 msgid "Mark the installation as externally managed"
 msgstr ""
 
-#: ../../pep-0668.rst:634
+#: ../../pep-0668.rst:637
 msgid ""
 "Distros should create an ``EXTERNALLY-MANAGED`` file in their ``stdlib`` "
 "directory."
 msgstr ""
 
-#: ../../pep-0668.rst:638
+#: ../../pep-0668.rst:641
 msgid "Guide users towards virtual environments"
 msgstr ""
 
-#: ../../pep-0668.rst:640
+#: ../../pep-0668.rst:643
 msgid ""
 "The file should contain a useful and distro-relevant error message "
 "indicating both how to install system-wide packages via the distro's "
@@ -1059,7 +1059,7 @@ msgid ""
 "how to make ``python3 -m venv`` work properly."
 msgstr ""
 
-#: ../../pep-0668.rst:648
+#: ../../pep-0668.rst:651
 msgid ""
 "Consider packaging pipx_, a tool for installing Python-language "
 "applications, and suggesting it in the error. pipx automatically creates "
@@ -1073,27 +1073,24 @@ msgid ""
 "Fedora or ``python3-full`` on Debian) depends on pipx."
 msgstr ""
 
-#: ../../pep-0668.rst:663
-msgid "Remove the marker file in container images"
+#: ../../pep-0668.rst:666
+msgid "Keep the marker file in container images"
 msgstr ""
 
-#: ../../pep-0668.rst:665
+#: ../../pep-0668.rst:668
 msgid ""
 "Distros that produce official images for single-application containers "
-"(e.g., Docker container images) should remove the ``EXTERNALLY-MANAGED`` "
-"file, preferably in a way that makes it not come back if a user of that "
+"(e.g., Docker container images) should keep the ``EXTERNALLY-MANAGED`` "
+"file, preferably in a way that makes it not go away if a user of that "
 "image installs package updates inside their image (think ``RUN apt-get "
-"dist-upgrade``). On dpkg-based systems, using ``dpkg-divert --local`` to "
-"persistently rename the file would work. On other systems, there may need"
-" to be some configuration flag available to a post-install script to re-"
-"remove the ``EXTERNALLY-MANAGED`` file."
+"dist-upgrade``)."
 msgstr ""
 
-#: ../../pep-0668.rst:676
+#: ../../pep-0668.rst:675
 msgid "Create separate distro and local directories"
 msgstr ""
 
-#: ../../pep-0668.rst:678
+#: ../../pep-0668.rst:677
 msgid ""
 "Distros should place two separate paths on the system interpreter's "
 "``sys.path``, one for distro-installed packages and one for packages "
@@ -1105,7 +1102,7 @@ msgid ""
 "packages."
 msgstr ""
 
-#: ../../pep-0668.rst:687
+#: ../../pep-0668.rst:686
 msgid ""
 "For example, Fedora and Debian (and their derivatives) both implement "
 "this split by using ``/usr/local`` for locally-installed packages and "
@@ -1120,7 +1117,7 @@ msgid ""
 "on ``sys.path`` for the distro interpreter.)"
 msgstr ""
 
-#: ../../pep-0668.rst:700
+#: ../../pep-0668.rst:699
 msgid ""
 "Note that the ``/usr/local`` vs. ``/usr`` split is analogous to how the "
 "``PATH`` environment variable typically includes "
@@ -1129,24 +1126,25 @@ msgid ""
 "Hierarchy Standard`__."
 msgstr ""
 
-#: ../../pep-0668.rst:708
+#: ../../pep-0668.rst:707
 msgid ""
 "There are two ways you could do this. One is, if you are building and "
 "packaging Python libraries directly (e.g., your packaging helpers unpack "
-"a PEP 517-built wheel or call ``setup.py install``), arrange for those "
-"tools to use a directory that is not in a ``sysconfig`` scheme but is "
+"a :pep:`517`-built wheel or call ``setup.py install``), arrange for those"
+" tools to use a directory that is not in a ``sysconfig`` scheme but is "
 "still on ``sys.path``."
 msgstr ""
 
-#: ../../pep-0668.rst:714
+#: ../../pep-0668.rst:713
 msgid ""
 "The other is to arrange for the default ``sysconfig`` scheme to change "
 "when running inside a package build versus when running on an installed "
 "system. The ``sysconfig`` customization hooks from bpo-43976_ should make"
-" this easy: make your packaging tool set an environment variable or some "
-"other detectable configuration, and define a ``get_preferred_schemes`` "
-"function to return a different scheme when called from inside a package "
-"build. Then you can use ``pip install`` as part of your distro packaging."
+" this easy (once accepted and implemented): make your packaging tool set "
+"an environment variable or some other detectable configuration, and "
+"define a ``get_preferred_schemes`` function to return a different scheme "
+"when called from inside a package build. Then you can use ``pip install``"
+" as part of your distro packaging."
 msgstr ""
 
 #: ../../pep-0668.rst:725
@@ -1362,7 +1360,7 @@ msgstr ""
 #: ../../pep-0668.rst:888
 msgid ""
 "Should the file be TOML? TOML is gaining popularity for packaging (see "
-"e.g. PEP 517) but does not yet have an implementation in the standard "
+"e.g. :pep:`517`) but does not yet have an implementation in the standard "
 "library. Strictly speaking, this isn't a blocker - distros need only "
 "write the file, not read it, so they don't need a TOML library (the file "
 "will probably be written by hand, regardless of format), and packaging "
@@ -1412,16 +1410,16 @@ msgstr ""
 
 #: ../../pep-0668.rst:927
 msgid ""
-"Why not use the ``INSTALLER`` file from PEP 376 to determine who "
+"Why not use the ``INSTALLER`` file from :pep:`376` to determine who "
 "installed a package and whether it can be removed? First, it's specific "
 "to a particular package (it's in the package's ``dist-info`` directory), "
 "so like some of the alternatives above, it doesn't provide information on"
 " an entire environment and whether package installations are permissible."
-" PEP 627 also updates PEP 376 to prevent programmatic use of "
+" :pep:`627` also updates :pep:`376` to prevent programmatic use of "
 "``INSTALLER``, specifying that the file is \"to be used for informational"
 " purposes only. [...] Our goal is supporting interoperating tools, and "
 "basing any action on which tool happened to install a package runs "
-"counter to that goal.\" Finally, as PEP 627 envisions, there are "
+"counter to that goal.\" Finally, as :pep:`627` envisions, there are "
 "legitimate use cases for one tool knowing how to handle packages "
 "installed by another tool; for instance, ``conda`` can safely remove a "
 "package installed by ``pip`` into a Conda environment."
@@ -1592,8 +1590,8 @@ msgstr ""
 msgid ""
 "For additional background on these problems and previous attempts to "
 "solve them, see `Debian bug 771794`_ \"pip silently removes/updates "
-"system provided python packages` from 2014, Fedora's 2018 article `Making"
-" sudo pip safe`_ about pointing ``sudo pip`` at /usr/local (which "
+"system provided python packages\" from 2014, Fedora's 2018 article "
+"`Making sudo pip safe`_ about pointing ``sudo pip`` at /usr/local (which "
 "acknowledges that the changes still do not make ``sudo pip`` completely "
 "safe), pip issues 5605_ (\"Disable upgrades to existing python modules "
 "which were not installed via pip\") and 5722_ (\"pip should respect "
@@ -1625,4 +1623,219 @@ msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "668"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Graceful cooperation between external and Python package managers"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "https://discuss.python.org/t/graceful-cooperation-"
+#~ "between-external-and-python-package-"
+#~ "managers-pep-668/10302"
+#~ msgstr ""
+
+#~ msgid "Draft"
+#~ msgstr ""
+
+#~ msgid "Informational"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A tool for installing, upgrading, and/or"
+#~ " removing Python packages in a manner"
+#~ " that conforms to Python packaging "
+#~ "standards (such as PEP 376 and PEP"
+#~ " 427). The most popular Python-"
+#~ "specific package manager is pip [#pip]_;"
+#~ " other examples include the old Easy"
+#~ " Install command [#easy-install]_ as "
+#~ "well as direct usage of a "
+#~ "``setup.py`` command."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A tool for installing, upgrading, and/or"
+#~ " removing a distro's packages in an"
+#~ " installed instance of that distro, "
+#~ "which is capable of installing Python"
+#~ " packages as well as non-Python "
+#~ "packages, and therefore generally has "
+#~ "its own database of installed software"
+#~ " unrelated to PEP 376. Examples "
+#~ "include ``apt``, ``dpkg``, ``dnf``, ``rpm``,"
+#~ " ``pacman``, and ``brew``. The salient "
+#~ "feature is that if a package was"
+#~ " installed by a distro package "
+#~ "manager, removing or upgrading it in "
+#~ "a way that would satisfy a "
+#~ "Python-specific package manager will "
+#~ "generally leave a distro package manager"
+#~ " in an inconsistent state."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Currently yes; stays yes (assuming the"
+#~ " Docker image removes the marker "
+#~ "file)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Such a CPython should (regardless of "
+#~ "this PEP) not be installed in a"
+#~ " way that that overlaps any "
+#~ "distro-installed Python on the same "
+#~ "system. For instance, on an OS "
+#~ "that ships Python in ``/usr/bin``, you"
+#~ " should not install a custom CPython"
+#~ " built with ``./configure --prefix=/usr``, "
+#~ "or it will overwrite some files "
+#~ "from the distro and the distro "
+#~ "will eventually overwrite some files "
+#~ "from your installation. Instead, your "
+#~ "installation should be in a separate "
+#~ "directory (perhaps ``/usr/local``, ``/opt``, "
+#~ "or your home directory)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Currently, the answer to \"Will ``pip`"
+#~ " delete externally-installed packages`` is"
+#~ " no, because pip has a special "
+#~ "case for running in a virtual "
+#~ "environment and attempting to delete "
+#~ "packages outside it. After this PEP, "
+#~ "the answer remains no, but the "
+#~ "reasoning becomes more general: system "
+#~ "site packages will be outside any "
+#~ "of the ``sysconfig`` schemes used for"
+#~ " package management in the environment."
+#~ msgstr ""
+
+#~ msgid "Remove the marker file in container images"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Distros that produce official images for"
+#~ " single-application containers (e.g., "
+#~ "Docker container images) should remove "
+#~ "the ``EXTERNALLY-MANAGED`` file, preferably"
+#~ " in a way that makes it not "
+#~ "come back if a user of that "
+#~ "image installs package updates inside "
+#~ "their image (think ``RUN apt-get "
+#~ "dist-upgrade``). On dpkg-based systems, "
+#~ "using ``dpkg-divert --local`` to "
+#~ "persistently rename the file would work."
+#~ " On other systems, there may need "
+#~ "to be some configuration flag available"
+#~ " to a post-install script to "
+#~ "re-remove the ``EXTERNALLY-MANAGED`` file."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There are two ways you could do"
+#~ " this. One is, if you are "
+#~ "building and packaging Python libraries "
+#~ "directly (e.g., your packaging helpers "
+#~ "unpack a PEP 517-built wheel or "
+#~ "call ``setup.py install``), arrange for "
+#~ "those tools to use a directory "
+#~ "that is not in a ``sysconfig`` "
+#~ "scheme but is still on ``sys.path``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The other is to arrange for the"
+#~ " default ``sysconfig`` scheme to change "
+#~ "when running inside a package build "
+#~ "versus when running on an installed "
+#~ "system. The ``sysconfig`` customization hooks"
+#~ " from bpo-43976_ should make this "
+#~ "easy: make your packaging tool set "
+#~ "an environment variable or some other"
+#~ " detectable configuration, and define a "
+#~ "``get_preferred_schemes`` function to return a"
+#~ " different scheme when called from "
+#~ "inside a package build. Then you "
+#~ "can use ``pip install`` as part of"
+#~ " your distro packaging."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Should the file be TOML? TOML is"
+#~ " gaining popularity for packaging (see "
+#~ "e.g. PEP 517) but does not yet "
+#~ "have an implementation in the standard"
+#~ " library. Strictly speaking, this isn't "
+#~ "a blocker - distros need only "
+#~ "write the file, not read it, so"
+#~ " they don't need a TOML library "
+#~ "(the file will probably be written "
+#~ "by hand, regardless of format), and "
+#~ "packaging tools likely have a TOML "
+#~ "reader already. However, the INI format"
+#~ " is currently used for various other"
+#~ " forms of packaging metadata (e.g., "
+#~ "``pydistutils.cfg`` and ``setup.cfg``), meets "
+#~ "our needs, and is parsable by the"
+#~ " standard library, and the pip "
+#~ "maintainers expressed a preference to "
+#~ "avoid using TOML for this yet."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Why not use the ``INSTALLER`` file "
+#~ "from PEP 376 to determine who "
+#~ "installed a package and whether it "
+#~ "can be removed? First, it's specific "
+#~ "to a particular package (it's in "
+#~ "the package's ``dist-info`` directory), "
+#~ "so like some of the alternatives "
+#~ "above, it doesn't provide information on"
+#~ " an entire environment and whether "
+#~ "package installations are permissible. PEP "
+#~ "627 also updates PEP 376 to "
+#~ "prevent programmatic use of ``INSTALLER``, "
+#~ "specifying that the file is \"to "
+#~ "be used for informational purposes only."
+#~ " [...] Our goal is supporting "
+#~ "interoperating tools, and basing any "
+#~ "action on which tool happened to "
+#~ "install a package runs counter to "
+#~ "that goal.\" Finally, as PEP 627 "
+#~ "envisions, there are legitimate use "
+#~ "cases for one tool knowing how to"
+#~ " handle packages installed by another "
+#~ "tool; for instance, ``conda`` can safely"
+#~ " remove a package installed by "
+#~ "``pip`` into a Conda environment."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For additional background on these "
+#~ "problems and previous attempts to solve"
+#~ " them, see `Debian bug 771794`_ \"pip"
+#~ " silently removes/updates system provided "
+#~ "python packages` from 2014, Fedora's "
+#~ "2018 article `Making sudo pip safe`_ "
+#~ "about pointing ``sudo pip`` at "
+#~ "/usr/local (which acknowledges that the "
+#~ "changes still do not make ``sudo "
+#~ "pip`` completely safe), pip issues 5605_"
+#~ " (\"Disable upgrades to existing python "
+#~ "modules which were not installed via "
+#~ "pip\") and 5722_ (\"pip should respect"
+#~ " /usr/local\") from 2018, and the "
+#~ "post-PyCon US 2019 discussion thread "
+#~ "`Playing nice with external package "
+#~ "managers`_."
+#~ msgstr ""
 

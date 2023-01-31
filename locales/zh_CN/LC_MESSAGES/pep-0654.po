@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 00:59+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0654.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0654.rst:1
-msgid "654"
-msgstr ""
-
-#: ../../pep-0654.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0654.rst:2
-msgid "Exception Groups and except*"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0654.rst
 msgid "Author"
@@ -68,38 +52,46 @@ msgid "22-Feb-2021"
 msgstr ""
 
 #: ../../pep-0654.rst
-msgid "Post-History"
+msgid "Python-Version"
 msgstr ""
 
 #: ../../pep-0654.rst:10
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0654.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0654.rst:11
 msgid "22-Feb-2021, 20-Mar-2021"
 msgstr ""
 
-#: ../../pep-0654.rst:14
+#: ../../pep-0654.rst:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0654.rst:16
+#: ../../pep-0654.rst:17
 msgid ""
 "This document proposes language extensions that allow programs to raise "
 "and handle multiple unrelated exceptions simultaneously:"
 msgstr ""
 
-#: ../../pep-0654.rst:19
+#: ../../pep-0654.rst:20
 msgid ""
 "A new standard exception type, the ``ExceptionGroup``, which represents a"
 " group of unrelated exceptions being propagated together."
 msgstr ""
 
-#: ../../pep-0654.rst:22
+#: ../../pep-0654.rst:23
 msgid "A new syntax ``except*`` for handling ``ExceptionGroups``."
 msgstr ""
 
-#: ../../pep-0654.rst:25
+#: ../../pep-0654.rst:26
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0654.rst:27
+#: ../../pep-0654.rst:28
 msgid ""
 "The interpreter is currently able to propagate at most one exception at a"
 " time. The chaining features introduced in :pep:`3134` link together "
@@ -109,7 +101,7 @@ msgid ""
 "are listed below."
 msgstr ""
 
-#: ../../pep-0654.rst:33
+#: ../../pep-0654.rst:34
 msgid ""
 "**Concurrent errors**. Libraries for async concurrency provide APIs to "
 "invoke multiple tasks and return their results in aggregate. There isn't "
@@ -126,7 +118,7 @@ msgid ""
 "are proposing (see also the `Programming Without 'except \\*'`_ section.)"
 msgstr ""
 
-#: ../../pep-0654.rst:47
+#: ../../pep-0654.rst:48
 msgid ""
 "Implementing a better task spawning API in asyncio, inspired by Trio "
 "nurseries, was the main motivation for this PEP.  That work is currently "
@@ -134,7 +126,7 @@ msgid ""
 "groups."
 msgstr ""
 
-#: ../../pep-0654.rst:52
+#: ../../pep-0654.rst:53
 msgid ""
 "**Multiple failures when retrying an operation.** The Python standard "
 "library's ``socket.create_connection`` function may attempt to connect to"
@@ -143,7 +135,7 @@ msgid ""
 "particularly when they are different (see issue 29980 [4]_.)"
 msgstr ""
 
-#: ../../pep-0654.rst:58
+#: ../../pep-0654.rst:59
 msgid ""
 "**Multiple user callbacks fail.** Python's ``atexit.register()`` function"
 " allows users to register functions that are called on system exit. If "
@@ -156,7 +148,7 @@ msgid ""
 "developer Ran Benita (see pytest issue 8217 [6]_.)"
 msgstr ""
 
-#: ../../pep-0654.rst:68
+#: ../../pep-0654.rst:69
 msgid ""
 "**Multiple errors in a complex calculation.** The Hypothesis library "
 "performs automatic bug reduction (simplifying code that demonstrates a "
@@ -169,7 +161,7 @@ msgid ""
 "Hatfield-Dodds)."
 msgstr ""
 
-#: ../../pep-0654.rst:77
+#: ../../pep-0654.rst:78
 msgid ""
 "**Errors in wrapper code.** The Python standard library's "
 "``tempfile.TemporaryDirectory`` context manager had an issue where an "
@@ -180,7 +172,7 @@ msgid ""
 "[8]_.)"
 msgstr ""
 
-#: ../../pep-0654.rst:85
+#: ../../pep-0654.rst:86
 msgid ""
 "The issue was resolved by making the cleanup code ignore errors, thus "
 "sidestepping the multiple exception problem. With the features we propose"
@@ -190,11 +182,11 @@ msgid ""
 "their types."
 msgstr ""
 
-#: ../../pep-0654.rst:93
+#: ../../pep-0654.rst:94
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0654.rst:95
+#: ../../pep-0654.rst:96
 msgid ""
 "Grouping several exceptions together can be done without changes to the "
 "language, simply by creating a container exception type. Trio [2]_ is an "
@@ -209,7 +201,7 @@ msgid ""
 " as simple as collecting exceptions into a set."
 msgstr ""
 
-#: ../../pep-0654.rst:106
+#: ../../pep-0654.rst:107
 msgid ""
 "Changes to the language are required in order to extend support for "
 "exception groups in the style of existing exception handling mechanisms. "
@@ -220,14 +212,14 @@ msgid ""
 " exceptions that it is not handling."
 msgstr ""
 
-#: ../../pep-0654.rst:114
+#: ../../pep-0654.rst:115
 msgid ""
 "We considered whether it is possible to modify the semantics of "
 "``except`` for this purpose, in a backwards-compatible manner, and found "
 "that it is not. See the `Rejected Ideas`_ section for more on this."
 msgstr ""
 
-#: ../../pep-0654.rst:118
+#: ../../pep-0654.rst:119
 msgid ""
 "The purpose of this PEP, then, is to add the ``ExceptionGroup`` builtin "
 "type and the ``except*`` syntax for handling exception groups in the "
@@ -237,7 +229,7 @@ msgid ""
 "add the new ``except*`` syntax."
 msgstr ""
 
-#: ../../pep-0654.rst:125
+#: ../../pep-0654.rst:126
 msgid ""
 "Our premise is that exception groups and ``except*`` will be used "
 "selectively, only when they are needed. We do not expect them to become "
@@ -247,15 +239,15 @@ msgid ""
 "done by introducing a new API rather than modifying an existing one."
 msgstr ""
 
-#: ../../pep-0654.rst:134
+#: ../../pep-0654.rst:135
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0654.rst:137
+#: ../../pep-0654.rst:138
 msgid "ExceptionGroup and BaseExceptionGroup"
 msgstr ""
 
-#: ../../pep-0654.rst:139
+#: ../../pep-0654.rst:140
 msgid ""
 "We propose to add two new builtin exception types: "
 "``BaseExceptionGroup(BaseException)`` and "
@@ -267,7 +259,7 @@ msgid ""
 "...``."
 msgstr ""
 
-#: ../../pep-0654.rst:147
+#: ../../pep-0654.rst:148
 msgid ""
 "Both have a constructor that takes two positional-only arguments: a "
 "message string and a sequence of the nested exceptions, which are exposed"
@@ -275,16 +267,19 @@ msgid ""
 "``ExceptionGroup('issues', [ValueError('bad value'), TypeError('bad "
 "type')])``. The difference between them is that ``ExceptionGroup`` can "
 "only wrap ``Exception`` subclasses while ``BaseExceptionGroup`` can wrap "
-"any ``BaseException`` subclass. A factory method that inspects the nested"
-" exceptions and selects between ``ExceptionGroup`` and "
-"``BaseExceptionGroup`` makes the choice automatic. In the rest of the "
-"document, when we refer to an exception group, we mean either an "
-"``ExceptionGroup`` or a ``BaseExceptionGroup``. When it is necessary to "
-"make the distinction, we use the class name. For brevity, we will use "
-"``ExceptionGroup`` in code examples that are relevant to both."
+"any ``BaseException`` subclass. The ``BaseExceptionGroup`` constructor "
+"inspects the nested exceptions and if they are all ``Exception`` "
+"subclasses, it returns an ``ExceptionGroup`` rather than a "
+"``BaseExceptionGroup``. The ``ExceptionGroup`` constructor raises a "
+"``TypeError`` if any of the nested exceptions is not an ``Exception`` "
+"instance.  In the rest of the document, when we refer to an exception "
+"group, we mean either an ``ExceptionGroup`` or a ``BaseExceptionGroup``. "
+"When it is necessary to make the distinction, we use the class name. For "
+"brevity, we will use ``ExceptionGroup`` in code examples that are "
+"relevant to both."
 msgstr ""
 
-#: ../../pep-0654.rst:161
+#: ../../pep-0654.rst:164
 msgid ""
 "Since an exception group can be nested, it represents a tree of "
 "exceptions, where the leaves are plain exceptions and each internal node "
@@ -292,7 +287,7 @@ msgid ""
 "into a new group and raised them together."
 msgstr ""
 
-#: ../../pep-0654.rst:166
+#: ../../pep-0654.rst:169
 msgid ""
 "The ``BaseExceptionGroup.subgroup(condition)`` method gives us a way to "
 "obtain an exception group that has the same metadata (message, cause, "
@@ -301,14 +296,14 @@ msgid ""
 "true:"
 msgstr ""
 
-#: ../../pep-0654.rst:217
+#: ../../pep-0654.rst:221
 msgid ""
 "The match condition is also applied to interior nodes (the exception "
 "groups), and a match causes the whole subtree rooted at this node to be "
 "included in the result."
 msgstr ""
 
-#: ../../pep-0654.rst:221
+#: ../../pep-0654.rst:225
 msgid ""
 "Empty nested groups are omitted from the result, as in the case of "
 "``ExceptionGroup(\"three\")`` in the example above.  If none of the "
@@ -323,19 +318,19 @@ msgid ""
 "copied by reference, so they are shared with the original ``eg``."
 msgstr ""
 
-#: ../../pep-0654.rst:234
+#: ../../pep-0654.rst:238
 msgid ""
 "If both the subgroup and its complement are needed, the "
 "``BaseExceptionGroup.split(condition)`` method can be used:"
 msgstr ""
 
-#: ../../pep-0654.rst:264
+#: ../../pep-0654.rst:268
 msgid ""
 "If a split is trivial (one side is empty), then None is returned for the "
 "other side:"
 msgstr ""
 
-#: ../../pep-0654.rst:277
+#: ../../pep-0654.rst:281
 msgid ""
 "Since splitting by exception type is a very common use case, ``subgroup``"
 " and ``split`` can take an exception type or tuple of exception types and"
@@ -345,11 +340,11 @@ msgid ""
 " for a match)."
 msgstr ""
 
-#: ../../pep-0654.rst:284
+#: ../../pep-0654.rst:288
 msgid "Subclassing Exception Groups"
 msgstr ""
 
-#: ../../pep-0654.rst:286
+#: ../../pep-0654.rst:290
 msgid ""
 "It is possible to subclass exception groups, but when doing that it is "
 "usually necessary to specify how ``subgroup()`` and ``split()`` should "
@@ -363,7 +358,7 @@ msgid ""
 "error code field, we can do this:"
 msgstr ""
 
-#: ../../pep-0654.rst:308
+#: ../../pep-0654.rst:312
 msgid ""
 "Note that we override ``__new__`` rather than ``__init__``; this is "
 "because ``BaseExceptionGroup.__new__`` needs to inspect the constructor "
@@ -373,11 +368,11 @@ msgid ""
 "``split`` do that for us."
 msgstr ""
 
-#: ../../pep-0654.rst:314
+#: ../../pep-0654.rst:318
 msgid "With the class defined above, we have the following:"
 msgstr ""
 
-#: ../../pep-0654.rst:327
+#: ../../pep-0654.rst:331
 msgid ""
 "If we do not override ``derive``, then split calls the one defined on "
 "``BaseExceptionGroup``, which returns an instance of ``ExceptionGroup`` "
@@ -385,11 +380,11 @@ msgid ""
 "``BaseExceptionGroup`` otherwise. For example:"
 msgstr ""
 
-#: ../../pep-0654.rst:347
+#: ../../pep-0654.rst:351
 msgid "The Traceback of an Exception Group"
 msgstr ""
 
-#: ../../pep-0654.rst:349
+#: ../../pep-0654.rst:353
 msgid ""
 "For regular exceptions, the traceback represents a simple path of frames,"
 " from the frame in which the exception was raised to the frame in which "
@@ -405,7 +400,7 @@ msgid ""
 " never need to be removed."
 msgstr ""
 
-#: ../../pep-0654.rst:361
+#: ../../pep-0654.rst:365
 msgid ""
 "We do not need to make any changes to this data structure. The "
 "``__traceback__`` field of the exception group instance represents the "
@@ -415,18 +410,18 @@ msgid ""
 "the frame of the merge."
 msgstr ""
 
-#: ../../pep-0654.rst:368
+#: ../../pep-0654.rst:372
 msgid ""
 "What we do need to change is any code that interprets and displays "
 "tracebacks, because it now needs to continue into tracebacks of nested "
 "exceptions, as in the following example:"
 msgstr ""
 
-#: ../../pep-0654.rst:405
+#: ../../pep-0654.rst:409
 msgid "Handling Exception Groups"
 msgstr ""
 
-#: ../../pep-0654.rst:407
+#: ../../pep-0654.rst:411
 msgid ""
 "We expect that when programs catch and handle exception groups, they will"
 " typically either query to check if it has leaf exceptions for which some"
@@ -434,7 +429,7 @@ msgid ""
 "exception (using the ``traceback`` module's methods)."
 msgstr ""
 
-#: ../../pep-0654.rst:412
+#: ../../pep-0654.rst:416
 msgid ""
 "It is less likely to be useful to iterate over the individual leaf "
 "exceptions. To see why, suppose that an application caught an exception "
@@ -447,7 +442,7 @@ msgid ""
 "not, than we are to be interested in the number of ``Ts`` in ``eg``."
 msgstr ""
 
-#: ../../pep-0654.rst:422
+#: ../../pep-0654.rst:426
 msgid ""
 "However, there are situations where it is necessary to inspect the "
 "individual leaf exceptions. For example, suppose that we have an "
@@ -456,7 +451,7 @@ msgid ""
 "passing a function with side effects to ``subgroup``, as follows:"
 msgstr ""
 
-#: ../../pep-0654.rst:445
+#: ../../pep-0654.rst:449
 msgid ""
 "In the previous example, when ``log_and_ignore_ENOENT`` is invoked on a "
 "leaf exception, only part of this exception's traceback is accessible -- "
@@ -466,22 +461,22 @@ msgid ""
 "direct iteration, recursively, as follows:"
 msgstr ""
 
-#: ../../pep-0654.rst:475
+#: ../../pep-0654.rst:479
 msgid "We can then process the full tracebacks of the leaf exceptions:"
 msgstr ""
 
-#: ../../pep-0654.rst:523
+#: ../../pep-0654.rst:527
 msgid "except*"
 msgstr ""
 
-#: ../../pep-0654.rst:525
+#: ../../pep-0654.rst:529
 msgid ""
 "We are proposing to introduce a new variant of the ``try..except`` syntax"
 " to simplify working with exception groups. The ``*`` symbol indicates "
 "that multiple exceptions can be handled by each ``except*`` clause:"
 msgstr ""
 
-#: ../../pep-0654.rst:540
+#: ../../pep-0654.rst:544
 msgid ""
 "In a traditional ``try-except`` statement there is only one exception to "
 "handle, so the body of at most one ``except`` clause executes; the first "
@@ -496,7 +491,7 @@ msgid ""
 "except*`` block is independent of any other exceptions in the group."
 msgstr ""
 
-#: ../../pep-0654.rst:551
+#: ../../pep-0654.rst:555
 msgid ""
 "For example, suppose that the body of the ``try`` block above raises ``eg"
 " = ExceptionGroup('msg', [FooError(1), FooError(2), BazError()])``. The "
@@ -515,45 +510,45 @@ msgid ""
 "``sys.exc_info()`` set to ``ExceptionGroup('msg', [BazError()])``."
 msgstr ""
 
-#: ../../pep-0654.rst:567
+#: ../../pep-0654.rst:571
 msgid "Exceptions are matched using a subclass check. For example:"
 msgstr ""
 
-#: ../../pep-0654.rst:577
+#: ../../pep-0654.rst:581
 msgid "could output:"
 msgstr ""
 
-#: ../../pep-0654.rst:587
+#: ../../pep-0654.rst:591
 msgid ""
 "The order of ``except*`` clauses is significant just like with the "
 "regular ``try..except``:"
 msgstr ""
 
-#: ../../pep-0654.rst:602
+#: ../../pep-0654.rst:606
 msgid "Recursive Matching"
 msgstr ""
 
-#: ../../pep-0654.rst:604
+#: ../../pep-0654.rst:608
 msgid ""
 "The matching of ``except*`` clauses against an exception group is "
 "performed recursively, using the ``split()`` method:"
 msgstr ""
 
-#: ../../pep-0654.rst:630
+#: ../../pep-0654.rst:634
 msgid "Unmatched Exceptions"
 msgstr ""
 
-#: ../../pep-0654.rst:632
+#: ../../pep-0654.rst:636
 msgid ""
 "If not all exceptions in an exception group were matched by the "
 "``except*`` clauses, the remaining part of the group is propagated on:"
 msgstr ""
 
-#: ../../pep-0654.rst:659
+#: ../../pep-0654.rst:663
 msgid "Naked Exceptions"
 msgstr ""
 
-#: ../../pep-0654.rst:661
+#: ../../pep-0654.rst:665
 msgid ""
 "If the exception raised inside the ``try`` body is not of type "
 "``ExceptionGroup`` or ``BaseExceptionGroup``, we call it a ``naked`` "
@@ -563,17 +558,17 @@ msgid ""
 "is to make the type of ``e`` consistent and statically known:"
 msgstr ""
 
-#: ../../pep-0654.rst:676
+#: ../../pep-0654.rst:680
 msgid ""
 "However, if a naked exception is not caught, it propagates in its "
 "original naked form:"
 msgstr ""
 
-#: ../../pep-0654.rst:693
+#: ../../pep-0654.rst:697
 msgid "Raising exceptions in an ``except*`` block"
 msgstr ""
 
-#: ../../pep-0654.rst:695
+#: ../../pep-0654.rst:699
 msgid ""
 "In a traditional ``except`` block, there are two ways to raise "
 "exceptions: ``raise e`` to explicitly raise an exception object ``e``, or"
@@ -582,7 +577,7 @@ msgid ""
 "does not add the current frame to the stack:"
 msgstr ""
 
-#: ../../pep-0654.rst:721
+#: ../../pep-0654.rst:725
 msgid ""
 "This holds for exception groups as well, but the situation is now more "
 "complex because there can be exceptions raised and reraised from multiple"
@@ -591,7 +586,7 @@ msgid ""
 "result, and raise that."
 msgstr ""
 
-#: ../../pep-0654.rst:727
+#: ../../pep-0654.rst:731
 msgid ""
 "The reraised exceptions and the unhandled exceptions are subgroups of the"
 " original group, and share its metadata (cause, context, traceback). On "
@@ -602,7 +597,7 @@ msgid ""
 "raise."
 msgstr ""
 
-#: ../../pep-0654.rst:734
+#: ../../pep-0654.rst:738
 msgid ""
 "In the aggregated exception group, the reraised and unhandled exceptions "
 "have the same relative structure as in the original exception, as if they"
@@ -613,7 +608,7 @@ msgid ""
 "``ExceptionGroup``:"
 msgstr ""
 
-#: ../../pep-0654.rst:770
+#: ../../pep-0654.rst:774
 msgid ""
 "When exceptions are raised explicitly, they are independent of the "
 "original exception group, and cannot be merged with it (they have their "
@@ -622,18 +617,18 @@ msgid ""
 "reraised/unhandled subgroup described above."
 msgstr ""
 
-#: ../../pep-0654.rst:776
+#: ../../pep-0654.rst:780
 msgid ""
 "In the following example, the ``ValueErrors`` were raised so they are in "
 "their own ``ExceptionGroup``, while the ``OSErrors`` were reraised so "
 "they were merged with the unhandled ``TypeErrors``."
 msgstr ""
 
-#: ../../pep-0654.rst:835
+#: ../../pep-0654.rst:839
 msgid "Chaining"
 msgstr ""
 
-#: ../../pep-0654.rst:837
+#: ../../pep-0654.rst:841
 msgid ""
 "Explicitly raised exception groups are chained as with any exceptions. "
 "The following example shows how part of ``ExceptionGroup`` \"one\" became"
@@ -641,24 +636,24 @@ msgid ""
 "combined with it into the new ``ExceptionGroup``."
 msgstr ""
 
-#: ../../pep-0654.rst:879
+#: ../../pep-0654.rst:883
 msgid "Raising New Exceptions"
 msgstr ""
 
-#: ../../pep-0654.rst:881
+#: ../../pep-0654.rst:885
 msgid ""
 "In the previous examples the explicit raises were of the exceptions that "
 "were caught, so for completion we show a new exception being raised, with"
 " chaining:"
 msgstr ""
 
-#: ../../pep-0654.rst:910
+#: ../../pep-0654.rst:911
 msgid ""
 "Note that exceptions raised in one ``except*`` clause are not eligible to"
 " match other clauses from the same ``try`` statement:"
 msgstr ""
 
-#: ../../pep-0654.rst:931
+#: ../../pep-0654.rst:929
 msgid ""
 "Raising a new instance of a naked exception does not cause this exception"
 " to be wrapped by an exception group. Rather, the exception is raised as "
@@ -666,18 +661,18 @@ msgid ""
 "becomes a direct child of the new exception group created for that:"
 msgstr ""
 
-#: ../../pep-0654.rst:989
+#: ../../pep-0654.rst:987
 msgid ""
 "Finally, as an example of how the proposed semantics can help us work "
 "effectively with exception groups, the following code ignores all "
 "``EPIPE`` OS errors, while letting all other exceptions propagate."
 msgstr ""
 
-#: ../../pep-0654.rst:1004
+#: ../../pep-0654.rst:1002
 msgid "Caught Exception Objects"
 msgstr ""
 
-#: ../../pep-0654.rst:1006
+#: ../../pep-0654.rst:1004
 msgid ""
 "It is important to point out that the exception group bound to ``e`` in "
 "an ``except*`` clause is an ephemeral object. Raising it via ``raise`` or"
@@ -685,31 +680,31 @@ msgid ""
 "exception group.  Any modifications to ``e`` will likely be lost:"
 msgstr ""
 
-#: ../../pep-0654.rst:1026
+#: ../../pep-0654.rst:1024
 msgid "Forbidden Combinations"
 msgstr ""
 
-#: ../../pep-0654.rst:1028
+#: ../../pep-0654.rst:1026
 msgid ""
 "It is not possible to use both traditional ``except`` blocks and the new "
 "``except*`` clauses in the same ``try`` statement. The following is a "
 "``SyntaxError``:"
 msgstr ""
 
-#: ../../pep-0654.rst:1042
+#: ../../pep-0654.rst:1040
 msgid ""
 "It is possible to catch the ``ExceptionGroup`` and ``BaseExceptionGroup``"
 " types with ``except``, but not with ``except*`` because the latter is "
 "ambiguous:"
 msgstr ""
 
-#: ../../pep-0654.rst:1064
+#: ../../pep-0654.rst:1062
 msgid ""
 "An empty \"match anything\" ``except*`` block is not supported as its "
 "meaning may be confusing:"
 msgstr ""
 
-#: ../../pep-0654.rst:1075
+#: ../../pep-0654.rst:1073
 msgid ""
 "``continue``, ``break``, and ``return`` are disallowed in ``except*`` "
 "clauses, causing a ``SyntaxError``. This is because the exceptions in an "
@@ -719,31 +714,31 @@ msgid ""
 " through other clauses."
 msgstr ""
 
-#: ../../pep-0654.rst:1084
+#: ../../pep-0654.rst:1082
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0654.rst:1086
+#: ../../pep-0654.rst:1084
 msgid ""
 "Backwards compatibility was a requirement of our design, and the changes "
 "we propose in this PEP will not break any existing code:"
 msgstr ""
 
-#: ../../pep-0654.rst:1089
+#: ../../pep-0654.rst:1087
 msgid ""
 "The addition of the new builtin exception types ``ExceptionGroup`` and "
 "``BaseExceptionGroup`` does not impact existing programs. The way that "
 "existing exceptions are handled and displayed does not change in any way."
 msgstr ""
 
-#: ../../pep-0654.rst:1093
+#: ../../pep-0654.rst:1091
 msgid ""
 "The behaviour of ``except`` is unchanged so existing code will continue "
 "to work. Programs will only be impacted by the changes proposed in this "
 "PEP once they begin to use exception groups and ``except*``."
 msgstr ""
 
-#: ../../pep-0654.rst:1097
+#: ../../pep-0654.rst:1095
 msgid ""
 "An important concern was that ``except Exception:`` will continue to "
 "catch almost all exceptions, and by making ``ExceptionGroup`` extend "
@@ -753,13 +748,13 @@ msgid ""
 "Exception``."
 msgstr ""
 
-#: ../../pep-0654.rst:1103
+#: ../../pep-0654.rst:1101
 msgid ""
 "Once programs begin to use these features, there will be migration issues"
 " to consider:"
 msgstr ""
 
-#: ../../pep-0654.rst:1106
+#: ../../pep-0654.rst:1104
 msgid ""
 "An ``except T:`` clause that wraps code which is now potentially raising "
 "an exception group may need to become ``except* T:``, and its body may "
@@ -768,17 +763,17 @@ msgid ""
 "existing ones."
 msgstr ""
 
-#: ../../pep-0654.rst:1112
+#: ../../pep-0654.rst:1110
 msgid ""
 "Libraries that need to support older Python versions will not be able to "
 "use ``except*`` or raise exception groups."
 msgstr ""
 
-#: ../../pep-0654.rst:1117
+#: ../../pep-0654.rst:1115
 msgid "How to Teach This"
 msgstr ""
 
-#: ../../pep-0654.rst:1119
+#: ../../pep-0654.rst:1117
 msgid ""
 "Exception groups and ``except*`` will be documented as part of the "
 "language standard. Libraries that raise exception groups such as "
@@ -787,17 +782,17 @@ msgid ""
 "``try-except``."
 msgstr ""
 
-#: ../../pep-0654.rst:1126
+#: ../../pep-0654.rst:1124
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0654.rst:1128
+#: ../../pep-0654.rst:1126
 msgid ""
 "We developed these concepts (and the examples for this PEP) with the help"
 " of the reference implementation [11]_."
 msgstr ""
 
-#: ../../pep-0654.rst:1131
+#: ../../pep-0654.rst:1129
 msgid ""
 "It has the builtin ``ExceptionGroup`` along with the changes to the "
 "traceback formatting code, in addition to the grammar, compiler and "
@@ -805,7 +800,7 @@ msgid ""
 "``BaseExceptionGroup`` will be added soon."
 msgstr ""
 
-#: ../../pep-0654.rst:1136
+#: ../../pep-0654.rst:1134
 msgid ""
 "Two opcodes were added: one implements the exception type match check via"
 " ``ExceptionGroup.split()``, and the other is used at the end of a ``try-"
@@ -821,15 +816,15 @@ msgid ""
 "metadata as the original, while the raised ones do not."
 msgstr ""
 
-#: ../../pep-0654.rst:1149
+#: ../../pep-0654.rst:1147
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0654.rst:1152
+#: ../../pep-0654.rst:1150
 msgid "Make Exception Groups Iterable"
 msgstr ""
 
-#: ../../pep-0654.rst:1154
+#: ../../pep-0654.rst:1152
 msgid ""
 "We considered making exception groups iterable, so that ``list(eg)`` "
 "would produce a flattened list of the leaf exceptions contained in the "
@@ -838,7 +833,7 @@ msgid ""
 " group is incomplete and this could create problems."
 msgstr ""
 
-#: ../../pep-0654.rst:1160
+#: ../../pep-0654.rst:1158
 msgid ""
 "Furthermore, as we explained in the `Handling Exception Groups`_ section,"
 " we find it unlikely that iteration over leaf exceptions will have many "
@@ -848,11 +843,11 @@ msgid ""
 "utility to the standard library or even make exception groups iterable."
 msgstr ""
 
-#: ../../pep-0654.rst:1168
+#: ../../pep-0654.rst:1166
 msgid "Make ``ExceptionGroup`` Extend ``BaseException``"
 msgstr ""
 
-#: ../../pep-0654.rst:1170
+#: ../../pep-0654.rst:1168
 msgid ""
 "We considered making ``ExceptionGroup`` subclass only ``BaseException``, "
 "and not ``Exception``. The rationale of this was that we expect exception"
@@ -871,11 +866,11 @@ msgid ""
 " to make ``ExceptionGroup`` a subclass of ``Exception``."
 msgstr ""
 
-#: ../../pep-0654.rst:1187
+#: ../../pep-0654.rst:1185
 msgid "Make it Impossible to Wrap ``BaseExceptions`` in an Exception Group"
 msgstr ""
 
-#: ../../pep-0654.rst:1189
+#: ../../pep-0654.rst:1187
 msgid ""
 "A consequence of the decision to make ``ExceptionGroup`` extend "
 "``Exception`` is that ``ExceptionGroup`` should not wrap "
@@ -890,11 +885,11 @@ msgid ""
 "exceptions."
 msgstr ""
 
-#: ../../pep-0654.rst:1201
+#: ../../pep-0654.rst:1199
 msgid "Traceback Representation"
 msgstr ""
 
-#: ../../pep-0654.rst:1203
+#: ../../pep-0654.rst:1201
 msgid ""
 "We considered options for adapting the traceback data structure to "
 "represent trees, but it became apparent that a traceback tree is not "
@@ -907,11 +902,11 @@ msgid ""
 "traceback mechanism as it is and modify the traceback display code."
 msgstr ""
 
-#: ../../pep-0654.rst:1213
+#: ../../pep-0654.rst:1211
 msgid "Extend ``except`` to Handle Exception Groups"
 msgstr ""
 
-#: ../../pep-0654.rst:1215
+#: ../../pep-0654.rst:1213
 msgid ""
 "We considered extending the semantics of ``except`` to handle exception "
 "groups, instead of introducing ``except*``. There were two backwards "
@@ -919,7 +914,7 @@ msgid ""
 "exception. Consider this example:"
 msgstr ""
 
-#: ../../pep-0654.rst:1228
+#: ../../pep-0654.rst:1226
 msgid ""
 "If the value assigned to err is an exception group containing all of the "
 "``OSErrors`` that were raised, then the attribute access ``err.errno`` no"
@@ -931,7 +926,7 @@ msgid ""
 "resource, the repetition could be harmful."
 msgstr ""
 
-#: ../../pep-0654.rst:1237
+#: ../../pep-0654.rst:1235
 msgid ""
 "The idea of making ``except`` iterate over the leaf exceptions of an "
 "exception group is at the heart of an `alternative proposal to this PEP "
@@ -942,7 +937,7 @@ msgid ""
 " semantics that parallel constructs have in other languages."
 msgstr ""
 
-#: ../../pep-0654.rst:1244
+#: ../../pep-0654.rst:1242
 msgid ""
 "Another option that came up in the public discussion was to add "
 "``except*``, but also make ``except`` treat ``ExceptionGroups`` as a "
@@ -958,11 +953,11 @@ msgid ""
 "would like to have in the long term."
 msgstr ""
 
-#: ../../pep-0654.rst:1258
+#: ../../pep-0654.rst:1256
 msgid "A New ``except`` Alternative"
 msgstr ""
 
-#: ../../pep-0654.rst:1260
+#: ../../pep-0654.rst:1258
 msgid ""
 "We considered introducing a new keyword (such as ``catch``) which can be "
 "used to handle both naked exceptions and exception groups. Its semantics "
@@ -976,11 +971,11 @@ msgid ""
 "exceptions."
 msgstr ""
 
-#: ../../pep-0654.rst:1271
+#: ../../pep-0654.rst:1269
 msgid "Applying an ``except*`` Clause on One Exception at a Time"
 msgstr ""
 
-#: ../../pep-0654.rst:1273
+#: ../../pep-0654.rst:1271
 msgid ""
 "We explained above that it is unsafe to execute an ``except`` clause in "
 "existing code more than once, because the code may not be idempotent. We "
@@ -995,18 +990,18 @@ msgid ""
 "handled before it is grouped and raised together with other exceptions."
 msgstr ""
 
-#: ../../pep-0654.rst:1285
+#: ../../pep-0654.rst:1283
 msgid ""
 "For example, ``KeyError`` is an exception that typically relates to a "
 "certain operation. Any recovery code would be local to the place where "
 "the error occurred, and would use the traditional ``except``:"
 msgstr ""
 
-#: ../../pep-0654.rst:1296
+#: ../../pep-0654.rst:1294
 msgid "It is unlikely that asyncio users would want to do something like this:"
 msgstr ""
 
-#: ../../pep-0654.rst:1307
+#: ../../pep-0654.rst:1305
 msgid ""
 "When a program handles a collection of exceptions that were aggregated "
 "into an exception group, it would not typically attempt to recover from "
@@ -1021,11 +1016,11 @@ msgid ""
 "it."
 msgstr ""
 
-#: ../../pep-0654.rst:1319
+#: ../../pep-0654.rst:1317
 msgid "Not Matching Naked Exceptions in ``except*``"
 msgstr ""
 
-#: ../../pep-0654.rst:1321
+#: ../../pep-0654.rst:1319
 msgid ""
 "We considered the option of making ``except* T`` match only exception "
 "groups that contain ``Ts``, but not naked ``Ts``. To see why we thought "
@@ -1041,7 +1036,7 @@ msgid ""
 "to have semantic benefit."
 msgstr ""
 
-#: ../../pep-0654.rst:1333
+#: ../../pep-0654.rst:1331
 msgid ""
 "If it does turn out to be necessary to make the distinction, it is always"
 " possible to nest in the ``try-except*`` clause an additional ``try-"
@@ -1051,11 +1046,11 @@ msgid ""
 "really do need to write a separate code block to handle each case:"
 msgstr ""
 
-#: ../../pep-0654.rst:1352
+#: ../../pep-0654.rst:1350
 msgid "Allow mixing ``except:`` and ``except*:`` in the same ``try``"
 msgstr ""
 
-#: ../../pep-0654.rst:1354
+#: ../../pep-0654.rst:1352
 msgid ""
 "This option was rejected because it adds complexity without adding useful"
 " semantics. Presumably the intention would be that an ``except T:`` block"
@@ -1065,11 +1060,11 @@ msgid ""
 "``try-except`` block can be used instead to achieve the same result."
 msgstr ""
 
-#: ../../pep-0654.rst:1362
+#: ../../pep-0654.rst:1360
 msgid "``try*`` instead of ``except*``"
 msgstr ""
 
-#: ../../pep-0654.rst:1364
+#: ../../pep-0654.rst:1362
 msgid ""
 "Since either all or none of the clauses of a ``try`` construct are "
 "``except*``, we considered changing the syntax of the ``try`` instead of "
@@ -1079,11 +1074,11 @@ msgid ""
 "state ``T``."
 msgstr ""
 
-#: ../../pep-0654.rst:1371
+#: ../../pep-0654.rst:1369
 msgid "Alternative syntax options"
 msgstr ""
 
-#: ../../pep-0654.rst:1373
+#: ../../pep-0654.rst:1371
 msgid ""
 "Alternatives to the ``except*`` syntax were evaluated in a `discussion on"
 " python-dev <http://groups.google.com/g/dev-python/c/G3p9_jovyus>`_, and "
@@ -1093,21 +1088,21 @@ msgid ""
 "true for any valid identifier."
 msgstr ""
 
-#: ../../pep-0654.rst:1388
+#: ../../pep-0654.rst:1386
 msgid "Programming Without 'except \\*'"
 msgstr ""
 
-#: ../../pep-0654.rst:1390
+#: ../../pep-0654.rst:1388
 msgid ""
 "Consider the following simple example of the ``except*`` syntax "
 "(pretending Trio natively supported this proposal):"
 msgstr ""
 
-#: ../../pep-0654.rst:1403
+#: ../../pep-0654.rst:1401
 msgid "Here is how this code would look in Python 3.9:"
 msgstr ""
 
-#: ../../pep-0654.rst:1419
+#: ../../pep-0654.rst:1417
 msgid ""
 "This example clearly demonstrates how unintuitive and cumbersome handling"
 " of multiple errors is in current Python.  The exception handling logic "
@@ -1120,33 +1115,33 @@ msgid ""
 "complicate the code to the point of it being unreadable."
 msgstr ""
 
-#: ../../pep-0654.rst:1431
+#: ../../pep-0654.rst:1429
 msgid "See Also"
 msgstr ""
 
-#: ../../pep-0654.rst:1433
+#: ../../pep-0654.rst:1431
 msgid ""
 "An analysis of how exception groups will likely be used in asyncio "
 "programs: [10]_."
 msgstr ""
 
-#: ../../pep-0654.rst:1436
+#: ../../pep-0654.rst:1434
 msgid "The issue where the ``except*`` concept was first formalized: [12]_."
 msgstr ""
 
-#: ../../pep-0654.rst:1438
+#: ../../pep-0654.rst:1436
 msgid "``MultiError2`` design document: [3]_."
 msgstr ""
 
-#: ../../pep-0654.rst:1440
+#: ../../pep-0654.rst:1438
 msgid "Reporting Multiple Errors in the Hypothesis library: [7]_."
 msgstr ""
 
-#: ../../pep-0654.rst:1444
+#: ../../pep-0654.rst:1442
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0654.rst:1446
+#: ../../pep-0654.rst:1444
 msgid ""
 "We wish to thank Nathaniel J. Smith and the other Trio developers for "
 "their work on structured concurrency. We borrowed the idea of "
@@ -1167,80 +1162,80 @@ msgid ""
 "Petr Viktorin and Barry Warsaw."
 msgstr ""
 
-#: ../../pep-0654.rst:1464
+#: ../../pep-0654.rst:1462
 msgid "Acceptance"
 msgstr ""
 
-#: ../../pep-0654.rst:1466
+#: ../../pep-0654.rst:1464
 msgid ""
-"PEP 654 was `accepted by Thomas Wouters on Sep 24, 2021 "
+":pep:`654` was `accepted by Thomas Wouters on Sep 24, 2021 "
 "<http://discuss.python.org/t/accepting-pep-654-exception-groups-and-"
 "except/10813>`_."
 msgstr ""
 
-#: ../../pep-0654.rst:1471
+#: ../../pep-0654.rst:1469
 msgid "References"
 msgstr ""
 
-#: ../../pep-0654.rst:1473
+#: ../../pep-0654.rst:1471
 msgid "https://docs.python.org/3/library/asyncio-task.html#asyncio.gather"
 msgstr ""
 
-#: ../../pep-0654.rst:1475
+#: ../../pep-0654.rst:1473
 msgid "https://trio.readthedocs.io/en/stable/"
 msgstr ""
 
-#: ../../pep-0654.rst:1477
+#: ../../pep-0654.rst:1475
 msgid "https://github.com/python-trio/trio/issues/611"
 msgstr ""
 
-#: ../../pep-0654.rst:1479
+#: ../../pep-0654.rst:1477
 msgid "https://bugs.python.org/issue29980"
 msgstr ""
 
-#: ../../pep-0654.rst:1481
+#: ../../pep-0654.rst:1479
 msgid "https://docs.python.org/3/library/atexit.html#atexit.register"
 msgstr ""
 
-#: ../../pep-0654.rst:1483
+#: ../../pep-0654.rst:1481
 msgid "https://github.com/pytest-dev/pytest/issues/8217"
 msgstr ""
 
-#: ../../pep-0654.rst:1485
+#: ../../pep-0654.rst:1483
 msgid "https://hypothesis.readthedocs.io/en/latest/settings.html#hypothesis.settings.report_multiple_bugs"
 msgstr ""
 
-#: ../../pep-0654.rst:1487
+#: ../../pep-0654.rst:1485
 msgid "https://bugs.python.org/issue40857"
 msgstr ""
 
-#: ../../pep-0654.rst:1489
+#: ../../pep-0654.rst:1487
 msgid "https://trio.readthedocs.io/en/stable/reference-core.html#trio.MultiError"
 msgstr ""
 
-#: ../../pep-0654.rst:1491
+#: ../../pep-0654.rst:1489
 msgid "https://github.com/python/exceptiongroups/issues/3#issuecomment-716203284"
 msgstr ""
 
-#: ../../pep-0654.rst:1493
+#: ../../pep-0654.rst:1491
 msgid "https://github.com/iritkatriel/cpython/tree/exceptionGroup-stage5"
 msgstr ""
 
-#: ../../pep-0654.rst:1495
+#: ../../pep-0654.rst:1493
 msgid "https://github.com/python/exceptiongroups/issues/4"
 msgstr ""
 
-#: ../../pep-0654.rst:1497
+#: ../../pep-0654.rst:1495
 msgid ""
 "https://trio.readthedocs.io/en/stable/reference-core.html#nurseries-and-"
 "spawning"
 msgstr ""
 
-#: ../../pep-0654.rst:1500
+#: ../../pep-0654.rst:1498
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0654.rst:1502
+#: ../../pep-0654.rst:1500
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
@@ -1314,5 +1309,51 @@ msgstr ""
 #~ "Spealman, Steve Stagg, Victor Stinner, "
 #~ "Marco Sulla, Petr Viktorin and Barry "
 #~ "Warsaw."
+#~ msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "654"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Exception Groups and except*"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Both have a constructor that takes "
+#~ "two positional-only arguments: a message"
+#~ " string and a sequence of the "
+#~ "nested exceptions, which are exposed in"
+#~ " the fields ``message`` and ``exceptions``."
+#~ " For example: ``ExceptionGroup('issues', "
+#~ "[ValueError('bad value'), TypeError('bad type')])``."
+#~ " The difference between them is that"
+#~ " ``ExceptionGroup`` can only wrap "
+#~ "``Exception`` subclasses while "
+#~ "``BaseExceptionGroup`` can wrap any "
+#~ "``BaseException`` subclass. A factory method"
+#~ " that inspects the nested exceptions "
+#~ "and selects between ``ExceptionGroup`` and "
+#~ "``BaseExceptionGroup`` makes the choice "
+#~ "automatic. In the rest of the "
+#~ "document, when we refer to an "
+#~ "exception group, we mean either an "
+#~ "``ExceptionGroup`` or a ``BaseExceptionGroup``. "
+#~ "When it is necessary to make the"
+#~ " distinction, we use the class name."
+#~ " For brevity, we will use "
+#~ "``ExceptionGroup`` in code examples that "
+#~ "are relevant to both."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 654 was `accepted by Thomas "
+#~ "Wouters on Sep 24, 2021 "
+#~ "<http://discuss.python.org/t/accepting-pep-654-exception-"
+#~ "groups-and-except/10813>`_."
 #~ msgstr ""
 

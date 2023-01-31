@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-3106.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-3106.txt:1
-msgid "3106"
-msgstr ""
-
-#: ../../pep-3106.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-3106.txt:2
-msgid "Revamping dict.keys(), .values() and .items()"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-3106.txt
 msgid "Author"
@@ -66,14 +50,22 @@ msgid "19-Dec-2006"
 msgstr ""
 
 #: ../../pep-3106.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-3106.txt:10
+msgid "3.0"
+msgstr ""
+
+#: ../../pep-3106.txt
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-3106.txt:14
+#: ../../pep-3106.txt:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-3106.txt:16
+#: ../../pep-3106.txt:17
 msgid ""
 "This PEP proposes to change the .keys(), .values() and .items() methods "
 "of the built-in dict type to return a set-like or unordered container "
@@ -82,17 +74,17 @@ msgid ""
 ".iterkeys(), .itervalues() and .iteritems() methods."
 msgstr ""
 
-#: ../../pep-3106.txt:22
+#: ../../pep-3106.txt:23
 msgid ""
 "The approach is inspired by that taken in the Java Collections Framework "
 "[1]_."
 msgstr ""
 
-#: ../../pep-3106.txt:27
+#: ../../pep-3106.txt:28
 msgid "Introduction"
 msgstr ""
 
-#: ../../pep-3106.txt:29
+#: ../../pep-3106.txt:30
 msgid ""
 "It has long been the plan to change the .keys(), .values() and .items() "
 "methods of the built-in dict type to return a more lightweight object "
@@ -100,29 +92,29 @@ msgid ""
 ".iteritems().  The idea is that code that currently (in 2.x) reads::"
 msgstr ""
 
-#: ../../pep-3106.txt:37
+#: ../../pep-3106.txt:38
 msgid "should be rewritten as::"
 msgstr ""
 
-#: ../../pep-3106.txt:41
+#: ../../pep-3106.txt:42
 msgid ""
 "(and similar for .itervalues() and .iterkeys(), except the latter is "
 "redundant since we can write that loop as ``for k in d``.)"
 msgstr ""
 
-#: ../../pep-3106.txt:44
+#: ../../pep-3106.txt:45
 msgid "Code that currently reads::"
 msgstr ""
 
-#: ../../pep-3106.txt:48
+#: ../../pep-3106.txt:49
 msgid "(etc.) should be rewritten as"
 msgstr ""
 
-#: ../../pep-3106.txt:50
+#: ../../pep-3106.txt:51
 msgid "a = list(d.keys())"
 msgstr ""
 
-#: ../../pep-3106.txt:52
+#: ../../pep-3106.txt:53
 msgid ""
 "There are (at least) two ways to accomplish this.  The original plan was "
 "to simply let .keys(), .values() and .items() return an iterator, i.e. "
@@ -134,20 +126,20 @@ msgid ""
 "the underlying dict and pull their values out of the dict as needed."
 msgstr ""
 
-#: ../../pep-3106.txt:62
+#: ../../pep-3106.txt:63
 msgid ""
 "The advantage of this approach is that one can still write code like "
 "this::"
 msgstr ""
 
-#: ../../pep-3106.txt:70
+#: ../../pep-3106.txt:71
 msgid ""
 "Effectively, iter(d.keys()) (etc.) in Python 3.0 will do what "
 "d.iterkeys() (etc.) does in Python 2.x; but in most contexts we don't "
 "have to write the iter() call because it is implied by a for-loop."
 msgstr ""
 
-#: ../../pep-3106.txt:74
+#: ../../pep-3106.txt:75
 msgid ""
 "The objects returned by the .keys() and .items() methods behave like "
 "sets.  The object returned by the values() method behaves like a much "
@@ -155,24 +147,24 @@ msgid ""
 "values are possible."
 msgstr ""
 
-#: ../../pep-3106.txt:79
+#: ../../pep-3106.txt:80
 msgid ""
 "Because of the set behavior, it will be possible to check whether two "
 "dicts have the same keys by simply testing::"
 msgstr ""
 
-#: ../../pep-3106.txt:84
+#: ../../pep-3106.txt:85
 msgid "and similarly for .items()."
 msgstr ""
 
-#: ../../pep-3106.txt:86
+#: ../../pep-3106.txt:87
 msgid ""
 "These operations are thread-safe only to the extent that using them in a "
 "thread-unsafe way may cause an exception but will not cause corruption of"
 " the internal representation."
 msgstr ""
 
-#: ../../pep-3106.txt:90
+#: ../../pep-3106.txt:91
 msgid ""
 "As in Python 2.x, mutating a dict while iterating over it using an "
 "iterator has an undefined effect and will in most cases raise a "
@@ -180,43 +172,43 @@ msgid ""
 "Java Collections Framework.)"
 msgstr ""
 
-#: ../../pep-3106.txt:95
+#: ../../pep-3106.txt:96
 msgid ""
 "The objects returned by .keys() and .items() are fully interoperable with"
 " instances of the built-in set and frozenset types; for example::"
 msgstr ""
 
-#: ../../pep-3106.txt:100
+#: ../../pep-3106.txt:101
 msgid ""
 "is guaranteed to be True (except when d is being modified simultaneously "
 "by another thread)."
 msgstr ""
 
-#: ../../pep-3106.txt:105
+#: ../../pep-3106.txt:106
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-3106.txt:107
+#: ../../pep-3106.txt:108
 msgid "I'm using pseudo-code to specify the semantics::"
 msgstr ""
 
-#: ../../pep-3106.txt:266
+#: ../../pep-3106.txt:267
 msgid "Notes:"
 msgstr ""
 
-#: ../../pep-3106.txt:268
+#: ../../pep-3106.txt:269
 msgid ""
 "The view objects are not directly mutable, but don't implement "
 "__hash__(); their value can change if the underlying dict is mutated."
 msgstr ""
 
-#: ../../pep-3106.txt:271
+#: ../../pep-3106.txt:272
 msgid ""
 "The only requirements on the underlying dict are that it implements "
 "__getitem__(), __contains__(), __iter__(), and __len__()."
 msgstr ""
 
-#: ../../pep-3106.txt:274
+#: ../../pep-3106.txt:275
 msgid ""
 "We don't implement .copy() -- the presence of a .copy() method suggests "
 "that the copy has the same type as the original, but that's not feasible "
@@ -225,7 +217,7 @@ msgid ""
 "or set() constructor."
 msgstr ""
 
-#: ../../pep-3106.txt:280
+#: ../../pep-3106.txt:281
 msgid ""
 "The specification implies that the order in which items are returned by "
 ".keys(), .values() and .items() is the same (just as it was in Python "
@@ -234,24 +226,24 @@ msgid ""
 "can be expressed by the following invariant::"
 msgstr ""
 
-#: ../../pep-3106.txt:290
+#: ../../pep-3106.txt:291
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-3106.txt:292
+#: ../../pep-3106.txt:293
 msgid ""
 "Do we need more of a motivation?  I would think that being able to do set"
 " operations on keys and items without having to copy them should speak "
 "for itself."
 msgstr ""
 
-#: ../../pep-3106.txt:296
+#: ../../pep-3106.txt:297
 msgid ""
 "I've left out the implementation of various set operations.  These could "
 "still present small surprises."
 msgstr ""
 
-#: ../../pep-3106.txt:299
+#: ../../pep-3106.txt:300
 msgid ""
 "It would be okay if multiple calls to d.keys() (etc.) returned the same "
 "object, since the object's only state is the dict to which it refers.  Is"
@@ -260,14 +252,14 @@ msgid ""
 "created?  Strawman: probably not worth the extra slots in every dict."
 msgstr ""
 
-#: ../../pep-3106.txt:306
+#: ../../pep-3106.txt:307
 msgid ""
 "Should d_keys, d_values and d_items have a public instance variable or "
 "method through which one can retrieve the underlying dict?  Strawman: yes"
 " (but what should it be called?)."
 msgstr ""
 
-#: ../../pep-3106.txt:310
+#: ../../pep-3106.txt:311
 msgid ""
 "I'm soliciting better names than d_keys, d_values and d_items.  These "
 "classes could be public so that their implementations could be reused by "
@@ -275,17 +267,17 @@ msgid ""
 " they?"
 msgstr ""
 
-#: ../../pep-3106.txt:315
+#: ../../pep-3106.txt:316
 msgid ""
 "Should the d_keys, d_values and d_items classes be reusable? Strawman: "
 "yes."
 msgstr ""
 
-#: ../../pep-3106.txt:318
+#: ../../pep-3106.txt:319
 msgid "Should they be subclassable?  Strawman: yes (but see below)."
 msgstr ""
 
-#: ../../pep-3106.txt:320
+#: ../../pep-3106.txt:321
 msgid ""
 "A particularly nasty issue is whether operations that are specified in "
 "terms of other operations (e.g. .discard()) must really be implemented in"
@@ -297,19 +289,31 @@ msgid ""
 "methods, for example."
 msgstr ""
 
-#: ../../pep-3106.txt:329
+#: ../../pep-3106.txt:330
 msgid ""
 "I'll leave the decisions (especially about naming) up to whoever submits "
 "a working implementation."
 msgstr ""
 
-#: ../../pep-3106.txt:334
+#: ../../pep-3106.txt:335
 msgid "References"
 msgstr ""
 
-#: ../../pep-3106.txt:336
+#: ../../pep-3106.txt:337
 msgid ""
 "Java Collections Framework "
 "http://java.sun.com/docs/books/tutorial/collections/index.html"
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "3106"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Revamping dict.keys(), .values() and .items()"
+#~ msgstr ""
 

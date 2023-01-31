@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0267.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0267.txt:1
-msgid "267"
-msgstr ""
-
-#: ../../pep-0267.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0267.txt:2
-msgid "Optimized Access to Module Namespaces"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0267.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0267.txt:5
-msgid "jeremy@alum.mit.edu (Jeremy Hylton)"
+#: ../../pep-0267.txt:3
+msgid "Jeremy Hylton <jeremy@alum.mit.edu>"
 msgstr ""
 
 #: ../../pep-0267.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0267.txt:6
+#: ../../pep-0267.txt:4
 msgid "Deferred"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0267.txt:7
+#: ../../pep-0267.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0267.txt:9
+#: ../../pep-0267.txt:7
 msgid "23-May-2001"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0267.txt:10
+#: ../../pep-0267.txt:8
 msgid "2.2"
 msgstr ""
 
@@ -77,22 +61,22 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0267.txt:15
+#: ../../pep-0267.txt:13
 msgid "Deferral"
 msgstr ""
 
-#: ../../pep-0267.txt:17
+#: ../../pep-0267.txt:15
 msgid ""
 "While this PEP is a nice idea, no-one has yet emerged to do the work of "
-"hashing out the differences between this PEP, PEP 266 and PEP 280. Hence,"
-" it is being deferred."
+"hashing out the differences between this PEP, :pep:`266` and :pep:`280`. "
+"Hence, it is being deferred."
 msgstr ""
 
-#: ../../pep-0267.txt:23
+#: ../../pep-0267.txt:21
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0267.txt:25
+#: ../../pep-0267.txt:23
 msgid ""
 "This PEP proposes a new implementation of global module namespaces and "
 "the builtin namespace that speeds name resolution.  The implementation "
@@ -101,7 +85,7 @@ msgid ""
 "module attributes at compile time."
 msgstr ""
 
-#: ../../pep-0267.txt:31
+#: ../../pep-0267.txt:29
 msgid ""
 "The current implementation represents these namespaces as dictionaries.  "
 "A global name incurs a dictionary lookup each time it is used; a builtin "
@@ -109,14 +93,14 @@ msgid ""
 "namespace and a second lookup in the builtin namespace."
 msgstr ""
 
-#: ../../pep-0267.txt:37
+#: ../../pep-0267.txt:35
 msgid ""
 "This implementation should speed Python code that uses module-level "
 "functions and variables.  It should also eliminate awkward coding styles "
 "that have evolved to speed access to these names."
 msgstr ""
 
-#: ../../pep-0267.txt:42
+#: ../../pep-0267.txt:40
 msgid ""
 "The implementation is complicated because the global and builtin "
 "namespaces can be modified dynamically in ways that are impossible for "
@@ -126,11 +110,11 @@ msgid ""
 " features."
 msgstr ""
 
-#: ../../pep-0267.txt:51
+#: ../../pep-0267.txt:49
 msgid "Introduction"
 msgstr ""
 
-#: ../../pep-0267.txt:53
+#: ../../pep-0267.txt:51
 msgid ""
 "This PEP proposes a new implementation of attribute access for module "
 "objects that optimizes access to module variables known at compile time."
@@ -140,24 +124,24 @@ msgid ""
 "code that uses the array offsets for fast access."
 msgstr ""
 
-#: ../../pep-0267.txt:61
+#: ../../pep-0267.txt:59
 msgid ""
 "[describe the key parts of the design: dlict, compiler support, stupid "
 "name trick workarounds, optimization of other module's globals]"
 msgstr ""
 
-#: ../../pep-0267.txt:65
+#: ../../pep-0267.txt:63
 msgid ""
 "The implementation will preserve existing semantics for module "
 "namespaces, including the ability to modify module namespaces at runtime "
 "in ways that affect the visibility of builtin names."
 msgstr ""
 
-#: ../../pep-0267.txt:71
+#: ../../pep-0267.txt:69
 msgid "DLict design"
 msgstr ""
 
-#: ../../pep-0267.txt:73
+#: ../../pep-0267.txt:71
 msgid ""
 "The namespaces are implemented using a data structure that has sometimes "
 "gone under the name ``dlict``.  It is a dictionary that has numbered "
@@ -167,22 +151,22 @@ msgid ""
 "subclass of dictionary with an alternate storage module for some keys."
 msgstr ""
 
-#: ../../pep-0267.txt:81
+#: ../../pep-0267.txt:79
 msgid "A Python implementation is included here to illustrate the basic design::"
 msgstr ""
 
-#: ../../pep-0267.txt:192
+#: ../../pep-0267.txt:190
 msgid "Compiler issues"
 msgstr ""
 
-#: ../../pep-0267.txt:194
+#: ../../pep-0267.txt:192
 msgid ""
 "The compiler currently collects the names of all global variables in a "
 "module.  These are names bound at the module level or bound in a class or"
 " function body that declares them to be global."
 msgstr ""
 
-#: ../../pep-0267.txt:198
+#: ../../pep-0267.txt:196
 msgid ""
 "The compiler would assign indices for each global name and add the names "
 "and indices of the globals to the module's code object. Each code object "
@@ -190,7 +174,7 @@ msgid ""
 "sure if there are some subtle problems with this.)"
 msgstr ""
 
-#: ../../pep-0267.txt:204
+#: ../../pep-0267.txt:202
 msgid ""
 "For attributes of imported modules, the module will store an indirection "
 "record.  Internally, the module will store a pointer to the defining "
@@ -199,23 +183,23 @@ msgid ""
 "is looked up."
 msgstr ""
 
-#: ../../pep-0267.txt:212
+#: ../../pep-0267.txt:210
 msgid "Runtime model"
 msgstr ""
 
-#: ../../pep-0267.txt:214
+#: ../../pep-0267.txt:212
 msgid ""
 "The PythonVM will be extended with new opcodes to access globals and "
 "module attributes via a module-level array."
 msgstr ""
 
-#: ../../pep-0267.txt:217
+#: ../../pep-0267.txt:215
 msgid ""
 "A function object would need to point to the module that defined it in "
 "order to provide access to the module-level global array."
 msgstr ""
 
-#: ../../pep-0267.txt:220
+#: ../../pep-0267.txt:218
 msgid ""
 "For module attributes stored in the ``dlict`` (call them static "
 "attributes), the get/delattr implementation would need to track access to"
@@ -223,17 +207,17 @@ msgid ""
 " is updated dynamically, e.g.::"
 msgstr ""
 
-#: ../../pep-0267.txt:227
+#: ../../pep-0267.txt:225
 msgid ""
 "The implementation would need to update the array slot instead of the "
 "backup dict."
 msgstr ""
 
-#: ../../pep-0267.txt:232
+#: ../../pep-0267.txt:230
 msgid "Backwards compatibility"
 msgstr ""
 
-#: ../../pep-0267.txt:234
+#: ../../pep-0267.txt:232
 msgid ""
 "The ``dlict`` will need to maintain meta-information about whether a slot"
 " is currently used or not.  It will also need to maintain a pointer to "
@@ -241,7 +225,7 @@ msgid ""
 "namespace, the lookup will have to fail over to the builtin namespace."
 msgstr ""
 
-#: ../../pep-0267.txt:240
+#: ../../pep-0267.txt:238
 msgid ""
 "In the reverse case, each module may need a special accessor function for"
 " the builtin namespace that checks to see if a global shadowing the "
@@ -250,7 +234,7 @@ msgid ""
 "bound that wasn't discovered at compile-time."
 msgstr ""
 
-#: ../../pep-0267.txt:247
+#: ../../pep-0267.txt:245
 msgid ""
 "These mechanisms would have little if any cost for the common case "
 "whether a module's global namespace is not modified in strange ways at "
@@ -259,20 +243,20 @@ msgid ""
 "worth discouraging."
 msgstr ""
 
-#: ../../pep-0267.txt:253
+#: ../../pep-0267.txt:251
 msgid ""
 "It may be desirable to disable dynamic additions to the global namespace "
 "in some future version of Python.  If so, the new implementation could "
 "provide warnings."
 msgstr ""
 
-#: ../../pep-0267.txt:259
+#: ../../pep-0267.txt:257
 msgid "Related PEPs"
 msgstr ""
 
-#: ../../pep-0267.txt:261
+#: ../../pep-0267.txt:259
 msgid ""
-"PEP 266, Optimizing Global Variable/Attribute Access, proposes a "
+":pep:`266`, Optimizing Global Variable/Attribute Access, proposes a "
 "different mechanism for optimizing access to global variables as well as "
 "attributes of objects.  The mechanism uses two new opcodes "
 "``TRACK_OBJECT`` and ``UNTRACK_OBJECT`` to create a slot in the local "
@@ -281,7 +265,7 @@ msgid ""
 "updating the aliases."
 msgstr ""
 
-#: ../../pep-0267.txt:269
+#: ../../pep-0267.txt:267
 msgid ""
 "The objecting tracking approach applies to a wider range of objects than "
 "just module.  It may also have a higher runtime cost, because each "
@@ -291,7 +275,7 @@ msgid ""
 "resizable data structure to hold a list of callbacks."
 msgstr ""
 
-#: ../../pep-0267.txt:277
+#: ../../pep-0267.txt:275
 msgid ""
 "The implementation proposed here avoids the need for registration, "
 "because it does not create aliases.  Instead it allows functions that "
@@ -301,11 +285,50 @@ msgid ""
 "per function call."
 msgstr ""
 
-#: ../../pep-0267.txt:286
+#: ../../pep-0267.txt:284
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0267.txt:288
+#: ../../pep-0267.txt:286
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "267"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Optimized Access to Module Namespaces"
+#~ msgstr ""
+
+#~ msgid "jeremy@alum.mit.edu (Jeremy Hylton)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "While this PEP is a nice idea, "
+#~ "no-one has yet emerged to do "
+#~ "the work of hashing out the "
+#~ "differences between this PEP, PEP 266"
+#~ " and PEP 280. Hence, it is "
+#~ "being deferred."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 266, Optimizing Global Variable/Attribute"
+#~ " Access, proposes a different mechanism "
+#~ "for optimizing access to global "
+#~ "variables as well as attributes of "
+#~ "objects.  The mechanism uses two new "
+#~ "opcodes ``TRACK_OBJECT`` and ``UNTRACK_OBJECT`` "
+#~ "to create a slot in the local "
+#~ "variables array that aliases the global"
+#~ " or object attribute.  If the object"
+#~ " being aliases is rebound, the rebind"
+#~ " operation is responsible for updating "
+#~ "the aliases."
+#~ msgstr ""
 

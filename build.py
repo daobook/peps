@@ -26,7 +26,10 @@ def create_parser():
                           dest="builder", const="dirhtml",
                           help='Render PEPs to "index.html" files within "pep-NNNN" directories. '
                                'Cannot be used with "-f" or "-l".')
-
+    builders.add_argument("-t", "--gettext", action="store_const",
+                          dest="builder", const="gettext",
+                          help='Render PEPs to "index.html" files within "pep-NNNN" directories. '
+                               'Cannot be used with "-d", "-f" or "-l".')
     # flags / options
     parser.add_argument("-w", "--fail-on-warning", action="store_true",
                         help="Fail the Sphinx build on any warning.")
@@ -65,7 +68,7 @@ if __name__ == "__main__":
     source_directory = root_directory
     build_directory = root_directory / args.output_dir
     doctree_directory = build_directory / ".doctrees"
-
+    print("args.builder", args.builder)
     # builder configuration
     if args.builder is not None:
         sphinx_builder = args.builder

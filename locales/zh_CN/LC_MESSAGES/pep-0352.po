@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0352.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0352.txt:1
-msgid "352"
-msgstr ""
-
-#: ../../pep-0352.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0352.txt:2
-msgid "Required Superclass for Exceptions"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0352.txt
 msgid "Author"
@@ -66,14 +50,22 @@ msgid "27-Oct-2005"
 msgstr ""
 
 #: ../../pep-0352.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0352.txt:10
+msgid "2.5"
+msgstr ""
+
+#: ../../pep-0352.txt
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0352.txt:14
+#: ../../pep-0352.txt:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0352.txt:16
+#: ../../pep-0352.txt:17
 msgid ""
 "In Python 2.4 and before, any (classic) class can be raised as an "
 "exception.  The plan for 2.5 was to allow new-style classes, but this "
@@ -86,7 +78,7 @@ msgid ""
 "exceptions to adhere to."
 msgstr ""
 
-#: ../../pep-0352.txt:26
+#: ../../pep-0352.txt:27
 msgid ""
 "One might counter that requiring a specific base class for a particular "
 "interface is unPythonic.  However, in the specific case of exceptions "
@@ -96,7 +88,7 @@ msgid ""
 "``except BaseException:`` instead of ``except *:``. [#hierarchy-good]_"
 msgstr ""
 
-#: ../../pep-0352.txt:34
+#: ../../pep-0352.txt:35
 msgid ""
 "Introducing a new superclass for exceptions also gives us the chance to "
 "rearrange the exception hierarchy slightly for the better.  As it "
@@ -113,15 +105,15 @@ msgid ""
 "exceptions that should propagate up."
 msgstr ""
 
-#: ../../pep-0352.txt:48
-msgid "This PEP is based on previous work done for PEP 348 [#pep348]_."
+#: ../../pep-0352.txt:49
+msgid "This PEP is based on previous work done for :pep:`348`."
 msgstr ""
 
-#: ../../pep-0352.txt:52
+#: ../../pep-0352.txt:53
 msgid "Requiring a Common Superclass"
 msgstr ""
 
-#: ../../pep-0352.txt:54
+#: ../../pep-0352.txt:55
 msgid ""
 "This PEP proposes introducing a new exception named BaseException that is"
 " a new-style class and has a single attribute, ``args``.  Below is the "
@@ -129,7 +121,7 @@ msgid ""
 " 2.x is covered in the `Transition Plan`_ section)::"
 msgstr ""
 
-#: ../../pep-0352.txt:82
+#: ../../pep-0352.txt:83
 msgid ""
 "No restriction is placed upon what may be passed in for ``args`` for "
 "backwards-compatibility reasons.  In practice, though, only a single "
@@ -140,7 +132,7 @@ msgid ""
 "number) should be stored as a separate attribute in a subclass."
 msgstr ""
 
-#: ../../pep-0352.txt:91
+#: ../../pep-0352.txt:92
 msgid ""
 "The ``raise`` statement will be changed to require that any object passed"
 " to it must inherit from BaseException.  This will make sure that all "
@@ -150,17 +142,17 @@ msgid ""
 "enforced starting in Python 3.0 (see the `Transition Plan`_ below)."
 msgstr ""
 
-#: ../../pep-0352.txt:99
+#: ../../pep-0352.txt:100
 msgid ""
 "With BaseException being the root of the exception hierarchy, Exception "
 "will now inherit from it."
 msgstr ""
 
-#: ../../pep-0352.txt:104
+#: ../../pep-0352.txt:105
 msgid "Exception Hierarchy Changes"
 msgstr ""
 
-#: ../../pep-0352.txt:106
+#: ../../pep-0352.txt:107
 msgid ""
 "With the exception hierarchy now even more important since it has a basic"
 " root, a change to the existing hierarchy is called for.  As it stands "
@@ -171,13 +163,13 @@ msgid ""
 "exceptions fall through to a bare ``except`` clause::"
 msgstr ""
 
-#: ../../pep-0352.txt:119
+#: ../../pep-0352.txt:120
 msgid ""
 "That is needlessly explicit.  This PEP proposes moving KeyboardInterrupt "
 "and SystemExit to inherit directly from BaseException."
 msgstr ""
 
-#: ../../pep-0352.txt:131
+#: ../../pep-0352.txt:132
 msgid ""
 "Doing this makes catching Exception more reasonable.  It would catch only"
 " exceptions that signify errors.  Exceptions that signal that the "
@@ -185,7 +177,7 @@ msgid ""
 "propagate up and allow the interpreter to terminate."
 msgstr ""
 
-#: ../../pep-0352.txt:136
+#: ../../pep-0352.txt:137
 msgid ""
 "KeyboardInterrupt has been moved since users typically expect an "
 "application to exit when they press the interrupt key (usually Ctrl-C). "
@@ -193,7 +185,7 @@ msgid ""
 "does not occur."
 msgstr ""
 
-#: ../../pep-0352.txt:141
+#: ../../pep-0352.txt:142
 msgid ""
 "SystemExit has been moved for similar reasons.  Since the exception is "
 "raised when ``sys.exit()`` is called the interpreter should normally be "
@@ -201,7 +193,7 @@ msgid ""
 "prevent the explicitly requested exit from occurring."
 msgstr ""
 
-#: ../../pep-0352.txt:146
+#: ../../pep-0352.txt:147
 msgid ""
 "To make sure that people catch Exception most of the time, various parts "
 "of the documentation and tutorials will need to be updated to strongly "
@@ -211,11 +203,11 @@ msgid ""
 "allowed to propagate up."
 msgstr ""
 
-#: ../../pep-0352.txt:155
+#: ../../pep-0352.txt:156
 msgid "Transition Plan"
 msgstr ""
 
-#: ../../pep-0352.txt:157
+#: ../../pep-0352.txt:158
 msgid ""
 "Since semantic changes to Python are being proposed, a transition plan is"
 " needed.  The goal is to end up with the new semantics being used in "
@@ -224,11 +216,11 @@ msgid ""
 "semantics starting in the version following the initial deprecation."
 msgstr ""
 
-#: ../../pep-0352.txt:163
+#: ../../pep-0352.txt:164
 msgid "Here is BaseException as implemented in the 2.x series::"
 msgstr ""
 
-#: ../../pep-0352.txt:208
+#: ../../pep-0352.txt:209
 msgid ""
 "Deprecation of features in Python 2.9 is optional.  This is because it is"
 " not known at this time if Python 2.9 (which is slated to be the last "
@@ -240,73 +232,73 @@ msgid ""
 " that version begins, to determine if they are still desired."
 msgstr ""
 
-#: ../../pep-0352.txt:218
+#: ../../pep-0352.txt:219
 msgid "Python 2.5 [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:220
+#: ../../pep-0352.txt:221
 msgid "all standard exceptions become new-style classes [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:222
+#: ../../pep-0352.txt:223
 msgid "introduce BaseException [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:224
+#: ../../pep-0352.txt:225
 msgid ""
 "Exception, KeyboardInterrupt, and SystemExit inherit from BaseException "
 "[done]"
 msgstr ""
 
-#: ../../pep-0352.txt:227
+#: ../../pep-0352.txt:228
 msgid "deprecate raising string exceptions [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:229
+#: ../../pep-0352.txt:230
 msgid "Python 2.6 [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:231
+#: ../../pep-0352.txt:232
 msgid "deprecate catching string exceptions [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:233
+#: ../../pep-0352.txt:234
 msgid "deprecate ``message`` attribute (see `Retracted Ideas`_) [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:235
+#: ../../pep-0352.txt:236
 msgid "Python 2.7 [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:237
+#: ../../pep-0352.txt:238
 msgid "deprecate raising exceptions that do not inherit from BaseException"
 msgstr ""
 
-#: ../../pep-0352.txt:239
+#: ../../pep-0352.txt:240
 msgid "Python 3.0 [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:241
+#: ../../pep-0352.txt:242
 msgid "drop everything that was deprecated above:"
 msgstr ""
 
-#: ../../pep-0352.txt:243
+#: ../../pep-0352.txt:244
 msgid "string exceptions (both raising and catching) [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:245
+#: ../../pep-0352.txt:246
 msgid "all exceptions must inherit from BaseException [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:247
+#: ../../pep-0352.txt:248
 msgid "drop ``__getitem__``, ``message`` [done]"
 msgstr ""
 
-#: ../../pep-0352.txt:251
+#: ../../pep-0352.txt:252
 msgid "Retracted Ideas"
 msgstr ""
 
-#: ../../pep-0352.txt:253
+#: ../../pep-0352.txt:254
 msgid ""
 "A previous version of this PEP that was implemented in Python 2.5 "
 "included a 'message' attribute on BaseException.  Its purpose was to "
@@ -316,7 +308,7 @@ msgid ""
 " cramming it all into ``args``."
 msgstr ""
 
-#: ../../pep-0352.txt:260
+#: ../../pep-0352.txt:261
 msgid ""
 "Unfortunately, while implementing the removal of the ``args`` attribute "
 "in Python 3.0 at the PyCon 2007 sprint [#pycon2007-sprint-email]_, it was"
@@ -329,40 +321,54 @@ msgid ""
 "and the original deprecation of ``args`` has been retracted."
 msgstr ""
 
-#: ../../pep-0352.txt:273
+#: ../../pep-0352.txt:274
 msgid "References"
 msgstr ""
 
-#: ../../pep-0352.txt:275
-msgid ""
-"PEP 348 (Exception Reorganization for Python 3.0) "
-"http://www.python.org/dev/peps/pep-0348/"
-msgstr ""
-
-#: ../../pep-0352.txt:278
+#: ../../pep-0352.txt:276
 msgid ""
 "python-dev Summary for 2004-08-01 through 2004-08-15 "
 "http://www.python.org/dev/summary/2004-08-01_2004-08-15.html#an-"
 "exception-is-an-exception-unless-it-doesn-t-inherit-from-exception"
 msgstr ""
 
-#: ../../pep-0352.txt:281
+#: ../../pep-0352.txt:279
 msgid ""
 "SF patch #1104669 (new-style exceptions) "
 "https://bugs.python.org/issue1104669"
 msgstr ""
 
-#: ../../pep-0352.txt:284
+#: ../../pep-0352.txt:282
 msgid ""
 "python-3000 email (\"How far to go with cleaning up exceptions\") "
 "https://mail.python.org/pipermail/python-3000/2007-March/005911.html"
 msgstr ""
 
-#: ../../pep-0352.txt:289
+#: ../../pep-0352.txt:287
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0352.txt:291
+#: ../../pep-0352.txt:289
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "352"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Required Superclass for Exceptions"
+#~ msgstr ""
+
+#~ msgid "This PEP is based on previous work done for PEP 348 [#pep348]_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 348 (Exception Reorganization for "
+#~ "Python 3.0) http://www.python.org/dev/peps/pep-0348/"
+#~ msgstr ""
 

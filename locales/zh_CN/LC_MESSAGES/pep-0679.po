@@ -1,0 +1,259 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0679.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0679.rst:3
+msgid "Pablo Galindo Salgado <pablogsal@python.org>"
+msgstr ""
+
+#: ../../pep-0679.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0679.rst:4
+msgid ""
+"https://discuss.python.org/t/pep-679-allow-parentheses-in-assert-"
+"statements/13003"
+msgstr ""
+
+#: ../../pep-0679.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0679.rst:5
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0679.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0679.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0679.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0679.rst:8
+msgid "07-Jan-2022"
+msgstr ""
+
+#: ../../pep-0679.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0679.rst:9
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0679.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0679.rst:15
+msgid ""
+"This PEP proposes to allow parentheses surrounding the two-argument form "
+"of assert statements. This will cause the interpreter to reinterpret what"
+" before would have been an assert with a two-element tuple that will "
+"always be True (``assert (expression, message)``) to an assert statement "
+"with a subject and a failure message, equivalent to the statement with "
+"the parentheses removed (``assert expression, message``)."
+msgstr ""
+
+#: ../../pep-0679.rst:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0679.rst:26
+msgid ""
+"It is a common user mistake when using the form of the assert statement "
+"that includes the error message to surround it with parentheses. "
+"Unfortunately, this mistake passes undetected as the assert will always "
+"pass, because it is interpreted as an assert statement where the "
+"expression is a two-tuple, which always has truth-y value."
+msgstr ""
+
+#: ../../pep-0679.rst:32
+msgid ""
+"The mistake most often happens when extending the test or description "
+"beyond a single line, as parentheses are the natural way to do that."
+msgstr ""
+
+#: ../../pep-0679.rst:35
+msgid ""
+"This is so common that a ``SyntaxWarning`` is `now emitted by the "
+"compiler <https://bugs.python.org/issue35029>`_."
+msgstr ""
+
+#: ../../pep-0679.rst:38
+msgid ""
+"Additionally, some other statements in the language allow parenthesized "
+"forms in one way or another like ``import`` statements (``from x import "
+"(a,b,c)``) and ``del`` statements (``del (a,b,c)``)."
+msgstr ""
+
+#: ../../pep-0679.rst:42
+msgid ""
+"Allowing parentheses not only will remove the common mistake but also "
+"will allow users and auto-formatters to format long assert statements "
+"over multiple lines in what the authors of this document believe will be "
+"a more natural way. Although is possible to currently format long "
+"``assert`` statements over multiple lines as::"
+msgstr ""
+
+#: ../../pep-0679.rst:56
+msgid ""
+"the authors of this document believe the parenthesized form is more clear"
+" and more consistent with the formatting of other grammar constructs::"
+msgstr ""
+
+#: ../../pep-0679.rst:67
+msgid "This change has been originally discussed and proposed in [bpo-46167]_."
+msgstr ""
+
+#: ../../pep-0679.rst:70
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0679.rst:72
+msgid ""
+"This change can be implemented in the parser or in the compiler. We have "
+"selected implementing this change in the parser because doing it in the "
+"compiler will require re-interpreting the AST of an assert statement with"
+" a two-tuple::"
+msgstr ""
+
+#: ../../pep-0679.rst:86
+msgid "as the AST of an assert statement with an expression and a message::"
+msgstr ""
+
+#: ../../pep-0679.rst:95
+msgid ""
+"The problem with this approach is that the AST of the first form will "
+"technically be \"incorrect\" as we already have a specialized form for "
+"the AST of an assert statement with a test and a message (the second "
+"one). This means that many tools that deal with ASTs will need to be "
+"aware of this change in semantics, which will be confusing as there is "
+"already a correct form that better expresses the new meaning."
+msgstr ""
+
+#: ../../pep-0679.rst:103
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0679.rst:105
+msgid "This PEP proposes changing the grammar of the ``assert`` statement to: ::"
+msgstr ""
+
+#: ../../pep-0679.rst:110
+msgid ""
+"Where the first line is the new form of the assert statement that allows "
+"parentheses. The lookahead is needed so statements like ``assert (a, b) "
+"<= c, \"something\"`` are still parsed correctly and to prevent the "
+"parser to eagerly capture the tuple as the full statement."
+msgstr ""
+
+#: ../../pep-0679.rst:115
+msgid ""
+"Optionally, new \"invalid\" rule can be added to produce custom syntax "
+"errors to cover tuples with 0, 1, 3 or more elements."
+msgstr ""
+
+#: ../../pep-0679.rst:120
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0679.rst:122
+msgid ""
+"The change is not technically backwards compatible, as parsing ``assert "
+"(x,y)`` is currently interpreted as an assert statement with a 2-tuple as"
+" the subject, while after this change it will be interpreted as ``assert "
+"x,y``."
+msgstr ""
+
+#: ../../pep-0679.rst:126
+msgid ""
+"On the other hand, assert statements of this kind always pass, so they "
+"are effectively not doing anything in user code. The authors of this "
+"document think that this backwards incompatibility nature is beneficial, "
+"as it will highlight these cases in user code while before they will have"
+" passed unnoticed (assuming that these cases still exist because users "
+"are ignoring syntax warnings)."
+msgstr ""
+
+#: ../../pep-0679.rst:133
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0679.rst:135
+msgid "There are no security implications for this change."
+msgstr ""
+
+#: ../../pep-0679.rst:139
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0679.rst:141
+msgid ""
+"The new form of the ``assert`` statement will be documented as part of "
+"the language standard."
+msgstr ""
+
+#: ../../pep-0679.rst:144
+msgid ""
+"When teaching the form with error message of the ``assert`` statement to "
+"users, now it can be noted that adding parentheses also work as expected,"
+" which allows to break the statement over multiple lines."
+msgstr ""
+
+#: ../../pep-0679.rst:150
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0679.rst:152
+msgid "A proposed draft PR with the change exist in [GH-30247]_."
+msgstr ""
+
+#: ../../pep-0679.rst:156
+msgid "References"
+msgstr ""
+
+#: ../../pep-0679.rst:158
+msgid "https://bugs.python.org/issue46167"
+msgstr ""
+
+#: ../../pep-0679.rst:159
+msgid "https://github.com/python/cpython/pull/30247"
+msgstr ""
+
+#: ../../pep-0679.rst:163
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0679.rst:165
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0219.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0219.txt:1
-msgid "219"
-msgstr ""
-
-#: ../../pep-0219.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0219.txt:2
-msgid "Stackless Python"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0219.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0219.txt:5
-msgid "gmcm@hypernet.com (Gordon McMillan)"
+#: ../../pep-0219.txt:3
+msgid "Gordon McMillan <gmcm@hypernet.com>"
 msgstr ""
 
 #: ../../pep-0219.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0219.txt:6
+#: ../../pep-0219.txt:4
 msgid "Deferred"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0219.txt:7
+#: ../../pep-0219.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0219.txt:9
+#: ../../pep-0219.txt:7
 msgid "14-Aug-2000"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0219.txt:10
+#: ../../pep-0219.txt:8
 msgid "2.1"
 msgstr ""
 
@@ -77,20 +61,20 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0219.txt:15
+#: ../../pep-0219.txt:13
 msgid "Introduction"
 msgstr ""
 
-#: ../../pep-0219.txt:17
+#: ../../pep-0219.txt:15
 msgid ""
 "This PEP discusses changes required to core Python in order to "
 "efficiently support generators, microthreads and coroutines. It is "
-"related to PEP 220, which describes how Python should be extended to "
+"related to :pep:`220`, which describes how Python should be extended to "
 "support these facilities. The focus of this PEP is strictly on the "
 "changes required to allow these extensions to work."
 msgstr ""
 
-#: ../../pep-0219.txt:23
+#: ../../pep-0219.txt:21
 msgid ""
 "While these PEPs are based on Christian Tismer's Stackless [1]_ "
 "implementation, they do not regard Stackless as a reference "
@@ -101,18 +85,18 @@ msgid ""
 "continuations, so there seems to be no demand for their support."
 msgstr ""
 
-#: ../../pep-0219.txt:32
+#: ../../pep-0219.txt:30
 msgid ""
 "However, Stackless support for continuations is a relatively minor piece "
 "of the implementation, so one might regard it as \"a\" reference "
 "implementation (rather than \"the\" reference implementation)."
 msgstr ""
 
-#: ../../pep-0219.txt:39
+#: ../../pep-0219.txt:37
 msgid "Background"
 msgstr ""
 
-#: ../../pep-0219.txt:41
+#: ../../pep-0219.txt:39
 msgid ""
 "Generators and coroutines have been implemented in a number of languages "
 "in a number of ways. Indeed, Tim Peters has done pure Python "
@@ -122,7 +106,7 @@ msgid ""
 "usefulness of this approach."
 msgstr ""
 
-#: ../../pep-0219.txt:48
+#: ../../pep-0219.txt:46
 msgid ""
 "Microthreads (a.k.a \"green\" or \"user\" threads) and coroutines involve"
 " transfers of control that are difficult to accommodate in a language "
@@ -131,7 +115,7 @@ msgid ""
 "coroutines.)"
 msgstr ""
 
-#: ../../pep-0219.txt:54
+#: ../../pep-0219.txt:52
 msgid ""
 "Real threads allocate a full-sized stack for each thread of control, and "
 "this is the major source of overhead. However, coroutines and "
@@ -141,18 +125,18 @@ msgid ""
 "today's limit of perhaps dozens of separate threads of activity)."
 msgstr ""
 
-#: ../../pep-0219.txt:62
+#: ../../pep-0219.txt:60
 msgid ""
-"Another justification for this PEP (explored in PEP 220) is that "
+"Another justification for this PEP (explored in :pep:`220`) is that "
 "coroutines and generators often allow a more direct expression of an "
 "algorithm than is possible in today's Python."
 msgstr ""
 
-#: ../../pep-0219.txt:68
+#: ../../pep-0219.txt:66
 msgid "Discussion"
 msgstr ""
 
-#: ../../pep-0219.txt:70
+#: ../../pep-0219.txt:68
 msgid ""
 "The first thing to note is that Python, while it mingles interpreter data"
 " (normal C stack usage) with Python data (the state of the interpreted "
@@ -160,7 +144,7 @@ msgid ""
 "to use the same stack."
 msgstr ""
 
-#: ../../pep-0219.txt:75
+#: ../../pep-0219.txt:73
 msgid ""
 "A real thread gets something approaching a process-sized stack because "
 "the implementation has no way of knowing how much stack space the thread "
@@ -169,20 +153,20 @@ msgid ""
 "process, not supported by C."
 msgstr ""
 
-#: ../../pep-0219.txt:81
+#: ../../pep-0219.txt:79
 msgid ""
 "Once Python stops putting Python data on the C stack, however, stack "
 "switching becomes easy."
 msgstr ""
 
-#: ../../pep-0219.txt:84
+#: ../../pep-0219.txt:82
 msgid ""
 "The fundamental approach of the PEP is based on these two ideas. First, "
 "separate C's stack usage from Python's stack usage. Secondly, associate "
 "with each frame enough stack space to handle that frame's execution."
 msgstr ""
 
-#: ../../pep-0219.txt:89
+#: ../../pep-0219.txt:87
 msgid ""
 "In the normal usage, Stackless Python has a normal stack structure, "
 "except that it is broken into chunks. But in the presence of a coroutine "
@@ -191,11 +175,11 @@ msgid ""
 "between frames outside the normal \"call / return\" path."
 msgstr ""
 
-#: ../../pep-0219.txt:98
+#: ../../pep-0219.txt:96
 msgid "Problems"
 msgstr ""
 
-#: ../../pep-0219.txt:100
+#: ../../pep-0219.txt:98
 msgid ""
 "The major difficulty with this approach is C calling Python. The problem "
 "is that the C stack now holds a nested execution of the byte-code "
@@ -205,7 +189,7 @@ msgid ""
 "exit back to C from the wrong interpreter, the C stack could be trashed."
 msgstr ""
 
-#: ../../pep-0219.txt:108
+#: ../../pep-0219.txt:106
 msgid ""
 "The ideal solution is to create a mechanism where nested executions of "
 "the byte code interpreter are never needed. The easy solution is for the "
@@ -213,7 +197,7 @@ msgid ""
 "refuse to allow transfers outside the current invocation."
 msgstr ""
 
-#: ../../pep-0219.txt:114
+#: ../../pep-0219.txt:112
 msgid ""
 "We can categorize code that involves C calling Python into two camps: "
 "Python's implementation, and C extensions. And hopefully we can offer a "
@@ -223,7 +207,7 @@ msgid ""
 " but will not play well with coroutines / microthreads."
 msgstr ""
 
-#: ../../pep-0219.txt:122
+#: ../../pep-0219.txt:120
 msgid ""
 "Generally, when a recursive call is transformed into a loop, a bit of "
 "extra bookkeeping is required. The loop will need to keep its own "
@@ -233,7 +217,7 @@ msgid ""
 "it has to deal with the same issues."
 msgstr ""
 
-#: ../../pep-0219.txt:129
+#: ../../pep-0219.txt:127
 msgid ""
 "In normal Python, ``PyEval_EvalCode`` is used to build a frame and "
 "execute it. Stackless Python introduces the concept of a "
@@ -244,14 +228,14 @@ msgid ""
 " \"calling\" frame."
 msgstr ""
 
-#: ../../pep-0219.txt:137
+#: ../../pep-0219.txt:135
 msgid ""
 "So Stackless transforms recursions into a loop, but it is not the "
 "``FrameDispatcher`` that manages the frames. This is done by the "
 "interpreter (or an extension that knows what it's doing)."
 msgstr ""
 
-#: ../../pep-0219.txt:141
+#: ../../pep-0219.txt:139
 msgid ""
 "The general idea is that where C code needs to execute Python code, it "
 "creates a frame for the Python code, setting its back pointer to the "
@@ -261,14 +245,14 @@ msgid ""
 "gives it the means to do so)."
 msgstr ""
 
-#: ../../pep-0219.txt:148
+#: ../../pep-0219.txt:146
 msgid ""
 "In the vanilla case, this magic can be hidden from the programmer (even, "
 "in most cases, from the Python-internals programmer). Many situations "
 "present another level of difficulty, however."
 msgstr ""
 
-#: ../../pep-0219.txt:152
+#: ../../pep-0219.txt:150
 msgid ""
 "The map builtin function involves two obstacles to this approach. It "
 "cannot simply construct a frame and get out of the way, not just because "
@@ -277,7 +261,7 @@ msgid ""
 "constructs a frame object for map itself."
 msgstr ""
 
-#: ../../pep-0219.txt:159
+#: ../../pep-0219.txt:157
 msgid ""
 "Most recursions of the interpreter are not this complex, but fairly "
 "frequently, some \"post\" operations are required. Stackless does not fix"
@@ -286,11 +270,11 @@ msgid ""
 " not ideal (and sometimes puzzling), this limitation is hardly crippling."
 msgstr ""
 
-#: ../../pep-0219.txt:168
+#: ../../pep-0219.txt:166
 msgid "Advantages"
 msgstr ""
 
-#: ../../pep-0219.txt:170
+#: ../../pep-0219.txt:168
 msgid ""
 "For normal Python, the advantage to this approach is that C stack usage "
 "becomes much smaller and more predictable. Unbounded recursion in Python "
@@ -301,30 +285,66 @@ msgid ""
 "(and the attendant bookkeeping involved)."
 msgstr ""
 
-#: ../../pep-0219.txt:179
+#: ../../pep-0219.txt:177
 msgid ""
 "The big advantage comes from realizing that the Python stack is really a "
 "tree, and the frame dispatcher can transfer control freely between leaf "
 "nodes of the tree, thus allowing things like microthreads and coroutines."
 msgstr ""
 
-#: ../../pep-0219.txt:186
+#: ../../pep-0219.txt:184
 msgid "References"
 msgstr ""
 
-#: ../../pep-0219.txt:188
+#: ../../pep-0219.txt:186
 msgid "http://www.stackless.com"
 msgstr ""
 
-#: ../../pep-0219.txt:189
+#: ../../pep-0219.txt:187
 msgid "http://web.archive.org/web/20000815070602/http://world.std.com/~wware/uthread.html"
 msgstr ""
 
-#: ../../pep-0219.txt:190
+#: ../../pep-0219.txt:188
 msgid "Demo/threads/Generator.py in the source distribution"
 msgstr ""
 
-#: ../../pep-0219.txt:191
+#: ../../pep-0219.txt:189
 msgid "http://www.stackless.com/coroutines.tim.peters.html"
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "219"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Stackless Python"
+#~ msgstr ""
+
+#~ msgid "gmcm@hypernet.com (Gordon McMillan)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP discusses changes required to"
+#~ " core Python in order to efficiently"
+#~ " support generators, microthreads and "
+#~ "coroutines. It is related to PEP "
+#~ "220, which describes how Python should"
+#~ " be extended to support these "
+#~ "facilities. The focus of this PEP "
+#~ "is strictly on the changes required "
+#~ "to allow these extensions to work."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Another justification for this PEP "
+#~ "(explored in PEP 220) is that "
+#~ "coroutines and generators often allow a"
+#~ " more direct expression of an "
+#~ "algorithm than is possible in today's"
+#~ " Python."
+#~ msgstr ""
 

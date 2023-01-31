@@ -1,0 +1,1182 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0675.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0675.rst:5
+msgid ""
+"Pradeep Kumar Srinivasan <gohanpra@gmail.com>, Graham Bleaney "
+"<gbleaney@gmail.com>"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0675.rst:6
+msgid "Jelle Zijlstra <jelle.zijlstra@gmail.com>"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0675.rst:7
+msgid ""
+"https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/VB74EHNM4RODDFM64NEEEBJQVAUAWIAW/"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0675.rst:8
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0675.rst:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0675.rst:10
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0675.rst:12
+msgid "30-Nov-2021"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0675.rst:13
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0675.rst:14
+msgid "07-Feb-2022"
+msgstr ""
+
+#: ../../pep-0675.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0675.rst:15
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/message/XEOOSSPNYPGZ5NXOJFPLXG2BTN7EVRT5/"
+msgstr ""
+
+#: ../../pep-0675.rst:18
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0675.rst:20
+msgid ""
+"There is currently no way to specify, using type annotations, that a "
+"function parameter can be of any literal string type. We have to specify "
+"a precise literal string type, such as ``Literal[\"foo\"]``. This PEP "
+"introduces a supertype of literal string types: ``LiteralString``. This "
+"allows a function to accept arbitrary literal string types, such as "
+"``Literal[\"foo\"]`` or ``Literal[\"bar\"]``."
+msgstr ""
+
+#: ../../pep-0675.rst:30
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0675.rst:32
+msgid ""
+"Powerful APIs that execute SQL or shell commands often recommend that "
+"they be invoked with literal strings, rather than arbitrary user "
+"controlled strings. There is no way to express this recommendation in the"
+" type system, however, meaning security vulnerabilities sometimes occur "
+"when developers fail to follow it. For example, a naive way to look up a "
+"user record from a database is to accept a user id and insert it into a "
+"predefined SQL query:"
+msgstr ""
+
+#: ../../pep-0675.rst:49
+msgid ""
+"However, the user-controlled data ``user_id`` is being mixed with the SQL"
+" command string, which means a malicious user could run arbitrary SQL "
+"commands:"
+msgstr ""
+
+#: ../../pep-0675.rst:62
+msgid ""
+"To prevent such SQL injection attacks, SQL APIs offer parameterized "
+"queries, which separate the executed query from user-controlled data and "
+"make it impossible to run arbitrary queries. For example, with `sqlite3 "
+"<https://docs.python.org/3/library/sqlite3.html>`_, our original function"
+" would be written safely as a query with parameters:"
+msgstr ""
+
+#: ../../pep-0675.rst:75
+msgid ""
+"The problem is that there is no way to enforce this discipline. sqlite3's"
+" own `documentation <https://docs.python.org/3/library/sqlite3.html>`_ "
+"can only admonish the reader to not dynamically build the ``sql`` "
+"argument from external input; the API's authors cannot express that "
+"through the type system. Users can (and often do) still use a convenient "
+"f-string as before and leave their code vulnerable to SQL injection."
+msgstr ""
+
+#: ../../pep-0675.rst:83
+msgid ""
+"Existing tools, such as the popular security linter `Bandit "
+"<https://github.com/PyCQA/bandit/blob/aac3f16f45648a7756727286ba8f8f0cf5e7d408/bandit/plugins/django_sql_injection.py#L102>`_,"
+" attempt to detect unsafe external data used in SQL APIs, by inspecting "
+"the AST or by other semantic pattern-matching. These tools, however, "
+"preclude common idioms like storing a large multi-line query in a "
+"variable before executing it, adding literal string modifiers to the "
+"query based on some conditions, or transforming the query string using a "
+"function. (We survey existing tools in the `Rejected Alternatives`_ "
+"section.) For example, many tools will detect a false positive issue in "
+"this benign snippet:"
+msgstr ""
+
+#: ../../pep-0675.rst:110
+msgid ""
+"We want to forbid harmful execution of user-controlled data while still "
+"allowing benign idioms like the above and not requiring extra user work."
+msgstr ""
+
+#: ../../pep-0675.rst:114
+msgid ""
+"To meet this goal, we introduce the ``LiteralString`` type, which only "
+"accepts string values that are known to be made of literals. This is a "
+"generalization of the ``Literal[\"foo\"]`` type from :pep:`586`. A string"
+" of type ``LiteralString`` cannot contain user-controlled data. Thus, any"
+" API that only accepts ``LiteralString`` will be immune to injection "
+"vulnerabilities (with `pragmatic limitations <Appendix B: "
+"Limitations_>`_)."
+msgstr ""
+
+#: ../../pep-0675.rst:123
+msgid ""
+"Since we want the ``sqlite3`` ``execute`` method to disallow strings "
+"built with user input, we would make its `typeshed stub "
+"<https://github.com/python/typeshed/blob/1c88ceeee924ec6cfe05dd4865776b49fec299e6/stdlib/sqlite3/dbapi2.pyi#L153>`_"
+" accept a ``sql`` query that is of type ``LiteralString``:"
+msgstr ""
+
+#: ../../pep-0675.rst:135
+msgid ""
+"This successfully forbids our unsafe SQL example. The variable ``query`` "
+"below is inferred to have type ``str``, since it is created from a format"
+" string using ``user_id``, and cannot be passed to ``execute``:"
+msgstr ""
+
+#: ../../pep-0675.rst:147
+msgid "The method remains flexible enough to allow our more complicated example:"
+msgstr ""
+
+#: ../../pep-0675.rst:168
+msgid ""
+"Notice that the user did not have to change their SQL code at all. The "
+"type checker was able to infer the literal string type and complain only "
+"in case of violations."
+msgstr ""
+
+#: ../../pep-0675.rst:172
+msgid ""
+"``LiteralString`` is also useful in other cases where we want strict "
+"command-data separation, such as when building shell commands or when "
+"rendering a string into an HTML response without escaping (see `Appendix "
+"A: Other Uses`_). Overall, this combination of strictness and flexibility"
+" makes it easy to enforce safer API usage in sensitive code without "
+"burdening users."
+msgstr ""
+
+#: ../../pep-0675.rst:180
+msgid "Usage statistics"
+msgstr ""
+
+#: ../../pep-0675.rst:182
+#, python-format
+msgid ""
+"In a sample of open-source projects using ``sqlite3``, we found that "
+"``conn.execute`` was called `~67% of the time "
+"<https://grep.app/search?q=conn%5C.execute%5C%28%5Cs%2A%5B%27%22%5D&regexp=true&filter[lang][0]=Python>`_"
+" with a safe string literal and `~33% of the time "
+"<https://grep.app/search?current=3&q=conn%5C.execute%5C%28%5Ba-"
+"zA-Z_%5D%2B%5C%29&regexp=true&filter[lang][0]=Python>`_ with a "
+"potentially unsafe, local string variable. Using this PEP's literal "
+"string type along with a type checker would prevent the unsafe portion of"
+" that 33% of cases (ie. the ones where user controlled data is "
+"incorporated into the query), while seamlessly allowing the safe ones to "
+"remain."
+msgstr ""
+
+#: ../../pep-0675.rst:194
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0675.rst:196
+msgid "Firstly, why use *types* to prevent security vulnerabilities?"
+msgstr ""
+
+#: ../../pep-0675.rst:198
+msgid ""
+"Warning users in documentation is insufficient - most users either never "
+"see these warnings or ignore them. Using an existing dynamic or static "
+"analysis approach is too restrictive - these prevent natural idioms, as "
+"we saw in the `Motivation`_ section (and will discuss more extensively in"
+" the `Rejected Alternatives`_ section). The typing-based approach in this"
+" PEP strikes a user-friendly balance between strictness and flexibility."
+msgstr ""
+
+#: ../../pep-0675.rst:206
+msgid ""
+"Runtime approaches do not work because, at runtime, the query string is a"
+" plain ``str``. While we could prevent some exploits using heuristics, "
+"such as regex-filtering for obviously malicious payloads, there will "
+"always be a way to work around them (perfectly distinguishing good and "
+"bad queries reduces to the halting problem)."
+msgstr ""
+
+#: ../../pep-0675.rst:212
+msgid ""
+"Static approaches, such as checking the AST to see if the query string is"
+" a literal string expression, cannot tell when a string is assigned to an"
+" intermediate variable or when it is transformed by a benign function. "
+"This makes them overly restrictive."
+msgstr ""
+
+#: ../../pep-0675.rst:217
+msgid ""
+"The type checker, surprisingly, does better than both because it has "
+"access to information not available in the runtime or static analysis "
+"approaches. Specifically, the type checker can tell us whether an "
+"expression has a literal string type, say ``Literal[\"foo\"]``. The type "
+"checker already propagates types across variable assignments or function "
+"calls."
+msgstr ""
+
+#: ../../pep-0675.rst:224
+msgid ""
+"In the current type system itself, if the SQL or shell command execution "
+"function only accepted three possible input strings, our job would be "
+"done. We would just say:"
+msgstr ""
+
+#: ../../pep-0675.rst:232
+msgid ""
+"But, of course, ``execute`` can accept *any* possible query. How do we "
+"ensure that the query does not contain an arbitrary, user-controlled "
+"string?"
+msgstr ""
+
+#: ../../pep-0675.rst:236
+msgid ""
+"We want to specify that the value must be of some type ``Literal[<...>]``"
+" where ``<...>`` is some string. This is what ``LiteralString`` "
+"represents. ``LiteralString`` is the \"supertype\" of all literal string "
+"types. In effect, this PEP just introduces a type in the type hierarchy "
+"between ``Literal[\"foo\"]`` and ``str``. Any particular literal string, "
+"such as ``Literal[\"foo\"]`` or ``Literal[\"bar\"]``, is compatible with "
+"``LiteralString``, but not the other way around. The \"supertype\" of "
+"``LiteralString`` itself is ``str``. So, ``LiteralString`` is compatible "
+"with ``str``, but not the other way around."
+msgstr ""
+
+#: ../../pep-0675.rst:247
+msgid ""
+"Note that a ``Union`` of literal types is naturally compatible with "
+"``LiteralString`` because each element of the ``Union`` is individually "
+"compatible with ``LiteralString``. So, ``Literal[\"foo\", \"bar\"]`` is "
+"compatible with ``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:252
+msgid ""
+"However, recall that we don't just want to represent exact literal "
+"queries. We also want to support composition of two literal strings, such"
+" as ``query + \" LIMIT 1\"``. This too is possible with the above "
+"concept. If ``x`` and ``y`` are two values of type ``LiteralString``, "
+"then ``x + y`` will also be of type compatible with ``LiteralString``. We"
+" can reason about this by looking at specific instances such as "
+"``Literal[\"foo\"]`` and ``Literal[\"bar\"]``; the value of the added "
+"string ``x + y`` can only be ``\"foobar\"``, which has type "
+"``Literal[\"foobar\"]`` and is thus compatible with ``LiteralString``. "
+"The same reasoning applies when ``x`` and ``y`` are unions of literal "
+"types; the result of pairwise adding any two literal types from ``x`` and"
+" ``y`` respectively is a literal type, which means that the overall "
+"result is a ``Union`` of literal types and is thus compatible with "
+"``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:267
+msgid ""
+"In this way, we are able to leverage Python's concept of a ``Literal`` "
+"string type to specify that our API can only accept strings that are "
+"known to be constructed from literals. More specific details follow in "
+"the remaining sections."
+msgstr ""
+
+#: ../../pep-0675.rst:273
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0675.rst:277
+msgid "Runtime Behavior"
+msgstr ""
+
+#: ../../pep-0675.rst:279
+msgid ""
+"We propose adding ``LiteralString`` to ``typing.py``, with an "
+"implementation similar to ``typing.NoReturn``."
+msgstr ""
+
+#: ../../pep-0675.rst:282
+msgid ""
+"Note that ``LiteralString`` is a special form used solely for type "
+"checking. There is no expression for which ``type(<expr>)`` will produce "
+"``LiteralString`` at runtime. So, we do not specify in the implementation"
+" that it is a subclass of ``str``."
+msgstr ""
+
+#: ../../pep-0675.rst:289
+msgid "Valid Locations for ``LiteralString``"
+msgstr ""
+
+#: ../../pep-0675.rst:291
+msgid "``LiteralString`` can be used where any other type can be used:"
+msgstr ""
+
+#: ../../pep-0675.rst:306
+msgid "It cannot be nested within unions of ``Literal`` types:"
+msgstr ""
+
+#: ../../pep-0675.rst:315
+msgid "Type Inference"
+msgstr ""
+
+#: ../../pep-0675.rst:321
+msgid "Inferring ``LiteralString``"
+msgstr ""
+
+#: ../../pep-0675.rst:323
+msgid ""
+"Any literal string type is compatible with ``LiteralString``. For "
+"example, ``x: LiteralString = \"foo\"`` is valid because ``\"foo\"`` is "
+"inferred to be of type ``Literal[\"foo\"]``."
+msgstr ""
+
+#: ../../pep-0675.rst:327
+msgid ""
+"As per the `Rationale`_, we also infer ``LiteralString`` in the following"
+" cases:"
+msgstr ""
+
+#: ../../pep-0675.rst:330
+msgid ""
+"Addition: ``x + y`` is of type ``LiteralString`` if both ``x`` and ``y`` "
+"are compatible with ``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:333
+msgid ""
+"Joining: ``sep.join(xs)`` is of type ``LiteralString`` if ``sep``'s type "
+"is compatible with ``LiteralString`` and ``xs``'s type is compatible with"
+" ``Iterable[LiteralString]``."
+msgstr ""
+
+#: ../../pep-0675.rst:337
+msgid ""
+"In-place addition: If ``s`` has type ``LiteralString`` and ``x`` has type"
+" compatible with ``LiteralString``, then ``s += x`` preserves ``s``'s "
+"type as ``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:341
+msgid ""
+"String formatting: An f-string has type ``LiteralString`` if and only if "
+"its constituent expressions are literal strings. ``s.format(...)`` has "
+"type ``LiteralString`` if and only if ``s`` and the arguments have types "
+"compatible with ``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:346
+msgid ""
+"Literal-preserving methods: In `Appendix C <appendix_C_>`_, we have "
+"provided an exhaustive list of ``str`` methods that preserve the "
+"``LiteralString`` type."
+msgstr ""
+
+#: ../../pep-0675.rst:350
+msgid ""
+"In all other cases, if one or more of the composed values has a non-"
+"literal type ``str``, the composition of types will have type ``str``. "
+"For example, if ``s`` has type ``str``, then ``\"hello\" + s`` has type "
+"``str``. This matches the pre-existing behavior of type checkers."
+msgstr ""
+
+#: ../../pep-0675.rst:356
+msgid ""
+"``LiteralString`` is compatible with the type ``str``. It inherits all "
+"methods from ``str``. So, if we have a variable ``s`` of type "
+"``LiteralString``, it is safe to write ``s.startswith(\"hello\")``."
+msgstr ""
+
+#: ../../pep-0675.rst:360
+msgid ""
+"Some type checkers refine the type of a string when doing an equality "
+"check:"
+msgstr ""
+
+#: ../../pep-0675.rst:369
+msgid ""
+"Such a refined type in the if-block is also compatible with "
+"``LiteralString`` because its type is ``Literal[\"bar\"]``."
+msgstr ""
+
+#: ../../pep-0675.rst:374
+msgid "Examples"
+msgstr ""
+
+#: ../../pep-0675.rst:376
+msgid "See the examples below to help clarify the above rules:"
+msgstr ""
+
+#: ../../pep-0675.rst:387
+msgid "Addition of literal strings:"
+msgstr ""
+
+#: ../../pep-0675.rst:402
+msgid "Join using literal strings:"
+msgstr ""
+
+#: ../../pep-0675.rst:415
+msgid "In-place addition using literal strings:"
+msgstr ""
+
+#: ../../pep-0675.rst:423
+msgid "Format strings using literal strings:"
+msgstr ""
+
+#: ../../pep-0675.rst:442
+msgid ""
+"Other literal types, such as literal integers, are not compatible with "
+"``LiteralString``:"
+msgstr ""
+
+#: ../../pep-0675.rst:453
+msgid "We can call functions on literal strings:"
+msgstr ""
+
+#: ../../pep-0675.rst:463
+msgid "Conditional statements and expressions work as expected:"
+msgstr ""
+
+#: ../../pep-0675.rst:483
+msgid "Interaction with TypeVars and Generics"
+msgstr ""
+
+#: ../../pep-0675.rst:485
+msgid "TypeVars can be bound to ``LiteralString``:"
+msgstr ""
+
+#: ../../pep-0675.rst:509
+msgid "``LiteralString`` can be used as a type argument for generic classes:"
+msgstr ""
+
+#: ../../pep-0675.rst:523
+msgid "Standard containers like ``List`` work as expected:"
+msgstr ""
+
+#: ../../pep-0675.rst:531
+msgid "Interactions with Overloads"
+msgstr ""
+
+#: ../../pep-0675.rst:533
+msgid ""
+"Literal strings and overloads do not need to interact in a special way: "
+"the existing rules work fine. ``LiteralString`` can be used as a fallback"
+" overload where a specific ``Literal[\"foo\"]`` type does not match:"
+msgstr ""
+
+#: ../../pep-0675.rst:554
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0675.rst:556
+msgid ""
+"We propose adding ``typing_extensions.LiteralString`` for use in earlier "
+"Python versions."
+msgstr ""
+
+#: ../../pep-0675.rst:559
+msgid ""
+"As :pep:`PEP 586 mentions <586#backwards-compatibility>`, type checkers "
+"\"should feel free to experiment with more sophisticated inference "
+"techniques\". So, if the type checker infers a literal string type for an"
+" unannotated variable that is initialized with a literal string, the "
+"following example should be OK:"
+msgstr ""
+
+#: ../../pep-0675.rst:572
+msgid ""
+"This enables precise type checking of idiomatic SQL query code without "
+"annotating the code at all (as seen in the `Motivation`_ section "
+"example)."
+msgstr ""
+
+#: ../../pep-0675.rst:576
+msgid ""
+"However, like :pep:`586`, this PEP does not mandate the above inference "
+"strategy. In case the type checker doesn't infer ``x`` to have type "
+"``Literal[\"hello\"]``, users can aid the type checker by explicitly "
+"annotating it as ``x: LiteralString``:"
+msgstr ""
+
+#: ../../pep-0675.rst:588
+msgid "Rejected Alternatives"
+msgstr ""
+
+#: ../../pep-0675.rst:591
+msgid "Why not use tool X?"
+msgstr ""
+
+#: ../../pep-0675.rst:593
+msgid ""
+"Tools to catch issues such as SQL injection seem to come in three "
+"flavors: AST based, function level analysis, and taint flow analysis."
+msgstr ""
+
+#: ../../pep-0675.rst:596
+msgid ""
+"**AST-based tools**: `Bandit "
+"<https://github.com/PyCQA/bandit/blob/aac3f16f45648a7756727286ba8f8f0cf5e7d408/bandit/plugins/django_sql_injection.py#L102>`_"
+" has a plugin to warn when SQL queries are not literal strings. The "
+"problem is that many perfectly safe SQL queries are dynamically built out"
+" of string literals, as shown in the `Motivation`_ section. At the AST "
+"level, the resultant SQL query is not going to appear as a string literal"
+" anymore and is thus indistinguishable from a potentially malicious "
+"string. To use these tools would require significantly restricting "
+"developers' ability to build SQL queries. ``LiteralString`` can provide "
+"similar safety guarantees with fewer restrictions."
+msgstr ""
+
+#: ../../pep-0675.rst:608
+msgid ""
+"**Semgrep and pyanalyze**: Semgrep supports a more sophisticated function"
+" level analysis, including `constant propagation "
+"<https://semgrep.dev/docs/writing-rules/data-flow/#constant-"
+"propagation>`_ within a function. This allows us to prevent injection "
+"attacks while permitting some forms of safe dynamic SQL queries within a "
+"function. `pyanalyze "
+"<https://github.com/quora/pyanalyze/blob/afcb58cd3e967e4e3fea9e57bb18b6b1d9d42ed7/README.md"
+"#extending-pyanalyze>`_ has a similar extension. But neither handles "
+"function calls that construct and return safe SQL queries. For example, "
+"in the code sample below, ``build_insert_query`` is a helper function to "
+"create a query that inserts multiple values into the corresponding "
+"columns. Semgrep and pyanalyze forbid this natural usage whereas "
+"``LiteralString`` handles it with no burden on the programmer:"
+msgstr ""
+
+#: ../../pep-0675.rst:652
+msgid ""
+"**Taint flow analysis**: Tools such as `Pysa <https://pyre-check.org/docs"
+"/pysa-basics/>`_ or `CodeQL <https://codeql.github.com/>`_ are capable of"
+" tracking data flowing from a user controlled input into a SQL query. "
+"These tools are powerful but involve considerable overhead in setting up "
+"the tool in CI, defining \"taint\" sinks and sources, and teaching "
+"developers how to use them. They also usually take longer to run than a "
+"type checker (minutes instead of seconds), which means feedback is not "
+"immediate. Finally, they move the burden of preventing vulnerabilities on"
+" to library users instead of allowing the libraries themselves to specify"
+" precisely how their APIs must be called (as is possible with "
+"``LiteralString``)."
+msgstr ""
+
+#: ../../pep-0675.rst:665
+msgid ""
+"One final reason to prefer using a new type over a dedicated tool is that"
+" type checkers are more widely used than dedicated security tooling; for "
+"example, MyPy was downloaded `over 7 million times "
+"<https://www.pypistats.org/packages/mypy>`_ in Jan 2022 vs `less than 2 "
+"million times <https://www.pypistats.org/packages/bandit>`_ for Bandit. "
+"Having security protections built right into type checkers will mean that"
+" more developers benefit from them."
+msgstr ""
+
+#: ../../pep-0675.rst:675
+msgid "Why not use a ``NewType`` for ``str``?"
+msgstr ""
+
+#: ../../pep-0675.rst:677
+msgid ""
+"Any API for which ``LiteralString`` would be suitable could instead be "
+"updated to accept a different type created within the Python type system,"
+" such as ``NewType(\"SafeSQL\", str)``:"
+msgstr ""
+
+#: ../../pep-0675.rst:693
+msgid ""
+"Having to create a new type to call an API might give some developers "
+"pause and encourage more caution, but it doesn't guarantee that "
+"developers won't just turn a user controlled string into the new type, "
+"and pass it into the modified API anyway:"
+msgstr ""
+
+#: ../../pep-0675.rst:703
+msgid ""
+"We are back to square one with the problem of preventing arbitrary inputs"
+" to ``SafeSQL``. This is not a theoretical concern either. Django uses "
+"the above approach with ``SafeString`` and `mark_safe "
+"<https://docs.djangoproject.com/en/dev/_modules/django/utils/safestring/#SafeString>`_."
+" Issues such as `CVE-2020-13596 "
+"<https://github.com/django/django/commit/2dd4d110c159d0c81dff42eaead2c378a0998735>`_"
+" show how this technique can `fail "
+"<https://nvd.nist.gov/vuln/detail/CVE-2020-13596>`_."
+msgstr ""
+
+#: ../../pep-0675.rst:713
+msgid ""
+"Also note that this requires invasive changes to the source code "
+"(wrapping the query with ``SafeSQL``) whereas ``LiteralString`` requires "
+"no such changes. Users can remain oblivious to it as long as they pass in"
+" literal strings to sensitive APIs."
+msgstr ""
+
+#: ../../pep-0675.rst:719
+msgid "Why not try to emulate Trusted Types?"
+msgstr ""
+
+#: ../../pep-0675.rst:721
+msgid ""
+"`Trusted Types <https://w3c.github.io/webappsec-trusted-"
+"types/dist/spec/>`_ is a W3C specification for preventing DOM-based Cross"
+" Site Scripting (XSS). XSS occurs when dangerous browser APIs accept raw "
+"user-controlled strings. The specification modifies these APIs to accept "
+"only the \"Trusted Types\" returned by designated sanitizing functions. "
+"These sanitizing functions must take in a potentially malicious string "
+"and validate it or render it benign somehow, for example by verifying "
+"that it is a valid URL or HTML-encoding it."
+msgstr ""
+
+#: ../../pep-0675.rst:731
+msgid ""
+"It can be tempting to assume porting the concept of Trusted Types to "
+"Python could solve the problem. The fundamental difference, however, is "
+"that the output of a Trusted Types sanitizer is usually intended *to not "
+"be executable code*. Thus it's easy to HTML encode the input, strip out "
+"dangerous tags, or otherwise render it inert. With a SQL query or shell "
+"command, the end result *still needs to be executable code*. There is no "
+"way to write a sanitizer that can reliably figure out which parts of an "
+"input string are benign and which ones are potentially malicious."
+msgstr ""
+
+#: ../../pep-0675.rst:742
+msgid "Runtime Checkable ``LiteralString``"
+msgstr ""
+
+#: ../../pep-0675.rst:744
+msgid ""
+"The ``LiteralString`` concept could be extended beyond static type "
+"checking to be a runtime checkable property of ``str`` objects. This "
+"would provide some benefits, such as allowing frameworks to raise errors "
+"on dynamic strings. Such runtime errors would be a more robust defense "
+"mechanism than type errors, which can potentially be suppressed, ignored,"
+" or never even seen if the author does not use a type checker."
+msgstr ""
+
+#: ../../pep-0675.rst:752
+msgid ""
+"This extension to the ``LiteralString`` concept would dramatically "
+"increase the scope of the proposal by requiring changes to one of the "
+"most fundamental types in Python. While runtime taint checking on "
+"strings, similar to Perl's `taint <https://metacpan.org/pod/Taint>`_, has"
+" been `considered <https://bugs.python.org/issue500698>`_ and `attempted "
+"<https://github.com/felixgr/pytaint>`_ in the past, and others may "
+"consider it in the future, such extensions are out of scope for this PEP."
+msgstr ""
+
+#: ../../pep-0675.rst:763
+msgid "Rejected Names"
+msgstr ""
+
+#: ../../pep-0675.rst:765
+msgid ""
+"We considered a variety of names for the literal string type and "
+"solicited ideas on `typing-sig <https://mail.python.org/archives/list"
+"/typing-sig@python.org/thread/VB74EHNM4RODDFM64NEEEBJQVAUAWIAW/>`_. Some "
+"notable alternatives were:"
+msgstr ""
+
+#: ../../pep-0675.rst:770
+msgid ""
+"``Literal[str]``: This is a natural extension of the ``Literal[\"foo\"]``"
+" type name, but typing-sig `objected "
+"<https://mail.python.org/archives/list/typing-"
+"sig@python.org/message/2ZQO4NTJEI42KTRJDBL77MNANEXOW7UI/>`_ that users "
+"could mistake this for the literal type of the ``str`` class."
+msgstr ""
+
+#: ../../pep-0675.rst:776
+msgid ""
+"``LiteralStr``: This is shorter than ``LiteralString`` but looks weird to"
+" the PEP authors."
+msgstr ""
+
+#: ../../pep-0675.rst:779
+msgid ""
+"``LiteralDerivedString``: This (along with ``MadeFromLiteralString``) "
+"best captures the technical meaning of the type. It represents not just "
+"the type of literal expressions, such as ``\"foo\"``, but also that of "
+"expressions composed from literals, such as ``\"foo\" + \"bar\"``. "
+"However, both names seem wordy."
+msgstr ""
+
+#: ../../pep-0675.rst:785
+msgid ""
+"``StringLiteral``: Users might confuse this with the existing concept of "
+"`\"string literals\" "
+"<https://docs.python.org/3/reference/lexical_analysis.html#string-and-"
+"bytes-literals>`_ where the string exists as a syntactic token in the "
+"source code, whereas our concept is more general."
+msgstr ""
+
+#: ../../pep-0675.rst:791
+msgid ""
+"``SafeString``: While this comes close to our intended meaning, it may "
+"mislead users into thinking that the string has been sanitized in some "
+"way, perhaps by escaping HTML tags or shell-related special characters."
+msgstr ""
+
+#: ../../pep-0675.rst:796
+msgid ""
+"``ConstantStr``: This does not capture the idea of composing literal "
+"strings."
+msgstr ""
+
+#: ../../pep-0675.rst:799
+msgid ""
+"``StaticStr``: This suggests that the string is statically computable, "
+"i.e., computable without running the program, which is not true. The "
+"literal string may vary based on runtime flags, as seen in the "
+"`Motivation`_ examples."
+msgstr ""
+
+#: ../../pep-0675.rst:804
+msgid ""
+"``LiteralOnly[str]``: This has the advantage of being extensible to other"
+" literal types, such as ``bytes`` or ``int``. However, we did not find "
+"the extensibility worth the loss of readability."
+msgstr ""
+
+#: ../../pep-0675.rst:808
+msgid ""
+"Overall, there was no clear winner on typing-sig over a long period, so "
+"we decided to tip the scales in favor of ``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:813
+msgid "``LiteralBytes``"
+msgstr ""
+
+#: ../../pep-0675.rst:815
+msgid ""
+"We could generalize literal byte types, such as ``Literal[b\"foo\"]``, to"
+" ``LiteralBytes``. However, literal byte types are used much less "
+"frequently than literal string types and we did not find much user demand"
+" for ``LiteralBytes``, so we decided not to include it in this PEP. "
+"Others may, however, consider it in future PEPs."
+msgstr ""
+
+#: ../../pep-0675.rst:823
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0675.rst:825
+msgid "This is implemented in Pyre v0.9.8 and is actively being used."
+msgstr ""
+
+#: ../../pep-0675.rst:827
+msgid ""
+"The implementation simply extends the type checker with ``LiteralString``"
+" as a supertype of literal string types."
+msgstr ""
+
+#: ../../pep-0675.rst:830
+msgid ""
+"To support composition via addition, join, etc., it was sufficient to "
+"overload the stubs for ``str`` in Pyre's copy of typeshed."
+msgstr ""
+
+#: ../../pep-0675.rst:835
+msgid "Appendix A: Other Uses"
+msgstr ""
+
+#: ../../pep-0675.rst:837
+msgid ""
+"To simplify the discussion and require minimal security knowledge, we "
+"focused on SQL injections throughout the PEP. ``LiteralString``, however,"
+" can also be used to prevent many other kinds of `injection "
+"vulnerabilities <https://owasp.org/www-community/Injection_Flaws>`_."
+msgstr ""
+
+#: ../../pep-0675.rst:843
+msgid "Command Injection"
+msgstr ""
+
+#: ../../pep-0675.rst:845
+msgid ""
+"APIs such as ``subprocess.run`` accept a string which can be run as a "
+"shell command:"
+msgstr ""
+
+#: ../../pep-0675.rst:852
+msgid ""
+"If user-controlled data is included in the command string, the code is "
+"vulnerable to \"command injection\"; i.e., an attacker can run malicious "
+"commands. For example, a value of ``' && rm -rf / #`` would result in the"
+" following destructive command being run:"
+msgstr ""
+
+#: ../../pep-0675.rst:861
+msgid ""
+"This vulnerability could be prevented by updating ``run`` to only accept "
+"``LiteralString`` when used in ``shell=True`` mode. Here is one "
+"simplified stub:"
+msgstr ""
+
+#: ../../pep-0675.rst:870
+msgid "Cross Site Scripting (XSS)"
+msgstr ""
+
+#: ../../pep-0675.rst:872
+msgid ""
+"Most popular Python web frameworks, such as Django, use a templating "
+"engine to produce HTML from user data. These templating languages auto-"
+"escape user data before inserting it into the HTML template and thus "
+"prevent cross site scripting (XSS) vulnerabilities."
+msgstr ""
+
+#: ../../pep-0675.rst:877
+msgid ""
+"But a common way to `bypass auto-escaping "
+"<https://django.readthedocs.io/en/stable/ref/templates/language.html#how-"
+"to-turn-it-off>`_ and render HTML as-is is to use functions like "
+"``mark_safe`` in `Django "
+"<https://docs.djangoproject.com/en/dev/ref/utils/#django.utils.safestring.mark_safe>`_"
+" or ``do_mark_safe`` in `Jinja2 "
+"<https://github.com/pallets/jinja/blob/077b7918a7642ff6742fe48a32e54d7875140894/src/jinja2/filters.py#L1264>`_,"
+" which cause XSS vulnerabilities:"
+msgstr ""
+
+#: ../../pep-0675.rst:891
+msgid ""
+"This vulnerability could be prevented by updating ``mark_safe`` to only "
+"accept ``LiteralString``:"
+msgstr ""
+
+#: ../../pep-0675.rst:899
+msgid "Server Side Template Injection (SSTI)"
+msgstr ""
+
+#: ../../pep-0675.rst:901
+msgid ""
+"Templating frameworks, such as Jinja, allow Python expressions which will"
+" be evaluated and substituted into the rendered result:"
+msgstr ""
+
+#: ../../pep-0675.rst:911
+msgid ""
+"If an attacker controls all or part of the template string, they can "
+"insert expressions which execute arbitrary code and `compromise "
+"<https://www.onsecurity.io/blog/server-side-template-injection-with-"
+"jinja2/>`_ the application:"
+msgstr ""
+
+#: ../../pep-0675.rst:923
+msgid ""
+"Template injection exploits like this could be prevented by updating the "
+"``Template`` API to only accept ``LiteralString``:"
+msgstr ""
+
+#: ../../pep-0675.rst:933
+msgid "Logging Format String Injection"
+msgstr ""
+
+#: ../../pep-0675.rst:935
+msgid ""
+"Logging frameworks often allow their input strings to contain formatting "
+"directives. At its worst, allowing users to control the logged string has"
+" led to `CVE-2021-44228 "
+"<https://nvd.nist.gov/vuln/detail/CVE-2021-44228>`_ (colloquially known "
+"as ``log4shell``), which has been described as the `\"most critical "
+"vulnerability of the last decade\" "
+"<https://www.theguardian.com/technology/2021/dec/10/software-flaw-most-"
+"critical-vulnerability-log-4-shell>`_. While no Python frameworks are "
+"currently known to be vulnerable to a similar attack, the built-in "
+"logging framework does provide formatting options which are vulnerable to"
+" Denial of Service attacks from externally controlled logging strings. "
+"The following example illustrates a simple denial of service scenario:"
+msgstr ""
+
+#: ../../pep-0675.rst:955
+msgid ""
+"This kind of attack could be prevented by requiring that the format "
+"string passed to the logger be a ``LiteralString`` and that all "
+"externally controlled data be passed separately as arguments (as proposed"
+" in `Issue 46200 <https://bugs.python.org/issue46200>`_):"
+msgstr ""
+
+#: ../../pep-0675.rst:967
+msgid "Appendix B: Limitations"
+msgstr ""
+
+#: ../../pep-0675.rst:969
+msgid ""
+"There are a number of ways ``LiteralString`` could still fail to prevent "
+"users from passing strings built from non-literal data to an API:"
+msgstr ""
+
+#: ../../pep-0675.rst:973
+msgid ""
+"1. If the developer does not use a type checker or does not add type "
+"annotations, then violations will go uncaught."
+msgstr ""
+
+#: ../../pep-0675.rst:976
+msgid ""
+"2. ``cast(LiteralString, non_literal_string)`` could be used to lie to "
+"the type checker and allow a dynamic string value to masquerade as a "
+"``LiteralString``. The same goes for a variable that has type ``Any``."
+msgstr ""
+
+#: ../../pep-0675.rst:980
+msgid ""
+"3. Comments such as ``# type: ignore`` could be used to ignore warnings "
+"about non-literal strings."
+msgstr ""
+
+#: ../../pep-0675.rst:983
+msgid ""
+"4. Trivial functions could be constructed to convert a ``str`` to a "
+"``LiteralString``:"
+msgstr ""
+
+#: ../../pep-0675.rst:998
+msgid ""
+"We could mitigate the above using linting, code review, etc., but "
+"ultimately a clever, malicious developer attempting to circumvent the "
+"protections offered by ``LiteralString`` will always succeed. The "
+"important thing to remember is that ``LiteralString`` is not intended to "
+"protect against *malicious* developers; it is meant to protect against "
+"benign developers accidentally using sensitive APIs in a dangerous way "
+"(without getting in their way otherwise)."
+msgstr ""
+
+#: ../../pep-0675.rst:1006
+msgid ""
+"Without ``LiteralString``, the best enforcement tool API authors have is "
+"documentation, which is easily ignored and often not seen. With "
+"``LiteralString``, API misuse requires conscious thought and artifacts in"
+" the code that reviewers and future developers can notice."
+msgstr ""
+
+#: ../../pep-0675.rst:1014
+msgid "Appendix C: ``str`` methods that preserve ``LiteralString``"
+msgstr ""
+
+#: ../../pep-0675.rst:1016
+msgid ""
+"The ``str`` class has several methods that would benefit from "
+"``LiteralString``. For example, users might expect "
+"``\"hello\".capitalize()`` to have the type ``LiteralString`` similar to "
+"the other examples we have seen in the `Inferring LiteralString "
+"<inferring_literal_string_>`_ section. Inferring the type "
+"``LiteralString`` is correct because the string is not an arbitrary user-"
+"supplied string - we know that it has the type ``Literal[\"HELLO\"]``, "
+"which is compatible with ``LiteralString``. In other words, the "
+"``capitalize`` method preserves the ``LiteralString`` type. There are "
+"several other ``str`` methods that preserve ``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:1028
+msgid ""
+"We propose updating the stub for ``str`` in typeshed so that the methods "
+"are overloaded with the ``LiteralString``-preserving versions. This means"
+" type checkers do not have to hardcode ``LiteralString`` behavior for "
+"each method. It also lets us easily support new methods in the future by "
+"updating the typeshed stub."
+msgstr ""
+
+#: ../../pep-0675.rst:1034
+msgid ""
+"For example, to preserve literal types for the ``capitalize`` method, we "
+"would change the stub as below:"
+msgstr ""
+
+#: ../../pep-0675.rst:1048
+msgid ""
+"The downside of changing the ``str`` stub is that the stub becomes more "
+"complicated and can make error messages harder to understand. Type "
+"checkers may need to special-case ``str`` to make error messages "
+"understandable for users."
+msgstr ""
+
+#: ../../pep-0675.rst:1053
+msgid ""
+"Below is an exhaustive list of ``str`` methods which, when called with "
+"arguments of type ``LiteralString``, must be treated as returning a "
+"``LiteralString``. If this PEP is accepted, we will update these method "
+"signatures in typeshed:"
+msgstr ""
+
+#: ../../pep-0675.rst:1225
+msgid "Appendix D: Guidelines for using ``LiteralString`` in Stubs"
+msgstr ""
+
+#: ../../pep-0675.rst:1227
+msgid ""
+"Libraries that do not contain type annotations within their source may "
+"specify type stubs in Typeshed. Libraries written in other languages, "
+"such as those for machine learning, may also provide Python type stubs. "
+"This means the type checker cannot verify that the type annotations match"
+" the source code and must trust the type stub. Thus, authors of type "
+"stubs need to be careful when using ``LiteralString``, since a function "
+"may falsely appear to be safe when it is not."
+msgstr ""
+
+#: ../../pep-0675.rst:1235
+msgid ""
+"We recommend the following guidelines for using ``LiteralString`` in "
+"stubs:"
+msgstr ""
+
+#: ../../pep-0675.rst:1237
+msgid ""
+"If the stub is for a pure function, we recommend using ``LiteralString`` "
+"in the return type of the function or of its overloads only if all the "
+"corresponding parameters have literal types (i.e., ``LiteralString`` or "
+"``Literal[\"a\", \"b\"]``)."
+msgstr ""
+
+#: ../../pep-0675.rst:1256
+msgid ""
+"If the stub is for a ``staticmethod``, we recommend the same guideline as"
+" above."
+msgstr ""
+
+#: ../../pep-0675.rst:1259
+msgid ""
+"If the stub is for any other kind of method, we recommend against using "
+"``LiteralString`` in the return type of the method or any of its "
+"overloads. This is because, even if all the explicit parameters have type"
+" ``LiteralString``, the object itself may be created using user data and "
+"thus the return type may be user-controlled."
+msgstr ""
+
+#: ../../pep-0675.rst:1265
+msgid ""
+"If the stub is for a class attribute or global variable, we also "
+"recommend against using ``LiteralString`` because the untyped code may "
+"write arbitrary values to the attribute."
+msgstr ""
+
+#: ../../pep-0675.rst:1269
+msgid ""
+"However, we leave the final call to the library author. They may use "
+"``LiteralString`` if they feel confident that the string returned by the "
+"method or function or the string stored in the attribute is guaranteed to"
+" have a literal type - i.e., the string is created by applying only "
+"literal-preserving ``str`` operations to a string literal."
+msgstr ""
+
+#: ../../pep-0675.rst:1276
+msgid ""
+"Note that these guidelines do not apply to inline type annotations since "
+"the type checker can verify that, say, a method returning "
+"``LiteralString`` does in fact return an expression of that type."
+msgstr ""
+
+#: ../../pep-0675.rst:1282
+msgid "Resources"
+msgstr ""
+
+#: ../../pep-0675.rst:1285
+msgid "Literal String Types in Scala"
+msgstr ""
+
+#: ../../pep-0675.rst:1287
+msgid ""
+"Scala `uses <https://www.scala-"
+"lang.org/api/2.13.x/scala/Singleton.html>`_ ``Singleton`` as the "
+"supertype for singleton types, which includes literal string types, such "
+"as ``\"foo\"``. ``Singleton`` is Scala's generalized analogue of this "
+"PEP's ``LiteralString``."
+msgstr ""
+
+#: ../../pep-0675.rst:1293
+msgid ""
+"Tamer Abdulradi showed how Scala's literal string types can be used for "
+"\"Preventing SQL injection at compile time\", Scala Days talk `Literal "
+"types: What are they good for? <https://slideslive.com/38907881/literal-"
+"types-what-they-are-good-for>`_ (slides 52 to 68)."
+msgstr ""
+
+#: ../../pep-0675.rst:1300
+msgid "Thanks"
+msgstr ""
+
+#: ../../pep-0675.rst:1302
+msgid "Thanks to the following people for their feedback on the PEP:"
+msgstr ""
+
+#: ../../pep-0675.rst:1304
+msgid ""
+"Edward Qiu, Jia Chen, Shannon Zhu, Gregory P. Smith, Никита Соболев, CAM "
+"Gerlach, Arie Bovenberg, David Foster, and Shengye Wan"
+msgstr ""
+
+#: ../../pep-0675.rst:1308
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0675.rst:1310
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

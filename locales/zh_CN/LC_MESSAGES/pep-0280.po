@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0280.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0280.txt:1
-msgid "280"
-msgstr ""
-
-#: ../../pep-0280.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0280.txt:2
-msgid "Optimizing access to globals"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0280.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0280.txt:5
-msgid "guido@python.org (Guido van Rossum)"
+#: ../../pep-0280.txt:3
+msgid "Guido van Rossum <guido@python.org>"
 msgstr ""
 
 #: ../../pep-0280.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0280.txt:6
+#: ../../pep-0280.txt:4
 msgid "Deferred"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0280.txt:7
+#: ../../pep-0280.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0280.txt:9
+#: ../../pep-0280.txt:7
 msgid "10-Feb-2002"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0280.txt:10
+#: ../../pep-0280.txt:8
 msgid "2.3"
 msgstr ""
 
@@ -77,40 +61,40 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0280.txt:15
+#: ../../pep-0280.txt:13
 msgid "Deferral"
 msgstr ""
 
-#: ../../pep-0280.txt:17
+#: ../../pep-0280.txt:15
 msgid ""
 "While this PEP is a nice idea, no-one has yet emerged to do the work of "
-"hashing out the differences between this PEP, PEP 266 and PEP 267. Hence,"
-" it is being deferred."
+"hashing out the differences between this PEP, :pep:`266` and :pep:`267`. "
+"Hence, it is being deferred."
 msgstr ""
 
-#: ../../pep-0280.txt:23
+#: ../../pep-0280.txt:21
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0280.txt:25
+#: ../../pep-0280.txt:23
 msgid ""
 "This PEP describes yet another approach to optimizing access to module "
-"globals, providing an alternative to PEP 266 (Optimizing Global "
-"Variable/Attribute Access by Skip Montanaro) and PEP 267 (Optimized "
+"globals, providing an alternative to :pep:`266` (Optimizing Global "
+"Variable/Attribute Access by Skip Montanaro) and :pep:`267` (Optimized "
 "Access to Module Namespaces by Jeremy Hylton)."
 msgstr ""
 
-#: ../../pep-0280.txt:30
+#: ../../pep-0280.txt:28
 msgid ""
 "The expectation is that eventually one approach will be picked and "
 "implemented; possibly multiple approaches will be prototyped first."
 msgstr ""
 
-#: ../../pep-0280.txt:36
+#: ../../pep-0280.txt:34
 msgid "Description"
 msgstr ""
 
-#: ../../pep-0280.txt:38
+#: ../../pep-0280.txt:36
 #, python-format
 msgid ""
 "(Note: Jason Orendorff writes: \"\"\"I implemented this once, long ago, "
@@ -122,27 +106,27 @@ msgid ""
 "dev/2002-February/019876.html)"
 msgstr ""
 
-#: ../../pep-0280.txt:46
+#: ../../pep-0280.txt:44
 msgid ""
 "Let a cell be a really simple Python object, containing a pointer to a "
 "Python object and a pointer to a cell.  Both pointers may be ``NULL``.  A"
 " Python implementation could be::"
 msgstr ""
 
-#: ../../pep-0280.txt:56
+#: ../../pep-0280.txt:54
 msgid ""
 "The cellptr attribute is used for chaining cells together for searching "
 "built-ins; this will be explained later."
 msgstr ""
 
-#: ../../pep-0280.txt:59
+#: ../../pep-0280.txt:57
 msgid ""
 "Let a celldict be a mapping from strings (the names of a module's "
 "globals) to objects (the values of those globals), implemented using a "
 "dict of cells.  A Python implementation could be::"
 msgstr ""
 
-#: ../../pep-0280.txt:119
+#: ../../pep-0280.txt:117
 msgid ""
 "It is possible that a cell exists corresponding to a given key, but the "
 "cell's objptr is ``NULL``; let's call such a cell empty.  When the "
@@ -151,11 +135,11 @@ msgid ""
 "possible to get at empty cells using the ``getcell()`` method."
 msgstr ""
 
-#: ../../pep-0280.txt:126
+#: ../../pep-0280.txt:124
 msgid "The celldict implementation never uses the cellptr attribute of cells."
 msgstr ""
 
-#: ../../pep-0280.txt:129
+#: ../../pep-0280.txt:127
 msgid ""
 "We change the module implementation to use a celldict for its "
 "``__dict__``.  The module's getattr, setattr and delattr operations now "
@@ -164,7 +148,7 @@ msgid ""
 "incompatibility."
 msgstr ""
 
-#: ../../pep-0280.txt:135
+#: ../../pep-0280.txt:133
 msgid ""
 "When a module is initialized, its ``__builtins__`` is initialized from "
 "the ``__builtin__`` module's ``__dict__``, which is itself a celldict. "
@@ -173,7 +157,7 @@ msgid ""
 "cell of ``__builtins__``.  Python pseudo-code (ignoring rexec)::"
 msgstr ""
 
-#: ../../pep-0280.txt:164
+#: ../../pep-0280.txt:162
 msgid ""
 "The compiler generates ``LOAD_GLOBAL_CELL <i>`` (and ``STORE_GLOBAL_CELL "
 "<i>`` etc.) opcodes for references to globals, where ``<i>`` is a small "
@@ -183,7 +167,7 @@ msgid ""
 "new analysis is required to be able to do this."
 msgstr ""
 
-#: ../../pep-0280.txt:171
+#: ../../pep-0280.txt:169
 msgid ""
 "When a function object is created from a code object and a celldict, the "
 "function object creates an array of cell pointers by asking the celldict "
@@ -195,7 +179,7 @@ msgid ""
 "pointer."
 msgstr ""
 
-#: ../../pep-0280.txt:180
+#: ../../pep-0280.txt:178
 msgid ""
 "When the VM executes a ``LOAD_GLOBAL_CELL <i>`` instruction, it gets cell"
 " number ``<i>`` from ``func_cells``.  It then looks in the cell's "
@@ -209,7 +193,7 @@ msgid ""
 "chain -- it always stores in the first cell."
 msgstr ""
 
-#: ../../pep-0280.txt:191
+#: ../../pep-0280.txt:189
 msgid ""
 "There are fallbacks in the VM for the case where the function's globals "
 "aren't a celldict, and hence ``func_cells`` is ``NULL``.  In that case, "
@@ -218,44 +202,44 @@ msgid ""
 "function's globals dict."
 msgstr ""
 
-#: ../../pep-0280.txt:199
+#: ../../pep-0280.txt:197
 msgid "Additional Ideas"
 msgstr ""
 
-#: ../../pep-0280.txt:201
+#: ../../pep-0280.txt:199
 msgid ""
 "Never make ``func_cell`` a ``NULL`` pointer; instead, make up an array of"
 " empty cells, so that ``LOAD_GLOBAL_CELL`` can index ``func_cells`` "
 "without a ``NULL`` check."
 msgstr ""
 
-#: ../../pep-0280.txt:205
+#: ../../pep-0280.txt:203
 msgid ""
 "Make ``c.cellptr`` equal to c when a cell is created, so that "
 "``LOAD_GLOBAL_CELL`` can always dereference ``c.cellptr`` without a "
 "``NULL`` check."
 msgstr ""
 
-#: ../../pep-0280.txt:209
+#: ../../pep-0280.txt:207
 msgid ""
 "With these two additional ideas added, here's Python pseudo-code for "
 "``LOAD_GLOBAL_CELL``::"
 msgstr ""
 
-#: ../../pep-0280.txt:220
+#: ../../pep-0280.txt:218
 msgid ""
 "Be more aggressive:  put the actual values of builtins into module dicts,"
 " not just pointers to cells containing the actual values."
 msgstr ""
 
-#: ../../pep-0280.txt:223
+#: ../../pep-0280.txt:221
 msgid ""
 "There are two points to this:  (1) Simplify and speed access, which is "
 "the most common operation.  (2) Support faithful emulation of extreme "
 "existing corner cases."
 msgstr ""
 
-#: ../../pep-0280.txt:227
+#: ../../pep-0280.txt:225
 msgid ""
 "WRT  #2, the set of builtins in the scheme above is captured at the time "
 "a module dict is first created.  Mutations to the set of builtin names "
@@ -263,7 +247,7 @@ msgid ""
 "consider files ``main.py`` and ``cheater.py``::"
 msgstr ""
 
-#: ../../pep-0280.txt:244
+#: ../../pep-0280.txt:242
 msgid ""
 "If ``main.py`` is run under Python 2.2 (or before), 666 is printed.  But "
 "under the proposal, ``__builtin__.pachinko`` doesn't exist at the time "
@@ -276,7 +260,7 @@ msgid ""
 " so raise ``NameError``."
 msgstr ""
 
-#: ../../pep-0280.txt:254
+#: ../../pep-0280.txt:252
 msgid ""
 "A similar (in cause) break in compatibility can occur if a module global "
 "foo is del'ed, but a builtin foo was created prior to that but after the "
@@ -285,7 +269,7 @@ msgid ""
 "proposal."
 msgstr ""
 
-#: ../../pep-0280.txt:260
+#: ../../pep-0280.txt:258
 msgid ""
 "Mutating builtins is extremely rare (most programs never mutate the "
 "builtins, and it's hard to imagine a plausible use for frequent mutation "
@@ -297,13 +281,13 @@ msgid ""
 "expensive to keep the caches in synch."
 msgstr ""
 
-#: ../../pep-0280.txt:270
+#: ../../pep-0280.txt:268
 msgid ""
 "Much of the scheme above remains the same, and most of the rest is just a"
 " little different.  A cell changes to::"
 msgstr ""
 
-#: ../../pep-0280.txt:278
+#: ../../pep-0280.txt:276
 msgid ""
 "and a celldict maps strings to this version of cells.  ``builtinflag`` is"
 " true when and only when objptr contains a value obtained from the "
@@ -312,21 +296,21 @@ msgid ""
 " a module global (possibly ``NULL``).  celldict changes to::"
 msgstr ""
 
-#: ../../pep-0280.txt:344
+#: ../../pep-0280.txt:342
 msgid ""
 "The speed benefit comes from simplifying ``LOAD_GLOBAL_CELL``, which I "
 "expect is executed more frequently than all other namespace operations "
 "combined::"
 msgstr ""
 
-#: ../../pep-0280.txt:353
+#: ../../pep-0280.txt:351
 msgid ""
 "That is, accessing builtins and accessing module globals are equally "
 "fast.  For module globals, a NULL-pointer test+branch is saved.  For "
 "builtins, an additional pointer chase is also saved."
 msgstr ""
 
-#: ../../pep-0280.txt:357
+#: ../../pep-0280.txt:355
 msgid ""
 "The other part needed to make this fly is expensive, propagating "
 "mutations of builtins into the module dicts that were initialized from "
@@ -340,39 +324,39 @@ msgid ""
 "builtins, execute ``reflect_bltin_del`` in each module::"
 msgstr ""
 
-#: ../../pep-0280.txt:379
+#: ../../pep-0280.txt:377
 msgid ""
 "Note that ``c.builtinflag`` protects from us erroneously deleting a "
 "module global of the same name.  Adding a new (key, value) builtin pair "
 "is similar::"
 msgstr ""
 
-#: ../../pep-0280.txt:398
+#: ../../pep-0280.txt:396
 msgid "Changing the value of an existing builtin::"
 msgstr ""
 
-#: ../../pep-0280.txt:411
+#: ../../pep-0280.txt:409
 msgid "FAQs"
 msgstr ""
 
-#: ../../pep-0280.txt:414
+#: ../../pep-0280.txt:412
 msgid "Q: Will it still be possible to:"
 msgstr ""
 
-#: ../../pep-0280.txt:416
+#: ../../pep-0280.txt:414
 msgid ""
 "a) install new builtins in the ``__builtin__`` namespace and have them "
 "available in all already loaded modules right away ?"
 msgstr ""
 
-#: ../../pep-0280.txt:419
+#: ../../pep-0280.txt:417
 msgid ""
 "b) override builtins (e.g. ``open()``) with my own copies (e.g. to "
 "increase security) in a way that makes these new copies override the "
 "previous ones in all modules ?"
 msgstr ""
 
-#: ../../pep-0280.txt:423
+#: ../../pep-0280.txt:421
 msgid ""
 "A: Yes, this is the whole point of this design.  In the original "
 "approach, when ``LOAD_GLOBAL_CELL`` finds a ``NULL`` in the second cell, "
@@ -381,19 +365,19 @@ msgid ""
 "alternative also takes care of this."
 msgstr ""
 
-#: ../../pep-0280.txt:429
+#: ../../pep-0280.txt:427
 msgid "Q: How does the new scheme get along with the restricted execution model?"
 msgstr ""
 
-#: ../../pep-0280.txt:432
+#: ../../pep-0280.txt:430
 msgid "A: It is intended to support that fully."
 msgstr ""
 
-#: ../../pep-0280.txt:434
+#: ../../pep-0280.txt:432
 msgid "Q: What happens when a global is deleted?"
 msgstr ""
 
-#: ../../pep-0280.txt:436
+#: ../../pep-0280.txt:434
 msgid ""
 "A: The module's celldict would have a cell with a ``NULL`` objptr for "
 "that key.  This is true in both variations, but the \"aggressive\" "
@@ -403,21 +387,21 @@ msgid ""
 " to true."
 msgstr ""
 
-#: ../../pep-0280.txt:443
+#: ../../pep-0280.txt:441
 msgid "Q: What would the C code for ``LOAD_GLOBAL_CELL`` look like?"
 msgstr ""
 
-#: ../../pep-0280.txt:445
+#: ../../pep-0280.txt:443
 msgid ""
 "A: The first version, with the first two bullets under \"Additional "
 "ideas\" incorporated, could look like this::"
 msgstr ""
 
-#: ../../pep-0280.txt:462
+#: ../../pep-0280.txt:460
 msgid "We could even write it like this (idea courtesy of Ka-Ping Yee)::"
 msgstr ""
 
-#: ../../pep-0280.txt:475
+#: ../../pep-0280.txt:473
 msgid ""
 "In modern CPU architectures, this reduces the number of branches taken "
 "for built-ins, which might be a really good thing, while any decent "
@@ -425,53 +409,87 @@ msgid ""
 "for regular globals and hence this should be very fast in that case too."
 msgstr ""
 
-#: ../../pep-0280.txt:481
+#: ../../pep-0280.txt:479
 msgid "For the aggressive variant::"
 msgstr ""
 
-#: ../../pep-0280.txt:494
+#: ../../pep-0280.txt:492
 msgid ""
 "Q: What happens in the module's top-level code where there is presumably "
 "no ``func_cells`` array?"
 msgstr ""
 
-#: ../../pep-0280.txt:497
+#: ../../pep-0280.txt:495
 msgid ""
 "A: We could do some code analysis and create a ``func_cells`` array, or "
 "we could use ``LOAD_NAME`` which should use ``PyMapping_GetItem`` on the "
 "globals dict."
 msgstr ""
 
-#: ../../pep-0280.txt:503
+#: ../../pep-0280.txt:501
 msgid "Graphics"
 msgstr ""
 
-#: ../../pep-0280.txt:505
+#: ../../pep-0280.txt:503
 msgid ""
 "Ka-Ping Yee supplied a drawing of the state of things after \"import "
 "spam\", where ``spam.py`` contains::"
 msgstr ""
 
-#: ../../pep-0280.txt:517
+#: ../../pep-0280.txt:515
 msgid ""
 "The drawing is at http://web.lfw.org/repo/cells.gif; a larger version is "
 "at http://lfw.org/repo/cells-big.gif; the source is at "
 "http://lfw.org/repo/cells.ai."
 msgstr ""
 
-#: ../../pep-0280.txt:523
+#: ../../pep-0280.txt:521
 msgid "Comparison"
 msgstr ""
 
-#: ../../pep-0280.txt:525
+#: ../../pep-0280.txt:523
 msgid "XXX Here, a comparison of the three approaches could be added."
 msgstr ""
 
-#: ../../pep-0280.txt:529
+#: ../../pep-0280.txt:527
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0280.txt:531
+#: ../../pep-0280.txt:529
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "280"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Optimizing access to globals"
+#~ msgstr ""
+
+#~ msgid "guido@python.org (Guido van Rossum)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "While this PEP is a nice idea, "
+#~ "no-one has yet emerged to do "
+#~ "the work of hashing out the "
+#~ "differences between this PEP, PEP 266"
+#~ " and PEP 267. Hence, it is "
+#~ "being deferred."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP describes yet another approach"
+#~ " to optimizing access to module "
+#~ "globals, providing an alternative to PEP"
+#~ " 266 (Optimizing Global Variable/Attribute "
+#~ "Access by Skip Montanaro) and PEP "
+#~ "267 (Optimized Access to Module "
+#~ "Namespaces by Jeremy Hylton)."
+#~ msgstr ""
 

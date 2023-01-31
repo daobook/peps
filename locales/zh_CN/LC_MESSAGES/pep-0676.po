@@ -1,0 +1,508 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0676.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0676.rst:3
+msgid "Adam Turner <python@quite.org.uk>"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0676.rst:4
+msgid "Mariatta <mariatta@python.org>"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "PEP-Delegate"
+msgstr ""
+
+#: ../../pep-0676.rst:5
+msgid "Barry Warsaw <barry@python.org>"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0676.rst:6
+msgid "https://discuss.python.org/t/10774"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0676.rst:7
+msgid "Active"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0676.rst:8
+msgid "Process"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0676.rst:10
+msgid "01-Nov-2021"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0676.rst:11
+msgid "23-Sep-2021, 30-Nov-2021"
+msgstr ""
+
+#: ../../pep-0676.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0676.rst:12
+msgid "https://discuss.python.org/t/10774/99"
+msgstr ""
+
+#: ../../pep-0676.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0676.rst:18
+msgid ""
+"This PEP addresses the infrastructure around rendering PEP files from "
+"`reStructuredText`_ files to HTML webpages. We aim to specify a self-"
+"contained and maintainable solution for PEP readers, authors, and "
+"editors."
+msgstr ""
+
+#: ../../pep-0676.rst:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0676.rst:26
+msgid ""
+"As of November 2021, Python Enhancement Proposals (PEPs) are rendered in "
+"a multi-system, multi-stage process. A continuous integration (CI) task "
+"runs a `docutils`_ script to render all PEP files individually. The CI "
+"task then uploads a tar archive to a server, where it is retrieved and "
+"rendered into the `python.org`_ website periodically."
+msgstr ""
+
+#: ../../pep-0676.rst:32
+msgid ""
+"This places a constraint on the `python.org`_ website to handle raw HTML "
+"uploads and handle PEP rendering, and makes the appropriate place to "
+"raise issues unclear in some cases [1]_."
+msgstr ""
+
+#: ../../pep-0676.rst:36
+msgid ""
+"This PEP provides a specification for self-contained rendering of PEPs. "
+"This would:"
+msgstr ""
+
+#: ../../pep-0676.rst:39
+msgid "reduce the amount of distributed configuration for supporting PEPs"
+msgstr ""
+
+#: ../../pep-0676.rst:40
+msgid ""
+"enable quality-of-life improvements for those who read, write, and review"
+" PEPs"
+msgstr ""
+
+#: ../../pep-0676.rst:42
+msgid "solve a number of outstanding issues, and lay the path for improvements"
+msgstr ""
+
+#: ../../pep-0676.rst:43
+msgid "save volunteer maintainers' time"
+msgstr ""
+
+#: ../../pep-0676.rst:45
+msgid ""
+"We propose that PEPs are accessed through `peps.python.org`_ at the top-"
+"level (for example `peps.python.org/pep-0008`_), and that all custom "
+"tooling to support rendering PEPs is hosted in the `python/peps`_ "
+"repository."
+msgstr ""
+
+#: ../../pep-0676.rst:51
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0676.rst:54
+msgid "Simplifying and Centralising Infrastructure"
+msgstr ""
+
+#: ../../pep-0676.rst:56
+msgid ""
+"As of November 2021, to locally render a PEP file, a PEP author or editor"
+" needs to create a full local instance of the `python.org`_ website and "
+"run a number of disparate scripts, following `documentation`_ that lives "
+"outside of the `python/peps`_ repository."
+msgstr ""
+
+#: ../../pep-0676.rst:61
+msgid ""
+"By contrast, the proposed implementation provides a single `Makefile`_ "
+"and a Python script to render all PEP files, with options to target a "
+"web-server or the local filesystem."
+msgstr ""
+
+#: ../../pep-0676.rst:65
+msgid ""
+"Using a single repository to host all tooling will clarify where to raise"
+" issues, reducing volunteer time spent in triage."
+msgstr ""
+
+#: ../../pep-0676.rst:68
+msgid ""
+"Simplified and centralised tooling may also reduce the barrier to entry "
+"to further improvements, as the scope of the PEP rendering infrastructure"
+" is well defined."
+msgstr ""
+
+#: ../../pep-0676.rst:74
+msgid "Quality-of-Life Improvements and Resolving Issues"
+msgstr ""
+
+#: ../../pep-0676.rst:76
+msgid ""
+"There are several requests for additional features in reading PEPs, such "
+"as:"
+msgstr ""
+
+#: ../../pep-0676.rst:78
+msgid "syntax highlighting [2]_"
+msgstr ""
+
+#: ../../pep-0676.rst:79
+msgid "use of ``.. code-block::`` directives [2]_"
+msgstr ""
+
+#: ../../pep-0676.rst:80
+msgid "support for SVG images [3]_"
+msgstr ""
+
+#: ../../pep-0676.rst:81
+msgid "typographic quotation marks [4]_"
+msgstr ""
+
+#: ../../pep-0676.rst:82
+msgid "additional footer information [5]_"
+msgstr ""
+
+#: ../../pep-0676.rst:83
+msgid "intersphinx functionality [6]_"
+msgstr ""
+
+#: ../../pep-0676.rst:84
+msgid "dark mode theme [7]_"
+msgstr ""
+
+#: ../../pep-0676.rst:86
+msgid ""
+"These are \"easy wins\" from this proposal, and would serve to improve "
+"the quality-of-life for consumers of PEPs (including reviewers and "
+"writers)."
+msgstr ""
+
+#: ../../pep-0676.rst:89
+msgid ""
+"For example, the current (as of November 2021) system runs periodically "
+"on a schedule. This means that updates to PEPs cannot be circulated "
+"immediately, reducing productivity. The reference implementation renders "
+"and publishes all PEPs on every commit to the repository, solving the "
+"issue by design."
+msgstr ""
+
+#: ../../pep-0676.rst:94
+msgid "The reference implementation fixes several issues [8]_. For example:"
+msgstr ""
+
+#: ../../pep-0676.rst:96
+msgid "list styles are currently not respected by `python.org`_'s stylesheets"
+msgstr ""
+
+#: ../../pep-0676.rst:97
+msgid "support for updating images in PEPs is challenging in `python.org`_"
+msgstr ""
+
+#: ../../pep-0676.rst:99
+msgid ""
+"Third-party providers such as `Read the Docs`_ or `Netlify`_ can enhance "
+"this experience with features such as automatic rendering of pull "
+"requests."
+msgstr ""
+
+#: ../../pep-0676.rst:104
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0676.rst:106
+msgid ""
+"The proposed specification for rendering the PEP files to HTML is as per "
+"the `reference implementation`_."
+msgstr ""
+
+#: ../../pep-0676.rst:109
+msgid ""
+"The rendered PEPs MUST be available at `peps.python.org`_. These SHOULD "
+"be hosted as static files, and MAY be behind a content delivery network "
+"(CDN)."
+msgstr ""
+
+#: ../../pep-0676.rst:112
+msgid ""
+"A service to render previews of pull requests SHOULD be provided. This "
+"service MAY be integrated with the hosting and deployment solution."
+msgstr ""
+
+#: ../../pep-0676.rst:115
+msgid "The following redirect rules MUST be created for the `python.org`_ domain:"
+msgstr ""
+
+#: ../../pep-0676.rst:117
+msgid "``/peps/``            -> https://peps.python.org/"
+msgstr ""
+
+#: ../../pep-0676.rst:118
+msgid "``/dev/peps/``        -> https://peps.python.org/"
+msgstr ""
+
+#: ../../pep-0676.rst:119
+msgid "``/peps/(.*)\\.html``  -> https://peps.python.org/$1"
+msgstr ""
+
+#: ../../pep-0676.rst:120
+msgid "``/dev/peps/(.*)``    -> https://peps.python.org/$1"
+msgstr ""
+
+#: ../../pep-0676.rst:122
+msgid "The following nginx configuration would achieve this:"
+msgstr ""
+
+#: ../../pep-0676.rst:138
+msgid ""
+"Redirects MUST be implemented to preserve `URL fragments`_ for backward "
+"compatibility purposes."
+msgstr ""
+
+#: ../../pep-0676.rst:142
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0676.rst:144
+msgid ""
+"Due to server-side redirects to the new canonical URLs, links in "
+"previously published materials referring to the old URL schemes will be "
+"guaranteed to work. All PEPs will continue to render correctly, and a "
+"custom stylesheet in the reference implementation improves presentation "
+"for some elements (most notably code blocks and block quotes). Therefore,"
+" this PEP presents no backwards compatibility issues."
+msgstr ""
+
+#: ../../pep-0676.rst:153
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0676.rst:155
+msgid ""
+"The main `python.org`_ website will no longer process raw HTML uploads, "
+"closing a potential threat vector. PEP rendering and deployment processes"
+" will use modern, well-maintained code and secure automated platforms, "
+"further reducing the potential attack surface. Therefore, we see no "
+"negative security impact."
+msgstr ""
+
+#: ../../pep-0676.rst:163
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0676.rst:165
+msgid ""
+"The new canonical URLs will be publicised in the documentation. However, "
+"this is mainly a backend infrastructure change, and there should be "
+"minimal end-user impact. PEP 1 and PEP 12 will be updated as needed."
+msgstr ""
+
+#: ../../pep-0676.rst:171
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0676.rst:173
+msgid ""
+"The proposed implementation has been merged into the `python/peps`_ "
+"repository in a series of pull requests [9]_. It uses the `Sphinx`_ "
+"documentation system with a custom theme (supporting light and dark "
+"colour schemes) and extensions."
+msgstr ""
+
+#: ../../pep-0676.rst:177
+msgid ""
+"This already automatically renders all PEPs on every commit, and "
+"publishes them to `python.github.io/peps`_. The high level documentation "
+"for the system covers `how to render PEPs locally "
+"<https://python.github.io/peps/docs/build>`__ and `the implementation of "
+"the system <https://python.github.io/peps/docs/rendering_system>`__."
+msgstr ""
+
+#: ../../pep-0676.rst:184
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0676.rst:186
+msgid ""
+"It would likely be possible to amend the current (as of November 2021) "
+"rendering process to include a subset of the quality-of-life improvements"
+" and issue mitigations mentioned above. However, we do not believe that "
+"this would solve the distributed tooling issue."
+msgstr ""
+
+#: ../../pep-0676.rst:191
+msgid ""
+"It would be possible to use the output from the proposed rendering system"
+" and import it into `python.org`_. We would argue that this would be the "
+"worst of both worlds, as a great deal of complexity is added whilst none "
+"is removed."
+msgstr ""
+
+#: ../../pep-0676.rst:197
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0676.rst:199
+msgid "Hugo van Kemenade"
+msgstr ""
+
+#: ../../pep-0676.rst:200
+msgid "Pablo Galindo Salgado"
+msgstr ""
+
+#: ../../pep-0676.rst:201
+msgid "Éric Araujo"
+msgstr ""
+
+#: ../../pep-0676.rst:202
+msgid "Mariatta"
+msgstr ""
+
+#: ../../pep-0676.rst:203
+msgid "C.A.M. Gerlach"
+msgstr ""
+
+#: ../../pep-0676.rst:207
+msgid "Footnotes"
+msgstr ""
+
+#: ../../pep-0676.rst:223
+msgid ""
+"For example, `pythondotorg#1024 "
+"<https://github.com/python/pythondotorg/issues/1204>`__, "
+"`pythondotorg#1038 "
+"<https://github.com/python/pythondotorg/issues/1038>`__, "
+"`pythondotorg#1387 "
+"<https://github.com/python/pythondotorg/issues/1387>`__, "
+"`pythondotorg#1388 "
+"<https://github.com/python/pythondotorg/issues/1388>`__, "
+"`pythondotorg#1393 "
+"<https://github.com/python/pythondotorg/issues/1393>`__, "
+"`pythondotorg#1564 "
+"<https://github.com/python/pythondotorg/issues/1564>`__, "
+"`pythondotorg#1913 "
+"<https://github.com/python/pythondotorg/issues/1913>`__,"
+msgstr ""
+
+#: ../../pep-0676.rst:231
+msgid ""
+"Requested: `pythondotorg#1063 "
+"<https://github.com/python/pythondotorg/pull/1063>`__, `pythondotorg#1206"
+" <https://github.com/python/pythondotorg/issues/1206>`__, "
+"`pythondotorg#1638 <https://github.com/python/pythondotorg/pull/1638>`__,"
+" `peps#159 <https://github.com/python/peps/issues/159>`__, `comment in "
+"peps#1571 "
+"<https://github.com/python/peps/pull/1571#discussion_r478701944>`__, "
+"`peps#1577 <https://github.com/python/peps/pull/1577>`__,"
+msgstr ""
+
+#: ../../pep-0676.rst:237
+msgid "Requested: `peps#701 <https://github.com/python/peps/issues/701>`__"
+msgstr ""
+
+#: ../../pep-0676.rst:238
+msgid "Requested: `peps#165 <https://github.com/python/peps/issues/165>`__"
+msgstr ""
+
+#: ../../pep-0676.rst:239
+msgid ""
+"Requested: `pythondotorg#1564 "
+"<https://github.com/python/pythondotorg/issues/1564>`__"
+msgstr ""
+
+#: ../../pep-0676.rst:240
+msgid ""
+"Requested: `comment in peps#2 "
+"<https://github.com/python/peps/issues/2#issuecomment-339195595>`__"
+msgstr ""
+
+#: ../../pep-0676.rst:241
+msgid ""
+"Requested: `in python-dev <https://mail.python.org/archives/list/python-"
+"dev@python.org/message/E7PK6TLVDJIYXVGFA6ZYPB24KLJASPUI/>`__"
+msgstr ""
+
+#: ../../pep-0676.rst:242
+msgid ""
+"As of November 2021, see `peps#1387 "
+"<https://github.com/python/peps/issues/1387>`__, `pythondotorg#824 "
+"<https://github.com/python/pythondotorg/issues/824>`__, "
+"`pythondotorg#1556 <https://github.com/python/pythondotorg/pull/1556>`__,"
+msgstr ""
+
+#: ../../pep-0676.rst:246
+msgid ""
+"Implementation PRs: `peps#1930 "
+"<https://github.com/python/peps/pull/1930>`__, `peps#1931 "
+"<https://github.com/python/peps/pull/1931>`__, `peps#1932 "
+"<https://github.com/python/peps/pull/1932>`__, `peps#1933 "
+"<https://github.com/python/peps/pull/1933>`__, `peps#1934 "
+"<https://github.com/python/peps/pull/1934>`__"
+msgstr ""
+
+#: ../../pep-0676.rst:255
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0676.rst:257
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

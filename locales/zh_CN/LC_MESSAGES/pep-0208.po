@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0208.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0208.txt:1
-msgid "208"
-msgstr ""
-
-#: ../../pep-0208.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0208.txt:2
-msgid "Reworking the Coercion Model"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0208.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0208.txt:5
-msgid "nas@arctrix.com (Neil Schemenauer), mal@lemburg.com (Marc-André Lemburg)"
+#: ../../pep-0208.txt:3
+msgid "Neil Schemenauer <nas@arctrix.com>, Marc-André Lemburg <mal@lemburg.com>"
 msgstr ""
 
 #: ../../pep-0208.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0208.txt:6
+#: ../../pep-0208.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0208.txt:7
+#: ../../pep-0208.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0208.txt:9
+#: ../../pep-0208.txt:7
 msgid "04-Dec-2000"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0208.txt:10
+#: ../../pep-0208.txt:8
 msgid "2.1"
 msgstr ""
 
@@ -77,11 +61,11 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0208.txt:15
+#: ../../pep-0208.txt:13
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0208.txt:17
+#: ../../pep-0208.txt:15
 msgid ""
 "Many Python types implement numeric operations.  When the arguments of a "
 "numeric operation are of different types, the interpreter tries to coerce"
@@ -95,11 +79,11 @@ msgid ""
 "having the interpreter do coercion."
 msgstr ""
 
-#: ../../pep-0208.txt:30
+#: ../../pep-0208.txt:28
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0208.txt:32
+#: ../../pep-0208.txt:30
 msgid ""
 "When implementing numeric or other related operations, it is often "
 "desirable to provide not only operations between operands of one type "
@@ -107,7 +91,7 @@ msgid ""
 "operation to other type combinations as well, e.g. integer + float."
 msgstr ""
 
-#: ../../pep-0208.txt:37
+#: ../../pep-0208.txt:35
 msgid ""
 "A common approach to this mixed type situation is to provide a method of "
 "\"lifting\" the operands to a common type (coercion) and then use that "
@@ -115,32 +99,32 @@ msgid ""
 "few drawbacks:"
 msgstr ""
 
-#: ../../pep-0208.txt:42
+#: ../../pep-0208.txt:40
 msgid ""
 "the \"lifting\" process creates at least one new (temporary) operand "
 "object,"
 msgstr ""
 
-#: ../../pep-0208.txt:45
+#: ../../pep-0208.txt:43
 msgid ""
 "since the coercion method is not being told about the operation that is "
 "to follow, it is not possible to implement operation specific coercion of"
 " types,"
 msgstr ""
 
-#: ../../pep-0208.txt:49
+#: ../../pep-0208.txt:47
 msgid ""
 "there is no elegant way to solve situations were a common type is not at "
 "hand, and"
 msgstr ""
 
-#: ../../pep-0208.txt:52
+#: ../../pep-0208.txt:50
 msgid ""
 "the coercion method will always have to be called prior to the "
 "operation's method itself."
 msgstr ""
 
-#: ../../pep-0208.txt:55
+#: ../../pep-0208.txt:53
 msgid ""
 "A fix for this situation is obviously needed, since these drawbacks make "
 "implementations of types needing these features very cumbersome, if not "
@@ -151,7 +135,7 @@ msgid ""
 "coercion mechanism could use to implement that operation."
 msgstr ""
 
-#: ../../pep-0208.txt:63
+#: ../../pep-0208.txt:61
 msgid ""
 "Currently, ``PyInstance`` types are treated specially by the interpreter "
 "in that their numeric methods are passed arguments of different types. "
@@ -160,11 +144,11 @@ msgid ""
 "is especially useful for extension types like ExtensionClass."
 msgstr ""
 
-#: ../../pep-0208.txt:71
+#: ../../pep-0208.txt:69
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0208.txt:73
+#: ../../pep-0208.txt:71
 msgid ""
 "Instead of using a central coercion method, the process of handling "
 "different operand types is simply left to the operation.  If the "
@@ -172,14 +156,14 @@ msgid ""
 " it may return a special singleton as indicator."
 msgstr ""
 
-#: ../../pep-0208.txt:78
+#: ../../pep-0208.txt:76
 msgid ""
 "Note that \"numbers\" (anything that implements the number protocol, or "
 "part of it) written in Python already use the first part of this strategy"
 " - it is the C level API that we focus on here."
 msgstr ""
 
-#: ../../pep-0208.txt:82
+#: ../../pep-0208.txt:80
 msgid ""
 "To maintain nearly 100% backward compatibility we have to be very careful"
 " to make numbers that don't know anything about the new strategy (old "
@@ -189,7 +173,7 @@ msgid ""
 "number indicates the availability of these."
 msgstr ""
 
-#: ../../pep-0208.txt:89
+#: ../../pep-0208.txt:87
 msgid ""
 "A new style number is considered by the interpreter as such if and only "
 "if it sets the type flag ``Py_TPFLAGS_CHECKTYPES``.  The main difference "
@@ -201,7 +185,7 @@ msgid ""
 "than writing the same kind of routines for an old style coercion slot."
 msgstr ""
 
-#: ../../pep-0208.txt:99
+#: ../../pep-0208.txt:97
 msgid ""
 "If a new style slot finds that it cannot handle the passed argument type "
 "combination, it may return a new reference of the special singleton "
@@ -211,7 +195,7 @@ msgid ""
 "the possible slots succeed, it raises a ``TypeError``."
 msgstr ""
 
-#: ../../pep-0208.txt:106
+#: ../../pep-0208.txt:104
 msgid ""
 "To make the implementation easy to understand (the whole topic is "
 "esoteric enough), a new layer in the handling of numeric operations is "
@@ -223,59 +207,59 @@ msgid ""
 "The numeric API (``PyNumber_*``) is easy to adapt to this new layer."
 msgstr ""
 
-#: ../../pep-0208.txt:116
+#: ../../pep-0208.txt:114
 msgid ""
 "As a side-effect all numeric slots can be NULL-checked (this has to be "
 "done anyway, so the added feature comes at no extra cost)."
 msgstr ""
 
-#: ../../pep-0208.txt:120
+#: ../../pep-0208.txt:118
 msgid "The scheme used by the layer to execute a binary operation is as follows:"
 msgstr ""
 
-#: ../../pep-0208.txt:124 ../../pep-0208.txt:144
+#: ../../pep-0208.txt:122 ../../pep-0208.txt:142
 msgid "v"
 msgstr ""
 
-#: ../../pep-0208.txt:124 ../../pep-0208.txt:144
+#: ../../pep-0208.txt:122 ../../pep-0208.txt:142
 msgid "w"
 msgstr ""
 
-#: ../../pep-0208.txt:124 ../../pep-0208.txt:144
+#: ../../pep-0208.txt:122 ../../pep-0208.txt:142
 msgid "Action taken"
 msgstr ""
 
-#: ../../pep-0208.txt:126 ../../pep-0208.txt:127 ../../pep-0208.txt:128
-#: ../../pep-0208.txt:146 ../../pep-0208.txt:147 ../../pep-0208.txt:148
-#: ../../pep-0208.txt:149 ../../pep-0208.txt:150 ../../pep-0208.txt:151
-#: ../../pep-0208.txt:152
+#: ../../pep-0208.txt:124 ../../pep-0208.txt:125 ../../pep-0208.txt:126
+#: ../../pep-0208.txt:144 ../../pep-0208.txt:145 ../../pep-0208.txt:146
+#: ../../pep-0208.txt:147 ../../pep-0208.txt:148 ../../pep-0208.txt:149
+#: ../../pep-0208.txt:150
 msgid "new"
 msgstr ""
 
-#: ../../pep-0208.txt:126
+#: ../../pep-0208.txt:124
 msgid "v.op(v,w), w.op(v,w)"
 msgstr ""
 
-#: ../../pep-0208.txt:127 ../../pep-0208.txt:128 ../../pep-0208.txt:129
-#: ../../pep-0208.txt:147 ../../pep-0208.txt:148 ../../pep-0208.txt:149
-#: ../../pep-0208.txt:150 ../../pep-0208.txt:151 ../../pep-0208.txt:152
-#: ../../pep-0208.txt:153
+#: ../../pep-0208.txt:125 ../../pep-0208.txt:126 ../../pep-0208.txt:127
+#: ../../pep-0208.txt:145 ../../pep-0208.txt:146 ../../pep-0208.txt:147
+#: ../../pep-0208.txt:148 ../../pep-0208.txt:149 ../../pep-0208.txt:150
+#: ../../pep-0208.txt:151
 msgid "old"
 msgstr ""
 
-#: ../../pep-0208.txt:127
+#: ../../pep-0208.txt:125
 msgid "v.op(v,w), coerce(v,w), v.op(v,w)"
 msgstr ""
 
-#: ../../pep-0208.txt:128
+#: ../../pep-0208.txt:126
 msgid "w.op(v,w), coerce(v,w), v.op(v,w)"
 msgstr ""
 
-#: ../../pep-0208.txt:129
+#: ../../pep-0208.txt:127
 msgid "coerce(v,w), v.op(v,w)"
 msgstr ""
 
-#: ../../pep-0208.txt:132
+#: ../../pep-0208.txt:130
 msgid ""
 "The indicated action sequence is executed from left to right until either"
 " the operation succeeds and a valid result (!= ``Py_NotImplemented``) is "
@@ -284,63 +268,63 @@ msgid ""
 "next item in the sequence is executed."
 msgstr ""
 
-#: ../../pep-0208.txt:138
+#: ../../pep-0208.txt:136
 msgid ""
 "Note that coerce(v,w) will use the old style ``nb_coerce`` slot methods "
 "via a call to ``PyNumber_Coerce()``."
 msgstr ""
 
-#: ../../pep-0208.txt:141
+#: ../../pep-0208.txt:139
 msgid "Ternary operations have a few more cases to handle:"
 msgstr ""
 
-#: ../../pep-0208.txt:144
+#: ../../pep-0208.txt:142
 msgid "z"
 msgstr ""
 
-#: ../../pep-0208.txt:146
+#: ../../pep-0208.txt:144
 msgid "v.op(v,w,z), w.op(v,w,z), z.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:147
+#: ../../pep-0208.txt:145
 msgid "v.op(v,w,z), z.op(v,w,z), coerce(v,w,z), v.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:148
+#: ../../pep-0208.txt:146
 msgid "w.op(v,w,z), z.op(v,w,z), coerce(v,w,z), v.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:149
+#: ../../pep-0208.txt:147
 msgid "z.op(v,w,z), coerce(v,w,z), v.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:150
+#: ../../pep-0208.txt:148
 msgid "v.op(v,w,z), w.op(v,w,z), coerce(v,w,z), v.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:151
+#: ../../pep-0208.txt:149
 msgid "v.op(v,w,z), coerce(v,w,z), v.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:152
+#: ../../pep-0208.txt:150
 msgid "w.op(v,w,z), coerce(v,w,z), v.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:153
+#: ../../pep-0208.txt:151
 msgid "coerce(v,w,z), v.op(v,w,z)"
 msgstr ""
 
-#: ../../pep-0208.txt:156
+#: ../../pep-0208.txt:154
 msgid "The same notes as above, except that coerce(v,w,z) actually does::"
 msgstr ""
 
-#: ../../pep-0208.txt:165
+#: ../../pep-0208.txt:163
 msgid ""
 "The current implementation uses this scheme already (there's only one "
 "ternary slot: ``nb_pow(a,b,c))``."
 msgstr ""
 
-#: ../../pep-0208.txt:168
+#: ../../pep-0208.txt:166
 msgid ""
 "Note that the numeric protocol is also used for some other related tasks,"
 " e.g. sequence concatenation.  These can also benefit from the new "
@@ -352,27 +336,28 @@ msgid ""
 "new_type."
 msgstr ""
 
-#: ../../pep-0208.txt:177
+#: ../../pep-0208.txt:175
 msgid ""
 "Since comparisons also rely on coercion (every time you compare an "
 "integer to a float, the integer is first converted to float and then "
 "compared...), a new slot to handle numeric comparisons is needed::"
 msgstr ""
 
-#: ../../pep-0208.txt:183
+#: ../../pep-0208.txt:181
 msgid ""
 "This slot should compare the two objects and return an integer object "
 "stating the result.  Currently, this result integer may only be -1, 0, 1."
 " If the slot cannot handle the type combination, it may return a "
 "reference to ``Py_NotImplemented``.  [XXX Note that this slot is still in"
-" flux since it should take into account rich comparisons (i.e. PEP 207).]"
+" flux since it should take into account rich comparisons (i.e. "
+":pep:`207`).]"
 msgstr ""
 
-#: ../../pep-0208.txt:190
+#: ../../pep-0208.txt:188
 msgid "Numeric comparisons are handled by a new numeric protocol API::"
 msgstr ""
 
-#: ../../pep-0208.txt:194
+#: ../../pep-0208.txt:192
 msgid ""
 "This function compare the two objects as \"numbers\" and return an "
 "integer object stating the result.  Currently, this result integer may "
@@ -380,13 +365,13 @@ msgid ""
 "objects, a ``TypeError`` is raised."
 msgstr ""
 
-#: ../../pep-0208.txt:199
+#: ../../pep-0208.txt:197
 msgid ""
 "The ``PyObject_Compare()`` API needs to adjusted accordingly to make use "
 "of this new API."
 msgstr ""
 
-#: ../../pep-0208.txt:202
+#: ../../pep-0208.txt:200
 msgid ""
 "Other changes include adapting some of the built-in functions (e.g. "
 "``cmp()``) to use this API as well.  Also, ``PyNumber_CoerceEx()`` will "
@@ -395,47 +380,78 @@ msgid ""
 " explicitly coerced."
 msgstr ""
 
-#: ../../pep-0208.txt:210
+#: ../../pep-0208.txt:208
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0208.txt:212
+#: ../../pep-0208.txt:210
 msgid ""
 "A preliminary patch for the CVS version of Python is available through "
 "the Source Forge patch manager [2]_."
 msgstr ""
 
-#: ../../pep-0208.txt:217
+#: ../../pep-0208.txt:215
 msgid "Credits"
 msgstr ""
 
-#: ../../pep-0208.txt:219
+#: ../../pep-0208.txt:217
 msgid ""
 "This PEP and the patch are heavily based on work done by Marc-André "
 "Lemburg [3]_."
 msgstr ""
 
-#: ../../pep-0208.txt:224
+#: ../../pep-0208.txt:222
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0208.txt:226
+#: ../../pep-0208.txt:224
 msgid "This document has been placed in the public domain."
 msgstr ""
 
-#: ../../pep-0208.txt:230
+#: ../../pep-0208.txt:228
 msgid "References"
 msgstr ""
 
-#: ../../pep-0208.txt:232
+#: ../../pep-0208.txt:230
 msgid "http://www.lemburg.com/files/python/mxDateTime.html"
 msgstr ""
 
-#: ../../pep-0208.txt:233
+#: ../../pep-0208.txt:231
 msgid "http://sourceforge.net/patch/?func=detailpatch&patch_id=102652&group_id=5470"
 msgstr ""
 
-#: ../../pep-0208.txt:234
+#: ../../pep-0208.txt:232
 msgid "http://www.lemburg.com/files/python/CoercionProposal.html"
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "208"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Reworking the Coercion Model"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "nas@arctrix.com (Neil Schemenauer), mal@lemburg.com"
+#~ " (Marc-André Lemburg)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This slot should compare the two "
+#~ "objects and return an integer object "
+#~ "stating the result.  Currently, this "
+#~ "result integer may only be -1, 0,"
+#~ " 1. If the slot cannot handle "
+#~ "the type combination, it may return "
+#~ "a reference to ``Py_NotImplemented``.  [XXX"
+#~ " Note that this slot is still "
+#~ "in flux since it should take into"
+#~ " account rich comparisons (i.e. PEP "
+#~ "207).]"
+#~ msgstr ""
 

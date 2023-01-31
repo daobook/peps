@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0302.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0302.txt:1
-msgid "302"
-msgstr ""
-
-#: ../../pep-0302.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0302.txt:2
-msgid "New Import Hooks"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0302.txt
 msgid "Author"
@@ -170,15 +154,16 @@ msgstr ""
 
 #: ../../pep-0302.txt:75
 msgid ""
-"The work on this PEP was partly triggered by the implementation of PEP "
-"273, which adds imports from Zip archives as a built-in feature to "
-"Python.  While the PEP itself was widely accepted as a must-have feature,"
-" the implementation left a few things to desire.  For one thing it went "
-"through great lengths to integrate itself with ``import.c``, adding lots "
-"of code that was either specific for Zip file imports or *not* specific "
-"to Zip imports, yet was not generally useful (or even desirable) either."
-"  Yet the PEP 273 implementation can hardly be blamed for this: it is "
-"simply extremely hard to do, given the current state of ``import.c``."
+"The work on this PEP was partly triggered by the implementation of "
+":pep:`273`, which adds imports from Zip archives as a built-in feature to"
+" Python.  While the PEP itself was widely accepted as a must-have "
+"feature, the implementation left a few things to desire.  For one thing "
+"it went through great lengths to integrate itself with ``import.c``, "
+"adding lots of code that was either specific for Zip file imports or "
+"*not* specific to Zip imports, yet was not generally useful (or even "
+"desirable) either.  Yet the :pep:`273` implementation can hardly be "
+"blamed for this: it is simply extremely hard to do, given the current "
+"state of ``import.c``."
 msgstr ""
 
 #: ../../pep-0302.txt:85
@@ -453,7 +438,7 @@ msgid ""
 msgstr ""
 
 #: ../../pep-0302.txt:268
-msgid "The ``__package__`` attribute [8]_ must be set."
+msgid "The ``__package__`` attribute must be set (:pep:`366`)."
 msgstr ""
 
 #: ../../pep-0302.txt:270
@@ -623,25 +608,25 @@ msgstr ""
 
 #: ../../pep-0302.txt:401
 msgid ""
-"To support execution of modules as scripts [6]_, the above three methods "
-"for finding the code associated with a module must be implemented. In "
-"addition to those methods, the following method may be provided in order "
-"to allow the ``runpy`` module to correctly set the ``__file__`` "
-"attribute::"
+"To support execution of modules as scripts (:pep:`338`), the above three "
+"methods for finding the code associated with a module must be "
+"implemented. In addition to those methods, the following method may be "
+"provided in order to allow the ``runpy`` module to correctly set the "
+"``__file__`` attribute::"
 msgstr ""
 
-#: ../../pep-0302.txt:408
+#: ../../pep-0302.txt:409
 msgid ""
 "This method should return the value that ``__file__`` would be set to if "
 "the named module was loaded. If the module is not found, then "
 "``ImportError`` should be raised."
 msgstr ""
 
-#: ../../pep-0302.txt:414
+#: ../../pep-0302.txt:415
 msgid "Integration with the 'imp' module"
 msgstr ""
 
-#: ../../pep-0302.txt:416
+#: ../../pep-0302.txt:417
 msgid ""
 "The new import hooks are not easily integrated in the existing "
 "``imp.find_module()`` and ``imp.load_module()`` calls.  It's questionable"
@@ -655,7 +640,7 @@ msgid ""
 "following pattern::"
 msgstr ""
 
-#: ../../pep-0302.txt:430
+#: ../../pep-0302.txt:431
 msgid ""
 "In the case of a \"basic\" import, one the `imp.find_module()` function "
 "would handle, the loader object would be a wrapper for the current output"
@@ -663,18 +648,18 @@ msgid ""
 "``imp.load_module()`` with that output."
 msgstr ""
 
-#: ../../pep-0302.txt:435
+#: ../../pep-0302.txt:436
 msgid ""
 "Note that this wrapper is currently not yet implemented, although a "
 "Python prototype exists in the ``test_importhooks.py`` script (the "
 "``ImpWrapper`` class) included with the patch."
 msgstr ""
 
-#: ../../pep-0302.txt:441
+#: ../../pep-0302.txt:442
 msgid "Forward Compatibility"
 msgstr ""
 
-#: ../../pep-0302.txt:443
+#: ../../pep-0302.txt:444
 msgid ""
 "Existing ``__import__`` hooks will not invoke new-style hooks by magic, "
 "unless they call the original ``__import__`` function as a fallback.  For"
@@ -682,11 +667,11 @@ msgid ""
 "not forward compatible with this PEP."
 msgstr ""
 
-#: ../../pep-0302.txt:450
+#: ../../pep-0302.txt:451
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-0302.txt:452
+#: ../../pep-0302.txt:453
 msgid ""
 "Modules often need supporting data files to do their job, particularly in"
 " the case of complex packages or full applications.  Current practice is "
@@ -695,11 +680,11 @@ msgid ""
 " for modules loaded via an import hook."
 msgstr ""
 
-#: ../../pep-0302.txt:458
+#: ../../pep-0302.txt:459
 msgid "There are a number of possible ways to address this problem:"
 msgstr ""
 
-#: ../../pep-0302.txt:460
+#: ../../pep-0302.txt:461
 msgid ""
 "\"Don't do that\".  If a package needs to locate data files via its "
 "``__path__``, it is not suitable for loading via an import hook.  The "
@@ -707,7 +692,7 @@ msgid ""
 "present, so this should not be seen as a major issue."
 msgstr ""
 
-#: ../../pep-0302.txt:465
+#: ../../pep-0302.txt:466
 msgid ""
 "Locate data files from a standard location, rather than relative to the "
 "module file.  A relatively simple approach (which is supported by "
@@ -716,7 +701,7 @@ msgid ""
 " \"data\", package_name)``."
 msgstr ""
 
-#: ../../pep-0302.txt:471
+#: ../../pep-0302.txt:472
 msgid ""
 "Import hooks could offer a standard way of getting at data files relative"
 " to the module file.  The standard ``zipimport`` object provides a method"
@@ -729,7 +714,7 @@ msgid ""
 "that this approach offers a general answer to the problem."
 msgstr ""
 
-#: ../../pep-0302.txt:481
+#: ../../pep-0302.txt:482
 msgid ""
 "It was suggested on python-dev that it would be useful to be able to "
 "receive a list of available modules from an importer and/or a list of "
@@ -740,7 +725,7 @@ msgid ""
 "implement ``list_modules()``: the importer or the loader or both?"
 msgstr ""
 
-#: ../../pep-0302.txt:489
+#: ../../pep-0302.txt:490
 msgid ""
 "This PEP is biased towards loading modules from alternative places: it "
 "currently doesn't offer dedicated solutions for loading modules from "
@@ -753,7 +738,7 @@ msgid ""
 "hookable built-in path importer object."
 msgstr ""
 
-#: ../../pep-0302.txt:499
+#: ../../pep-0302.txt:500
 msgid ""
 "There is no specific support within this PEP for \"stacking\" hooks.  For"
 " example, it is not obvious how to write a hook to load modules from "
@@ -765,7 +750,7 @@ msgid ""
 "  It may be worth considering as a future enhancement, however."
 msgstr ""
 
-#: ../../pep-0302.txt:508
+#: ../../pep-0302.txt:509
 msgid ""
 "It is possible (via ``sys.meta_path``) to add hooks which run before "
 "``sys.path`` is processed.  However, there is no equivalent way of adding"
@@ -779,45 +764,45 @@ msgid ""
 "it."
 msgstr ""
 
-#: ../../pep-0302.txt:520
+#: ../../pep-0302.txt:521
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0302.txt:522
+#: ../../pep-0302.txt:523
 msgid ""
-"The PEP 302 implementation has been integrated with Python as of 2.3a1.  "
-"An earlier version is available as patch #652586 [9]_, but more "
+"The :pep:`302` implementation has been integrated with Python as of "
+"2.3a1.  An earlier version is available as patch #652586 [9]_, but more "
 "interestingly, the issue contains a fairly detailed history of the "
 "development and design."
 msgstr ""
 
-#: ../../pep-0302.txt:526
-msgid "PEP 273 has been implemented using PEP 302's import hooks."
+#: ../../pep-0302.txt:527
+msgid ":pep:`273` has been implemented using :pep:`302`'s import hooks."
 msgstr ""
 
-#: ../../pep-0302.txt:530
+#: ../../pep-0302.txt:531
 msgid "References and Footnotes"
 msgstr ""
 
-#: ../../pep-0302.txt:532
+#: ../../pep-0302.txt:533
 msgid "imputil module http://docs.python.org/library/imputil.html"
 msgstr ""
 
-#: ../../pep-0302.txt:535
+#: ../../pep-0302.txt:536
 msgid ""
 "The Freeze tool. See also the ``Tools/freeze/`` directory in a Python "
 "source distribution"
 msgstr ""
 
-#: ../../pep-0302.txt:538
+#: ../../pep-0302.txt:539
 msgid "py2exe by Thomas Heller http://www.py2exe.org/"
 msgstr ""
 
-#: ../../pep-0302.txt:541
+#: ../../pep-0302.txt:542
 msgid "imp.set_frozenmodules() patch http://bugs.python.org/issue642578"
 msgstr ""
 
-#: ../../pep-0302.txt:544
+#: ../../pep-0302.txt:545
 msgid ""
 "The path argument to ``finder.find_module()`` is there because the "
 "``pkg.__path__`` variable may be needed at this point.  It may either "
@@ -825,47 +810,106 @@ msgid ""
 "``imp.find_module()`` or the proposed ``imp.get_loader()`` function."
 msgstr ""
 
-#: ../../pep-0302.txt:549
-msgid ""
-"PEP 338: Executing modules as scripts "
-"http://www.python.org/dev/peps/pep-0338/"
-msgstr ""
-
-#: ../../pep-0302.txt:552
+#: ../../pep-0302.txt:550
 msgid ""
 "Quixote, a framework for developing Web applications http://www.mems-"
 "exchange.org/software/quixote/"
 msgstr ""
 
-#: ../../pep-0302.txt:555
-msgid ""
-"PEP 366: Main module explicit relative imports "
-"http://www.python.org/dev/peps/pep-0366/"
-msgstr ""
-
-#: ../../pep-0302.txt:558
+#: ../../pep-0302.txt:553
 msgid ""
 "New import hooks + Import from Zip files "
 "http://bugs.python.org/issue652586"
 msgstr ""
 
-#: ../../pep-0302.txt:561
+#: ../../pep-0302.txt:556
 msgid ""
 "Language reference for imports "
 "http://docs.python.org/3/reference/import.html"
 msgstr ""
 
-#: ../../pep-0302.txt:564
+#: ../../pep-0302.txt:559
 msgid ""
 "importlib documentation http://docs.python.org/3/library/importlib.html"
 "#module-importlib"
 msgstr ""
 
-#: ../../pep-0302.txt:569
+#: ../../pep-0302.txt:564
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0302.txt:571
+#: ../../pep-0302.txt:566
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "302"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "New Import Hooks"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The work on this PEP was partly"
+#~ " triggered by the implementation of "
+#~ "PEP 273, which adds imports from "
+#~ "Zip archives as a built-in feature"
+#~ " to Python.  While the PEP itself "
+#~ "was widely accepted as a must-have"
+#~ " feature, the implementation left a "
+#~ "few things to desire.  For one "
+#~ "thing it went through great lengths "
+#~ "to integrate itself with ``import.c``, "
+#~ "adding lots of code that was "
+#~ "either specific for Zip file imports "
+#~ "or *not* specific to Zip imports, "
+#~ "yet was not generally useful (or "
+#~ "even desirable) either.  Yet the PEP "
+#~ "273 implementation can hardly be blamed"
+#~ " for this: it is simply extremely "
+#~ "hard to do, given the current "
+#~ "state of ``import.c``."
+#~ msgstr ""
+
+#~ msgid "The ``__package__`` attribute [8]_ must be set."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To support execution of modules as "
+#~ "scripts [6]_, the above three methods"
+#~ " for finding the code associated with"
+#~ " a module must be implemented. In "
+#~ "addition to those methods, the following"
+#~ " method may be provided in order "
+#~ "to allow the ``runpy`` module to "
+#~ "correctly set the ``__file__`` attribute::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The PEP 302 implementation has been "
+#~ "integrated with Python as of 2.3a1.  "
+#~ "An earlier version is available as "
+#~ "patch #652586 [9]_, but more "
+#~ "interestingly, the issue contains a "
+#~ "fairly detailed history of the "
+#~ "development and design."
+#~ msgstr ""
+
+#~ msgid "PEP 273 has been implemented using PEP 302's import hooks."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 338: Executing modules as scripts"
+#~ " http://www.python.org/dev/peps/pep-0338/"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 366: Main module explicit relative"
+#~ " imports http://www.python.org/dev/peps/pep-0366/"
+#~ msgstr ""
 

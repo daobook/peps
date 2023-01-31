@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0582.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0582.rst:1
-msgid "582"
-msgstr ""
-
-#: ../../pep-0582.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0582.rst:2
-msgid "Python local packages directory"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0582.rst
 msgid "Author"
@@ -68,10 +52,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0582.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0582.rst:10
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0582.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0582.rst:11
+#: ../../pep-0582.rst:12
 msgid "16-May-2018"
 msgstr ""
 
@@ -79,15 +71,15 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0582.rst:12
-msgid "3.8"
+#: ../../pep-0582.rst:13
+msgid "3.12"
 msgstr ""
 
-#: ../../pep-0582.rst:16
+#: ../../pep-0582.rst:17
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0582.rst:18
+#: ../../pep-0582.rst:19
 msgid ""
 "This PEP proposes to add to Python a mechanism to automatically recognize"
 " a ``__pypackages__`` directory and prefer importing packages installed "
@@ -97,11 +89,11 @@ msgid ""
 "when present."
 msgstr ""
 
-#: ../../pep-0582.rst:27
+#: ../../pep-0582.rst:28
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0582.rst:29
+#: ../../pep-0582.rst:30
 msgid ""
 "Python virtual environments have become an essential part of development "
 "and teaching workflow in the community, but at the same time, they create"
@@ -110,13 +102,13 @@ msgid ""
 "first time)."
 msgstr ""
 
-#: ../../pep-0582.rst:34
+#: ../../pep-0582.rst:35
 msgid ""
 "How virtual environments work is a lot of information for anyone new. It "
 "takes a lot of extra time and effort to explain them."
 msgstr ""
 
-#: ../../pep-0582.rst:37
+#: ../../pep-0582.rst:38
 msgid ""
 "Different platforms and shell environments require different sets of "
 "commands to activate the virtual environments. Any workshop or teaching "
@@ -124,7 +116,7 @@ msgid ""
 " on their laptops create a lot of confusion among the participants."
 msgstr ""
 
-#: ../../pep-0582.rst:42
+#: ../../pep-0582.rst:43
 msgid ""
 "Virtual environments need to be activated on each opened terminal. If "
 "someone creates/opens a new terminal, that by default does not get the "
@@ -132,11 +124,35 @@ msgid ""
 "activated."
 msgstr ""
 
-#: ../../pep-0582.rst:48
+#: ../../pep-0582.rst:49
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0582.rst:51
+#, python-format
+msgid ""
+"Python is a beginner friendly programming language. But, so far virtual "
+"environment(s) is the major time taking part of the learning process of a"
+" new person. This PEP is not trying to solve every packaging problem, but"
+" focused on the 90% of the new folks who struggle with virtual "
+"environments in their learning path. Creating a new directory is still "
+"far easier than learning the details of virtual environments in various "
+"platforms."
+msgstr ""
+
+#: ../../pep-0582.rst:58
+msgid ""
+"A major point for this PEP is that it is not trying to replace virtual "
+"environments. If one needs all the features of virtual environments, they"
+" should use proper virtual environments (for example, created using the "
+":mod:`venv` module)."
+msgstr ""
+
+#: ../../pep-0582.rst:63
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0582.rst:50
+#: ../../pep-0582.rst:65
 msgid ""
 "When the Python binary is executed, it attempts to determine its prefix "
 "(as stored in ``sys.prefix``), which is then used to find the standard "
@@ -150,7 +166,7 @@ msgid ""
 "Python import system will search for modules."
 msgstr ""
 
-#: ../../pep-0582.rst:60
+#: ../../pep-0582.rst:75
 msgid ""
 "This PEP proposes to add a new step in this process. If a "
 "``__pypackages__`` directory is found in the current working directory, "
@@ -160,7 +176,7 @@ msgid ""
 "automatically find all the dependencies inside of ``__pypackages__``."
 msgstr ""
 
-#: ../../pep-0582.rst:67
+#: ../../pep-0582.rst:82
 msgid ""
 "In case of Python scripts, Python will try to find ``__pypackages__`` in "
 "the same directory as the script. If found (along with the current Python"
@@ -168,14 +184,14 @@ msgid ""
 "behave as it does currently."
 msgstr ""
 
-#: ../../pep-0582.rst:72
+#: ../../pep-0582.rst:87
 msgid ""
 "If any package management tool finds the same ``__pypackages__`` "
 "directory in the current working directory, it will install any packages "
 "there and also create it if required based on Python version."
 msgstr ""
 
-#: ../../pep-0582.rst:76
+#: ../../pep-0582.rst:91
 msgid ""
 "Projects that use a source management system can include a "
 "``__pypackages__`` directory (empty or with e.g. a file like "
@@ -184,42 +200,53 @@ msgid ""
 "into this directory."
 msgstr ""
 
-#: ../../pep-0582.rst:82
+#: ../../pep-0582.rst:96
+msgid ""
+"But, this does not enable all features of virtual environments in a "
+"similar fashion. For example, if the project has multiple scripts, or "
+"helper scripts in a different directory to build the project, a normal "
+"virtual environment should be preferred over ``__pypackages__``."
+msgstr ""
+
+#: ../../pep-0582.rst:103
 msgid "Example"
 msgstr ""
 
-#: ../../pep-0582.rst:84
+#: ../../pep-0582.rst:105
 msgid ""
 "The following shows an example project directory structure, and different"
 " ways the Python executable and any script will behave."
 msgstr ""
 
-#: ../../pep-0582.rst:115
+#: ../../pep-0582.rst:137
 msgid ""
 "We have a project directory called ``foo`` and it has a "
 "``__pypackages__`` inside of it. We have ``bottle`` installed in that "
-"``__pypackages__/3.8/lib``, and have a ``myscript.py`` file inside of the"
-" project directory. We have used whatever tool we generally use to "
-"install ``bottle`` in that location."
+"``__pypackages__/lib/python3.10/stie-packages/``, and have a "
+"``myscript.py`` file inside of the project directory. We have used "
+"whatever tool we generally use to install ``bottle`` in that location. "
+"This actual internal path will depend on the Python implementation name, "
+"as mentioned in the ``sysconfig._INSTALL_SCHEMES['posix_prefix']`` "
+"dictionary."
 msgstr ""
 
-#: ../../pep-0582.rst:121
+#: ../../pep-0582.rst:145
 msgid ""
 "For invoking a script, Python will try to find a ``__pypackages__`` "
-"inside of the directory that the script resides[1]_, ``/usr/bin``.  The "
+"inside of the directory that the script resides [1]_, ``/usr/bin``.  The "
 "same will happen in case of the last example, where we are executing "
 "``/usr/bin/ansible`` from inside of the ``foo`` directory. In both cases,"
 " it will **not** use the ``__pypackages__`` in the current working "
 "directory."
 msgstr ""
 
-#: ../../pep-0582.rst:127
+#: ../../pep-0582.rst:151
 msgid ""
 "Similarly, if we invoke ``myscript.py`` from the first example, it will "
 "use the ``__pypackages__`` directory that was in the ``foo`` directory."
 msgstr ""
 
-#: ../../pep-0582.rst:130
+#: ../../pep-0582.rst:154
 msgid ""
 "If we go inside of the ``foo`` directory and start the Python executable "
 "(the interpreter), it will find the ``__pypackages__`` directory inside "
@@ -229,13 +256,13 @@ msgid ""
 "directory."
 msgstr ""
 
-#: ../../pep-0582.rst:136
+#: ../../pep-0582.rst:160
 msgid ""
 "The above two examples are only cases where ``__pypackages__`` from "
 "current working directory is used."
 msgstr ""
 
-#: ../../pep-0582.rst:139
+#: ../../pep-0582.rst:163
 msgid ""
 "In another example scenario, a trainer of a Python class can say \"Today "
 "we are going to learn how to use Twisted! To start, please checkout our "
@@ -243,7 +270,7 @@ msgid ""
 "install twisted``.\""
 msgstr ""
 
-#: ../../pep-0582.rst:143
+#: ../../pep-0582.rst:167
 msgid ""
 "That will install Twisted into a directory separate from ``python3``. "
 "There's no need to discuss virtual environments, global versus user "
@@ -252,11 +279,17 @@ msgid ""
 "step, etc."
 msgstr ""
 
-#: ../../pep-0582.rst:154
+#: ../../pep-0582.rst:173
+msgid ""
+"In the case of symlinks, it is the directory where the actual script "
+"resides, not the symlink pointing to the script"
+msgstr ""
+
+#: ../../pep-0582.rst:178
 msgid "Security Considerations"
 msgstr ""
 
-#: ../../pep-0582.rst:156
+#: ../../pep-0582.rst:180
 msgid ""
 "While executing a Python script, it will not consider the "
 "``__pypackages__`` in the current directory, instead if there is a "
@@ -264,7 +297,7 @@ msgid ""
 " used."
 msgstr ""
 
-#: ../../pep-0582.rst:160
+#: ../../pep-0582.rst:184
 msgid ""
 "For example, if we execute ``python /usr/share/myproject/fancy.py`` from "
 "the ``/tmp`` directory and  if there is a ``__pypackages__`` directory "
@@ -272,19 +305,27 @@ msgid ""
 "potential ``__pypackages__`` directory in ``/tmp`` will be ignored."
 msgstr ""
 
-#: ../../pep-0582.rst:167
+#: ../../pep-0582.rst:189
+msgid ""
+"This also means we will not scan any parent directory while executing "
+"scripts. If we want to execute scripts inside of the ``~/bin/`` "
+"directory, then the ``__pypackages__`` directory must be inside of the "
+"``~/bin/`` directory."
+msgstr ""
+
+#: ../../pep-0582.rst:194
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0582.rst:169
+#: ../../pep-0582.rst:196
 msgid "This does not affect any older version of Python implementation."
 msgstr ""
 
-#: ../../pep-0582.rst:172
+#: ../../pep-0582.rst:199
 msgid "Impact on other Python implementations"
 msgstr ""
 
-#: ../../pep-0582.rst:174
+#: ../../pep-0582.rst:201
 msgid ""
 "Other Python implementations will need to replicate the new behavior of "
 "the interpreter bootstrap, including locating the ``__pypackages__`` "
@@ -292,29 +333,80 @@ msgid ""
 " is present."
 msgstr ""
 
-#: ../../pep-0582.rst:180
+#: ../../pep-0582.rst:207
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0582.rst:182
+#: ../../pep-0582.rst:209
 msgid ""
-"`Here <https://github.com/kushaldas/cpython/tree/pypackages>`_ is a PoC "
-"implementation (in the ``pypackages`` branch)."
+"`Here <https://github.com/kushaldas/pep582>`_ is a small script which "
+"will enable the implementation for ``Cpython`` & in ``PyPy``."
 msgstr ""
 
-#: ../../pep-0582.rst:187
+#: ../../pep-0582.rst:214
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0582.rst:189
-msgid "``__pylocal__`` and ``python_modules``."
+#: ../../pep-0582.rst:216
+msgid ""
+"``__pylocal__`` and ``python_modules`` as directory name. We will also "
+"not reimplement all the features of virtual environments."
 msgstr ""
 
-#: ../../pep-0582.rst:193
+#: ../../pep-0582.rst:220
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0582.rst:195
+#: ../../pep-0582.rst:222
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "582"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Python local packages directory"
+#~ msgstr ""
+
+#~ msgid "3.8"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We have a project directory called "
+#~ "``foo`` and it has a ``__pypackages__``"
+#~ " inside of it. We have ``bottle`` "
+#~ "installed in that ``__pypackages__/3.8/lib``, "
+#~ "and have a ``myscript.py`` file inside"
+#~ " of the project directory. We have"
+#~ " used whatever tool we generally use"
+#~ " to install ``bottle`` in that "
+#~ "location."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For invoking a script, Python will "
+#~ "try to find a ``__pypackages__`` inside"
+#~ " of the directory that the script "
+#~ "resides[1]_, ``/usr/bin``.  The same will "
+#~ "happen in case of the last "
+#~ "example, where we are executing "
+#~ "``/usr/bin/ansible`` from inside of the "
+#~ "``foo`` directory. In both cases, it "
+#~ "will **not** use the ``__pypackages__`` "
+#~ "in the current working directory."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Here <https://github.com/kushaldas/cpython/tree/pypackages>`_"
+#~ " is a PoC implementation (in the "
+#~ "``pypackages`` branch)."
+#~ msgstr ""
+
+#~ msgid "``__pylocal__`` and ``python_modules``."
+#~ msgstr ""
 

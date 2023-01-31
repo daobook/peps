@@ -8,36 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0383.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0383.txt:1
-msgid "383"
-msgstr ""
-
-#: ../../pep-0383.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0383.txt:2
-msgid "Non-decodable Bytes in System Character Interfaces"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0383.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0383.txt:5
+#: ../../pep-0383.txt:3
 msgid "Martin v. Löwis <martin@v.loewis.de>"
 msgstr ""
 
@@ -45,7 +29,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0383.txt:6
+#: ../../pep-0383.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0383.txt:7
+#: ../../pep-0383.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0383.txt:9
+#: ../../pep-0383.txt:7
 msgid "22-Apr-2009"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0383.txt:10
+#: ../../pep-0383.txt:8
 msgid "3.1"
 msgstr ""
 
@@ -77,11 +61,11 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0383.txt:14
+#: ../../pep-0383.txt:12
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0383.txt:16
+#: ../../pep-0383.txt:14
 msgid ""
 "File names, environment variables, and command line arguments are defined"
 " as being character data in POSIX; the C APIs however allow passing "
@@ -91,11 +75,11 @@ msgid ""
 "recreation of the original byte string."
 msgstr ""
 
-#: ../../pep-0383.txt:24
+#: ../../pep-0383.txt:22
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0383.txt:26
+#: ../../pep-0383.txt:24
 msgid ""
 "The C char type is a data type that is commonly used to represent both "
 "character data and bytes. Certain POSIX interfaces are specified and "
@@ -107,7 +91,7 @@ msgid ""
 "encoding."
 msgstr ""
 
-#: ../../pep-0383.txt:35
+#: ../../pep-0383.txt:33
 msgid ""
 "On the other hand, Microsoft Windows NT has corrected the original design"
 " limitation of Unix, and made it explicit in its system interfaces that "
@@ -116,7 +100,7 @@ msgid ""
 "-char-based one for backwards compatibility)."
 msgstr ""
 
-#: ../../pep-0383.txt:42
+#: ../../pep-0383.txt:40
 msgid ""
 "For Python 3, one proposed solution is to provide two sets of APIs: a "
 "byte-oriented one, and a character-oriented one, where the character-"
@@ -129,7 +113,7 @@ msgid ""
 "way that caused endless troubles for Python 2.x."
 msgstr ""
 
-#: ../../pep-0383.txt:52
+#: ../../pep-0383.txt:50
 msgid ""
 "With this PEP, a uniform treatment of these data as characters becomes "
 "possible. The uniformity is achieved by using specific encoding "
@@ -137,25 +121,25 @@ msgid ""
 " systems only if the same encoding is used."
 msgstr ""
 
-#: ../../pep-0383.txt:57
+#: ../../pep-0383.txt:55
 msgid ""
 "Being able to treat such strings uniformly will allow application writers"
 " to abstract from details specific to the operating system, and reduces "
 "the risk of one API failing when the other API would have worked."
 msgstr ""
 
-#: ../../pep-0383.txt:63
+#: ../../pep-0383.txt:61
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0383.txt:65
+#: ../../pep-0383.txt:63
 msgid ""
 "On Windows, Python uses the wide character APIs to access character-"
 "oriented APIs, allowing direct conversion of the environmental data to "
-"Python str objects ([1]_)."
+"Python str objects (:pep:`277`)."
 msgstr ""
 
-#: ../../pep-0383.txt:69
+#: ../../pep-0383.txt:67
 msgid ""
 "On POSIX systems, Python currently applies the locale's encoding to "
 "convert the byte data to Unicode, failing for characters that cannot be "
@@ -164,9 +148,9 @@ msgid ""
 "exceptions; see the discussion below."
 msgstr ""
 
-#: ../../pep-0383.txt:75
+#: ../../pep-0383.txt:73
 msgid ""
-"To convert non-decodable bytes, a new error handler ([2]_) "
+"To convert non-decodable bytes, a new error handler (:pep:`293`) "
 "\"surrogateescape\" is introduced, which produces these surrogates. On "
 "encoding, the error handler converts the surrogate back to the "
 "corresponding byte. This error handler will be used in any API that "
@@ -174,36 +158,36 @@ msgid ""
 "variables."
 msgstr ""
 
-#: ../../pep-0383.txt:82
+#: ../../pep-0383.txt:80
 msgid ""
 "The error handler interface is extended to allow the encode error handler"
 " to return byte strings immediately, in addition to returning Unicode "
 "strings which then get encoded again (also see the discussion below)."
 msgstr ""
 
-#: ../../pep-0383.txt:87
+#: ../../pep-0383.txt:85
 msgid ""
 "Byte-oriented interfaces that already exist in Python 3.0 are not "
 "affected by this specification. They are neither enhanced nor deprecated."
 msgstr ""
 
-#: ../../pep-0383.txt:91
+#: ../../pep-0383.txt:89
 msgid ""
 "External libraries that operate on file names (such as GUI file choosers)"
 " should also encode them according to the PEP."
 msgstr ""
 
-#: ../../pep-0383.txt:95
+#: ../../pep-0383.txt:93
 msgid "Discussion"
 msgstr ""
 
-#: ../../pep-0383.txt:97
+#: ../../pep-0383.txt:95
 msgid ""
 "This surrogateescape encoding is based on Markus Kuhn's idea that he "
 "called UTF-8b [3]_."
 msgstr ""
 
-#: ../../pep-0383.txt:100
+#: ../../pep-0383.txt:98
 msgid ""
 "While providing a uniform API to non-decodable bytes, this interface has "
 "the limitation that chosen representation only \"works\" if the data get "
@@ -213,13 +197,13 @@ msgid ""
 "produce non-sensical data."
 msgstr ""
 
-#: ../../pep-0383.txt:107
+#: ../../pep-0383.txt:105
 msgid ""
 "Data obtained from other sources may conflict with data produced by this "
 "PEP. Dealing with such conflicts is out of scope of the PEP."
 msgstr ""
 
-#: ../../pep-0383.txt:110
+#: ../../pep-0383.txt:108
 msgid ""
 "This PEP allows the possibility of \"smuggling\" bytes in character "
 "strings. This would be a security risk if the bytes are security-critical"
@@ -233,7 +217,7 @@ msgid ""
 " to address the security risks."
 msgstr ""
 
-#: ../../pep-0383.txt:122
+#: ../../pep-0383.txt:120
 msgid ""
 "Encodings that are not compatible with ASCII are not supported by this "
 "specification; bytes in the ASCII range that fail to decode will cause an"
@@ -241,7 +225,7 @@ msgid ""
 " locale charsets."
 msgstr ""
 
-#: ../../pep-0383.txt:127
+#: ../../pep-0383.txt:125
 msgid ""
 "For most applications, we assume that they eventually pass data received "
 "from a system interface back into the same system interfaces. For "
@@ -255,7 +239,7 @@ msgid ""
 "would be written as::"
 msgstr ""
 
-#: ../../pep-0383.txt:145
+#: ../../pep-0383.txt:143
 msgid ""
 "The extension to the encode error handler interface proposed by this PEP "
 "is necessary to implement the 'surrogateescape' error handler, because "
@@ -270,21 +254,21 @@ msgid ""
 "would create the desired bytes."
 msgstr ""
 
-#: ../../pep-0383.txt:157
+#: ../../pep-0383.txt:155
 msgid "A few alternative approaches have been proposed:"
 msgstr ""
 
-#: ../../pep-0383.txt:159
+#: ../../pep-0383.txt:157
 msgid "create a new string subclass that supports embedded bytes"
 msgstr ""
 
-#: ../../pep-0383.txt:160
+#: ../../pep-0383.txt:158
 msgid ""
 "use different escape schemes, such as escaping with a NUL character, or "
 "mapping to infrequent characters."
 msgstr ""
 
-#: ../../pep-0383.txt:163
+#: ../../pep-0383.txt:161
 msgid ""
 "Of these proposals, the approach of escaping each byte XX with the "
 "sequence U+0000 U+00XX has the disadvantage that encoding to UTF-8 will "
@@ -294,33 +278,71 @@ msgid ""
 "case; other libraries may show similar problems."
 msgstr ""
 
-#: ../../pep-0383.txt:172
+#: ../../pep-0383.txt:170
 msgid "References"
 msgstr ""
 
-#: ../../pep-0383.txt:174
-msgid ""
-"PEP 277 \"Unicode file name support for Windows NT\" "
-"http://www.python.org/dev/peps/pep-0277/"
-msgstr ""
-
-#: ../../pep-0383.txt:178
-msgid ""
-"PEP 293 \"Codec Error Handling Callbacks\" "
-"http://www.python.org/dev/peps/pep-0293/"
-msgstr ""
-
-#: ../../pep-0383.txt:182
+#: ../../pep-0383.txt:172
 msgid ""
 "UTF-8b "
-"http://permalink.gmane.org/gmane.comp.internationalization.linux/920"
+"https://web.archive.org/web/20090830064219/http://mail.nl.linux.org"
+"/linux-utf8/2000-07/msg00040.html"
 msgstr ""
 
-#: ../../pep-0383.txt:186
+#: ../../pep-0383.txt:176
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0383.txt:188
+#: ../../pep-0383.txt:178
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "383"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Non-decodable Bytes in System Character Interfaces"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "On Windows, Python uses the wide "
+#~ "character APIs to access character-"
+#~ "oriented APIs, allowing direct conversion "
+#~ "of the environmental data to Python "
+#~ "str objects ([1]_)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To convert non-decodable bytes, a "
+#~ "new error handler ([2]_) \"surrogateescape\""
+#~ " is introduced, which produces these "
+#~ "surrogates. On encoding, the error "
+#~ "handler converts the surrogate back to"
+#~ " the corresponding byte. This error "
+#~ "handler will be used in any API"
+#~ " that receives or produces file "
+#~ "names, command line arguments, or "
+#~ "environment variables."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 277 \"Unicode file name support "
+#~ "for Windows NT\" "
+#~ "http://www.python.org/dev/peps/pep-0277/"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 293 \"Codec Error Handling "
+#~ "Callbacks\" http://www.python.org/dev/peps/pep-0293/"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "UTF-8b "
+#~ "http://permalink.gmane.org/gmane.comp.internationalization.linux/920"
+#~ msgstr ""
 

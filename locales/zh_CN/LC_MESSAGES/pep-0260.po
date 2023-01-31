@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0260.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0260.txt:1
-msgid "260"
-msgstr ""
-
-#: ../../pep-0260.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0260.txt:2
-msgid "Simplify xrange()"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0260.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0260.txt:5
-msgid "guido@python.org (Guido van Rossum)"
+#: ../../pep-0260.txt:3
+msgid "Guido van Rossum <guido@python.org>"
 msgstr ""
 
 #: ../../pep-0260.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0260.txt:6
+#: ../../pep-0260.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0260.txt:7
+#: ../../pep-0260.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0260.txt:9 ../../pep-0260.txt:11
+#: ../../pep-0260.txt:7 ../../pep-0260.txt:9
 msgid "26-Jun-2001"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0260.txt:10
+#: ../../pep-0260.txt:8
 msgid "2.2"
 msgstr ""
 
@@ -77,25 +61,25 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0260.txt:15
+#: ../../pep-0260.txt:13
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0260.txt:17
+#: ../../pep-0260.txt:15
 msgid ""
 "This PEP proposes to strip the ``xrange()`` object from some rarely used "
 "behavior like ``x[i:j]`` and ``x*n``."
 msgstr ""
 
-#: ../../pep-0260.txt:22
+#: ../../pep-0260.txt:20
 msgid "Problem"
 msgstr ""
 
-#: ../../pep-0260.txt:24
+#: ../../pep-0260.txt:22
 msgid "The ``xrange()`` function has one idiomatic use::"
 msgstr ""
 
-#: ../../pep-0260.txt:28
+#: ../../pep-0260.txt:26
 msgid ""
 "However, the ``xrange()`` object has a bunch of rarely used behaviors "
 "that attempt to make it more sequence-like.  These are so rarely used "
@@ -103,75 +87,75 @@ msgid ""
 "that went undetected for several releases."
 msgstr ""
 
-#: ../../pep-0260.txt:33
+#: ../../pep-0260.txt:31
 msgid ""
 "I claim that it's better to drop these unused features.  This will "
 "simplify the implementation, testing, and documentation, and reduce "
 "maintenance and code size."
 msgstr ""
 
-#: ../../pep-0260.txt:39
+#: ../../pep-0260.txt:37
 msgid "Proposed Solution"
 msgstr ""
 
-#: ../../pep-0260.txt:41
+#: ../../pep-0260.txt:39
 msgid ""
 "I propose to strip the ``xrange()`` object to the bare minimum.  The only"
 " retained sequence behaviors are ``x[i]``, ``len(x)``, and ``repr(x)``. "
 "In particular, these behaviors will be dropped:"
 msgstr ""
 
-#: ../../pep-0260.txt:45
+#: ../../pep-0260.txt:43
 msgid "``x[i:j]`` (slicing)"
 msgstr ""
 
-#: ../../pep-0260.txt:46
+#: ../../pep-0260.txt:44
 msgid "``x*n``, ``n*x`` (sequence-repeat)"
 msgstr ""
 
-#: ../../pep-0260.txt:47
+#: ../../pep-0260.txt:45
 msgid "``cmp(x1, x2)`` (comparisons)"
 msgstr ""
 
-#: ../../pep-0260.txt:48
+#: ../../pep-0260.txt:46
 msgid "``i in x`` (containment test)"
 msgstr ""
 
-#: ../../pep-0260.txt:49
+#: ../../pep-0260.txt:47
 msgid "``x.tolist()`` method"
 msgstr ""
 
-#: ../../pep-0260.txt:50
+#: ../../pep-0260.txt:48
 msgid "``x.start``, ``x.stop``, ``x.step`` attributes"
 msgstr ""
 
-#: ../../pep-0260.txt:52
+#: ../../pep-0260.txt:50
 msgid ""
 "I also propose to change the signature of the ``PyRange_New()`` C API to "
 "remove the 4th argument (the repetition count)."
 msgstr ""
 
-#: ../../pep-0260.txt:55
+#: ../../pep-0260.txt:53
 msgid ""
 "By implementing a custom iterator type, we could speed up the common use,"
 " but this is optional (the default sequence iterator does just fine)."
 msgstr ""
 
-#: ../../pep-0260.txt:61
+#: ../../pep-0260.txt:59
 msgid "Scope"
 msgstr ""
 
-#: ../../pep-0260.txt:63
+#: ../../pep-0260.txt:61
 msgid ""
 "This PEP affects the ``xrange()`` built-in function and the "
 "``PyRange_New()`` C API."
 msgstr ""
 
-#: ../../pep-0260.txt:68
+#: ../../pep-0260.txt:66
 msgid "Risks"
 msgstr ""
 
-#: ../../pep-0260.txt:70
+#: ../../pep-0260.txt:68
 msgid ""
 "Somebody's code could be relying on the extended code, and this code "
 "would break.  However, given that historically bugs in the extended code "
@@ -179,11 +163,11 @@ msgid ""
 "affected."
 msgstr ""
 
-#: ../../pep-0260.txt:77
+#: ../../pep-0260.txt:75
 msgid "Transition"
 msgstr ""
 
-#: ../../pep-0260.txt:79
+#: ../../pep-0260.txt:77
 msgid ""
 "For backwards compatibility, the existing functionality will still be "
 "present in Python 2.2, but will trigger a warning.  A year after Python "
@@ -191,11 +175,26 @@ msgid ""
 "out."
 msgstr ""
 
-#: ../../pep-0260.txt:86
+#: ../../pep-0260.txt:84
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0260.txt:88
+#: ../../pep-0260.txt:86
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "260"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Simplify xrange()"
+#~ msgstr ""
+
+#~ msgid "guido@python.org (Guido van Rossum)"
+#~ msgstr ""
 

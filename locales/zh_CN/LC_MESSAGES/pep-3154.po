@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-3154.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-3154.txt:1
-msgid "3154"
-msgstr ""
-
-#: ../../pep-3154.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-3154.txt:2
-msgid "Pickle protocol version 4"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-3154.txt
 msgid "Author"
@@ -77,23 +61,25 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-3154.txt:12
-msgid "https://mail.python.org/pipermail/python-dev/2011-August/112821.html"
+#: ../../pep-3154.txt:11
+msgid ""
+"`12-Aug-2011 <https://mail.python.org/pipermail/python-"
+"dev/2011-August/112821.html>`__"
 msgstr ""
 
 #: ../../pep-3154.txt
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-3154.txt:13
+#: ../../pep-3154.txt:12
 msgid "https://mail.python.org/pipermail/python-dev/2013-November/130439.html"
 msgstr ""
 
-#: ../../pep-3154.txt:17
+#: ../../pep-3154.txt:16
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-3154.txt:19
+#: ../../pep-3154.txt:18
 msgid ""
 "Data serialized using the pickle module must be portable across Python "
 "versions.  It should also support the latest language features as well as"
@@ -107,11 +93,11 @@ msgid ""
 "transfer)."
 msgstr ""
 
-#: ../../pep-3154.txt:32
+#: ../../pep-3154.txt:31
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-3154.txt:34
+#: ../../pep-3154.txt:33
 msgid ""
 "The latest current protocol, coincidentally named protocol 3, appeared "
 "with Python 3.0 and supports the new incompatible features in the "
@@ -120,7 +106,7 @@ msgid ""
 "other ways."
 msgstr ""
 
-#: ../../pep-3154.txt:40
+#: ../../pep-3154.txt:39
 msgid ""
 "This PEP is an attempt to foster a number of incremental improvements in "
 "a new pickle protocol version.  The PEP process is used in order to "
@@ -128,15 +114,15 @@ msgid ""
 "new pickle protocol should be a rare occurrence."
 msgstr ""
 
-#: ../../pep-3154.txt:47
+#: ../../pep-3154.txt:46
 msgid "Proposed changes"
 msgstr ""
 
-#: ../../pep-3154.txt:50
+#: ../../pep-3154.txt:49
 msgid "Framing"
 msgstr ""
 
-#: ../../pep-3154.txt:52
+#: ../../pep-3154.txt:51
 msgid ""
 "Traditionally, when unpickling an object from a stream (by calling "
 "``load()`` rather than ``loads()``), many small ``read()`` calls can be "
@@ -144,13 +130,13 @@ msgid ""
 "impact."
 msgstr ""
 
-#: ../../pep-3154.txt:57
+#: ../../pep-3154.txt:56
 msgid ""
 "Protocol 4, by contrast, features binary framing.  The general structure "
 "of a pickle is thus the following::"
 msgstr ""
 
-#: ../../pep-3154.txt:77
+#: ../../pep-3154.txt:76
 msgid ""
 "To keep the implementation simple, it is forbidden for a pickle opcode to"
 " straddle frame boundaries.  The pickler takes care not to produce such "
@@ -159,13 +145,13 @@ msgid ""
 "opcode."
 msgstr ""
 
-#: ../../pep-3154.txt:82
+#: ../../pep-3154.txt:81
 msgid ""
 "A well-written C implementation doesn't need additional memory copies for"
 " the framing layer, preserving general (un)pickling efficiency."
 msgstr ""
 
-#: ../../pep-3154.txt:87
+#: ../../pep-3154.txt:86
 msgid ""
 "How the pickler decides to partition the pickle stream into frames is an "
 "implementation detail.  For example, \"closing\" a frame as soon as it "
@@ -173,11 +159,11 @@ msgid ""
 "size overhead."
 msgstr ""
 
-#: ../../pep-3154.txt:93
+#: ../../pep-3154.txt:92
 msgid "Binary encoding for all opcodes"
 msgstr ""
 
-#: ../../pep-3154.txt:95
+#: ../../pep-3154.txt:94
 msgid ""
 "The GLOBAL opcode, which is still used in protocol 3, uses the so-called "
 "\"text\" mode of the pickle protocol, which involves looking for newlines"
@@ -185,17 +171,17 @@ msgid ""
 "framing."
 msgstr ""
 
-#: ../../pep-3154.txt:100
+#: ../../pep-3154.txt:99
 msgid ""
 "Protocol 4 forbids use of the GLOBAL opcode and replaces it with "
 "STACK_GLOBAL, a new opcode which takes its operand from the stack."
 msgstr ""
 
-#: ../../pep-3154.txt:104
+#: ../../pep-3154.txt:103
 msgid "Serializing more \"lookupable\" objects"
 msgstr ""
 
-#: ../../pep-3154.txt:106
+#: ../../pep-3154.txt:105
 msgid ""
 "By default, pickle is only able to serialize module-global functions and "
 "classes.  Supporting other kinds of objects, such as unbound methods "
@@ -204,7 +190,7 @@ msgid ""
 " [5]_."
 msgstr ""
 
-#: ../../pep-3154.txt:111
+#: ../../pep-3154.txt:110
 msgid ""
 "The ``__qualname__`` attribute from :pep:`3155` makes it possible to "
 "lookup many more objects by name.  Making the STACK_GLOBAL opcode accept "
@@ -212,11 +198,11 @@ msgid ""
 "support all those kinds of objects."
 msgstr ""
 
-#: ../../pep-3154.txt:117
+#: ../../pep-3154.txt:116
 msgid "64-bit opcodes for large objects"
 msgstr ""
 
-#: ../../pep-3154.txt:119
+#: ../../pep-3154.txt:118
 msgid ""
 "Current protocol versions export object sizes for various built-in types "
 "(str, bytes) as 32-bit ints.  This forbids serialization of large data "
@@ -224,11 +210,11 @@ msgid ""
 "objects."
 msgstr ""
 
-#: ../../pep-3154.txt:125
+#: ../../pep-3154.txt:124
 msgid "Native opcodes for sets and frozensets"
 msgstr ""
 
-#: ../../pep-3154.txt:127
+#: ../../pep-3154.txt:126
 msgid ""
 "Many common built-in types (such as str, bytes, dict, list, tuple) have "
 "dedicated opcodes to improve resource consumption when serializing and "
@@ -238,11 +224,11 @@ msgid ""
 "sets [2]_."
 msgstr ""
 
-#: ../../pep-3154.txt:135
+#: ../../pep-3154.txt:134
 msgid "Calling __new__ with keyword arguments"
 msgstr ""
 
-#: ../../pep-3154.txt:137
+#: ../../pep-3154.txt:136
 msgid ""
 "Currently, classes whose ``__new__`` mandates the use of keyword-only "
 "arguments can not be pickled (or, rather, unpickled) [3]_.  Both a new "
@@ -253,22 +239,22 @@ msgid ""
 " for the class's ``__new__`` method."
 msgstr ""
 
-#: ../../pep-3154.txt:146
+#: ../../pep-3154.txt:145
 msgid "Better string encoding"
 msgstr ""
 
-#: ../../pep-3154.txt:148
+#: ../../pep-3154.txt:147
 msgid ""
 "Short str objects currently have their length coded as a 4-bytes integer,"
 " which is wasteful.  A specific opcode with a 1-byte length would make "
 "many pickles smaller."
 msgstr ""
 
-#: ../../pep-3154.txt:153
+#: ../../pep-3154.txt:152
 msgid "Smaller memoization"
 msgstr ""
 
-#: ../../pep-3154.txt:155
+#: ../../pep-3154.txt:154
 msgid ""
 "The PUT opcodes all require an explicit index to select in which entry of"
 " the memo dictionary the top-of-stack is memoized.  However, in practice "
@@ -278,87 +264,87 @@ msgid ""
 "opcodes are emitted for all non-atomic datatypes."
 msgstr ""
 
-#: ../../pep-3154.txt:164
+#: ../../pep-3154.txt:163
 msgid "Summary of new opcodes"
 msgstr ""
 
-#: ../../pep-3154.txt:166
+#: ../../pep-3154.txt:165
 msgid ""
 "These reflect the state of the proposed implementation (thanks mostly to "
 "Alexandre Vassalotti's work):"
 msgstr ""
 
-#: ../../pep-3154.txt:169
+#: ../../pep-3154.txt:168
 msgid ""
 "``FRAME``: introduce a new frame (followed by the 8-byte frame size and "
 "the frame contents)."
 msgstr ""
 
-#: ../../pep-3154.txt:172
+#: ../../pep-3154.txt:171
 msgid ""
 "``SHORT_BINUNICODE``: push a utf8-encoded str object with a one-byte size"
 " prefix (therefore less than 256 bytes long)."
 msgstr ""
 
-#: ../../pep-3154.txt:175
+#: ../../pep-3154.txt:174
 msgid ""
 "``BINUNICODE8``: push a utf8-encoded str object with an eight-byte size "
 "prefix (for strings longer than 2**32 bytes, which therefore cannot be "
 "serialized using ``BINUNICODE``)."
 msgstr ""
 
-#: ../../pep-3154.txt:179
+#: ../../pep-3154.txt:178
 msgid ""
 "``BINBYTES8``: push a bytes object with an eight-byte size prefix (for "
 "bytes objects longer than 2**32 bytes, which therefore cannot be "
 "serialized using ``BINBYTES``)."
 msgstr ""
 
-#: ../../pep-3154.txt:183
+#: ../../pep-3154.txt:182
 msgid "``EMPTY_SET``: push a new empty set object on the stack."
 msgstr ""
 
-#: ../../pep-3154.txt:185
+#: ../../pep-3154.txt:184
 msgid ""
 "``ADDITEMS``: add the topmost stack items to the set (to be used with "
 "``EMPTY_SET``)."
 msgstr ""
 
-#: ../../pep-3154.txt:188
+#: ../../pep-3154.txt:187
 msgid ""
 "``FROZENSET``: create a frozenset object from the topmost stack items, "
 "and push it on the stack."
 msgstr ""
 
-#: ../../pep-3154.txt:191
+#: ../../pep-3154.txt:190
 msgid ""
 "``NEWOBJ_EX``: take the three topmost stack items ``cls``, ``args`` and "
 "``kwargs``, and push the result of calling ``cls.__new__(*args, "
 "**kwargs)``."
 msgstr ""
 
-#: ../../pep-3154.txt:195
+#: ../../pep-3154.txt:194
 msgid ""
 "``STACK_GLOBAL``: take the two topmost stack items ``module_name`` and "
 "``qualname``, and push the result of looking up the dotted ``qualname`` "
 "in the module named ``module_name``."
 msgstr ""
 
-#: ../../pep-3154.txt:199
+#: ../../pep-3154.txt:198
 msgid ""
 "``MEMOIZE``: store the top-of-stack object in the memo dictionary with an"
 " index equal to the current size of the memo dictionary."
 msgstr ""
 
-#: ../../pep-3154.txt:204
+#: ../../pep-3154.txt:203
 msgid "Alternative ideas"
 msgstr ""
 
-#: ../../pep-3154.txt:207
+#: ../../pep-3154.txt:206
 msgid "Prefetching"
 msgstr ""
 
-#: ../../pep-3154.txt:209
+#: ../../pep-3154.txt:208
 msgid ""
 "Serhiy Storchaka suggested to replace framing with a special PREFETCH "
 "opcode (with a 2- or 4-bytes argument) to declare known pickle chunks "
@@ -368,71 +354,100 @@ msgid ""
 " PREFETCH length falls on an opcode boundary."
 msgstr ""
 
-#: ../../pep-3154.txt:218
+#: ../../pep-3154.txt:217
 msgid "Acknowledgments"
 msgstr ""
 
-#: ../../pep-3154.txt:220
+#: ../../pep-3154.txt:219
 msgid "In alphabetic order:"
 msgstr ""
 
-#: ../../pep-3154.txt:222
-msgid "Alexandre Vassalotti, for starting the second PEP 3154 implementation [6]_"
+#: ../../pep-3154.txt:221
+msgid ""
+"Alexandre Vassalotti, for starting the second :pep:`3154` implementation "
+"[6]_"
 msgstr ""
 
-#: ../../pep-3154.txt:224
+#: ../../pep-3154.txt:223
 msgid "Serhiy Storchaka, for discussing the framing proposal [6]_"
 msgstr ""
 
-#: ../../pep-3154.txt:226
+#: ../../pep-3154.txt:225
 msgid ""
-"Stefan Mihaila, for starting the first PEP 3154 implementation as a "
+"Stefan Mihaila, for starting the first :pep:`3154` implementation as a "
 "Google Summer of Code project mentored by Alexandre Vassalotti [7]_."
 msgstr ""
 
-#: ../../pep-3154.txt:231
+#: ../../pep-3154.txt:230
 msgid "References"
 msgstr ""
 
-#: ../../pep-3154.txt:233
+#: ../../pep-3154.txt:232
 msgid "\"pickle not 64-bit ready\": http://bugs.python.org/issue11564"
 msgstr ""
 
-#: ../../pep-3154.txt:236
+#: ../../pep-3154.txt:235
 msgid "\"Cannot pickle self-referencing sets\": http://bugs.python.org/issue9269"
 msgstr ""
 
-#: ../../pep-3154.txt:239
+#: ../../pep-3154.txt:238
 msgid ""
 "\"pickle/copyreg doesn't support keyword only arguments in __new__\": "
 "http://bugs.python.org/issue4727"
 msgstr ""
 
-#: ../../pep-3154.txt:242
+#: ../../pep-3154.txt:241
 msgid "\"pickle should support methods\": http://bugs.python.org/issue9276"
 msgstr ""
 
-#: ../../pep-3154.txt:245
+#: ../../pep-3154.txt:244
 msgid ""
 "Lib/multiprocessing/forking.py: "
 "http://hg.python.org/cpython/file/baea9f5f973c/Lib/multiprocessing/forking.py#l54"
 msgstr ""
 
-#: ../../pep-3154.txt:248
+#: ../../pep-3154.txt:247
 msgid ""
 "Implement PEP 3154, by Alexandre Vassalotti "
 "http://bugs.python.org/issue17810"
 msgstr ""
 
-#: ../../pep-3154.txt:251
+#: ../../pep-3154.txt:250
 msgid "Implement PEP 3154, by Stefan Mihaila http://bugs.python.org/issue15642"
 msgstr ""
 
-#: ../../pep-3154.txt:256
+#: ../../pep-3154.txt:255
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-3154.txt:258
+#: ../../pep-3154.txt:257
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "3154"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Pickle protocol version 4"
+#~ msgstr ""
+
+#~ msgid "https://mail.python.org/pipermail/python-dev/2011-August/112821.html"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Alexandre Vassalotti, for starting the "
+#~ "second PEP 3154 implementation [6]_"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Stefan Mihaila, for starting the first"
+#~ " PEP 3154 implementation as a Google"
+#~ " Summer of Code project mentored by"
+#~ " Alexandre Vassalotti [7]_."
+#~ msgstr ""
 

@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0593.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0593.rst:1
-msgid "593"
-msgstr ""
-
-#: ../../pep-0593.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0593.rst:2
-msgid "Flexible function and variable annotations"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0593.rst
 msgid "Author"
@@ -74,10 +58,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0593.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0593.rst:8
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0593.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0593.rst:9
+#: ../../pep-0593.rst:10
 msgid "26-Apr-2019"
 msgstr ""
 
@@ -85,7 +77,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0593.rst:10
+#: ../../pep-0593.rst:11
 msgid "3.9"
 msgstr ""
 
@@ -93,42 +85,42 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0593.rst:11
+#: ../../pep-0593.rst:12
 msgid "20-May-2019"
 msgstr ""
 
-#: ../../pep-0593.rst:14
+#: ../../pep-0593.rst:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0593.rst:16
+#: ../../pep-0593.rst:17
 msgid ""
 "This PEP introduces a mechanism to extend the type annotations from PEP "
 "484 with arbitrary metadata."
 msgstr ""
 
-#: ../../pep-0593.rst:20
+#: ../../pep-0593.rst:21
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0593.rst:22
+#: ../../pep-0593.rst:23
 msgid ""
-"PEP 484 provides a standard semantic for the annotations introduced in "
-"PEP 3107. PEP 484 is prescriptive but it is the de facto standard for "
-"most of the consumers of annotations; in many statically checked code "
-"bases, where type annotations are widely used, they have effectively "
+":pep:`484` provides a standard semantic for the annotations introduced in"
+" :pep:`3107`. :pep:`484` is prescriptive but it is the de facto standard "
+"for most of the consumers of annotations; in many statically checked code"
+" bases, where type annotations are widely used, they have effectively "
 "crowded out any other form of annotation. Some of the use cases for "
-"annotations described in PEP 3107 (database mapping, foreign languages "
-"bridge) are not currently realistic given the prevalence of type "
+"annotations described in :pep:`3107` (database mapping, foreign languages"
+" bridge) are not currently realistic given the prevalence of type "
 "annotations. Furthermore, the standardisation of type annotations rules "
 "out advanced features only supported by specific type checkers."
 msgstr ""
 
-#: ../../pep-0593.rst:34
+#: ../../pep-0593.rst:35
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0593.rst:36
+#: ../../pep-0593.rst:37
 msgid ""
 "This PEP adds an ``Annotated`` type to the typing module to decorate "
 "existing types with context-specific metadata. Specifically, a type ``T``"
@@ -139,68 +131,68 @@ msgid ""
 "treat the type as ``T``. Unlike the ``no_type_check`` functionality that "
 "currently exists in the ``typing`` module which completely disables "
 "typechecking annotations on a function or a class, the ``Annotated`` type"
-" allows for both static typechecking of ``T`` (e.g., via mypy [mypy]_ or "
-"Pyre [pyre]_, which can safely ignore ``x``) together with runtime access"
-" to ``x`` within a specific application. The introduction of this type "
-"would address a diverse set of use cases of interest to the broader "
+" allows for both static typechecking of ``T`` (e.g., via `mypy <mypy_>`_ "
+"or `Pyre <pyre_>`_, which can safely ignore ``x``) together with runtime "
+"access to ``x`` within a specific application. The introduction of this "
+"type would address a diverse set of use cases of interest to the broader "
 "Python community."
 msgstr ""
 
-#: ../../pep-0593.rst:51
+#: ../../pep-0593.rst:53
 msgid ""
-"This was originally brought up as issue 600 [issue-600]_ in the typing "
-"github and then discussed in Python ideas [python-ideas]_."
+"This was originally brought up as `issue 600 <issue-600_>`_ in the typing"
+" github and then discussed in `Python ideas <python-ideas_>`_."
 msgstr ""
 
-#: ../../pep-0593.rst:55
+#: ../../pep-0593.rst:57
 msgid "Motivating examples"
 msgstr ""
 
-#: ../../pep-0593.rst:58
+#: ../../pep-0593.rst:60
 msgid "Combining runtime and static uses of annotations"
 msgstr ""
 
-#: ../../pep-0593.rst:60
+#: ../../pep-0593.rst:62
 msgid ""
 "There's an emerging trend of libraries leveraging the typing annotations "
 "at runtime (e.g.: dataclasses); having the ability to extend the typing "
 "annotations with external data would be a great boon for those libraries."
 msgstr ""
 
-#: ../../pep-0593.rst:64
+#: ../../pep-0593.rst:66
 msgid ""
 "Here's an example of how a hypothetical module could leverage annotations"
 " to read c structs::"
 msgstr ""
 
-#: ../../pep-0593.rst:81
+#: ../../pep-0593.rst:83
 msgid "Lowering barriers to developing new typing constructs"
 msgstr ""
 
-#: ../../pep-0593.rst:83
+#: ../../pep-0593.rst:85
 msgid ""
 "Typically when adding a new type, a developer need to upstream that type "
-"to the typing module and change mypy, PyCharm [pycharm]_, Pyre, pytype "
-"[pytype]_, etc... This is particularly important when working on open-"
-"source code that makes use of these types, seeing as the code would not "
-"be immediately transportable to other developers' tools without "
-"additional logic. As a result, there is a high cost to developing and "
+"to the typing module and change mypy, `PyCharm <pycharm_>`_, Pyre, "
+"`pytype <pytype_>`_, etc... This is particularly important when working "
+"on open-source code that makes use of these types, seeing as the code "
+"would not be immediately transportable to other developers' tools without"
+" additional logic. As a result, there is a high cost to developing and "
 "trying out new types in a codebase. Ideally, authors should be able to "
 "introduce new types in a manner that allows for graceful degradation "
-"(e.g.: when clients do not have a custom mypy plugin [mypy-plugin]_), "
+"(e.g.: when clients do not have a custom `mypy plugin <mypy-plugin_>`_), "
 "which would lower the barrier to development and ensure some degree of "
 "backward compatibility."
 msgstr ""
 
-#: ../../pep-0593.rst:95
+#: ../../pep-0593.rst:97
 msgid ""
-"For example, suppose that an author wanted to add support for tagged "
-"unions [tagged-union]_ to Python. One way to accomplish would be to "
-"annotate ``TypedDict`` [typed-dict]_ in Python such that only one field "
-"is allowed to be set::"
+"For example, suppose that an author wanted to add support for `tagged "
+"unions <tagged-union_>`_ to Python. One way to accomplish would be to "
+"`annotate <typed-dict_>`_ ``TypedDict`` in Python such that only one "
+"field is allowed to be set::"
 msgstr ""
 
-#: ../../pep-0593.rst:105
+#: ../../pep-0593.rst:107
 msgid ""
 "This is a somewhat cumbersome syntax but it allows us to iterate on this "
 "proof-of-concept and have people with type checkers (or other tools) that"
@@ -212,62 +204,62 @@ msgid ""
 "still a close approximation (slightly less strict)."
 msgstr ""
 
-#: ../../pep-0593.rst:114
+#: ../../pep-0593.rst:116
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0593.rst:117
+#: ../../pep-0593.rst:119
 msgid "Syntax"
 msgstr ""
 
-#: ../../pep-0593.rst:119
+#: ../../pep-0593.rst:121
 msgid ""
 "``Annotated`` is parameterized with a type and an arbitrary list of "
 "Python values that represent the annotations. Here are the specific "
 "details of the syntax:"
 msgstr ""
 
-#: ../../pep-0593.rst:123
+#: ../../pep-0593.rst:125
 msgid "The first argument to ``Annotated`` must be a valid type"
 msgstr ""
 
-#: ../../pep-0593.rst:125
+#: ../../pep-0593.rst:127
 msgid ""
 "Multiple type annotations are supported (``Annotated`` supports variadic "
 "arguments)::"
 msgstr ""
 
-#: ../../pep-0593.rst:130
+#: ../../pep-0593.rst:132
 msgid ""
 "``Annotated`` must be called with at least two arguments ( "
 "``Annotated[int]`` is not valid)"
 msgstr ""
 
-#: ../../pep-0593.rst:133
+#: ../../pep-0593.rst:135
 msgid ""
 "The order of the annotations is preserved and matters for equality "
 "checks::"
 msgstr ""
 
-#: ../../pep-0593.rst:140
+#: ../../pep-0593.rst:142
 msgid ""
 "Nested ``Annotated`` types are flattened, with metadata ordered starting "
 "with the innermost annotation::"
 msgstr ""
 
-#: ../../pep-0593.rst:147
+#: ../../pep-0593.rst:149
 msgid "Duplicated annotations are not removed::"
 msgstr ""
 
-#: ../../pep-0593.rst:153
+#: ../../pep-0593.rst:155
 msgid "``Annotated`` can be used with nested and generic aliases::"
 msgstr ""
 
-#: ../../pep-0593.rst:162
+#: ../../pep-0593.rst:164
 msgid "Consuming annotations"
 msgstr ""
 
-#: ../../pep-0593.rst:164
+#: ../../pep-0593.rst:166
 msgid ""
 "Ultimately, the responsibility of how to interpret the annotations (if at"
 " all) is the responsibility of the tool or library encountering the "
@@ -276,7 +268,7 @@ msgid ""
 "(e.g., using ``isinstance()``)."
 msgstr ""
 
-#: ../../pep-0593.rst:170
+#: ../../pep-0593.rst:172
 msgid ""
 "**Unknown annotations:** When a tool or a library does not support "
 "annotations or encounters an unknown annotation it should just ignore it "
@@ -286,20 +278,20 @@ msgid ""
 "struct2.ctype(\"<10s\")]``), the unpack method should ignore it."
 msgstr ""
 
-#: ../../pep-0593.rst:177
+#: ../../pep-0593.rst:179
 msgid ""
 "**Namespacing annotations:** Namespaces are not needed for annotations "
 "since the class used by the annotations acts as a namespace."
 msgstr ""
 
-#: ../../pep-0593.rst:180
+#: ../../pep-0593.rst:182
 msgid ""
 "**Multiple annotations:** It's up to the tool consuming the annotations "
 "to decide whether the client is allowed to have several annotations on "
 "one type and how to merge those annotations."
 msgstr ""
 
-#: ../../pep-0593.rst:184
+#: ../../pep-0593.rst:186
 msgid ""
 "Since the ``Annotated`` type allows you to put several annotations of the"
 " same (or different) type(s) on any node, the tools or libraries "
@@ -308,15 +300,15 @@ msgid ""
 "allow this::"
 msgstr ""
 
-#: ../../pep-0593.rst:193
+#: ../../pep-0593.rst:195
 msgid "Flattening nested annotations, this translates to::"
 msgstr ""
 
-#: ../../pep-0593.rst:198
+#: ../../pep-0593.rst:200
 msgid "Interaction with ``get_type_hints()``"
 msgstr ""
 
-#: ../../pep-0593.rst:200
+#: ../../pep-0593.rst:202
 msgid ""
 "``typing.get_type_hints()`` will take a new argument ``include_extras`` "
 "that defaults to ``False`` to preserve backward compatibility. When "
@@ -325,38 +317,38 @@ msgid ""
 "unchanged::"
 msgstr ""
 
-#: ../../pep-0593.rst:217
+#: ../../pep-0593.rst:219
 msgid "Aliases & Concerns over verbosity"
 msgstr ""
 
-#: ../../pep-0593.rst:219
+#: ../../pep-0593.rst:221
 msgid ""
 "Writing ``typing.Annotated`` everywhere can be quite verbose; "
 "fortunately, the ability to alias annotations means that in practice we "
 "don't expect clients to have to write lots of boilerplate code::"
 msgstr ""
 
-#: ../../pep-0593.rst:231
+#: ../../pep-0593.rst:233
 msgid "Rejected ideas"
 msgstr ""
 
-#: ../../pep-0593.rst:233
+#: ../../pep-0593.rst:235
 msgid ""
 "Some of the proposed ideas were rejected from this PEP because they would"
 " cause ``Annotated`` to not integrate cleanly with the other typing "
 "annotations:"
 msgstr ""
 
-#: ../../pep-0593.rst:236
+#: ../../pep-0593.rst:238
 msgid ""
 "``Annotated`` cannot infer the decorated type. You could imagine that "
 "``Annotated[..., Immutable]`` could be used to mark a value as immutable "
 "while still inferring its type. Typing does not support using the "
-"inferred type anywhere else [issue-276]_; it's best to not add this as a "
-"special case."
+"inferred type `anywhere else <issue-276_>`_; it's best to not add this as"
+" a special case."
 msgstr ""
 
-#: ../../pep-0593.rst:242
+#: ../../pep-0593.rst:244
 msgid ""
 "Using ``(Type, Ann1, Ann2, ...)`` instead of ``Annotated[Type, Ann1, "
 "Ann2, ...]``. This would cause confusion when annotations appear in "
@@ -365,11 +357,11 @@ msgid ""
 "to be passthrough (``T(5) == C(5)`` when ``C = Annotation[T, Ann]``)."
 msgstr ""
 
-#: ../../pep-0593.rst:248
+#: ../../pep-0593.rst:250
 msgid "This feature was left out to keep the design simple:"
 msgstr ""
 
-#: ../../pep-0593.rst:250
+#: ../../pep-0593.rst:252
 msgid ""
 "``Annotated`` cannot be called with a single argument. Annotated could "
 "support returning the underlying value when called with a single argument"
@@ -377,59 +369,163 @@ msgid ""
 "and adds little benefit."
 msgstr ""
 
-#: ../../pep-0593.rst:257
-msgid "References"
-msgstr ""
-
-#: ../../pep-0593.rst:260
-msgid "https://github.com/python/typing/issues/600"
-msgstr ""
-
-#: ../../pep-0593.rst:263
-msgid "https://mail.python.org/pipermail/python-ideas/2019-January/054908.html"
-msgstr ""
-
-#: ../../pep-0593.rst:266
-msgid "https://docs.python.org/3/library/struct.html#examples"
-msgstr ""
-
-#: ../../pep-0593.rst:269
-msgid "http://www.mypy-lang.org/"
-msgstr ""
-
-#: ../../pep-0593.rst:272
-msgid "https://pyre-check.org/"
-msgstr ""
-
-#: ../../pep-0593.rst:275
-msgid "https://www.jetbrains.com/pycharm/"
-msgstr ""
-
-#: ../../pep-0593.rst:278
-msgid "https://github.com/google/pytype"
-msgstr ""
-
-#: ../../pep-0593.rst:281
-msgid "https://github.com/python/mypy_extensions"
-msgstr ""
-
-#: ../../pep-0593.rst:284
-msgid "https://en.wikipedia.org/wiki/Tagged_union"
-msgstr ""
-
-#: ../../pep-0593.rst:287
-msgid "https://mypy.readthedocs.io/en/latest/more_types.html#typeddict"
-msgstr ""
-
-#: ../../pep-0593.rst:290
-msgid "https://github.com/python/typing/issues/276"
-msgstr ""
-
-#: ../../pep-0593.rst:293
+#: ../../pep-0593.rst:289
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0593.rst:295
+#: ../../pep-0593.rst:291
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "593"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Flexible function and variable annotations"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 484 provides a standard semantic "
+#~ "for the annotations introduced in PEP"
+#~ " 3107. PEP 484 is prescriptive but"
+#~ " it is the de facto standard "
+#~ "for most of the consumers of "
+#~ "annotations; in many statically checked "
+#~ "code bases, where type annotations are"
+#~ " widely used, they have effectively "
+#~ "crowded out any other form of "
+#~ "annotation. Some of the use cases "
+#~ "for annotations described in PEP 3107"
+#~ " (database mapping, foreign languages "
+#~ "bridge) are not currently realistic "
+#~ "given the prevalence of type "
+#~ "annotations. Furthermore, the standardisation "
+#~ "of type annotations rules out advanced"
+#~ " features only supported by specific "
+#~ "type checkers."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP adds an ``Annotated`` type "
+#~ "to the typing module to decorate "
+#~ "existing types with context-specific "
+#~ "metadata. Specifically, a type ``T`` can"
+#~ " be annotated with metadata ``x`` via"
+#~ " the typehint ``Annotated[T, x]``. This "
+#~ "metadata can be used for either "
+#~ "static analysis or at runtime. If "
+#~ "a library (or tool) encounters a "
+#~ "typehint ``Annotated[T, x]`` and has no"
+#~ " special logic for metadata ``x``, it"
+#~ " should ignore it and simply treat"
+#~ " the type as ``T``. Unlike the "
+#~ "``no_type_check`` functionality that currently "
+#~ "exists in the ``typing`` module which"
+#~ " completely disables typechecking annotations "
+#~ "on a function or a class, the "
+#~ "``Annotated`` type allows for both "
+#~ "static typechecking of ``T`` (e.g., via"
+#~ " mypy [mypy]_ or Pyre [pyre]_, which"
+#~ " can safely ignore ``x``) together "
+#~ "with runtime access to ``x`` within "
+#~ "a specific application. The introduction "
+#~ "of this type would address a "
+#~ "diverse set of use cases of "
+#~ "interest to the broader Python "
+#~ "community."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This was originally brought up as "
+#~ "issue 600 [issue-600]_ in the typing "
+#~ "github and then discussed in Python "
+#~ "ideas [python-ideas]_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Typically when adding a new type, "
+#~ "a developer need to upstream that "
+#~ "type to the typing module and "
+#~ "change mypy, PyCharm [pycharm]_, Pyre, "
+#~ "pytype [pytype]_, etc... This is "
+#~ "particularly important when working on "
+#~ "open-source code that makes use of"
+#~ " these types, seeing as the code "
+#~ "would not be immediately transportable "
+#~ "to other developers' tools without "
+#~ "additional logic. As a result, there "
+#~ "is a high cost to developing and"
+#~ " trying out new types in a "
+#~ "codebase. Ideally, authors should be "
+#~ "able to introduce new types in a"
+#~ " manner that allows for graceful "
+#~ "degradation (e.g.: when clients do not"
+#~ " have a custom mypy plugin [mypy-"
+#~ "plugin]_), which would lower the barrier"
+#~ " to development and ensure some "
+#~ "degree of backward compatibility."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For example, suppose that an author "
+#~ "wanted to add support for tagged "
+#~ "unions [tagged-union]_ to Python. One"
+#~ " way to accomplish would be to "
+#~ "annotate ``TypedDict`` [typed-dict]_ in "
+#~ "Python such that only one field is"
+#~ " allowed to be set::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "``Annotated`` cannot infer the decorated "
+#~ "type. You could imagine that "
+#~ "``Annotated[..., Immutable]`` could be used"
+#~ " to mark a value as immutable "
+#~ "while still inferring its type. Typing"
+#~ " does not support using the inferred"
+#~ " type anywhere else [issue-276]_; it's "
+#~ "best to not add this as a "
+#~ "special case."
+#~ msgstr ""
+
+#~ msgid "References"
+#~ msgstr ""
+
+#~ msgid "https://github.com/python/typing/issues/600"
+#~ msgstr ""
+
+#~ msgid "https://mail.python.org/pipermail/python-ideas/2019-January/054908.html"
+#~ msgstr ""
+
+#~ msgid "https://docs.python.org/3/library/struct.html#examples"
+#~ msgstr ""
+
+#~ msgid "http://www.mypy-lang.org/"
+#~ msgstr ""
+
+#~ msgid "https://pyre-check.org/"
+#~ msgstr ""
+
+#~ msgid "https://www.jetbrains.com/pycharm/"
+#~ msgstr ""
+
+#~ msgid "https://github.com/google/pytype"
+#~ msgstr ""
+
+#~ msgid "https://github.com/python/mypy_extensions"
+#~ msgstr ""
+
+#~ msgid "https://en.wikipedia.org/wiki/Tagged_union"
+#~ msgstr ""
+
+#~ msgid "https://mypy.readthedocs.io/en/latest/more_types.html#typeddict"
+#~ msgstr ""
+
+#~ msgid "https://github.com/python/typing/issues/276"
+#~ msgstr ""
 

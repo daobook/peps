@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0610.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0610.rst:1
-msgid "610"
-msgstr ""
-
-#: ../../pep-0610.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0610.rst:2
-msgid "Recording the Direct URL Origin of installed distributions"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0610.rst
 msgid "Author"
@@ -86,10 +70,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0610.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0610.rst:9
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0610.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0610.rst:10
+#: ../../pep-0610.rst:11
 msgid "21-Apr-2019"
 msgstr ""
 
@@ -101,61 +93,44 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0610.rst:12
+#: ../../pep-0610.rst:13
 msgid "https://discuss.python.org/t/1535/56"
 msgstr ""
 
-#: ../../pep-0610.rst:15
+#: ../../pep-0610.rst:20
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0610.rst:17
+#: ../../pep-0610.rst:22
 msgid ""
-"Following PEP 440, a distribution can be identified by a name and either "
-"a version, or a direct URL reference (see `PEP440 Direct References`_). "
-"After installation, the name and version are captured in the project "
-"metadata, but currently there is no way to obtain details of the URL used"
-" when the distribution was identified by a direct URL reference."
+"Following :pep:`440`, a distribution can be identified by a name and "
+"either a version, or a direct URL reference (see :pep:`PEP440 Direct "
+"References <440#direct-references>`). After installation, the name and "
+"version are captured in the project metadata, but currently there is no "
+"way to obtain details of the URL used when the distribution was "
+"identified by a direct URL reference."
 msgstr ""
 
-#: ../../pep-0610.rst:23
+#: ../../pep-0610.rst:28
 msgid ""
 "This proposal defines additional metadata, to be added to the installed "
 "distribution by the installation front end, which records the Direct URL "
 "Origin for use by consumers which introspect the database of installed "
-"packages (see PEP 376)."
-msgstr ""
-
-#: ../../pep-0610.rst:29
-msgid "Provisional acceptance"
-msgstr ""
-
-#: ../../pep-0610.rst:31
-msgid ""
-"In accordance with the PyPA's specification process, this PEP has been "
-"`provisionally accepted <https://www.pypa.io/en/latest/specifications"
-"/#provisional-acceptance>`_ for initial implementation in ``pip`` and "
-"other PyPA tools."
+"packages (see :pep:`376`)."
 msgstr ""
 
 #: ../../pep-0610.rst:35
-msgid ""
-"During this time, the specification is still subject to revision based on"
-" real world experience with those initial implementations."
-msgstr ""
-
-#: ../../pep-0610.rst:39
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0610.rst:41
+#: ../../pep-0610.rst:37
 msgid ""
 "The original motivation of this PEP was to permit tools with a \"freeze\""
 " operation allowing a Python environment to be recreated to work in a "
 "broader range of situations."
 msgstr ""
 
-#: ../../pep-0610.rst:45
+#: ../../pep-0610.rst:41
 msgid ""
 "Specifically, the PEP originated from the desire to address `pip issue "
 "#609`_: i.e. improving the behavior of ``pip freeze`` in the presence of "
@@ -163,63 +138,63 @@ msgid ""
 "on discuss.python.org`_ about the best course of action to implement it."
 msgstr ""
 
-#: ../../pep-0610.rst:52
+#: ../../pep-0610.rst:48
 msgid "Installation from direct URL references"
 msgstr ""
 
-#: ../../pep-0610.rst:54
+#: ../../pep-0610.rst:50
 msgid ""
 "Python installers such as pip are capable of downloading and installing "
 "distributions from package indexes. They are also capable of downloading "
 "and installing source code from requirements specifying arbitrary URLs of"
 " source archives and Version Control Systems (VCS) repositories, as "
-"standardized in `PEP440 Direct References`_."
+"standardized in :pep:`PEP440 Direct References <440#direct-references>`."
 msgstr ""
 
-#: ../../pep-0610.rst:60
+#: ../../pep-0610.rst:56
 msgid "In other words, two relevant installation modes exist."
 msgstr ""
 
-#: ../../pep-0610.rst:62
+#: ../../pep-0610.rst:58
 msgid "the package to install is specified as a name and version specifier:"
 msgstr ""
 
-#: ../../pep-0610.rst:64
+#: ../../pep-0610.rst:60
 msgid ""
 "In this case, the installer looks in a package index (or optionally using"
 " ``--find-links`` in the case of pip) to find the distribution to "
 "install."
 msgstr ""
 
-#: ../../pep-0610.rst:67
+#: ../../pep-0610.rst:63
 msgid "The package to install is specified as a direct URL reference:"
 msgstr ""
 
-#: ../../pep-0610.rst:69
+#: ../../pep-0610.rst:65
 msgid ""
 "In this case, the installer downloads whatever is specified by the URL "
 "(typically a wheel, a source archive or a VCS repository) and installs "
 "it."
 msgstr ""
 
-#: ../../pep-0610.rst:72
+#: ../../pep-0610.rst:68
 msgid ""
 "In this mode, installers typically download the source code in a "
-"temporary directory, invoke the PEP 517 build backend to produce a wheel "
-"if needed, install the wheel, and delete the temporary directory."
+"temporary directory, invoke the :pep:`517` build backend to produce a "
+"wheel if needed, install the wheel, and delete the temporary directory."
 msgstr ""
 
-#: ../../pep-0610.rst:76
+#: ../../pep-0610.rst:72
 msgid ""
 "After installation, no trace of the URL the user requested to download "
 "the package is left on the user system."
 msgstr ""
 
-#: ../../pep-0610.rst:80
+#: ../../pep-0610.rst:76
 msgid "Freezing an environment"
 msgstr ""
 
-#: ../../pep-0610.rst:82
+#: ../../pep-0610.rst:78
 msgid ""
 "Pip also sports a command named ``pip freeze`` which examines the "
 "Database of Installed Python Distributions to generate a list of "
@@ -228,7 +203,7 @@ msgid ""
 "environment with the highest possible fidelity."
 msgstr ""
 
-#: ../../pep-0610.rst:88
+#: ../../pep-0610.rst:84
 msgid ""
 "As of pip version 19.3, the ``pip freeze`` command outputs a "
 "``name==version`` line for each installed distribution (except for "
@@ -239,14 +214,14 @@ msgid ""
 "known from environmental or command line parameters of the installer."
 msgstr ""
 
-#: ../../pep-0610.rst:97
+#: ../../pep-0610.rst:93
 msgid ""
 "This freeze mechanism therefore works fine for installation mode 1 (i.e. "
 "when the package to install was specified as a name plus version "
 "specifier)."
 msgstr ""
 
-#: ../../pep-0610.rst:100
+#: ../../pep-0610.rst:96
 msgid ""
 "For installation mode 2, i.e. when the package to install was specified "
 "as a direct URL reference, the ``name==version`` tuple is obviously not "
@@ -254,7 +229,7 @@ msgid ""
 "command expect it to output the URL that was originally requested."
 msgstr ""
 
-#: ../../pep-0610.rst:105
+#: ../../pep-0610.rst:101
 msgid ""
 "The reasoning above is equally applicable to tools, other than ``pip "
 "freeze``, that would attempt to generate a ``Pipfile.lock`` or any other "
@@ -263,11 +238,11 @@ msgid ""
 "generic term for such an operation."
 msgstr ""
 
-#: ../../pep-0610.rst:112
+#: ../../pep-0610.rst:108
 msgid "The importance of installing from (VCS) URLs for application integrators"
 msgstr ""
 
-#: ../../pep-0610.rst:114
+#: ../../pep-0610.rst:110
 msgid ""
 "For an application integrator, it is important to be able to reliably "
 "install and freeze unreleased version of python distributions. For "
@@ -277,18 +252,18 @@ msgid ""
 "release an updated version."
 msgstr ""
 
-#: ../../pep-0610.rst:121
+#: ../../pep-0610.rst:117
 msgid ""
 "In such cases, it is important for \"freeze\" to pin the exact VCS "
 "reference (commit-hash if available) that was installed, in order to "
 "create reproducible builds with the highest possible fidelity."
 msgstr ""
 
-#: ../../pep-0610.rst:126
+#: ../../pep-0610.rst:122
 msgid "Additional origin metadata available for VCS URLs"
 msgstr ""
 
-#: ../../pep-0610.rst:128
+#: ../../pep-0610.rst:124
 msgid ""
 "For VCS URLs, there is additional origin information available only at "
 "install time useful for introspection and certain workflows. For example,"
@@ -298,11 +273,11 @@ msgid ""
 "Distributions to communicate to users more information about what version"
 " was installed (e.g. whether a branch or tag was installed and, if so, "
 "the name of the branch or tag). This also permits one to know whether a "
-"PEP 440 direct reference URL can be constructed using the tag form, as "
-"only tags have the semantics of immutability."
+":pep:`440` direct reference URL can be constructed using the tag form, as"
+" only tags have the semantics of immutability."
 msgstr ""
 
-#: ../../pep-0610.rst:139
+#: ../../pep-0610.rst:135
 msgid ""
 "In cases where the revision is mutable (e.g. branches and Git refs), "
 "knowing this information enables workflows where users can e.g. update to"
@@ -312,17 +287,17 @@ msgid ""
 "network calls) that no update is needed."
 msgstr ""
 
-#: ../../pep-0610.rst:146
+#: ../../pep-0610.rst:142
 msgid ""
 "As with the URL itself, if this information isn't recorded at install "
 "time when the VCS repository is available, it would otherwise be lost."
 msgstr ""
 
-#: ../../pep-0610.rst:150
+#: ../../pep-0610.rst:146
 msgid "Note about \"editable\" installs"
 msgstr ""
 
-#: ../../pep-0610.rst:152
+#: ../../pep-0610.rst:148
 msgid ""
 "The editable installation mode of pip roughly lets a user insert a local "
 "directory in sys.path for development purpose. This mode is somewhat "
@@ -332,42 +307,43 @@ msgid ""
 "information can be recovered when running \"freeze\"."
 msgstr ""
 
-#: ../../pep-0610.rst:159
+#: ../../pep-0610.rst:155
 msgid ""
 "The use of this workaround, although useful, is fragile, creates "
 "confusion about the purpose of the editable mode, and works only when the"
 " distribution can be installed with setuptools (i.e. it is not usable "
-"with other PEP 517 build backends)."
+"with other :pep:`517` build backends)."
 msgstr ""
 
-#: ../../pep-0610.rst:164
+#: ../../pep-0610.rst:160
 msgid ""
 "When this PEP is implemented, it will not be necessary anymore to use "
 "editable installs for the purpose of making pip freeze work correctly "
 "with VCS references."
 msgstr ""
 
-#: ../../pep-0610.rst:169
+#: ../../pep-0610.rst:165
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0610.rst:171
+#: ../../pep-0610.rst:167
 msgid ""
 "This PEP specifies a new ``direct_url.json`` metadata file in the "
 "``.dist-info`` directory of an installed distribution."
 msgstr ""
 
-#: ../../pep-0610.rst:174
+#: ../../pep-0610.rst:170
 msgid ""
 "The fields specified are sufficient to reproduce the source archive and "
 "`VCS URLs supported by pip`_. They are also sufficient to reproduce "
-"`PEP440 Direct References`_, as well as `Pipfile and Pipfile.lock`_ "
-"entries. Finally, they are sufficient to record the branch, tag, and/or "
-"Git ref origin of the installed version that is already available for "
-"editable installs by virtue of a VCS checkout being present."
+":pep:`PEP440 Direct References <440#direct-references>`, as well as "
+"`Pipfile and Pipfile.lock`_ entries. Finally, they are sufficient to "
+"record the branch, tag, and/or Git ref origin of the installed version "
+"that is already available for editable installs by virtue of a VCS "
+"checkout being present."
 msgstr ""
 
-#: ../../pep-0610.rst:181
+#: ../../pep-0610.rst:178
 msgid ""
 "Since at least three different ways already exist to encode this type of "
 "information, this PEP uses a dictionary format, so as not to make any "
@@ -376,57 +352,57 @@ msgid ""
 "more discussion about this choice."
 msgstr ""
 
-#: ../../pep-0610.rst:187
+#: ../../pep-0610.rst:184
 msgid ""
 "Information has been taken from Ruby's bundler manual to verify it has "
 "similar capabilities and inform the selection and naming of fields in "
 "this specifications."
 msgstr ""
 
-#: ../../pep-0610.rst:191
+#: ../../pep-0610.rst:188
 msgid ""
 "The JSON format allows for the addition of additional fields in the "
 "future."
 msgstr ""
 
-#: ../../pep-0610.rst:194
+#: ../../pep-0610.rst:191
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0610.rst:196
+#: ../../pep-0610.rst:193
 msgid ""
 "This PEP specifies a ``direct_url.json`` file in the ``.dist-info`` "
 "directory of an installed distribution, to record the Direct URL Origin "
 "of the distribution."
 msgstr ""
 
-#: ../../pep-0610.rst:199
+#: ../../pep-0610.rst:196
 msgid ""
 "The canonical source for the name and semantics of this metadata file is "
 "the `Recording the Direct URL Origin of installed distributions`_ "
 "document."
 msgstr ""
 
-#: ../../pep-0610.rst:202
+#: ../../pep-0610.rst:199
 msgid ""
 "This file MUST be created by installers when installing a distribution "
 "from a requirement specifying a direct URL reference (including a VCS "
 "URL)."
 msgstr ""
 
-#: ../../pep-0610.rst:205
+#: ../../pep-0610.rst:202
 msgid ""
 "This file MUST NOT be created when installing a distribution from an "
 "other type of requirement (i.e. name plus version specifier)."
 msgstr ""
 
-#: ../../pep-0610.rst:208
+#: ../../pep-0610.rst:205
 msgid ""
-"This JSON file MUST be a dictionary, compliant with `RFC 8259`_ and UTF-8"
+"This JSON file MUST be a dictionary, compliant with :rfc:`8259` and UTF-8"
 " encoded."
 msgstr ""
 
-#: ../../pep-0610.rst:211
+#: ../../pep-0610.rst:208
 msgid ""
 "If present, it MUST contain at least two fields. The first one is "
 "``url``, with type ``string``. Depending on what ``url`` refers to, the "
@@ -437,32 +413,32 @@ msgid ""
 "below."
 msgstr ""
 
-#: ../../pep-0610.rst:218
+#: ../../pep-0610.rst:215
 msgid ""
 "``url`` MUST be stripped of any sensitive authentication information, for"
 " security reasons."
 msgstr ""
 
-#: ../../pep-0610.rst:221
+#: ../../pep-0610.rst:218
 msgid ""
 "The user:password section of the URL MAY however be composed of "
 "environment variables, matching the following regular expression::"
 msgstr ""
 
-#: ../../pep-0610.rst:227
+#: ../../pep-0610.rst:224
 msgid ""
 "Additionally, the user:password section of the URL MAY be a well-known, "
 "non security sensitive string. A typical example is ``git`` in the case "
 "of an URL such as ``ssh://git@gitlab.com``."
 msgstr ""
 
-#: ../../pep-0610.rst:231
+#: ../../pep-0610.rst:228
 msgid ""
 "When ``url`` refers to a VCS repository, the ``vcs_info`` key MUST be "
 "present as a dictionary with the following keys:"
 msgstr ""
 
-#: ../../pep-0610.rst:234
+#: ../../pep-0610.rst:231
 msgid ""
 "A ``vcs`` key (type ``string``) MUST be present, containing the name of "
 "the VCS (i.e. one of ``git``, ``hg``, ``bzr``, ``svn``). Other VCS's "
@@ -472,14 +448,14 @@ msgid ""
 "command of the VCS."
 msgstr ""
 
-#: ../../pep-0610.rst:240
+#: ../../pep-0610.rst:237
 msgid ""
 "A ``requested_revision`` key (type ``string``) MAY be present naming a "
 "branch/tag/ref/commit/revision/etc (in a format compatible with the VCS) "
 "to install."
 msgstr ""
 
-#: ../../pep-0610.rst:243
+#: ../../pep-0610.rst:240
 msgid ""
 "A ``commit_id`` key (type ``string``) MUST be present, containing the "
 "exact commit/revision number that was installed. If the VCS supports "
@@ -488,7 +464,7 @@ msgid ""
 "code that was installed."
 msgstr ""
 
-#: ../../pep-0610.rst:249
+#: ../../pep-0610.rst:246
 msgid ""
 "If the installer could discover additional information about the "
 "requested revision, it MAY add a ``resolved_revision`` and/or "
@@ -499,13 +475,13 @@ msgid ""
 "``resolved_revision_type`` with value ``tag``."
 msgstr ""
 
-#: ../../pep-0610.rst:257
+#: ../../pep-0610.rst:254
 msgid ""
 "When ``url`` refers to a source archive or a wheel, the ``archive_info`` "
 "key MUST be present as a dictionary with the following key:"
 msgstr ""
 
-#: ../../pep-0610.rst:260
+#: ../../pep-0610.rst:257
 msgid ""
 "A ``hash`` key (type ``string``) SHOULD be present, with value ``<hash-"
 "algorithm>=<expected-hash>``. It is RECOMMENDED that only hashes which "
@@ -515,28 +491,28 @@ msgid ""
 "'sha384', and 'sha512'."
 msgstr ""
 
-#: ../../pep-0610.rst:267
+#: ../../pep-0610.rst:264
 msgid ""
 "When ``url`` refers to a local directory, the ``dir_info`` key MUST be "
 "present as a dictionary with the following key:"
 msgstr ""
 
-#: ../../pep-0610.rst:270
+#: ../../pep-0610.rst:267
 msgid ""
 "``editable`` (type: ``boolean``): ``true`` if the distribution was "
 "installed in editable mode, ``false`` otherwise. If absent, default to "
 "``false``."
 msgstr ""
 
-#: ../../pep-0610.rst:273
+#: ../../pep-0610.rst:270
 msgid ""
 "When ``url`` refers to a local directory, it MUST have the ``file`` "
-"scheme and be compliant with `RFC 8089`_. In particular, the path "
+"scheme and be compliant with :rfc:`8089`. In particular, the path "
 "component must be absolute. Symbolic links SHOULD be preserved when "
 "making relative paths absolute."
 msgstr ""
 
-#: ../../pep-0610.rst:280
+#: ../../pep-0610.rst:277
 msgid ""
 "When the requested URL has the file:// scheme and points to a local "
 "directory that happens to contain a VCS checkout, installers MUST NOT "
@@ -544,7 +520,7 @@ msgid ""
 "VCS related information (such as ``vcs_info``) in ``direct_url.json``."
 msgstr ""
 
-#: ../../pep-0610.rst:285
+#: ../../pep-0610.rst:282
 msgid ""
 "A top-level ``subdirectory`` field MAY be present containing a directory "
 "path, relative to the root of the VCS repository, source archive or local"
@@ -552,7 +528,7 @@ msgid ""
 "located."
 msgstr ""
 
-#: ../../pep-0610.rst:291
+#: ../../pep-0610.rst:288
 msgid ""
 "As a general rule, installers should as much as possible preserve the "
 "information that was provided in the requested URL when generating "
@@ -563,11 +539,11 @@ msgid ""
 "such as ``commit_id``."
 msgstr ""
 
-#: ../../pep-0610.rst:299
+#: ../../pep-0610.rst:296
 msgid "Registered VCS"
 msgstr ""
 
-#: ../../pep-0610.rst:301
+#: ../../pep-0610.rst:298
 msgid ""
 "This section lists the registered VCS's; expanded, VCS-specific "
 "information on how to use the ``vcs``, ``requested_revision``, and other "
@@ -579,54 +555,54 @@ msgid ""
 "name."
 msgstr ""
 
-#: ../../pep-0610.rst:311
+#: ../../pep-0610.rst:308
 msgid "Git"
 msgstr ""
 
-#: ../../pep-0610.rst:313 ../../pep-0610.rst:345 ../../pep-0610.rst:368
-#: ../../pep-0610.rst:391
+#: ../../pep-0610.rst:310 ../../pep-0610.rst:342 ../../pep-0610.rst:365
+#: ../../pep-0610.rst:388
 msgid "Home page"
 msgstr ""
 
-#: ../../pep-0610.rst:315
+#: ../../pep-0610.rst:312
 msgid "https://git-scm.com/"
 msgstr ""
 
-#: ../../pep-0610.rst:317 ../../pep-0610.rst:349 ../../pep-0610.rst:372
-#: ../../pep-0610.rst:395
+#: ../../pep-0610.rst:314 ../../pep-0610.rst:346 ../../pep-0610.rst:369
+#: ../../pep-0610.rst:392
 msgid "vcs command"
 msgstr ""
 
-#: ../../pep-0610.rst:319 ../../pep-0610.rst:323
+#: ../../pep-0610.rst:316 ../../pep-0610.rst:320
 msgid "git"
 msgstr ""
 
-#: ../../pep-0610.rst:321 ../../pep-0610.rst:353 ../../pep-0610.rst:376
-#: ../../pep-0610.rst:399
+#: ../../pep-0610.rst:318 ../../pep-0610.rst:350 ../../pep-0610.rst:373
+#: ../../pep-0610.rst:396
 msgid "``vcs`` field"
 msgstr ""
 
-#: ../../pep-0610.rst:325 ../../pep-0610.rst:357 ../../pep-0610.rst:380
-#: ../../pep-0610.rst:403
+#: ../../pep-0610.rst:322 ../../pep-0610.rst:354 ../../pep-0610.rst:377
+#: ../../pep-0610.rst:400
 msgid "``requested_revision`` field"
 msgstr ""
 
-#: ../../pep-0610.rst:327
+#: ../../pep-0610.rst:324
 msgid ""
 "A tag name, branch name, Git ref, commit hash, shortened commit hash, or "
 "other commit-ish."
 msgstr ""
 
-#: ../../pep-0610.rst:330 ../../pep-0610.rst:361 ../../pep-0610.rst:384
-#: ../../pep-0610.rst:408
+#: ../../pep-0610.rst:327 ../../pep-0610.rst:358 ../../pep-0610.rst:381
+#: ../../pep-0610.rst:405
 msgid "``commit_id`` field"
 msgstr ""
 
-#: ../../pep-0610.rst:332
+#: ../../pep-0610.rst:329
 msgid "A commit hash (40 hexadecimal characters sha1)."
 msgstr ""
 
-#: ../../pep-0610.rst:336
+#: ../../pep-0610.rst:333
 msgid ""
 "Installers can use the ``git show-ref`` and ``git symbolic-ref`` commands"
 " to determine if the ``requested_revision`` corresponds to a Git ref. In "
@@ -635,125 +611,125 @@ msgid ""
 "branch."
 msgstr ""
 
-#: ../../pep-0610.rst:343
+#: ../../pep-0610.rst:340
 msgid "Mercurial"
 msgstr ""
 
-#: ../../pep-0610.rst:347
+#: ../../pep-0610.rst:344
 msgid "https://www.mercurial-scm.org/"
 msgstr ""
 
-#: ../../pep-0610.rst:351 ../../pep-0610.rst:355
+#: ../../pep-0610.rst:348 ../../pep-0610.rst:352
 msgid "hg"
 msgstr ""
 
-#: ../../pep-0610.rst:359
+#: ../../pep-0610.rst:356
 msgid "A tag name, branch name, changeset ID, shortened changeset ID."
 msgstr ""
 
-#: ../../pep-0610.rst:363
+#: ../../pep-0610.rst:360
 msgid "A changeset ID (40 hexadecimal characters)."
 msgstr ""
 
-#: ../../pep-0610.rst:366
+#: ../../pep-0610.rst:363
 msgid "Bazaar"
 msgstr ""
 
-#: ../../pep-0610.rst:370
+#: ../../pep-0610.rst:367
 msgid "https://bazaar.canonical.com/"
 msgstr ""
 
-#: ../../pep-0610.rst:374 ../../pep-0610.rst:378
+#: ../../pep-0610.rst:371 ../../pep-0610.rst:375
 msgid "bzr"
 msgstr ""
 
-#: ../../pep-0610.rst:382
+#: ../../pep-0610.rst:379
 msgid "A tag name, branch name, revision id."
 msgstr ""
 
-#: ../../pep-0610.rst:386
+#: ../../pep-0610.rst:383
 msgid "A revision id."
 msgstr ""
 
-#: ../../pep-0610.rst:389
+#: ../../pep-0610.rst:386
 msgid "Subversion"
 msgstr ""
 
-#: ../../pep-0610.rst:393
+#: ../../pep-0610.rst:390
 msgid "https://subversion.apache.org/"
 msgstr ""
 
-#: ../../pep-0610.rst:397 ../../pep-0610.rst:401
+#: ../../pep-0610.rst:394 ../../pep-0610.rst:398
 msgid "svn"
 msgstr ""
 
-#: ../../pep-0610.rst:405
+#: ../../pep-0610.rst:402
 msgid ""
 "``requested_revision`` must be compatible with ``svn checkout`` "
 "``--revision`` option. In Subversion, branch or tag is part of ``url``."
 msgstr ""
 
-#: ../../pep-0610.rst:410
+#: ../../pep-0610.rst:407
 msgid ""
 "Since Subversion does not support globally unique identifiers, this field"
 " is the Subversion revision number in the corresponding repository."
 msgstr ""
 
-#: ../../pep-0610.rst:415
+#: ../../pep-0610.rst:412
 msgid "Examples"
 msgstr ""
 
-#: ../../pep-0610.rst:418
+#: ../../pep-0610.rst:415
 msgid "Example direct_url.json"
 msgstr ""
 
-#: ../../pep-0610.rst:420
+#: ../../pep-0610.rst:417
 msgid "Source archive:"
 msgstr ""
 
-#: ../../pep-0610.rst:431
+#: ../../pep-0610.rst:428
 msgid "Git URL with tag and commit-hash:"
 msgstr ""
 
-#: ../../pep-0610.rst:445
+#: ../../pep-0610.rst:442
 msgid "Local directory:"
 msgstr ""
 
-#: ../../pep-0610.rst:454
+#: ../../pep-0610.rst:451
 msgid "Local directory installed in editable mode:"
 msgstr ""
 
-#: ../../pep-0610.rst:467
+#: ../../pep-0610.rst:464
 msgid "Example pip commands and their effect on direct_url.json"
 msgstr ""
 
-#: ../../pep-0610.rst:469
+#: ../../pep-0610.rst:466
 msgid "Commands that generate a ``direct_url.json``:"
 msgstr ""
 
-#: ../../pep-0610.rst:471
+#: ../../pep-0610.rst:468
 msgid "pip install https://example.com/app-1.0.tgz"
 msgstr ""
 
-#: ../../pep-0610.rst:472
+#: ../../pep-0610.rst:469
 msgid "pip install https://example.com/app-1.0.whl"
 msgstr ""
 
-#: ../../pep-0610.rst:473
+#: ../../pep-0610.rst:470
 msgid ""
 "pip install "
 "\"git+https://example.com/repo/app.git#egg=app&subdirectory=setup\""
 msgstr ""
 
-#: ../../pep-0610.rst:474
+#: ../../pep-0610.rst:471
 msgid "pip install ./app"
 msgstr ""
 
-#: ../../pep-0610.rst:475
+#: ../../pep-0610.rst:472
 msgid "pip install file:///home/user/app"
 msgstr ""
 
-#: ../../pep-0610.rst:476
+#: ../../pep-0610.rst:473
 msgid ""
 "pip install --editable "
 "\"git+https://example.com/repo/app.git#egg=app&subdirectory=setup\" (in "
@@ -762,31 +738,31 @@ msgid ""
 " true`` and no ``vcs_info`` will be set)"
 msgstr ""
 
-#: ../../pep-0610.rst:480
+#: ../../pep-0610.rst:477
 msgid "pip install -e ./app"
 msgstr ""
 
-#: ../../pep-0610.rst:482
+#: ../../pep-0610.rst:479
 msgid "Commands that *do not* generate a ``direct_url.json``"
 msgstr ""
 
-#: ../../pep-0610.rst:484
+#: ../../pep-0610.rst:481
 msgid "pip install app"
 msgstr ""
 
-#: ../../pep-0610.rst:485
+#: ../../pep-0610.rst:482
 msgid "pip install app --no-index --find-links https://example.com/"
 msgstr ""
 
-#: ../../pep-0610.rst:488
+#: ../../pep-0610.rst:485
 msgid "Use cases"
 msgstr ""
 
-#: ../../pep-0610.rst:490
+#: ../../pep-0610.rst:487
 msgid "\"Freezing\" an environment"
 msgstr ""
 
-#: ../../pep-0610.rst:492
+#: ../../pep-0610.rst:489
 msgid ""
 "Tools, such as ``pip freeze``, which generate requirements from the "
 "Database of Installed Python Distributions SHOULD exploit "
@@ -800,7 +776,7 @@ msgid ""
 "approach, depending on the needs of their users."
 msgstr ""
 
-#: ../../pep-0610.rst:502
+#: ../../pep-0610.rst:499
 msgid ""
 "Note the initial iteration of this PEP does not attempt to make "
 "environments that include editable installs or installs from local "
@@ -810,86 +786,249 @@ msgid ""
 "strategy that fits their use cases."
 msgstr ""
 
-#: ../../pep-0610.rst:510
+#: ../../pep-0610.rst:507
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0610.rst:512
+#: ../../pep-0610.rst:509
 msgid ""
 "Since this PEP specifies a new file in the ``.dist-info`` directory, "
 "there are no backwards compatibility implications."
 msgstr ""
 
-#: ../../pep-0610.rst:516
+#: ../../pep-0610.rst:513
 msgid "Alternatives"
 msgstr ""
 
-#: ../../pep-0610.rst:519
-msgid "PEP426 source_url"
+#: ../../pep-0610.rst:516
+msgid "PEP 426 source_url"
+msgstr ""
+
+#: ../../pep-0610.rst:518
+msgid ""
+"The now withdrawn :pep:`426` specifies a ``source_url`` metadata entry. "
+"It is also implemented in `distlib`_."
 msgstr ""
 
 #: ../../pep-0610.rst:521
-msgid ""
-"The now withdrawn PEP 426 specifies a ``source_url`` metadata entry. It "
-"is also implemented in `distlib`_."
-msgstr ""
-
-#: ../../pep-0610.rst:524
 msgid "It was intended for a slightly different purpose, for use in sdists."
 msgstr ""
 
-#: ../../pep-0610.rst:526
+#: ../../pep-0610.rst:523
 msgid ""
 "This format lacks support for the ``subdirectory`` option of pip "
-"requirement URLs. The same limitation is present in `PEP440 Direct "
-"References`_."
+"requirement URLs. The same limitation is present in :pep:`PEP440 Direct "
+"References <440#direct-references>`."
 msgstr ""
 
-#: ../../pep-0610.rst:529
+#: ../../pep-0610.rst:526
 msgid ""
 "It also lacks explicit support for `environment variables in the "
 "user:password part of URLs`_."
 msgstr ""
 
-#: ../../pep-0610.rst:532
+#: ../../pep-0610.rst:529
 msgid ""
 "The introduction of a key/value extensibility mechanism and support for "
-"environment variables for user:password in PEP 440, would be necessary "
-"for use in this PEP."
+"environment variables for user:password in :pep:`440`, would be necessary"
+" for use in this PEP."
 msgstr ""
 
-#: ../../pep-0610.rst:537
+#: ../../pep-0610.rst:534
 msgid "revision vs ref"
 msgstr ""
 
-#: ../../pep-0610.rst:539
+#: ../../pep-0610.rst:536
 msgid ""
 "The ``requested_revision`` key was retained over ``requested_ref`` as it "
 "is a more generic term across various VCS and ``ref`` has a specific "
 "meaning for ``git``."
 msgstr ""
 
-#: ../../pep-0610.rst:544
-msgid "References"
-msgstr ""
-
-#: ../../pep-0610.rst:559
+#: ../../pep-0610.rst:552
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0610.rst:561
+#: ../../pep-0610.rst:554
 msgid ""
 "Various people helped make this PEP a reality. Paul F. Moore provided the"
 " essence of the abstract. Nick Coghlan suggested the direct_url name."
 msgstr ""
 
-#: ../../pep-0610.rst:565
+#: ../../pep-0610.rst:558
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0610.rst:567
+#: ../../pep-0610.rst:560
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "610"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Recording the Direct URL Origin of installed distributions"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Following PEP 440, a distribution can"
+#~ " be identified by a name and "
+#~ "either a version, or a direct URL"
+#~ " reference (see `PEP440 Direct "
+#~ "References`_). After installation, the name"
+#~ " and version are captured in the "
+#~ "project metadata, but currently there is"
+#~ " no way to obtain details of "
+#~ "the URL used when the distribution "
+#~ "was identified by a direct URL "
+#~ "reference."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This proposal defines additional metadata, "
+#~ "to be added to the installed "
+#~ "distribution by the installation front "
+#~ "end, which records the Direct URL "
+#~ "Origin for use by consumers which "
+#~ "introspect the database of installed "
+#~ "packages (see PEP 376)."
+#~ msgstr ""
+
+#~ msgid "Provisional acceptance"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In accordance with the PyPA's "
+#~ "specification process, this PEP has been"
+#~ " `provisionally accepted "
+#~ "<https://www.pypa.io/en/latest/specifications/#provisional-"
+#~ "acceptance>`_ for initial implementation in"
+#~ " ``pip`` and other PyPA tools."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "During this time, the specification is"
+#~ " still subject to revision based on"
+#~ " real world experience with those "
+#~ "initial implementations."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Python installers such as pip are "
+#~ "capable of downloading and installing "
+#~ "distributions from package indexes. They "
+#~ "are also capable of downloading and "
+#~ "installing source code from requirements "
+#~ "specifying arbitrary URLs of source "
+#~ "archives and Version Control Systems "
+#~ "(VCS) repositories, as standardized in "
+#~ "`PEP440 Direct References`_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In this mode, installers typically "
+#~ "download the source code in a "
+#~ "temporary directory, invoke the PEP 517"
+#~ " build backend to produce a wheel "
+#~ "if needed, install the wheel, and "
+#~ "delete the temporary directory."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For VCS URLs, there is additional "
+#~ "origin information available only at "
+#~ "install time useful for introspection "
+#~ "and certain workflows. For example, when"
+#~ " installing a revision from a VCS "
+#~ "URL, a tool can determine if the"
+#~ " revision corresponds to a branch, "
+#~ "tag or (in the case of Git) "
+#~ "a ref. This information can be "
+#~ "used when introspecting the Database of"
+#~ " Installed Distributions to communicate to"
+#~ " users more information about what "
+#~ "version was installed (e.g. whether a"
+#~ " branch or tag was installed and, "
+#~ "if so, the name of the branch "
+#~ "or tag). This also permits one to"
+#~ " know whether a PEP 440 direct "
+#~ "reference URL can be constructed using"
+#~ " the tag form, as only tags "
+#~ "have the semantics of immutability."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The use of this workaround, although "
+#~ "useful, is fragile, creates confusion "
+#~ "about the purpose of the editable "
+#~ "mode, and works only when the "
+#~ "distribution can be installed with "
+#~ "setuptools (i.e. it is not usable "
+#~ "with other PEP 517 build backends)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The fields specified are sufficient to"
+#~ " reproduce the source archive and "
+#~ "`VCS URLs supported by pip`_. They "
+#~ "are also sufficient to reproduce `PEP440"
+#~ " Direct References`_, as well as "
+#~ "`Pipfile and Pipfile.lock`_ entries. Finally,"
+#~ " they are sufficient to record the"
+#~ " branch, tag, and/or Git ref origin"
+#~ " of the installed version that is "
+#~ "already available for editable installs "
+#~ "by virtue of a VCS checkout being"
+#~ " present."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This JSON file MUST be a "
+#~ "dictionary, compliant with `RFC 8259`_ "
+#~ "and UTF-8 encoded."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When ``url`` refers to a local "
+#~ "directory, it MUST have the ``file`` "
+#~ "scheme and be compliant with `RFC "
+#~ "8089`_. In particular, the path "
+#~ "component must be absolute. Symbolic "
+#~ "links SHOULD be preserved when making"
+#~ " relative paths absolute."
+#~ msgstr ""
+
+#~ msgid "PEP426 source_url"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The now withdrawn PEP 426 specifies "
+#~ "a ``source_url`` metadata entry. It is"
+#~ " also implemented in `distlib`_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This format lacks support for the "
+#~ "``subdirectory`` option of pip requirement "
+#~ "URLs. The same limitation is present "
+#~ "in `PEP440 Direct References`_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The introduction of a key/value "
+#~ "extensibility mechanism and support for "
+#~ "environment variables for user:password in "
+#~ "PEP 440, would be necessary for "
+#~ "use in this PEP."
+#~ msgstr ""
+
+#~ msgid "References"
+#~ msgstr ""
 

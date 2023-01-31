@@ -1,0 +1,1347 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0695.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0695.rst:3
+msgid "Eric Traut <erictr at microsoft.com>"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0695.rst:4
+msgid "Guido van Rossum <guido@python.org>"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0695.rst:5
+msgid ""
+"https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/BB2BGYJY2YG5IWESKGTAPUQL3N27ZKVW/"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0695.rst:6
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0695.rst:7
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0695.rst:8
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0695.rst:10
+msgid "15-Jun-2022"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0695.rst:11
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0695.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0695.rst:12
+msgid ""
+"`20-Jun-2022 <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/BB2BGYJY2YG5IWESKGTAPUQL3N27ZKVW/>`__"
+msgstr ""
+
+#: ../../pep-0695.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0695.rst:18
+msgid ""
+"This PEP specifies an improved syntax for specifying type parameters "
+"within a generic class, function, or type alias. It also introduces a new"
+" statement for declaring type aliases."
+msgstr ""
+
+#: ../../pep-0695.rst:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0695.rst:26
+msgid ""
+":pep:`484` introduced type variables into the language. :pep:`612` built "
+"upon this concept by introducing parameter specifications, and :pep:`646`"
+" added variadic type variables."
+msgstr ""
+
+#: ../../pep-0695.rst:30
+msgid ""
+"While generic types and type parameters have grown in popularity, the "
+"syntax for specifying type parameters still feels \"bolted on\" to "
+"Python. This is a source of confusion among Python developers."
+msgstr ""
+
+#: ../../pep-0695.rst:34
+msgid ""
+"There is consensus within the Python static typing community that it is "
+"time to provide a formal syntax that is similar to other modern "
+"programming languages that support generic types."
+msgstr ""
+
+#: ../../pep-0695.rst:38
+#, python-format
+msgid ""
+"An analysis of 25 popular typed Python libraries revealed that type "
+"variables (in particular, the ``typing.TypeVar`` symbol) were used in 14%"
+" of modules."
+msgstr ""
+
+#: ../../pep-0695.rst:44
+msgid "Points of Confusion"
+msgstr ""
+
+#: ../../pep-0695.rst:46
+msgid ""
+"While the use of type variables has become widespread, the manner in "
+"which they are specified within code is the source of confusion among "
+"many Python developers. There are a couple of factors that contribute to "
+"this confusion."
+msgstr ""
+
+#: ../../pep-0695.rst:51
+msgid ""
+"The scoping rules for type variables are difficult to understand. Type "
+"variables are typically allocated within the global scope, but their "
+"semantic meaning is valid only when used within the context of a generic "
+"class, function, or type alias. A single runtime instance of a type "
+"variable may be reused in multiple generic contexts, and it has a "
+"different semantic meaning in each of these contexts. This PEP proposes "
+"to eliminate this source of confusion by declaring type parameters at a "
+"natural place within a class, function, or type alias declaration "
+"statement."
+msgstr ""
+
+#: ../../pep-0695.rst:60
+msgid ""
+"Generic type aliases are often misused because it is not clear to "
+"developers that a type argument must be supplied when the type alias is "
+"used. This leads to an implied type argument of ``Any``, which is rarely "
+"the intent. This PEP proposes to add new syntax that makes generic type "
+"alias declarations clear."
+msgstr ""
+
+#: ../../pep-0695.rst:66
+msgid ""
+":pep:`483` and :pep:`484` introduced the concept of \"variance\" for a "
+"type variable used within a generic class. Type variables can be "
+"invariant, covariant, or contravariant. The concept of variance is an "
+"advanced detail of type theory that is not well understood by most Python"
+" developers, yet they must confront this concept today when defining "
+"their first generic class. This PEP largely eliminates the need for most "
+"developers to understand the concept of variance when defining generic "
+"classes."
+msgstr ""
+
+#: ../../pep-0695.rst:74
+msgid ""
+"When more than one type parameter is used with a generic class or type "
+"alias, the rules for type parameter ordering can be confusing. It is "
+"normally based on the order in which they first appear within a class or "
+"type alias declaration statement. However, this can be overridden in a "
+"class definition by including a \"Generic\" or \"Protocol\" base class. "
+"For example, in the class declaration ``class ClassA(Mapping[K, V])``, "
+"the type parameters are ordered as ``K`` and then ``V``. However, in the "
+"class declaration ``class ClassB(Mapping[K, V], Generic[V, K])``, the "
+"type parameters are ordered as ``V`` and then ``K``. This PEP proposes to"
+" make type parameter ordering explicit in all cases."
+msgstr ""
+
+#: ../../pep-0695.rst:85
+msgid ""
+"The practice of sharing a type variable across multiple generic contexts "
+"creates other problems today. Modern editors provide features like \"find"
+" all references\" and \"rename all references\" that operate on symbols "
+"at the semantic level. When a type parameter is shared among multiple "
+"generic classes, functions, and type aliases, all references are "
+"semantically equivalent."
+msgstr ""
+
+#: ../../pep-0695.rst:92
+msgid ""
+"Type variables defined within the global scope also need to be given a "
+"name that starts with an underscore to indicate that the variable is "
+"private to the module. Globally-defined type variables are also often "
+"given names to indicate their variance, leading to cumbersome names like "
+"\"_T_contra\" and \"_KT_co\". The current mechanisms for allocating type "
+"variables also requires the developer to supply a redundant name in "
+"quotes (e.g. ``T = TypeVar(\"T\")``). This PEP eliminates the need for "
+"the redundant name and cumbersome variable names."
+msgstr ""
+
+#: ../../pep-0695.rst:101
+msgid ""
+"Defining type parameters today requires importing the ``TypeVar`` and "
+"``Generic`` symbols from the ``typing`` module. Over the past several "
+"releases of Python, efforts have been made to eliminate the need to "
+"import ``typing`` symbols for common use cases, and the PEP furthers this"
+" goal."
+msgstr ""
+
+#: ../../pep-0695.rst:108
+msgid "Summary Examples"
+msgstr ""
+
+#: ../../pep-0695.rst:110
+msgid "Defining a generic class prior to this PEP looks something like this."
+msgstr ""
+
+#: ../../pep-0695.rst:123
+msgid "With the new syntax, it looks like this."
+msgstr ""
+
+#: ../../pep-0695.rst:132
+msgid "Here is an example of a generic function today."
+msgstr ""
+
+#: ../../pep-0695.rst:143
+msgid "And the new syntax."
+msgstr ""
+
+#: ../../pep-0695.rst:151
+msgid "Here is an example of a generic type alias today."
+msgstr ""
+
+#: ../../pep-0695.rst:162
+msgid "And with the new syntax."
+msgstr ""
+
+#: ../../pep-0695.rst:170
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0695.rst:173
+msgid "Type Parameter Declarations"
+msgstr ""
+
+#: ../../pep-0695.rst:175
+msgid ""
+"Here is a new syntax for declaring type parameters for generic classes, "
+"functions, and type aliases. The syntax adds support for a comma-"
+"delimited list of type parameters in square brackets after the name of "
+"the class, function, or type alias."
+msgstr ""
+
+#: ../../pep-0695.rst:180
+msgid ""
+"Simple (non-variadic) type variables are declared with an unadorned name."
+" Variadic type variables are preceded by ``*`` (see :pep:`646` for "
+"details). Parameter specifications are preceded by ``**`` (see :pep:`612`"
+" for details)."
+msgstr ""
+
+#: ../../pep-0695.rst:190
+msgid ""
+"There is no need to include ``Generic`` as a base class. Its inclusion as"
+" a base class is implied by the presence of type parameters, and it will "
+"automatically be included in the ``__mro__`` and ``__orig_bases__`` "
+"attributes for the class. The explicit use of a ``Generic`` base class "
+"will result in a runtime error."
+msgstr ""
+
+#: ../../pep-0695.rst:201
+msgid ""
+"A ``Protocol`` base class with type arguments may generate a runtime "
+"error. Type checkers should generate an error in this case because the "
+"use of type arguments is not needed, and the order of type parameters for"
+" the class are no longer dictated by their order in the ``Protocol`` base"
+" class."
+msgstr ""
+
+#: ../../pep-0695.rst:214
+msgid ""
+"Type parameter names within a generic class, function, or type alias must"
+" be unique within that same class, function, or type alias. A duplicate "
+"name generates a syntax error at compile time. This is consistent with "
+"the requirement that parameter names within a function signature must be "
+"unique."
+msgstr ""
+
+#: ../../pep-0695.rst:226
+msgid ""
+"Class type parameter names are not mangled if they begin with a double "
+"underscore. Mangling would not make sense because type parameters, unlike"
+" other class-scoped variables, cannot be accessed through the class "
+"dictionary, and the notion of a \"private\" type parameter doesn't make "
+"sense."
+msgstr ""
+
+#: ../../pep-0695.rst:233
+msgid "Upper Bound Specification"
+msgstr ""
+
+#: ../../pep-0695.rst:235
+msgid ""
+"For a non-variadic type parameter, an \"upper bound\" type can be "
+"specified through the use of a type annotation expression. If an upper "
+"bound is not specified, the upper bound is assumed to be ``object``."
+msgstr ""
+
+#: ../../pep-0695.rst:243
+msgid ""
+"The specified upper bound type must use an expression form that is "
+"allowed in type annotations. More complex expression forms should be "
+"flagged as an error by a type checker. Quoted forward references are "
+"allowed."
+msgstr ""
+
+#: ../../pep-0695.rst:247
+msgid ""
+"The specified upper bound type must be concrete. An attempt to use a "
+"generic type should be flagged as an error by a type checker. This is "
+"consistent with the existing rules enforced by type checkers for a "
+"``TypeVar`` constructor call."
+msgstr ""
+
+#: ../../pep-0695.rst:264
+msgid "Constrained Type Specification"
+msgstr ""
+
+#: ../../pep-0695.rst:266
+msgid ""
+":pep:`484` introduced the concept of a \"constrained type variable\" "
+"which is constrained to a set of two or more types. The new syntax "
+"supports this type of constraint through the use of a literal tuple "
+"expression that contains two or more types."
+msgstr ""
+
+#: ../../pep-0695.rst:285
+msgid ""
+"If the specified type is not a tuple expression or the tuple expression "
+"includes complex expression forms that are not allowed in a type "
+"annotation, a type checker should generate an error. Quoted forward "
+"references are allowed."
+msgstr ""
+
+#: ../../pep-0695.rst:294
+msgid ""
+"The specified constrained types must be concrete. An attempt to use a "
+"generic type should be flagged as an error by a type checker. This is "
+"consistent with the existing rules enforced by type checkers for a "
+"``TypeVar`` constructor call."
+msgstr ""
+
+#: ../../pep-0695.rst:305
+msgid "Generic Type Alias"
+msgstr ""
+
+#: ../../pep-0695.rst:307
+msgid ""
+"We propose to introduce a new statement for declaring type aliases. "
+"Similar to ``class`` and ``def`` statements, a ``type`` statement defines"
+" a scope for type parameters."
+msgstr ""
+
+#: ../../pep-0695.rst:320
+msgid "Type aliases can refer to themselves without the use of quotes."
+msgstr ""
+
+#: ../../pep-0695.rst:331
+msgid ""
+"The ``type`` keyword is a new soft keyword. It is interpreted as a "
+"keyword only in this part of the grammar. In all other locations, it is "
+"assumed to be an identifier name."
+msgstr ""
+
+#: ../../pep-0695.rst:335
+msgid ""
+"Type parameters declared as part of a generic type alias are valid only "
+"when evaluating the right-hand side of the type alias."
+msgstr ""
+
+#: ../../pep-0695.rst:338
+msgid ""
+"As with ``typing.TypeAlias``, type checkers should restrict the right-"
+"hand expression to expression forms that are allowed within type "
+"annotations. The use of more complex expression forms (call expressions, "
+"ternary operators, arithmetic operators, comparison operators, etc.) "
+"should be flagged as an error."
+msgstr ""
+
+#: ../../pep-0695.rst:344
+msgid ""
+"Type alias expressions are not allowed to use traditional type variables "
+"(i.e. those allocated with an explicit ``TypeVar`` constructor call). "
+"Type checkers should generate an error in this case."
+msgstr ""
+
+#: ../../pep-0695.rst:354
+msgid ""
+"We propose to deprecate the existing ``typing.TypeAlias`` introduced in "
+":pep:`613`. The new syntax eliminates its need entirely."
+msgstr ""
+
+#: ../../pep-0695.rst:359
+msgid "Runtime Type Alias Class"
+msgstr ""
+
+#: ../../pep-0695.rst:361
+msgid ""
+"At runtime, a ``type`` statement will generate an instance of "
+"``typing.TypeAliasType``. This class represents the type. Its attributes "
+"include:"
+msgstr ""
+
+#: ../../pep-0695.rst:365
+msgid "``__name__`` is a str representing the name of the type alias"
+msgstr ""
+
+#: ../../pep-0695.rst:366
+msgid ""
+"``__parameters__`` is a tuple of ``TypeVar``, ``TypeVarTuple``, or "
+"``ParamSpec`` objects that parameterize the type alias if it is generic"
+msgstr ""
+
+#: ../../pep-0695.rst:368
+msgid "``__value__`` is the evaluated value of the type alias"
+msgstr ""
+
+#: ../../pep-0695.rst:370
+msgid ""
+"The ``__value__`` attribute initially has a value of ``None`` while the "
+"type alias expression is evaluated. It is then updated after a successful"
+" evaluation. This allows for self-referential type aliases."
+msgstr ""
+
+#: ../../pep-0695.rst:376
+msgid "Type Parameter Scopes"
+msgstr ""
+
+#: ../../pep-0695.rst:378
+msgid ""
+"When the new syntax is used, a new lexical scope is introduced, and this "
+"scope includes the type parameters. Type parameters can be accessed by "
+"name within inner scopes. As with other symbols in Python, an inner scope"
+" can define its own symbol that overrides an outer-scope symbol of the "
+"same name."
+msgstr ""
+
+#: ../../pep-0695.rst:383
+msgid ""
+"Type parameters declared earlier in a type parameter list are visible to "
+"type parameters declared later in the list. This allows later type "
+"parameters to use earlier type parameters within their definition. While "
+"there is currently no use for this capability, it preserves the ability "
+"in the future to support upper bound expressions or type argument "
+"defaults that depend on earlier type parameters."
+msgstr ""
+
+#: ../../pep-0695.rst:390
+msgid ""
+"A compiler error or runtime exception is generated if the definition of "
+"an earlier type parameter references a later type parameter even if the "
+"name is defined in an outer scope."
+msgstr ""
+
+#: ../../pep-0695.rst:409
+msgid ""
+"A type parameter declared as part of a generic class is valid within the "
+"class body and inner scopes contained therein. Type parameters are also "
+"accessible when evaluating the argument list (base classes and any "
+"keyword arguments) that comprise the class definition. This allows base "
+"classes to be parameterized by these type parameters. Type parameters are"
+" not accessible outside of the class body, including class decorators."
+msgstr ""
+
+#: ../../pep-0695.rst:426
+msgid ""
+"A type parameter declared as part of a generic function is valid within "
+"the function body and any scopes contained therein. It is also valid "
+"within parameter and return type annotations. Default argument values for"
+" function parameters are evaluated outside of this scope, so type "
+"parameters are not accessible in default value expressions. Likewise, "
+"type parameters are not in scope for function decorators."
+msgstr ""
+
+#: ../../pep-0695.rst:444
+msgid ""
+"A type parameter declared as part of a generic type alias is valid within"
+" the type alias expression."
+msgstr ""
+
+#: ../../pep-0695.rst:452
+msgid ""
+"Type parameter symbols defined in outer scopes cannot be bound with "
+"``nonlocal`` statements in inner scopes."
+msgstr ""
+
+#: ../../pep-0695.rst:473
+msgid ""
+"The lexical scope introduced by the new type parameter syntax is unlike "
+"traditional scopes introduced by a ``def`` or ``class`` statement. A type"
+" parameter scope acts more like a temporary \"overlay\" to the containing"
+" scope. It does not capture variables from outer scopes, and the only "
+"symbols contained within its symbol table are the type parameters defined"
+" using the new syntax. References to all other symbols are treated as "
+"though they were found within the containing scope. This allows base "
+"class lists (in class definitions) and type annotation expressions (in "
+"function definitions) to reference symbols defined in the containing "
+"scope."
+msgstr ""
+
+#: ../../pep-0695.rst:499
+msgid ""
+"The compiler allows inner scopes to define a local symbol that overrides "
+"an outer-scoped type parameter."
+msgstr ""
+
+#: ../../pep-0695.rst:502
+msgid ""
+"Consistent with the scoping rules defined in :pep:`484`, type checkers "
+"should generate an error if inner-scoped generic classes, functions, or "
+"type aliases reuse the same type parameter name as an outer scope."
+msgstr ""
+
+#: ../../pep-0695.rst:528
+msgid ""
+"Symbols referenced in inner scopes are resolved using existing rules "
+"except that type parameter scopes are also considered during name "
+"resolution."
+msgstr ""
+
+#: ../../pep-0695.rst:567
+msgid ""
+"When the new type parameter syntax is used for a generic class, "
+"assignment expressions are not allowed within the argument list for the "
+"class definition. Likewise, with functions that use the new type "
+"parameter syntax, assignment expressions are not allowed within parameter"
+" or return type annotations, nor are they allowed within the expression "
+"that defines a type alias."
+msgstr ""
+
+#: ../../pep-0695.rst:573
+msgid ""
+"This restriction is necessary because expressions evaluated within the "
+"new lexical scope should not introduce symbols within that scope other "
+"than the defined type parameters."
+msgstr ""
+
+#: ../../pep-0695.rst:589
+msgid "Accessing Type Parameters at Runtime"
+msgstr ""
+
+#: ../../pep-0695.rst:591
+msgid ""
+"A new read-only attribute called ``__type_variables__`` is available on "
+"class, function, and type alias objects. This attribute is a tuple of the"
+" active type variables that are visible within the scope of that class, "
+"function, or type alias. This attribute is needed for runtime evaluation "
+"of stringified (forward referenced) type annotations that include "
+"references to type parameters. Functions like ``typing.get_type_hints`` "
+"can use this attribute to populate the ``locals`` dictionary with values "
+"for type parameters that are in scope when calling ``eval`` to evaluate "
+"the stringified expression. The tuple contains ``TypeVar`` instances."
+msgstr ""
+
+#: ../../pep-0695.rst:601
+msgid ""
+"Type parameters declared using the new syntax will not appear within the "
+"dictionary returned by ``globals()`` or ``locals()``."
+msgstr ""
+
+#: ../../pep-0695.rst:606
+msgid "Variance Inference"
+msgstr ""
+
+#: ../../pep-0695.rst:608
+msgid ""
+"This PEP eliminates the need for variance to be specified for type "
+"parameters. Instead, type checkers will infer the variance of type "
+"parameters based on their usage within a class. Type parameters are "
+"inferred to be invariant, covariant, or contravariant depending on how "
+"they are used."
+msgstr ""
+
+#: ../../pep-0695.rst:613
+msgid ""
+"Python type checkers already include the ability to determine the "
+"variance of type parameters for the purpose of validating variance within"
+" a generic protocol class. This capability can be used for all classes "
+"(whether or not they are protocols) to calculate the variance of each "
+"type parameter."
+msgstr ""
+
+#: ../../pep-0695.rst:618
+msgid ""
+"The algorithm for computing the variance of a type parameter is as "
+"follows."
+msgstr ""
+
+#: ../../pep-0695.rst:620
+msgid "For each type parameter in a generic class:"
+msgstr ""
+
+#: ../../pep-0695.rst:622
+msgid ""
+"1. If the type parameter is variadic (``TypeVarTuple``) or a parameter "
+"specification (``ParamSpec``), it is always considered invariant. No "
+"further inference is needed."
+msgstr ""
+
+#: ../../pep-0695.rst:626
+msgid ""
+"2. If the type parameter comes from a traditional ``TypeVar`` declaration"
+" and is not specified as ``infer_variance`` (see below), its variance is "
+"specified by the ``TypeVar`` constructor call. No further inference is "
+"needed."
+msgstr ""
+
+#: ../../pep-0695.rst:630
+msgid ""
+"3. Create two specialized versions of the class. We'll refer to these as "
+"``upper`` and ``lower`` specializations. In both of these "
+"specializations, replace all type parameters other than the one being "
+"inferred by a dummy type instance (a concrete anonymous class that is "
+"type compatible with itself and assumed to meet the bounds or constraints"
+" of the type parameter). In the ``upper`` specialized class, specialize "
+"the target type parameter with an ``object`` instance. This "
+"specialization ignores the type parameter's upper bound or constraints. "
+"In the ``lower`` specialized class, specialize the target type parameter "
+"with itself (i.e. the corresponding type argument is the type parameter "
+"itself)."
+msgstr ""
+
+#: ../../pep-0695.rst:641
+msgid ""
+"4. Determine whether ``lower`` can be assigned to ``upper`` using normal "
+"type compatibility rules. If so, the target type parameter is covariant. "
+"If not, determine whether ``upper`` can be assigned to ``lower``. If so, "
+"the target type parameter is contravariant. If neither of these "
+"combinations are assignable, the target type parameter is invariant."
+msgstr ""
+
+#: ../../pep-0695.rst:647
+msgid "Here is an example."
+msgstr ""
+
+#: ../../pep-0695.rst:658
+msgid "To determine the variance of ``T1``, we specialize ``ClassA`` as follows:"
+msgstr ""
+
+#: ../../pep-0695.rst:665
+msgid ""
+"We find that ``upper`` is not assignable to ``lower`` using normal type "
+"compatibility rules defined in :pep:`484`. Likewise, ``lower`` is not "
+"assignable to ``upper``, so we conclude that ``T1`` is invariant."
+msgstr ""
+
+#: ../../pep-0695.rst:669
+msgid "To determine the variance of ``T2``, we specialize ``ClassA`` as follows:"
+msgstr ""
+
+#: ../../pep-0695.rst:676
+msgid "Since ``upper`` is assignable to ``lower``, ``T2`` is contravariant."
+msgstr ""
+
+#: ../../pep-0695.rst:678
+msgid "To determine the variance of ``T3``, we specialize ``ClassA`` as follows:"
+msgstr ""
+
+#: ../../pep-0695.rst:685
+msgid "Since ``lower`` is assignable to ``upper``, ``T3`` is covariant."
+msgstr ""
+
+#: ../../pep-0695.rst:689
+msgid "Auto Variance For TypeVar"
+msgstr ""
+
+#: ../../pep-0695.rst:691
+msgid ""
+"The existing ``TypeVar`` class constructor accepts keyword parameters "
+"named ``covariant`` and ``contravariant``. If both of these are "
+"``False``, the type variable is assumed to be invariant. We propose to "
+"add another keyword parameter named ``infer_variance`` indicating that a "
+"type checker should use inference to determine whether the type variable "
+"is invariant, covariant or contravariant. A corresponding instance "
+"variable ``__infer_variance__`` can be accessed at runtime to determine "
+"whether the variance is inferred. Type variables that are implicitly "
+"allocated using the new syntax will always have ``__infer_variance__`` "
+"set to ``True``."
+msgstr ""
+
+#: ../../pep-0695.rst:701
+msgid ""
+"A generic class that uses the traditional syntax may include combinations"
+" of type variables with explicit and inferred variance."
+msgstr ""
+
+#: ../../pep-0695.rst:716
+msgid "Compatibility with Traditional TypeVars"
+msgstr ""
+
+#: ../../pep-0695.rst:718
+msgid ""
+"The existing mechanism for allocating ``TypeVar``, ``TypeVarTuple``, and "
+"``ParamSpec`` is retained for backward compatibility. However, these "
+"\"traditional\" type variables should not be combined with type "
+"parameters allocated using the new syntax. Such a combination should be "
+"flagged as an error by type checkers. This is necessary because the type "
+"parameter order is ambiguous."
+msgstr ""
+
+#: ../../pep-0695.rst:725
+msgid ""
+"It is OK to combine traditional type variables with new-style type "
+"parameters if the class, function, or type alias does not use the new "
+"syntax. The new-style type parameters must come from an outer scope in "
+"this case."
+msgstr ""
+
+#: ../../pep-0695.rst:754
+msgid "Runtime Implementation"
+msgstr ""
+
+#: ../../pep-0695.rst:757
+msgid "Grammar Changes"
+msgstr ""
+
+#: ../../pep-0695.rst:759
+msgid ""
+"This PEP introduces a new soft keyword ``type``. It modifies the grammar "
+"in the following ways:"
+msgstr ""
+
+#: ../../pep-0695.rst:762
+msgid ""
+"Addition of optional type parameter clause in ``class`` and ``def`` "
+"statements."
+msgstr ""
+
+#: ../../pep-0695.rst:786
+msgid "Addition of new ``type`` statement for defining type aliases."
+msgstr ""
+
+#: ../../pep-0695.rst:794
+msgid "AST Changes"
+msgstr ""
+
+#: ../../pep-0695.rst:796
+msgid "This PEP introduces a new AST node type called ``TypeAlias``."
+msgstr ""
+
+#: ../../pep-0695.rst:802
+msgid "It also adds an AST node type that represents a type parameter."
+msgstr ""
+
+#: ../../pep-0695.rst:810
+msgid ""
+"It also modifies existing AST node types ``FunctionDef``, "
+"``AsyncFunctionDef`` and ``ClassDef`` to include an additional optional "
+"attribute called ``typeparam*`` that includes a list of type parameters "
+"associated with the function or class."
+msgstr ""
+
+#: ../../pep-0695.rst:817
+msgid "Library Changes"
+msgstr ""
+
+#: ../../pep-0695.rst:819
+msgid ""
+"Several classes in the ``typing`` module that are currently implemented "
+"in Python must be reimplemented in C. This includes: ``TypeVar``, "
+"``TypeVarTuple``, ``ParamSpec``, ``Generic``, and ``Union``. The new "
+"class ``TypeAliasType`` (described above) also must be implemented in C. "
+"The documented behaviors of these classes should not change."
+msgstr ""
+
+#: ../../pep-0695.rst:825
+msgid ""
+"The ``typing.get_type_hints`` must be updated to use the new "
+"``__type_variables__`` attribute."
+msgstr ""
+
+#: ../../pep-0695.rst:830
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0695.rst:832
+msgid ""
+"This proposal is partially prototyped in the CPython code base in `this "
+"fork <https://github.com/erictraut/cpython/tree/type_param_syntax2>`_."
+msgstr ""
+
+#: ../../pep-0695.rst:835
+msgid "The Pyright type checker supports the behavior described in this PEP."
+msgstr ""
+
+#: ../../pep-0695.rst:839
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0695.rst:842
+msgid "Prefix Clause"
+msgstr ""
+
+#: ../../pep-0695.rst:843
+msgid ""
+"We explored various syntactic options for specifying type parameters that"
+" preceded ``def`` and ``class`` statements. One such variant we "
+"considered used a ``using`` clause as follows:"
+msgstr ""
+
+#: ../../pep-0695.rst:852
+msgid ""
+"This option was rejected because the scoping rules for the type "
+"parameters were less clear. Also, this syntax did not interact well with "
+"class and function decorators, which are common in Python. Only one other"
+" popular programming language, C++, uses this approach."
+msgstr ""
+
+#: ../../pep-0695.rst:857
+msgid ""
+"We likewise considered prefix forms that looked like decorators (e.g., "
+"``@using(S, T)``). This idea was rejected because such forms would be "
+"confused with regular decorators, and they would not compose well with "
+"existing decorators. Furthermore, decorators are logically executed after"
+" the statement they are decorating, so it would be confusing for them to "
+"introduce symbols (type parameters) that are visible within the "
+"\"decorated\" statement, which is logically executed before the decorator"
+" itself."
+msgstr ""
+
+#: ../../pep-0695.rst:867
+msgid "Angle Brackets"
+msgstr ""
+
+#: ../../pep-0695.rst:868
+msgid ""
+"Many languages that support generics make use of angle brackets. (Refer "
+"to the table at the end of Appendix A for a summary.) We explored the use"
+" of angle brackets for type parameter declarations in Python, but we "
+"ultimately rejected it for two reasons. First, angle brackets are not "
+"considered \"paired\" by the Python scanner, so end-of-line characters "
+"between a ``<`` and ``>`` token are retained. That means any line breaks "
+"within a list of type parameters would require the use of unsightly and "
+"cumbersome ``\\`` escape sequences. Second, Python has already "
+"established the use of square brackets for explicit specialization of a "
+"generic type (e.g., ``list[int]``). We concluded that it would be "
+"inconsistent and confusing to use angle brackets for generic declarations"
+" but square brackets for explicit specialization. All other languages "
+"that we surveyed were consistent in this regard."
+msgstr ""
+
+#: ../../pep-0695.rst:883
+msgid "Bounds Syntax"
+msgstr ""
+
+#: ../../pep-0695.rst:884
+msgid ""
+"We explored various syntactic options for specifying the bounds and "
+"constraints for a type variable. We considered, but ultimately rejected, "
+"the use of a ``<:`` token like in Scala, the use of an ``extends`` or "
+"``with`` keyword like in various other languages, and the use of a "
+"function call syntax similar to today's ``typing.TypeVar`` constructor. "
+"The simple colon syntax is consistent with many other programming "
+"languages (see Appendix A), and it was heavily preferred by a cross "
+"section of Python developers who were surveyed."
+msgstr ""
+
+#: ../../pep-0695.rst:895
+msgid "Explicit Variance"
+msgstr ""
+
+#: ../../pep-0695.rst:896
+msgid ""
+"We considered adding syntax for specifying whether a type parameter is "
+"intended to be invariant, covariant, or contravariant. The "
+"``typing.TypeVar`` mechanism in Python requires this. A few other "
+"languages including Scala and C# also require developers to specify the "
+"variance. We rejected this idea because variance can generally be "
+"inferred, and most modern programming languages do infer variance based "
+"on usage. Variance is an advanced topic that many developers find "
+"confusing, so we want to eliminate the need to understand this concept "
+"for most Python developers."
+msgstr ""
+
+#: ../../pep-0695.rst:907
+msgid "Name Mangling"
+msgstr ""
+
+#: ../../pep-0695.rst:908
+msgid ""
+"When considering implementation options, we considered a \"name "
+"mangling\" approach where each type parameter was given a unique "
+"\"mangled\" name by the compiler. This mangled name would be based on the"
+" qualified name of the generic class, function or type alias it was "
+"associated with. This approach was rejected because qualified names are "
+"not necessarily unique, which means the mangled name would need to be "
+"based on some other randomized value. Furthermore, this approach is not "
+"compatible with techniques used for evaluating quoted (forward "
+"referenced) type annotations."
+msgstr ""
+
+#: ../../pep-0695.rst:919
+msgid "Lambda Lifting"
+msgstr ""
+
+#: ../../pep-0695.rst:920
+msgid ""
+"When considering implementation options, we considered introducing a new "
+"scope and executing the ``class``, ``def``, or ``type`` statement within "
+"a lambda -- a technique that is sometimes referred to as \"lambda "
+"lifting\". We ultimately rejected this idea because it did not work well "
+"for statements within a class body (because class-scoped symbols cannot "
+"be accessed by inner scopes). It also introduced many odd behaviors for "
+"scopes that were further nested within the lambda."
+msgstr ""
+
+#: ../../pep-0695.rst:930
+msgid "Appendix A: Survey of Type Parameter Syntax"
+msgstr ""
+
+#: ../../pep-0695.rst:932
+msgid ""
+"Support for generic types is found in many programming languages. In this"
+" section, we provide a survey of the options used by other popular "
+"programming languages. This is relevant because familiarity with other "
+"languages will make it easier for Python developers to understand this "
+"concept. We provide additional details here (for example, default type "
+"argument support) that may be useful when considering future extensions "
+"to the Python type system."
+msgstr ""
+
+#: ../../pep-0695.rst:941 ../../pep-0695.rst:1331
+msgid "C++"
+msgstr ""
+
+#: ../../pep-0695.rst:943
+msgid ""
+"C++ uses angle brackets in combination with keywords ``template`` and "
+"``typename`` to declare type parameters. It uses angle brackets for "
+"specialization."
+msgstr ""
+
+#: ../../pep-0695.rst:947
+msgid ""
+"C++20 introduced the notion of generalized constraints, which can act "
+"like protocols in Python. A collection of constraints can be defined in a"
+" named entity called a ``concept``."
+msgstr ""
+
+#: ../../pep-0695.rst:951
+msgid ""
+"Variance is not explicitly specified, but constraints can enforce "
+"variance."
+msgstr ""
+
+#: ../../pep-0695.rst:953 ../../pep-0695.rst:1067 ../../pep-0695.rst:1174
+msgid "A default type argument can be specified using the ``=`` operator."
+msgstr ""
+
+#: ../../pep-0695.rst:996 ../../pep-0695.rst:1334
+msgid "Java"
+msgstr ""
+
+#: ../../pep-0695.rst:998
+msgid ""
+"Java uses angle brackets to declare type parameters and for "
+"specialization. By default, type parameters are invariant. The "
+"``extends`` keyword is used to specify an upper bound. The ``super`` "
+"keyword is used to specify a contravariant bound."
+msgstr ""
+
+#: ../../pep-0695.rst:1003
+msgid ""
+"Java uses use-site variance. The compiler places limits on which methods "
+"and members can be accessed based on the use of a generic type. Variance "
+"is not specified explicitly."
+msgstr ""
+
+#: ../../pep-0695.rst:1007
+msgid "Java provides no way to specify a default type argument."
+msgstr ""
+
+#: ../../pep-0695.rst:1024 ../../pep-0695.rst:1337
+msgid "C#"
+msgstr ""
+
+#: ../../pep-0695.rst:1026
+msgid ""
+"C# uses angle brackets to declare type parameters and for specialization."
+" The ``where`` keyword and a colon is used to specify the bound for a "
+"type parameter."
+msgstr ""
+
+#: ../../pep-0695.rst:1030
+msgid ""
+"C# uses declaration-site variance using the keywords ``in`` and ``out`` "
+"for contravariance and covariance, respectively. By default, type "
+"parameters are invariant."
+msgstr ""
+
+#: ../../pep-0695.rst:1034
+msgid "C# provides no way to specify a default type argument."
+msgstr ""
+
+#: ../../pep-0695.rst:1056 ../../pep-0695.rst:1339
+msgid "TypeScript"
+msgstr ""
+
+#: ../../pep-0695.rst:1058
+msgid ""
+"TypeScript uses angle brackets to declare type parameters and for "
+"specialization. The ``extends`` keyword is used to specify a bound. It "
+"can be combined with other type operators such as ``keyof``."
+msgstr ""
+
+#: ../../pep-0695.rst:1062
+msgid ""
+"TypeScript uses declaration-site variance. Variance is inferred from "
+"usage, not specified explicitly. TypeScript 4.7 introduced the ability to"
+" specify variance using ``in`` and ``out`` keywords. This was added to "
+"handle extremely complex types where inference of variance was expensive."
+msgstr ""
+
+#: ../../pep-0695.rst:1069
+msgid ""
+"TypeScript supports the ``type`` keyword to declare a type alias, and "
+"this syntax supports generics."
+msgstr ""
+
+#: ../../pep-0695.rst:1096 ../../pep-0695.rst:1342
+msgid "Scala"
+msgstr ""
+
+#: ../../pep-0695.rst:1098
+msgid ""
+"In Scala, square brackets are used to declare type parameters. Square "
+"brackets are also used for specialization. The ``<:`` and ``>:`` "
+"operators are used to specify upper and lower bounds, respectively."
+msgstr ""
+
+#: ../../pep-0695.rst:1102
+msgid ""
+"Scala uses use-site variance but also allows declaration-site variance "
+"specification. It uses a ``+`` or ``-`` prefix operator for covariance "
+"and contravariance, respectively."
+msgstr ""
+
+#: ../../pep-0695.rst:1106
+msgid "Scala provides no way to specify a default type argument."
+msgstr ""
+
+#: ../../pep-0695.rst:1108
+msgid ""
+"It does support higher-kinded types (type parameters that accept type "
+"type parameters)."
+msgstr ""
+
+#: ../../pep-0695.rst:1139 ../../pep-0695.rst:1344
+msgid "Swift"
+msgstr ""
+
+#: ../../pep-0695.rst:1141
+msgid ""
+"Swift uses angle brackets to declare type parameters and for "
+"specialization. The upper bound of a type parameter is specified using a "
+"colon."
+msgstr ""
+
+#: ../../pep-0695.rst:1144
+msgid "Swift doesn't support generic variance; all type parameters are invariant."
+msgstr ""
+
+#: ../../pep-0695.rst:1146
+msgid "Swift provides no way to specify a default type argument."
+msgstr ""
+
+#: ../../pep-0695.rst:1164 ../../pep-0695.rst:1346
+msgid "Rust"
+msgstr ""
+
+#: ../../pep-0695.rst:1166
+msgid ""
+"Rust uses angle brackets to declare type parameters and for "
+"specialization. The upper bound of a type parameter is specified using a "
+"colon. Alternatively a ``where`` clause can specify various constraints."
+msgstr ""
+
+#: ../../pep-0695.rst:1170
+msgid ""
+"Rust does not have traditional object oriented inheritance or variance. "
+"Subtyping in Rust is very restricted and occurs only due to variance with"
+" respect to lifetimes."
+msgstr ""
+
+#: ../../pep-0695.rst:1211 ../../pep-0695.rst:1349
+msgid "Kotlin"
+msgstr ""
+
+#: ../../pep-0695.rst:1213
+msgid ""
+"Kotlin uses angle brackets to declare type parameters and for "
+"specialization. By default, type parameters are invariant. The upper "
+"bound of a type is specified using a colon. Alternatively, a ``where`` "
+"clause can specify various constraints."
+msgstr ""
+
+#: ../../pep-0695.rst:1218
+msgid ""
+"Kotlin supports declaration-site variance where variance of type "
+"parameters is explicitly declared using ``in`` and ``out`` keywords. It "
+"also supports use-site variance which limits which methods and members "
+"can be used."
+msgstr ""
+
+#: ../../pep-0695.rst:1222
+msgid "Kotlin provides no way to specify a default type argument."
+msgstr ""
+
+#: ../../pep-0695.rst:1248 ../../pep-0695.rst:1352
+msgid "Julia"
+msgstr ""
+
+#: ../../pep-0695.rst:1250
+msgid ""
+"Julia uses curly braces to declare type parameters and for "
+"specialization. The ``<:`` operator can be used within a ``where`` clause"
+" to declare upper and lower bounds on a type."
+msgstr ""
+
+#: ../../pep-0695.rst:1268 ../../pep-0695.rst:1354
+msgid "Dart"
+msgstr ""
+
+#: ../../pep-0695.rst:1270
+msgid ""
+"Dart uses angle brackets to declare type parameters and for "
+"specialization. The upper bound of a type is specified using the "
+"``extends`` keyword. By default, type parameters are covariant."
+msgstr ""
+
+#: ../../pep-0695.rst:1274
+msgid ""
+"Dart supports declaration-site variance, where variance of type "
+"parameters is explicitly declared using ``in``, ``out`` and ``inout`` "
+"keywords. It does not support use-site variance."
+msgstr ""
+
+#: ../../pep-0695.rst:1278
+msgid "Dart provides no way to specify a default type argument."
+msgstr ""
+
+#: ../../pep-0695.rst:1298 ../../pep-0695.rst:1357
+msgid "Go"
+msgstr ""
+
+#: ../../pep-0695.rst:1300
+msgid ""
+"Go uses square brackets to declare type parameters and for "
+"specialization. The upper bound of a type is specified after the name of "
+"the parameter, and must always be specified. The keyword ``any`` is used "
+"for an unbound type parameter."
+msgstr ""
+
+#: ../../pep-0695.rst:1304
+msgid "Go doesn't support variance; all type parameters are invariant."
+msgstr ""
+
+#: ../../pep-0695.rst:1306
+msgid "Go provides no way to specify a default type argument."
+msgstr ""
+
+#: ../../pep-0695.rst:1308
+msgid "Go does not support generic type aliases."
+msgstr ""
+
+#: ../../pep-0695.rst:1325
+msgid "Summary"
+msgstr ""
+
+#: ../../pep-0695.rst:1328
+msgid "Decl Syntax"
+msgstr ""
+
+#: ../../pep-0695.rst:1328
+msgid "Upper Bound"
+msgstr ""
+
+#: ../../pep-0695.rst:1328
+msgid "Lower Bound"
+msgstr ""
+
+#: ../../pep-0695.rst:1328
+msgid "Default Value"
+msgstr ""
+
+#: ../../pep-0695.rst:1328
+msgid "Variance Site"
+msgstr ""
+
+#: ../../pep-0695.rst:1328
+msgid "Variance"
+msgstr ""
+
+#: ../../pep-0695.rst:1331
+msgid "template <>"
+msgstr ""
+
+#: ../../pep-0695.rst:1331 ../../pep-0695.rst:1344 ../../pep-0695.rst:1346
+#: ../../pep-0695.rst:1352 ../../pep-0695.rst:1357
+msgid "n/a"
+msgstr ""
+
+#: ../../pep-0695.rst:1331 ../../pep-0695.rst:1339 ../../pep-0695.rst:1346
+msgid "="
+msgstr ""
+
+#: ../../pep-0695.rst:1334 ../../pep-0695.rst:1337 ../../pep-0695.rst:1339
+#: ../../pep-0695.rst:1344 ../../pep-0695.rst:1346 ../../pep-0695.rst:1349
+#: ../../pep-0695.rst:1354
+msgid "<>"
+msgstr ""
+
+#: ../../pep-0695.rst:1334 ../../pep-0695.rst:1339 ../../pep-0695.rst:1354
+msgid "extends"
+msgstr ""
+
+#: ../../pep-0695.rst:1334
+msgid "use"
+msgstr ""
+
+#: ../../pep-0695.rst:1334
+msgid "super, extends"
+msgstr ""
+
+#: ../../pep-0695.rst:1337
+msgid "where"
+msgstr ""
+
+#: ../../pep-0695.rst:1337 ../../pep-0695.rst:1339 ../../pep-0695.rst:1354
+#: ../../pep-0695.rst:1359
+msgid "decl"
+msgstr ""
+
+#: ../../pep-0695.rst:1337 ../../pep-0695.rst:1349
+msgid "in, out"
+msgstr ""
+
+#: ../../pep-0695.rst:1339
+msgid "inferred, in, out"
+msgstr ""
+
+#: ../../pep-0695.rst:1342 ../../pep-0695.rst:1357 ../../pep-0695.rst:1359
+msgid "[]"
+msgstr ""
+
+#: ../../pep-0695.rst:1342 ../../pep-0695.rst:1352
+msgid "T <: X"
+msgstr ""
+
+#: ../../pep-0695.rst:1342
+msgid "T >: X"
+msgstr ""
+
+#: ../../pep-0695.rst:1342 ../../pep-0695.rst:1349
+msgid "use, decl"
+msgstr ""
+
+#: ../../pep-0695.rst:1342
+msgid "+, -"
+msgstr ""
+
+#: ../../pep-0695.rst:1344 ../../pep-0695.rst:1359
+msgid "T: X"
+msgstr ""
+
+#: ../../pep-0695.rst:1346 ../../pep-0695.rst:1349
+msgid "T: X, where"
+msgstr ""
+
+#: ../../pep-0695.rst:1352
+msgid "{}"
+msgstr ""
+
+#: ../../pep-0695.rst:1352
+msgid "X <: T"
+msgstr ""
+
+#: ../../pep-0695.rst:1354
+msgid "in, out, inout"
+msgstr ""
+
+#: ../../pep-0695.rst:1357
+msgid "T X"
+msgstr ""
+
+#: ../../pep-0695.rst:1359
+msgid "Python (proposed)"
+msgstr ""
+
+#: ../../pep-0695.rst:1359
+msgid "inferred"
+msgstr ""
+
+#: ../../pep-0695.rst:1365
+msgid "Acknowledgements"
+msgstr ""
+
+#: ../../pep-0695.rst:1367
+msgid ""
+"Thanks to Sebastian Rittau for kick-starting the discussions that led to "
+"this proposal, to Jukka Lehtosalo for proposing the syntax for type alias"
+" statements and to Jelle Zijlstra, Daniel Moisset, and Guido van Rossum "
+"for their valuable feedback and suggested improvements to the "
+"specification and implementation."
+msgstr ""
+
+#: ../../pep-0695.rst:1375
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0695.rst:1377
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

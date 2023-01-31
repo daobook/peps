@@ -1,0 +1,333 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0682.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0682.rst:3
+msgid "John Belmonte <john@neggie.net>"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0682.rst:4
+msgid "Mark Dickinson <dickinsm@gmail.com>"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "PEP-Delegate"
+msgstr ""
+
+#: ../../pep-0682.rst:5
+msgid "Mark Dickinson"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0682.rst:6
+msgid ""
+"https://discuss.python.org/t/pep-682-format-specifier-for-signed-"
+"zero/13596"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0682.rst:7
+msgid "Final"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0682.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0682.rst:10
+msgid "29-Jan-2022"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0682.rst:11
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0682.rst:12
+msgid "08-Feb-2022"
+msgstr ""
+
+#: ../../pep-0682.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0682.rst:13
+msgid ""
+"https://discuss.python.org/t/accepting-pep-682-format-specifier-for-"
+"signed-zero/14088"
+msgstr ""
+
+#: ../../pep-0682.rst:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0682.rst:19
+msgid ""
+"Though ``float`` and ``Decimal`` types can represent `signed zero`_, in "
+"many fields of mathematics negative zero is surprising or unwanted -- "
+"especially in the context of displaying an (often rounded) numerical "
+"result.  This PEP proposes an extension to the `string format "
+"specification`_ allowing negative zero to be normalized to positive zero."
+msgstr ""
+
+#: ../../pep-0682.rst:30
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0682.rst:32
+msgid "Here is negative zero::"
+msgstr ""
+
+#: ../../pep-0682.rst:38
+msgid ""
+"When formatting a number, negative zero can result from rounding.  "
+"Assuming the user's intention is truly to discard precision, the "
+"distinction between negative and positive zero of the rounded result "
+"might be considered an unwanted artifact::"
+msgstr ""
+
+#: ../../pep-0682.rst:49
+msgid ""
+"There are various approaches to clearing the sign of a negative zero.  It"
+" can be achieved without a conditional by adding positive zero::"
+msgstr ""
+
+#: ../../pep-0682.rst:56
+msgid ""
+"To normalize negative zero when formatting, it is necessary to perform a "
+"redundant (and error-prone) pre-rounding of the input::"
+msgstr ""
+
+#: ../../pep-0682.rst:65
+msgid ""
+"There is ample evidence that, regardless of the language, programmers are"
+" often looking for a way to suppress negative zero, and landing on a "
+"variety of workarounds (pre-round, post-regex, etc.).  A sampling:"
+msgstr ""
+
+#: ../../pep-0682.rst:69
+msgid ""
+"`How to have negative zero always formatted as positive zero in a python "
+"string?`_ (Python, post-regex)"
+msgstr ""
+
+#: ../../pep-0682.rst:71
+msgid ""
+"`(Iron)Python formatting issue with modulo operator & \"negative zero\"`_"
+" (Python, pre-round)"
+msgstr ""
+
+#: ../../pep-0682.rst:73
+msgid "`Negative sign in case of zero in java`_ (Java, post-regex)"
+msgstr ""
+
+#: ../../pep-0682.rst:74
+msgid ""
+"`Prevent small negative numbers printing as \"-0\"`_ (Objective-C, custom"
+" number formatter)"
+msgstr ""
+
+#: ../../pep-0682.rst:77
+msgid ""
+"What we would like instead is a first-class option to normalize negative "
+"zero, on top of everything else that numerical string formatting already "
+"offers."
+msgstr ""
+
+#: ../../pep-0682.rst:88
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0682.rst:90
+msgid ""
+"There are use cases where negative zero is unwanted in formatted number "
+"output -- arguably, not wanting it is more common.  Expanding the format "
+"specification is the best way to support this because number formatting "
+"already incorporates rounding, and the normalization of negative zero "
+"must happen after rounding."
+msgstr ""
+
+#: ../../pep-0682.rst:96
+msgid ""
+"While it is possible to pre-round and normalize a number before "
+"formatting, it's tedious and prone to error if the rounding doesn't "
+"precisely match that of the format spec.  Furthermore, functions that "
+"wrap formatting would find themselves having to parse format specs to "
+"extract the precision information.  For example, consider how this "
+"utility for formatting one-dimensional numerical arrays would be "
+"complicated by such pre-rounding:"
+msgstr ""
+
+#: ../../pep-0682.rst:109
+msgid ""
+"To date, there doesn't appear to be any other widely-used language or "
+"library providing a formatting option for negative zero.  However, the "
+"same ``z`` option syntax and semantics specified below have been "
+"`proposed for C++ std::format()`_.  While the proposal was withdrawn for "
+"C++20, a consensus proposal is promised for C++23.  (The original "
+"`feature request`_ prompting this PEP was argued without knowledge of the"
+" C++ proposal.)"
+msgstr ""
+
+#: ../../pep-0682.rst:116
+msgid ""
+"When Rust developers debated whether to suppress negative zero in "
+"``print`` output, they took a small `survey of other languages`_.  "
+"Notably, it didn't mention any language providing an option for negative "
+"zero handling."
+msgstr ""
+
+#: ../../pep-0682.rst:126
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0682.rst:128
+msgid ""
+"An optional, literal ``z`` is added to the `Format Specification Mini-"
+"Language`_ following ``sign``:"
+msgstr ""
+
+#: ../../pep-0682.rst:135
+msgid ""
+"where ``z`` is allowed for floating-point presentation types (``f``, "
+"``g``, etc.,  as defined by the format specification documentation).  "
+"Support for ``z`` is provided by the ``.__format__()`` method of each "
+"numeric type, allowing the specifier to be used in f-strings, built-in "
+"``format()``, and ``str.format()``."
+msgstr ""
+
+#: ../../pep-0682.rst:141
+msgid ""
+"When ``z`` is present, negative zero (whether the original value or the "
+"result of rounding) will be normalized to positive zero."
+msgstr ""
+
+#: ../../pep-0682.rst:144
+msgid "Synopsis::"
+msgstr ""
+
+#: ../../pep-0682.rst:158
+msgid "Design Notes"
+msgstr ""
+
+#: ../../pep-0682.rst:159
+msgid ""
+"The solution must be opt-in, because we can't change the behavior of "
+"programs that may be expecting or relying on negative zero when "
+"formatting numbers."
+msgstr ""
+
+#: ../../pep-0682.rst:163
+msgid ""
+"The proposed extension is intentionally ``[sign][z]`` rather than "
+"``[sign[z]]``.  The default for ``sign`` (``-``) is not widely known or "
+"explicitly written, so this avoids everyone having to learn it just to "
+"use the ``z`` option."
+msgstr ""
+
+#: ../../pep-0682.rst:168
+#, python-format
+msgid ""
+"While f-strings, built-in ``format()``, and ``str.format()`` can access "
+"the new option, %-formatting cannot.  There is already precedent for not "
+"extending %-formatting with new options, as was the case for the ``,`` "
+"option (:pep:`378`)."
+msgstr ""
+
+#: ../../pep-0682.rst:173
+msgid ""
+"C99 ``printf`` already uses the ``z`` option character for another "
+"purpose:  qualifying the unsigned type (``u``) to match the length of "
+"``size_t``.  However, since the signed zero option specifically disallows"
+" ``z`` for integer presentation types, it's possible to disambiguate the "
+"two uses, should C want to adopt this new option."
+msgstr ""
+
+#: ../../pep-0682.rst:181
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0682.rst:183
+msgid ""
+"The new formatting behavior is opt-in, so numerical formatting of "
+"existing programs will not be affected."
+msgstr ""
+
+#: ../../pep-0682.rst:188
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0682.rst:189
+msgid ""
+"A typical introductory Python course will not cover string formatting in "
+"full detail.  For such a course, no adjustments would need to be made. "
+"For a course that does go into details of the string format "
+"specification, a single example demonstrating the effect of the ``z`` "
+"option on a negative value that's rounded to zero by the formatting "
+"should be enough.  For an independent developer encountering the feature "
+"in someone else's code, reference to the `Format Specification Mini-"
+"Language`_ section of the library reference manual should suffice."
+msgstr ""
+
+#: ../../pep-0682.rst:202
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0682.rst:204
+msgid "A reference implementation exists at `pull request #30049`_."
+msgstr ""
+
+#: ../../pep-0682.rst:210
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0682.rst:212
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

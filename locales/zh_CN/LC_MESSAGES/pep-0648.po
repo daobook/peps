@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0648.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0648.rst:1
-msgid "648"
-msgstr ""
-
-#: ../../pep-0648.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0648.rst:2
-msgid "Extensible customizations of the interpreter at startup"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0648.rst
 msgid "Author"
@@ -50,18 +34,10 @@ msgid "Pablo Galindo"
 msgstr ""
 
 #: ../../pep-0648.rst
-msgid "BDFL-Delegate"
-msgstr ""
-
-#: ../../pep-0648.rst:5
-msgid "XXXX"
-msgstr ""
-
-#: ../../pep-0648.rst
 msgid "Discussions-To"
 msgstr ""
 
-#: ../../pep-0648.rst:6
+#: ../../pep-0648.rst:5
 msgid ""
 "https://discuss.python.org/t/pep-648-extensible-customizations-of-the-"
 "interpreter-at-startup/6403"
@@ -71,15 +47,15 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0648.rst:7
-msgid "Draft"
+#: ../../pep-0648.rst:6
+msgid "Rejected"
 msgstr ""
 
 #: ../../pep-0648.rst
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0648.rst:8
+#: ../../pep-0648.rst:7
 msgid "Standards Track"
 msgstr ""
 
@@ -87,7 +63,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0648.rst:10
+#: ../../pep-0648.rst:9
 msgid "30-Dec-2020"
 msgstr ""
 
@@ -95,7 +71,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0648.rst:11
+#: ../../pep-0648.rst:10
 msgid "3.11"
 msgstr ""
 
@@ -103,31 +79,43 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0648.rst:12
-msgid "python-ideas: 16th Dec. python-dev: 18th Dec."
+#: ../../pep-0648.rst:11
+msgid "16-Dec-2020, 18-Dec-2020"
 msgstr ""
 
-#: ../../pep-0648.rst:15
+#: ../../pep-0648.rst:14
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0648.rst:17
+#: ../../pep-0648.rst:16
 msgid ""
 "This PEP proposes supporting extensible customization of the interpreter "
 "by allowing users to install files that will be executed at startup."
 msgstr ""
 
-#: ../../pep-0648.rst:21
+#: ../../pep-0648.rst:20
+msgid "PEP Rejection"
+msgstr ""
+
+#: ../../pep-0648.rst:22
+msgid ""
+"PEP 648 was rejected `by the steering council "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/message/UHODNOGISLYUKX2K2JCCBYMZFEWZDSPO/>`__ as it has a "
+"limited number of use cases and further complicates the startup sequence."
+msgstr ""
+
+#: ../../pep-0648.rst:27
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0648.rst:23
+#: ../../pep-0648.rst:29
 msgid ""
 "System administrators, tools that repackage the interpreter and some "
 "libraries need to customize aspects of the interpreter at startup time."
 msgstr ""
 
-#: ../../pep-0648.rst:26
+#: ../../pep-0648.rst:32
 msgid ""
 "This is usually achieved via ``sitecustomize.py`` for system "
 "administrators whilst libraries rely on exploiting ``pth`` files. This "
@@ -135,11 +123,11 @@ msgid ""
 "friendly and structured way."
 msgstr ""
 
-#: ../../pep-0648.rst:31
+#: ../../pep-0648.rst:37
 msgid "Limitations of ``pth`` files"
 msgstr ""
 
-#: ../../pep-0648.rst:33
+#: ../../pep-0648.rst:39
 msgid ""
 "If a library needs to perform any customization before an import or that "
 "relates to the general working of the interpreter, they often rely on the"
@@ -148,7 +136,7 @@ msgid ""
 "when the ``pth`` file is evaluated."
 msgstr ""
 
-#: ../../pep-0648.rst:39
+#: ../../pep-0648.rst:45
 msgid ""
 "Note that ``pth`` files were originally developed to just add additional "
 "directories to ``sys.path``, but they may also contain lines which start "
@@ -158,7 +146,7 @@ msgid ""
 "examples."
 msgstr ""
 
-#: ../../pep-0648.rst:45
+#: ../../pep-0648.rst:51
 msgid ""
 "Using ``pth`` files for this purpose is far from ideal for library "
 "developers, as they need to inject code into a single line preceded by an"
@@ -168,7 +156,7 @@ msgid ""
 "approach is still not really user friendly."
 msgstr ""
 
-#: ../../pep-0648.rst:52
+#: ../../pep-0648.rst:58
 msgid ""
 "Additionally, it is also non-ideal for users of the interpreter if they "
 "want to inspect what is being executed at Python startup as they need to "
@@ -179,17 +167,17 @@ msgid ""
 "complex one."
 msgstr ""
 
-#: ../../pep-0648.rst:59
+#: ../../pep-0648.rst:65
 msgid ""
 "Lastly, there have been multiple suggestions for removing code execution "
 "from ``pth`` files, see [#bpo-24534]_ and [#bpo-33944]_."
 msgstr ""
 
-#: ../../pep-0648.rst:63
+#: ../../pep-0648.rst:69
 msgid "Limitations of ``sitecustomize.py``"
 msgstr ""
 
-#: ../../pep-0648.rst:65
+#: ../../pep-0648.rst:71
 msgid ""
 "Whilst sitecustomize is an acceptable solution, it assumes a single "
 "person is in charge of the system and the interpreter. If both the system"
@@ -207,11 +195,11 @@ msgid ""
 "their interpreter."
 msgstr ""
 
-#: ../../pep-0648.rst:80
+#: ../../pep-0648.rst:86
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0648.rst:82
+#: ../../pep-0648.rst:88
 msgid ""
 "This PEP proposes supporting extensible customization of the interpreter "
 "at startup by executing all files discovered in directories named "
@@ -219,11 +207,11 @@ msgid ""
 "usersitepackages [#usersitepackages-api]_ at startup time."
 msgstr ""
 
-#: ../../pep-0648.rst:88
+#: ../../pep-0648.rst:94
 msgid "Why ``__sitecustomize__``"
 msgstr ""
 
-#: ../../pep-0648.rst:90
+#: ../../pep-0648.rst:96
 msgid ""
 "The name aims to follow the already existing concept of "
 "``sitecustomize.py``. As the directory will be within ``sys.path``, given"
@@ -232,51 +220,51 @@ msgid ""
 "``sitecustomize.py``."
 msgstr ""
 
-#: ../../pep-0648.rst:96
+#: ../../pep-0648.rst:102
 msgid "Discovering the new ``__sitecustomize__`` directories"
 msgstr ""
 
-#: ../../pep-0648.rst:98
+#: ../../pep-0648.rst:104
 msgid ""
 "The Python interpreter will look at startup for directory named "
 "``__sitecustomize__`` within any of the standard site-packages path."
 msgstr ""
 
-#: ../../pep-0648.rst:101
+#: ../../pep-0648.rst:107
 msgid ""
 "These are commonly the Python system location and the user location, but "
 "are ultimately defined by the site module logic."
 msgstr ""
 
-#: ../../pep-0648.rst:104
+#: ../../pep-0648.rst:110
 msgid ""
 "Users can use ``site.sitepackages`` [#sitepackages-api]_ and "
 "``site.usersitepackages`` [#usersitepackages-api]_ to know the paths "
 "where the interpreter can discover ``__sitecustomize__`` directories."
 msgstr ""
 
-#: ../../pep-0648.rst:109
+#: ../../pep-0648.rst:115
 msgid "Time of ``__sitecustomize__`` discovery"
 msgstr ""
 
-#: ../../pep-0648.rst:111
+#: ../../pep-0648.rst:117
 msgid ""
 "The ``__sitecustomize__`` directories will be discovered exactly after "
 "``pth`` files are discovered in a site-packages path as part of "
 "``site.addsitedir`` [#siteaddsitedir]_."
 msgstr ""
 
-#: ../../pep-0648.rst:115
+#: ../../pep-0648.rst:121
 msgid ""
 "These is repeated for each of the site-packages path in the exact same "
 "order that is being followed today for ``pth`` files."
 msgstr ""
 
-#: ../../pep-0648.rst:119
+#: ../../pep-0648.rst:125
 msgid "Order of execution within ``__sitecustomize__``"
 msgstr ""
 
-#: ../../pep-0648.rst:121
+#: ../../pep-0648.rst:127
 msgid ""
 "The implementation will execute the files within ``__sitecustomize__`` by"
 " sorting them by name when discovering each of the ``__sitecustomize__`` "
@@ -284,7 +272,7 @@ msgid ""
 "though."
 msgstr ""
 
-#: ../../pep-0648.rst:125
+#: ../../pep-0648.rst:131
 msgid ""
 "We considered executing them in random order, but that could result in "
 "different results depending on how the interpreter chooses to pick up "
@@ -295,39 +283,39 @@ msgid ""
 "running a files."
 msgstr ""
 
-#: ../../pep-0648.rst:133
+#: ../../pep-0648.rst:139
 msgid "Interaction with ``pth`` files"
 msgstr ""
 
-#: ../../pep-0648.rst:135
+#: ../../pep-0648.rst:141
 msgid ""
 "``pth`` files can be used to add paths into ``sys.path``, but this should"
 " not affect the ``__sitecustomize__`` discovery process, as those "
 "directories are looked up exclusively in site-packages paths."
 msgstr ""
 
-#: ../../pep-0648.rst:140
+#: ../../pep-0648.rst:146
 msgid "Execution of files within ``__sitecustomize__``"
 msgstr ""
 
-#: ../../pep-0648.rst:142
+#: ../../pep-0648.rst:148
 msgid ""
 "When a ``__sitecustomize__`` directory is discovered, all of the files "
 "that have a ``.py`` extension within it will be read with "
 "``io.open_code`` and executed by using ``exec`` [#exec]_."
 msgstr ""
 
-#: ../../pep-0648.rst:146
+#: ../../pep-0648.rst:152
 msgid ""
 "An empty dictionary will be passed as ``globals`` to the ``exec`` "
 "function to prevent unexpected interactions between different files."
 msgstr ""
 
-#: ../../pep-0648.rst:150
+#: ../../pep-0648.rst:156
 msgid "Failure handling"
 msgstr ""
 
-#: ../../pep-0648.rst:152
+#: ../../pep-0648.rst:158
 msgid ""
 "Any error on the execution of any of the files will not be logged unless "
 "the interpreter is run in verbose mode and it should not stop the "
@@ -337,11 +325,11 @@ msgid ""
 "``sitecustomize.py``."
 msgstr ""
 
-#: ../../pep-0648.rst:159
+#: ../../pep-0648.rst:165
 msgid "Interaction with virtual environments"
 msgstr ""
 
-#: ../../pep-0648.rst:161
+#: ../../pep-0648.rst:167
 msgid ""
 "The customizations applied to an interpreter via the new "
 "``__sitecustomize__`` solutions will continue to work when a user creates"
@@ -349,14 +337,14 @@ msgid ""
 "with virtual environments."
 msgstr ""
 
-#: ../../pep-0648.rst:166
+#: ../../pep-0648.rst:172
 msgid ""
 "This is a difference when compared to ``pth`` files, which are not "
 "propagated into virtual environments unless ``include-system-site-"
 "packages`` is enabled."
 msgstr ""
 
-#: ../../pep-0648.rst:169
+#: ../../pep-0648.rst:175
 msgid ""
 "If library maintainers have features installed via ``__sitecustomize__`` "
 "that they do not want to propagate into virtual environments, they should"
@@ -365,11 +353,11 @@ msgid ""
 "that modify the global ``sitecustomize.py``."
 msgstr ""
 
-#: ../../pep-0648.rst:176
+#: ../../pep-0648.rst:182
 msgid "Interaction with ``sitecustomize.py`` and ``usercustomize.py``"
 msgstr ""
 
-#: ../../pep-0648.rst:178
+#: ../../pep-0648.rst:184
 msgid ""
 "Until removed, ``sitecustomize`` and ``usercustomize`` will be executed "
 "after ``__sitecustomize__`` similar to pth files. See the Backward "
@@ -377,22 +365,22 @@ msgid ""
 "``sitecustomize`` and ``usercustomize``."
 msgstr ""
 
-#: ../../pep-0648.rst:184
+#: ../../pep-0648.rst:190
 msgid "Identifying all installed files"
 msgstr ""
 
-#: ../../pep-0648.rst:186
+#: ../../pep-0648.rst:192
 msgid ""
 "To facilitate debugging of the Python startup, if the site module is "
 "invoked it will print the ``__sitecustomize__`` directories that will be "
 "discovered on startup."
 msgstr ""
 
-#: ../../pep-0648.rst:191
+#: ../../pep-0648.rst:197
 msgid "Files naming convention"
 msgstr ""
 
-#: ../../pep-0648.rst:193
+#: ../../pep-0648.rst:199
 msgid ""
 "Packages will be encouraged to include the name of the package within the"
 " name of the file to avoid collisions between packages. But the only "
@@ -400,11 +388,11 @@ msgid ""
 "interpreter to execute them."
 msgstr ""
 
-#: ../../pep-0648.rst:199
+#: ../../pep-0648.rst:205
 msgid "Disabling start files"
 msgstr ""
 
-#: ../../pep-0648.rst:201
+#: ../../pep-0648.rst:207
 msgid ""
 "In some scenarios, like when the startup time is key, it might be desired"
 " to disable this option altogether. The already existing flag ``-S`` "
@@ -413,7 +401,7 @@ msgid ""
 " will not be discovered."
 msgstr ""
 
-#: ../../pep-0648.rst:207
+#: ../../pep-0648.rst:213
 msgid ""
 "Additionally, to allow for starting the interpreter disabling only this "
 "new feature a new option will be added under ``-X``: "
@@ -421,18 +409,18 @@ msgid ""
 "``__sitecustomize__`` exclusively."
 msgstr ""
 
-#: ../../pep-0648.rst:211
+#: ../../pep-0648.rst:217
 msgid ""
 "Lastly, the user can disable the discovery of ``__sitecustomize__`` "
 "directories only in the user site by disabling the user site via any of "
 "the multiple options in the ``site.py`` module."
 msgstr ""
 
-#: ../../pep-0648.rst:216
+#: ../../pep-0648.rst:222
 msgid "Support in build backends"
 msgstr ""
 
-#: ../../pep-0648.rst:218
+#: ../../pep-0648.rst:224
 msgid ""
 "Whilst build backends can choose to provide an option to facilitate the "
 "installation of these files into a ``__sitecustomize__`` directory, this "
@@ -443,11 +431,11 @@ msgid ""
 "support as a requirement for this PEP."
 msgstr ""
 
-#: ../../pep-0648.rst:227
+#: ../../pep-0648.rst:233
 msgid "Impact on startup time"
 msgstr ""
 
-#: ../../pep-0648.rst:229
+#: ../../pep-0648.rst:235
 msgid ""
 "A concern in this implementation is how Python interpreter startup time "
 "can be affected by this addition. We expect the performance impact to be "
@@ -455,7 +443,7 @@ msgid ""
 " in the Python environment being tested."
 msgstr ""
 
-#: ../../pep-0648.rst:234
+#: ../../pep-0648.rst:240
 msgid ""
 "If the interpreter has any files in their ``__sitecustomize__`` "
 "directory, the file execution time plus a call reading the code will be "
@@ -467,7 +455,7 @@ msgid ""
 "files."
 msgstr ""
 
-#: ../../pep-0648.rst:242
+#: ../../pep-0648.rst:248
 msgid ""
 "Results were gathered by running \"./python.exe -c pass\" with perf on 50"
 " iterations, repeating 50 times the command on each iteration and getting"
@@ -476,78 +464,78 @@ msgid ""
 "implementation]_."
 msgstr ""
 
-#: ../../pep-0648.rst:247
+#: ../../pep-0648.rst:253
 msgid ""
 "The benchmark was run with 3.10 alpha 7 compiled with PGO and LTO with "
 "the following parameters and system state:"
 msgstr ""
 
-#: ../../pep-0648.rst:250
+#: ../../pep-0648.rst:256
 msgid "Perf event: Max sample rate set to 1 per second"
 msgstr ""
 
-#: ../../pep-0648.rst:251
+#: ../../pep-0648.rst:257
 msgid "CPU Frequency: Minimum frequency of CPU 17,35 set to the maximum frequency"
 msgstr ""
 
-#: ../../pep-0648.rst:252
+#: ../../pep-0648.rst:258
 msgid ""
 "Turbo Boost (MSR): Turbo Boost disabled on CPU 17: MSR 0x1a0 set to "
 "0x4000850089"
 msgstr ""
 
-#: ../../pep-0648.rst:253
+#: ../../pep-0648.rst:259
 msgid "IRQ affinity: Set default affinity to CPU 0-16,18-34"
 msgstr ""
 
-#: ../../pep-0648.rst:254
+#: ../../pep-0648.rst:260
 msgid ""
 "IRQ affinity: Set affinity of IRQ "
 "1,3-16,21,25-31,56-59,68-85,87,89-90,92-93,95-104 to CPU 0-16,18-34"
 msgstr ""
 
-#: ../../pep-0648.rst:255
+#: ../../pep-0648.rst:261
 msgid "CPU: use 2 logical CPUs: 17,35"
 msgstr ""
 
-#: ../../pep-0648.rst:256
+#: ../../pep-0648.rst:262
 msgid "Perf event: Maximum sample rate: 1 per second"
 msgstr ""
 
-#: ../../pep-0648.rst:257
+#: ../../pep-0648.rst:263
 msgid "ASLR: Full randomization"
 msgstr ""
 
-#: ../../pep-0648.rst:258
+#: ../../pep-0648.rst:264
 msgid "Linux scheduler: Isolated CPUs (2/36): 17,35"
 msgstr ""
 
-#: ../../pep-0648.rst:259
+#: ../../pep-0648.rst:265
 msgid "Linux scheduler: RCU disabled on CPUs (2/36): 17,35"
 msgstr ""
 
-#: ../../pep-0648.rst:260
+#: ../../pep-0648.rst:266
 msgid ""
 "CPU Frequency: 0-16,18-34=min=1200 MHz, max=3600 MHz; 17,35=min=max=3600 "
 "MHz"
 msgstr ""
 
-#: ../../pep-0648.rst:261
+#: ../../pep-0648.rst:267
 msgid "Turbo Boost (MSR): CPU 17,35: disabled"
 msgstr ""
 
-#: ../../pep-0648.rst:263
+#: ../../pep-0648.rst:269
 msgid ""
 "The code placed to be executed in ``pth`` files, ``sitecustomize.py``, "
 "``usercustomize.py`` and files within ``__sitecustomize__`` is the "
 "following:"
 msgstr ""
 
-#: ../../pep-0648.rst:266
+#: ../../pep-0648.rst:272
 msgid "import time; x = time.time() ** 5"
 msgstr ""
 
-#: ../../pep-0648.rst:268
+#: ../../pep-0648.rst:274
 msgid ""
 "The file is aimed at execution a simple operation but still expected to "
 "be negligible. This is to put the experiment in a situation where we make"
@@ -556,172 +544,172 @@ msgid ""
 "single line to be able to be used in ``pth`` files."
 msgstr ""
 
-#: ../../pep-0648.rst:275
+#: ../../pep-0648.rst:281
 msgid "Test"
 msgstr ""
 
-#: ../../pep-0648.rst:275
+#: ../../pep-0648.rst:281
 msgid "# of files"
 msgstr ""
 
-#: ../../pep-0648.rst:275
+#: ../../pep-0648.rst:281
 msgid "Time (us)"
 msgstr ""
 
-#: ../../pep-0648.rst:277
+#: ../../pep-0648.rst:283
 msgid "#"
 msgstr ""
 
-#: ../../pep-0648.rst:277
+#: ../../pep-0648.rst:283
 msgid "``sitecustomize.py``"
 msgstr ""
 
-#: ../../pep-0648.rst:277
+#: ../../pep-0648.rst:283
 msgid "``usercustomize.py``"
 msgstr ""
 
-#: ../../pep-0648.rst:277
+#: ../../pep-0648.rst:283
 msgid "``pth``"
 msgstr ""
 
-#: ../../pep-0648.rst:277
+#: ../../pep-0648.rst:283
 msgid "``__sitecustomize__``"
 msgstr ""
 
-#: ../../pep-0648.rst:277
+#: ../../pep-0648.rst:283
 msgid "Run 1"
 msgstr ""
 
-#: ../../pep-0648.rst:277
+#: ../../pep-0648.rst:283
 msgid "Run 2"
 msgstr ""
 
-#: ../../pep-0648.rst:279 ../../pep-0648.rst:281 ../../pep-0648.rst:282
-#: ../../pep-0648.rst:283
+#: ../../pep-0648.rst:285 ../../pep-0648.rst:287 ../../pep-0648.rst:288
+#: ../../pep-0648.rst:289
 msgid "1"
 msgstr ""
 
-#: ../../pep-0648.rst:279 ../../pep-0648.rst:280 ../../pep-0648.rst:281
-#: ../../pep-0648.rst:282 ../../pep-0648.rst:283 ../../pep-0648.rst:284
-#: ../../pep-0648.rst:285 ../../pep-0648.rst:286
+#: ../../pep-0648.rst:285 ../../pep-0648.rst:286 ../../pep-0648.rst:287
+#: ../../pep-0648.rst:288 ../../pep-0648.rst:289 ../../pep-0648.rst:290
+#: ../../pep-0648.rst:291 ../../pep-0648.rst:292
 msgid "0"
 msgstr ""
 
-#: ../../pep-0648.rst:279
+#: ../../pep-0648.rst:285
 msgid "Dir not created"
 msgstr ""
 
-#: ../../pep-0648.rst:279
+#: ../../pep-0648.rst:285
 msgid "13884"
 msgstr ""
 
-#: ../../pep-0648.rst:279
+#: ../../pep-0648.rst:285
 msgid "13897"
 msgstr ""
 
-#: ../../pep-0648.rst:280
+#: ../../pep-0648.rst:286
 msgid "2"
 msgstr ""
 
-#: ../../pep-0648.rst:280
+#: ../../pep-0648.rst:286
 msgid "13871"
 msgstr ""
 
-#: ../../pep-0648.rst:280
+#: ../../pep-0648.rst:286
 msgid "13818"
 msgstr ""
 
-#: ../../pep-0648.rst:281
+#: ../../pep-0648.rst:287
 msgid "3"
 msgstr ""
 
-#: ../../pep-0648.rst:281
+#: ../../pep-0648.rst:287
 msgid "13964"
 msgstr ""
 
-#: ../../pep-0648.rst:281
+#: ../../pep-0648.rst:287
 msgid "13924"
 msgstr ""
 
-#: ../../pep-0648.rst:282
+#: ../../pep-0648.rst:288
 msgid "4"
 msgstr ""
 
-#: ../../pep-0648.rst:282
+#: ../../pep-0648.rst:288
 msgid "13940"
 msgstr ""
 
-#: ../../pep-0648.rst:282
+#: ../../pep-0648.rst:288
 msgid "13939"
 msgstr ""
 
-#: ../../pep-0648.rst:283
+#: ../../pep-0648.rst:289
 msgid "5"
 msgstr ""
 
-#: ../../pep-0648.rst:283
+#: ../../pep-0648.rst:289
 msgid "13990"
 msgstr ""
 
-#: ../../pep-0648.rst:283
+#: ../../pep-0648.rst:289
 msgid "13993"
 msgstr ""
 
-#: ../../pep-0648.rst:284
+#: ../../pep-0648.rst:290
 msgid "6"
 msgstr ""
 
-#: ../../pep-0648.rst:284
+#: ../../pep-0648.rst:290
 msgid "2 (system + user)"
 msgstr ""
 
-#: ../../pep-0648.rst:284
+#: ../../pep-0648.rst:290
 msgid "14063"
 msgstr ""
 
-#: ../../pep-0648.rst:284
+#: ../../pep-0648.rst:290
 msgid "14040"
 msgstr ""
 
-#: ../../pep-0648.rst:285
+#: ../../pep-0648.rst:291
 msgid "7"
 msgstr ""
 
-#: ../../pep-0648.rst:285 ../../pep-0648.rst:286
+#: ../../pep-0648.rst:291 ../../pep-0648.rst:292
 msgid "50"
 msgstr ""
 
-#: ../../pep-0648.rst:285
+#: ../../pep-0648.rst:291
 msgid "16011"
 msgstr ""
 
-#: ../../pep-0648.rst:285
+#: ../../pep-0648.rst:291
 msgid "16014"
 msgstr ""
 
-#: ../../pep-0648.rst:286
+#: ../../pep-0648.rst:292
 msgid "8"
 msgstr ""
 
-#: ../../pep-0648.rst:286
+#: ../../pep-0648.rst:292
 msgid "15456"
 msgstr ""
 
-#: ../../pep-0648.rst:286
+#: ../../pep-0648.rst:292
 msgid "15448"
 msgstr ""
 
-#: ../../pep-0648.rst:289
+#: ../../pep-0648.rst:295
 msgid ""
 "Results can be reproduced with ``run-benchmark.py`` script provided in "
 "the reference implementation [#reference-implementation]_."
 msgstr ""
 
-#: ../../pep-0648.rst:292
+#: ../../pep-0648.rst:298
 msgid "We interpret the following from these results:"
 msgstr ""
 
-#: ../../pep-0648.rst:294
+#: ../../pep-0648.rst:300
 msgid ""
 "Using two ``__sitecustomize__`` scripts compared to ``sitecustomize.py`` "
 "and ``usercustomize.py`` slows down the interpreter by 0.3%. We expect "
@@ -730,7 +718,7 @@ msgid ""
 "files, the interpreter will still attempt to import them."
 msgstr ""
 
-#: ../../pep-0648.rst:299
+#: ../../pep-0648.rst:305
 #, python-format
 msgid ""
 "With the arbitrary 50 pth files with code tested, moving those to "
@@ -739,17 +727,17 @@ msgid ""
 "files compared to ``pth`` file execution."
 msgstr ""
 
-#: ../../pep-0648.rst:303
+#: ../../pep-0648.rst:309
 msgid ""
 "In general all measurements show that there is a low impact on startup "
 "time with this addition."
 msgstr ""
 
-#: ../../pep-0648.rst:307
+#: ../../pep-0648.rst:313
 msgid "Audit Event"
 msgstr ""
 
-#: ../../pep-0648.rst:309
+#: ../../pep-0648.rst:315
 msgid ""
 "A new audit event will be added and triggered on ``__sitecustomize__`` "
 "execution to facilitate security inspection by calling ``sys.audit`` "
@@ -757,49 +745,49 @@ msgid ""
 "argument."
 msgstr ""
 
-#: ../../pep-0648.rst:316
+#: ../../pep-0648.rst:322
 msgid "Security implications"
 msgstr ""
 
-#: ../../pep-0648.rst:318
+#: ../../pep-0648.rst:324
 msgid ""
 "This PEP aims to move all code execution from ``pth`` files to files "
 "within a ``__sitecustomize__`` directory. We think this is an improvement"
 " to system admins for the following reasons:"
 msgstr ""
 
-#: ../../pep-0648.rst:322
+#: ../../pep-0648.rst:328
 msgid ""
 "Allows to quickly identify the code being executed at startup time by the"
 " interpreter by looking into a single directory rather than having to "
 "scan all ``pth`` files."
 msgstr ""
 
-#: ../../pep-0648.rst:326
+#: ../../pep-0648.rst:332
 msgid ""
 "Allows to track usage of this feature through the new proposed audit "
 "event."
 msgstr ""
 
-#: ../../pep-0648.rst:328
+#: ../../pep-0648.rst:334
 msgid ""
 "Gives finer grain control by allowing to tune permissions on the "
 "``__sitecustomize__`` directory, potentially allowing users to install "
 "only packages that does not change the interpreter startup."
 msgstr ""
 
-#: ../../pep-0648.rst:332
+#: ../../pep-0648.rst:338
 msgid ""
 "In short, whilst this allows for a malicious users to drop a file that "
 "will be executed at startup, it's an improvement compared to the existing"
 " ``pth`` files."
 msgstr ""
 
-#: ../../pep-0648.rst:337
+#: ../../pep-0648.rst:343
 msgid "How to teach this"
 msgstr ""
 
-#: ../../pep-0648.rst:339
+#: ../../pep-0648.rst:345
 msgid ""
 "This can be documented and taught as simple as saying that the "
 "interpreter will try to look for the ``__sitecustomize__`` directory at "
@@ -807,7 +795,7 @@ msgid ""
 "extension, it will then execute it one by one."
 msgstr ""
 
-#: ../../pep-0648.rst:344
+#: ../../pep-0648.rst:350
 msgid ""
 "For system administrators and tools that package the interpreter, we can "
 "now recommend placing files in ``__sitecustomize__`` as they used to "
@@ -816,7 +804,7 @@ msgid ""
 " files to handle the logic they want to customize."
 msgstr ""
 
-#: ../../pep-0648.rst:350
+#: ../../pep-0648.rst:356
 msgid ""
 "Library developers should be able to specify a new argument on tools like"
 " setuptools that will inject those new files. Something like "
@@ -827,11 +815,11 @@ msgid ""
 "name."
 msgstr ""
 
-#: ../../pep-0648.rst:358
+#: ../../pep-0648.rst:364
 msgid "Backward compatibility"
 msgstr ""
 
-#: ../../pep-0648.rst:360
+#: ../../pep-0648.rst:366
 msgid ""
 "This PEP adds a deprecation warning on ``sitecustomize.py``, "
 "``usercustomize.py`` and ``pth`` code execution in 3.11, 3.12 and 3.13. "
@@ -840,7 +828,7 @@ msgid ""
 "logic into a different file."
 msgstr ""
 
-#: ../../pep-0648.rst:366
+#: ../../pep-0648.rst:372
 msgid ""
 "Whilst the existing ``sitecustomize.py`` mechanism was created targeting "
 "System Administrators that placed it in a site path, the file could be "
@@ -852,53 +840,53 @@ msgid ""
 "which just imports ``sitecustomize`` as a migration path."
 msgstr ""
 
-#: ../../pep-0648.rst:376
+#: ../../pep-0648.rst:382
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0648.rst:378
+#: ../../pep-0648.rst:384
 msgid ""
 "An initial implementation that passes the CPython test suite is available"
 " for evaluation [#reference-implementation]_."
 msgstr ""
 
-#: ../../pep-0648.rst:381
+#: ../../pep-0648.rst:387
 msgid ""
 "This implementation is just for the reviewer to play with and check "
 "potential issues that this PEP could generate."
 msgstr ""
 
-#: ../../pep-0648.rst:385
+#: ../../pep-0648.rst:391
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0648.rst:388
+#: ../../pep-0648.rst:394
 msgid "Do nothing"
 msgstr ""
 
-#: ../../pep-0648.rst:390
+#: ../../pep-0648.rst:396
 msgid ""
 "Whilst the current status \"works\" it presents the issues listed in the "
 "motivation. After analyzing the impact of this change, we believe it is "
 "worth it, given the enhanced experience it brings."
 msgstr ""
 
-#: ../../pep-0648.rst:395
+#: ../../pep-0648.rst:401
 msgid "Formalize using ``pth`` files"
 msgstr ""
 
-#: ../../pep-0648.rst:397
+#: ../../pep-0648.rst:403
 msgid ""
 "Another option would be to just glorify and document the usage of ``pth``"
 " files to inject code at startup code, but that is a suboptimal "
 "experience for users as listed in the motivation."
 msgstr ""
 
-#: ../../pep-0648.rst:402
+#: ../../pep-0648.rst:408
 msgid "Making ``__sitecustomize__`` a namespace package"
 msgstr ""
 
-#: ../../pep-0648.rst:404
+#: ../../pep-0648.rst:410
 msgid ""
 "We considered making the directory a namespace package and just import "
 "all the modules within it, which allowed searching across all paths in "
@@ -907,41 +895,41 @@ msgid ""
 " multiple reasons:"
 msgstr ""
 
-#: ../../pep-0648.rst:410
+#: ../../pep-0648.rst:416
 msgid ""
 "This was unnecessarily broadening the list of paths where arbitrary files"
 " are executed."
 msgstr ""
 
-#: ../../pep-0648.rst:412
+#: ../../pep-0648.rst:418
 msgid ""
 "The logic brought additional complexity, like what to do if a package "
 "were to install an ``__init__.py`` file in one of the locations."
 msgstr ""
 
-#: ../../pep-0648.rst:414
+#: ../../pep-0648.rst:420
 msgid ""
 "It's cheaper to search for ``__sitecustomize__`` as we are looking for "
 "``pth`` files already in the site paths compared to performing an actual "
 "import of a namespace package."
 msgstr ""
 
-#: ../../pep-0648.rst:419
+#: ../../pep-0648.rst:425
 msgid "Support for shutdown customization"
 msgstr ""
 
-#: ../../pep-0648.rst:421
+#: ../../pep-0648.rst:427
 msgid ""
 "``init.d`` users might be tempted to implement this feature in a way that"
 " users could also add code at shutdown, but extra support for that is not"
 " needed, as Python users can already do that via ``atexit``."
 msgstr ""
 
-#: ../../pep-0648.rst:426
+#: ../../pep-0648.rst:432
 msgid "Using entry_points"
 msgstr ""
 
-#: ../../pep-0648.rst:428
+#: ../../pep-0648.rst:434
 msgid ""
 "We considered extending the use of entry points to allow specifying files"
 " that should be executed at startup but we discarded that solution due to"
@@ -958,77 +946,101 @@ msgid ""
 "``__sitecustomize__`` directory."
 msgstr ""
 
-#: ../../pep-0648.rst:442
+#: ../../pep-0648.rst:448
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0648.rst:444
+#: ../../pep-0648.rst:450
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
 
-#: ../../pep-0648.rst:448
+#: ../../pep-0648.rst:454
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0648.rst:450
+#: ../../pep-0648.rst:456
 msgid ""
 "Thanks Pablo Galindo for contributing to this PEP and offering his PC to "
 "run the benchmark."
 msgstr ""
 
-#: ../../pep-0648.rst:454
+#: ../../pep-0648.rst:460
 msgid "References"
 msgstr ""
 
-#: ../../pep-0648.rst:457
+#: ../../pep-0648.rst:463
 msgid "https://bugs.python.org/issue24534"
 msgstr ""
 
-#: ../../pep-0648.rst:460
+#: ../../pep-0648.rst:466
 msgid "https://bugs.python.org/issue33944"
 msgstr ""
 
-#: ../../pep-0648.rst:463
+#: ../../pep-0648.rst:469
 msgid "https://docs.python.org/3/using/cmdline.html#id3"
 msgstr ""
 
-#: ../../pep-0648.rst:466
+#: ../../pep-0648.rst:472
 msgid "https://github.com/pypa/setuptools/blob/b6bbe236ed0689f50b5148f1172510b975687e62/setup.py#L100"
 msgstr ""
 
-#: ../../pep-0648.rst:469
+#: ../../pep-0648.rst:475
 msgid ""
 "https://github.com/Qix-/better-"
 "exceptions/blob/7b417527757d555faedc354c86d3b6fe449200c2/better_exceptions_hook.pth#L1"
 msgstr ""
 
-#: ../../pep-0648.rst:472
+#: ../../pep-0648.rst:478
 msgid "https://github.com/mariocj89/cpython/tree/pu/__sitecustomize__"
 msgstr ""
 
-#: ../../pep-0648.rst:475
+#: ../../pep-0648.rst:481
 msgid "https://docs.python.org/3/library/site.html"
 msgstr ""
 
-#: ../../pep-0648.rst:478
+#: ../../pep-0648.rst:484
 msgid "https://docs.python.org/3/library/site.html?highlight=site#site.getsitepackages"
 msgstr ""
 
-#: ../../pep-0648.rst:481
+#: ../../pep-0648.rst:487
 msgid "https://docs.python.org/3/library/site.html?highlight=site#site.getusersitepackages"
 msgstr ""
 
-#: ../../pep-0648.rst:484
+#: ../../pep-0648.rst:490
 msgid "https://github.com/python/cpython/blob/5787ba4a45492e232f5470c7d2e93763198e4b22/Lib/site.py#L207"
 msgstr ""
 
-#: ../../pep-0648.rst:487
+#: ../../pep-0648.rst:493
 msgid "https://docs.python.org/3/library/functions.html#exec"
 msgstr ""
 
-#: ../../pep-0648.rst:490
+#: ../../pep-0648.rst:496
 msgid "https://docs.python.org/3/library/sys.html#sys.audit"
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "648"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Extensible customizations of the interpreter at startup"
+#~ msgstr ""
+
+#~ msgid "BDFL-Delegate"
+#~ msgstr ""
+
+#~ msgid "XXXX"
+#~ msgstr ""
+
+#~ msgid "Draft"
+#~ msgstr ""
+
+#~ msgid "python-ideas: 16th Dec. python-dev: 18th Dec."
+#~ msgstr ""
 

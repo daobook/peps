@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0586.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0586.rst:1
-msgid "586"
-msgstr ""
-
-#: ../../pep-0586.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0586.rst:2
-msgid "Literal Types"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0586.rst
 msgid "Author"
@@ -56,7 +40,7 @@ msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0586.rst:5
-msgid "Typing-Sig <typing-sig@python.org>"
+msgid "typing-sig@python.org"
 msgstr ""
 
 #: ../../pep-0586.rst
@@ -76,10 +60,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0586.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0586.rst:8
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0586.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0586.rst:9 ../../pep-0586.rst:11
+#: ../../pep-0586.rst:10 ../../pep-0586.rst:12
 msgid "14-Mar-2019"
 msgstr ""
 
@@ -87,7 +79,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0586.rst:10
+#: ../../pep-0586.rst:11
 msgid "3.8"
 msgstr ""
 
@@ -99,84 +91,84 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0586.rst:12
+#: ../../pep-0586.rst:13
 msgid ""
 "https://mail.python.org/archives/list/typing-"
 "sig@python.org/message/FDO4KFYWYQEP3U2HVVBEBR3SXPHQSHYR/"
 msgstr ""
 
-#: ../../pep-0586.rst:16
+#: ../../pep-0586.rst:17
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0586.rst:18
+#: ../../pep-0586.rst:19
 msgid ""
-"This PEP proposes adding *Literal types* to the PEP 484 ecosystem. "
+"This PEP proposes adding *Literal types* to the :pep:`484` ecosystem. "
 "Literal types indicate that some expression has literally a specific "
 "value. For example, the following function will accept only expressions "
 "that have literally the value \"4\"::"
 msgstr ""
 
-#: ../../pep-0586.rst:32
+#: ../../pep-0586.rst:33
 msgid "Motivation and Rationale"
 msgstr ""
 
-#: ../../pep-0586.rst:34
+#: ../../pep-0586.rst:35
 msgid ""
 "Python has many APIs that return different types depending on the value "
 "of some argument provided. For example:"
 msgstr ""
 
-#: ../../pep-0586.rst:37
+#: ../../pep-0586.rst:38
 msgid ""
 "``open(filename, mode)`` returns either ``IO[bytes]`` or ``IO[Text]`` "
 "depending on whether the second argument is something like ``r`` or "
 "``rb``."
 msgstr ""
 
-#: ../../pep-0586.rst:40
+#: ../../pep-0586.rst:41
 msgid ""
 "``subprocess.check_output(...)`` returns either bytes or text depending "
 "on whether the ``universal_newlines`` keyword argument is set to ``True``"
 " or not."
 msgstr ""
 
-#: ../../pep-0586.rst:44
+#: ../../pep-0586.rst:45
 msgid ""
 "This pattern is also fairly common in many popular 3rd party libraries. "
 "For example, here are just two examples from pandas and numpy "
 "respectively:"
 msgstr ""
 
-#: ../../pep-0586.rst:47
+#: ../../pep-0586.rst:48
 msgid ""
 "``pandas.concat(...)`` will return either ``Series`` or ``DataFrame`` "
 "depending on whether the ``axis`` argument is set to 0 or 1."
 msgstr ""
 
-#: ../../pep-0586.rst:51
+#: ../../pep-0586.rst:52
 msgid ""
 "``numpy.unique`` will return either a single array or a tuple containing "
 "anywhere from two to four arrays depending on three boolean flag values."
 msgstr ""
 
-#: ../../pep-0586.rst:54
+#: ../../pep-0586.rst:55
 msgid ""
 "The typing issue tracker contains some `additional examples and "
 "discussion <typing-discussion_>`_."
 msgstr ""
 
-#: ../../pep-0586.rst:57
+#: ../../pep-0586.rst:58
 msgid ""
 "There is currently no way of expressing the type signatures of these "
-"functions: PEP 484 does not include any mechanism for writing signatures "
-"where the return type varies depending on the value passed in. Note that "
-"this problem persists even if we redesign these APIs to instead accept "
-"enums: ``MyEnum.FOO`` and ``MyEnum.BAR`` are both considered to be of "
-"type ``MyEnum``."
+"functions: :pep:`484` does not include any mechanism for writing "
+"signatures where the return type varies depending on the value passed in."
+" Note that this problem persists even if we redesign these APIs to "
+"instead accept enums: ``MyEnum.FOO`` and ``MyEnum.BAR`` are both "
+"considered to be of type ``MyEnum``."
 msgstr ""
 
-#: ../../pep-0586.rst:64
+#: ../../pep-0586.rst:65
 msgid ""
 "Currently, type checkers work around this limitation by adding ad hoc "
 "extensions for important builtins and standard library functions. For "
@@ -187,23 +179,23 @@ msgid ""
 " checkers."
 msgstr ""
 
-#: ../../pep-0586.rst:72
+#: ../../pep-0586.rst:73
 msgid "We propose adding *Literal types* to address these gaps."
 msgstr ""
 
-#: ../../pep-0586.rst:75
+#: ../../pep-0586.rst:76
 msgid "Core Semantics"
 msgstr ""
 
-#: ../../pep-0586.rst:77
+#: ../../pep-0586.rst:78
 msgid "This section outlines the baseline behavior of literal types."
 msgstr ""
 
-#: ../../pep-0586.rst:80
+#: ../../pep-0586.rst:81
 msgid "Core behavior"
 msgstr ""
 
-#: ../../pep-0586.rst:82
+#: ../../pep-0586.rst:83
 msgid ""
 "Literal types indicate that a variable has a specific and concrete value."
 " For example, if we define some variable ``foo`` to have type "
@@ -211,14 +203,14 @@ msgid ""
 "``3`` and no other value."
 msgstr ""
 
-#: ../../pep-0586.rst:87
+#: ../../pep-0586.rst:88
 msgid ""
 "Given some value ``v`` that is a member of type ``T``, the type "
 "``Literal[v]`` shall be treated as a subtype of ``T``. For example, "
 "``Literal[3]`` is a subtype of ``int``."
 msgstr ""
 
-#: ../../pep-0586.rst:91
+#: ../../pep-0586.rst:92
 msgid ""
 "All methods from the parent type will be directly inherited by the "
 "literal type. So, if we have some variable ``foo`` of type ``Literal[3]``"
@@ -226,31 +218,31 @@ msgid ""
 "``__add__`` method. The resulting type of ``foo + 5`` is ``int``."
 msgstr ""
 
-#: ../../pep-0586.rst:96
+#: ../../pep-0586.rst:97
 msgid ""
-"This \"inheriting\" behavior is identical to how we `handle NewTypes. "
-"<newtypes_>`_."
+"This \"inheriting\" behavior is identical to how we :pep:`handle NewTypes"
+" <484#newtype-helper-function>`."
 msgstr ""
 
-#: ../../pep-0586.rst:100
+#: ../../pep-0586.rst:101
 msgid "Equivalence of two Literals"
 msgstr ""
 
-#: ../../pep-0586.rst:102
+#: ../../pep-0586.rst:103
 msgid ""
 "Two types ``Literal[v1]`` and ``Literal[v2]`` are equivalent when both of"
 " the following conditions are true:"
 msgstr ""
 
-#: ../../pep-0586.rst:105
+#: ../../pep-0586.rst:106
 msgid "``type(v1) == type(v2)``"
 msgstr ""
 
-#: ../../pep-0586.rst:106
+#: ../../pep-0586.rst:107
 msgid "``v1 == v2``"
 msgstr ""
 
-#: ../../pep-0586.rst:108
+#: ../../pep-0586.rst:109
 msgid ""
 "For example, ``Literal[20]`` and ``Literal[0x14]`` are equivalent. "
 "However, ``Literal[0]`` and ``Literal[False]`` is *not* equivalent "
@@ -258,11 +250,11 @@ msgid ""
 "type ``int`` and ``False`` has type ``bool``."
 msgstr ""
 
-#: ../../pep-0586.rst:114
+#: ../../pep-0586.rst:115
 msgid "Shortening unions of literals"
 msgstr ""
 
-#: ../../pep-0586.rst:116
+#: ../../pep-0586.rst:117
 msgid ""
 "Literals are parameterized with one or more values. When a Literal is "
 "parameterized with more than one value, it's treated as exactly "
@@ -270,100 +262,100 @@ msgid ""
 "is equivalent to ``Union[Literal[v1], Literal[v2], Literal[v3]]``."
 msgstr ""
 
-#: ../../pep-0586.rst:121
+#: ../../pep-0586.rst:122
 msgid ""
 "This shortcut helps make writing signatures for functions that accept "
 "many different literals more ergonomic — for example, functions like "
 "``open(...)``::"
 msgstr ""
 
-#: ../../pep-0586.rst:141
+#: ../../pep-0586.rst:142
 msgid ""
 "The provided values do not all have to be members of the same type. For "
 "example, ``Literal[42, \"foo\", True]`` is a legal type."
 msgstr ""
 
-#: ../../pep-0586.rst:144
+#: ../../pep-0586.rst:145
 msgid ""
 "However, Literal **must** be parameterized with at least one type. Types "
 "like ``Literal[]`` or ``Literal`` are illegal."
 msgstr ""
 
-#: ../../pep-0586.rst:149
+#: ../../pep-0586.rst:150
 msgid "Legal and illegal parameterizations"
 msgstr ""
 
-#: ../../pep-0586.rst:151
+#: ../../pep-0586.rst:152
 msgid ""
 "This section describes what exactly constitutes a legal ``Literal[...]`` "
 "type: what values may and may not be used as parameters."
 msgstr ""
 
-#: ../../pep-0586.rst:154
+#: ../../pep-0586.rst:155
 msgid ""
 "In short, a ``Literal[...]`` type may be parameterized by one or more "
 "literal expressions, and nothing else."
 msgstr ""
 
-#: ../../pep-0586.rst:159
+#: ../../pep-0586.rst:160
 msgid "Legal parameters for ``Literal`` at type check time"
 msgstr ""
 
-#: ../../pep-0586.rst:161
+#: ../../pep-0586.rst:162
 msgid ""
 "``Literal`` may be parameterized with literal ints, byte and unicode "
 "strings, bools, Enum values and ``None``. So for example, all of the "
 "following would be legal::"
 msgstr ""
 
-#: ../../pep-0586.rst:175
+#: ../../pep-0586.rst:176
 msgid ""
 "**Note:** Since the type ``None`` is inhabited by just a single value, "
 "the types ``None`` and ``Literal[None]`` are exactly equivalent. Type "
 "checkers may simplify ``Literal[None]`` into just ``None``."
 msgstr ""
 
-#: ../../pep-0586.rst:179
+#: ../../pep-0586.rst:180
 msgid ""
 "``Literal`` may also be parameterized by other literal types, or type "
 "aliases to other literal types. For example, the following is legal::"
 msgstr ""
 
-#: ../../pep-0586.rst:190
+#: ../../pep-0586.rst:191
 msgid ""
 "This feature is again intended to help make using and reusing literal "
 "types more ergonomic."
 msgstr ""
 
-#: ../../pep-0586.rst:193
+#: ../../pep-0586.rst:194
 msgid ""
 "**Note:** As a consequence of the above rules, type checkers are also "
 "expected to support types that look like the following::"
 msgstr ""
 
-#: ../../pep-0586.rst:198
+#: ../../pep-0586.rst:199
 msgid "This should be exactly equivalent to the following type::"
 msgstr ""
 
-#: ../../pep-0586.rst:202
+#: ../../pep-0586.rst:203
 msgid "...and also to the following type::"
 msgstr ""
 
-#: ../../pep-0586.rst:206
+#: ../../pep-0586.rst:207
 msgid ""
 "**Note:** String literal types like ``Literal[\"foo\"]`` should subtype "
 "either bytes or unicode in the same way regular string literals do at "
 "runtime."
 msgstr ""
 
-#: ../../pep-0586.rst:209
+#: ../../pep-0586.rst:210
 msgid ""
 "For example, in Python 3, the type ``Literal[\"foo\"]`` is equivalent to "
 "``Literal[u\"foo\"]``, since ``\"foo\"`` is equivalent to ``u\"foo\"`` in"
 " Python 3."
 msgstr ""
 
-#: ../../pep-0586.rst:212
+#: ../../pep-0586.rst:213
 msgid ""
 "Similarly, in Python 2, the type ``Literal[\"foo\"]`` is equivalent to "
 "``Literal[b\"foo\"]`` -- unless the file includes a ``from __future__ "
@@ -371,29 +363,29 @@ msgid ""
 " ``Literal[u\"foo\"]``."
 msgstr ""
 
-#: ../../pep-0586.rst:218
+#: ../../pep-0586.rst:219
 msgid "Illegal parameters for ``Literal`` at type check time"
 msgstr ""
 
-#: ../../pep-0586.rst:220
+#: ../../pep-0586.rst:221
 msgid "The following parameters are intentionally disallowed by design:"
 msgstr ""
 
-#: ../../pep-0586.rst:222
+#: ../../pep-0586.rst:223
 msgid ""
 "Arbitrary expressions like ``Literal[3 + 4]`` or "
 "``Literal[\"foo\".replace(\"o\", \"b\")]``."
 msgstr ""
 
-#: ../../pep-0586.rst:225
+#: ../../pep-0586.rst:226
 msgid ""
-"Rationale: Literal types are meant to be a minimal extension to the PEP "
-"484 typing ecosystem and requiring type checkers to interpret potentially"
-" expressions inside types adds too much complexity. Also see `Rejected or"
-" out-of-scope ideas`_."
+"Rationale: Literal types are meant to be a minimal extension to the "
+":pep:`484` typing ecosystem and requiring type checkers to interpret "
+"potentially expressions inside types adds too much complexity. Also see "
+"`Rejected or out-of-scope ideas`_."
 msgstr ""
 
-#: ../../pep-0586.rst:230
+#: ../../pep-0586.rst:231
 msgid ""
 "As a consequence, complex numbers like ``Literal[4 + 3j]`` and "
 "``Literal[-4 + 2j]`` are also prohibited. For consistency, literals like "
@@ -401,13 +393,13 @@ msgid ""
 "prohibited."
 msgstr ""
 
-#: ../../pep-0586.rst:235
+#: ../../pep-0586.rst:236
 msgid ""
 "The only exception to this rule is the unary ``-`` (minus) for ints: "
 "types like ``Literal[-5]`` are *accepted*."
 msgstr ""
 
-#: ../../pep-0586.rst:238
+#: ../../pep-0586.rst:239
 msgid ""
 "Tuples containing valid literal types like ``Literal[(1, \"foo\", "
 "\"bar\")]``. The user could always express this type as "
@@ -415,14 +407,14 @@ msgid ""
 "tuples are likely to be confused with the ``Literal[1, 2, 3]`` shortcut."
 msgstr ""
 
-#: ../../pep-0586.rst:244
+#: ../../pep-0586.rst:245
 msgid ""
 "Mutable literal data structures like dict literals, list literals, or set"
 " literals: literals are always implicitly final and immutable. So, "
 "``Literal[{\"a\": \"b\", \"c\": \"d\"}]`` is illegal."
 msgstr ""
 
-#: ../../pep-0586.rst:248
+#: ../../pep-0586.rst:249
 msgid ""
 "Any other types: for example, ``Literal[Path]``, or "
 "``Literal[some_object_instance]`` are illegal. This includes typevars: if"
@@ -430,45 +422,45 @@ msgid ""
 "over only types, never over values."
 msgstr ""
 
-#: ../../pep-0586.rst:253
+#: ../../pep-0586.rst:254
 msgid ""
 "The following are provisionally disallowed for simplicity. We can "
 "consider allowing them in future extensions of this PEP."
 msgstr ""
 
-#: ../../pep-0586.rst:256
+#: ../../pep-0586.rst:257
 msgid ""
 "Floats: e.g. ``Literal[3.14]``. Representing Literals of infinity or NaN "
 "in a clean way is tricky; real-world APIs are unlikely to vary their "
 "behavior based on a float parameter."
 msgstr ""
 
-#: ../../pep-0586.rst:260
+#: ../../pep-0586.rst:261
 msgid ""
 "Any: e.g. ``Literal[Any]``. ``Any`` is a type, and ``Literal[...]`` is "
 "meant to contain values only. It is also unclear what ``Literal[Any]`` "
 "would actually semantically mean."
 msgstr ""
 
-#: ../../pep-0586.rst:265
+#: ../../pep-0586.rst:266
 msgid "Parameters at runtime"
 msgstr ""
 
-#: ../../pep-0586.rst:267
+#: ../../pep-0586.rst:268
 msgid ""
 "Although the set of parameters ``Literal[...]`` may contain at type check"
 " time is very small, the actual implementation of ``typing.Literal`` will"
 " not perform any checks at runtime. For example::"
 msgstr ""
 
-#: ../../pep-0586.rst:277
+#: ../../pep-0586.rst:278
 msgid ""
 "The type checker should reject this program: all three uses of "
 "``Literal`` are *invalid* according to this spec. However, Python itself "
 "should execute this program with no errors."
 msgstr ""
 
-#: ../../pep-0586.rst:281
+#: ../../pep-0586.rst:282
 msgid ""
 "This is partly to help us preserve flexibility in case we want to expand "
 "the scope of what ``Literal`` can be used for in the future, and partly "
@@ -477,11 +469,11 @@ msgid ""
 "``Literal[1 + 2]`` and ``Literal[3]`` at runtime."
 msgstr ""
 
-#: ../../pep-0586.rst:288
+#: ../../pep-0586.rst:289
 msgid "Literals, enums, and forward references"
 msgstr ""
 
-#: ../../pep-0586.rst:290
+#: ../../pep-0586.rst:291
 msgid ""
 "One potential ambiguity is between literal strings and forward references"
 " to literal enum members. For example, suppose we have the type "
@@ -489,28 +481,28 @@ msgid ""
 "literal or a forward reference to some ``Color.RED`` enum member?"
 msgstr ""
 
-#: ../../pep-0586.rst:296
+#: ../../pep-0586.rst:297
 msgid ""
 "In cases like these, we always assume the user meant to construct a "
 "literal string. If the user wants a forward reference, they must wrap the"
 " entire literal type in a string -- e.g. ``\"Literal[Color.RED]\"``."
 msgstr ""
 
-#: ../../pep-0586.rst:301
+#: ../../pep-0586.rst:302
 msgid "Type inference"
 msgstr ""
 
-#: ../../pep-0586.rst:303
+#: ../../pep-0586.rst:304
 msgid ""
 "This section describes a few rules regarding type inference and literals,"
 " along with some examples."
 msgstr ""
 
-#: ../../pep-0586.rst:307
+#: ../../pep-0586.rst:308
 msgid "Backwards compatibility"
 msgstr ""
 
-#: ../../pep-0586.rst:309
+#: ../../pep-0586.rst:310
 msgid ""
 "When type checkers add support for Literal, it's important they do so in "
 "a way that maximizes backwards-compatibility. Type checkers should ensure"
@@ -518,14 +510,14 @@ msgid ""
 "Literal is added on a best-effort basis."
 msgstr ""
 
-#: ../../pep-0586.rst:314
+#: ../../pep-0586.rst:315
 msgid ""
 "This is particularly important when performing type inference. For "
 "example, given the statement ``x = \"blue\"``, should the inferred type "
 "of ``x`` be ``str`` or ``Literal[\"blue\"]``?"
 msgstr ""
 
-#: ../../pep-0586.rst:318
+#: ../../pep-0586.rst:319
 msgid ""
 "One naive strategy would be to always assume expressions are intended to "
 "be Literal types. So, ``x`` would always have an inferred type of "
@@ -534,13 +526,13 @@ msgid ""
 "to start failing when they previously did not::"
 msgstr ""
 
-#: ../../pep-0586.rst:332
+#: ../../pep-0586.rst:333
 msgid ""
 "Another example of when this strategy would fail is when setting fields "
 "in objects::"
 msgstr ""
 
-#: ../../pep-0586.rst:345
+#: ../../pep-0586.rst:346
 msgid ""
 "An alternative strategy that *does* maintain compatibility in every case "
 "would be to always assume expressions are *not* Literal types unless they"
@@ -549,7 +541,7 @@ msgid ""
 "above."
 msgstr ""
 
-#: ../../pep-0586.rst:350
+#: ../../pep-0586.rst:351
 msgid ""
 "This is not the only viable strategy: type checkers should feel free to "
 "experiment with more sophisticated inference techniques. This PEP does "
@@ -557,122 +549,122 @@ msgid ""
 " backwards compatibility."
 msgstr ""
 
-#: ../../pep-0586.rst:355
+#: ../../pep-0586.rst:356
 msgid "Using non-Literals in Literal contexts"
 msgstr ""
 
-#: ../../pep-0586.rst:357
+#: ../../pep-0586.rst:358
 msgid ""
 "Literal types follow the existing rules regarding subtyping with no "
 "additional special-casing. For example, programs like the following are "
 "type safe::"
 msgstr ""
 
-#: ../../pep-0586.rst:366
+#: ../../pep-0586.rst:367
 msgid ""
 "This also means non-Literal expressions in general should not "
 "automatically be cast to Literal. For example::"
 msgstr ""
 
-#: ../../pep-0586.rst:375
+#: ../../pep-0586.rst:376
 msgid ""
 "**Note:** If the user wants their API to support accepting both literals "
 "*and* the original type -- perhaps for legacy purposes -- they should "
 "implement a fallback overload. See `Interactions with overloads`_."
 msgstr ""
 
-#: ../../pep-0586.rst:380
+#: ../../pep-0586.rst:381
 msgid "Interactions with other types and features"
 msgstr ""
 
-#: ../../pep-0586.rst:382
+#: ../../pep-0586.rst:383
 msgid ""
 "This section discusses how Literal types interact with other existing "
 "types."
 msgstr ""
 
-#: ../../pep-0586.rst:385
+#: ../../pep-0586.rst:386
 msgid "Intelligent indexing of structured data"
 msgstr ""
 
-#: ../../pep-0586.rst:387
+#: ../../pep-0586.rst:388
 msgid ""
 "Literals can be used to \"intelligently index\" into structured types "
 "like tuples, NamedTuple, and classes. (Note: this is not an exhaustive "
 "list)."
 msgstr ""
 
-#: ../../pep-0586.rst:390
+#: ../../pep-0586.rst:391
 msgid ""
 "For example, type checkers should infer the correct value type when "
 "indexing into a tuple using an int key that corresponds a valid index::"
 msgstr ""
 
-#: ../../pep-0586.rst:400
+#: ../../pep-0586.rst:401
 msgid "We expect similar behavior when using functions like getattr::"
 msgstr ""
 
-#: ../../pep-0586.rst:417
+#: ../../pep-0586.rst:418
 msgid ""
 "**Note:** See `Interactions with Final`_ for a proposal on how we can "
 "express the variable declarations above in a more compact manner."
 msgstr ""
 
-#: ../../pep-0586.rst:421
+#: ../../pep-0586.rst:422
 msgid "Interactions with overloads"
 msgstr ""
 
-#: ../../pep-0586.rst:423
+#: ../../pep-0586.rst:424
 msgid ""
 "Literal types and overloads do not need to interact in  a special way: "
 "the existing rules work fine."
 msgstr ""
 
-#: ../../pep-0586.rst:426
+#: ../../pep-0586.rst:427
 msgid ""
 "However, one important use case type checkers must take care to support "
 "is the ability to use a *fallback* when the user is not using literal "
 "types. For example, consider ``open``::"
 msgstr ""
 
-#: ../../pep-0586.rst:445
+#: ../../pep-0586.rst:446
 msgid ""
 "If we were to change the signature of ``open`` to use just the first two "
 "overloads, we would break any code that does not pass in a literal string"
 " expression. For example, code like this would be broken::"
 msgstr ""
 
-#: ../../pep-0586.rst:453
+#: ../../pep-0586.rst:454
 msgid ""
 "A little more broadly: we propose adding a policy to typeshed that "
 "mandates that whenever we add literal types to some existing API, we also"
 " always include a fallback overload to maintain backwards-compatibility."
 msgstr ""
 
-#: ../../pep-0586.rst:458
+#: ../../pep-0586.rst:459
 msgid "Interactions with generics"
 msgstr ""
 
-#: ../../pep-0586.rst:460
+#: ../../pep-0586.rst:461
 msgid ""
 "Types like ``Literal[3]`` are meant to be just plain old subclasses of "
 "``int``. This means you can use types like ``Literal[3]`` anywhere you "
 "could use normal types, such as with generics."
 msgstr ""
 
-#: ../../pep-0586.rst:464
+#: ../../pep-0586.rst:465
 msgid ""
 "This means that it is legal to parameterize generic functions or classes "
 "using Literal types::"
 msgstr ""
 
-#: ../../pep-0586.rst:483
+#: ../../pep-0586.rst:484
 msgid ""
 "Similarly, it is legal to construct TypeVars with value restrictions or "
 "bounds involving Literal types::"
 msgstr ""
 
-#: ../../pep-0586.rst:489
+#: ../../pep-0586.rst:490
 msgid ""
 "...although it is unclear when it would ever be useful to construct a "
 "TypeVar with a Literal upper bound. For example, the ``S`` TypeVar in the"
@@ -680,7 +672,7 @@ msgid ""
 "by using ``S = Literal[\"foo\"]`` instead."
 msgstr ""
 
-#: ../../pep-0586.rst:494
+#: ../../pep-0586.rst:495
 msgid ""
 "**Note:** Literal types and generics deliberately interact in only very "
 "basic and limited ways. In particular, libraries that want to type check "
@@ -689,18 +681,18 @@ msgid ""
 "to be insufficient for their needs."
 msgstr ""
 
-#: ../../pep-0586.rst:500
+#: ../../pep-0586.rst:501
 msgid ""
 "We considered several different proposals for fixing this, but ultimately"
 " decided to defer the problem of integer generics to a later date. See "
 "`Rejected or out-of-scope ideas`_ for more details."
 msgstr ""
 
-#: ../../pep-0586.rst:505
+#: ../../pep-0586.rst:506
 msgid "Interactions with enums and exhaustiveness checks"
 msgstr ""
 
-#: ../../pep-0586.rst:507
+#: ../../pep-0586.rst:508
 msgid ""
 "Type checkers should be capable of performing exhaustiveness checks when "
 "working Literal types that have a closed number of variants, such as "
@@ -709,15 +701,15 @@ msgid ""
 "values of the ``Status`` enum have already been exhausted::"
 msgstr ""
 
-#: ../../pep-0586.rst:529
+#: ../../pep-0586.rst:530
 msgid ""
-"The interaction described above is not new: it's already `already "
-"codified within PEP 484 <pep-484-enums_>`_. However, many type checkers "
-"(such as mypy) do not yet implement this due to the expected complexity "
-"of the implementation work."
+"The interaction described above is not new: it's already :pep:`codified "
+"within PEP 484 <484#support-for-singleton-types-in-unions>`. However, "
+"many type checkers (such as mypy) do not yet implement this due to the "
+"expected complexity of the implementation work."
 msgstr ""
 
-#: ../../pep-0586.rst:534
+#: ../../pep-0586.rst:536
 msgid ""
 "Some of this complexity will be alleviated once Literal types are "
 "introduced: rather than entirely special-casing enums, we can instead "
@@ -727,30 +719,30 @@ msgid ""
 "checker might have already implemented."
 msgstr ""
 
-#: ../../pep-0586.rst:540
+#: ../../pep-0586.rst:542
 msgid ""
 "So here, the ``Status`` enum could be treated as being approximately "
 "equivalent to ``Literal[Status.SUCCESS, Status.INVALID_DATA, "
 "Status.FATAL_ERROR]`` and the type of ``s`` narrowed accordingly."
 msgstr ""
 
-#: ../../pep-0586.rst:545
+#: ../../pep-0586.rst:547
 msgid "Interactions with narrowing"
 msgstr ""
 
-#: ../../pep-0586.rst:547
+#: ../../pep-0586.rst:549
 msgid ""
 "Type checkers may optionally perform additional analysis for both enum "
 "and non-enum Literal types beyond what is described in the section above."
 msgstr ""
 
-#: ../../pep-0586.rst:550
+#: ../../pep-0586.rst:552
 msgid ""
 "For example, it may be useful to perform narrowing based on things like "
 "containment or equality checks::"
 msgstr ""
 
-#: ../../pep-0586.rst:563
+#: ../../pep-0586.rst:565
 msgid ""
 "It may also be useful to perform narrowing taking into account "
 "expressions involving Literal bools. For example, we can combine "
@@ -758,76 +750,76 @@ msgid ""
 "\"custom type guards\"::"
 msgstr ""
 
-#: ../../pep-0586.rst:586
+#: ../../pep-0586.rst:588
 msgid "Interactions with Final"
 msgstr ""
 
-#: ../../pep-0586.rst:588
+#: ../../pep-0586.rst:590
 msgid ""
-"`PEP 591 <pep-591_>`_ proposes adding a \"Final\" qualifier to the typing"
-" ecosystem. This qualifier can be used to declare that some variable or "
-"attribute cannot be reassigned::"
+":pep:`591` proposes adding a \"Final\" qualifier to the typing ecosystem."
+" This qualifier can be used to declare that some variable or attribute "
+"cannot be reassigned::"
 msgstr ""
 
-#: ../../pep-0586.rst:595
+#: ../../pep-0586.rst:597
 msgid ""
 "Note that in the example above, we know that ``foo`` will always be equal"
 " to exactly ``3``. A type checker can use this information to deduce that"
 " ``foo`` is valid to use in any context that expects a ``Literal[3]``::"
 msgstr ""
 
-#: ../../pep-0586.rst:603
+#: ../../pep-0586.rst:605
 msgid ""
 "The ``Final`` qualifier serves as a shorthand for declaring that a "
 "variable is *effectively Literal*."
 msgstr ""
 
-#: ../../pep-0586.rst:606
+#: ../../pep-0586.rst:608
 msgid ""
-"If both this PEP and PEP 591 are accepted, type checkers are expected to "
-"support this shortcut. Specifically, given a variable or attribute "
+"If both this PEP and :pep:`591` are accepted, type checkers are expected "
+"to support this shortcut. Specifically, given a variable or attribute "
 "assignment of the form ``var: Final = value`` where ``value`` is a valid "
 "parameter for ``Literal[...]``, type checkers should understand that "
 "``var`` may be used in any context that expects a ``Literal[value]``."
 msgstr ""
 
-#: ../../pep-0586.rst:612
+#: ../../pep-0586.rst:614
 msgid ""
 "Type checkers are not obligated to understand any other uses of Final. "
 "For example, whether or not the following program type checks is left "
 "unspecified::"
 msgstr ""
 
-#: ../../pep-0586.rst:624
+#: ../../pep-0586.rst:626
 msgid "Rejected or out-of-scope ideas"
 msgstr ""
 
-#: ../../pep-0586.rst:626
+#: ../../pep-0586.rst:628
 msgid ""
 "This section outlines some potential features that are explicitly out-of-"
 "scope."
 msgstr ""
 
-#: ../../pep-0586.rst:629
+#: ../../pep-0586.rst:631
 msgid "True dependent types/integer generics"
 msgstr ""
 
-#: ../../pep-0586.rst:631
+#: ../../pep-0586.rst:633
 msgid ""
 "This proposal is essentially describing adding a very simplified "
-"dependent type system to the PEP 484 ecosystem. One obvious extension "
+"dependent type system to the :pep:`484` ecosystem. One obvious extension "
 "would be to implement a full-fledged dependent type system that lets "
 "users predicate types based on their values in arbitrary ways. That would"
 " let us write signatures like the below::"
 msgstr ""
 
-#: ../../pep-0586.rst:646
+#: ../../pep-0586.rst:648
 msgid ""
 "At the very least, it would be useful to add some form of integer "
 "generics."
 msgstr ""
 
-#: ../../pep-0586.rst:648
+#: ../../pep-0586.rst:650
 msgid ""
 "Although such a type system would certainly be useful, it’s out of scope "
 "for this PEP: it would require a far more substantial amount of "
@@ -835,7 +827,7 @@ msgid ""
 " current proposal."
 msgstr ""
 
-#: ../../pep-0586.rst:652
+#: ../../pep-0586.rst:654
 msgid ""
 "It's entirely possible we'll circle back and revisit this topic in the "
 "future: we very likely will need some form of dependent typing along with"
@@ -843,44 +835,44 @@ msgid ""
 "like numpy."
 msgstr ""
 
-#: ../../pep-0586.rst:656
+#: ../../pep-0586.rst:658
 msgid ""
 "This PEP should be seen as a stepping stone towards this goal, rather "
 "than an attempt at providing a comprehensive solution."
 msgstr ""
 
-#: ../../pep-0586.rst:660
+#: ../../pep-0586.rst:662
 msgid "Adding more concise syntax"
 msgstr ""
 
-#: ../../pep-0586.rst:662
+#: ../../pep-0586.rst:664
 msgid ""
 "One objection to this PEP is that having to explicitly write "
 "``Literal[...]`` feels verbose. For example, instead of writing::"
 msgstr ""
 
-#: ../../pep-0586.rst:668
+#: ../../pep-0586.rst:670
 msgid "...it would be nice to instead write::"
 msgstr ""
 
-#: ../../pep-0586.rst:673
+#: ../../pep-0586.rst:675
 msgid ""
 "Unfortunately, these abbreviations simply will not work with the existing"
 " implementation of ``typing`` at runtime. For example, the following "
 "snippet crashes when run using Python 3.7::"
 msgstr ""
 
-#: ../../pep-0586.rst:683
+#: ../../pep-0586.rst:685
 msgid "Running this yields the following exception::"
 msgstr ""
 
-#: ../../pep-0586.rst:687
+#: ../../pep-0586.rst:689
 msgid ""
 "We don’t want users to have to memorize exactly when it’s ok to elide "
 "``Literal``, so we require ``Literal`` to always be present."
 msgstr ""
 
-#: ../../pep-0586.rst:690
+#: ../../pep-0586.rst:692
 msgid ""
 "A little more broadly, we feel overhauling the syntax of types in Python "
 "is not within the scope of this PEP: it would be best to have that "
@@ -888,11 +880,11 @@ msgid ""
 "this PEP deliberately does not try and innovate Python's type syntax."
 msgstr ""
 
-#: ../../pep-0586.rst:696
+#: ../../pep-0586.rst:698
 msgid "Backporting the ``Literal`` type"
 msgstr ""
 
-#: ../../pep-0586.rst:698
+#: ../../pep-0586.rst:700
 msgid ""
 "Once this PEP is accepted, the ``Literal`` type will need to be "
 "backported for Python versions that come bundled with older versions of "
@@ -901,70 +893,168 @@ msgid ""
 " backported types."
 msgstr ""
 
-#: ../../pep-0586.rst:704
+#: ../../pep-0586.rst:706
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0586.rst:706
+#: ../../pep-0586.rst:708
 msgid ""
 "The mypy type checker currently has implemented a large subset of the "
 "behavior described in this spec, with the exception of enum Literals and "
 "some of the more complex narrowing interactions described above."
 msgstr ""
 
-#: ../../pep-0586.rst:712
+#: ../../pep-0586.rst:714
 msgid "Related work"
 msgstr ""
 
-#: ../../pep-0586.rst:714
+#: ../../pep-0586.rst:716
 msgid ""
 "This proposal was written based on the discussion that took place in the "
 "following threads:"
 msgstr ""
 
-#: ../../pep-0586.rst:717
+#: ../../pep-0586.rst:719
 msgid ""
 "`Check that literals belong to/are excluded from a set of values <typing-"
 "discussion_>`_"
 msgstr ""
 
-#: ../../pep-0586.rst:719
+#: ../../pep-0586.rst:721
 msgid "`Simple dependent types <mypy-discussion_>`_"
 msgstr ""
 
-#: ../../pep-0586.rst:721
+#: ../../pep-0586.rst:723
 msgid "`Typing for multi-dimensional arrays <arrays-discussion_>`_"
 msgstr ""
 
-#: ../../pep-0586.rst:723
+#: ../../pep-0586.rst:725
 msgid ""
 "The overall design of this proposal also ended up converging into "
 "something similar to how `literal types are handled in TypeScript "
 "<typescript-literal-types_>`_."
 msgstr ""
 
-#: ../../pep-0586.rst:744
+#: ../../pep-0586.rst:741
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0586.rst:746
+#: ../../pep-0586.rst:743
 msgid ""
 "Thanks to Mark Mendoza, Ran Benita, Rebecca Chen, and the other members "
 "of typing-sig for their comments on this PEP."
 msgstr ""
 
-#: ../../pep-0586.rst:749
+#: ../../pep-0586.rst:746
 msgid ""
 "Additional thanks to the various participants in the mypy and typing "
 "issue trackers, who helped provide a lot of the motivation and reasoning "
 "behind this PEP."
 msgstr ""
 
-#: ../../pep-0586.rst:755
+#: ../../pep-0586.rst:752
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0586.rst:757
+#: ../../pep-0586.rst:754
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "586"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Literal Types"
+#~ msgstr ""
+
+#~ msgid "Typing-Sig <typing-sig@python.org>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP proposes adding *Literal types*"
+#~ " to the PEP 484 ecosystem. Literal"
+#~ " types indicate that some expression "
+#~ "has literally a specific value. For "
+#~ "example, the following function will "
+#~ "accept only expressions that have "
+#~ "literally the value \"4\"::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There is currently no way of "
+#~ "expressing the type signatures of these"
+#~ " functions: PEP 484 does not include"
+#~ " any mechanism for writing signatures "
+#~ "where the return type varies depending"
+#~ " on the value passed in. Note "
+#~ "that this problem persists even if "
+#~ "we redesign these APIs to instead "
+#~ "accept enums: ``MyEnum.FOO`` and "
+#~ "``MyEnum.BAR`` are both considered to be"
+#~ " of type ``MyEnum``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This \"inheriting\" behavior is identical "
+#~ "to how we `handle NewTypes. "
+#~ "<newtypes_>`_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Rationale: Literal types are meant to"
+#~ " be a minimal extension to the "
+#~ "PEP 484 typing ecosystem and requiring"
+#~ " type checkers to interpret potentially "
+#~ "expressions inside types adds too much"
+#~ " complexity. Also see `Rejected or "
+#~ "out-of-scope ideas`_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The interaction described above is not"
+#~ " new: it's already `already codified "
+#~ "within PEP 484 <pep-484-enums_>`_. However,"
+#~ " many type checkers (such as mypy)"
+#~ " do not yet implement this due "
+#~ "to the expected complexity of the "
+#~ "implementation work."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`PEP 591 <pep-591_>`_ proposes adding a"
+#~ " \"Final\" qualifier to the typing "
+#~ "ecosystem. This qualifier can be used"
+#~ " to declare that some variable or "
+#~ "attribute cannot be reassigned::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If both this PEP and PEP 591 "
+#~ "are accepted, type checkers are expected"
+#~ " to support this shortcut. Specifically,"
+#~ " given a variable or attribute "
+#~ "assignment of the form ``var: Final "
+#~ "= value`` where ``value`` is a "
+#~ "valid parameter for ``Literal[...]``, type "
+#~ "checkers should understand that ``var`` "
+#~ "may be used in any context that"
+#~ " expects a ``Literal[value]``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This proposal is essentially describing "
+#~ "adding a very simplified dependent type"
+#~ " system to the PEP 484 ecosystem. "
+#~ "One obvious extension would be to "
+#~ "implement a full-fledged dependent type"
+#~ " system that lets users predicate "
+#~ "types based on their values in "
+#~ "arbitrary ways. That would let us "
+#~ "write signatures like the below::"
+#~ msgstr ""
 

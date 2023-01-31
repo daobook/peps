@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0275.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0275.txt:1
-msgid "275"
-msgstr ""
-
-#: ../../pep-0275.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0275.txt:2
-msgid "Switching on Multiple Values"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0275.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0275.txt:5
-msgid "mal@lemburg.com (Marc-André Lemburg)"
+#: ../../pep-0275.txt:3
+msgid "Marc-André Lemburg <mal@lemburg.com>"
 msgstr ""
 
 #: ../../pep-0275.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0275.txt:6
+#: ../../pep-0275.txt:4
 msgid "Rejected"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0275.txt:7
+#: ../../pep-0275.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0275.txt:9
+#: ../../pep-0275.txt:7
 msgid "10-Nov-2001"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0275.txt:10
+#: ../../pep-0275.txt:8
 msgid "2.6"
 msgstr ""
 
@@ -77,38 +61,38 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0275.txt:14
+#: ../../pep-0275.txt:12
 msgid "Rejection Notice"
 msgstr ""
 
-#: ../../pep-0275.txt:16
+#: ../../pep-0275.txt:14
 msgid ""
-"A similar PEP for Python 3000, PEP 3103 [2]_, was already rejected, so "
-"this proposal has no chance of being accepted either."
+"A similar PEP for Python 3000, :pep:`3103`, was already rejected, so this"
+" proposal has no chance of being accepted either."
 msgstr ""
 
-#: ../../pep-0275.txt:20
+#: ../../pep-0275.txt:18
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0275.txt:22
+#: ../../pep-0275.txt:20
 msgid ""
 "This PEP proposes strategies to enhance Python's performance with respect"
 " to handling switching on a single variable having one of multiple "
 "possible values."
 msgstr ""
 
-#: ../../pep-0275.txt:27
+#: ../../pep-0275.txt:25
 msgid "Problem"
 msgstr ""
 
-#: ../../pep-0275.txt:29
+#: ../../pep-0275.txt:27
 msgid ""
 "Up to Python 2.5, the typical way of writing multi-value switches has "
 "been to use long switch constructs of the following type::"
 msgstr ""
 
-#: ../../pep-0275.txt:44
+#: ../../pep-0275.txt:42
 msgid ""
 "This works fine for short switch constructs, since the overhead of "
 "repeated loading of a local (the variable x in this case) and comparing "
@@ -118,7 +102,7 @@ msgid ""
 " 10 or more cases."
 msgstr ""
 
-#: ../../pep-0275.txt:51
+#: ../../pep-0275.txt:49
 msgid ""
 "The current solution to this problem lies in using a dispatch table to "
 "find the case implementing method to execute depending on the value of "
@@ -129,33 +113,33 @@ msgid ""
 " two instructions per case, e.g."
 msgstr ""
 
-#: ../../pep-0275.txt:65
+#: ../../pep-0275.txt:63
 msgid ""
 "A nice example of this is the state machine implemented in pickle.py "
 "which is used to serialize Python objects. Other prominent cases include "
 "XML SAX parsers and Internet protocol handlers."
 msgstr ""
 
-#: ../../pep-0275.txt:71
+#: ../../pep-0275.txt:69
 msgid "Proposed Solutions"
 msgstr ""
 
-#: ../../pep-0275.txt:73
+#: ../../pep-0275.txt:71
 msgid "This PEP proposes two different but not necessarily conflicting solutions:"
 msgstr ""
 
-#: ../../pep-0275.txt:76
+#: ../../pep-0275.txt:74
 msgid ""
 "Adding an optimization to the Python compiler and VM which detects the "
 "above if-elif-else construct and generates special opcodes for it which "
 "use a read-only dictionary for storing jump offsets."
 msgstr ""
 
-#: ../../pep-0275.txt:81
+#: ../../pep-0275.txt:79
 msgid "Adding new syntax to Python which mimics the C style switch statement."
 msgstr ""
 
-#: ../../pep-0275.txt:84
+#: ../../pep-0275.txt:82
 msgid ""
 "The first solution has the benefit of not relying on adding new keywords "
 "to the language, while the second looks cleaner. Both involve some run-"
@@ -163,7 +147,7 @@ msgid ""
 "hashable."
 msgstr ""
 
-#: ../../pep-0275.txt:89
+#: ../../pep-0275.txt:87
 msgid ""
 "Both solutions use a dictionary lookup to find the right jump location, "
 "so they both share the same problem space in terms of requiring that both"
@@ -172,21 +156,21 @@ msgid ""
 "hash(a)==hash(b))."
 msgstr ""
 
-#: ../../pep-0275.txt:96
+#: ../../pep-0275.txt:94
 msgid "Solution 1: Optimizing if-elif-else"
 msgstr ""
 
-#: ../../pep-0275.txt:98
+#: ../../pep-0275.txt:96
 msgid "Implementation:"
 msgstr ""
 
-#: ../../pep-0275.txt:100
+#: ../../pep-0275.txt:98
 msgid ""
 "It should be possible for the compiler to detect an if-elif-else "
 "construct which has the following signature::"
 msgstr ""
 
-#: ../../pep-0275.txt:107
+#: ../../pep-0275.txt:105
 msgid ""
 "i.e. the left hand side always references the same variable, the right "
 "hand side a hashable immutable builtin type.  The right hand sides need "
@@ -194,7 +178,7 @@ msgid ""
 " the left hand switch variable."
 msgstr ""
 
-#: ../../pep-0275.txt:113
+#: ../../pep-0275.txt:111
 msgid ""
 "The compiler could then setup a read-only (perfect) hash table, store it "
 "in the constants and add an opcode SWITCH in front of the standard if-"
@@ -202,7 +186,7 @@ msgid ""
 "behaviour:"
 msgstr ""
 
-#: ../../pep-0275.txt:118
+#: ../../pep-0275.txt:116
 msgid ""
 "At runtime, SWITCH would check x for being one of the well-known "
 "immutable types (strings, unicode, numbers) and use the hash table for "
@@ -212,11 +196,11 @@ msgid ""
 "else byte code stream."
 msgstr ""
 
-#: ../../pep-0275.txt:127
+#: ../../pep-0275.txt:125
 msgid "Issues:"
 msgstr ""
 
-#: ../../pep-0275.txt:129
+#: ../../pep-0275.txt:127
 msgid ""
 "The new optimization should not change the current Python semantics (by "
 "reducing the number of ``__cmp__`` calls and adding ``__hash__`` calls in"
@@ -227,33 +211,33 @@ msgid ""
 " since it's not clear whether these are still immutable or not)"
 msgstr ""
 
-#: ../../pep-0275.txt:139
+#: ../../pep-0275.txt:137
 msgid ""
 "To prevent post-modifications of the jump-table dictionary (which could "
 "be used to reach protected code), the jump-table will have to be a read-"
 "only type (e.g. a read-only dictionary)."
 msgstr ""
 
-#: ../../pep-0275.txt:144
+#: ../../pep-0275.txt:142
 msgid ""
 "The optimization should only be used for if-elif-else constructs which "
 "have a minimum number of n cases (where n is a number which has yet to be"
 " defined depending on performance tests)."
 msgstr ""
 
-#: ../../pep-0275.txt:150
+#: ../../pep-0275.txt:148
 msgid "Solution 2: Adding a switch statement to Python"
 msgstr ""
 
-#: ../../pep-0275.txt:153
+#: ../../pep-0275.txt:151
 msgid "New Syntax"
 msgstr ""
 
-#: ../../pep-0275.txt:165
+#: ../../pep-0275.txt:163
 msgid "(modulo indentation variations)"
 msgstr ""
 
-#: ../../pep-0275.txt:167
+#: ../../pep-0275.txt:165
 msgid ""
 "The \"else\" part is optional. If no else part is given and none of the "
 "defined cases matches, no action is taken and the switch statement is "
@@ -262,39 +246,39 @@ msgid ""
 "which then implements the intended action."
 msgstr ""
 
-#: ../../pep-0275.txt:174
+#: ../../pep-0275.txt:172
 msgid ""
 "Note that the constants need not be all of the same type, but they should"
 " be comparable to the type of the switch variable."
 msgstr ""
 
-#: ../../pep-0275.txt:178
+#: ../../pep-0275.txt:176
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0275.txt:180
+#: ../../pep-0275.txt:178
 msgid "The compiler would have to compile this into byte code similar to this::"
 msgstr ""
 
-#: ../../pep-0275.txt:194
+#: ../../pep-0275.txt:192
 msgid "into (omitting POP_TOP's and SET_LINENO's)::"
 msgstr ""
 
-#: ../../pep-0275.txt:222
+#: ../../pep-0275.txt:220
 msgid "Where the 'SWITCH' opcode would jump to 14, 22, 30 or 38 depending on 'x'."
 msgstr ""
 
-#: ../../pep-0275.txt:225
+#: ../../pep-0275.txt:223
 msgid ""
 "Thomas Wouters has written a patch which demonstrates the above. You can "
 "download it from [1]_."
 msgstr ""
 
-#: ../../pep-0275.txt:229
+#: ../../pep-0275.txt:227
 msgid "Issues"
 msgstr ""
 
-#: ../../pep-0275.txt:231
+#: ../../pep-0275.txt:229
 msgid ""
 "The switch statement should not implement fall-through behaviour (as does"
 " the switch statement in C). Each case defines a complete and independent"
@@ -302,13 +286,13 @@ msgid ""
 "break in switch statements inside loops."
 msgstr ""
 
-#: ../../pep-0275.txt:237
+#: ../../pep-0275.txt:235
 msgid ""
 "If the interpreter finds that the switch variable x is not hashable, it "
 "should raise a TypeError at run-time pointing out the problem."
 msgstr ""
 
-#: ../../pep-0275.txt:241
+#: ../../pep-0275.txt:239
 msgid ""
 "There have been other proposals for the syntax which reuse existing "
 "keywords and avoid adding two new ones (\"switch\" and \"case\"). Others "
@@ -317,7 +301,7 @@ msgid ""
 "(e.g. fall-through without break). Some of the proposed variants::"
 msgstr ""
 
-#: ../../pep-0275.txt:273
+#: ../../pep-0275.txt:271
 msgid ""
 "The switch statement could be extended to allow multiple values for one "
 "section (e.g. case 'a', 'b', 'c': ...). Another proposed extension would "
@@ -326,75 +310,96 @@ msgid ""
 "first version."
 msgstr ""
 
-#: ../../pep-0275.txt:280
+#: ../../pep-0275.txt:278
 msgid "Examples"
 msgstr ""
 
-#: ../../pep-0275.txt:282
+#: ../../pep-0275.txt:280
 msgid ""
 "The following examples all use a new syntax as proposed by solution 2. "
 "However, all of these examples would work with solution 1 as well."
 msgstr ""
 
-#: ../../pep-0275.txt:327
+#: ../../pep-0275.txt:325
 msgid ""
 "Here's another nice application found by Jack Jansen (switching on "
 "argument types)::"
 msgstr ""
 
-#: ../../pep-0275.txt:337
+#: ../../pep-0275.txt:335
 msgid "Scope"
 msgstr ""
 
-#: ../../pep-0275.txt:339
+#: ../../pep-0275.txt:337
 msgid "XXX Explain \"from __future__ import switch\""
 msgstr ""
 
-#: ../../pep-0275.txt:342
+#: ../../pep-0275.txt:340
 msgid "Credits"
 msgstr ""
 
-#: ../../pep-0275.txt:344
+#: ../../pep-0275.txt:342
 msgid "Martin von Löwis (issues with the optimization idea)"
 msgstr ""
 
-#: ../../pep-0275.txt:345
+#: ../../pep-0275.txt:343
 msgid "Thomas Wouters (switch statement + byte code compiler example)"
 msgstr ""
 
-#: ../../pep-0275.txt:346
+#: ../../pep-0275.txt:344
 msgid "Skip Montanaro (dispatching ideas, examples)"
 msgstr ""
 
-#: ../../pep-0275.txt:347
+#: ../../pep-0275.txt:345
 msgid "Donald Beaudry (switch syntax)"
 msgstr ""
 
-#: ../../pep-0275.txt:348
+#: ../../pep-0275.txt:346
 msgid "Greg Ewing (switch syntax)"
 msgstr ""
 
-#: ../../pep-0275.txt:349
+#: ../../pep-0275.txt:347
 msgid "Jack Jansen (type switching examples)"
 msgstr ""
 
-#: ../../pep-0275.txt:352
+#: ../../pep-0275.txt:350
 msgid "References"
 msgstr ""
 
-#: ../../pep-0275.txt:354
+#: ../../pep-0275.txt:352
 msgid "https://sourceforge.net/tracker/index.php?func=detail&aid=481118&group_id=5470&atid=305470"
 msgstr ""
 
 #: ../../pep-0275.txt:356
-msgid "http://www.python.org/dev/peps/pep-3103"
-msgstr ""
-
-#: ../../pep-0275.txt:360
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0275.txt:362
+#: ../../pep-0275.txt:358
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "275"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Switching on Multiple Values"
+#~ msgstr ""
+
+#~ msgid "mal@lemburg.com (Marc-André Lemburg)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A similar PEP for Python 3000, PEP"
+#~ " 3103 [2]_, was already rejected, so"
+#~ " this proposal has no chance of "
+#~ "being accepted either."
+#~ msgstr ""
+
+#~ msgid "http://www.python.org/dev/peps/pep-3103"
+#~ msgstr ""
 

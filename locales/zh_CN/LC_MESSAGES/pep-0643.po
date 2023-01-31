@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0643.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0643.rst:1
-msgid "643"
-msgstr ""
-
-#: ../../pep-0643.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0643.rst:2
-msgid "Metadata for Package Source Distributions"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0643.rst
 msgid "Author"
@@ -64,7 +48,7 @@ msgid "Status"
 msgstr ""
 
 #: ../../pep-0643.rst:6
-msgid "Accepted"
+msgid "Final"
 msgstr ""
 
 #: ../../pep-0643.rst
@@ -76,10 +60,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0643.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0643.rst:8
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0643.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0643.rst:9
+#: ../../pep-0643.rst:10
 msgid "24-Oct-2020"
 msgstr ""
 
@@ -87,7 +79,7 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0643.rst:10
+#: ../../pep-0643.rst:11
 msgid "24-Oct-2020, 01-Nov-2020, 02-Nov-2020, 14-Nov-2020"
 msgstr ""
 
@@ -95,17 +87,17 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0643.rst:11
+#: ../../pep-0643.rst:12
 msgid ""
 "https://discuss.python.org/t/pep-643-metadata-for-package-source-"
 "distributions/5577/53"
 msgstr ""
 
-#: ../../pep-0643.rst:15
+#: ../../pep-0643.rst:19
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0643.rst:17
+#: ../../pep-0643.rst:21
 msgid ""
 "Python package metadata is stored in the distribution file in a standard "
 "format, defined in the `Core Metadata Specification`_. However, for "
@@ -116,14 +108,14 @@ msgid ""
 "discussion of this issue."
 msgstr ""
 
-#: ../../pep-0643.rst:25
+#: ../../pep-0643.rst:29
 msgid ""
 "As a result, metadata consumers are unable to rely on the data available "
 "from source distributions, and need to use the (costly) :pep:`517` build "
 "mechanisms to extract medatata."
 msgstr ""
 
-#: ../../pep-0643.rst:29
+#: ../../pep-0643.rst:33
 msgid ""
 "This PEP defines a standard that allows build backends to reliably store "
 "package metadata in the source distribution, while still retaining the "
@@ -131,42 +123,42 @@ msgid ""
 "calculated at build time."
 msgstr ""
 
-#: ../../pep-0643.rst:36
+#: ../../pep-0643.rst:40
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0643.rst:38
+#: ../../pep-0643.rst:42
 msgid ""
 "There are a number of issues with the way that metadata is currently "
 "stored in source distributions:"
 msgstr ""
 
-#: ../../pep-0643.rst:41
+#: ../../pep-0643.rst:45
 msgid ""
 "The details of how to store metadata, while standardised, are not easy to"
 " find."
 msgstr ""
 
-#: ../../pep-0643.rst:43
+#: ../../pep-0643.rst:47
 msgid ""
 "The specification requires an old metadata version, and has not been "
 "updated in line with changes to the core metadata spec."
 msgstr ""
 
-#: ../../pep-0643.rst:45
+#: ../../pep-0643.rst:49
 msgid ""
 "There is no way in the spec to distinguish between \"this field has been "
 "omitted because its value will not be known until build time\" and \"this"
 " field does not have a value\"."
 msgstr ""
 
-#: ../../pep-0643.rst:48
+#: ../../pep-0643.rst:52
 msgid ""
 "The core metadata specification allows most fields to be optional, "
 "meaning that the previous issue affects nearly every metadata field."
 msgstr ""
 
-#: ../../pep-0643.rst:51
+#: ../../pep-0643.rst:55
 msgid ""
 "This PEP proposes an update to the metadata specification to allow "
 "recording of fields which are expected to be \"filled in later\", and "
@@ -174,11 +166,11 @@ msgid ""
 "should record sdist metadata using that version of the spec (or later)."
 msgstr ""
 
-#: ../../pep-0643.rst:58
+#: ../../pep-0643.rst:62
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0643.rst:60
+#: ../../pep-0643.rst:64
 msgid ""
 "This PEP allows projects to define source distribution metadata values as"
 " being \"dynamic\". In this context, saying that a field is \"dynamic\" "
@@ -188,18 +180,18 @@ msgid ""
 "details of the build environment."
 msgstr ""
 
-#: ../../pep-0643.rst:67
+#: ../../pep-0643.rst:71
 msgid ""
 ":pep:`621` has a similar concept, of \"dynamic\" values that will be "
 "\"filled in later\", and so we choose to use the same term here by "
 "analogy."
 msgstr ""
 
-#: ../../pep-0643.rst:73
+#: ../../pep-0643.rst:77
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0643.rst:75
+#: ../../pep-0643.rst:79
 msgid ""
 "This PEP defines the relationship between metadata values specified in a "
 "source distribution, and the corresponding values in wheels built from "
@@ -207,27 +199,27 @@ msgid ""
 "*not* simply be copied unchanged from the sdist to the wheel."
 msgstr ""
 
-#: ../../pep-0643.rst:80
+#: ../../pep-0643.rst:84
 msgid ""
 "In addition, this PEP makes the `PyPA Specifications`_ document the "
 "canonical location for the specification of the source distribution "
 "format (collecting the information in :pep:`517` and in this PEP)."
 msgstr ""
 
-#: ../../pep-0643.rst:84
+#: ../../pep-0643.rst:88
 msgid ""
 "A new field, ``Dynamic``, will be added to the `Core Metadata "
 "Specification`_. This field will be multiple use, and will be allowed to "
 "contain the name of another core metadata field."
 msgstr ""
 
-#: ../../pep-0643.rst:88
+#: ../../pep-0643.rst:92
 msgid ""
 "When found in the metadata of a source distribution, the following rules "
 "apply:"
 msgstr ""
 
-#: ../../pep-0643.rst:91
+#: ../../pep-0643.rst:95
 msgid ""
 "If a field is *not* marked as ``Dynamic``, then the value of the field in"
 " any wheel built from the sdist MUST match the value in the sdist. If the"
@@ -235,19 +227,19 @@ msgid ""
 "NOT be present in the wheel."
 msgstr ""
 
-#: ../../pep-0643.rst:95
+#: ../../pep-0643.rst:99
 msgid ""
 "If a field is marked as ``Dynamic``, it may contain any valid value in a "
 "wheel built from the sdist (including not being present at all)."
 msgstr ""
 
-#: ../../pep-0643.rst:97
+#: ../../pep-0643.rst:101
 msgid ""
 "Backends MUST NOT mark a field as ``Dynamic`` if they can determine that "
 "it was generated from data that will not change at build time."
 msgstr ""
 
-#: ../../pep-0643.rst:100
+#: ../../pep-0643.rst:104
 msgid ""
 "Backends MAY record the value they calculated for a field they mark as "
 "``Dynamic`` in a source distribution. Consumers, however, MUST NOT treat "
@@ -255,7 +247,7 @@ msgid ""
 "value in a wheel could be."
 msgstr ""
 
-#: ../../pep-0643.rst:105
+#: ../../pep-0643.rst:109
 msgid ""
 "In any context other than a source distribution, if a field is marked as "
 "``Dynamic``, that indicates that the value was generated at wheel build "
@@ -265,23 +257,23 @@ msgid ""
 "any significance, except in a source distribution."
 msgstr ""
 
-#: ../../pep-0643.rst:112
+#: ../../pep-0643.rst:116
 msgid "The fields ``Name`` and ``Version`` MUST NOT be marked as ``Dynamic``."
 msgstr ""
 
-#: ../../pep-0643.rst:114
+#: ../../pep-0643.rst:118
 msgid ""
 "As it adds a new metadata field, this PEP updates the core metadata "
 "format to version 2.2."
 msgstr ""
 
-#: ../../pep-0643.rst:117
+#: ../../pep-0643.rst:121
 msgid ""
 "Source distributions SHOULD use the latest version of the core metadata "
 "specification that was available when they were created."
 msgstr ""
 
-#: ../../pep-0643.rst:120
+#: ../../pep-0643.rst:124
 msgid ""
 "Build backends are strongly encouraged to only mark fields as ``Dynamic``"
 " when absolutely necessary, and to encourage projects to avoid backend "
@@ -290,11 +282,11 @@ msgid ""
 "install location."
 msgstr ""
 
-#: ../../pep-0643.rst:128
+#: ../../pep-0643.rst:132
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0643.rst:130
+#: ../../pep-0643.rst:134
 msgid ""
 "As this proposal increments the core metadata version, it is compatible "
 "with existing source distributions, which will use an older metadata "
@@ -302,21 +294,21 @@ msgid ""
 "this PEP by checking the metadata version."
 msgstr ""
 
-#: ../../pep-0643.rst:137
+#: ../../pep-0643.rst:141
 msgid "Security Implications"
 msgstr ""
 
-#: ../../pep-0643.rst:139
+#: ../../pep-0643.rst:143
 msgid ""
 "As this specification is purely for the storage of data that is intended "
 "to be publicly available, there are no security implications."
 msgstr ""
 
-#: ../../pep-0643.rst:144
+#: ../../pep-0643.rst:148
 msgid "How to Teach This"
 msgstr ""
 
-#: ../../pep-0643.rst:146
+#: ../../pep-0643.rst:150
 msgid ""
 "This is a data storage format for project metadata, and so will not "
 "typically be visible to end users. There is therefore no need to teach "
@@ -324,17 +316,17 @@ msgid ""
 " will be able to find the details in the `PyPA Specifications`_."
 msgstr ""
 
-#: ../../pep-0643.rst:153
+#: ../../pep-0643.rst:157
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0643.rst:155
+#: ../../pep-0643.rst:159
 msgid ""
 "Rather than marking fields as ``Dynamic``, fields should be assumed to be"
 " dynamic unless explicitly marked as ``Static``."
 msgstr ""
 
-#: ../../pep-0643.rst:158
+#: ../../pep-0643.rst:162
 msgid ""
 "This is logically equivalent to the current proposal, but it implies that"
 " fields being dynamic is the norm. Packaging tools can be much more "
@@ -343,20 +335,20 @@ msgid ""
 " \"opt in\" to making a field dynamic."
 msgstr ""
 
-#: ../../pep-0643.rst:164
+#: ../../pep-0643.rst:168
 msgid ""
 "In addition, if dynamic is the default, then in future, as more and more "
 "metadata becomes static, metadata files will include an increasing number"
 " of ``Static`` declarations."
 msgstr ""
 
-#: ../../pep-0643.rst:168
+#: ../../pep-0643.rst:172
 msgid ""
 "Rather than having a ``Dynamic`` field, add a special value that "
 "indicates that a field is \"not yet defined\"."
 msgstr ""
 
-#: ../../pep-0643.rst:171
+#: ../../pep-0643.rst:175
 msgid ""
 "Again, this is logically equivalent to the current proposal. It makes "
 "\"being dynamic\" an explicit choice, but requires a special value.  As "
@@ -366,11 +358,11 @@ msgid ""
 "instead of the proposed mechanism."
 msgstr ""
 
-#: ../../pep-0643.rst:178
+#: ../../pep-0643.rst:182
 msgid "Special handling of ``Requires-Python``."
 msgstr ""
 
-#: ../../pep-0643.rst:180
+#: ../../pep-0643.rst:184
 msgid ""
 "Early drafts of the PEP needed special discussion of ``Requires-Python``,"
 " because the lack of environment markers for this field meant that it "
@@ -379,13 +371,13 @@ msgid ""
 "dynamic was dropped."
 msgstr ""
 
-#: ../../pep-0643.rst:186
+#: ../../pep-0643.rst:190
 msgid ""
 "Restrict the use of ``Dynamic`` to a minimal \"white list\" of permitted "
 "fields."
 msgstr ""
 
-#: ../../pep-0643.rst:189
+#: ../../pep-0643.rst:193
 msgid ""
 "This approach was likely to prove extremely difficult for setuptools to "
 "implement in a backward compatible way, due to the dynamic nature of the "
@@ -394,25 +386,39 @@ msgid ""
 "essential."
 msgstr ""
 
-#: ../../pep-0643.rst:197
+#: ../../pep-0643.rst:201
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-0643.rst:199
+#: ../../pep-0643.rst:203
 msgid "None"
 msgstr ""
 
-#: ../../pep-0643.rst:202
-msgid "References"
-msgstr ""
-
-#: ../../pep-0643.rst:208
+#: ../../pep-0643.rst:212
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0643.rst:210
+#: ../../pep-0643.rst:214
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "643"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Metadata for Package Source Distributions"
+#~ msgstr ""
+
+#~ msgid "Accepted"
+#~ msgstr ""
+
+#~ msgid "References"
+#~ msgstr ""
 

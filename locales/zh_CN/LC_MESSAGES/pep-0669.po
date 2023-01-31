@@ -1,0 +1,1057 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0669.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0669.rst:3
+msgid "Mark Shannon <mark@hotpy.org>"
+msgstr ""
+
+#: ../../pep-0669.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0669.rst:4
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0669.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0669.rst:5
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0669.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0669.rst:7
+msgid "18-Aug-2021"
+msgstr ""
+
+#: ../../pep-0669.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0669.rst:8
+msgid "07-Dec-2021"
+msgstr ""
+
+#: ../../pep-0669.rst:12
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0669.rst:14
+msgid ""
+"Using a profiler or debugger in CPython can have a severe impact on "
+"performance. Slowdowns by an order of magnitude are common."
+msgstr ""
+
+#: ../../pep-0669.rst:17
+msgid ""
+"This PEP proposes an API for monitoring Python programs running on "
+"CPython that will enable monitoring at low cost."
+msgstr ""
+
+#: ../../pep-0669.rst:20
+msgid ""
+"Although this PEP does not specify an implementation, it is expected that"
+" it will be implemented using the quickening step of :pep:`659`."
+msgstr ""
+
+#: ../../pep-0669.rst:24
+msgid ""
+"A ``sys.monitoring`` namespace will be added, which will contain the "
+"relevant functions and enum."
+msgstr ""
+
+#: ../../pep-0669.rst:29
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0669.rst:31
+msgid ""
+"Developers should not have to pay an unreasonable cost to use debuggers, "
+"profilers and other similar tools."
+msgstr ""
+
+#: ../../pep-0669.rst:34
+msgid ""
+"C++ and Java developers expect to be able to run a program at full speed "
+"(or very close to it) under a debugger. Python developers should expect "
+"that too."
+msgstr ""
+
+#: ../../pep-0669.rst:39
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0669.rst:41
+msgid ""
+"The quickening mechanism provided by :pep:`659` provides a way to "
+"dynamically modify executing Python bytecode. These modifications have "
+"little cost beyond the parts of the code that are modified and a "
+"relatively low cost to those parts that are modified. We can leverage "
+"this to provide an efficient mechanism for monitoring that was not "
+"possible in 3.10 or earlier."
+msgstr ""
+
+#: ../../pep-0669.rst:47
+msgid ""
+"By using quickening, we expect that code run under a debugger on 3.12 "
+"should outperform code run without a debugger on 3.11. Profiling will "
+"still slow down execution, but by much less than in 3.11."
+msgstr ""
+
+#: ../../pep-0669.rst:53
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0669.rst:55
+msgid ""
+"Monitoring of Python programs is done by registering callback functions "
+"for events and by activating a set of events."
+msgstr ""
+
+#: ../../pep-0669.rst:58
+msgid ""
+"Activating events and registering callback functions are independent of "
+"each other."
+msgstr ""
+
+#: ../../pep-0669.rst:60
+msgid ""
+"Both registering callbacks and activating events are done on a per-tool "
+"basis. It is possible to have multiple tools that respond to different "
+"sets of events."
+msgstr ""
+
+#: ../../pep-0669.rst:63
+msgid ""
+"Note that, unlike ``sys.settrace()``, events and callbacks are per "
+"interpreter, not per thread."
+msgstr ""
+
+#: ../../pep-0669.rst:66 ../../pep-0669.rst:372
+msgid "Events"
+msgstr ""
+
+#: ../../pep-0669.rst:68
+msgid ""
+"As a code object executes various events occur that might be of interest "
+"to tools. By activating events and by registering callback functions "
+"tools can respond to these events in any way that suits them. Events can "
+"be set globally, or for individual code objects."
+msgstr ""
+
+#: ../../pep-0669.rst:73
+msgid "For 3.12, CPython will support the following events:"
+msgstr ""
+
+#: ../../pep-0669.rst:75
+msgid ""
+"PY_START: Start of a Python function (occurs immediately after the call, "
+"the callee's frame will be on the stack)"
+msgstr ""
+
+#: ../../pep-0669.rst:76
+msgid ""
+"PY_RESUME: Resumption of a Python function (for generator and coroutine "
+"functions), except for throw() calls."
+msgstr ""
+
+#: ../../pep-0669.rst:77
+msgid "PY_THROW: A Python function is resumed by a throw() call."
+msgstr ""
+
+#: ../../pep-0669.rst:78
+msgid ""
+"PY_RETURN: Return from a Python function (occurs immediately before the "
+"return, the callee's frame will be on the stack)."
+msgstr ""
+
+#: ../../pep-0669.rst:79
+msgid ""
+"PY_YIELD: Yield from a Python function (occurs immediately before the "
+"yield, the callee's frame will be on the stack)."
+msgstr ""
+
+#: ../../pep-0669.rst:80
+msgid "PY_UNWIND:  Exit from a Python function during exception unwinding."
+msgstr ""
+
+#: ../../pep-0669.rst:81
+msgid ""
+"C_CALL: Call to any callable, except Python functions (before the call in"
+" this case)."
+msgstr ""
+
+#: ../../pep-0669.rst:82
+msgid ""
+"C_RETURN: Return from any callable, except Python functions (after the "
+"return in this case)."
+msgstr ""
+
+#: ../../pep-0669.rst:83
+msgid "RAISE: An exception is raised."
+msgstr ""
+
+#: ../../pep-0669.rst:84
+msgid "EXCEPTION_HANDLED: An exception is handled."
+msgstr ""
+
+#: ../../pep-0669.rst:85
+msgid ""
+"LINE: An instruction is about to be executed that has a different line "
+"number from the preceding instruction."
+msgstr ""
+
+#: ../../pep-0669.rst:86
+msgid "INSTRUCTION -- A VM instruction is about to be executed."
+msgstr ""
+
+#: ../../pep-0669.rst:87
+msgid "JUMP -- An unconditional jump in the control flow graph is reached."
+msgstr ""
+
+#: ../../pep-0669.rst:88
+msgid "BRANCH -- A conditional branch is about to be taken (or not)."
+msgstr ""
+
+#: ../../pep-0669.rst:89
+msgid "MARKER -- A marker is hit"
+msgstr ""
+
+#: ../../pep-0669.rst:91
+msgid "More events may be added in the future."
+msgstr ""
+
+#: ../../pep-0669.rst:93
+msgid ""
+"All events will be attributes of the ``Event`` enum in "
+"``sys.monitoring``::"
+msgstr ""
+
+#: ../../pep-0669.rst:98
+msgid ""
+"Note that ``Event`` is an ``IntFlag`` which means that the events can be "
+"or-ed together to form a set of events."
+msgstr ""
+
+#: ../../pep-0669.rst:102
+msgid "Tool identifiers"
+msgstr ""
+
+#: ../../pep-0669.rst:104
+msgid ""
+"The VM can support up to 6 tools at once. Before registering or "
+"activating events, a tool should choose an identifier. Identifiers are "
+"integers in the range 0 to 5."
+msgstr ""
+
+#: ../../pep-0669.rst:114
+msgid ""
+"``sys.monitoring.use_tool_id`` raises a ``ValueError`` if ``id`` is in "
+"use. ``sys.monitoring.get_tool`` returns the name of the tool if ``id`` "
+"is in use, otherwise it returns ``None``."
+msgstr ""
+
+#: ../../pep-0669.rst:118
+msgid ""
+"All IDs are treated the same by the VM with regard to events, but the "
+"following IDs are pre-defined to make co-operation of tools easier::"
+msgstr ""
+
+#: ../../pep-0669.rst:126
+msgid ""
+"There is no obligation to set an ID, nor is there anything preventing a "
+"tool from using an ID even it is already in use. However, tool are "
+"encouraged to use a unique ID and respect other tools."
+msgstr ""
+
+#: ../../pep-0669.rst:130
+msgid ""
+"For example, if a debugger were attached and ``DEBUGGER_ID`` were in use,"
+" it should report an error, rather than carrying on regardless."
+msgstr ""
+
+#: ../../pep-0669.rst:133
+msgid ""
+"The ``OPTIMIZER_ID`` is provided for tools like Cinder or PyTorch that "
+"want to optimize Python code, but need to decide what to optimize in a "
+"way that depends on some wider context."
+msgstr ""
+
+#: ../../pep-0669.rst:138
+msgid "Setting events globally"
+msgstr ""
+
+#: ../../pep-0669.rst:140
+msgid ""
+"Events can be controlled globally by modifying the set of events being "
+"monitored:"
+msgstr ""
+
+#: ../../pep-0669.rst:142
+msgid ""
+"``sys.monitoring.get_events(tool_id:int)->Event`` Returns the ``Event`` "
+"set for all the active events."
+msgstr ""
+
+#: ../../pep-0669.rst:145
+msgid ""
+"``sys.monitoring.set_events(tool_id:int, event_set: Event)`` Activates "
+"all events which are set in ``event_set``."
+msgstr ""
+
+#: ../../pep-0669.rst:148
+msgid "No events are active by default."
+msgstr ""
+
+#: ../../pep-0669.rst:151
+msgid "Per code object events"
+msgstr ""
+
+#: ../../pep-0669.rst:153
+msgid "Events can also be controlled on a per code object basis:"
+msgstr ""
+
+#: ../../pep-0669.rst:155
+msgid ""
+"``sys.monitoring.get_local_events(tool_id:int, code: CodeType)->Event`` "
+"Returns the ``Event`` set for all the local events for ``code``"
+msgstr ""
+
+#: ../../pep-0669.rst:158
+msgid ""
+"``sys.monitoring.set_local_events(tool_id:int, code: CodeType, event_set:"
+" Event)`` Activates all the local events for ``code``  which are set in "
+"``event_set``."
+msgstr ""
+
+#: ../../pep-0669.rst:161
+msgid ""
+"Local events add to global events, but do not mask them. In other words, "
+"all global events will trigger for a code object, regardless of the local"
+" events."
+msgstr ""
+
+#: ../../pep-0669.rst:166
+msgid "Register callback functions"
+msgstr ""
+
+#: ../../pep-0669.rst:168
+msgid "To register a callable for events call::"
+msgstr ""
+
+#: ../../pep-0669.rst:172
+msgid ""
+"If another callback was registered for the given ``tool_id`` and "
+"``event``, it is unregistered and returned. Otherwise "
+"``register_callback`` returns ``None``."
+msgstr ""
+
+#: ../../pep-0669.rst:176
+msgid ""
+"Functions can be unregistered by calling "
+"``sys.monitoring.register_callback(tool_id, event, None)``."
+msgstr ""
+
+#: ../../pep-0669.rst:179
+msgid "Callback functions can be registered and unregistered at any time."
+msgstr ""
+
+#: ../../pep-0669.rst:181
+msgid ""
+"Registering or unregistering a callback function will generate a "
+"``sys.audit`` event."
+msgstr ""
+
+#: ../../pep-0669.rst:184
+msgid "Callback function arguments"
+msgstr ""
+
+#: ../../pep-0669.rst:186
+msgid ""
+"When an active event occurs, the registered callback function is called. "
+"Different events will provide the callback function with different "
+"arguments, as follows:"
+msgstr ""
+
+#: ../../pep-0669.rst:189
+msgid "All events starting with ``PY_``:"
+msgstr ""
+
+#: ../../pep-0669.rst:191 ../../pep-0669.rst:215 ../../pep-0669.rst:219
+msgid "``func(code: CodeType, instruction_offset: int) -> DISABLE | Any``"
+msgstr ""
+
+#: ../../pep-0669.rst:193
+msgid "``C_CALL`` and ``C_RETURN``:"
+msgstr ""
+
+#: ../../pep-0669.rst:195
+msgid ""
+"``func(code: CodeType, instruction_offset: int, callable: object) -> "
+"DISABLE | Any``"
+msgstr ""
+
+#: ../../pep-0669.rst:197
+msgid "``RAISE`` and ``EXCEPTION_HANDLED``:"
+msgstr ""
+
+#: ../../pep-0669.rst:199
+msgid ""
+"``func(code: CodeType, instruction_offset: int, exception: BaseException)"
+" -> DISABLE | Any``"
+msgstr ""
+
+#: ../../pep-0669.rst:201
+msgid "``LINE``:"
+msgstr ""
+
+#: ../../pep-0669.rst:203
+msgid "``func(code: CodeType, line_number: int) -> DISABLE | Any``"
+msgstr ""
+
+#: ../../pep-0669.rst:205
+msgid "``BRANCH``:"
+msgstr ""
+
+#: ../../pep-0669.rst:207
+msgid ""
+"``func(code: CodeType, instruction_offset: int, destination_offset: int) "
+"-> DISABLE | Any``"
+msgstr ""
+
+#: ../../pep-0669.rst:209
+msgid ""
+"Note that the ``destination_offset`` is where the code will next execute."
+" For an untaken branch this will be the offset of the instruction "
+"following the branch."
+msgstr ""
+
+#: ../../pep-0669.rst:213
+msgid "``INSTRUCTION``:"
+msgstr ""
+
+#: ../../pep-0669.rst:217
+msgid "``MARKER``:"
+msgstr ""
+
+#: ../../pep-0669.rst:221
+msgid ""
+"If a callback function returns ``DISABLE``, then that function will no "
+"longer be called for that ``(code, instruction_offset)`` until "
+"``sys.monitoring.restart_events()`` is called. This feature is provided "
+"for coverage and other tools that are only interested seeing an event "
+"once."
+msgstr ""
+
+#: ../../pep-0669.rst:227
+msgid ""
+"Note that ``sys.monitoring.restart_events()`` is not specific to one "
+"tool, so tools must be prepared to receive events that they have chosen "
+"to DISABLE."
+msgstr ""
+
+#: ../../pep-0669.rst:231
+msgid "Events in callback functions"
+msgstr ""
+
+#: ../../pep-0669.rst:233
+msgid ""
+"Events are suspended in callback functions and their callees for the tool"
+" that registered that callback."
+msgstr ""
+
+#: ../../pep-0669.rst:236
+msgid ""
+"That means that other tools will see events in the callback functions for"
+" other tools. This could be useful for debugging a profiling tool, but "
+"would produce misleading profiles, as the debugger tool would show up in "
+"the profile."
+msgstr ""
+
+#: ../../pep-0669.rst:241
+msgid "Inserting and removing markers"
+msgstr ""
+
+#: ../../pep-0669.rst:243
+msgid "Two new functions are added to the ``sys`` module to support markers."
+msgstr ""
+
+#: ../../pep-0669.rst:245
+msgid ""
+"``sys.monitoring.insert_marker(tool_id: int, code: CodeType, offset: "
+"int)``"
+msgstr ""
+
+#: ../../pep-0669.rst:246
+msgid ""
+"``sys.monitoring.remove_marker(tool_id: int, code: CodeType, offset: "
+"int)``"
+msgstr ""
+
+#: ../../pep-0669.rst:248
+msgid ""
+"A single code object may not have more than 255 markers at once. "
+"``sys.monitoring.insert_marker`` raises a ``ValueError`` if this limit is"
+" exceeded."
+msgstr ""
+
+#: ../../pep-0669.rst:253
+msgid "Order of events"
+msgstr ""
+
+#: ../../pep-0669.rst:255
+msgid ""
+"If an instructions triggers several events they occur in the following "
+"order:"
+msgstr ""
+
+#: ../../pep-0669.rst:257
+msgid "MARKER"
+msgstr ""
+
+#: ../../pep-0669.rst:258 ../../pep-0669.rst:374 ../../pep-0669.rst:430
+msgid "INSTRUCTION"
+msgstr ""
+
+#: ../../pep-0669.rst:259 ../../pep-0669.rst:374 ../../pep-0669.rst:429
+msgid "LINE"
+msgstr ""
+
+#: ../../pep-0669.rst:260
+msgid "All other events (only one of these events can occur per instruction)"
+msgstr ""
+
+#: ../../pep-0669.rst:262
+msgid "Each event is delivered to tools in ascending order of ID."
+msgstr ""
+
+#: ../../pep-0669.rst:265
+msgid "Attributes of the ``sys.monitoring`` namespace"
+msgstr ""
+
+#: ../../pep-0669.rst:267
+msgid "``class Event(enum.IntFlag)``"
+msgstr ""
+
+#: ../../pep-0669.rst:268
+msgid "``def use_tool_id(id)->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:269 ../../pep-0669.rst:354
+msgid "``def free_tool_id(id)->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:270 ../../pep-0669.rst:340
+msgid "``def get_events(tool_id: int)->Event``"
+msgstr ""
+
+#: ../../pep-0669.rst:271 ../../pep-0669.rst:355
+msgid "``def set_events(tool_id: int, event_set: Event)->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:272 ../../pep-0669.rst:341
+msgid "``def get_local_events(tool_id: int, code: CodeType)->Event``"
+msgstr ""
+
+#: ../../pep-0669.rst:273 ../../pep-0669.rst:347
+msgid ""
+"``def set_local_events(tool_id: int, code: CodeType, event_set: "
+"Event)->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:274 ../../pep-0669.rst:342
+msgid ""
+"``def register_callback(tool_id: int, event: Event, func: "
+"Callable)->Optional[Callable]``"
+msgstr ""
+
+#: ../../pep-0669.rst:275 ../../pep-0669.rst:348
+msgid "``def insert_marker(tool_id: int, code: CodeType, offset: Event)->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:276 ../../pep-0669.rst:349
+msgid "``def remove_marker(tool_id: int, code: CodeType, offset: Event)->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:277 ../../pep-0669.rst:356
+msgid "``def restart_events()->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:278
+msgid "``DISABLE: object``"
+msgstr ""
+
+#: ../../pep-0669.rst:281
+msgid "Access to \"debug only\" features"
+msgstr ""
+
+#: ../../pep-0669.rst:283
+msgid ""
+"Some features of the standard library are not accessible to normal code, "
+"but are accessible to debuggers. For example, setting local variables, or"
+" the line number."
+msgstr ""
+
+#: ../../pep-0669.rst:287
+msgid "These features will be available to callback functions."
+msgstr ""
+
+#: ../../pep-0669.rst:290
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0669.rst:292
+msgid "This PEP is mostly backwards compatible."
+msgstr ""
+
+#: ../../pep-0669.rst:294
+msgid ""
+"There are some compatibility issues with :pep:`523`, as the behavior of "
+":pep:`523` plugins is outside of the VM's control. It is up to :pep:`523`"
+" plugins to ensure that they respect the semantics of this PEP. Simple "
+"plugins that do not change the state of the VM, and defer execution to "
+"``_PyEval_EvalFrameDefault()`` should continue to work."
+msgstr ""
+
+#: ../../pep-0669.rst:300
+msgid ""
+":func:`sys.settrace` and :func:`sys.setprofile` will act as if they were "
+"tools 6 and 7 respectively, so can be used along side this PEP."
+msgstr ""
+
+#: ../../pep-0669.rst:303
+msgid ""
+"This means that :func:`sys.settrace` and :func:`sys.setprofile` may not "
+"work correctly with all :pep:`523` plugins. Although, simple :pep:`523` "
+"plugins, as described above, should be fine."
+msgstr ""
+
+#: ../../pep-0669.rst:308
+msgid "Performance"
+msgstr ""
+
+#: ../../pep-0669.rst:310
+#, python-format
+msgid ""
+"If no events are active, this PEP should have a small positive impact on "
+"performance. Experiments show between 1 and 2% speedup from not "
+"supporting :func:`sys.settrace` directly."
+msgstr ""
+
+#: ../../pep-0669.rst:314
+msgid ""
+"The performance of :func:`sys.settrace` will be worse. The performance of"
+" :func:`sys.setprofile` should be better. However, tools relying on "
+":func:`sys.settrace` and :func:`sys.setprofile` can be made a lot faster "
+"by using the API provided by this PEP."
+msgstr ""
+
+#: ../../pep-0669.rst:320
+msgid ""
+"If a small set of events are active, e.g. for a debugger, then the "
+"overhead of callbacks will be orders of magnitudes less than for "
+":func:`sys.settrace` and much cheaper than using :pep:`523`."
+msgstr ""
+
+#: ../../pep-0669.rst:324
+msgid ""
+"Coverage tools can be implemented at very low cost, by returning "
+"``DISABLE`` in all callbacks."
+msgstr ""
+
+#: ../../pep-0669.rst:327
+msgid ""
+"For heavily instrumented code, e.g. using ``LINE``, performance should be"
+" better than ``sys.settrace``, but not by that much as performance will "
+"be dominated by the time spent in callbacks."
+msgstr ""
+
+#: ../../pep-0669.rst:331
+msgid ""
+"For optimizing virtual machines, such as future versions of CPython (and "
+"``PyPy`` should they choose to support this API), changes to the set "
+"active events in the midst of a long running program could be quite "
+"expensive, possibly taking hundreds of milliseconds as it triggers de-"
+"optimizations. Once such de-optimization has occurred, performance should"
+" recover as the VM can re-optimize the instrumented code."
+msgstr ""
+
+#: ../../pep-0669.rst:338
+msgid "In general these operations can be considered to be fast:"
+msgstr ""
+
+#: ../../pep-0669.rst:343
+msgid "``def get_tool(tool_id) -> str | None``"
+msgstr ""
+
+#: ../../pep-0669.rst:345
+msgid "These operations are slower, but not especially so:"
+msgstr ""
+
+#: ../../pep-0669.rst:351
+msgid "And these operations should be regarded as slow:"
+msgstr ""
+
+#: ../../pep-0669.rst:353
+msgid "``def use_tool_id(id, name:str)->None``"
+msgstr ""
+
+#: ../../pep-0669.rst:358
+msgid ""
+"How slow the slow operations are depends on when then happen. If done "
+"early in the program, before modules are loaded, they should be fairly "
+"inexpensive."
+msgstr ""
+
+#: ../../pep-0669.rst:363
+msgid "Memory Consumption"
+msgstr ""
+
+#: ../../pep-0669.rst:365
+msgid ""
+"When not in use, this PEP will have a neglible change on memory "
+"consumption."
+msgstr ""
+
+#: ../../pep-0669.rst:367
+msgid ""
+"How memory is used is very much an implementation detail. However, we "
+"expect that for 3.12 the additional memory consumption per code object "
+"will be **roughly** as follows:"
+msgstr ""
+
+#: ../../pep-0669.rst:374
+msgid "Tools"
+msgstr ""
+
+#: ../../pep-0669.rst:374
+msgid "Others"
+msgstr ""
+
+#: ../../pep-0669.rst:376
+msgid "One"
+msgstr ""
+
+#: ../../pep-0669.rst:376
+msgid "None"
+msgstr ""
+
+#: ../../pep-0669.rst:376 ../../pep-0669.rst:378
+msgid "≈40%"
+msgstr ""
+
+#: ../../pep-0669.rst:376
+msgid "≈80%"
+msgstr ""
+
+#: ../../pep-0669.rst:378
+msgid "Two or more"
+msgstr ""
+
+#: ../../pep-0669.rst:378
+msgid "≈120%"
+msgstr ""
+
+#: ../../pep-0669.rst:378
+msgid "≈200%"
+msgstr ""
+
+#: ../../pep-0669.rst:383
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0669.rst:385
+msgid ""
+"Allowing modification of running code has some security implications, but"
+" no more than the ability to generate and call new code."
+msgstr ""
+
+#: ../../pep-0669.rst:388
+msgid "All the new functions listed above will trigger audit hooks."
+msgstr ""
+
+#: ../../pep-0669.rst:391
+msgid "Implementation"
+msgstr ""
+
+#: ../../pep-0669.rst:393
+msgid ""
+"This outlines the proposed implementation for CPython 3.12. The actual "
+"implementation for later versions of CPython and other Python "
+"implementations may differ considerably."
+msgstr ""
+
+#: ../../pep-0669.rst:397
+msgid ""
+"The proposed implementation of this PEP will be built on top of the "
+"quickening step of CPython 3.11, as described in :pep:`PEP 659 "
+"<659#quickening>`. Instrumentation works in much the same way as "
+"quickening, bytecodes are replaced with instrumented ones as needed."
+msgstr ""
+
+#: ../../pep-0669.rst:402
+msgid ""
+"For example, if the ``C_CALL`` event is turned on, then all call "
+"instructions will be replaced with a ``INSTRUMENTED_CALL`` instruction."
+msgstr ""
+
+#: ../../pep-0669.rst:406
+msgid ""
+"Note that this will interfere with specialization, which will result in "
+"some performance degradation in addition to the overhead of calling the "
+"registered callable."
+msgstr ""
+
+#: ../../pep-0669.rst:410
+msgid ""
+"When the set of active events changes, the VM will immediately update all"
+" code objects present on the call stack of any thread. It will also set "
+"in place traps to ensure that all code objects are correctly instrumented"
+" when called. Consequently changing the set of active events should be "
+"done as infrequently as possible, as it could be quite an expensive "
+"operation."
+msgstr ""
+
+#: ../../pep-0669.rst:416
+msgid ""
+"Other events, such as ``RAISE`` can be turned on or off cheaply, as they "
+"do not rely on code instrumentation, but runtime checks when the "
+"underlying event occurs."
+msgstr ""
+
+#: ../../pep-0669.rst:420
+msgid ""
+"The exact set of events that require instrumentation is an implementation"
+" detail, but for the current design, the following events will require "
+"instrumentation:"
+msgstr ""
+
+#: ../../pep-0669.rst:423
+msgid "PY_START"
+msgstr ""
+
+#: ../../pep-0669.rst:424 ../../pep-0669.rst:509
+msgid "PY_RESUME"
+msgstr ""
+
+#: ../../pep-0669.rst:425 ../../pep-0669.rst:511
+msgid "PY_RETURN"
+msgstr ""
+
+#: ../../pep-0669.rst:426 ../../pep-0669.rst:512
+msgid "PY_YIELD"
+msgstr ""
+
+#: ../../pep-0669.rst:427 ../../pep-0669.rst:514
+msgid "C_CALL"
+msgstr ""
+
+#: ../../pep-0669.rst:428 ../../pep-0669.rst:515
+msgid "C_RETURN"
+msgstr ""
+
+#: ../../pep-0669.rst:431
+msgid "JUMP"
+msgstr ""
+
+#: ../../pep-0669.rst:432
+msgid "BRANCH"
+msgstr ""
+
+#: ../../pep-0669.rst:434
+msgid ""
+"Each instrumented bytecode will require an additional 8 bits of "
+"information to note which tool the instrumentation applies to. ``LINE`` "
+"and ``INSTRUCTION`` events require additional information, as they need "
+"to store the original instruction, or even the instrumented instruction "
+"if they overlap other instrumentation."
+msgstr ""
+
+#: ../../pep-0669.rst:442
+msgid "Implementing tools"
+msgstr ""
+
+#: ../../pep-0669.rst:444
+msgid ""
+"It is the philosophy of this PEP that it should be possible for third-"
+"party monitoring tools to achieve high-performance, not that it should be"
+" easy for them to do so."
+msgstr ""
+
+#: ../../pep-0669.rst:447
+msgid ""
+"Converting events into data that is meaningful to the users is the "
+"responsibility of the tool."
+msgstr ""
+
+#: ../../pep-0669.rst:450
+msgid ""
+"All events have a cost, and tools should attempt to the use set of events"
+" that trigger the least often and still provide the necessary "
+"information."
+msgstr ""
+
+#: ../../pep-0669.rst:454
+msgid "Debuggers"
+msgstr ""
+
+#: ../../pep-0669.rst:457
+msgid "Inserting breakpoints"
+msgstr ""
+
+#: ../../pep-0669.rst:459
+msgid "Breakpoints can be inserted by using markers. For example::"
+msgstr ""
+
+#: ../../pep-0669.rst:463
+msgid ""
+"Which will insert a marker at ``offset`` in ``code``, which can be used "
+"as a breakpoint."
+msgstr ""
+
+#: ../../pep-0669.rst:466
+msgid ""
+"To insert a breakpoint at a given line, the matching instruction offsets "
+"should be found from ``code.co_lines()``."
+msgstr ""
+
+#: ../../pep-0669.rst:469
+msgid "Breakpoints can be removed by removing the marker::"
+msgstr ""
+
+#: ../../pep-0669.rst:474
+msgid "Stepping"
+msgstr ""
+
+#: ../../pep-0669.rst:476
+msgid ""
+"Debuggers usually offer the ability to step execution by a single "
+"instruction or line."
+msgstr ""
+
+#: ../../pep-0669.rst:479
+msgid ""
+"This can be implemented by inserting a new marker at the required "
+"offset(s) of the code to be stepped to, and by removing the current "
+"marker."
+msgstr ""
+
+#: ../../pep-0669.rst:483
+msgid "It is the job of the debugger to compute the relevant offset(s)."
+msgstr ""
+
+#: ../../pep-0669.rst:486
+msgid "Attaching"
+msgstr ""
+
+#: ../../pep-0669.rst:488
+msgid ""
+"Debuggers can use the ``PY_CALL``, etc. events to be informed when a code"
+" object is first encountered, so that any necessary breakpoints can be "
+"inserted."
+msgstr ""
+
+#: ../../pep-0669.rst:493
+msgid "Coverage Tools"
+msgstr ""
+
+#: ../../pep-0669.rst:495
+msgid ""
+"Coverage tools need to track which parts of the control graph have been "
+"executed. To do this, they need to register for the ``PY_`` events, plus "
+"``JUMP`` and ``BRANCH``."
+msgstr ""
+
+#: ../../pep-0669.rst:499
+msgid ""
+"This information can be then be converted back into a line based report "
+"after execution has completed."
+msgstr ""
+
+#: ../../pep-0669.rst:503
+msgid "Profilers"
+msgstr ""
+
+#: ../../pep-0669.rst:505
+msgid ""
+"Simple profilers need to gather information about calls. To do this "
+"profilers should register for the following events:"
+msgstr ""
+
+#: ../../pep-0669.rst:508
+msgid "PY_CALL"
+msgstr ""
+
+#: ../../pep-0669.rst:510
+msgid "PY_THROW"
+msgstr ""
+
+#: ../../pep-0669.rst:513
+msgid "PY_UNWIND"
+msgstr ""
+
+#: ../../pep-0669.rst:519
+msgid "Line based profilers"
+msgstr ""
+
+#: ../../pep-0669.rst:521
+msgid ""
+"Line based profilers can use the ``LINE`` and ``JUMP`` events. "
+"Implementers of profilers should be aware that instrumenting ``LINE`` "
+"events will have a large impact on performance."
+msgstr ""
+
+#: ../../pep-0669.rst:527
+msgid ""
+"Instrumenting profilers have significant overhead and will distort the "
+"results of profiling. Unless you need exact call counts, consider using a"
+" statistical profiler."
+msgstr ""
+
+#: ../../pep-0669.rst:533
+msgid "Rejected ideas"
+msgstr ""
+
+#: ../../pep-0669.rst:535
+msgid ""
+"A draft version of this PEP proposed making the user responsible for "
+"inserting the monitoring instructions, rather than have VM do it. "
+"However, that puts too much of a burden on the tools, and would make "
+"attaching a debugger nearly impossible."
+msgstr ""
+
+#: ../../pep-0669.rst:542
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0669.rst:544
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

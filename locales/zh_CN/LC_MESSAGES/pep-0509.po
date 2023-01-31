@@ -8,36 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0509.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0509.txt:1
-msgid "509"
-msgstr ""
-
-#: ../../pep-0509.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0509.txt:2
-msgid "Add a private version to dict"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0509.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0509.txt:5
+#: ../../pep-0509.txt:3
 msgid "Victor Stinner <vstinner@python.org>"
 msgstr ""
 
@@ -45,15 +29,15 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0509.txt:6
-msgid "Final"
+#: ../../pep-0509.txt:4
+msgid "Superseded"
 msgstr ""
 
 #: ../../pep-0509.txt
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0509.txt:7
+#: ../../pep-0509.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0509.txt:9
+#: ../../pep-0509.txt:7
 msgid "04-Jan-2016"
 msgstr ""
 
@@ -69,26 +53,60 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0509.txt:10
+#: ../../pep-0509.txt:8
 msgid "3.6"
 msgstr ""
 
+#: ../../pep-0509.txt
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0509.txt:9
+msgid ""
+"`08-Jan-2016 <https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/FPB7MLWMRSCYQVOUYN2SUV4NR47TPPG3/>`__, "
+"`11-Jan-2016 <https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/AY42HER5DFKA7DJV25AL7YX5DQPF6RMV/>`__, `14-Apr-2016"
+" <https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/UXEQIDSTVLAHJVDQJMJPCU2QZGYMBV2H/>`__, `19-Apr-2016"
+" <https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/2S562SVRK5S2QKP3SFONG357Z72I6KLE/>`__"
+msgstr ""
+
+#: ../../pep-0509.txt
+msgid "Superseded-By"
+msgstr ""
+
+#: ../../pep-0509.txt:13
+msgid "699"
+msgstr ""
+
+#: ../../pep-0509.txt
+msgid "Resolution"
+msgstr ""
+
 #: ../../pep-0509.txt:14
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/message/QFVJV6YQOUSWIYY4FBORY647YCBSCIMQ/"
+msgstr ""
+
+#: ../../pep-0509.txt:18
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0509.txt:16
+#: ../../pep-0509.txt:20
 msgid ""
 "Add a new private version to the builtin ``dict`` type, incremented at "
 "each dictionary creation and at each dictionary change, to implement fast"
 " guards on namespaces."
 msgstr ""
 
-#: ../../pep-0509.txt:22
+#: ../../pep-0509.txt:26
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0509.txt:24
+#: ../../pep-0509.txt:28
 msgid ""
 "In Python, the builtin ``dict`` type is used by many instructions. For "
 "example, the ``LOAD_GLOBAL`` instruction looks up a variable in the "
@@ -98,7 +116,7 @@ msgid ""
 "namespace) is usually optimized to an array, but it can be a dict too."
 msgstr ""
 
-#: ../../pep-0509.txt:31
+#: ../../pep-0509.txt:35
 msgid ""
 "Python is hard to optimize because almost everything is mutable: builtin "
 "functions, function code, global variables, local variables, ... can be "
@@ -107,14 +125,14 @@ msgid ""
 "these checks \"guards\"."
 msgstr ""
 
-#: ../../pep-0509.txt:37
+#: ../../pep-0509.txt:41
 msgid ""
 "The speedup of optimizations depends on the speed of guard checks. This "
 "PEP proposes to add a private version to dictionaries to implement fast "
 "guards on namespaces."
 msgstr ""
 
-#: ../../pep-0509.txt:41
+#: ../../pep-0509.txt:45
 msgid ""
 "Dictionary lookups can be skipped if the version does not change, which "
 "is the common case for most namespaces. The version is globally unique, "
@@ -122,14 +140,14 @@ msgid ""
 "dictionary was not replaced with a new dictionary."
 msgstr ""
 
-#: ../../pep-0509.txt:46
+#: ../../pep-0509.txt:50
 msgid ""
 "When the dictionary version does not change, the performance of a guard "
 "does not depend on the number of watched dictionary entries: the "
 "complexity is O(1)."
 msgstr ""
 
-#: ../../pep-0509.txt:50
+#: ../../pep-0509.txt:54
 msgid ""
 "Example of optimization: copy the value of a global variable to function "
 "constants.  This optimization requires a guard on the global variable to "
@@ -140,34 +158,33 @@ msgid ""
 "next function calls)."
 msgstr ""
 
-#: ../../pep-0509.txt:58
+#: ../../pep-0509.txt:62
 msgid ""
-"See the `PEP 510 -- Specialized functions with guards "
-"<https://www.python.org/dev/peps/pep-0510/>`_ for concrete usage of "
-"guards to specialize functions and for a more general rationale on Python"
-" static optimizers."
+"See the :pep:`510 -- Specialized functions with guards <510>` for "
+"concrete usage of guards to specialize functions and for a more general "
+"rationale on Python static optimizers."
 msgstr ""
 
-#: ../../pep-0509.txt:65
+#: ../../pep-0509.txt:69
 msgid "Guard example"
 msgstr ""
 
-#: ../../pep-0509.txt:67
+#: ../../pep-0509.txt:71
 msgid ""
 "Pseudo-code of a fast guard to check if a dictionary entry was modified "
 "(created, updated or deleted) using a hypothetical "
 "``dict_get_version(dict)`` function::"
 msgstr ""
 
-#: ../../pep-0509.txt:103
+#: ../../pep-0509.txt:107
 msgid "Usage of the dict version"
 msgstr ""
 
-#: ../../pep-0509.txt:106
+#: ../../pep-0509.txt:110
 msgid "Speedup method calls"
 msgstr ""
 
-#: ../../pep-0509.txt:108
+#: ../../pep-0509.txt:112
 msgid ""
 "Yury Selivanov wrote a `patch to optimize method calls "
 "<https://bugs.python.org/issue26110>`_. The patch depends on the "
@@ -177,7 +194,7 @@ msgid ""
 "builtins dictionary has been modified."
 msgstr ""
 
-#: ../../pep-0509.txt:115
+#: ../../pep-0509.txt:119
 msgid ""
 "The cache also requires that the dictionary version is globally unique. "
 "It is possible to define a function in a namespace and call it in a "
@@ -186,19 +203,18 @@ msgid ""
 "must also be invalidated."
 msgstr ""
 
-#: ../../pep-0509.txt:123
+#: ../../pep-0509.txt:127
 msgid "Specialized functions using guards"
 msgstr ""
 
-#: ../../pep-0509.txt:125
+#: ../../pep-0509.txt:129
 msgid ""
-"The `PEP 510 -- Specialized functions with guards "
-"<https://www.python.org/dev/peps/pep-0510/>`_ proposes an API to support "
-"specialized functions with guards. It allows to implement static "
-"optimizers for Python without breaking the Python semantics."
+":pep:`510` proposes an API to support specialized functions with guards. "
+"It allows to implement static optimizers for Python without breaking the "
+"Python semantics."
 msgstr ""
 
-#: ../../pep-0509.txt:130
+#: ../../pep-0509.txt:133
 msgid ""
 "The `fatoptimizer <http://fatoptimizer.readthedocs.org/>`_ of the `FAT "
 "Python <http://faster-cpython.readthedocs.org/fat_python.html>`_ project "
@@ -206,58 +222,58 @@ msgid ""
 "optimizations which require guards on namespaces:"
 msgstr ""
 
-#: ../../pep-0509.txt:135
+#: ../../pep-0509.txt:138
 msgid ""
 "Call pure builtins: to replace ``len(\"abc\")`` with ``3``, guards on "
 "``builtins.__dict__['len']`` and ``globals()['len']`` are required"
 msgstr ""
 
-#: ../../pep-0509.txt:137
+#: ../../pep-0509.txt:140
 msgid ""
 "Loop unrolling: to unroll the loop ``for i in range(...): ...``, guards "
 "on ``builtins.__dict__['range']`` and ``globals()['range']`` are required"
 msgstr ""
 
-#: ../../pep-0509.txt:140
+#: ../../pep-0509.txt:143
 msgid "etc."
 msgstr ""
 
-#: ../../pep-0509.txt:144
+#: ../../pep-0509.txt:147
 msgid "Pyjion"
 msgstr ""
 
-#: ../../pep-0509.txt:146
+#: ../../pep-0509.txt:149
 msgid ""
 "According of Brett Cannon, one of the two main developers of Pyjion, "
 "Pyjion can benefit from dictionary version to implement optimizations."
 msgstr ""
 
-#: ../../pep-0509.txt:149
+#: ../../pep-0509.txt:152
 msgid ""
 "`Pyjion <https://github.com/Microsoft/Pyjion>`_ is a JIT compiler for "
 "Python based upon CoreCLR (Microsoft .NET Core runtime)."
 msgstr ""
 
-#: ../../pep-0509.txt:154
+#: ../../pep-0509.txt:157
 msgid "Cython"
 msgstr ""
 
-#: ../../pep-0509.txt:156
+#: ../../pep-0509.txt:159
 msgid "Cython can benefit from dictionary version to implement optimizations."
 msgstr ""
 
-#: ../../pep-0509.txt:158
+#: ../../pep-0509.txt:161
 msgid ""
 "`Cython <http://cython.org/>`_ is an optimising static compiler for both "
 "the Python programming language and the extended Cython programming "
 "language."
 msgstr ""
 
-#: ../../pep-0509.txt:164
+#: ../../pep-0509.txt:167
 msgid "Unladen Swallow"
 msgstr ""
 
-#: ../../pep-0509.txt:166
+#: ../../pep-0509.txt:169
 msgid ""
 "Even if dictionary version was not explicitly mentioned, optimizing "
 "globals and builtins lookup was part of the Unladen Swallow plan: "
@@ -266,7 +282,7 @@ msgid ""
 "<https://code.google.com/p/unladen-swallow/wiki/ProjectPlan>`_)."
 msgstr ""
 
-#: ../../pep-0509.txt:172
+#: ../../pep-0509.txt:175
 msgid ""
 "Unladen Swallow is a fork of CPython 2.6.1 adding a JIT compiler "
 "implemented with LLVM. The project stopped in 2011: `Unladen Swallow "
@@ -274,59 +290,59 @@ msgid ""
 "retrospective.html>`_."
 msgstr ""
 
-#: ../../pep-0509.txt:179
+#: ../../pep-0509.txt:182
 msgid "Changes"
 msgstr ""
 
-#: ../../pep-0509.txt:181
+#: ../../pep-0509.txt:184
 msgid ""
 "Add a ``ma_version_tag`` field to the ``PyDictObject`` structure with the"
 " C type ``PY_UINT64_T``, 64-bit unsigned integer. Add also a global "
 "dictionary version."
 msgstr ""
 
-#: ../../pep-0509.txt:185
+#: ../../pep-0509.txt:188
 msgid ""
 "Each time a dictionary is created, the global version is incremented and "
 "the dictionary version is initialized to the global version."
 msgstr ""
 
-#: ../../pep-0509.txt:188
+#: ../../pep-0509.txt:191
 msgid ""
 "Each time the dictionary content is modified, the global version must be "
 "incremented and copied to the dictionary version. Dictionary methods "
 "which can modify its content:"
 msgstr ""
 
-#: ../../pep-0509.txt:192
+#: ../../pep-0509.txt:195
 msgid "``clear()``"
 msgstr ""
 
-#: ../../pep-0509.txt:193
+#: ../../pep-0509.txt:196
 msgid "``pop(key)``"
 msgstr ""
 
-#: ../../pep-0509.txt:194
+#: ../../pep-0509.txt:197
 msgid "``popitem()``"
 msgstr ""
 
-#: ../../pep-0509.txt:195
+#: ../../pep-0509.txt:198
 msgid "``setdefault(key, value)``"
 msgstr ""
 
-#: ../../pep-0509.txt:196
+#: ../../pep-0509.txt:199
 msgid "``__delitem__(key)``"
 msgstr ""
 
-#: ../../pep-0509.txt:197
+#: ../../pep-0509.txt:200
 msgid "``__setitem__(key, value)``"
 msgstr ""
 
-#: ../../pep-0509.txt:198
+#: ../../pep-0509.txt:201
 msgid "``update(...)``"
 msgstr ""
 
-#: ../../pep-0509.txt:200
+#: ../../pep-0509.txt:203
 msgid ""
 "The choice of increasing or not the version when a dictionary method does"
 " not change its content is left to the Python implementation. A Python "
@@ -335,45 +351,45 @@ msgid ""
 "modify its content:"
 msgstr ""
 
-#: ../../pep-0509.txt:206
+#: ../../pep-0509.txt:209
 msgid "``clear()`` if the dict is already empty"
 msgstr ""
 
-#: ../../pep-0509.txt:207
+#: ../../pep-0509.txt:210
 msgid "``pop(key)`` if the key does not exist"
 msgstr ""
 
-#: ../../pep-0509.txt:208
+#: ../../pep-0509.txt:211
 msgid "``popitem()`` if the dict is empty"
 msgstr ""
 
-#: ../../pep-0509.txt:209
+#: ../../pep-0509.txt:212
 msgid "``setdefault(key, value)`` if the key already exists"
 msgstr ""
 
-#: ../../pep-0509.txt:210
+#: ../../pep-0509.txt:213
 msgid "``__delitem__(key)`` if the key does not exist"
 msgstr ""
 
-#: ../../pep-0509.txt:211
+#: ../../pep-0509.txt:214
 msgid ""
 "``__setitem__(key, value)`` if the new value is identical to the current "
 "value"
 msgstr ""
 
-#: ../../pep-0509.txt:213
+#: ../../pep-0509.txt:216
 msgid ""
 "``update()`` if called without argument or if new values are identical to"
 " current values"
 msgstr ""
 
-#: ../../pep-0509.txt:216
+#: ../../pep-0509.txt:219
 msgid ""
 "Setting a key to a new value equals to the old value is also considered "
 "as an operation modifying the dictionary content."
 msgstr ""
 
-#: ../../pep-0509.txt:219
+#: ../../pep-0509.txt:222
 msgid ""
 "Two different empty dictionaries must have a different version to be able"
 " to identify a dictionary just by its version. It allows to verify in a "
@@ -384,17 +400,17 @@ msgid ""
 "support weak references."
 msgstr ""
 
-#: ../../pep-0509.txt:227
+#: ../../pep-0509.txt:230
 msgid ""
 "The version increase must be atomic. In CPython, the Global Interpreter "
 "Lock (GIL) already protects ``dict`` methods to make changes atomic."
 msgstr ""
 
-#: ../../pep-0509.txt:230
+#: ../../pep-0509.txt:233
 msgid "Example using a hypothetical ``dict_get_version(dict)`` function::"
 msgstr ""
 
-#: ../../pep-0509.txt:245
+#: ../../pep-0509.txt:248
 msgid ""
 "The field is called ``ma_version_tag``, rather than ``ma_version``, to "
 "suggest to compare it using ``version_tag == old_version_tag``, rather "
@@ -402,36 +418,36 @@ msgid ""
 "overflow."
 msgstr ""
 
-#: ../../pep-0509.txt:252
+#: ../../pep-0509.txt:255
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0509.txt:254
+#: ../../pep-0509.txt:257
 msgid ""
 "Since the ``PyDictObject`` structure is not part of the stable ABI and "
 "the new dictionary version not exposed at the Python scope, changes are "
 "backward compatible."
 msgstr ""
 
-#: ../../pep-0509.txt:260
+#: ../../pep-0509.txt:263
 msgid "Implementation and Performance"
 msgstr ""
 
-#: ../../pep-0509.txt:262
+#: ../../pep-0509.txt:265
 msgid ""
 "The `issue #26058: PEP 509: Add ma_version_tag to PyDictObject "
 "<https://bugs.python.org/issue26058>`_ contains a patch implementing this"
 " PEP."
 msgstr ""
 
-#: ../../pep-0509.txt:266
+#: ../../pep-0509.txt:269
 msgid ""
 "On pybench and timeit microbenchmarks, the patch does not seem to add any"
 " overhead on dictionary operations. For example, the following timeit "
 "micro-benchmarks takes 318 nanoseconds before and after the change::"
 msgstr ""
 
-#: ../../pep-0509.txt:272
+#: ../../pep-0509.txt:275
 msgid ""
 "When the version does not change, ``PyDict_GetItem()`` takes 14.8 ns for "
 "a dictionary lookup, whereas a guard check only takes 3.8 ns. Moreover, a"
@@ -441,18 +457,18 @@ msgid ""
 "change (39x as fast)."
 msgstr ""
 
-#: ../../pep-0509.txt:279
+#: ../../pep-0509.txt:282
 msgid ""
 "The `fat module "
 "<http://fatoptimizer.readthedocs.org/en/latest/fat.html>`_ implements "
 "such guards: ``fat.GuardDict`` is based on the dictionary version."
 msgstr ""
 
-#: ../../pep-0509.txt:285
+#: ../../pep-0509.txt:288
 msgid "Integer overflow"
 msgstr ""
 
-#: ../../pep-0509.txt:287
+#: ../../pep-0509.txt:290
 msgid ""
 "The implementation uses the C type ``PY_UINT64_T`` to store the version: "
 "a 64 bits unsigned integer. The C code uses ``version++``. On integer "
@@ -460,7 +476,7 @@ msgid ""
 "incremented) according to the C standard."
 msgstr ""
 
-#: ../../pep-0509.txt:292
+#: ../../pep-0509.txt:295
 msgid ""
 "After an integer overflow, a guard can succeed whereas the watched "
 "dictionary key was modified. The bug only occurs at a guard check if "
@@ -468,7 +484,7 @@ msgid ""
 " the previous guard check."
 msgstr ""
 
-#: ../../pep-0509.txt:297
+#: ../../pep-0509.txt:300
 msgid ""
 "If a dictionary is modified every nanosecond, ``2 ** 64`` modifications "
 "takes longer than 584 years. Using a 32-bit version, it only takes 4 "
@@ -476,19 +492,19 @@ msgid ""
 "systems. A dictionary lookup at the C level takes 14.8 ns."
 msgstr ""
 
-#: ../../pep-0509.txt:302
+#: ../../pep-0509.txt:305
 msgid "A risk of a bug every 584 years is acceptable."
 msgstr ""
 
-#: ../../pep-0509.txt:306
+#: ../../pep-0509.txt:309
 msgid "Alternatives"
 msgstr ""
 
-#: ../../pep-0509.txt:309
+#: ../../pep-0509.txt:312
 msgid "Expose the version at Python level as a read-only __version__ property"
 msgstr ""
 
-#: ../../pep-0509.txt:311
+#: ../../pep-0509.txt:314
 msgid ""
 "The first version of the PEP proposed to expose the dictionary version as"
 " a read-only ``__version__`` property at Python level, and also to add "
@@ -496,11 +512,11 @@ msgid ""
 "``dict`` API)."
 msgstr ""
 
-#: ../../pep-0509.txt:316
+#: ../../pep-0509.txt:319
 msgid "There are multiple issues:"
 msgstr ""
 
-#: ../../pep-0509.txt:318
+#: ../../pep-0509.txt:321
 msgid ""
 "To be consistent and avoid bad surprises, the version must be added to "
 "all mapping types. Implementing a new mapping type would require extra "
@@ -508,14 +524,14 @@ msgid ""
 "type in practice."
 msgstr ""
 
-#: ../../pep-0509.txt:322
+#: ../../pep-0509.txt:325
 msgid ""
 "All Python implementations would have to implement this new property, it "
 "gives more work to other implementations, whereas they may not use the "
 "dictionary version at all."
 msgstr ""
 
-#: ../../pep-0509.txt:325
+#: ../../pep-0509.txt:328
 msgid ""
 "Exposing the dictionary version at the Python level can lead the false "
 "assumption on performances. Checking ``dict.__version__`` at the Python "
@@ -524,7 +540,7 @@ msgid ""
 "ns, the difference is only 1.2 ns (3%)::"
 msgstr ""
 
-#: ../../pep-0509.txt:337
+#: ../../pep-0509.txt:340
 msgid ""
 "The ``__version__`` can be wrapped on integer overflow. It is error "
 "prone: using ``dict.__version__ <= guard_version`` is wrong, "
@@ -533,34 +549,34 @@ msgid ""
 " in practice)."
 msgstr ""
 
-#: ../../pep-0509.txt:343
+#: ../../pep-0509.txt:346
 msgid "Mandatory bikeshedding on the property name:"
 msgstr ""
 
-#: ../../pep-0509.txt:345
+#: ../../pep-0509.txt:348
 msgid ""
 "``__cache_token__``: name proposed by Nick Coghlan, name coming from "
 "`abc.get_cache_token() "
 "<https://docs.python.org/3/library/abc.html#abc.get_cache_token>`_."
 msgstr ""
 
-#: ../../pep-0509.txt:348
+#: ../../pep-0509.txt:351
 msgid "``__version__``"
 msgstr ""
 
-#: ../../pep-0509.txt:349
+#: ../../pep-0509.txt:352
 msgid "``__version_tag__``"
 msgstr ""
 
-#: ../../pep-0509.txt:350
+#: ../../pep-0509.txt:353
 msgid "``__timestamp__``"
 msgstr ""
 
-#: ../../pep-0509.txt:354
+#: ../../pep-0509.txt:357
 msgid "Add a version to each dict entry"
 msgstr ""
 
-#: ../../pep-0509.txt:356
+#: ../../pep-0509.txt:359
 msgid ""
 "A single version per dictionary requires to keep a strong reference to "
 "the value which can keep the value alive longer than expected. If we add "
@@ -569,7 +585,7 @@ msgid ""
 "only strong references to the dictionary and to the key are needed."
 msgstr ""
 
-#: ../../pep-0509.txt:362
+#: ../../pep-0509.txt:365
 msgid ""
 "Changes: add a ``me_version_tag`` field to the ``PyDictKeyEntry`` "
 "structure, the field has the C type ``PY_UINT64_T``. When a key is "
@@ -577,14 +593,14 @@ msgid ""
 "which is incremented at any change (create, modify, delete)."
 msgstr ""
 
-#: ../../pep-0509.txt:367
+#: ../../pep-0509.txt:370
 msgid ""
 "Pseudo-code of a fast guard to check if a dictionary key was modified "
 "using hypothetical ``dict_get_version(dict)`` and "
 "``dict_get_entry_version(dict)`` functions::"
 msgstr ""
 
-#: ../../pep-0509.txt:402
+#: ../../pep-0509.txt:405
 msgid ""
 "The main drawback of this option is the impact on the memory footprint. "
 "It increases the size of each dictionary entry, so the overhead depends "
@@ -593,48 +609,44 @@ msgid ""
 "64-bit system."
 msgstr ""
 
-#: ../../pep-0509.txt:408
+#: ../../pep-0509.txt:411
 msgid ""
 "In Python, the memory footprint matters and the trend is to reduce it. "
 "Examples:"
 msgstr ""
 
-#: ../../pep-0509.txt:411
-msgid ""
-"`PEP 393 -- Flexible String Representation "
-"<https://www.python.org/dev/peps/pep-0393/>`_"
+#: ../../pep-0509.txt:414
+msgid ":pep:`393` -- Flexible String Representation"
 msgstr ""
 
-#: ../../pep-0509.txt:413
-msgid ""
-"`PEP 412 -- Key-Sharing Dictionary "
-"<https://www.python.org/dev/peps/pep-0412/>`_"
+#: ../../pep-0509.txt:415
+msgid ":pep:`412` -- Key-Sharing Dictionary"
 msgstr ""
 
-#: ../../pep-0509.txt:418
+#: ../../pep-0509.txt:419
 msgid "Add a new dict subtype"
 msgstr ""
 
-#: ../../pep-0509.txt:420
+#: ../../pep-0509.txt:421
 msgid ""
 "Add a new ``verdict`` type, subtype of ``dict``. When guards are needed, "
 "use the ``verdict`` for namespaces (module namespace, type namespace, "
 "instance namespace, etc.) instead of ``dict``."
 msgstr ""
 
-#: ../../pep-0509.txt:424
+#: ../../pep-0509.txt:425
 msgid ""
 "Leave the ``dict`` type unchanged to not add any overhead (CPU, memory "
 "footprint) when guards are not used."
 msgstr ""
 
-#: ../../pep-0509.txt:427
+#: ../../pep-0509.txt:428
 msgid ""
 "Technical issue: a lot of C code in the wild, including CPython core, "
 "expecting the exact ``dict`` type. Issues:"
 msgstr ""
 
-#: ../../pep-0509.txt:430
+#: ../../pep-0509.txt:431
 msgid ""
 "``exec()`` requires a ``dict`` for globals and locals. A lot of code use "
 "``globals={}``. It is not possible to cast the ``dict`` to a ``dict`` "
@@ -642,54 +654,54 @@ msgid ""
 "modified (``dict`` is mutable)."
 msgstr ""
 
-#: ../../pep-0509.txt:434
+#: ../../pep-0509.txt:435
 msgid ""
 "C functions call directly ``PyDict_xxx()`` functions, instead of calling "
 "``PyObject_xxx()`` if the object is a ``dict`` subtype"
 msgstr ""
 
-#: ../../pep-0509.txt:436
+#: ../../pep-0509.txt:437
 msgid ""
 "``PyDict_CheckExact()`` check fails on ``dict`` subtype, whereas some "
 "functions require the exact ``dict`` type."
 msgstr ""
 
-#: ../../pep-0509.txt:438
+#: ../../pep-0509.txt:439
 msgid ""
 "``Python/ceval.c`` does not completely supports dict subtypes for "
 "namespaces"
 msgstr ""
 
-#: ../../pep-0509.txt:442
+#: ../../pep-0509.txt:443
 msgid "The ``exec()`` issue is a blocker issue."
 msgstr ""
 
-#: ../../pep-0509.txt:444
+#: ../../pep-0509.txt:445
 msgid "Other issues:"
 msgstr ""
 
-#: ../../pep-0509.txt:446
+#: ../../pep-0509.txt:447
 msgid ""
 "The garbage collector has a special code to \"untrack\" ``dict`` "
 "instances. If a ``dict`` subtype is used for namespaces, the garbage "
 "collector can be unable to break some reference cycles."
 msgstr ""
 
-#: ../../pep-0509.txt:449
+#: ../../pep-0509.txt:450
 msgid ""
 "Some functions have a fast-path for ``dict`` which would not be taken for"
 " ``dict`` subtypes, and so it would make Python a little bit slower."
 msgstr ""
 
-#: ../../pep-0509.txt:455
+#: ../../pep-0509.txt:456
 msgid "Prior Art"
 msgstr ""
 
-#: ../../pep-0509.txt:458
+#: ../../pep-0509.txt:459
 msgid "Method cache and type version tag"
 msgstr ""
 
-#: ../../pep-0509.txt:460
+#: ../../pep-0509.txt:461
 msgid ""
 "In 2007, Armin Rigo wrote a patch to implement a cache of methods. It was"
 " merged into Python 2.6.  The patch adds a \"type attribute cache version"
@@ -697,11 +709,11 @@ msgid ""
 "(the ``PyTypeObject`` structure)."
 msgstr ""
 
-#: ../../pep-0509.txt:465
+#: ../../pep-0509.txt:466
 msgid "The type version tag is not exposed at the Python level."
 msgstr ""
 
-#: ../../pep-0509.txt:467
+#: ../../pep-0509.txt:468
 msgid ""
 "The version tag has the C type ``unsigned int``. The cache is a global "
 "hash table of 4096 entries, shared by all types. The cache is global to "
@@ -711,7 +723,7 @@ msgid ""
 "type ``unsigned int``."
 msgstr ""
 
-#: ../../pep-0509.txt:474
+#: ../../pep-0509.txt:475
 msgid ""
 "By default, a type has its \"valid version tag\" flag cleared to indicate"
 " that the version tag is invalid. When the first method of the type is "
@@ -721,13 +733,13 @@ msgid ""
 "the entry is removed because its version tag is outdated."
 msgstr ""
 
-#: ../../pep-0509.txt:481
+#: ../../pep-0509.txt:482
 msgid ""
 "On integer overflow, the whole cache is cleared and the global version "
 "tag is reset to ``0``."
 msgstr ""
 
-#: ../../pep-0509.txt:484
+#: ../../pep-0509.txt:485
 msgid ""
 "See `Method cache (issue #1685986) "
 "<https://bugs.python.org/issue1685986>`_ and `Armin's method cache "
@@ -735,11 +747,11 @@ msgid ""
 "<https://bugs.python.org/issue1700288>`_."
 msgstr ""
 
-#: ../../pep-0509.txt:491
+#: ../../pep-0509.txt:492
 msgid "Globals / builtins cache"
 msgstr ""
 
-#: ../../pep-0509.txt:493
+#: ../../pep-0509.txt:494
 msgid ""
 "In 2010, Antoine Pitrou proposed a `Globals / builtins cache (issue "
 "#10401) <http://bugs.python.org/issue10401>`_ which adds a private "
@@ -747,22 +759,22 @@ msgid ""
 "the field has the C type ``Py_ssize_t``."
 msgstr ""
 
-#: ../../pep-0509.txt:498
+#: ../../pep-0509.txt:499
 msgid ""
 "The patch adds a \"global and builtin cache\" to functions and frames, "
 "and changes ``LOAD_GLOBAL`` and ``STORE_GLOBAL`` instructions to use the "
 "cache."
 msgstr ""
 
-#: ../../pep-0509.txt:502
+#: ../../pep-0509.txt:503
 msgid "The change on the ``PyDictObject`` structure is very similar to this PEP."
 msgstr ""
 
-#: ../../pep-0509.txt:507
+#: ../../pep-0509.txt:508
 msgid "Cached globals+builtins lookup"
 msgstr ""
 
-#: ../../pep-0509.txt:509
+#: ../../pep-0509.txt:510
 msgid ""
 "In 2006, Andrea Griffini proposed a patch implementing a `Cached "
 "globals+builtins lookup optimization "
@@ -771,18 +783,18 @@ msgid ""
 "the field has the C type ``size_t``."
 msgstr ""
 
-#: ../../pep-0509.txt:515
+#: ../../pep-0509.txt:516
 msgid ""
 "Thread on python-dev: `About dictionary lookup caching "
 "<https://mail.python.org/pipermail/python-"
 "dev/2006-December/070348.html>`_ (December 2006)."
 msgstr ""
 
-#: ../../pep-0509.txt:521
+#: ../../pep-0509.txt:522
 msgid "Guard against changing dict during iteration"
 msgstr ""
 
-#: ../../pep-0509.txt:523
+#: ../../pep-0509.txt:524
 msgid ""
 "In 2013, Serhiy Storchaka proposed `Guard against changing dict during "
 "iteration (issue #19332) <https://bugs.python.org/issue19332>`_ which "
@@ -791,17 +803,17 @@ msgid ""
 "when the dictionary is modified."
 msgstr ""
 
-#: ../../pep-0509.txt:531
+#: ../../pep-0509.txt:532
 msgid "PySizer"
 msgstr ""
 
-#: ../../pep-0509.txt:533
+#: ../../pep-0509.txt:534
 msgid ""
 "`PySizer <http://pysizer.8325.org/>`_: a memory profiler for Python, "
 "Google Summer of Code 2005 project by Nick Smallbone."
 msgstr ""
 
-#: ../../pep-0509.txt:536
+#: ../../pep-0509.txt:537
 msgid ""
 "This project has a patch for CPython 2.4 which adds ``key_time`` and "
 "``value_time`` fields to dictionary entries. It uses a global process-"
@@ -810,45 +822,45 @@ msgid ""
 " in their parent objects."
 msgstr ""
 
-#: ../../pep-0509.txt:544
+#: ../../pep-0509.txt:545
 msgid "Discussion"
 msgstr ""
 
-#: ../../pep-0509.txt:546
+#: ../../pep-0509.txt:547
 msgid "Thread on the mailing lists:"
 msgstr ""
 
-#: ../../pep-0509.txt:548
+#: ../../pep-0509.txt:549
 msgid ""
 "python-dev: `Updated PEP 509 <https://mail.python.org/pipermail/python-"
 "dev/2016-April/144250.html>`_"
 msgstr ""
 
-#: ../../pep-0509.txt:550
+#: ../../pep-0509.txt:551
 msgid ""
 "python-dev: `RFC: PEP 509: Add a private version to dict "
 "<https://mail.python.org/pipermail/python-dev/2016-April/144137.html>`_"
 msgstr ""
 
-#: ../../pep-0509.txt:552
+#: ../../pep-0509.txt:553
 msgid ""
 "python-dev: `PEP 509: Add a private version to dict "
 "<https://mail.python.org/pipermail/python-dev/2016-January/142685.html>`_"
 " (January 2016)"
 msgstr ""
 
-#: ../../pep-0509.txt:555
+#: ../../pep-0509.txt:556
 msgid ""
 "python-ideas: `RFC: PEP: Add dict.__version__ "
 "<https://mail.python.org/pipermail/python-"
 "ideas/2016-January/037702.html>`_ (January 2016)"
 msgstr ""
 
-#: ../../pep-0509.txt:561
+#: ../../pep-0509.txt:562
 msgid "Acceptance"
 msgstr ""
 
-#: ../../pep-0509.txt:563
+#: ../../pep-0509.txt:564
 msgid ""
 "The PEP was `accepted on 2016-09-07 by Guido van Rossum "
 "<https://mail.python.org/pipermail/python-"
@@ -856,11 +868,55 @@ msgid ""
 "committed to the repository."
 msgstr ""
 
-#: ../../pep-0509.txt:569
+#: ../../pep-0509.txt:570
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0509.txt:571
+#: ../../pep-0509.txt:572
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "509"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Add a private version to dict"
+#~ msgstr ""
+
+#~ msgid "Final"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "See the `PEP 510 -- Specialized "
+#~ "functions with guards "
+#~ "<https://www.python.org/dev/peps/pep-0510/>`_ for concrete"
+#~ " usage of guards to specialize "
+#~ "functions and for a more general "
+#~ "rationale on Python static optimizers."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The `PEP 510 -- Specialized functions"
+#~ " with guards "
+#~ "<https://www.python.org/dev/peps/pep-0510/>`_ proposes an"
+#~ " API to support specialized functions "
+#~ "with guards. It allows to implement "
+#~ "static optimizers for Python without "
+#~ "breaking the Python semantics."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`PEP 393 -- Flexible String "
+#~ "Representation <https://www.python.org/dev/peps/pep-0393/>`_"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`PEP 412 -- Key-Sharing Dictionary "
+#~ "<https://www.python.org/dev/peps/pep-0412/>`_"
+#~ msgstr ""
 

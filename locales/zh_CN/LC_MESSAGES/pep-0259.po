@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0259.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0259.txt:1
-msgid "259"
-msgstr ""
-
-#: ../../pep-0259.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0259.txt:2
-msgid "Omit printing newline after newline"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0259.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0259.txt:5
-msgid "guido@python.org (Guido van Rossum)"
+#: ../../pep-0259.txt:3
+msgid "Guido van Rossum <guido@python.org>"
 msgstr ""
 
 #: ../../pep-0259.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0259.txt:6 ../../pep-0259.txt:122
+#: ../../pep-0259.txt:4 ../../pep-0259.txt:120
 msgid "Rejected"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0259.txt:7
+#: ../../pep-0259.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0259.txt:9 ../../pep-0259.txt:11
+#: ../../pep-0259.txt:7 ../../pep-0259.txt:9
 msgid "11-Jun-2001"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0259.txt:10
+#: ../../pep-0259.txt:8
 msgid "2.2"
 msgstr ""
 
@@ -77,11 +61,11 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0259.txt:15
+#: ../../pep-0259.txt:13
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0259.txt:17
+#: ../../pep-0259.txt:15
 msgid ""
 "Currently, the ``print`` statement always appends a newline, unless a "
 "trailing comma is used.  This means that if we want to print data that "
@@ -89,13 +73,13 @@ msgid ""
 "precautions are taken."
 msgstr ""
 
-#: ../../pep-0259.txt:22
+#: ../../pep-0259.txt:20
 msgid ""
 "I propose to skip printing the newline when it follows a newline that "
 "came from data."
 msgstr ""
 
-#: ../../pep-0259.txt:25
+#: ../../pep-0259.txt:23
 msgid ""
 "In order to avoid having to add yet another magic variable to file "
 "objects, I propose to give the existing 'softspace' variable an extra "
@@ -103,28 +87,28 @@ msgid ""
 "newline so no space *or* newline is required.\""
 msgstr ""
 
-#: ../../pep-0259.txt:32
+#: ../../pep-0259.txt:30
 msgid "Problem"
 msgstr ""
 
-#: ../../pep-0259.txt:34
+#: ../../pep-0259.txt:32
 msgid ""
 "When printing data that resembles the lines read from a file using a "
 "simple loop, double-spacing occurs unless special care is taken::"
 msgstr ""
 
-#: ../../pep-0259.txt:50
+#: ../../pep-0259.txt:48
 msgid ""
 "While there are easy work-arounds, this is often noticed only during "
 "testing and requires an extra edit-test roundtrip; the fixed code is "
 "uglier and harder to maintain."
 msgstr ""
 
-#: ../../pep-0259.txt:56
+#: ../../pep-0259.txt:54
 msgid "Proposed Solution"
 msgstr ""
 
-#: ../../pep-0259.txt:58
+#: ../../pep-0259.txt:56
 msgid ""
 "In the ``PRINT_ITEM`` opcode in ``ceval.c``, when a string object is "
 "printed, a check is already made that looks at the last character of that"
@@ -135,38 +119,38 @@ msgid ""
 "softspace flag is set to one."
 msgstr ""
 
-#: ../../pep-0259.txt:66
+#: ../../pep-0259.txt:64
 msgid "The proposal changes this test slightly so that softspace is set to:"
 msgstr ""
 
-#: ../../pep-0259.txt:69
+#: ../../pep-0259.txt:67
 msgid "``-1`` -- if the last object written is a string ending in a newline"
 msgstr ""
 
-#: ../../pep-0259.txt:72
+#: ../../pep-0259.txt:70
 msgid ""
 "``0`` -- if the last object written is a string ending in a whitespace "
 "character that's neither space nor newline"
 msgstr ""
 
-#: ../../pep-0259.txt:75
+#: ../../pep-0259.txt:73
 msgid ""
 "``1`` -- in all other cases (including the case when the last object "
 "written is an empty string or not a string)"
 msgstr ""
 
-#: ../../pep-0259.txt:78
+#: ../../pep-0259.txt:76
 msgid ""
 "Then, the ``PRINT_NEWLINE`` opcode, printing of the newline is suppressed"
 " if the value of softspace is negative; in any case the softspace flag is"
 " reset to zero."
 msgstr ""
 
-#: ../../pep-0259.txt:84
+#: ../../pep-0259.txt:82
 msgid "Scope"
 msgstr ""
 
-#: ../../pep-0259.txt:86
+#: ../../pep-0259.txt:84
 msgid ""
 "This only affects printing of 8-bit strings.  It doesn't affect Unicode, "
 "although that could be considered a bug in the Unicode implementation.  "
@@ -174,15 +158,15 @@ msgid ""
 "end in a newline character."
 msgstr ""
 
-#: ../../pep-0259.txt:93
+#: ../../pep-0259.txt:91
 msgid "Risks"
 msgstr ""
 
-#: ../../pep-0259.txt:95
+#: ../../pep-0259.txt:93
 msgid "This change breaks some existing code.  For example::"
 msgstr ""
 
-#: ../../pep-0259.txt:100
+#: ../../pep-0259.txt:98
 msgid ""
 "In current Python, this produces a blank line separating the subject from"
 " the message body; with the proposed change, the body begins immediately "
@@ -190,39 +174,54 @@ msgid ""
 "written as::"
 msgstr ""
 
-#: ../../pep-0259.txt:109
+#: ../../pep-0259.txt:107
 msgid ""
 "In the test suite, only ``test_StringIO`` (which explicitly tests for "
 "this feature) breaks."
 msgstr ""
 
-#: ../../pep-0259.txt:114
+#: ../../pep-0259.txt:112
 msgid "Implementation"
 msgstr ""
 
-#: ../../pep-0259.txt:116
+#: ../../pep-0259.txt:114
 msgid "A patch relative to current CVS is here::"
 msgstr ""
 
-#: ../../pep-0259.txt:124
+#: ../../pep-0259.txt:122
 msgid ""
 "The user community unanimously rejected this, so I won't pursue this idea"
 " any further.  Frequently heard arguments against included:"
 msgstr ""
 
-#: ../../pep-0259.txt:128
+#: ../../pep-0259.txt:126
 msgid "It is likely to break thousands of CGI scripts."
 msgstr ""
 
-#: ../../pep-0259.txt:130
+#: ../../pep-0259.txt:128
 msgid "Enough magic already (also: no more tinkering with 'print' please)."
 msgstr ""
 
-#: ../../pep-0259.txt:135
+#: ../../pep-0259.txt:133
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0259.txt:137
+#: ../../pep-0259.txt:135
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "259"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Omit printing newline after newline"
+#~ msgstr ""
+
+#~ msgid "guido@python.org (Guido van Rossum)"
+#~ msgstr ""
 

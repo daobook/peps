@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0550.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0550.rst:1
-msgid "550"
-msgstr ""
-
-#: ../../pep-0550.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0550.rst:2
-msgid "Execution Context"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0550.rst
 msgid "Author"
@@ -780,10 +764,10 @@ msgid ""
 "Execution context is implemented as an immutable linked list of logical "
 "contexts, where each logical context is an immutable weak key mapping.  A"
 " pointer to the currently active execution context is stored in the OS "
-"thread state::"
+"thread state:"
 msgstr ""
 
-#: ../../pep-0550.rst:841
+#: ../../pep-0550.rst:843
 msgid ""
 "The choice of the immutable list of immutable mappings as a fundamental "
 "data structure is motivated by the need to efficiently implement "
@@ -793,47 +777,47 @@ msgid ""
 " *by reference*::"
 msgstr ""
 
-#: ../../pep-0550.rst:851
+#: ../../pep-0550.rst:853
 msgid "Let's review all possible context modification scenarios:"
 msgstr ""
 
-#: ../../pep-0550.rst:853
+#: ../../pep-0550.rst:855
 msgid "The ``ContextVariable.set()`` method is called::"
 msgstr ""
 
-#: ../../pep-0550.rst:867
+#: ../../pep-0550.rst:869
 msgid ""
 "The ``contextvars.run_with_logical_context()`` is called, in which case "
 "the passed logical context object is appended to the execution context::"
 msgstr ""
 
-#: ../../pep-0550.rst:883
+#: ../../pep-0550.rst:885
 msgid ""
 "The ``contextvars.run_with_execution_context()`` is called, in which case"
 " the current execution context is set to the passed execution context "
 "with a new empty logical context appended to it::"
 msgstr ""
 
-#: ../../pep-0550.rst:900
+#: ../../pep-0550.rst:902
 msgid ""
 "Either ``genobj.send()``, ``genobj.throw()``, ``genobj.close()`` are "
 "called on a ``genobj`` generator, in which case the logical context "
 "recorded in ``genobj`` is pushed onto the stack::"
 msgstr ""
 
-#: ../../pep-0550.rst:932
+#: ../../pep-0550.rst:934
 msgid ""
 "Coroutines and asynchronous generators share the implementation with "
 "generators, and the above changes apply to them as well."
 msgstr ""
 
-#: ../../pep-0550.rst:935
+#: ../../pep-0550.rst:937
 msgid ""
 "In certain scenarios the EC may need to be squashed to limit the size of "
 "the chain.  For example, consider the following corner case::"
 msgstr ""
 
-#: ../../pep-0550.rst:950
+#: ../../pep-0550.rst:952
 msgid ""
 "In the above code, the EC chain will grow as long as ``repeat()`` is "
 "called. Each new task will call "
@@ -844,17 +828,17 @@ msgid ""
 "single LC::"
 msgstr ""
 
-#: ../../pep-0550.rst:977
+#: ../../pep-0550.rst:979
 msgid "Logical Context"
 msgstr ""
 
-#: ../../pep-0550.rst:979
+#: ../../pep-0550.rst:981
 msgid ""
 "Logical context is an immutable weak key mapping which has the following "
 "properties with respect to garbage collection:"
 msgstr ""
 
-#: ../../pep-0550.rst:982
+#: ../../pep-0550.rst:984
 msgid ""
 "``ContextVar`` objects are strongly-referenced only from the application "
 "code, not from any of the execution context machinery or values they "
@@ -863,76 +847,76 @@ msgid ""
 "by the GC."
 msgstr ""
 
-#: ../../pep-0550.rst:988
+#: ../../pep-0550.rst:990
 msgid ""
 "Values put in the execution context are guaranteed to be kept alive while"
 " there is a ``ContextVar`` key referencing them in the thread."
 msgstr ""
 
-#: ../../pep-0550.rst:992
+#: ../../pep-0550.rst:994
 msgid ""
 "If a ``ContextVar`` is garbage collected, all of its values will be "
 "removed from all contexts, allowing them to be GCed if needed."
 msgstr ""
 
-#: ../../pep-0550.rst:995
+#: ../../pep-0550.rst:997
 msgid ""
 "If an OS thread has ended its execution, its thread state will be cleaned"
 " up along with its execution context, cleaning up all values bound to all"
 " context variables in the thread."
 msgstr ""
 
-#: ../../pep-0550.rst:999
+#: ../../pep-0550.rst:1001
 msgid ""
 "As discussed earlier, we need ``contextvars.get_execution_context()`` to "
 "be consistently fast regardless of the size of the execution context, so "
 "logical context is necessarily an immutable mapping."
 msgstr ""
 
-#: ../../pep-0550.rst:1003
+#: ../../pep-0550.rst:1005
 msgid ""
 "Choosing ``dict`` for the underlying implementation is suboptimal, "
 "because ``LC.set()`` will cause ``dict.copy()``, which is an O(N) "
 "operation, where *N* is the number of items in the LC."
 msgstr ""
 
-#: ../../pep-0550.rst:1007
+#: ../../pep-0550.rst:1009
 msgid ""
 "``get_execution_context()``, when squashing the EC, is an O(M) operation,"
 " where *M* is the total number of context variable values in the EC."
 msgstr ""
 
-#: ../../pep-0550.rst:1011
+#: ../../pep-0550.rst:1013
 msgid ""
 "So, instead of ``dict``, we choose Hash Array Mapped Trie (HAMT) as the "
 "underlying implementation of logical contexts.  (Scala and Clojure use "
 "HAMT to implement high performance immutable collections [5]_, [6]_.)"
 msgstr ""
 
-#: ../../pep-0550.rst:1016
+#: ../../pep-0550.rst:1018
 msgid ""
 "With HAMT ``.set()`` becomes an O(log N) operation, and "
 "``get_execution_context()`` squashing is more efficient on average due to"
 " structural sharing in HAMT."
 msgstr ""
 
-#: ../../pep-0550.rst:1020
+#: ../../pep-0550.rst:1022
 msgid ""
 "See `Appendix: HAMT Performance Analysis`_ for a more elaborate analysis "
 "of HAMT performance compared to ``dict``."
 msgstr ""
 
-#: ../../pep-0550.rst:1025
+#: ../../pep-0550.rst:1027
 msgid "Context Variables"
 msgstr ""
 
-#: ../../pep-0550.rst:1027
+#: ../../pep-0550.rst:1029
 msgid ""
 "The ``ContextVar.get()`` and ``ContextVar.set()`` methods are implemented"
 " as follows (in pseudo-code)::"
 msgstr ""
 
-#: ../../pep-0550.rst:1080
+#: ../../pep-0550.rst:1082
 msgid ""
 "For efficient access in performance-sensitive code paths, such as in "
 "``numpy`` and ``decimal``, we cache lookups in ``ContextVar.get()``, "
@@ -940,7 +924,7 @@ msgid ""
 "composed from the following:"
 msgstr ""
 
-#: ../../pep-0550.rst:1085
+#: ../../pep-0550.rst:1087
 msgid ""
 "The new ``uint64_t PyThreadState->unique_id``, which is a globally unique"
 " thread state identifier.  It is computed from the new ``uint64_t "
@@ -948,43 +932,43 @@ msgid ""
 "thread state is created."
 msgstr ""
 
-#: ../../pep-0550.rst:1090
+#: ../../pep-0550.rst:1092
 msgid ""
 "The new ``uint64_t PyThreadState->stack_version``, which is a thread-"
 "specific counter, which is incremented whenever a non-empty logical "
 "context is pushed onto the stack or popped from the stack."
 msgstr ""
 
-#: ../../pep-0550.rst:1094
+#: ../../pep-0550.rst:1096
 msgid ""
 "The ``uint64_t ContextVar->version`` counter, which is incremented "
 "whenever the context variable value is changed in any logical context in "
 "any OS thread."
 msgstr ""
 
-#: ../../pep-0550.rst:1098
+#: ../../pep-0550.rst:1100
 msgid "The cache is then implemented as follows::"
 msgstr ""
 
-#: ../../pep-0550.rst:1126
+#: ../../pep-0550.rst:1128
 msgid ""
 "Note that ``last_value`` is a borrowed reference.  We assume that if the "
 "version checks are fine, the value object will be alive. This allows the "
 "values of context variables to be properly garbage collected."
 msgstr ""
 
-#: ../../pep-0550.rst:1131
+#: ../../pep-0550.rst:1133
 msgid ""
 "This generic caching approach is similar to what the current C "
 "implementation of ``decimal`` does to cache the current decimal context, "
 "and has similar performance characteristics."
 msgstr ""
 
-#: ../../pep-0550.rst:1137
+#: ../../pep-0550.rst:1139
 msgid "Performance Considerations"
 msgstr ""
 
-#: ../../pep-0550.rst:1139
+#: ../../pep-0550.rst:1141
 #, python-format
 msgid ""
 "Tests of the reference implementation based on the prior revisions of "
@@ -992,132 +976,132 @@ msgid ""
 "noticeable difference in macrobenchmarks."
 msgstr ""
 
-#: ../../pep-0550.rst:1143
+#: ../../pep-0550.rst:1145
 msgid ""
 "The performance of non-generator and non-async code is not affected by "
 "this PEP."
 msgstr ""
 
-#: ../../pep-0550.rst:1148
+#: ../../pep-0550.rst:1150
 msgid "Summary of the New APIs"
 msgstr ""
 
-#: ../../pep-0550.rst:1151
+#: ../../pep-0550.rst:1153
 msgid "Python"
 msgstr ""
 
-#: ../../pep-0550.rst:1153
+#: ../../pep-0550.rst:1155
 msgid "The following new Python APIs are introduced by this PEP:"
 msgstr ""
 
-#: ../../pep-0550.rst:1155
+#: ../../pep-0550.rst:1157
 msgid ""
 "The new ``contextvars.ContextVar(name: str='...')`` class, instances of "
 "which have the following:"
 msgstr ""
 
-#: ../../pep-0550.rst:1158
+#: ../../pep-0550.rst:1160
 msgid "the read-only ``.name`` attribute,"
 msgstr ""
 
-#: ../../pep-0550.rst:1159
+#: ../../pep-0550.rst:1161
 msgid ""
 "the ``.get()`` method, which returns the value of the variable in the "
 "current execution context;"
 msgstr ""
 
-#: ../../pep-0550.rst:1161
+#: ../../pep-0550.rst:1163
 msgid ""
 "the ``.set()`` method, which sets the value of the variable in the "
 "current logical context;"
 msgstr ""
 
-#: ../../pep-0550.rst:1163
+#: ../../pep-0550.rst:1165
 msgid ""
 "the ``.delete()`` method, which removes the value of the variable from "
 "the current logical context."
 msgstr ""
 
-#: ../../pep-0550.rst:1166
+#: ../../pep-0550.rst:1168
 msgid ""
 "The new ``contextvars.ExecutionContext()`` class, which represents an "
 "execution context."
 msgstr ""
 
-#: ../../pep-0550.rst:1169
+#: ../../pep-0550.rst:1171
 msgid ""
 "The new ``contextvars.LogicalContext()`` class, which represents a "
 "logical context."
 msgstr ""
 
-#: ../../pep-0550.rst:1172
+#: ../../pep-0550.rst:1174
 msgid ""
 "The new ``contextvars.get_execution_context()`` function, which returns "
 "an ``ExecutionContext`` instance representing a copy of the current "
 "execution context."
 msgstr ""
 
-#: ../../pep-0550.rst:1176
+#: ../../pep-0550.rst:1178
 msgid ""
 "The ``contextvars.run_with_execution_context(ec: ExecutionContext, func, "
 "*args, **kwargs)`` function, which runs *func* with the provided "
 "execution context."
 msgstr ""
 
-#: ../../pep-0550.rst:1180
+#: ../../pep-0550.rst:1182
 msgid ""
 "The ``contextvars.run_with_logical_context(lc: LogicalContext, func, "
 "*args, **kwargs)`` function, which runs *func* with the provided logical "
 "context on top of the current execution context."
 msgstr ""
 
-#: ../../pep-0550.rst:1186
+#: ../../pep-0550.rst:1188
 msgid "C API"
 msgstr ""
 
-#: ../../pep-0550.rst:1188
+#: ../../pep-0550.rst:1190
 msgid ""
 "``PyContextVar * PyContext_NewVar(char *desc)``: create a "
 "``PyContextVar`` object."
 msgstr ""
 
-#: ../../pep-0550.rst:1191
+#: ../../pep-0550.rst:1193
 msgid ""
 "``PyObject * PyContext_GetValue(PyContextVar *, int topmost)``: return "
 "the value of the variable in the current execution context."
 msgstr ""
 
-#: ../../pep-0550.rst:1194
+#: ../../pep-0550.rst:1196
 msgid ""
 "``int PyContext_SetValue(PyContextVar *, PyObject *)``: set the value of "
 "the variable in the current logical context."
 msgstr ""
 
-#: ../../pep-0550.rst:1197
+#: ../../pep-0550.rst:1199
 msgid ""
 "``int PyContext_DelValue(PyContextVar *)``: delete the value of the "
 "variable from the current logical context."
 msgstr ""
 
-#: ../../pep-0550.rst:1200
+#: ../../pep-0550.rst:1202
 msgid ""
 "``PyLogicalContext * PyLogicalContext_New()``: create a new empty "
 "``PyLogicalContext``."
 msgstr ""
 
-#: ../../pep-0550.rst:1203
+#: ../../pep-0550.rst:1205
 msgid ""
 "``PyExecutionContext * PyExecutionContext_New()``: create a new empty "
 "``PyExecutionContext``."
 msgstr ""
 
-#: ../../pep-0550.rst:1206
+#: ../../pep-0550.rst:1208
 msgid ""
 "``PyExecutionContext * PyExecutionContext_Get()``: return the current "
 "execution context."
 msgstr ""
 
-#: ../../pep-0550.rst:1209
+#: ../../pep-0550.rst:1211
 msgid ""
 "``int PyContext_SetCurrent( PyExecutionContext *, PyLogicalContext *)``: "
 "set the passed EC object as the current execution context for the active "
@@ -1125,73 +1109,73 @@ msgid ""
 "context."
 msgstr ""
 
-#: ../../pep-0550.rst:1217
+#: ../../pep-0550.rst:1219
 msgid "Design Considerations"
 msgstr ""
 
-#: ../../pep-0550.rst:1220
+#: ../../pep-0550.rst:1222
 msgid "Should \"yield from\" leak context changes?"
 msgstr ""
 
-#: ../../pep-0550.rst:1222
+#: ../../pep-0550.rst:1224
 msgid ""
 "No.  It may be argued that ``yield from`` is semantically equivalent to "
 "calling a function, and should leak context changes. However, it is not "
 "possible to satisfy the following at the same time:"
 msgstr ""
 
-#: ../../pep-0550.rst:1226
+#: ../../pep-0550.rst:1228
 msgid "``next(gen)`` *does not* leak context changes made in ``gen``, and"
 msgstr ""
 
-#: ../../pep-0550.rst:1227
+#: ../../pep-0550.rst:1229
 msgid "``yield from gen`` *leaks* context changes made in ``gen``."
 msgstr ""
 
-#: ../../pep-0550.rst:1229
+#: ../../pep-0550.rst:1231
 msgid ""
 "The reason is that ``yield from`` can be used with a partially iterated "
 "generator, which already has local context changes::"
 msgstr ""
 
-#: ../../pep-0550.rst:1251
+#: ../../pep-0550.rst:1253
 msgid ""
 "Another example would be refactoring of an explicit ``for..in yield`` "
 "construct to a ``yield from`` expression.  Consider the following code::"
 msgstr ""
 
-#: ../../pep-0550.rst:1262
+#: ../../pep-0550.rst:1264
 msgid "which we want to refactor to use ``yield from``::"
 msgstr ""
 
-#: ../../pep-0550.rst:1270
+#: ../../pep-0550.rst:1272
 msgid ""
 "The above examples illustrate that it is unsafe to refactor generator "
 "code using ``yield from`` when it can leak context changes."
 msgstr ""
 
-#: ../../pep-0550.rst:1273
+#: ../../pep-0550.rst:1275
 msgid ""
 "Thus, the only well-defined and consistent behaviour is to **always** "
 "isolate context changes in generators, regardless of how they are being "
 "iterated."
 msgstr ""
 
-#: ../../pep-0550.rst:1279
+#: ../../pep-0550.rst:1281
 msgid "Should ``PyThreadState_GetDict()`` use the execution context?"
 msgstr ""
 
-#: ../../pep-0550.rst:1281
+#: ../../pep-0550.rst:1283
 msgid ""
 "No. ``PyThreadState_GetDict`` is based on TLS, and changing its semantics"
 " will break backwards compatibility."
 msgstr ""
 
-#: ../../pep-0550.rst:1286
+#: ../../pep-0550.rst:1288
 msgid "PEP 521"
 msgstr ""
 
-#: ../../pep-0550.rst:1288
+#: ../../pep-0550.rst:1290
 msgid ""
 ":pep:`521` proposes an alternative solution to the problem, which extends"
 " the context manager protocol with two new methods: ``__suspend__()`` and"
@@ -1199,23 +1183,23 @@ msgid ""
 "is also extended with ``__asuspend__()`` and ``__aresume__()``."
 msgstr ""
 
-#: ../../pep-0550.rst:1294
+#: ../../pep-0550.rst:1296
 msgid ""
 "This allows implementing context managers that manage non-local state, "
 "which behave correctly in generators and coroutines."
 msgstr ""
 
-#: ../../pep-0550.rst:1297
+#: ../../pep-0550.rst:1299
 msgid ""
 "For example, consider the following context manager, which uses execution"
 " state::"
 msgstr ""
 
-#: ../../pep-0550.rst:1312
-msgid "An equivalent implementation with PEP 521::"
+#: ../../pep-0550.rst:1314
+msgid "An equivalent implementation with :pep:`521`::"
 msgstr ""
 
-#: ../../pep-0550.rst:1331
+#: ../../pep-0550.rst:1333
 msgid ""
 "The downside of this approach is the addition of significant new "
 "complexity to the context manager protocol and the interpreter "
@@ -1223,22 +1207,22 @@ msgid ""
 "performance of generators and coroutines."
 msgstr ""
 
-#: ../../pep-0550.rst:1336
+#: ../../pep-0550.rst:1338
 msgid ""
 "Additionally, the solution in :pep:`521` is limited to context managers, "
 "and does not provide any mechanism to propagate state in asynchronous "
 "tasks and callbacks."
 msgstr ""
 
-#: ../../pep-0550.rst:1342
+#: ../../pep-0550.rst:1344
 msgid "Can Execution Context be implemented without modifying CPython?"
 msgstr ""
 
-#: ../../pep-0550.rst:1344
+#: ../../pep-0550.rst:1346
 msgid "No."
 msgstr ""
 
-#: ../../pep-0550.rst:1346
+#: ../../pep-0550.rst:1348
 msgid ""
 "It is true that the concept of \"task-locals\" can be implemented for "
 "coroutines in libraries (see, for example, [29]_ and [30]_). On the other"
@@ -1246,18 +1230,18 @@ msgid ""
 "their context must also be managed by the interpreter."
 msgstr ""
 
-#: ../../pep-0550.rst:1352
+#: ../../pep-0550.rst:1354
 msgid ""
 "Furthermore, execution context cannot be implemented in a third-party "
 "module at all, otherwise the standard library, including ``decimal`` "
 "would not be able to rely on it."
 msgstr ""
 
-#: ../../pep-0550.rst:1358
+#: ../../pep-0550.rst:1360
 msgid "Should we update sys.displayhook and other APIs to use EC?"
 msgstr ""
 
-#: ../../pep-0550.rst:1360
+#: ../../pep-0550.rst:1362
 msgid ""
 "APIs like redirecting stdout by overwriting ``sys.stdout``, or specifying"
 " new exception display hooks by overwriting the ``sys.displayhook`` "
@@ -1267,17 +1251,17 @@ msgid ""
 "Execution Context."
 msgstr ""
 
-#: ../../pep-0550.rst:1367
+#: ../../pep-0550.rst:1369
 msgid ""
 "That said we think it is possible to design new APIs that will be context"
 " aware, but that is outside of the scope of this PEP."
 msgstr ""
 
-#: ../../pep-0550.rst:1372
+#: ../../pep-0550.rst:1374
 msgid "Greenlets"
 msgstr ""
 
-#: ../../pep-0550.rst:1374
+#: ../../pep-0550.rst:1376
 msgid ""
 "Greenlet is an alternative implementation of cooperative scheduling for "
 "Python.  Although greenlet package is not part of CPython, popular "
@@ -1285,7 +1269,7 @@ msgid ""
 "be modified to support execution contexts."
 msgstr ""
 
-#: ../../pep-0550.rst:1380
+#: ../../pep-0550.rst:1382
 msgid ""
 "Conceptually, the behaviour of greenlets is very similar to that of "
 "generators, which means that similar changes around greenlet entry and "
@@ -1293,47 +1277,47 @@ msgid ""
 " the necessary C APIs to do that."
 msgstr ""
 
-#: ../../pep-0550.rst:1387
+#: ../../pep-0550.rst:1389
 msgid "Context manager as the interface for modifications"
 msgstr ""
 
-#: ../../pep-0550.rst:1389
+#: ../../pep-0550.rst:1391
 msgid ""
 "This PEP concentrates on the low-level mechanics and the minimal API that"
 " enables fundamental operations with execution context."
 msgstr ""
 
-#: ../../pep-0550.rst:1392
+#: ../../pep-0550.rst:1394
 msgid ""
 "For developer convenience, a high-level context manager interface may be "
 "added to the ``contextvars`` module.  For example::"
 msgstr ""
 
-#: ../../pep-0550.rst:1400
+#: ../../pep-0550.rst:1402
 msgid "Setting and restoring context variables"
 msgstr ""
 
-#: ../../pep-0550.rst:1402
+#: ../../pep-0550.rst:1404
 msgid ""
 "The ``ContextVar.delete()`` method removes the context variable from the "
 "topmost logical context."
 msgstr ""
 
-#: ../../pep-0550.rst:1405
+#: ../../pep-0550.rst:1407
 msgid ""
 "If the variable is not found in the topmost logical context, a "
 "``LookupError`` is raised, similarly to ``del var`` raising ``NameError``"
 " when ``var`` is not in scope."
 msgstr ""
 
-#: ../../pep-0550.rst:1409
+#: ../../pep-0550.rst:1411
 msgid ""
 "This method is useful when there is a (rare) need to correctly restore "
 "the state of a logical context, such as when a nested generator wants to "
 "modify the logical context *temporarily*::"
 msgstr ""
 
-#: ../../pep-0550.rst:1432
+#: ../../pep-0550.rst:1434
 msgid ""
 "The above example would work correctly only if there is a way to delete "
 "``var`` from the logical context in ``gen()``.  Setting it to a "
@@ -1341,15 +1325,15 @@ msgid ""
 "``main()`` between the iterations."
 msgstr ""
 
-#: ../../pep-0550.rst:1439
+#: ../../pep-0550.rst:1441
 msgid "Alternative Designs for ContextVar API"
 msgstr ""
 
-#: ../../pep-0550.rst:1442
+#: ../../pep-0550.rst:1444
 msgid "Logical Context with stacked values"
 msgstr ""
 
-#: ../../pep-0550.rst:1444
+#: ../../pep-0550.rst:1446
 msgid ""
 "By the design presented in this PEP, logical context is a simple "
 "``LC({ContextVar: value, ...})`` mapping.  An alternative representation "
@@ -1357,29 +1341,29 @@ msgid ""
 "``LC({ContextVar: [val1, val2, ...], ...})``."
 msgstr ""
 
-#: ../../pep-0550.rst:1449
+#: ../../pep-0550.rst:1451
 msgid "The ``ContextVar`` methods would then be:"
 msgstr ""
 
-#: ../../pep-0550.rst:1451
+#: ../../pep-0550.rst:1453
 msgid ""
 "``get(*, default=None)`` -- traverses the stack of logical contexts, and "
 "returns the top value from the first non-empty logical context;"
 msgstr ""
 
-#: ../../pep-0550.rst:1455
+#: ../../pep-0550.rst:1457
 msgid ""
 "``push(val)`` -- pushes *val* onto the stack of values in the current "
 "logical context;"
 msgstr ""
 
-#: ../../pep-0550.rst:1458
+#: ../../pep-0550.rst:1460
 msgid ""
 "``pop()`` -- pops the top value from the stack of values in the current "
 "logical context."
 msgstr ""
 
-#: ../../pep-0550.rst:1461
+#: ../../pep-0550.rst:1463
 msgid ""
 "Compared to the single-value design with the ``set()`` and ``delete()`` "
 "methods, the stack-based approach allows for a simpler implementation of "
@@ -1388,105 +1372,105 @@ msgid ""
 " stack of LCs and a stack of values in each LC."
 msgstr ""
 
-#: ../../pep-0550.rst:1468
+#: ../../pep-0550.rst:1470
 msgid "(This idea was suggested by Nathaniel Smith.)"
 msgstr ""
 
-#: ../../pep-0550.rst:1472
+#: ../../pep-0550.rst:1474
 msgid "ContextVar \"set/reset\""
 msgstr ""
 
-#: ../../pep-0550.rst:1474
+#: ../../pep-0550.rst:1476
 msgid ""
 "Yet another approach is to return a special object from "
 "``ContextVar.set()``, which would represent the modification of the "
 "context variable in the current logical context::"
 msgstr ""
 
-#: ../../pep-0550.rst:1488
+#: ../../pep-0550.rst:1490
 msgid ""
 "The critical flaw in this approach is that it becomes possible to pass "
 "context var \"modification objects\" into code running in a different "
 "execution context, which leads to undefined side effects."
 msgstr ""
 
-#: ../../pep-0550.rst:1494
+#: ../../pep-0550.rst:1496
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0550.rst:1496
+#: ../../pep-0550.rst:1498
 msgid "This proposal preserves 100% backwards compatibility."
 msgstr ""
 
-#: ../../pep-0550.rst:1500
+#: ../../pep-0550.rst:1502
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0550.rst:1503
+#: ../../pep-0550.rst:1505
 msgid "Replication of threading.local() interface"
 msgstr ""
 
-#: ../../pep-0550.rst:1505
+#: ../../pep-0550.rst:1507
 msgid ""
 "Choosing the ``threading.local()``-like interface for context variables "
 "was considered and rejected for the following reasons:"
 msgstr ""
 
-#: ../../pep-0550.rst:1508
+#: ../../pep-0550.rst:1510
 msgid ""
 "A survey of the standard library and Django has shown that the vast "
 "majority of ``threading.local()`` uses involve a single attribute, which "
 "indicates that the namespace approach is not as helpful in the field."
 msgstr ""
 
-#: ../../pep-0550.rst:1513
+#: ../../pep-0550.rst:1515
 msgid ""
 "Using ``__getattr__()`` instead of ``.get()`` for value lookup does not "
 "provide any way to specify the depth of the lookup (i.e. search only the "
 "top logical context)."
 msgstr ""
 
-#: ../../pep-0550.rst:1517
+#: ../../pep-0550.rst:1519
 msgid ""
 "Single-value ``ContextVar`` is easier to reason about in terms of "
 "visibility.  Suppose ``ContextVar()`` is a namespace, and the consider "
 "the following::"
 msgstr ""
 
-#: ../../pep-0550.rst:1539
+#: ../../pep-0550.rst:1541
 msgid ""
 "The above example demonstrates that reasoning about the visibility of "
 "different attributes of the same context var is not trivial."
 msgstr ""
 
-#: ../../pep-0550.rst:1542
+#: ../../pep-0550.rst:1544
 msgid ""
 "Single-value ``ContextVar`` allows straightforward implementation of the "
 "lookup cache;"
 msgstr ""
 
-#: ../../pep-0550.rst:1545
+#: ../../pep-0550.rst:1547
 msgid ""
 "Single-value ``ContextVar`` interface allows the C-API to be simple and "
 "essentially the same as the Python API."
 msgstr ""
 
-#: ../../pep-0550.rst:1548
+#: ../../pep-0550.rst:1550
 msgid "See also the mailing list discussion: [26]_, [27]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1552
+#: ../../pep-0550.rst:1554
 msgid "Coroutines not leaking context changes by default"
 msgstr ""
 
-#: ../../pep-0550.rst:1554
+#: ../../pep-0550.rst:1556
 msgid ""
 "In V4 (`Version History`_) of this PEP, coroutines were considered to "
 "behave exactly like generators with respect to the execution context: "
 "changes in awaited coroutines were not visible in the outer coroutine."
 msgstr ""
 
-#: ../../pep-0550.rst:1558
+#: ../../pep-0550.rst:1560
 msgid ""
 "This idea was rejected on the grounds that is breaks the semantic "
 "similarity of the task and thread models, and, more specifically, makes "
@@ -1494,31 +1478,31 @@ msgid ""
 "modify context vars, since ``__aenter__`` is a coroutine."
 msgstr ""
 
-#: ../../pep-0550.rst:1566
+#: ../../pep-0550.rst:1568
 msgid "Appendix: HAMT Performance Analysis"
 msgstr ""
 
-#: ../../pep-0550.rst:1572
+#: ../../pep-0550.rst:1575
 msgid "Figure 1.  Benchmark code can be found here: [9]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1574
+#: ../../pep-0550.rst:1577
 msgid "The above chart demonstrates that:"
 msgstr ""
 
-#: ../../pep-0550.rst:1576
+#: ../../pep-0550.rst:1579
 msgid "HAMT displays near O(1) performance for all benchmarked dictionary sizes."
 msgstr ""
 
-#: ../../pep-0550.rst:1579
+#: ../../pep-0550.rst:1582
 msgid "``dict.copy()`` becomes very slow around 100 items."
 msgstr ""
 
-#: ../../pep-0550.rst:1585
+#: ../../pep-0550.rst:1589
 msgid "Figure 2.  Benchmark code can be found here: [10]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1587
+#: ../../pep-0550.rst:1591
 #, python-format
 msgid ""
 "Figure 2 compares the lookup costs of ``dict`` versus a HAMT-based "
@@ -1527,141 +1511,141 @@ msgid ""
 "latter is very well optimized."
 msgstr ""
 
-#: ../../pep-0550.rst:1592
+#: ../../pep-0550.rst:1596
 msgid ""
 "There is research [8]_ showing that there are further possible "
 "improvements to the performance of HAMT."
 msgstr ""
 
-#: ../../pep-0550.rst:1595
+#: ../../pep-0550.rst:1599
 msgid "The reference implementation of HAMT for CPython can be found here: [7]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1600
+#: ../../pep-0550.rst:1604
 msgid "Acknowledgments"
 msgstr ""
 
-#: ../../pep-0550.rst:1602
+#: ../../pep-0550.rst:1606
 msgid ""
 "Thanks to Victor Petrovykh for countless discussions around the topic and"
 " PEP proofreading and edits."
 msgstr ""
 
-#: ../../pep-0550.rst:1605
+#: ../../pep-0550.rst:1609
 msgid ""
 "Thanks to Nathaniel Smith for proposing the ``ContextVar`` design [17]_ "
 "[18]_, for pushing the PEP towards a more complete design, and coming up "
 "with the idea of having a stack of contexts in the thread state."
 msgstr ""
 
-#: ../../pep-0550.rst:1610
+#: ../../pep-0550.rst:1614
 msgid ""
 "Thanks to Nick Coghlan for numerous suggestions and ideas on the mailing "
 "list, and for coming up with a case that cause the complete rewrite of "
 "the initial PEP version [19]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1616
+#: ../../pep-0550.rst:1620
 msgid "Version History"
 msgstr ""
 
-#: ../../pep-0550.rst:1618
+#: ../../pep-0550.rst:1622
 msgid "Initial revision, posted on 11-Aug-2017 [20]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1620
+#: ../../pep-0550.rst:1624
 msgid "V2 posted on 15-Aug-2017 [21]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1622
+#: ../../pep-0550.rst:1626
 msgid ""
 "The fundamental limitation that caused a complete redesign of the first "
 "version was that it was not possible to implement an iterator that would "
 "interact with the EC in the same way as generators (see [19]_.)"
 msgstr ""
 
-#: ../../pep-0550.rst:1627
+#: ../../pep-0550.rst:1631
 msgid ""
 "Version 2 was a complete rewrite, introducing new terminology (Local "
 "Context, Execution Context, Context Item) and new APIs."
 msgstr ""
 
-#: ../../pep-0550.rst:1630
+#: ../../pep-0550.rst:1634
 msgid "V3 posted on 18-Aug-2017 [22]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1632
+#: ../../pep-0550.rst:1636
 msgid "Updates:"
 msgstr ""
 
-#: ../../pep-0550.rst:1634
+#: ../../pep-0550.rst:1638
 msgid ""
 "Local Context was renamed to Logical Context.  The term \"local\" was "
 "ambiguous and conflicted with local name scopes."
 msgstr ""
 
-#: ../../pep-0550.rst:1637
+#: ../../pep-0550.rst:1641
 msgid ""
 "Context Item was renamed to Context Key, see the thread with Nick "
 "Coghlan, Stefan Krah, and Yury Selivanov [23]_ for details."
 msgstr ""
 
-#: ../../pep-0550.rst:1640
+#: ../../pep-0550.rst:1644
 msgid ""
 "Context Item get cache design was adjusted, per Nathaniel Smith's idea in"
 " [25]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1643
+#: ../../pep-0550.rst:1647
 msgid ""
 "Coroutines are created without a Logical Context; ceval loop no longer "
 "needs to special case the ``await`` expression (proposed by Nick Coghlan "
 "in [24]_.)"
 msgstr ""
 
-#: ../../pep-0550.rst:1647
+#: ../../pep-0550.rst:1651
 msgid "V4 posted on 25-Aug-2017 [31]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1649
+#: ../../pep-0550.rst:1653
 msgid "The specification section has been completely rewritten."
 msgstr ""
 
-#: ../../pep-0550.rst:1651
+#: ../../pep-0550.rst:1655
 msgid ""
 "Coroutines now have their own Logical Context.  This means there is no "
 "difference between coroutines, generators, and asynchronous generators "
 "w.r.t. interaction with the Execution Context."
 msgstr ""
 
-#: ../../pep-0550.rst:1656
+#: ../../pep-0550.rst:1660
 msgid "Context Key renamed to Context Var."
 msgstr ""
 
-#: ../../pep-0550.rst:1658
+#: ../../pep-0550.rst:1662
 msgid ""
 "Removed the distinction between generators and coroutines with respect to"
 " logical context isolation."
 msgstr ""
 
-#: ../../pep-0550.rst:1661
+#: ../../pep-0550.rst:1665
 msgid "V5 posted on 01-Sep-2017: the current version."
 msgstr ""
 
-#: ../../pep-0550.rst:1663
+#: ../../pep-0550.rst:1667
 msgid ""
 "Coroutines have no logical context by default (a revert to the V3 "
 "semantics).  Read about the motivation in the `Coroutines not leaking "
 "context changes by default`_ section."
 msgstr ""
 
-#: ../../pep-0550.rst:1667
+#: ../../pep-0550.rst:1671
 msgid ""
 "The `High-Level Specification`_ section was also updated (specifically "
 "Generators and Coroutines subsections)."
 msgstr ""
 
-#: ../../pep-0550.rst:1670
+#: ../../pep-0550.rst:1674
 msgid ""
 "All APIs have been placed to the ``contextvars`` module, and the factory "
 "functions were changed to class constructors (``ContextVar``, "
@@ -1669,28 +1653,28 @@ msgid ""
 "idea [33]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1675
+#: ../../pep-0550.rst:1679
 msgid ""
 "``ContextVar.lookup()`` got renamed back to ``ContextVar.get()`` and "
 "gained the ``topmost`` and ``default`` keyword arguments. Added "
 "``ContextVar.delete()``."
 msgstr ""
 
-#: ../../pep-0550.rst:1679
+#: ../../pep-0550.rst:1683
 msgid "See Guido's comment in [32]_."
 msgstr ""
 
-#: ../../pep-0550.rst:1681
+#: ../../pep-0550.rst:1685
 msgid ""
 "New ``ExecutionContext.vars()`` method.  Read about it in the "
 "`Enumerating context vars`_ section."
 msgstr ""
 
-#: ../../pep-0550.rst:1684
+#: ../../pep-0550.rst:1688
 msgid "Fixed ``ContextVar.get()`` cache bug (thanks Nathaniel!)."
 msgstr ""
 
-#: ../../pep-0550.rst:1686
+#: ../../pep-0550.rst:1690
 msgid ""
 "New `Rejected Ideas`_, `Should \"yield from\" leak context changes?`_, "
 "`Alternative Designs for ContextVar API`_, `Setting and restoring context"
@@ -1698,151 +1682,189 @@ msgid ""
 "sections."
 msgstr ""
 
-#: ../../pep-0550.rst:1694
+#: ../../pep-0550.rst:1698
 msgid "References"
 msgstr ""
 
-#: ../../pep-0550.rst:1696
-msgid "https://blog.golang.org/context"
-msgstr ""
-
-#: ../../pep-0550.rst:1698
-msgid ""
-"https://msdn.microsoft.com/en-"
-"us/library/system.threading.executioncontext.aspx"
-msgstr ""
-
 #: ../../pep-0550.rst:1700
-msgid "https://github.com/numpy/numpy/issues/9444"
+msgid "https://go.dev/blog/context"
 msgstr ""
 
 #: ../../pep-0550.rst:1702
-msgid "http://bugs.python.org/issue31179"
+msgid ""
+"https://docs.microsoft.com/en-"
+"us/dotnet/api/system.threading.executioncontext"
 msgstr ""
 
 #: ../../pep-0550.rst:1704
-msgid "https://en.wikipedia.org/wiki/Hash_array_mapped_trie"
+msgid "https://github.com/numpy/numpy/issues/9444"
 msgstr ""
 
 #: ../../pep-0550.rst:1706
-msgid ""
-"http://blog.higher-order.net/2010/08/16/assoc-and-clojures-"
-"persistenthashmap-part-ii.html"
+msgid "https://en.wikipedia.org/wiki/Hash_array_mapped_trie"
 msgstr ""
 
 #: ../../pep-0550.rst:1708
-msgid "https://github.com/1st1/cpython/tree/hamt"
+msgid ""
+"https://blog.higher-order.net/2010/08/16/assoc-and-clojures-"
+"persistenthashmap-part-ii.html"
 msgstr ""
 
 #: ../../pep-0550.rst:1710
-msgid "https://michael.steindorfer.name/publications/oopsla15.pdf"
+msgid "https://github.com/1st1/cpython/tree/hamt"
 msgstr ""
 
 #: ../../pep-0550.rst:1712
-msgid "https://gist.github.com/1st1/9004813d5576c96529527d44c5457dcd"
+msgid "https://michael.steindorfer.name/publications/oopsla15.pdf"
 msgstr ""
 
 #: ../../pep-0550.rst:1714
-msgid "https://gist.github.com/1st1/dbe27f2e14c30cce6f0b5fddfc8c437e"
+msgid "https://gist.github.com/1st1/9004813d5576c96529527d44c5457dcd"
 msgstr ""
 
 #: ../../pep-0550.rst:1716
-msgid "https://github.com/1st1/cpython/tree/pep550"
+msgid "https://gist.github.com/1st1/dbe27f2e14c30cce6f0b5fddfc8c437e"
 msgstr ""
 
 #: ../../pep-0550.rst:1718
-msgid "https://www.python.org/dev/peps/pep-0492/#async-await"
-msgstr ""
-
-#: ../../pep-0550.rst:1720
-msgid "https://github.com/MagicStack/uvloop/blob/master/examples/bench/echoserver.py"
-msgstr ""
-
-#: ../../pep-0550.rst:1722
-msgid "https://github.com/MagicStack/pgbench"
-msgstr ""
-
-#: ../../pep-0550.rst:1724
-msgid "https://github.com/python/performance"
-msgstr ""
-
-#: ../../pep-0550.rst:1726
-msgid "https://gist.github.com/1st1/6b7a614643f91ead3edf37c4451a6b4c"
-msgstr ""
-
-#: ../../pep-0550.rst:1728
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046752.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1730
+#: ../../pep-0550.rst:1720
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046772.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1732
+#: ../../pep-0550.rst:1722
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046775.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1734
+#: ../../pep-0550.rst:1724
 msgid "https://github.com/python/peps/blob/e8a06c9a790f39451d9e99e203b13b3ad73a1d01/pep-0550.rst"
 msgstr ""
 
-#: ../../pep-0550.rst:1736
+#: ../../pep-0550.rst:1726
 msgid "https://github.com/python/peps/blob/e3aa3b2b4e4e9967d28a10827eed1e9e5960c175/pep-0550.rst"
 msgstr ""
 
-#: ../../pep-0550.rst:1738
+#: ../../pep-0550.rst:1728
 msgid "https://github.com/python/peps/blob/287ed87bb475a7da657f950b353c71c1248f67e7/pep-0550.rst"
 msgstr ""
 
-#: ../../pep-0550.rst:1740
+#: ../../pep-0550.rst:1730
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046801.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1742
+#: ../../pep-0550.rst:1732
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046790.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1744
+#: ../../pep-0550.rst:1734
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046786.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1746
+#: ../../pep-0550.rst:1736
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046888.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1748
+#: ../../pep-0550.rst:1738
 msgid "https://mail.python.org/pipermail/python-ideas/2017-August/046889.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1750
+#: ../../pep-0550.rst:1740
 msgid "https://docs.python.org/3/library/decimal.html#decimal.Context.abs"
 msgstr ""
 
-#: ../../pep-0550.rst:1752
-msgid "https://curio.readthedocs.io/en/latest/reference.html#task-local-storage"
+#: ../../pep-0550.rst:1742
+msgid ""
+"https://web.archive.org/web/20170706074739/https://curio.readthedocs.io/en/latest/reference.html"
+"#task-local-storage"
 msgstr ""
 
-#: ../../pep-0550.rst:1754
+#: ../../pep-0550.rst:1744
 msgid "https://docs.atlassian.com/aiolocals/latest/usage.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1756
+#: ../../pep-0550.rst:1746
 msgid "https://github.com/python/peps/blob/1b8728ded7cde9df0f9a24268574907fafec6d5e/pep-0550.rst"
 msgstr ""
 
-#: ../../pep-0550.rst:1758
+#: ../../pep-0550.rst:1748
 msgid "https://mail.python.org/pipermail/python-dev/2017-August/149020.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1760
+#: ../../pep-0550.rst:1750
 msgid "https://mail.python.org/pipermail/python-dev/2017-August/149043.html"
 msgstr ""
 
-#: ../../pep-0550.rst:1764
+#: ../../pep-0550.rst:1754
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0550.rst:1766
+#: ../../pep-0550.rst:1756
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "550"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Execution Context"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Execution context is implemented as an"
+#~ " immutable linked list of logical "
+#~ "contexts, where each logical context is"
+#~ " an immutable weak key mapping.  A"
+#~ " pointer to the currently active "
+#~ "execution context is stored in the "
+#~ "OS thread state::"
+#~ msgstr ""
+
+#~ msgid "An equivalent implementation with PEP 521::"
+#~ msgstr ""
+
+#~ msgid "https://blog.golang.org/context"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "https://msdn.microsoft.com/en-"
+#~ "us/library/system.threading.executioncontext.aspx"
+#~ msgstr ""
+
+#~ msgid "http://bugs.python.org/issue31179"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "http://blog.higher-order.net/2010/08/16/assoc-and-"
+#~ "clojures-persistenthashmap-part-ii.html"
+#~ msgstr ""
+
+#~ msgid "https://github.com/1st1/cpython/tree/pep550"
+#~ msgstr ""
+
+#~ msgid "https://www.python.org/dev/peps/pep-0492/#async-await"
+#~ msgstr ""
+
+#~ msgid "https://github.com/MagicStack/uvloop/blob/master/examples/bench/echoserver.py"
+#~ msgstr ""
+
+#~ msgid "https://github.com/MagicStack/pgbench"
+#~ msgstr ""
+
+#~ msgid "https://github.com/python/performance"
+#~ msgstr ""
+
+#~ msgid "https://gist.github.com/1st1/6b7a614643f91ead3edf37c4451a6b4c"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "https://curio.readthedocs.io/en/latest/reference.html#task-"
+#~ "local-storage"
+#~ msgstr ""
 

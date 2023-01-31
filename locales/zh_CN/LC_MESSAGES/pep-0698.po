@@ -1,0 +1,712 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0698.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0698.rst:3
+msgid ""
+"Steven Troxler <steven.troxler@gmail.com>, Joshua Xu <jxu425@fb.com>, "
+"Shannon Zhu <szhu@fb.com>"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0698.rst:6
+msgid "Jelle Zijlstra <jelle.zijlstra at gmail.com>"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0698.rst:7
+msgid "https://discuss.python.org/t/pep-698-a-typing-override-decorator/20839"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0698.rst:8
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0698.rst:9
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0698.rst:10
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0698.rst:12
+msgid "05-Sep-2022"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0698.rst:13
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0698.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0698.rst:14
+msgid ""
+"`20-May-2022 <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/V23I4D6DEOFW4BBPWBMYTHZUOMKR7KQE/>`__, `17-Aug-2022"
+" <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/7JDW2PKGF6YTERUJGWM3BRP3GDHRFP4O/>`__, `11-Oct-2022"
+" <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/TOIYZ3SNPBJZDBRU3ZSBREXV2NNHF4KW/>`__, `07-Nov-2022"
+" <https://discuss.python.org/t/pep-698-a-typing-override-"
+"decorator/20839>`__,"
+msgstr ""
+
+#: ../../pep-0698.rst:21
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0698.rst:23
+msgid ""
+"This PEP proposes adding an ``@override`` decorator to the Python type "
+"system. This will allow type checkers to prevent a class of bugs that "
+"occur when a base class changes methods that are inherited by derived "
+"classes."
+msgstr ""
+
+#: ../../pep-0698.rst:29 ../../pep-0698.rst:227
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0698.rst:31
+msgid ""
+"A primary purpose of type checkers is to flag when refactors or changes "
+"break pre-existing semantic structures in the code, so users can identify"
+" and make fixes across their project without doing a manual audit of "
+"their code."
+msgstr ""
+
+#: ../../pep-0698.rst:37
+msgid "Safe Refactoring"
+msgstr ""
+
+#: ../../pep-0698.rst:39
+msgid ""
+"Python’s type system does not provide a way to identify call sites that "
+"need to be changed to stay consistent when an overridden function API "
+"changes. This makes refactoring and transforming code more dangerous."
+msgstr ""
+
+#: ../../pep-0698.rst:43
+msgid "Consider this simple inheritance structure:"
+msgstr ""
+
+#: ../../pep-0698.rst:62
+msgid ""
+"If the overridden method on the superclass is renamed or deleted, type "
+"checkers will only alert us to update call sites that deal with the base "
+"type directly. But the type checker can only see the new code, not the "
+"change we made, so it has no way of knowing that we probably also needed "
+"to rename the same method on child classes."
+msgstr ""
+
+#: ../../pep-0698.rst:68
+msgid ""
+"A type checker will happily accept this code, even though we are likely "
+"introducing bugs:"
+msgstr ""
+
+#: ../../pep-0698.rst:92
+msgid "This code will type check, but there are two potential sources of bugs:"
+msgstr ""
+
+#: ../../pep-0698.rst:94
+msgid ""
+"If we pass a ``Child`` instance to the parent_callsite function, it will "
+"invoke the implementation in ``Parent.new_foo``. rather than "
+"``Child.foo``. This is probably a bug - we presumably would not have "
+"written ``Child.foo`` in the first place if we didn’t need custom "
+"behavior."
+msgstr ""
+
+#: ../../pep-0698.rst:98
+msgid ""
+"Our system was likely relying on ``Child.foo``  behaving in a similar way"
+" to ``Parent.foo``. But unless we catch this early, we have now forked "
+"the methods, and future refactors it is likely no one will realize that "
+"major changes to the behavior of new_foo likely require updating "
+"``Child.foo`` as well, which could lead to major bugs later."
+msgstr ""
+
+#: ../../pep-0698.rst:104
+msgid ""
+"The incorrectly-refactored code is type-safe, but is probably not what we"
+" intended and could cause our system to behave incorrectly. The bug can "
+"be difficult to track down because our new code likely does execute "
+"without throwing exceptions. Tests are less likely to catch the problem, "
+"and silent errors can take longer to track down in production."
+msgstr ""
+
+#: ../../pep-0698.rst:110
+msgid ""
+"We are aware of several production outages in multiple typed codebases "
+"caused by such incorrect refactors. This is our primary motivation for "
+"adding an ``@override`` decorator to the type system, which lets "
+"developers express the relationship between ``Parent.foo`` and "
+"``Child.foo`` so that type checkers can detect the problem."
+msgstr ""
+
+#: ../../pep-0698.rst:117
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0698.rst:121
+msgid "Subclass Implementations Become More Explicit"
+msgstr ""
+
+#: ../../pep-0698.rst:123
+msgid ""
+"We believe that explicit overrides will make unfamiliar code easier to "
+"read than implicit overrides. A developer reading the implementation of a"
+" subclass that uses ``@override``  can immediately see which methods are "
+"overriding functionality in some base class; without this decorator, the "
+"only way to quickly find out is using a static analysis tool."
+msgstr ""
+
+#: ../../pep-0698.rst:131
+msgid "Precedent in Other Languages and Runtime Libraries"
+msgstr ""
+
+#: ../../pep-0698.rst:134
+msgid "Static Override Checks in Other Languages"
+msgstr ""
+
+#: ../../pep-0698.rst:136
+msgid "Many popular programming languages support override checks. For example:"
+msgstr ""
+
+#: ../../pep-0698.rst:138
+msgid ""
+"`C++ has <https://en.cppreference.com/w/cpp/language/override/>`_ "
+"``override``."
+msgstr ""
+
+#: ../../pep-0698.rst:139
+msgid ""
+"`C# has <https://docs.microsoft.com/en-us/dotnet/csharp/language-"
+"reference/keywords/override/>`_ ``override``."
+msgstr ""
+
+#: ../../pep-0698.rst:140
+msgid ""
+"`Hack has <https://docs.hhvm.com/hack/attributes/predefined-"
+"attributes#__override/>`_ ``<<__Override>>``."
+msgstr ""
+
+#: ../../pep-0698.rst:141
+msgid ""
+"`Java has "
+"<https://docs.oracle.com/javase/tutorial/java/IandI/override.html/>`_ "
+"``@Override``."
+msgstr ""
+
+#: ../../pep-0698.rst:142
+msgid ""
+"`Kotlin has <https://kotlinlang.org/docs/inheritance.html#overriding-"
+"methods/>`_ ``override``."
+msgstr ""
+
+#: ../../pep-0698.rst:143
+msgid ""
+"`Scala has <https://www.javatpoint.com/scala-method-overriding/>`_ "
+"``override``."
+msgstr ""
+
+#: ../../pep-0698.rst:144
+msgid ""
+"`Swift has <https://docs.swift.org/swift-"
+"book/LanguageGuide/Inheritance.html#ID198/>`_ ``override``."
+msgstr ""
+
+#: ../../pep-0698.rst:145
+msgid ""
+"`TypeScript has <https://www.typescriptlang.org/docs/handbook/release-"
+"notes/typescript-4-3.html#override-and-the---noimplicitoverride-flag/>`_ "
+"``override``."
+msgstr ""
+
+#: ../../pep-0698.rst:148
+msgid "Runtime Override Checks in Python"
+msgstr ""
+
+#: ../../pep-0698.rst:150
+msgid ""
+"Today, there is an `Overrides library "
+"<https://pypi.org/project/overrides/>`_ that provides decorators "
+"``@overrides`` (sic) and ``@final`` and will enforce them at runtime."
+msgstr ""
+
+#: ../../pep-0698.rst:154
+msgid ""
+":pep:`591` added a ``@final`` decorator with the same semantics as those "
+"in the Overrides library. But the override component of the runtime "
+"library is not supported statically at all, which has added some "
+"confusion around the mix/matched support."
+msgstr ""
+
+#: ../../pep-0698.rst:159
+msgid ""
+"Providing support for ``@override`` in static checks would add value "
+"because"
+msgstr ""
+
+#: ../../pep-0698.rst:161
+msgid "Bugs can be caught earlier, often in-editor."
+msgstr ""
+
+#: ../../pep-0698.rst:162
+msgid "Static checks come with no performance overhead, unlike runtime checks."
+msgstr ""
+
+#: ../../pep-0698.rst:163
+msgid ""
+"Bugs will be caught quickly even in rarely-used modules, whereas with "
+"runtime checks these might go undetected for a time without automated "
+"tests of all imports."
+msgstr ""
+
+#: ../../pep-0698.rst:169
+msgid "Disadvantages"
+msgstr ""
+
+#: ../../pep-0698.rst:171
+msgid "Using ``@override`` will make code more verbose."
+msgstr ""
+
+#: ../../pep-0698.rst:175
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0698.rst:177
+msgid ""
+"When type checkers encounter a method decorated with ``@typing.override``"
+" they should treat it as a type error unless that method is overriding a "
+"compatible method or attribute in some ancestor class."
+msgstr ""
+
+#: ../../pep-0698.rst:203
+msgid ""
+"The ``@override`` decorator should be permitted anywhere a type checker "
+"considers a method to be a valid override, which typically includes not "
+"only normal methods but also ``@property``, ``@staticmethod``, and "
+"``@classmethod``."
+msgstr ""
+
+#: ../../pep-0698.rst:209
+msgid "No New Rules for Override Compatibility"
+msgstr ""
+
+#: ../../pep-0698.rst:211
+msgid ""
+"This PEP is exclusively concerned with the handling of the new "
+"``@override`` decorator, which specifies that the decorated method must "
+"override some attribute in an ancestor class. This PEP does not propose "
+"any new rules regarding the type signatures of such methods."
+msgstr ""
+
+#: ../../pep-0698.rst:218
+msgid "Strict Enforcement Per-Project"
+msgstr ""
+
+#: ../../pep-0698.rst:220
+msgid ""
+"We believe that ``@override`` is most useful if checkers also allow "
+"developers to opt into a strict mode where methods that override a parent"
+" class are required to use the decorator. Strict enforcement should be "
+"opt-in for backward compatibility."
+msgstr ""
+
+#: ../../pep-0698.rst:229
+msgid ""
+"The primary reason for a strict mode that requires ``@override`` is that "
+"developers can only trust that refactors are override-safe if they know "
+"that the ``@override`` decorator is used throughout the project."
+msgstr ""
+
+#: ../../pep-0698.rst:233
+msgid ""
+"There is another class of bug related to overrides that we can only catch"
+" using a strict mode."
+msgstr ""
+
+#: ../../pep-0698.rst:235
+msgid "Consider the following code:"
+msgstr ""
+
+#: ../../pep-0698.rst:246
+msgid "Imagine we refactor it as follows:"
+msgstr ""
+
+#: ../../pep-0698.rst:262
+msgid "The semantics of our code changed here, which could cause two problems:"
+msgstr ""
+
+#: ../../pep-0698.rst:264
+msgid ""
+"If the author of the code change did not know that ``Child.foo`` already "
+"existed (which is very possible in a large codebase), they might be "
+"surprised to see that ``call_foo`` does not always invoke ``Parent.foo``."
+msgstr ""
+
+#: ../../pep-0698.rst:267
+msgid ""
+"If the codebase authors tried to manually apply ``@override`` everywhere "
+"when writing overrides in subclasses, they are likely to miss the fact "
+"that ``Child.foo`` needs it here."
+msgstr ""
+
+#: ../../pep-0698.rst:272
+msgid ""
+"At first glance this kind of change may seem unlikely, but it can "
+"actually happen often if one or more subclasses have functionality that "
+"developers later realize belongs in the base class."
+msgstr ""
+
+#: ../../pep-0698.rst:276
+msgid "With a strict mode, we will always alert developers when this occurs."
+msgstr ""
+
+#: ../../pep-0698.rst:279
+msgid "Precedent"
+msgstr ""
+
+#: ../../pep-0698.rst:281
+msgid ""
+"Most of the typed, object-oriented programming languages we looked at "
+"have an easy way to require explicit overrides throughout a project:"
+msgstr ""
+
+#: ../../pep-0698.rst:284
+msgid "C#, Kotlin, Scala, and Swift always require explicit overrides"
+msgstr ""
+
+#: ../../pep-0698.rst:285
+msgid ""
+"TypeScript has a `--no-implicit-override "
+"<https://www.typescriptlang.org/docs/handbook/release-"
+"notes/typescript-4-3.html#override-and-the---noimplicitoverride-flag/>`_ "
+"flag to force explicit overrides"
+msgstr ""
+
+#: ../../pep-0698.rst:288
+msgid ""
+"In Hack and Java the type checker always treats overrides as opt-in, but "
+"widely-used linters can warn if explicit overrides are missing."
+msgstr ""
+
+#: ../../pep-0698.rst:293
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-0698.rst:295
+msgid ""
+"By default, the ``@override`` decorator will be opt-in. Codebases that do"
+" not use it will type-check as before, without the additional type "
+"safety."
+msgstr ""
+
+#: ../../pep-0698.rst:300
+msgid "Runtime Behavior"
+msgstr ""
+
+#: ../../pep-0698.rst:303
+msgid "Set ``__override__ = True`` when possible"
+msgstr ""
+
+#: ../../pep-0698.rst:305
+msgid ""
+"At runtime, ``@typing.override`` will make a best-effort attempt to add "
+"an attribute ``__override__`` with value ``True`` to its argument. By "
+"\"best-effort\" we mean that we will try adding the attribute, but if "
+"that fails (for example because the input is a descriptor type with fixed"
+" slots) we will silently return the argument as-is."
+msgstr ""
+
+#: ../../pep-0698.rst:311
+msgid ""
+"This is exactly what the ``@typing.final`` decorator does, and the "
+"motivation is similar - it gives runtime libraries the ability to use "
+"``@override``. As a concrete example, a runtime library could check "
+"``__override__`` in order to automatically populate the ``__doc__`` "
+"attribute of child class methods using the parent method docstring."
+msgstr ""
+
+#: ../../pep-0698.rst:318
+msgid "Limitations of setting ``__override__``"
+msgstr ""
+
+#: ../../pep-0698.rst:320
+msgid ""
+"As described above, adding ``__override__`` may fail at runtime, in which"
+" case we will simply return the argument as-is."
+msgstr ""
+
+#: ../../pep-0698.rst:323
+msgid ""
+"In addition, even in cases where it does work it may be difficult for "
+"users to correctly work with multiple decorators, because getting the "
+"``__override__`` field to exist on the final output requires "
+"understanding the implementation of each decorator:"
+msgstr ""
+
+#: ../../pep-0698.rst:328
+msgid ""
+"The ``@override`` decorator needs to execute *after* ordinary decorators "
+"like ``@functools.lru_cache`` that use wrapper functions, since we want "
+"to set ``__override__`` on the outermost wrapper. This means it needs to "
+"go *above* all these other decorators."
+msgstr ""
+
+#: ../../pep-0698.rst:332
+msgid ""
+"But ``@override`` needs to execute *before* many special descriptor-based"
+" decorators like ``@property``, ``@staticmethod``, and ``@classmethod``."
+msgstr ""
+
+#: ../../pep-0698.rst:334
+msgid ""
+"As discussed above, in some cases (for example a descriptor with fixed "
+"slots or a descriptor that also wraps) it may be impossible to get the "
+"``__override__`` attribute at all."
+msgstr ""
+
+#: ../../pep-0698.rst:338
+msgid ""
+"As a result, runtime support for setting ``__override__`` is best effort "
+"only, and we do not expect type checkers to validate the ordering of "
+"decorators."
+msgstr ""
+
+#: ../../pep-0698.rst:344
+msgid "Rejected Alternatives"
+msgstr ""
+
+#: ../../pep-0698.rst:348
+msgid "Rely on Integrated Development Environments for safety"
+msgstr ""
+
+#: ../../pep-0698.rst:350
+msgid ""
+"Modern Integrated Development Environments (IDEs) often provide the "
+"ability to automatically update subclasses when renaming a method. But we"
+" view this as insufficient for several reasons:"
+msgstr ""
+
+#: ../../pep-0698.rst:354
+msgid ""
+"If a codebase is split into multiple projects, an IDE will not help and "
+"the bug appears when upgrading dependencies. Type checkers are a fast way"
+" to catch breaking changes in dependencies."
+msgstr ""
+
+#: ../../pep-0698.rst:357
+msgid ""
+"Not all developers use such IDEs. And library maintainers, even if they "
+"do use an IDE, should not need to assume pull request authors use the "
+"same IDE. We prefer being able to detect problems in continuous "
+"integration without assuming anything about developers’ choice of editor."
+msgstr ""
+
+#: ../../pep-0698.rst:365
+msgid "Runtime enforcement"
+msgstr ""
+
+#: ../../pep-0698.rst:367
+msgid ""
+"We considered having ``@typing.override`` enforce override safety at "
+"runtime, similarly to how ``@overrides.overrides`` `does today "
+"<https://pypi.org/project/overrides/>`_."
+msgstr ""
+
+#: ../../pep-0698.rst:371
+msgid "We rejected this for four reasons:"
+msgstr ""
+
+#: ../../pep-0698.rst:373
+msgid ""
+"For users of static type checking, it is not clear this brings any "
+"benefits."
+msgstr ""
+
+#: ../../pep-0698.rst:374
+msgid ""
+"There would be at least some performance overhead, leading to projects "
+"importing slower with runtime enforcement. We estimate the "
+"``@overrides.overrides`` implementation takes around 100 microseconds, "
+"which is fast but could still add up to a second or more of extra "
+"initialization time in million-plus line codebases, which is exactly "
+"where we think ``@typing.override`` will be most useful."
+msgstr ""
+
+#: ../../pep-0698.rst:380
+msgid ""
+"An implementation may have edge cases where it doesn’t work well (we "
+"heard from a maintainer of one such closed-source library that this has "
+"been a problem). We expect static enforcement to be simple and reliable."
+msgstr ""
+
+#: ../../pep-0698.rst:383
+msgid ""
+"The implementation approaches we know of are not simple. The decorator "
+"executes before the class is finished evaluating, so the options we know "
+"of are either to inspect the bytecode of the caller (as "
+"``@overrides.overrrides`` does) or to use a metaclass-based approach. "
+"Neither approach seems ideal."
+msgstr ""
+
+#: ../../pep-0698.rst:390
+msgid "Mark a base class to force explicit overrides on subclasses"
+msgstr ""
+
+#: ../../pep-0698.rst:392
+msgid ""
+"We considered including a class decorator "
+"``@require_explicit_overrides``, which would have provided a way for base"
+" classes to declare that all subclasses must use the ``@override`` "
+"decorator on method overrides. The overrides library has a mixin class, "
+"``EnforceExplicitOverrides``, which provides similar behavior in runtime "
+"checks."
+msgstr ""
+
+#: ../../pep-0698.rst:398
+msgid ""
+"We decided against this because we expect owners of large codebases will "
+"benefit most from ``@override``, and for these use cases having a strict "
+"mode where explicit ``@override`` is required (see the Backward "
+"Compatibility section) provides more benefits than a way to mark base "
+"classes."
+msgstr ""
+
+#: ../../pep-0698.rst:403
+msgid ""
+"Moreover we believe that authors of projects who do not consider the "
+"extra type safety to be worth the additional boilerplate of using "
+"``@override`` should not be forced to do so. Having an optional strict "
+"mode puts the decision in the hands of project owners, whereas the use of"
+" ``@require_explicit_overrides`` in libraries would force project owners "
+"to use ``@override`` even if they prefer not to."
+msgstr ""
+
+#: ../../pep-0698.rst:411
+msgid "Include the name of the ancestor class being overridden"
+msgstr ""
+
+#: ../../pep-0698.rst:413
+msgid ""
+"We considered allowing the caller of ``@override`` to specify a specific "
+"ancestor class where the overridden method should be defined:"
+msgstr ""
+
+#: ../../pep-0698.rst:438
+msgid ""
+"This could be useful for code readability because it makes the override "
+"structure more explicit for deep inheritance trees. It also might catch "
+"bugs by prompting developers to check that the implementation of an "
+"override still makes sense whenever a method being overridden moves from "
+"one base class to another."
+msgstr ""
+
+#: ../../pep-0698.rst:443
+msgid "We decided against it because:"
+msgstr ""
+
+#: ../../pep-0698.rst:445
+msgid ""
+"Supporting this would add complexity to the implementation of both "
+"``@override`` and type checker support for it, so there would need to be "
+"considerable benefits."
+msgstr ""
+
+#: ../../pep-0698.rst:448
+msgid "We believe that it would be rarely used and catch relatively few bugs."
+msgstr ""
+
+#: ../../pep-0698.rst:450
+msgid ""
+"The author of the ``overrides`` package `has noted "
+"<https://discuss.python.org/t/pep-698-a-typing-override-"
+"decorator/20839/4>`_ that early versions of his library included this "
+"capability but it was rarely useful and seemed to have little benefit. "
+"After it was removed, the ability was never requested by users."
+msgstr ""
+
+#: ../../pep-0698.rst:459
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0698.rst:461
+msgid "Pyre: A proof of concept is implemented in Pyre:"
+msgstr ""
+
+#: ../../pep-0698.rst:463
+msgid ""
+"The decorator `@pyre_extensions.override <https://github.com/facebook"
+"/pyre-"
+"check/blob/f4d3f676d17b2e59c4c55d09dfa3caead8ec2e7c/pyre_extensions/__init__.py#L95/>`_"
+" can mark overrides"
+msgstr ""
+
+#: ../../pep-0698.rst:466
+msgid ""
+"Pyre can `type-check this decorator <https://github.com/facebook/pyre-"
+"check/blob/ae68c44f4e5b263ce0e175f0798272d9318589af/source/analysis/test/integration/methodTest.ml#L2515-L2638/>`_"
+" as specified in this PEP"
+msgstr ""
+
+#: ../../pep-0698.rst:471
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0698.rst:473
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

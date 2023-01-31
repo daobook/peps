@@ -1,0 +1,431 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0687.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0687.rst:3
+msgid ""
+"Erlend Egeberg Aasland <erlend.aasland@protonmail.com>, Petr Viktorin "
+"<encukou@gmail.com>"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0687.rst:4
+msgid "https://discuss.python.org/t/14824"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0687.rst:5
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0687.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Requires"
+msgstr ""
+
+#: ../../pep-0687.rst:8
+msgid "489, 573, 630"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0687.rst:9
+msgid "04-Apr-2022"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0687.rst:10
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0687.rst:11
+msgid ""
+"`04-Apr-2022 <https://discuss.python.org/t/14824>`__, `11-Apr-2022 "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/B3HYQIE4Z5WBJCC3FUZJZHXLM32I4BZA/>`__"
+msgstr ""
+
+#: ../../pep-0687.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0687.rst:13
+msgid "https://discuss.python.org/t/14824/4"
+msgstr ""
+
+#: ../../pep-0687.rst:16
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0687.rst:18
+msgid ""
+"Extensions in the standard library will be converted to multi-phase "
+"initialization (:pep:`489`) and where possible, all state will be stored "
+"on module objects rather than in process-global variables."
+msgstr ""
+
+#: ../../pep-0687.rst:24
+msgid "Note on Backdating"
+msgstr ""
+
+#: ../../pep-0687.rst:26
+msgid ""
+"Much of this proposal has already been implemented. We submit this PEP to"
+" explain the changes, seek consensus on whether they are good,  propose "
+"the remaining changes, and set best practices for new modules."
+msgstr ""
+
+#: ../../pep-0687.rst:34
+msgid "Motivation & Rationale"
+msgstr ""
+
+#: ../../pep-0687.rst:36
+msgid ""
+"The informational :pep:`630` describes the background, motivation, "
+"rationale, implications and implementation notes of the proposed changes "
+"as they apply generally to any extension module (not just the standard "
+"library)."
+msgstr ""
+
+#: ../../pep-0687.rst:40
+msgid "It is an integral part of this proposal. Read it first."
+msgstr ""
+
+#: ../../pep-0687.rst:42
+msgid "This PEP discusses specifics of the standard library."
+msgstr ""
+
+#: ../../pep-0687.rst:46
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0687.rst:48
+msgid ""
+"The body of :pep:`630` will be converted to a HOWTO in the Python "
+"documentation, and that PEP will be retired (marked Final)."
+msgstr ""
+
+#: ../../pep-0687.rst:51
+msgid ""
+"All extension modules in the standard library will be converted to multi-"
+"phase initialization introduced in :pep:`489`."
+msgstr ""
+
+#: ../../pep-0687.rst:54
+msgid "All stdlib extension modules will be *isolated*. That is:"
+msgstr ""
+
+#: ../../pep-0687.rst:56
+msgid ""
+"Types, functions and other objects defined by the module will either be "
+"immutable, or not shared with other module instances."
+msgstr ""
+
+#: ../../pep-0687.rst:59
+msgid ""
+"State specific to the module will not be shared with other module "
+"instances, unless it represents global state."
+msgstr ""
+
+#: ../../pep-0687.rst:62
+msgid ""
+"For example, ``_csv.field_size_limit`` will get/set a module-specific "
+"number. On the other hand, functions like ``readline.get_history_item`` "
+"or ``os.getpid`` will continue to work with state that is process-global "
+"(external to the module, and possibly shared across other libraries, "
+"including non-Python ones)."
+msgstr ""
+
+#: ../../pep-0687.rst:69
+msgid "Conversion to heap types"
+msgstr ""
+
+#: ../../pep-0687.rst:71
+msgid ""
+"Static types that do not need module state access, and have no other "
+"reason to be converted, should stay static."
+msgstr ""
+
+#: ../../pep-0687.rst:74
+msgid ""
+"Types whose methods need access to their module instance will be "
+"converted to heap types following :pep:`630`, with the following "
+"considerations:"
+msgstr ""
+
+#: ../../pep-0687.rst:77
+msgid ""
+"All standard library types that used to be static types should remain "
+"immutable. Heap types must be defined with the "
+"``Py_TPFLAGS_IMMUTABLE_TYPE`` flag to retain immutability. See `bpo-43908"
+" <https://bugs.python.org/issue43908>`__."
+msgstr ""
+
+#: ../../pep-0687.rst:82
+msgid ""
+"Tests should ensure ``TypeError`` is raised when trying to create a new "
+"attribute of an immutable type."
+msgstr ""
+
+#: ../../pep-0687.rst:85
+msgid ""
+"A static type with ``tp_new = NULL`` does not have a public constructor, "
+"but heap types inherit the constructor from the base class. Make sure "
+"types that previously were impossible to instantiate retain that feature;"
+" use ``Py_TPFLAGS_DISALLOW_INSTANTIATION``. Add tests using "
+"``test.support.check_disallow_instantiation()``. See `bpo-43916 "
+"<https://bugs.python.org/issue43916>`__."
+msgstr ""
+
+#: ../../pep-0687.rst:92
+msgid ""
+"Converted heap types may unintentionally become serializable "
+"(``pickle``-able). Test that calling ``pickle.dumps`` has the same result"
+" before and after conversion, and if the test fails, add a ``__reduce__``"
+" method that raises ``TypeError``. See `PR-21002 "
+"<https://github.com/python/cpython/pull/21002/files>`__ for an example."
+msgstr ""
+
+#: ../../pep-0687.rst:98
+msgid "These issues will be added to the Devguide to help any future conversions."
+msgstr ""
+
+#: ../../pep-0687.rst:100
+msgid ""
+"If another kind of issue is found, the module in question should be "
+"unchanged until a solution is found and added to the Devguide, and "
+"already converted modules are checked and fixed."
+msgstr ""
+
+#: ../../pep-0687.rst:106
+msgid "Process"
+msgstr ""
+
+#: ../../pep-0687.rst:108
+msgid ""
+"The following process should be added to the Devguide, and remain until "
+"all modules are converted. Any new findings should be documented there or"
+" in the general HOWTO."
+msgstr ""
+
+#: ../../pep-0687.rst:113
+msgid "Part 1: Preparation"
+msgstr ""
+
+#: ../../pep-0687.rst:115
+msgid ""
+"Open a discussion, either on the bug tracker or on Discourse. Involve the"
+" module maintainer and/or code owner. Explain the reason and rationale "
+"for the changes."
+msgstr ""
+
+#: ../../pep-0687.rst:118
+msgid ""
+"Identify global state performance bottlenecks. Create a proof-of-concept "
+"implementation, and measure the performance impact. ``pyperf`` is a good "
+"tool for benchmarking."
+msgstr ""
+
+#: ../../pep-0687.rst:121
+msgid ""
+"Create an implementation plan. For small modules with few types, a single"
+" PR may do the job. For larger modules with lots of types, and possibly "
+"also external library callbacks, multiple PR's will be needed."
+msgstr ""
+
+#: ../../pep-0687.rst:127
+msgid "Part 2: Implementation"
+msgstr ""
+
+#: ../../pep-0687.rst:129
+msgid ""
+"Note: this is a suggested implementation plan for a complex module, based"
+" on lessons learned with other modules. Feel free to simplify it for "
+"smaller modules."
+msgstr ""
+
+#: ../../pep-0687.rst:133
+msgid ""
+"Add Argument Clinic where possible; it enables you to easily use the "
+"defining class to fetch module state from type methods."
+msgstr ""
+
+#: ../../pep-0687.rst:135
+msgid ""
+"Prepare for module state; establish a module state ``struct``, add an "
+"instance as a static global variable, and create helper stubs for "
+"fetching the module state."
+msgstr ""
+
+#: ../../pep-0687.rst:138
+msgid ""
+"Add relevant global variables to the module state ``struct``, and modify "
+"code that accesses the global state to use the module state helpers "
+"instead. This step may be broken into several PR's."
+msgstr ""
+
+#: ../../pep-0687.rst:141
+msgid "Where necessary, convert static types to heap types."
+msgstr ""
+
+#: ../../pep-0687.rst:142
+msgid "Convert the global module state struct to true module state."
+msgstr ""
+
+#: ../../pep-0687.rst:143
+msgid "Implement multi-phase initialisation."
+msgstr ""
+
+#: ../../pep-0687.rst:145
+msgid ""
+"Steps 4 through 6 should preferably land in a single alpha development "
+"phase."
+msgstr ""
+
+#: ../../pep-0687.rst:149
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0687.rst:151
+msgid ""
+"Extension modules in the standard library will now be loadable more than "
+"once. For example, deleting such a module from ``sys.modules`` and re-"
+"importing it will result in a fresh module instance, isolated from any "
+"previously loaded instances."
+msgstr ""
+
+#: ../../pep-0687.rst:156
+msgid ""
+"This may affect code that expected the previous behavior: globals of "
+"extension modules were shallowly copied from the first loaded module."
+msgstr ""
+
+#: ../../pep-0687.rst:161
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0687.rst:163
+msgid "None known."
+msgstr ""
+
+#: ../../pep-0687.rst:167
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0687.rst:169
+msgid ""
+"A large part of this proposal is a HOWTO aimed at experienced users, "
+"which will be moved to the documentation."
+msgstr ""
+
+#: ../../pep-0687.rst:172
+msgid "Beginners should not be affected."
+msgstr ""
+
+#: ../../pep-0687.rst:176
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0687.rst:178
+msgid ""
+"Most of the changes are now in the main branch, as commits for these "
+"issues:"
+msgstr ""
+
+#: ../../pep-0687.rst:180
+msgid ""
+"`bpo-40077, Convert static types to heap types: use PyType_FromSpec() "
+"<https://bugs.python.org/issue40077>`_"
+msgstr ""
+
+#: ../../pep-0687.rst:181
+msgid ""
+"`bpo-46417, Clear static types in Py_Finalize() for embedded Python "
+"<https://bugs.python.org/issue46417>`_"
+msgstr ""
+
+#: ../../pep-0687.rst:182
+msgid ""
+"`bpo-1635741, Py_Finalize() doesn't clear all Python objects at exit "
+"<https://bugs.python.org/issue1635741>`_"
+msgstr ""
+
+#: ../../pep-0687.rst:184
+msgid "As an example, changes and fix-ups done in the ``_csv`` module are:"
+msgstr ""
+
+#: ../../pep-0687.rst:186
+msgid ""
+"`GH-23224, Remove static state from the _csv module "
+"<https://github.com/python/cpython/pull/23224>`_"
+msgstr ""
+
+#: ../../pep-0687.rst:187
+msgid ""
+"`GH-26008, Allow subclassing of csv.Error "
+"<https://github.com/python/cpython/pull/26008>`_"
+msgstr ""
+
+#: ../../pep-0687.rst:188
+msgid ""
+"`GH-26074, Add GC support to _csv heap types "
+"<https://github.com/python/cpython/pull/26074>`_"
+msgstr ""
+
+#: ../../pep-0687.rst:189
+msgid ""
+"`GH-26351, Make heap types converted during 3.10 alpha immutable "
+"<https://github.com/python/cpython/pull/26351>`_"
+msgstr ""
+
+#: ../../pep-0687.rst:193
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0687.rst:195
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0353.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0353.txt:1
-msgid "353"
-msgstr ""
-
-#: ../../pep-0353.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0353.txt:2
-msgid "Using ssize_t as the index type"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0353.txt
 msgid "Author"
@@ -66,14 +50,22 @@ msgid "18-Dec-2005"
 msgstr ""
 
 #: ../../pep-0353.txt
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0353.txt:10
+msgid "2.5"
+msgstr ""
+
+#: ../../pep-0353.txt
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0353.txt:14
+#: ../../pep-0353.txt:15
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0353.txt:16
+#: ../../pep-0353.txt:17
 msgid ""
 "In Python 2.4, indices of sequences are restricted to the C type int. On "
 "64-bit machines, sequences therefore cannot use the full address space, "
@@ -83,11 +75,11 @@ msgid ""
 "http://svn.python.org/projects/python/branches/ssize_t."
 msgstr ""
 
-#: ../../pep-0353.txt:25
+#: ../../pep-0353.txt:26
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0353.txt:27
+#: ../../pep-0353.txt:28
 msgid ""
 "64-bit machines are becoming more popular, and the size of main memory "
 "increases beyond 4GiB. On such machines, Python currently is limited, in "
@@ -95,7 +87,7 @@ msgid ""
 "...)  cannot contain more than 2GiElements."
 msgstr ""
 
-#: ../../pep-0353.txt:32
+#: ../../pep-0353.txt:33
 msgid ""
 "Today, very few machines have memory to represent larger lists: as each "
 "pointer is 8B (in a 64-bit machine), one needs 16GiB to just hold the "
@@ -104,39 +96,39 @@ msgid ""
 "users request improvements today:"
 msgstr ""
 
-#: ../../pep-0353.txt:38
+#: ../../pep-0353.txt:39
 msgid "strings (currently restricted to 2GiB)"
 msgstr ""
 
-#: ../../pep-0353.txt:39
+#: ../../pep-0353.txt:40
 msgid ""
 "mmap objects (likewise; plus the system typically won't keep the whole "
 "object in memory concurrently)"
 msgstr ""
 
-#: ../../pep-0353.txt:41
+#: ../../pep-0353.txt:42
 msgid "Numarray objects (from Numerical Python)"
 msgstr ""
 
-#: ../../pep-0353.txt:43
+#: ../../pep-0353.txt:44
 msgid ""
 "As the proposed change will cause incompatibilities on 64-bit machines, "
 "it should be carried out while such machines are not in wide use (IOW, as"
 " early as possible)."
 msgstr ""
 
-#: ../../pep-0353.txt:49
+#: ../../pep-0353.txt:50
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0353.txt:51
+#: ../../pep-0353.txt:52
 msgid ""
 "A new type Py_ssize_t is introduced, which has the same size as the "
 "compiler's size_t type, but is signed. It will be a typedef for ssize_t "
 "where available."
 msgstr ""
 
-#: ../../pep-0353.txt:55
+#: ../../pep-0353.txt:56
 msgid ""
 "The internal representation of the length fields of all container types "
 "is changed from int to ssize_t, for all types included in the standard "
@@ -144,14 +136,14 @@ msgid ""
 "Py_ssize_t, affecting all extension modules that use that macro."
 msgstr ""
 
-#: ../../pep-0353.txt:60
+#: ../../pep-0353.txt:61
 msgid ""
 "All occurrences of index and length parameters and results are changed to"
 " use Py_ssize_t, including the sequence slots in type objects, and the "
 "buffer interface."
 msgstr ""
 
-#: ../../pep-0353.txt:64
+#: ../../pep-0353.txt:65
 msgid ""
 "New conversion functions PyInt_FromSsize_t and PyInt_AsSsize_t, are "
 "introduced. PyInt_FromSsize_t will transparently return a long int object"
@@ -159,7 +151,7 @@ msgid ""
 "process long int objects."
 msgstr ""
 
-#: ../../pep-0353.txt:69
+#: ../../pep-0353.txt:70
 msgid ""
 "New function pointer typedefs ssizeargfunc, ssizessizeargfunc, "
 "ssizeobjargproc, ssizessizeobjargproc, and lenfunc are introduced. The "
@@ -167,46 +159,46 @@ msgid ""
 "writebufferproc, segcountproc, and charbufferproc."
 msgstr ""
 
-#: ../../pep-0353.txt:74
+#: ../../pep-0353.txt:75
 msgid ""
 "A new conversion code 'n' is introduced for PyArg_ParseTuple "
 "Py_BuildValue, PyObject_CallFunction and PyObject_CallMethod. This code "
 "operates on Py_ssize_t."
 msgstr ""
 
-#: ../../pep-0353.txt:78
+#: ../../pep-0353.txt:79
 msgid ""
 "The conversion codes 's#' and 't#' will output Py_ssize_t if the macro "
 "PY_SSIZE_T_CLEAN is defined before Python.h is included, and continue to "
 "output int if that macro isn't defined."
 msgstr ""
 
-#: ../../pep-0353.txt:83
+#: ../../pep-0353.txt:84
 msgid ""
 "At places where a conversion from size_t/Py_ssize_t to int is necessary, "
 "the strategy for conversion is chosen on a case-by-case basis (see next "
 "section)."
 msgstr ""
 
-#: ../../pep-0353.txt:87
+#: ../../pep-0353.txt:88
 msgid ""
 "To prevent loading extension modules that assume a 32-bit size type into "
 "an interpreter that has a 64-bit size type, Py_InitModule4 is renamed to "
 "Py_InitModule4_64."
 msgstr ""
 
-#: ../../pep-0353.txt:93
+#: ../../pep-0353.txt:94
 msgid "Conversion guidelines"
 msgstr ""
 
-#: ../../pep-0353.txt:95
+#: ../../pep-0353.txt:96
 msgid ""
 "Module authors have the choice whether they support this PEP in their "
 "code or not; if they support it, they have the choice of different levels"
 " of compatibility."
 msgstr ""
 
-#: ../../pep-0353.txt:99
+#: ../../pep-0353.txt:100
 msgid ""
 "If a module is not converted to support this PEP, it will continue to "
 "work unmodified on a 32-bit system.  On a 64-bit system, compile-time "
@@ -214,13 +206,13 @@ msgid ""
 "interpreter if the warnings are ignored."
 msgstr ""
 
-#: ../../pep-0353.txt:104
+#: ../../pep-0353.txt:105
 msgid ""
 "Conversion of a module can either attempt to continue using int indices, "
 "or use Py_ssize_t indices throughout."
 msgstr ""
 
-#: ../../pep-0353.txt:107
+#: ../../pep-0353.txt:108
 msgid ""
 "If the module should continue to use int indices, care must be taken when"
 " calling functions that return Py_ssize_t or size_t, in particular, for "
@@ -230,33 +222,33 @@ msgid ""
 "strategies are available:"
 msgstr ""
 
-#: ../../pep-0353.txt:114
+#: ../../pep-0353.txt:115
 msgid ""
 "statically determine that the size can never exceed an int (e.g. when "
 "taking the sizeof a struct, or the strlen of a file pathname). In this "
 "case, write::"
 msgstr ""
 
-#: ../../pep-0353.txt:120
+#: ../../pep-0353.txt:121
 msgid ""
 "This will add an assertion in debug mode that the value really fits into "
 "an int, and just add a cast otherwise."
 msgstr ""
 
-#: ../../pep-0353.txt:123
+#: ../../pep-0353.txt:124
 msgid ""
 "statically determine that the value shouldn't overflow an int unless "
 "there is a bug in the C code somewhere. Test whether the value is smaller"
 " than INT_MAX, and raise an InternalError if it isn't."
 msgstr ""
 
-#: ../../pep-0353.txt:127
+#: ../../pep-0353.txt:128
 msgid ""
 "otherwise, check whether the value fits an int, and raise a ValueError if"
 " it doesn't."
 msgstr ""
 
-#: ../../pep-0353.txt:130
+#: ../../pep-0353.txt:131
 msgid ""
 "The same care must be taken for tp_as_sequence slots, in addition, the "
 "signatures of these slots change, and the slots must be explicitly recast"
@@ -264,24 +256,24 @@ msgid ""
 "Python versions can be achieved with the test::"
 msgstr ""
 
-#: ../../pep-0353.txt:142
+#: ../../pep-0353.txt:143
 msgid ""
 "and then using Py_ssize_t in the rest of the code. For the tp_as_sequence"
 " slots, additional typedefs might be necessary; alternatively, by "
 "replacing::"
 msgstr ""
 
-#: ../../pep-0353.txt:151
+#: ../../pep-0353.txt:152
 msgid "with::"
 msgstr ""
 
-#: ../../pep-0353.txt:159
+#: ../../pep-0353.txt:160
 msgid ""
 "it becomes possible to drop the cast entirely; the type of foo_item "
 "should then match the sq_item slot in all Python versions."
 msgstr ""
 
-#: ../../pep-0353.txt:163
+#: ../../pep-0353.txt:164
 msgid ""
 "If the module should be extended to use Py_ssize_t indices, all usages of"
 " the type int should be reviewed, to see whether it should be changed to "
@@ -289,28 +281,28 @@ msgid ""
 "review is still necessary."
 msgstr ""
 
-#: ../../pep-0353.txt:168
+#: ../../pep-0353.txt:169
 msgid ""
 "Particular care must be taken for PyArg_ParseTuple calls: they need all "
 "be checked for s# and t# converters, and PY_SSIZE_T_CLEAN must be defined"
 " before including Python.h if the calls have been updated accordingly."
 msgstr ""
 
-#: ../../pep-0353.txt:173
+#: ../../pep-0353.txt:174
 msgid ""
 "Fredrik Lundh has written a scanner_ which checks the code of a C module "
 "for usage of APIs whose signature has changed."
 msgstr ""
 
-#: ../../pep-0353.txt:180
+#: ../../pep-0353.txt:181
 msgid "Discussion"
 msgstr ""
 
-#: ../../pep-0353.txt:183
+#: ../../pep-0353.txt:184
 msgid "Why not size_t"
 msgstr ""
 
-#: ../../pep-0353.txt:185
+#: ../../pep-0353.txt:186
 msgid ""
 "An initial attempt to implement this feature tried to use size_t. It "
 "quickly turned out that this cannot work: Python uses negative indices in"
@@ -319,15 +311,15 @@ msgid ""
 "e.g. in loops like::"
 msgstr ""
 
-#: ../../pep-0353.txt:194
+#: ../../pep-0353.txt:195
 msgid "This loop will never terminate if index is changed from int to size_t."
 msgstr ""
 
-#: ../../pep-0353.txt:198
+#: ../../pep-0353.txt:199
 msgid "Why not Py_intptr_t"
 msgstr ""
 
-#: ../../pep-0353.txt:200
+#: ../../pep-0353.txt:201
 msgid ""
 "Conceptually, Py_intptr_t and Py_ssize_t are different things: "
 "Py_intptr_t needs to be the same size as void*, and Py_ssize_t the same "
@@ -337,17 +329,17 @@ msgid ""
 "as well."
 msgstr ""
 
-#: ../../pep-0353.txt:208
+#: ../../pep-0353.txt:209
 msgid "Doesn't this break much code?"
 msgstr ""
 
-#: ../../pep-0353.txt:210
+#: ../../pep-0353.txt:211
 msgid ""
 "With the changes proposed, code breakage is fairly minimal. On a 32-bit "
 "system, no code will break, as Py_ssize_t is just a typedef for int."
 msgstr ""
 
-#: ../../pep-0353.txt:214
+#: ../../pep-0353.txt:215
 msgid ""
 "On a 64-bit system, the compiler will warn in many places. If these "
 "warnings are ignored, the code will continue to work as long as the "
@@ -359,17 +351,17 @@ msgid ""
 "value); this applies most notably to codecs and slice objects."
 msgstr ""
 
-#: ../../pep-0353.txt:226
+#: ../../pep-0353.txt:227
 msgid ""
 "If the conversion of the code is made, the same code can continue to work"
 " on earlier Python releases."
 msgstr ""
 
-#: ../../pep-0353.txt:230
+#: ../../pep-0353.txt:231
 msgid "Doesn't this consume too much memory?"
 msgstr ""
 
-#: ../../pep-0353.txt:232
+#: ../../pep-0353.txt:233
 msgid ""
 "One might think that using Py_ssize_t in all tuples, strings, lists, etc."
 " is a waste of space. This is not true, though: on a 32-bit machine, "
@@ -377,25 +369,25 @@ msgid ""
 "doesn't change, e.g."
 msgstr ""
 
-#: ../../pep-0353.txt:238
+#: ../../pep-0353.txt:239
 msgid ""
 "in lists and tuples, a pointer immediately follows the ob_size member. "
 "This means that the compiler currently inserts a 4 padding bytes; with "
 "the change, these padding bytes become part of the size."
 msgstr ""
 
-#: ../../pep-0353.txt:242
+#: ../../pep-0353.txt:243
 msgid ""
 "in strings, the ob_shash field follows ob_size. This field is of type "
 "long, which is a 64-bit type on most 64-bit systems (except Win64), so "
 "the compiler inserts padding before it as well."
 msgstr ""
 
-#: ../../pep-0353.txt:248
+#: ../../pep-0353.txt:249
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-0353.txt:250
+#: ../../pep-0353.txt:251
 msgid ""
 "Marc-Andre Lemburg commented that complete backwards compatibility with "
 "existing source code should be preserved. In particular, functions that "
@@ -403,15 +395,27 @@ msgid ""
 "if the callers pass int*."
 msgstr ""
 
-#: ../../pep-0353.txt:256
+#: ../../pep-0353.txt:257
 msgid "It is not clear what strategy could be used to implement that requirement."
 msgstr ""
 
-#: ../../pep-0353.txt:261
+#: ../../pep-0353.txt:262
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0353.txt:263
+#: ../../pep-0353.txt:264
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "353"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Using ssize_t as the index type"
+#~ msgstr ""
 

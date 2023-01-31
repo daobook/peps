@@ -11,6 +11,12 @@ RENDER_COMMAND=$(VENVDIR)/bin/python3 build.py -j $(JOBS) -o $(OUTPUT_DIR)
 html: venv
 	$(RENDER_COMMAND)
 
+# gettext 		  Update internationalization document
+.PHONY: gettext
+gettext: venv
+	$(RENDER_COMMAND) -o build/gettext --gettext
+	sphinx-intl update -p build/gettext
+
 ## dirhtml        to render PEPs to "index.html" files within "pep-NNNN" directories
 .PHONY: dirhtml
 dirhtml: venv rss
@@ -85,3 +91,4 @@ pages: dirhtml
 help : Makefile
 	@echo "Please use \`make <target>' where <target> is one of"
 	@sed -n 's/^##//p' $<
+

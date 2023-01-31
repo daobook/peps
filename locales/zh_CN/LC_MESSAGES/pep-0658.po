@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0658.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0658.rst:1
-msgid "658"
-msgstr ""
-
-#: ../../pep-0658.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0658.rst:2
-msgid "Serve Distribution Metadata in the Simple Repository API"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0658.rst
 msgid "Author"
@@ -82,10 +66,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0658.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0658.rst:9
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0658.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0658.rst:10 ../../pep-0658.rst:11
+#: ../../pep-0658.rst:11 ../../pep-0658.rst:12
 msgid "10-May-2021"
 msgstr ""
 
@@ -97,15 +89,15 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0658.rst:12
+#: ../../pep-0658.rst:13
 msgid "https://discuss.python.org/t/8651/48"
 msgstr ""
 
-#: ../../pep-0658.rst:16
+#: ../../pep-0658.rst:17
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0658.rst:18
+#: ../../pep-0658.rst:19
 msgid ""
 "This PEP proposes adding an anchor tag to expose the ``METADATA`` file "
 "from distributions in the :pep:`503` \"simple\" repository API. A ``data-"
@@ -113,11 +105,11 @@ msgid ""
 "from a given distribution can be independently fetched."
 msgstr ""
 
-#: ../../pep-0658.rst:25
+#: ../../pep-0658.rst:26
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0658.rst:27
+#: ../../pep-0658.rst:28
 msgid ""
 "Package management workflows made popular by recent tooling increase the "
 "need to inspect distribution metadata without intending to install the "
@@ -127,11 +119,11 @@ msgid ""
 "experience."
 msgstr ""
 
-#: ../../pep-0658.rst:36
+#: ../../pep-0658.rst:37
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0658.rst:38
+#: ../../pep-0658.rst:39
 msgid ""
 "Tools have been exploring methods to reduce the download size by "
 "partially downloading wheels with HTTP range requests. This, however, "
@@ -143,7 +135,7 @@ msgid ""
 "the need to perform additional requests and ZIP inspection."
 msgstr ""
 
-#: ../../pep-0658.rst:48
+#: ../../pep-0658.rst:49
 msgid ""
 "The metadata file defined by the Core Metadata Specification [core-"
 "metadata]_ will be served directly by repositories since it contains the "
@@ -154,7 +146,7 @@ msgid ""
 "directory [dist-info]_."
 msgstr ""
 
-#: ../../pep-0658.rst:56
+#: ../../pep-0658.rst:57
 msgid ""
 "An HTML attribute on the distribution file's anchor link is needed to "
 "indicate whether a client is able to choose the separately served "
@@ -165,11 +157,11 @@ msgid ""
 "repository support."
 msgstr ""
 
-#: ../../pep-0658.rst:66
+#: ../../pep-0658.rst:67
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0658.rst:68
+#: ../../pep-0658.rst:69
 msgid ""
 "In a simple repository's project page, each anchor tag pointing to a "
 "distribution **MAY** have a ``data-dist-info-metadata`` attribute. The "
@@ -178,7 +170,7 @@ msgid ""
 "modified when the distribution is processed and/or installed."
 msgstr ""
 
-#: ../../pep-0658.rst:74
+#: ../../pep-0658.rst:75
 msgid ""
 "If a ``data-dist-info-metadata`` attribute is present, the repository "
 "**MUST** serve the distribution's Core Metadata file alongside the "
@@ -189,7 +181,7 @@ msgid ""
 " how :pep:`503` specifies the GPG signature file's location."
 msgstr ""
 
-#: ../../pep-0658.rst:82
+#: ../../pep-0658.rst:83
 msgid ""
 "The repository **SHOULD** provide the hash of the Core Metadata file as "
 "the ``data-dist-info-metadata`` attribute's value using the syntax "
@@ -199,18 +191,18 @@ msgid ""
 "is unavailable."
 msgstr ""
 
-#: ../../pep-0658.rst:91
+#: ../../pep-0658.rst:92
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0658.rst:93
+#: ../../pep-0658.rst:94
 msgid ""
 "If an anchor tag lacks the ``data-dist-info-metadata`` attribute, tools "
 "are expected to revert to their current behaviour of downloading the "
 "distribution to inspect the metadata."
 msgstr ""
 
-#: ../../pep-0658.rst:97
+#: ../../pep-0658.rst:98
 msgid ""
 "Older tools not supporting the new ``data-dist-info-metadata`` attribute "
 "are expected to ignore the attribute and maintain their current behaviour"
@@ -219,15 +211,15 @@ msgid ""
 "operate."
 msgstr ""
 
-#: ../../pep-0658.rst:105
+#: ../../pep-0658.rst:106
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0658.rst:108
+#: ../../pep-0658.rst:109
 msgid "Put metadata content on the project page"
 msgstr ""
 
-#: ../../pep-0658.rst:110
+#: ../../pep-0658.rst:111
 msgid ""
 "Since tools generally only need dependency information from a "
 "distribution in addition to what's already available on the project page,"
@@ -236,7 +228,7 @@ msgid ""
 "specified in :pep:`503`."
 msgstr ""
 
-#: ../../pep-0658.rst:116
+#: ../../pep-0658.rst:117
 msgid ""
 "This approach was abandoned since a distribution may contain arbitrarily "
 "long lists of dependencies (including required and optional), and it is "
@@ -247,11 +239,11 @@ msgid ""
 "more proportional to the number of distributions inspected."
 msgstr ""
 
-#: ../../pep-0658.rst:127
+#: ../../pep-0658.rst:128
 msgid "Expose more files in the distribution"
 msgstr ""
 
-#: ../../pep-0658.rst:129
+#: ../../pep-0658.rst:130
 msgid ""
 "It was proposed to provide the entire ``.dist-info`` directory as a "
 "separate part, instead of only the metadata file. However, searving "
@@ -262,18 +254,18 @@ msgid ""
 "installed."
 msgstr ""
 
-#: ../../pep-0658.rst:137
+#: ../../pep-0658.rst:138
 msgid ""
 "It should also be noted that the approach taken here does not preclude "
 "other files from being introduced in the future, whether we want to serve"
 " them together or individually."
 msgstr ""
 
-#: ../../pep-0658.rst:143
+#: ../../pep-0658.rst:144
 msgid "Explicitly specify the metadata file's URL on the project page"
 msgstr ""
 
-#: ../../pep-0658.rst:145
+#: ../../pep-0658.rst:146
 msgid ""
 "An early version of this draft proposed putting the metadata file's URL "
 "in the ``data-dist-info-metadata`` attribute. But people feel it is "
@@ -282,33 +274,45 @@ msgid ""
 " has an additional benefit of making the project page smaller."
 msgstr ""
 
-#: ../../pep-0658.rst:153
+#: ../../pep-0658.rst:154
 msgid "References"
 msgstr ""
 
-#: ../../pep-0658.rst:155
+#: ../../pep-0658.rst:156
 msgid "https://packaging.python.org/specifications/core-metadata/"
 msgstr ""
 
-#: ../../pep-0658.rst:157
+#: ../../pep-0658.rst:158
 msgid "https://packaging.python.org/specifications/recording-installed-packages/"
 msgstr ""
 
-#: ../../pep-0658.rst:159
+#: ../../pep-0658.rst:160
 msgid "https://packaging.python.org/specifications/binary-distribution-format/"
 msgstr ""
 
-#: ../../pep-0658.rst:161
+#: ../../pep-0658.rst:162
 msgid "https://packaging.python.org/specifications/source-distribution-format/"
 msgstr ""
 
-#: ../../pep-0658.rst:165
+#: ../../pep-0658.rst:166
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0658.rst:167
+#: ../../pep-0658.rst:168
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "658"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Serve Distribution Metadata in the Simple Repository API"
+#~ msgstr ""
 

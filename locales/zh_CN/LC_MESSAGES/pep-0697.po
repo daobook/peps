@@ -1,0 +1,838 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0697.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0697.rst:3
+msgid "Petr Viktorin <encukou@gmail.com>"
+msgstr ""
+
+#: ../../pep-0697.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0697.rst:4
+msgid "https://discuss.python.org/t/19743"
+msgstr ""
+
+#: ../../pep-0697.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0697.rst:5
+msgid "Draft"
+msgstr ""
+
+#: ../../pep-0697.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0697.rst:6
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0697.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0697.rst:8
+msgid "23-Aug-2022"
+msgstr ""
+
+#: ../../pep-0697.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0697.rst:9
+msgid "3.12"
+msgstr ""
+
+#: ../../pep-0697.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0697.rst:10
+msgid ""
+"`24-May-2022 <https://mail.python.org/archives/list/capi-"
+"sig@python.org/thread/SIP3VP7JU4OBWP62KBOYGOYCVIOTXEFH/>`__, `06-Oct-2022"
+" <https://discuss.python.org/t/19743>`__,"
+msgstr ""
+
+#: ../../pep-0697.rst:15
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0697.rst:17
+msgid ""
+"Add `Limited C API <https://docs.python.org/3.11/c-api/stable.html"
+"#stable-application-binary-interface>`__ for extending types with opaque "
+"data, by allowing code to only deal with data specific to a particular "
+"(sub)class."
+msgstr ""
+
+#: ../../pep-0697.rst:21
+msgid "Make the mechanism usable with ``PyHeapTypeObject``."
+msgstr ""
+
+#: ../../pep-0697.rst:25
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0697.rst:27
+msgid ""
+"The motivating problem this PEP solves is attaching C-level state to "
+"custom types --- i.e. metaclasses (subclasses of "
+":py:class:`python:type`)."
+msgstr ""
+
+#: ../../pep-0697.rst:31
+msgid ""
+"This is often needed in “wrappers” that expose another type system (e.g. "
+"C++, Java, Rust) as Python classes. These typically need to attach "
+"information about the “wrapped” non-Python class to the Python type "
+"object."
+msgstr ""
+
+#: ../../pep-0697.rst:36
+msgid ""
+"This should be possible to do in the Limited API, so that the language "
+"wrappers or code generators can be used to create Stable ABI extensions. "
+"(See :pep:`652` for the benefits of providing a stable ABI.)"
+msgstr ""
+
+#: ../../pep-0697.rst:40
+msgid ""
+"Extending ``type`` is an instance of a more general problem: extending a "
+"class while maintaining loose coupling – that is, not depending on the "
+"memory layout used by the superclass. (That's a lot of jargon; see "
+"Rationale for a concrete example of extending ``list``.)"
+msgstr ""
+
+#: ../../pep-0697.rst:48
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0697.rst:51
+msgid "Extending opaque types"
+msgstr ""
+
+#: ../../pep-0697.rst:53
+msgid ""
+"In the Limited API, most ``struct``\\ s are opaque: their size and memory"
+" layout are not exposed, so they can be changed in new versions of "
+"CPython (or alternate implementations of the C API)."
+msgstr ""
+
+#: ../../pep-0697.rst:57
+msgid ""
+"This means that the usual subclassing pattern -- making the ``struct`` "
+"used for instances of the *base* type be the first element of the "
+"``struct`` used for instances of the *derived* type -- does not work. To "
+"illustrate with code, the `example from the tutorial "
+"<https://docs.python.org/3.11/extending/newtypes_tutorial.html"
+"#subclassing-other-types>`_ extends "
+":external+python:c:type:`PyListObject` (:py:class:`python:list`) using "
+"the following ``struct``:"
+msgstr ""
+
+#: ../../pep-0697.rst:71
+msgid ""
+"This won't compile in the Limited API, since ``PyListObject`` is opaque "
+"(to allow changes as features and optimizations are implemented)."
+msgstr ""
+
+#: ../../pep-0697.rst:74
+msgid ""
+"Instead, this PEP proposes using a ``struct`` with only the state needed "
+"in the subclass, that is:"
+msgstr ""
+
+#: ../../pep-0697.rst:85
+msgid ""
+"The subclass can now be completely decoupled from the memory layout (and "
+"size) of the superclass."
+msgstr ""
+
+#: ../../pep-0697.rst:88
+msgid "This is possible today. To use such a struct:"
+msgstr ""
+
+#: ../../pep-0697.rst:90
+msgid ""
+"when creating the class, use ``PyListObject->tp_basicsize + "
+"sizeof(SubListState)`` as ``PyType_Spec.basicsize``;"
+msgstr ""
+
+#: ../../pep-0697.rst:92
+msgid ""
+"when accessing the data, use ``PyListObject->tp_basicsize`` as the offset"
+" into the instance (``PyObject*``)."
+msgstr ""
+
+#: ../../pep-0697.rst:95
+msgid "However, this has disadvantages:"
+msgstr ""
+
+#: ../../pep-0697.rst:97
+msgid ""
+"The base's ``basicsize`` may not be properly aligned, causing issues on "
+"some architectures if not mitigated. (These issues can be particularly "
+"nasty if alignment changes in a new release.)"
+msgstr ""
+
+#: ../../pep-0697.rst:100
+msgid ""
+"``PyTypeObject.tp_basicsize`` is not exposed in the Limited API, so "
+"extensions that support Limited API need to use "
+"``PyObject_GetAttrString(obj, \"__basicsize__\")``. This is cumbersome, "
+"and unsafe in edge cases (the Python attribute can be overridden)."
+msgstr ""
+
+#: ../../pep-0697.rst:105
+msgid "Variable-size objects are not handled (see :ref:`697-var-sized` below)."
+msgstr ""
+
+#: ../../pep-0697.rst:107
+msgid ""
+"To make this easy (and even *best practice* for projects that choose "
+"loose coupling over maximum performance), this PEP proposes an API to:"
+msgstr ""
+
+#: ../../pep-0697.rst:110
+msgid ""
+"During class creation, specify that ``SubListState`` should be “appended”"
+" to ``PyListObject``, without passing any additional details about "
+"``list``. (The interpreter itself gets all necessary info, like "
+"``tp_basicsize``, from the base)."
+msgstr ""
+
+#: ../../pep-0697.rst:115
+msgid ""
+"This will be specified by a negative ``PyType_Spec.basicsize``: "
+"``-sizeof(SubListState)``."
+msgstr ""
+
+#: ../../pep-0697.rst:118
+msgid ""
+"Given an instance, and the subclass ``PyTypeObject*``, get a pointer to "
+"the ``SubListState``. A new function, ``PyObject_GetTypeData``, will be "
+"added for this."
+msgstr ""
+
+#: ../../pep-0697.rst:122
+msgid ""
+"The base class is not limited to ``PyListObject``, of course: it can be "
+"used to extend any base class whose instance ``struct`` is opaque, "
+"unstable across releases, or not exposed at all -- including "
+":py:class:`python:type` (``PyHeapTypeObject``) or third-party extensions "
+"(for example, NumPy arrays [#f1]_)."
+msgstr ""
+
+#: ../../pep-0697.rst:128
+msgid ""
+"For cases where no additional state is needed, a zero ``basicsize`` will "
+"be allowed: in that case, the base's ``tp_basicsize`` will be inherited. "
+"(This currently works, but lacks explicit documentation and tests.)"
+msgstr ""
+
+#: ../../pep-0697.rst:132
+msgid ""
+"The ``tp_basicsize`` of the new class will be set to the computed total "
+"size, so code that inspects classes will continue working as before."
+msgstr ""
+
+#: ../../pep-0697.rst:139
+msgid "Extending variable-size objects"
+msgstr ""
+
+#: ../../pep-0697.rst:141
+msgid ""
+"Additional considerations are needed to subclass :external+python:c:type"
+":`variable-sized objects <PyVarObject>` while maintaining loose coupling:"
+" the variable-sized data can collide with subclass data (``SubListState``"
+" in the example above)."
+msgstr ""
+
+#: ../../pep-0697.rst:147
+msgid ""
+"Currently, CPython doesn't provide a way to prevent such collisions. So, "
+"the proposed mechanism of extending opaque classes (negative "
+"``base->tp_itemsize``) will *fail* by default."
+msgstr ""
+
+#: ../../pep-0697.rst:151
+msgid ""
+"We could stop there, but since the motivating type --- "
+"``PyHeapTypeObject`` --- is variable sized, we need a safe way to allow "
+"subclassing it. A bit of background first:"
+msgstr ""
+
+#: ../../pep-0697.rst:156
+msgid "Variable-size layouts"
+msgstr ""
+
+#: ../../pep-0697.rst:158
+msgid "There are two main memory layouts for variable-sized objects."
+msgstr ""
+
+#: ../../pep-0697.rst:160
+msgid ""
+"In types such as ``int`` or ``tuple``, the variable data is stored at a "
+"fixed offset. If subclasses need additional space, it must be added after"
+" any variable-sized data::"
+msgstr ""
+
+#: ../../pep-0697.rst:175
+msgid ""
+"In other types, like ``PyHeapTypeObject``, variable-sized data always "
+"lives at the end of the instance's memory area::"
+msgstr ""
+
+#: ../../pep-0697.rst:188
+msgid ""
+"The first layout enables fast access to the items array. The second "
+"allows subclasses to ignore the variable-sized array (assuming they use "
+"offsets from the start of the object to access their data)."
+msgstr ""
+
+#: ../../pep-0697.rst:192
+msgid ""
+"Since this PEP focuses on ``PyHeapTypeObject``, it proposes an API to "
+"allow subclassing for the second variant. Support for the first can be "
+"added later *as an API-compatible change* (though your PEP author doubts "
+"it'd be worth the effort)."
+msgstr ""
+
+#: ../../pep-0697.rst:199
+msgid "Extending classes with the ``PyHeapTypeObject``-like layout"
+msgstr ""
+
+#: ../../pep-0697.rst:201
+msgid ""
+"This PEP proposes a type flag, ``Py_TPFLAGS_ITEMS_AT_END``, which will "
+"indicate the ``PyHeapTypeObject``-like layout. This can be set in two "
+"ways:"
+msgstr ""
+
+#: ../../pep-0697.rst:205
+msgid ""
+"the superclass can set the flag, allowing subclass authors to not care "
+"about the fact that ``itemsize`` is involved, or"
+msgstr ""
+
+#: ../../pep-0697.rst:207
+msgid ""
+"the new subclass sets the flag, asserting that the author knows the "
+"superclass is suitable (but perhaps hasn't been updated to use the flag "
+"yet)."
+msgstr ""
+
+#: ../../pep-0697.rst:210
+msgid ""
+"This flag will be necessary to extend a variable-sized type using "
+"negative ``basicsize``."
+msgstr ""
+
+#: ../../pep-0697.rst:213
+msgid ""
+"An alternative to a flag would be to require subclass authors to know "
+"that the base uses a compatible layout (e.g. from documentation). A past "
+"version of this PEP proposed a new ``PyType_Slot`` for it. This turned "
+"out to be hard to explain, and goes against the idea of decoupling the "
+"subclass from the base layout."
+msgstr ""
+
+#: ../../pep-0697.rst:220
+msgid ""
+"The new flag will be used to allow safely extending variable-sized types:"
+" creating a type with ``spec->basesize < 0`` and ``base->tp_itemsize > "
+"0`` will require the flag."
+msgstr ""
+
+#: ../../pep-0697.rst:224
+msgid ""
+"Additionally, this PEP proposes a helper function to get the variable-"
+"sized data of a given instance, if it uses the new "
+"``Py_TPFLAGS_ITEMS_AT_END`` flag. This hides the necessary pointer "
+"arithmetic behind an API that can potentially be adapted to other layouts"
+" in the future (including, potentially, a VM-managed layout)."
+msgstr ""
+
+#: ../../pep-0697.rst:231
+msgid "Big picture"
+msgstr ""
+
+#: ../../pep-0697.rst:233
+msgid ""
+"To make it easier to verify that all cases are covered, here's a scary-"
+"looking big-picture decision tree."
+msgstr ""
+
+#: ../../pep-0697.rst:238
+msgid ""
+"The individual cases are easier to explain in isolation (see the "
+":ref:`reference implementation <697-ref-impl>` for draft docs)."
+msgstr ""
+
+#: ../../pep-0697.rst:241
+msgid ""
+"``spec->basesize > 0``: No change to the status quo. (The base class "
+"layout is known.)"
+msgstr ""
+
+#: ../../pep-0697.rst:244
+msgid "``spec->basesize == 0``: (Inheriting the basicsize)"
+msgstr ""
+
+#: ../../pep-0697.rst:246
+msgid ""
+"``base->tp_itemsize == 0``: The item size is set to "
+"``spec->tp_itemsize``. (No change to status quo.)"
+msgstr ""
+
+#: ../../pep-0697.rst:248 ../../pep-0697.rst:263
+msgid "``base->tp_itemsize > 0``: (Extending a variable-size class)"
+msgstr ""
+
+#: ../../pep-0697.rst:250
+msgid ""
+"``spec->itemsize == 0``: The item size is inherited. (No change to status"
+" quo.)"
+msgstr ""
+
+#: ../../pep-0697.rst:252
+msgid ""
+"``spec->itemsize > 0``: The item size is set. (This is hard to use "
+"safely, but it's CPython's current behavior.)"
+msgstr ""
+
+#: ../../pep-0697.rst:255
+msgid "``spec->basesize < 0``: (Extending the basicsize)"
+msgstr ""
+
+#: ../../pep-0697.rst:257
+msgid "``base->tp_itemsize == 0``: (Extending a fixed-size class)"
+msgstr ""
+
+#: ../../pep-0697.rst:259
+msgid "``spec->itemsize == 0``: The item size is set to 0."
+msgstr ""
+
+#: ../../pep-0697.rst:260
+msgid ""
+"``spec->itemsize > 0``: Fail. (We'd need to add an ``ob_size``, which is "
+"only possible for trivial types -- and the trivial layout must be known.)"
+msgstr ""
+
+#: ../../pep-0697.rst:265
+msgid "``spec->itemsize == 0``: (Inheriting the itemsize)"
+msgstr ""
+
+#: ../../pep-0697.rst:267
+msgid "``Py_TPFLAGS_ITEMS_AT_END`` used: itemsize is inherited."
+msgstr ""
+
+#: ../../pep-0697.rst:268
+msgid "``Py_TPFLAGS_ITEMS_AT_END`` not used: Fail. (Possible conflict.)"
+msgstr ""
+
+#: ../../pep-0697.rst:270
+msgid ""
+"``spec->itemsize > 0``: Fail. (Changing/extending the item size can't be "
+"done safely.)"
+msgstr ""
+
+#: ../../pep-0697.rst:273
+msgid ""
+"Setting ``spec->itemsize < 0`` is always an error. This PEP does not "
+"propose any mechanism to *extend* ``tp->itemsize`` rather than just "
+"inherit it."
+msgstr ""
+
+#: ../../pep-0697.rst:279 ../../pep-0697.rst:395
+msgid "Relative member offsets"
+msgstr ""
+
+#: ../../pep-0697.rst:281
+msgid ""
+"One more piece of the puzzle is ``PyMemberDef.offset``. Extensions that "
+"use a subclass-specific ``struct`` (``SubListState`` above) will get a "
+"way to specify “relative” offsets (offsets based from this ``struct``) "
+"rather than “absolute” ones (based off the ``PyObject`` struct)."
+msgstr ""
+
+#: ../../pep-0697.rst:286
+msgid ""
+"One way to do it would be to automatically assume “relative” offsets when"
+" creating a class using the new API. However, this implicit assumption "
+"would be too surprising."
+msgstr ""
+
+#: ../../pep-0697.rst:290
+msgid ""
+"To be more explicit, this PEP proposes a new flag for “relative” offsets."
+" At least initially, this flag will serve only as a check against misuse "
+"(and a hint for reviewers). It must be present if used with the new API, "
+"and must not be used otherwise."
+msgstr ""
+
+#: ../../pep-0697.rst:297
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0697.rst:299
+msgid ""
+"In the code blocks below, only function headers are part of the "
+"specification. Other code (the size/offset calculations) are details of "
+"the initial CPython implementation, and subject to change."
+msgstr ""
+
+#: ../../pep-0697.rst:304
+msgid "Relative ``basicsize``"
+msgstr ""
+
+#: ../../pep-0697.rst:306
+msgid ""
+"The ``basicsize`` member of ``PyType_Spec`` will be allowed to be zero or"
+" negative. In that case, its absolute value will specify how much *extra*"
+" storage space instances of the new class require, in addition to the "
+"basicsize of the base class. That is, the basicsize of the resulting "
+"class will be:"
+msgstr ""
+
+#: ../../pep-0697.rst:317
+msgid "where ``_align`` rounds up to a multiple of ``alignof(max_align_t)``."
+msgstr ""
+
+#: ../../pep-0697.rst:319
+msgid ""
+"When ``spec->basicsize`` is zero, basicsize will be inherited directly "
+"instead, i.e. set to ``base->tp_basicsize`` without aligning. (This "
+"already works; explicit tests and documentation will be added.)"
+msgstr ""
+
+#: ../../pep-0697.rst:323
+msgid ""
+"On an instance, the memory area specific to a subclass -- that is, the "
+"“extra space” that subclass reserves in addition its base -- will be "
+"available through a new function, ``PyObject_GetTypeData``. In CPython, "
+"this function will be defined as:"
+msgstr ""
+
+#: ../../pep-0697.rst:335
+msgid "Another function will be added to retreive the size of this memory area:"
+msgstr ""
+
+#: ../../pep-0697.rst:344
+msgid ""
+"The result may be higher than requested by ``-basicsize``. It is safe to "
+"use all of it (e.g. with ``memset``)."
+msgstr ""
+
+#: ../../pep-0697.rst:347
+msgid ""
+"The new ``*Get*`` functions come with an important caveat, which will be "
+"pointed out in documentation: They may only be used for classes created "
+"using negative ``PyType_Spec.basicsize``. For other classes, their "
+"behavior is undefined. (Note that this allows the above code to assume "
+"``cls->tp_base`` is not ``NULL``.)"
+msgstr ""
+
+#: ../../pep-0697.rst:356
+msgid "Inheriting ``itemsize``"
+msgstr ""
+
+#: ../../pep-0697.rst:358
+msgid ""
+"When ``spec->itemsize`` is zero, ``tp_itemsize`` will be inherited from "
+"the base. (This already works; explicit tests and documentation will be "
+"added.)"
+msgstr ""
+
+#: ../../pep-0697.rst:362
+msgid ""
+"A new type flag, ``Py_TPFLAGS_ITEMS_AT_END``, will be added. This flag "
+"can only be set on types with non-zero ``tp_itemsize``. It indicates that"
+" the variable-sized portion of an instance is stored at the end of the "
+"instance's memory."
+msgstr ""
+
+#: ../../pep-0697.rst:367
+msgid "The default metatype (``PyType_Type``) will set this flag."
+msgstr ""
+
+#: ../../pep-0697.rst:369
+msgid ""
+"A new function, ``PyObject_GetItemData``, will be added to access the "
+"memory reserved for variable-sized content of types with the new flag. In"
+" CPython it will be defined as:"
+msgstr ""
+
+#: ../../pep-0697.rst:383
+msgid "This function will initially *not* be added to the Limited API."
+msgstr ""
+
+#: ../../pep-0697.rst:385
+msgid ""
+"Extending a class with positive ``base->itemsize`` using negative "
+"``spec->basicsize`` will fail unless ``Py_TPFLAGS_ITEMS_AT_END`` is set, "
+"either on the base or in ``spec->flags``. (See :ref:`697-var-sized` for a"
+" full explanation.)"
+msgstr ""
+
+#: ../../pep-0697.rst:390
+msgid ""
+"Extending a class with positive ``spec->itemsize`` using negative "
+"``spec->basesize`` will fail."
+msgstr ""
+
+#: ../../pep-0697.rst:397
+msgid ""
+"In types defined using negative ``PyType_Spec.basicsize``, the offsets of"
+" members defined via ``Py_tp_members`` must be relative to the extra "
+"subclass data, rather than the full ``PyObject`` struct. This will be "
+"indicated by a new flag in ``PyMemberDef.flags``: ``Py_RELATIVE_OFFSET``."
+msgstr ""
+
+#: ../../pep-0697.rst:403
+msgid ""
+"In the initial implementation, the new flag will be redundant. It only "
+"serves to make the offset's changed meaning clear, and to help avoid "
+"mistakes. It will be an error to *not* use ``Py_RELATIVE_OFFSET`` with "
+"negative ``basicsize``, and it will be an error to use it in any other "
+"context (i.e. direct or indirect calls to ``PyDescr_NewMember``, "
+"``PyMember_GetOne``, ``PyMember_SetOne``)."
+msgstr ""
+
+#: ../../pep-0697.rst:410
+msgid ""
+"CPython will adjust the offset and clear the ``Py_RELATIVE_OFFSET`` flag "
+"when intitializing a type. This means that:"
+msgstr ""
+
+#: ../../pep-0697.rst:414
+msgid ""
+"the created type's ``tp_members`` will not match the input definition's "
+"``Py_tp_members`` slot, and"
+msgstr ""
+
+#: ../../pep-0697.rst:416
+msgid "any code that reads ``tp_members`` will not need to handle the flag."
+msgstr ""
+
+#: ../../pep-0697.rst:420
+msgid "List of new API"
+msgstr ""
+
+#: ../../pep-0697.rst:422
+msgid "The following new functions/values are proposed."
+msgstr ""
+
+#: ../../pep-0697.rst:424
+msgid "These will be added to the Limited API/Stable ABI:"
+msgstr ""
+
+#: ../../pep-0697.rst:426
+msgid "``void * PyObject_GetTypeData(PyObject *obj, PyTypeObject *cls)``"
+msgstr ""
+
+#: ../../pep-0697.rst:427
+msgid "``Py_ssize_t PyType_GetTypeDataSize(PyTypeObject *cls)``"
+msgstr ""
+
+#: ../../pep-0697.rst:428
+msgid "``Py_TPFLAGS_ITEMS_AT_END`` flag for ``PyTypeObject.tp_flags``"
+msgstr ""
+
+#: ../../pep-0697.rst:429
+msgid "``Py_RELATIVE_OFFSET`` flag for ``PyMemberDef.flags``"
+msgstr ""
+
+#: ../../pep-0697.rst:431
+msgid "These will be added to the public C API only:"
+msgstr ""
+
+#: ../../pep-0697.rst:433
+msgid "``void *PyObject_GetItemData(PyObject *obj)``"
+msgstr ""
+
+#: ../../pep-0697.rst:437
+msgid "Backwards Compatibility"
+msgstr ""
+
+#: ../../pep-0697.rst:439
+msgid "No backwards compatibility concerns are known."
+msgstr ""
+
+#: ../../pep-0697.rst:443
+msgid "Assumptions"
+msgstr ""
+
+#: ../../pep-0697.rst:445
+msgid ""
+"The implementation assumes that an instance's memory between "
+"``type->tp_base->tp_basicsize`` and ``type->tp_basicsize`` offsets "
+"“belongs” to ``type`` (except variable-length types). This is not "
+"documented explicitly, but CPython up to version 3.11 relied on it when "
+"adding ``__dict__`` to subclasses, so it should be safe."
+msgstr ""
+
+#: ../../pep-0697.rst:453
+msgid "Security Implications"
+msgstr ""
+
+#: ../../pep-0697.rst:455
+msgid "None known."
+msgstr ""
+
+#: ../../pep-0697.rst:459
+msgid "Endorsements"
+msgstr ""
+
+#: ../../pep-0697.rst:461
+msgid ""
+"The author of ``pybind11`` originally requested solving the issue (see "
+"point 2 in `this list <https://discuss.python.org/t/15993>`__), and `has "
+"been verifying the implementation "
+"<https://discuss.python.org/t/19743/14>`__."
+msgstr ""
+
+#: ../../pep-0697.rst:465
+msgid ""
+"Florian from the HPy project `said "
+"<https://discuss.python.org/t/19743/3>`__ that the API looks good in "
+"general. (See :ref:`below <697-alignment-performance>` for a possible "
+"solution to performance concerns.)"
+msgstr ""
+
+#: ../../pep-0697.rst:472
+msgid "How to Teach This"
+msgstr ""
+
+#: ../../pep-0697.rst:474
+msgid ""
+"The initial implementation will include reference documentation and a "
+"What's New entry, which should be enough for the target audience -- "
+"authors of C extension libraries."
+msgstr ""
+
+#: ../../pep-0697.rst:482
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0697.rst:484
+msgid ""
+"A reference implementation is in the `extend-opaque branch "
+"<https://github.com/python/cpython/compare/main...encukou:cpython:extend-"
+"opaque>`__ in the ``encukou/cpython`` GitHub repo."
+msgstr ""
+
+#: ../../pep-0697.rst:489
+msgid "Possible Future Enhancements"
+msgstr ""
+
+#: ../../pep-0697.rst:494
+msgid "Alignment & Performance"
+msgstr ""
+
+#: ../../pep-0697.rst:496
+msgid ""
+"The proposed implementation may waste some space if instance structs need"
+" smaller alignment than ``alignof(max_align_t)``. Also, dealing with "
+"alignment makes the calculation slower than it could be if we could rely "
+"on ``base->tp_basicsize`` being properly aligned for the subtype."
+msgstr ""
+
+#: ../../pep-0697.rst:502
+msgid ""
+"In other words, the proposed implementation focuses on safety and ease of"
+" use, and trades space and time for it. If it turns out that this is a "
+"problem, the implementation can be adjusted without breaking the API:"
+msgstr ""
+
+#: ../../pep-0697.rst:507
+msgid ""
+"The offset to the type-specific buffer can be stored, so "
+"``PyObject_GetTypeData`` effectively becomes ``(char *)obj + "
+"cls->ht_typedataoffset``, possibly speeding things up at the cost of an "
+"extra pointer in the class."
+msgstr ""
+
+#: ../../pep-0697.rst:511
+msgid ""
+"Then, a new ``PyType_Slot`` can specify the desired alignment, to reduce "
+"space requirements for instances."
+msgstr ""
+
+#: ../../pep-0697.rst:515
+msgid "Other layouts for variable-size types"
+msgstr ""
+
+#: ../../pep-0697.rst:517
+msgid ""
+"A flag like ``Py_TPFLAGS_ITEMS_AT_END`` could be added to signal the "
+"“tuple-like” layout described in :ref:`697-var-sized`, and all mechanisms"
+" this PEP proposes could be adapted to support it. Other layouts could be"
+" added as well. However, it seems there'd be very little practical "
+"benefit, so it's just a theoretical possibility."
+msgstr ""
+
+#: ../../pep-0697.rst:526
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0697.rst:528
+msgid "None yet."
+msgstr ""
+
+#: ../../pep-0697.rst:532
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0697.rst:534
+msgid ""
+"Is negative basicsize the way to go? Should this be enabled by a flag "
+"instead?"
+msgstr ""
+
+#: ../../pep-0697.rst:538
+msgid "Footnotes"
+msgstr ""
+
+#: ../../pep-0697.rst:540
+msgid ""
+"This PEP does not make it “safe” to subclass NumPy arrays specifically. "
+"NumPy publishes `an extensive list of caveats "
+"<https://numpy.org/doc/1.23/user/basics.subclassing.html>`__ for "
+"subclassing its arrays from Python, and extending in C might need a "
+"similar list."
+msgstr ""
+
+#: ../../pep-0697.rst:547
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0697.rst:549
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0207.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0207.txt:1
-msgid "207"
-msgstr ""
-
-#: ../../pep-0207.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0207.txt:2
-msgid "Rich Comparisons"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0207.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0207.txt:5
-msgid "guido@python.org (Guido van Rossum), DavidA@ActiveState.com (David Ascher)"
+#: ../../pep-0207.txt:3
+msgid "Guido van Rossum <guido@python.org>, David Ascher <DavidA@ActiveState.com>"
 msgstr ""
 
 #: ../../pep-0207.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0207.txt:6
+#: ../../pep-0207.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0207.txt:7
+#: ../../pep-0207.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0207.txt:9
+#: ../../pep-0207.txt:7
 msgid "25-Jul-2000"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0207.txt:10
+#: ../../pep-0207.txt:8
 msgid "2.1"
 msgstr ""
 
@@ -77,31 +61,31 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0207.txt:15 ../../pep-0207.txt:232
+#: ../../pep-0207.txt:13 ../../pep-0207.txt:230
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0207.txt:17
+#: ../../pep-0207.txt:15
 msgid "This PEP proposes several new features for comparisons:"
 msgstr ""
 
-#: ../../pep-0207.txt:19
+#: ../../pep-0207.txt:17
 msgid ""
 "Allow separately overloading of <, >, <=, >=, ==, !=, both in classes and"
 " in C extensions."
 msgstr ""
 
-#: ../../pep-0207.txt:22
+#: ../../pep-0207.txt:20
 msgid ""
 "Allow any of those overloaded operators to return something else besides "
 "a Boolean result."
 msgstr ""
 
-#: ../../pep-0207.txt:27 ../../pep-0207.txt:251
+#: ../../pep-0207.txt:25 ../../pep-0207.txt:249
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0207.txt:29
+#: ../../pep-0207.txt:27
 msgid ""
 "The main motivation comes from NumPy, whose users agree that A<B should "
 "return an array of elementwise comparison outcomes; they currently have "
@@ -109,7 +93,7 @@ msgid ""
 "or raise an exception."
 msgstr ""
 
-#: ../../pep-0207.txt:34
+#: ../../pep-0207.txt:32
 msgid ""
 "An additional motivation is that frequently, types don't have a natural "
 "ordering, but still need to be compared for equality. Currently such a "
@@ -117,7 +101,7 @@ msgid ""
 " just so that equality can be tested."
 msgstr ""
 
-#: ../../pep-0207.txt:39
+#: ../../pep-0207.txt:37
 msgid ""
 "Also, for some object types an equality test can be implemented much more"
 " efficiently than an ordering test; for example, lists and dictionaries "
@@ -125,31 +109,31 @@ msgid ""
 "some (potentially all) items."
 msgstr ""
 
-#: ../../pep-0207.txt:46
+#: ../../pep-0207.txt:44
 msgid "Previous Work"
 msgstr ""
 
-#: ../../pep-0207.txt:48
+#: ../../pep-0207.txt:46
 msgid ""
 "Rich Comparisons have been proposed before; in particular by David "
 "Ascher, after experience with Numerical Python:"
 msgstr ""
 
-#: ../../pep-0207.txt:51
+#: ../../pep-0207.txt:49
 msgid "http://starship.python.net/crew/da/proposals/richcmp.html"
 msgstr ""
 
-#: ../../pep-0207.txt:53
+#: ../../pep-0207.txt:51
 msgid ""
 "It is also included below as an Appendix.  Most of the material in this "
 "PEP is derived from David's proposal."
 msgstr ""
 
-#: ../../pep-0207.txt:58
+#: ../../pep-0207.txt:56
 msgid "Concerns"
 msgstr ""
 
-#: ../../pep-0207.txt:60
+#: ../../pep-0207.txt:58
 msgid ""
 "Backwards compatibility, both at the Python level (classes using "
 "``__cmp__`` need not be changed) and at the C level (extensions defining "
@@ -158,7 +142,7 @@ msgid ""
 "scheme)."
 msgstr ""
 
-#: ../../pep-0207.txt:66
+#: ../../pep-0207.txt:64
 msgid ""
 "When A<B returns a matrix of elementwise comparisons, an easy mistake to "
 "make is to use this expression in a Boolean context. Without special "
@@ -166,37 +150,37 @@ msgid ""
 " instead."
 msgstr ""
 
-#: ../../pep-0207.txt:71
+#: ../../pep-0207.txt:69
 msgid ""
 "If a class overrides x==y but nothing else, should x!=y be computed as "
 "not(x==y), or fail?  What about the similar relationship between < and "
 ">=, or between > and <=?"
 msgstr ""
 
-#: ../../pep-0207.txt:75
+#: ../../pep-0207.txt:73
 msgid ""
 "Similarly, should we allow x<y to be calculated from y>x?  And x<=y from "
 "not(x>y)?  And x==y from y==x, or x!=y from y!=x?"
 msgstr ""
 
-#: ../../pep-0207.txt:78
+#: ../../pep-0207.txt:76
 msgid ""
 "When comparison operators return elementwise comparisons, what to do "
 "about shortcut operators like A<B<C, ``A<B and C<D``, ``A<B or C<D``?"
 msgstr ""
 
-#: ../../pep-0207.txt:82
+#: ../../pep-0207.txt:80
 msgid ""
 "What to do about ``min()`` and ``max()``, the 'in' and 'not in' "
 "operators, ``list.sort()``, dictionary key comparison, and other uses of "
 "comparisons by built-in operations?"
 msgstr ""
 
-#: ../../pep-0207.txt:88
+#: ../../pep-0207.txt:86
 msgid "Proposed Resolutions"
 msgstr ""
 
-#: ../../pep-0207.txt:90
+#: ../../pep-0207.txt:88
 msgid ""
 "Full backwards compatibility can be achieved as follows.  When an object "
 "defines ``tp_compare()`` but not ``tp_richcompare()``, and a rich "
@@ -206,7 +190,7 @@ msgid ""
 "``tp_compare()`` is negative, and 0 if it is zero or positive.  Etc."
 msgstr ""
 
-#: ../../pep-0207.txt:97
+#: ../../pep-0207.txt:95
 msgid ""
 "Full forward compatibility can be achieved as follows.  When a classic "
 "comparison is requested on an object that implements "
@@ -219,7 +203,7 @@ msgid ""
 "fallbacks are tried next."
 msgstr ""
 
-#: ../../pep-0207.txt:108
+#: ../../pep-0207.txt:106
 msgid ""
 "(I thought long and hard about the order in which the three comparisons "
 "should be tried.  At one point I had a convincing argument for doing it "
@@ -228,14 +212,14 @@ msgid ""
 "it makes a difference any more.)"
 msgstr ""
 
-#: ../../pep-0207.txt:115
+#: ../../pep-0207.txt:113
 msgid ""
 "Any type that returns a collection of Booleans instead of a single "
 "boolean should define ``nb_nonzero()`` to raise an exception. Such a type"
 " is considered a non-Boolean."
 msgstr ""
 
-#: ../../pep-0207.txt:119
+#: ../../pep-0207.txt:117
 msgid ""
 "The == and != operators are not assumed to be each other's complement "
 "(e.g. IEEE 754 floating point numbers do not satisfy this).  It is up to "
@@ -244,7 +228,7 @@ msgid ""
 "tabnanny)."
 msgstr ""
 
-#: ../../pep-0207.txt:125
+#: ../../pep-0207.txt:123
 msgid ""
 "The reflexivity rules **are** assumed by Python.  Thus, the interpreter "
 "may swap y>x with x<y, y>=x with x<=y, and may swap the arguments of x==y"
@@ -252,7 +236,7 @@ msgid ""
 "x!=x is never true; this should not be assumed.)"
 msgstr ""
 
-#: ../../pep-0207.txt:131
+#: ../../pep-0207.txt:129
 msgid ""
 "In the current proposal, when A<B returns an array of elementwise "
 "comparisons, this outcome is considered non-Boolean, and its "
@@ -262,37 +246,37 @@ msgid ""
 " you can write (A<B)&(B<C)."
 msgstr ""
 
-#: ../../pep-0207.txt:139
+#: ../../pep-0207.txt:137
 msgid ""
 "The ``min()`` and ``list.sort()`` operations will only use the < "
 "operator; max() will only use the > operator.  The 'in' and 'not in' "
 "operators and dictionary lookup will only use the == operator."
 msgstr ""
 
-#: ../../pep-0207.txt:146
+#: ../../pep-0207.txt:144
 msgid "Implementation Proposal"
 msgstr ""
 
-#: ../../pep-0207.txt:148
+#: ../../pep-0207.txt:146
 msgid "This closely follows David Ascher's proposal."
 msgstr ""
 
-#: ../../pep-0207.txt:151
+#: ../../pep-0207.txt:149
 msgid "C API"
 msgstr ""
 
-#: ../../pep-0207.txt:153
+#: ../../pep-0207.txt:151
 msgid "New functions::"
 msgstr ""
 
-#: ../../pep-0207.txt:157
+#: ../../pep-0207.txt:155
 msgid ""
 "This performs the requested rich comparison, returning a Python object or"
 " raising an exception.  The 3rd argument must be one of Py_LT, Py_LE, "
 "Py_EQ, Py_NE, Py_GT or Py_GE."
 msgstr ""
 
-#: ../../pep-0207.txt:165
+#: ../../pep-0207.txt:163
 msgid ""
 "This performs the requested rich comparison, returning a Boolean: -1 for "
 "exception, 0 for false, 1 for true.  The 3rd argument must be one of "
@@ -301,15 +285,15 @@ msgid ""
 "``PyObject_RichCompareBool()`` will raise an exception."
 msgstr ""
 
-#: ../../pep-0207.txt:172
+#: ../../pep-0207.txt:170
 msgid "New typedef::"
 msgstr ""
 
-#: ../../pep-0207.txt:176
+#: ../../pep-0207.txt:174
 msgid "New slot in type object, replacing spare tp_xxx7::"
 msgstr ""
 
-#: ../../pep-0207.txt:180
+#: ../../pep-0207.txt:178
 msgid ""
 "This should be a function with the same signature as "
 "``PyObject_RichCompare()``, and performing the same comparison. At least "
@@ -319,17 +303,17 @@ msgid ""
 "reference to ``Py_NotImplemented``."
 msgstr ""
 
-#: ../../pep-0207.txt:188
+#: ../../pep-0207.txt:186
 msgid ""
 "``PyObject_Compare()`` is changed to try rich comparisons if they are "
 "defined (but only if classic comparisons aren't defined)."
 msgstr ""
 
-#: ../../pep-0207.txt:192
+#: ../../pep-0207.txt:190
 msgid "Changes to the interpreter"
 msgstr ""
 
-#: ../../pep-0207.txt:194
+#: ../../pep-0207.txt:192
 msgid ""
 "Whenever ``PyObject_Compare()`` is called with the intent of getting the "
 "outcome of a particular comparison (e.g. in ``list.sort()``, and of "
@@ -340,7 +324,7 @@ msgid ""
 "exception)."
 msgstr ""
 
-#: ../../pep-0207.txt:202
+#: ../../pep-0207.txt:200
 msgid ""
 "Most built-in types that currently define a comparison will be modified "
 "to define a rich comparison instead.  (This is optional; I've converted "
@@ -348,11 +332,11 @@ msgid ""
 "whether I will convert others.)"
 msgstr ""
 
-#: ../../pep-0207.txt:208
+#: ../../pep-0207.txt:206
 msgid "Classes"
 msgstr ""
 
-#: ../../pep-0207.txt:210
+#: ../../pep-0207.txt:208
 msgid ""
 "Classes can define new special methods ``__lt__``, ``__le__``, "
 "``__eq__``, ``__ne__``, ``__gt__``, ``__ge__`` to override the "
@@ -361,26 +345,26 @@ msgid ""
 "used when ``__lt__`` etc. have been tried and return ``NotImplemented``."
 msgstr ""
 
-#: ../../pep-0207.txt:218
+#: ../../pep-0207.txt:216
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0207.txt:220
+#: ../../pep-0207.txt:218
 msgid "This document has been placed in the public domain."
 msgstr ""
 
-#: ../../pep-0207.txt:223
+#: ../../pep-0207.txt:221
 msgid "Appendix"
 msgstr ""
 
-#: ../../pep-0207.txt:225
+#: ../../pep-0207.txt:223
 msgid ""
 "Here is most of David Ascher's original proposal (version 0.2.1, dated "
 "Wed Jul 22 16:49:28 1998; I've left the Contents, History and Patches "
 "sections out).  It addresses almost all concerns above."
 msgstr ""
 
-#: ../../pep-0207.txt:234
+#: ../../pep-0207.txt:232
 msgid ""
 "A new mechanism allowing comparisons of Python objects to return values "
 "other than -1, 0, or 1 (or raise exceptions) is proposed. This mechanism "
@@ -389,21 +373,21 @@ msgid ""
 "three cooperating parts to the proposed mechanism:"
 msgstr ""
 
-#: ../../pep-0207.txt:241
+#: ../../pep-0207.txt:239
 msgid ""
 "the use of the last slot in the type object structure to store a pointer "
 "to a rich comparison function"
 msgstr ""
 
-#: ../../pep-0207.txt:244
+#: ../../pep-0207.txt:242
 msgid "the addition of special methods for classes"
 msgstr ""
 
-#: ../../pep-0207.txt:246
+#: ../../pep-0207.txt:244
 msgid "the addition of an optional argument to the builtin ``cmp()`` function."
 msgstr ""
 
-#: ../../pep-0207.txt:253
+#: ../../pep-0207.txt:251
 msgid ""
 "The current comparison protocol for Python objects assumes that any two "
 "Python objects can be compared (as of Python 1.5, object comparisons can "
@@ -416,17 +400,17 @@ msgid ""
 "context of Numeric Python (NumPy)."
 msgstr ""
 
-#: ../../pep-0207.txt:264
+#: ../../pep-0207.txt:262
 msgid ""
 "Specifically, NumPy allows the creation of multidimensional arrays, which"
 " support most of the numeric operators. Thus::"
 msgstr ""
 
-#: ../../pep-0207.txt:269
+#: ../../pep-0207.txt:267
 msgid "are two NumPy arrays. While they can be added elementwise,::"
 msgstr ""
 
-#: ../../pep-0207.txt:273
+#: ../../pep-0207.txt:271
 msgid ""
 "they cannot be compared in the current framework - the released version "
 "of NumPy compares the pointers, (thus yielding junk information) which "
@@ -434,7 +418,7 @@ msgid ""
 "to raise exceptions in comparison functions."
 msgstr ""
 
-#: ../../pep-0207.txt:279
+#: ../../pep-0207.txt:277
 msgid ""
 "Even with the ability to raise exceptions, the current protocol makes "
 "array comparisons useless. To deal with this fact, NumPy includes several"
@@ -446,11 +430,11 @@ msgid ""
 " the arrays x and y defined above::"
 msgstr ""
 
-#: ../../pep-0207.txt:291
+#: ../../pep-0207.txt:289
 msgid "would be an array containing the numbers (1,0,0,0)."
 msgstr ""
 
-#: ../../pep-0207.txt:293
+#: ../../pep-0207.txt:291
 msgid ""
 "The current proposal is to modify the Python object interface to allow "
 "the NumPy package to make it so that x < y returns the same thing as "
@@ -460,11 +444,11 @@ msgid ""
 "their authors choose to do so."
 msgstr ""
 
-#: ../../pep-0207.txt:302
+#: ../../pep-0207.txt:300
 msgid "Current State of Affairs"
 msgstr ""
 
-#: ../../pep-0207.txt:304
+#: ../../pep-0207.txt:302
 msgid ""
 "The current protocol is, at the C level, that each object type defines a "
 "``tp_compare`` slot, which is a pointer to a function which takes two "
@@ -474,22 +458,22 @@ msgid ""
 "which takes two arguments."
 msgstr ""
 
-#: ../../pep-0207.txt:312
+#: ../../pep-0207.txt:310
 msgid "Proposed Mechanism"
 msgstr ""
 
-#: ../../pep-0207.txt:314
+#: ../../pep-0207.txt:312
 msgid "Changes to the C structure for type objects"
 msgstr ""
 
-#: ../../pep-0207.txt:316
+#: ../../pep-0207.txt:314
 msgid ""
 "The last available slot in the ``PyTypeObject``, reserved up to now for "
 "future expansion, is used to optionally store a pointer to a new "
 "comparison function, of type richcmpfunc defined by::"
 msgstr ""
 
-#: ../../pep-0207.txt:323
+#: ../../pep-0207.txt:321
 msgid ""
 "This function takes three arguments. The first two are the objects to be "
 "compared, and the third is an integer corresponding to an opcode (one of "
@@ -498,23 +482,23 @@ msgid ""
 "class provide the special methods described below)."
 msgstr ""
 
-#: ../../pep-0207.txt:330
+#: ../../pep-0207.txt:328
 msgid ""
 "The above opcodes need to be added to the published Python/C API "
 "(probably under the names Py_LT, Py_LE, etc.)"
 msgstr ""
 
-#: ../../pep-0207.txt:333
+#: ../../pep-0207.txt:331
 msgid "Additions of special methods for classes"
 msgstr ""
 
-#: ../../pep-0207.txt:335
+#: ../../pep-0207.txt:333
 msgid ""
 "Classes wishing to support the rich comparison mechanisms must add one or"
 " more of the following new special methods::"
 msgstr ""
 
-#: ../../pep-0207.txt:351
+#: ../../pep-0207.txt:349
 msgid ""
 "Each of these is called when the class instance is the on the left-hand-"
 "side of the corresponding operators (<, <=, >, >=, ==, and != or <>). The"
@@ -523,7 +507,7 @@ msgid ""
 "all, that's the entire point of the proposal)."
 msgstr ""
 
-#: ../../pep-0207.txt:358
+#: ../../pep-0207.txt:356
 msgid ""
 "If the object on the left side of the operator does not define an "
 "appropriate rich comparison operator (either at the C level or with one "
@@ -534,7 +518,7 @@ msgid ""
 "only if b == a)."
 msgstr ""
 
-#: ../../pep-0207.txt:366
+#: ../../pep-0207.txt:364
 msgid ""
 "For example, if obj1 is an object which supports the rich comparison "
 "protocol and x and y are objects which do not support the rich comparison"
@@ -544,7 +528,7 @@ msgid ""
 "comparison mechanism."
 msgstr ""
 
-#: ../../pep-0207.txt:373
+#: ../../pep-0207.txt:371
 msgid ""
 "The above mechanism is such that classes can get away with not "
 "implementing either ``__lt__`` and ``__le__`` or ``__gt__`` and "
@@ -557,11 +541,11 @@ msgid ""
 "defined method."
 msgstr ""
 
-#: ../../pep-0207.txt:383
+#: ../../pep-0207.txt:381
 msgid "Addition of an optional argument to the builtin ``cmp()``"
 msgstr ""
 
-#: ../../pep-0207.txt:385
+#: ../../pep-0207.txt:383
 msgid ""
 "The builtin ``cmp()`` is still used for simple comparisons. For rich "
 "comparisons, it is called with a third argument, one of \"<\", \"<=\", "
@@ -571,26 +555,26 @@ msgid ""
 " 0 or 1 as before."
 msgstr ""
 
-#: ../../pep-0207.txt:393
+#: ../../pep-0207.txt:391
 msgid "Chained Comparisons"
 msgstr ""
 
-#: ../../pep-0207.txt:396
+#: ../../pep-0207.txt:394
 msgid "Problem"
 msgstr ""
 
-#: ../../pep-0207.txt:398
+#: ../../pep-0207.txt:396
 msgid ""
 "It would be nice to allow objects for which the comparison returns "
 "something other than -1, 0, or 1 to be used in chained comparisons, such "
 "as::"
 msgstr ""
 
-#: ../../pep-0207.txt:404
+#: ../../pep-0207.txt:402
 msgid "Currently, this is interpreted by Python as::"
 msgstr ""
 
-#: ../../pep-0207.txt:412
+#: ../../pep-0207.txt:410
 msgid ""
 "Note that this requires testing the truth value of the result of "
 "comparisons, with potential \"shortcutting\" of the right-side comparison"
@@ -600,7 +584,7 @@ msgid ""
 "then the user expects::"
 msgstr ""
 
-#: ../../pep-0207.txt:421
+#: ../../pep-0207.txt:419
 msgid ""
 "to be an array of 0's and 1's where 1's are in the locations "
 "corresponding to the elements of y which are between the corresponding "
@@ -609,11 +593,11 @@ msgid ""
 "the mechanism currently in use by the parser."
 msgstr ""
 
-#: ../../pep-0207.txt:428
+#: ../../pep-0207.txt:426
 msgid "Solution"
 msgstr ""
 
-#: ../../pep-0207.txt:430
+#: ../../pep-0207.txt:428
 msgid ""
 "Guido mentioned that one possible way out would be to change the code "
 "generated by chained comparisons to allow arrays to be chained-compared "
@@ -621,13 +605,13 @@ msgid ""
 "The code generated for x < y < z would be equivalent to::"
 msgstr ""
 
-#: ../../pep-0207.txt:443
+#: ../../pep-0207.txt:441
 msgid ""
 "where boolean_combine is a new function which does something like the "
 "following::"
 msgstr ""
 
-#: ../../pep-0207.txt:459
+#: ../../pep-0207.txt:457
 msgid ""
 "where the ``__boolean_and__`` special method is implemented for C-level "
 "types by another value of the third argument to the richcmp function. "
@@ -635,14 +619,14 @@ msgid ""
 "implemented in the umath module as the logical_and ufunc)."
 msgstr ""
 
-#: ../../pep-0207.txt:465
+#: ../../pep-0207.txt:463
 msgid ""
 "Thus, objects returned by rich comparisons should always test true, but "
 "should define another special method which creates boolean combinations "
 "of them and their argument."
 msgstr ""
 
-#: ../../pep-0207.txt:469
+#: ../../pep-0207.txt:467
 msgid ""
 "This solution has the advantage of allowing chained comparisons to work "
 "for arrays, but the disadvantage that it requires comparison arrays to "
@@ -651,9 +635,26 @@ msgid ""
 "massively ambiguous."
 msgstr ""
 
-#: ../../pep-0207.txt:475
+#: ../../pep-0207.txt:473
 msgid ""
 "The inlining already present which deals with integer comparisons would "
 "still apply, resulting in no performance cost for the most common cases."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "207"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Rich Comparisons"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "guido@python.org (Guido van Rossum), "
+#~ "DavidA@ActiveState.com (David Ascher)"
+#~ msgstr ""
 

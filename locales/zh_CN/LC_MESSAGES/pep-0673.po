@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0673.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0673.rst:1
-msgid "673"
-msgstr ""
-
-#: ../../pep-0673.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0673.rst:2
-msgid "Self Type"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0673.rst
 msgid "Author"
@@ -56,7 +40,7 @@ msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0673.rst:8
-msgid "Typing-Sig <typing-sig@python.org>"
+msgid "typing-sig@python.org"
 msgstr ""
 
 #: ../../pep-0673.rst
@@ -64,7 +48,7 @@ msgid "Status"
 msgstr ""
 
 #: ../../pep-0673.rst:9
-msgid "Draft"
+msgid "Accepted"
 msgstr ""
 
 #: ../../pep-0673.rst
@@ -76,10 +60,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0673.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0673.rst:11
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0673.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0673.rst:12
+#: ../../pep-0673.rst:13
 msgid "10-Nov-2021"
 msgstr ""
 
@@ -87,7 +79,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0673.rst:13
+#: ../../pep-0673.rst:14
 msgid "3.11"
 msgstr ""
 
@@ -95,37 +87,50 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0673.rst:17
-msgid "Abstract"
+#: ../../pep-0673.rst:15
+msgid "17-Nov-2021"
+msgstr ""
+
+#: ../../pep-0673.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0673.rst:16
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/J7BWL5KWOPQQK5KFWKENVLXW6UGSPTGI/"
 msgstr ""
 
 #: ../../pep-0673.rst:19
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0673.rst:21
 msgid ""
 "This PEP introduces a simple and intuitive way to annotate methods that "
 "return an instance of their class. This behaves the same as the "
-"``TypeVar``-based approach specified in `PEP 484 "
-"<https://www.python.org/dev/peps/pep-0484>`_ but is more concise and "
-"easier to follow."
-msgstr ""
-
-#: ../../pep-0673.rst:25
-msgid "Motivation"
+"``TypeVar``-based approach specified in :pep:`484` but is more concise "
+"and easier to follow."
 msgstr ""
 
 #: ../../pep-0673.rst:27
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0673.rst:29
 msgid ""
 "A common use case is to write a method that returns an instance of the "
 "same class, usually by returning ``self``."
 msgstr ""
 
-#: ../../pep-0673.rst:40
+#: ../../pep-0673.rst:42
 msgid ""
 "One way to denote the return type is to specify it as the current class, "
 "say, ``Shape``. Using the method makes the type checker infer the type "
 "``Shape``, as expected."
 msgstr ""
 
-#: ../../pep-0673.rst:54
+#: ../../pep-0673.rst:56
 msgid ""
 "However, when we call ``set_scale`` on a subclass of ``Shape``, the type "
 "checker still infers the return type to be ``Shape``. This is problematic"
@@ -134,14 +139,14 @@ msgid ""
 "present on the base class."
 msgstr ""
 
-#: ../../pep-0673.rst:72
+#: ../../pep-0673.rst:74
 msgid ""
 "The present workaround for such instances is to define a ``TypeVar`` with"
 " the base class as the bound and use it as the annotation for the "
 "``self`` parameter and the return type:"
 msgstr ""
 
-#: ../../pep-0673.rst:95
+#: ../../pep-0673.rst:97
 msgid ""
 "Unfortunately, this is verbose and unintuitive. Because ``self`` is "
 "usually not explicitly annotated, the above solution doesn't immediately "
@@ -150,14 +155,14 @@ msgid ""
 "annotation for ``self``."
 msgstr ""
 
-#: ../../pep-0673.rst:100
+#: ../../pep-0673.rst:102
 msgid ""
 "This difficulty means that users often give up and either use fallback "
 "types like ``Any`` or just omit the type annotation completely, both of "
 "which make the code less safe."
 msgstr ""
 
-#: ../../pep-0673.rst:104
+#: ../../pep-0673.rst:106
 msgid ""
 "We propose a more intuitive and succinct way of expressing the above "
 "intention. We introduce a special form ``Self`` that stands for a type "
@@ -165,7 +170,7 @@ msgid ""
 " above, the user simply has to annotate the return type as ``Self``:"
 msgstr ""
 
-#: ../../pep-0673.rst:124
+#: ../../pep-0673.rst:126
 msgid ""
 "By annotating the return type as ``Self``, we no longer have to declare a"
 " ``TypeVar`` with an explicit bound on the base class. The return type "
@@ -173,17 +178,17 @@ msgid ""
 "easier to understand."
 msgstr ""
 
-#: ../../pep-0673.rst:129
+#: ../../pep-0673.rst:131
 msgid ""
 "As in the above example, the type checker will correctly infer the type "
 "of ``Circle().set_scale(0.5)`` to be ``Circle``, as expected."
 msgstr ""
 
-#: ../../pep-0673.rst:133
+#: ../../pep-0673.rst:135
 msgid "Usage statistics"
 msgstr ""
 
-#: ../../pep-0673.rst:135
+#: ../../pep-0673.rst:137
 msgid ""
 "We `analyzed <https://github.com/pradeep90/annotation_collector/#self-"
 "type-stats>`_ popular open-source projects and found that patterns like "
@@ -196,33 +201,41 @@ msgid ""
 "and users will benefit a lot from the simpler approach above."
 msgstr ""
 
-#: ../../pep-0673.rst:146
+#: ../../pep-0673.rst:147
+msgid ""
+"Users of Python types have also frequently requested this feature, both "
+"on the `proposal doc <https://docs.google.com/document/d"
+"/1ujuSMXDmSIOJpiZyV7mvBEC8P-y55AgSzXcvhrZciuI/edit?disco=AAAARP_cNdc>`_ "
+"and on `GitHub <https://github.com/python/mypy/issues/11871>`_."
+msgstr ""
+
+#: ../../pep-0673.rst:153
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0673.rst:149
+#: ../../pep-0673.rst:156
 msgid "Use in Method Signatures"
 msgstr ""
 
-#: ../../pep-0673.rst:151
+#: ../../pep-0673.rst:158
 msgid ""
 "``Self`` used in the signature of a method is treated as if it were a "
 "``TypeVar`` bound to the class."
 msgstr ""
 
-#: ../../pep-0673.rst:163 ../../pep-0673.rst:484
+#: ../../pep-0673.rst:170 ../../pep-0673.rst:491
 msgid "is treated equivalently to:"
 msgstr ""
 
-#: ../../pep-0673.rst:176
+#: ../../pep-0673.rst:183
 msgid "This works the same for a subclass too:"
 msgstr ""
 
-#: ../../pep-0673.rst:185
+#: ../../pep-0673.rst:192
 msgid "which is treated equivalently to:"
 msgstr ""
 
-#: ../../pep-0673.rst:196
+#: ../../pep-0673.rst:203
 msgid ""
 "One implementation strategy is to simply desugar the former to the latter"
 " in a preprocessing step. If a method uses ``Self`` in its signature, the"
@@ -230,11 +243,11 @@ msgid ""
 "type of ``self`` will remain the enclosing class."
 msgstr ""
 
-#: ../../pep-0673.rst:203
+#: ../../pep-0673.rst:210
 msgid "Use in Classmethod Signatures"
 msgstr ""
 
-#: ../../pep-0673.rst:205
+#: ../../pep-0673.rst:212
 msgid ""
 "The ``Self`` type annotation is also useful for classmethods that return "
 "an instance of the class that they operate on. For example, "
@@ -242,87 +255,87 @@ msgid ""
 " given ``config``."
 msgstr ""
 
-#: ../../pep-0673.rst:219
+#: ../../pep-0673.rst:226
 msgid ""
 "However, this means that ``Circle.from_config(...)`` is inferred to "
 "return a value of type ``Shape``, when in fact it should be ``Circle``:"
 msgstr ""
 
-#: ../../pep-0673.rst:236
+#: ../../pep-0673.rst:244
 msgid "The current workaround for this is unintuitive and error-prone:"
 msgstr ""
 
-#: ../../pep-0673.rst:249
+#: ../../pep-0673.rst:257
 msgid "We propose using ``Self`` directly:"
 msgstr ""
 
-#: ../../pep-0673.rst:260
+#: ../../pep-0673.rst:268
 msgid ""
 "This avoids the complicated ``cls: type[Self]`` annotation and the "
 "``TypeVar`` declaration with a ``bound``. Once again, the latter code "
 "behaves equivalently to the former code."
 msgstr ""
 
-#: ../../pep-0673.rst:265
+#: ../../pep-0673.rst:273
 msgid "Use in Parameter Types"
 msgstr ""
 
-#: ../../pep-0673.rst:267
+#: ../../pep-0673.rst:275
 msgid ""
 "Another use for ``Self`` is to annotate parameters that expect instances "
 "of the current class:"
 msgstr ""
 
-#: ../../pep-0673.rst:279
+#: ../../pep-0673.rst:287
 msgid "We propose using ``Self`` directly to achieve the same behavior:"
 msgstr ""
 
-#: ../../pep-0673.rst:290
+#: ../../pep-0673.rst:298
 msgid ""
 "Note that specifying ``self: Self`` is harmless, so some users may find "
 "it more readable to write the above as:"
 msgstr ""
 
-#: ../../pep-0673.rst:299
+#: ../../pep-0673.rst:307
 msgid "Use in Attribute Annotations"
 msgstr ""
 
-#: ../../pep-0673.rst:301
+#: ../../pep-0673.rst:309
 msgid ""
 "Another use for ``Self`` is to annotate attributes. One example is where "
 "we have a ``LinkedList`` whose elements must be subclasses of the current"
 " class."
 msgstr ""
 
-#: ../../pep-0673.rst:322
+#: ../../pep-0673.rst:330
 msgid ""
 "However, annotating the ``next`` attribute as ``LinkedList[T]`` allows "
 "invalid constructions with subclasses:"
 msgstr ""
 
-#: ../../pep-0673.rst:340
+#: ../../pep-0673.rst:348
 msgid "We propose expressing this constraint using ``next: Self | None``:"
 msgstr ""
 
-#: ../../pep-0673.rst:366
+#: ../../pep-0673.rst:373
 msgid ""
 "The code above is semantically equivalent to treating each attribute "
 "containing a ``Self`` type as a ``property`` that returns that type:"
 msgstr ""
 
-#: ../../pep-0673.rst:394
+#: ../../pep-0673.rst:401
 msgid "Use in Generic Classes"
 msgstr ""
 
-#: ../../pep-0673.rst:396
+#: ../../pep-0673.rst:403
 msgid "``Self`` can also be used in generic class methods:"
 msgstr ""
 
-#: ../../pep-0673.rst:405
+#: ../../pep-0673.rst:412
 msgid "This is equivalent to writing:"
 msgstr ""
 
-#: ../../pep-0673.rst:416
+#: ../../pep-0673.rst:423
 msgid ""
 "The behavior is to preserve the type argument of the object on which the "
 "method was called. When called on an object with concrete type "
@@ -331,7 +344,7 @@ msgid ""
 "``Container[T]``:"
 msgstr ""
 
-#: ../../pep-0673.rst:436
+#: ../../pep-0673.rst:443
 msgid ""
 "The PEP doesn’t specify the exact type of ``self.value`` within the "
 "method ``set_value``. Some type checkers may choose to implement ``Self``"
@@ -342,32 +355,32 @@ msgid ""
 "leave this up to the type checker."
 msgstr ""
 
-#: ../../pep-0673.rst:444
+#: ../../pep-0673.rst:451
 msgid ""
 "Note that we reject using ``Self`` with type arguments, such as "
 "``Self[int]``. This is because it creates ambiguity about the type of the"
 " ``self`` parameter and introduces unnecessary complexity:"
 msgstr ""
 
-#: ../../pep-0673.rst:456
+#: ../../pep-0673.rst:463
 msgid "In such cases, we recommend using an explicit type for ``self``:"
 msgstr ""
 
-#: ../../pep-0673.rst:469
+#: ../../pep-0673.rst:476
 msgid "Use in Protocols"
 msgstr ""
 
-#: ../../pep-0673.rst:471
+#: ../../pep-0673.rst:478
 msgid "``Self`` is valid within Protocols, similar to its use in classes:"
 msgstr ""
 
-#: ../../pep-0673.rst:500
+#: ../../pep-0673.rst:507
 msgid ""
-"See `PEP 544 <https://www.python.org/dev/peps/pep-0544/#self-types-in-"
-"protocols>`_ for details on the behavior of TypeVars bound to protocols."
+"See :pep:`PEP 544 <544#self-types-in-protocols>` for details on the "
+"behavior of TypeVars bound to protocols."
 msgstr ""
 
-#: ../../pep-0673.rst:504
+#: ../../pep-0673.rst:511
 msgid ""
 "Checking a class for compatibility with a protocol: If a protocol uses "
 "``Self`` in methods or attribute annotations, then a class ``Foo`` is "
@@ -376,26 +389,35 @@ msgid ""
 "subclasses. See the examples below:"
 msgstr ""
 
-#: ../../pep-0673.rst:562
+#: ../../pep-0673.rst:569
 msgid "Valid Locations for ``Self``"
 msgstr ""
 
-#: ../../pep-0673.rst:564
+#: ../../pep-0673.rst:571
 msgid ""
 "A ``Self`` annotation is only valid in class contexts, and will always "
 "refer to the encapsulating class. In contexts involving nested classes, "
 "``Self`` will always refer to the innermost class."
 msgstr ""
 
-#: ../../pep-0673.rst:568
+#: ../../pep-0673.rst:575
 msgid "The following uses of ``Self`` are accepted:"
 msgstr ""
 
-#: ../../pep-0673.rst:632
+#: ../../pep-0673.rst:634
 msgid "The following uses of ``Self`` are rejected."
 msgstr ""
 
-#: ../../pep-0673.rst:663
+#: ../../pep-0673.rst:665
+msgid ""
+"We reject type aliases containing ``Self``. Supporting ``Self`` outside "
+"class definitions can require a lot of special-handling in type checkers."
+" Given that it also goes against the rest of the PEP to use ``Self`` "
+"outside a class definition, we believe the added convenience of aliases "
+"is not worth it:"
+msgstr ""
+
+#: ../../pep-0673.rst:679
 msgid ""
 "Note that we reject ``Self`` in staticmethods. ``Self`` does not add much"
 " value since there is no ``self`` or ``cls`` to return. The only possible"
@@ -404,7 +426,7 @@ msgid ""
 " complexity."
 msgstr ""
 
-#: ../../pep-0673.rst:679
+#: ../../pep-0673.rst:695
 msgid ""
 "Likewise, we reject ``Self`` in metaclasses. ``Self`` in this PEP "
 "consistently refers to the same type (that of ``self``). But in "
@@ -416,63 +438,63 @@ msgid ""
 "we reject this edge case."
 msgstr ""
 
-#: ../../pep-0673.rst:700
+#: ../../pep-0673.rst:716
 msgid "Runtime behavior"
 msgstr ""
 
-#: ../../pep-0673.rst:702
+#: ../../pep-0673.rst:718
 msgid ""
 "Because ``Self`` is not subscriptable, we propose an implementation "
 "similar to ``typing.NoReturn``."
 msgstr ""
 
-#: ../../pep-0673.rst:725
+#: ../../pep-0673.rst:741
 msgid "Rejected Alternatives"
 msgstr ""
 
-#: ../../pep-0673.rst:728
+#: ../../pep-0673.rst:744
 msgid "Allow the Type Checker to Infer the Return Type"
 msgstr ""
 
-#: ../../pep-0673.rst:730
+#: ../../pep-0673.rst:746
 msgid ""
 "One proposal is to leave the ``Self`` type implicit and let the type "
 "checker infer from the body of the method that the return type must be "
 "the same as the type of the ``self`` parameter:"
 msgstr ""
 
-#: ../../pep-0673.rst:741
+#: ../../pep-0673.rst:757
 msgid ""
 "We reject this because Explicit Is Better Than Implicit. Beyond that, the"
 " above approach will fail for type stubs, which don’t have method bodies "
 "to analyze."
 msgstr ""
 
-#: ../../pep-0673.rst:747
+#: ../../pep-0673.rst:763
 msgid "Reference Implementations"
 msgstr ""
 
-#: ../../pep-0673.rst:749
+#: ../../pep-0673.rst:765
 msgid ""
 "Mypy: Proof of concept implementation in `Mypy "
 "<https://github.com/Gobot1234/mypy>`_."
 msgstr ""
 
-#: ../../pep-0673.rst:752
+#: ../../pep-0673.rst:768
 msgid "Pyright: v1.1.184"
 msgstr ""
 
-#: ../../pep-0673.rst:754
+#: ../../pep-0673.rst:770
 msgid ""
 "Runtime implementation of ``Self``: `PR "
 "<https://github.com/python/typing/pull/933>`_."
 msgstr ""
 
-#: ../../pep-0673.rst:758
+#: ../../pep-0673.rst:774
 msgid "Resources"
 msgstr ""
 
-#: ../../pep-0673.rst:760
+#: ../../pep-0673.rst:776
 msgid ""
 "Similar discussions on a ``Self`` type in Python started in Mypy around "
 "2016: `Mypy issue #1212 <https://github.com/python/mypy/issues/1212>`_ - "
@@ -483,59 +505,101 @@ msgid ""
 "generic classes."
 msgstr ""
 
-#: ../../pep-0673.rst:770
+#: ../../pep-0673.rst:786
 msgid "Pradeep made a concrete proposal at the PyCon Typing Summit 2021:"
 msgstr ""
 
-#: ../../pep-0673.rst:769
+#: ../../pep-0673.rst:785
 msgid ""
 "`recorded talk <https://youtu.be/ld9rwCvGdhc?t=3260>`_, `slides "
 "<https://drive.google.com/file/d/1x-"
 "qoDVY_OvLpIV1EwT7m3vm4HrgubHPG/view>`_."
 msgstr ""
 
-#: ../../pep-0673.rst:772
+#: ../../pep-0673.rst:788
 msgid ""
 "James brought up the proposal independently on typing-sig: `Typing-sig "
 "thread <https://mail.python.org/archives/list/typing-"
 "sig@python.org/thread/SJAANGA2CWZ6D6TJ7KOPG7PZQC56K73S/#B2CBLQDHXQ5HMFUMS4VNY2D4YDCFT64Q>`_."
 msgstr ""
 
-#: ../../pep-0673.rst:775
+#: ../../pep-0673.rst:791
 msgid ""
 "Other languages have similar ways to express the type of the enclosing "
 "class:"
 msgstr ""
 
-#: ../../pep-0673.rst:777
+#: ../../pep-0673.rst:793
 msgid ""
 "TypeScript has the ``this`` type (`TypeScript docs "
 "<https://typescriptlang.org/docs/handbook/2/classes.html#this-types>`_)"
 msgstr ""
 
-#: ../../pep-0673.rst:779
+#: ../../pep-0673.rst:795
 msgid ""
 "Rust has the ``Self`` type (`Rust docs <https://doc.rust-"
 "lang.org/std/keyword.SelfTy.html>`_)"
 msgstr ""
 
-#: ../../pep-0673.rst:782
+#: ../../pep-0673.rst:798
 msgid "Thanks to the following people for their feedback on the PEP:"
 msgstr ""
 
-#: ../../pep-0673.rst:784
+#: ../../pep-0673.rst:800
 msgid ""
 "Jia Chen, Rebecca Chen, Sergei Lebedev, Kaylynn Morgan, Tuomas Suutari, "
-"Alex Waygood, Shannon Zhu, and Никита Соболев"
+"Eric Traut, Alex Waygood, Shannon Zhu, and Никита Соболев"
 msgstr ""
 
-#: ../../pep-0673.rst:788
+#: ../../pep-0673.rst:804
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0673.rst:790
+#: ../../pep-0673.rst:806
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "673"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Self Type"
+#~ msgstr ""
+
+#~ msgid "Typing-Sig <typing-sig@python.org>"
+#~ msgstr ""
+
+#~ msgid "Draft"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP introduces a simple and "
+#~ "intuitive way to annotate methods that"
+#~ " return an instance of their class."
+#~ " This behaves the same as the "
+#~ "``TypeVar``-based approach specified in `PEP"
+#~ " 484 <https://www.python.org/dev/peps/pep-0484>`_ but"
+#~ " is more concise and easier to "
+#~ "follow."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "See `PEP 544 "
+#~ "<https://www.python.org/dev/peps/pep-0544/#self-types-"
+#~ "in-protocols>`_ for details on the "
+#~ "behavior of TypeVars bound to protocols."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Jia Chen, Rebecca Chen, Sergei Lebedev,"
+#~ " Kaylynn Morgan, Tuomas Suutari, Alex "
+#~ "Waygood, Shannon Zhu, and Никита Соболев"
+#~ msgstr ""
 

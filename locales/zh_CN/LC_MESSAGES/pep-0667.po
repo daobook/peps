@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0667.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0667.rst:1
-msgid "667"
-msgstr ""
-
-#: ../../pep-0667.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0667.rst:2
-msgid "Consistent views of namespaces"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0667.rst
 msgid "Author"
@@ -351,108 +335,146 @@ msgid ""
 "They serve only to illustrate the proposed design."
 msgstr ""
 
-#: ../../pep-0667.rst:369
+#: ../../pep-0667.rst:357
 msgid "C API"
 msgstr ""
 
-#: ../../pep-0667.rst:371
+#: ../../pep-0667.rst:359
 msgid "``PyEval_GetLocals()`` will be implemented roughly as follows::"
 msgstr ""
 
-#: ../../pep-0667.rst:380
+#: ../../pep-0667.rst:368
 msgid ""
 "As with all functions that return a borrowed reference, care must be "
 "taken to ensure that the reference is not used beyond the lifetime of the"
 " object."
 msgstr ""
 
-#: ../../pep-0667.rst:384
+#: ../../pep-0667.rst:372
 msgid "Comparison with PEP 558"
 msgstr ""
 
-#: ../../pep-0667.rst:386
+#: ../../pep-0667.rst:374
 msgid ""
-"This PEP and PEP 558 [2]_ share a common goal: to make the semantics of  "
+"This PEP and :pep:`558` share a common goal: to make the semantics of  "
 "``locals()`` and ``frame.f_locals()`` intelligible, and their operation "
 "reliable."
 msgstr ""
 
-#: ../../pep-0667.rst:390
+#: ../../pep-0667.rst:379
 msgid ""
-"In the author's opinion, PEP 558 fails to do that as it is too complex, "
-"and has many corner cases which will lead to bugs."
+"The key difference between this PEP and :pep:`558` is that :pep:`558` "
+"keeps an internal copy of the local variables, whereas this PEP does not."
 msgstr ""
 
-#: ../../pep-0667.rst:393
+#: ../../pep-0667.rst:383
 msgid ""
-"The key difference between this PEP and PEP 558 is that PEP 558 requires "
-"an internal copy of the local variables, whereas this PEP does not. "
-"Maintaining a copy adds considerably to the complexity of both the "
-"specification and implementation, and brings no real benefits."
+":pep:`558` does not specify exactly when the internal copy is updated, "
+"making the behavior of :pep:`558` impossible to reason about."
 msgstr ""
 
-#: ../../pep-0667.rst:400
-msgid "The semantics of ``frame.f_locals``"
-msgstr ""
-
-#: ../../pep-0667.rst:402
-msgid ""
-"In this PEP, ``frame.f_locals`` is a view onto the underlying frame. It "
-"is always synchronized with the underlying frame. In PEP 558, there is an"
-" additional copy of the local variables present in the frame which is "
-"updated whenever ``frame.f_locals`` is accessed. PEP 558 does not make it"
-" clear whether calls to ``locals()`` update ``frame.f_locals`` or not."
-msgstr ""
-
-#: ../../pep-0667.rst:409
-msgid "For example consider::"
-msgstr ""
-
-#: ../../pep-0667.rst:417
-msgid ""
-"It is not clear from PEP 558 (at time of writing) what would be printed. "
-"Does the call to ``locals()`` update ``x``? Would ``\"y\"`` be present in"
-" either ``x`` or ``y``?"
-msgstr ""
-
-#: ../../pep-0667.rst:421
-msgid "With this PEP it should be clear that the above would print::"
-msgstr ""
-
-#: ../../pep-0667.rst:427
+#: ../../pep-0667.rst:388
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-0667.rst:429
+#: ../../pep-0667.rst:390
 msgid "An alternative way to define ``locals()`` would be simply as::"
 msgstr ""
 
-#: ../../pep-0667.rst:434
+#: ../../pep-0667.rst:395
 msgid ""
 "This would be simpler and easier to understand. However, there would be "
 "backwards compatibility issues when ``locals`` is assigned to a local "
 "variable or when passed to ``eval`` or ``exec``."
 msgstr ""
 
-#: ../../pep-0667.rst:439
+#: ../../pep-0667.rst:400
 msgid "References"
 msgstr ""
 
-#: ../../pep-0667.rst:441
+#: ../../pep-0667.rst:402
 msgid "https://bugs.python.org/issue30744"
 msgstr ""
 
-#: ../../pep-0667.rst:443
-msgid "https://www.python.org/dev/peps/pep-0558/"
-msgstr ""
-
-#: ../../pep-0667.rst:446
+#: ../../pep-0667.rst:405
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0667.rst:448
+#: ../../pep-0667.rst:407
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "667"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Consistent views of namespaces"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP and PEP 558 [2]_ share"
+#~ " a common goal: to make the "
+#~ "semantics of  ``locals()`` and "
+#~ "``frame.f_locals()`` intelligible, and their "
+#~ "operation reliable."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In the author's opinion, PEP 558 "
+#~ "fails to do that as it is "
+#~ "too complex, and has many corner "
+#~ "cases which will lead to bugs."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The key difference between this PEP "
+#~ "and PEP 558 is that PEP 558 "
+#~ "requires an internal copy of the "
+#~ "local variables, whereas this PEP does"
+#~ " not. Maintaining a copy adds "
+#~ "considerably to the complexity of both"
+#~ " the specification and implementation, and"
+#~ " brings no real benefits."
+#~ msgstr ""
+
+#~ msgid "The semantics of ``frame.f_locals``"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In this PEP, ``frame.f_locals`` is a "
+#~ "view onto the underlying frame. It "
+#~ "is always synchronized with the "
+#~ "underlying frame. In PEP 558, there "
+#~ "is an additional copy of the local"
+#~ " variables present in the frame which"
+#~ " is updated whenever ``frame.f_locals`` is"
+#~ " accessed. PEP 558 does not make "
+#~ "it clear whether calls to ``locals()``"
+#~ " update ``frame.f_locals`` or not."
+#~ msgstr ""
+
+#~ msgid "For example consider::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It is not clear from PEP 558 "
+#~ "(at time of writing) what would be"
+#~ " printed. Does the call to "
+#~ "``locals()`` update ``x``? Would ``\"y\"`` "
+#~ "be present in either ``x`` or "
+#~ "``y``?"
+#~ msgstr ""
+
+#~ msgid "With this PEP it should be clear that the above would print::"
+#~ msgstr ""
+
+#~ msgid "https://www.python.org/dev/peps/pep-0558/"
+#~ msgstr ""
 

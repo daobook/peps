@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 00:59+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0671.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0671.rst:1
-msgid "671"
-msgstr ""
-
-#: ../../pep-0671.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0671.rst:2
-msgid "Syntax for late-bound function argument defaults"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0671.rst
 msgid "Author"
@@ -42,10 +26,20 @@ msgid "Chris Angelico <rosuav@gmail.com>"
 msgstr ""
 
 #: ../../pep-0671.rst
-msgid "Status"
+msgid "Discussions-To"
 msgstr ""
 
 #: ../../pep-0671.rst:4
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/UVOQEK7IRFSCBOH734T5GFJOEJXFCR6A/"
+msgstr ""
+
+#: ../../pep-0671.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0671.rst:5
 msgid "Draft"
 msgstr ""
 
@@ -53,7 +47,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0671.rst:5
+#: ../../pep-0671.rst:6
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +55,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0671.rst:7 ../../pep-0671.rst:9
+#: ../../pep-0671.rst:8
 msgid "24-Oct-2021"
 msgstr ""
 
@@ -69,19 +63,27 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0671.rst:8
-msgid "3.11"
+#: ../../pep-0671.rst:9
+msgid "3.12"
 msgstr ""
 
 #: ../../pep-0671.rst
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0671.rst:13
+#: ../../pep-0671.rst:10
+msgid ""
+"`24-Oct-2021 <https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/KR2TMLPFR7NHDZCDOS6VTNWDKZQQJN3V/>`__, "
+"`01-Dec-2021 <https://mail.python.org/archives/list/python-"
+"ideas@python.org/thread/UVOQEK7IRFSCBOH734T5GFJOEJXFCR6A/>`__"
+msgstr ""
+
+#: ../../pep-0671.rst:14
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0671.rst:15
+#: ../../pep-0671.rst:16
 msgid ""
 "Function parameters can have default values which are calculated during "
 "function definition and saved. This proposal introduces a new form of "
@@ -89,11 +91,11 @@ msgid ""
 "call time."
 msgstr ""
 
-#: ../../pep-0671.rst:22
+#: ../../pep-0671.rst:23
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0671.rst:24
+#: ../../pep-0671.rst:25
 msgid ""
 "Optional function arguments, if omitted, often have some sort of logical "
 "default value. When this value depends on other arguments, or needs to be"
@@ -101,11 +103,11 @@ msgid ""
 " this in the function header."
 msgstr ""
 
-#: ../../pep-0671.rst:29
+#: ../../pep-0671.rst:30
 msgid "Currently-legal idioms for this include::"
 msgstr ""
 
-#: ../../pep-0671.rst:49
+#: ../../pep-0671.rst:50
 msgid ""
 "In each form, ``help(function)`` fails to show the true default value. "
 "Each one has additional problems, too; using ``None`` is only valid if "
@@ -114,60 +116,85 @@ msgid ""
 "one argument could be given."
 msgstr ""
 
-#: ../../pep-0671.rst:56
+#: ../../pep-0671.rst:57
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0671.rst:58
+#: ../../pep-0671.rst:59
 msgid "Function default arguments can be defined using the new ``=>`` notation::"
 msgstr ""
 
-#: ../../pep-0671.rst:65
+#: ../../pep-0671.rst:66
 msgid ""
 "The expression is saved in its source code form for the purpose of "
 "inspection, and bytecode to evaluate it is prepended to the function's "
 "body."
 msgstr ""
 
-#: ../../pep-0671.rst:68
+#: ../../pep-0671.rst:69
 msgid ""
 "Notably, the expression is evaluated in the function's run-time scope, "
 "NOT the scope in which the function was defined (as are early-bound "
 "defaults). This allows the expression to refer to other arguments."
 msgstr ""
 
-#: ../../pep-0671.rst:72
+#: ../../pep-0671.rst:73
 msgid ""
 "Multiple late-bound arguments are evaluated from left to right, and can "
 "refer to previously-defined values. Order is defined by the function, "
-"regardless of the order in which keyword arguments may be passed. Using "
-"names of later arguments should not be relied upon, and while this MAY "
-"work in some Python implementations, it should be considered dubious::"
+"regardless of the order in which keyword arguments may be passed."
 msgstr ""
 
-#: ../../pep-0671.rst:85
-msgid "Choice of spelling"
-msgstr ""
-
-#: ../../pep-0671.rst:87
+#: ../../pep-0671.rst:77
 msgid ""
-"Our chief syntax proposal is ``name=>expression`` -- our two syntax "
-"proposals ... ahem. Amongst our potential syntaxes are::"
+"def prevref(word=\"foo\", a=>len(word), b=>a//2): # Valid def "
+"selfref(spam=>spam): # UnboundLocalError def spaminate(sausage=>eggs + 1,"
+" eggs=>sausage - 1): # Confusing, don't do this def frob(n=>len(items), "
+"items=[]): # See below"
 msgstr ""
 
-#: ../../pep-0671.rst:103
+#: ../../pep-0671.rst:82
+msgid ""
+"Evaluation order is left-to-right; however, implementations MAY choose to"
+" do so in two separate passes, first for all passed arguments and early-"
+"bound defaults, and then a second pass for late-bound defaults. "
+"Otherwise, all arguments will be assigned strictly left-to-right."
+msgstr ""
+
+#: ../../pep-0671.rst:88
+msgid "Rejected choices of spelling"
+msgstr ""
+
+#: ../../pep-0671.rst:90
+msgid ""
+"While this document specifies a single syntax ``name=>expression``, "
+"alternate spellings are similarly plausible. The following spellings were"
+" considered::"
+msgstr ""
+
+#: ../../pep-0671.rst:98
 msgid ""
 "Since default arguments behave largely the same whether they're early or "
-"late bound, the preferred syntax is very similar to the existing early-"
-"bind syntax. The alternatives offer little advantage over the preferred "
-"one."
+"late bound, the chosen syntax ``hi=>len(a)`` is deliberately similar to "
+"the existing early-bind syntax."
 msgstr ""
 
-#: ../../pep-0671.rst:108
+#: ../../pep-0671.rst:102
+msgid ""
+"One reason for rejection of the ``:=`` syntax is its behaviour with "
+"annotations. Annotations go before the default, so in all syntax options,"
+" it must be unambiguous (both to the human and the parser) whether this "
+"is an annotation, a default, or both. The alternate syntax "
+"``target:=expr`` runs the risk of being misinterpreted as "
+"``target:int=expr`` with the annotation omitted in error, and may thus "
+"mask bugs. The chosen syntax ``target=>expr`` does not have this problem."
+msgstr ""
+
+#: ../../pep-0671.rst:112
 msgid "How to Teach This"
 msgstr ""
 
-#: ../../pep-0671.rst:110
+#: ../../pep-0671.rst:114
 msgid ""
 "Early-bound default arguments should always be taught first, as they are "
 "the simpler and more efficient way to evaluate arguments. Building on "
@@ -175,48 +202,60 @@ msgid ""
 "the function::"
 msgstr ""
 
-#: ../../pep-0671.rst:122
-msgid "Interaction with other open PEPs"
-msgstr ""
-
 #: ../../pep-0671.rst:124
 msgid ""
-"PEP 661 attempts to solve one of the same problems as this does. It seeks"
-" to improve the documentation of sentinel values in default arguments, "
-"where this proposal seeks to remove the need for sentinels in many common"
-" cases. PEP 661 is able to improve documentation in arbitrarily "
-"complicated functions (it cites ``traceback.print_exception`` as its "
-"primary motivation, which has two arguments which must both-or-neither be"
-" specified); on the other hand, many of the common cases would no longer "
-"need sentinels if the true default could be defined by the function. "
-"Additionally, dedicated sentinel objects can be used as dictionary lookup"
-" keys, where PEP 671 does not apply."
+"A simple rule of thumb is: \"target=expression\" is evaluated when the "
+"function is defined, and \"target=>expression\" is evaluated when the "
+"function is called. Either way, if the argument is provided at call time,"
+" the default is ignored. While this does not completely explain all the "
+"subtleties, it is sufficient to cover the important distinction here (and"
+" the fact that they are similar)."
 msgstr ""
 
-#: ../../pep-0671.rst:136
-msgid "Open Issues"
+#: ../../pep-0671.rst:132
+msgid "Interaction with other proposals"
 msgstr ""
 
-#: ../../pep-0671.rst:138
+#: ../../pep-0671.rst:134
 msgid ""
-"Annotations go before the default, so in all syntax options, it must be "
-"unambiguous (both to the human and the parser) whether this is an "
-"annotation, a default, or both. The worst offender is the ``:=`` "
-"notation, as ``:int=`` would be a valid annotation and early-bound "
-"default."
+":pep:`661` attempts to solve one of the same problems as this does. It "
+"seeks to improve the documentation of sentinel values in default "
+"arguments, where this proposal seeks to remove the need for sentinels in "
+"many common cases. :pep:`661` is able to improve documentation in "
+"arbitrarily complicated functions (it cites ``traceback.print_exception``"
+" as its primary motivation, which has two arguments which must both-or-"
+"neither be specified); on the other hand, many of the common cases would "
+"no longer need sentinels if the true default could be defined by the "
+"function. Additionally, dedicated sentinel objects can be used as "
+"dictionary lookup keys, where :pep:`671` does not apply."
 msgstr ""
 
-#: ../../pep-0671.rst:145
+#: ../../pep-0671.rst:144
+msgid ""
+"A generic system for deferred evaluation has been proposed at times (not "
+"to be confused with :pep:`563` and :pep:`649` which are specific to "
+"annotations). While it may seem, on the surface, that late-bound argument"
+" defaults are of a similar nature, they are in fact unrelated and "
+"orthogonal ideas, and both could be of value to the language. The "
+"acceptance or rejection of this proposal would not affect the viability "
+"of a deferred evaluation proposal, and vice versa. (A key difference "
+"between generalized deferred evaluation and argument defaults is that "
+"argument defaults will always and only be evaluated as the function "
+"begins executing, whereas deferred expressions would only be realized "
+"upon reference.)"
+msgstr ""
+
+#: ../../pep-0671.rst:156
 msgid "Implementation details"
 msgstr ""
 
-#: ../../pep-0671.rst:147
+#: ../../pep-0671.rst:158
 msgid ""
 "The following relates to the reference implementation, and is not "
 "necessarily part of the specification."
 msgstr ""
 
-#: ../../pep-0671.rst:150
+#: ../../pep-0671.rst:161
 msgid ""
 "Argument defaults (positional or keyword) have both their values, as "
 "already retained, and an extra piece of information. For positional "
@@ -226,7 +265,7 @@ msgid ""
 "argument default."
 msgstr ""
 
-#: ../../pep-0671.rst:156
+#: ../../pep-0671.rst:167
 msgid ""
 "For each parameter with a late-bound default, the special value "
 "``Ellipsis`` is stored as the value placeholder, and the corresponding "
@@ -235,75 +274,79 @@ msgid ""
 "string and the true value is calculated as the function begins."
 msgstr ""
 
-#: ../../pep-0671.rst:162
+#: ../../pep-0671.rst:173
 msgid ""
 "When a parameter with a late-bound default is omitted, the function will "
 "begin with the parameter unbound. The function begins by testing for each"
-" parameter with a late-bound default, and if unbound, evaluates the "
-"original expression."
+" parameter with a late-bound default using a new opcode "
+"QUERY_FAST/QUERY_DEREF, and if unbound, evaluates the original "
+"expression. This opcode (available only for fast locals and closure "
+"variables) pushes True onto the stack if the given local has a value, and"
+" False if not - meaning that it pushes False if LOAD_FAST or LOAD_DEREF "
+"would raise UnboundLocalError, and True if it would succeed."
 msgstr ""
 
-#: ../../pep-0671.rst:167
+#: ../../pep-0671.rst:181
 msgid ""
 "Out-of-order variable references are permitted as long as the referent "
 "has a value from an argument or early-bound default."
 msgstr ""
 
-#: ../../pep-0671.rst:172
+#: ../../pep-0671.rst:186
 msgid "Costs"
 msgstr ""
 
-#: ../../pep-0671.rst:174
+#: ../../pep-0671.rst:188
 msgid ""
 "When no late-bound argument defaults are used, the following costs should"
 " be all that are incurred:"
 msgstr ""
 
-#: ../../pep-0671.rst:177
+#: ../../pep-0671.rst:191
 msgid "Function objects require two additional pointers, which will be NULL"
 msgstr ""
 
-#: ../../pep-0671.rst:178
+#: ../../pep-0671.rst:192
 msgid "Compiling code and constructing functions have additional flag checks"
 msgstr ""
 
-#: ../../pep-0671.rst:179
+#: ../../pep-0671.rst:193
 msgid ""
 "Using ``Ellipsis`` as a default value will require run-time verification "
 "to see if late-bound defaults exist."
 msgstr ""
 
-#: ../../pep-0671.rst:182
+#: ../../pep-0671.rst:196
 msgid ""
 "These costs are expected to be minimal (on 64-bit Linux, this increases "
 "all function objects from 152 bytes to 168), with virtually no run-time "
 "cost when late-bound defaults are not used."
 msgstr ""
 
-#: ../../pep-0671.rst:187
+#: ../../pep-0671.rst:201
 msgid "Backward incompatibility"
 msgstr ""
 
-#: ../../pep-0671.rst:189
+#: ../../pep-0671.rst:203
 msgid ""
 "Where late-bound defaults are not used, behaviour should be identical. "
 "Care should be taken if Ellipsis is found, as it may not represent "
 "itself, but beyond that, tools should see existing code unchanged."
 msgstr ""
 
-#: ../../pep-0671.rst:194
+#: ../../pep-0671.rst:208
 msgid "References"
 msgstr ""
 
-#: ../../pep-0671.rst:196
+#: ../../pep-0671.rst:210
 msgid "https://github.com/rosuav/cpython/tree/pep-671"
 msgstr ""
 
-#: ../../pep-0671.rst:199
+#: ../../pep-0671.rst:213
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0671.rst:201
+#: ../../pep-0671.rst:215
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
@@ -343,5 +386,90 @@ msgstr ""
 #~ " - 1): # Error def "
 #~ "selfref(spam=>spam): # Error def "
 #~ "frob(n=>len(items), items=[]): # Error"
+#~ msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "671"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Syntax for late-bound function argument defaults"
+#~ msgstr ""
+
+#~ msgid "3.11"
+#~ msgstr ""
+
+#~ msgid "Choice of spelling"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Our chief syntax proposal is "
+#~ "``name=>expression`` -- our two syntax "
+#~ "proposals ... ahem. Amongst our "
+#~ "potential syntaxes are::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Since default arguments behave largely "
+#~ "the same whether they're early or "
+#~ "late bound, the preferred syntax is "
+#~ "very similar to the existing early-"
+#~ "bind syntax. The alternatives offer "
+#~ "little advantage over the preferred one."
+#~ msgstr ""
+
+#~ msgid "Interaction with other open PEPs"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 661 attempts to solve one of"
+#~ " the same problems as this does. "
+#~ "It seeks to improve the documentation"
+#~ " of sentinel values in default "
+#~ "arguments, where this proposal seeks to"
+#~ " remove the need for sentinels in "
+#~ "many common cases. PEP 661 is able"
+#~ " to improve documentation in arbitrarily"
+#~ " complicated functions (it cites "
+#~ "``traceback.print_exception`` as its primary "
+#~ "motivation, which has two arguments "
+#~ "which must both-or-neither be "
+#~ "specified); on the other hand, many "
+#~ "of the common cases would no "
+#~ "longer need sentinels if the true "
+#~ "default could be defined by the "
+#~ "function. Additionally, dedicated sentinel "
+#~ "objects can be used as dictionary "
+#~ "lookup keys, where PEP 671 does "
+#~ "not apply."
+#~ msgstr ""
+
+#~ msgid "Open Issues"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Annotations go before the default, so"
+#~ " in all syntax options, it must "
+#~ "be unambiguous (both to the human "
+#~ "and the parser) whether this is an"
+#~ " annotation, a default, or both. The"
+#~ " worst offender is the ``:=`` "
+#~ "notation, as ``:int=`` would be a "
+#~ "valid annotation and early-bound "
+#~ "default."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When a parameter with a late-bound"
+#~ " default is omitted, the function "
+#~ "will begin with the parameter unbound."
+#~ " The function begins by testing for"
+#~ " each parameter with a late-bound "
+#~ "default, and if unbound, evaluates the"
+#~ " original expression."
 #~ msgstr ""
 

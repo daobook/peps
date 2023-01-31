@@ -1,0 +1,837 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0681.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0681.rst:3
+msgid ""
+"Erik De Bonte <erikd at microsoft.com>, Eric Traut <erictr at "
+"microsoft.com>"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0681.rst:5
+msgid "Jelle Zijlstra <jelle.zijlstra at gmail.com>"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0681.rst:6
+msgid ""
+"https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/EAALIHA3XEDFDNG2NRXTI3ERFPAD65Z4/"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0681.rst:7
+msgid "Accepted"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0681.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0681.rst:9
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0681.rst:11
+msgid "02-Dec-2021"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0681.rst:12
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0681.rst:13
+msgid ""
+"`24-Apr-2021 <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/TXL5LEHYX5ZJAZPZ7YHZU7MVFXMVUVWL/>`__, `13-Dec-2021"
+" <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/EAALIHA3XEDFDNG2NRXTI3ERFPAD65Z4/>`__, `22-Feb-2022"
+" <https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/BW6CB6URC4BCN54QSG2STINU2M7V4TQQ/>`__"
+msgstr ""
+
+#: ../../pep-0681.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0681.rst:16
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/message/R4A2IYLGFHKFDYJPSDA5NFJ6N7KRPJ6D/"
+msgstr ""
+
+#: ../../pep-0681.rst:20
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0681.rst:22
+msgid ""
+":pep:`557` introduced the dataclass to the Python stdlib. Several popular"
+" libraries have behaviors that are similar to dataclasses, but these "
+"behaviors cannot be described using standard type annotations. Such "
+"projects include attrs, pydantic, and object relational mapper (ORM) "
+"packages such as SQLAlchemy and Django."
+msgstr ""
+
+#: ../../pep-0681.rst:28
+msgid ""
+"Most type checkers, linters and language servers have full support for "
+"dataclasses. This proposal aims to generalize this functionality and "
+"provide a way for third-party libraries to indicate that certain "
+"decorator functions, classes, and metaclasses provide behaviors similar "
+"to dataclasses."
+msgstr ""
+
+#: ../../pep-0681.rst:34
+msgid "These behaviors include:"
+msgstr ""
+
+#: ../../pep-0681.rst:36
+msgid "Synthesizing an ``__init__`` method based on declared data fields."
+msgstr ""
+
+#: ../../pep-0681.rst:38
+msgid ""
+"Optionally synthesizing ``__eq__``, ``__ne__``, ``__lt__``, ``__le__``, "
+"``__gt__`` and ``__ge__`` methods."
+msgstr ""
+
+#: ../../pep-0681.rst:40
+msgid ""
+"Supporting \"frozen\" classes, a way to enforce immutability during "
+"static type checking."
+msgstr ""
+
+#: ../../pep-0681.rst:42
+msgid ""
+"Supporting \"field specifiers\", which describe attributes of individual "
+"fields that a static type checker must be aware of, such as whether a "
+"default value is provided for the field."
+msgstr ""
+
+#: ../../pep-0681.rst:46
+msgid ""
+"The full behavior of the stdlib dataclass is described in the `Python "
+"documentation <#dataclass-docs_>`_."
+msgstr ""
+
+#: ../../pep-0681.rst:49
+msgid ""
+"This proposal does not affect CPython directly except for the addition of"
+" a ``dataclass_transform`` decorator in ``typing.py``."
+msgstr ""
+
+#: ../../pep-0681.rst:54
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0681.rst:56
+msgid ""
+"There is no existing, standard way for libraries with dataclass-like "
+"semantics to declare their behavior to type checkers. To work around this"
+" limitation, Mypy custom plugins have been developed for many of these "
+"libraries, but these plugins don't work with other type checkers, linters"
+" or language servers. They are also costly to maintain for library "
+"authors, and they require that Python developers know about the existence"
+" of these plugins and download and configure them within their "
+"environment."
+msgstr ""
+
+#: ../../pep-0681.rst:67
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0681.rst:69
+msgid ""
+"The intent of this proposal is not to support every feature of every "
+"library with dataclass-like semantics, but rather to make it possible to "
+"use the most common features of these libraries in a way that is "
+"compatible with static type checking. If a user values these libraries "
+"and also values static type checking, they may need to avoid using "
+"certain features or make small adjustments to the way they use them. "
+"That's already true for the Mypy custom plugins, which don't support "
+"every feature of every dataclass-like library."
+msgstr ""
+
+#: ../../pep-0681.rst:78
+msgid ""
+"As new features are added to dataclasses in the future, we intend, when "
+"appropriate, to add support for those features on ``dataclass_transform``"
+" as well. Keeping these two feature sets in sync will make it easier for "
+"dataclass users to understand and use ``dataclass_transform`` and will "
+"simplify the maintenance of dataclass support in type checkers."
+msgstr ""
+
+#: ../../pep-0681.rst:85
+msgid ""
+"Additionally, we will consider adding ``dataclass_transform`` support in "
+"the future for features that have been adopted by multiple third-party "
+"libraries but are not supported by dataclasses."
+msgstr ""
+
+#: ../../pep-0681.rst:91
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0681.rst:94
+msgid "The ``dataclass_transform`` decorator"
+msgstr ""
+
+#: ../../pep-0681.rst:96
+msgid ""
+"This specification introduces a new decorator function in the ``typing`` "
+"module named ``dataclass_transform``. This decorator can be applied to "
+"either a function that is itself a decorator, a class, or a metaclass. "
+"The presence of ``dataclass_transform`` tells a static type checker that "
+"the decorated function, class, or metaclass performs runtime \"magic\" "
+"that transforms a class, endowing it with dataclass-like behaviors."
+msgstr ""
+
+#: ../../pep-0681.rst:104
+msgid ""
+"If ``dataclass_transform`` is applied to a function, using the decorated "
+"function as a decorator is assumed to apply dataclass-like semantics. If "
+"the function has overloads, the ``dataclass_transform`` decorator can be "
+"applied to the implementation of the function or any one, but not more "
+"than one, of the overloads. When applied to an overload, the "
+"``dataclass_transform`` decorator still impacts all usage of the "
+"function."
+msgstr ""
+
+#: ../../pep-0681.rst:112
+msgid ""
+"If ``dataclass_transform`` is applied to a class, dataclass-like "
+"semantics will be assumed for any class that directly or indirectly "
+"derives from the decorated class or uses the decorated class as a "
+"metaclass. Attributes on the decorated class and its base classes are not"
+" considered to be fields."
+msgstr ""
+
+#: ../../pep-0681.rst:118
+msgid ""
+"Examples of each approach are shown in the following sections. Each "
+"example creates a ``CustomerModel`` class with dataclass-like semantics. "
+"The implementation of the decorated objects is omitted for brevity, but "
+"we assume that they modify classes in the following ways:"
+msgstr ""
+
+#: ../../pep-0681.rst:123
+msgid ""
+"They synthesize an ``__init__`` method using data fields declared within "
+"the class and its parent classes."
+msgstr ""
+
+#: ../../pep-0681.rst:125
+msgid "They synthesize ``__eq__`` and ``__ne__`` methods."
+msgstr ""
+
+#: ../../pep-0681.rst:127
+msgid ""
+"Type checkers supporting this PEP will recognize that the "
+"``CustomerModel`` class can be instantiated using the synthesized "
+"``__init__`` method:"
+msgstr ""
+
+#: ../../pep-0681.rst:146 ../../pep-0681.rst:274
+msgid "Decorator function example"
+msgstr ""
+
+#: ../../pep-0681.rst:169 ../../pep-0681.rst:297
+msgid "Class example"
+msgstr ""
+
+#: ../../pep-0681.rst:185 ../../pep-0681.rst:328
+msgid "Metaclass example"
+msgstr ""
+
+#: ../../pep-0681.rst:203
+msgid "Decorator function and class/metaclass parameters"
+msgstr ""
+
+#: ../../pep-0681.rst:205
+msgid ""
+"A decorator function, class, or metaclass that provides dataclass-like "
+"functionality may accept parameters that modify certain behaviors. This "
+"specification defines the following parameters that static type checkers "
+"must honor if they are used by a dataclass transform. Each of these "
+"parameters accepts a bool argument, and it must be possible for the bool "
+"value (``True`` or ``False``) to be statically evaluated."
+msgstr ""
+
+#: ../../pep-0681.rst:212
+msgid ""
+"``eq``.  ``order``, ``frozen``, ``init`` and ``unsafe_hash`` are "
+"parameters supported in the stdlib dataclass, with meanings defined in "
+":pep:`PEP 557 <557#id7>`."
+msgstr ""
+
+#: ../../pep-0681.rst:215
+msgid ""
+"``kw_only``, ``match_args`` and ``slots`` are parameters supported in the"
+" stdlib dataclass, first introduced in Python 3.10."
+msgstr ""
+
+#: ../../pep-0681.rst:219
+msgid "``dataclass_transform`` parameters"
+msgstr ""
+
+#: ../../pep-0681.rst:221
+msgid ""
+"Parameters to ``dataclass_transform`` allow for some basic customization "
+"of default behaviors:"
+msgstr ""
+
+#: ../../pep-0681.rst:237
+msgid ""
+"``eq_default`` indicates whether the ``eq`` parameter is assumed to be "
+"True or False if it is omitted by the caller. If not specified, "
+"``eq_default`` will default to True (the default assumption for "
+"dataclass)."
+msgstr ""
+
+#: ../../pep-0681.rst:241
+msgid ""
+"``order_default`` indicates whether the ``order`` parameter is assumed to"
+" be True or False if it is omitted by the caller. If not specified, "
+"``order_default`` will default to False (the default assumption for "
+"dataclass)."
+msgstr ""
+
+#: ../../pep-0681.rst:245
+msgid ""
+"``kw_only_default`` indicates whether the ``kw_only`` parameter is "
+"assumed to be True or False if it is omitted by the caller. If not "
+"specified, ``kw_only_default`` will default to False (the default "
+"assumption for dataclass)."
+msgstr ""
+
+#: ../../pep-0681.rst:249
+msgid ""
+"``field_specifiers`` specifies a static list of supported classes that "
+"describe fields. Some libraries also supply functions to allocate "
+"instances of field specifiers, and those functions may also be specified "
+"in this tuple. If not specified, ``field_specifiers`` will default to an "
+"empty tuple (no field specifiers supported). The standard dataclass "
+"behavior supports only one type of field specifier called ``Field`` plus "
+"a helper function (``field``) that instantiates this class, so if we were"
+" describing the stdlib dataclass behavior, we would provide the tuple "
+"argument ``(dataclasses.Field, dataclasses.field)``."
+msgstr ""
+
+#: ../../pep-0681.rst:259
+msgid ""
+"``kwargs`` allows arbitrary additional keyword args to be passed to "
+"``dataclass_transform``. This gives type checkers the freedom to support "
+"experimental parameters without needing to wait for changes in "
+"``typing.py``. Type checkers should report errors for any unrecognized "
+"parameters."
+msgstr ""
+
+#: ../../pep-0681.rst:265
+msgid ""
+"In the future, we may add additional parameters to "
+"``dataclass_transform`` as needed to support common behaviors in user "
+"code. These additions will be made after reaching consensus on typing-sig"
+" rather than via additional PEPs."
+msgstr ""
+
+#: ../../pep-0681.rst:270
+msgid ""
+"The following sections provide additional examples showing how these "
+"parameters are used."
+msgstr ""
+
+#: ../../pep-0681.rst:366
+msgid "Field specifiers"
+msgstr ""
+
+#: ../../pep-0681.rst:368
+msgid ""
+"Most libraries that support dataclass-like semantics provide one or more "
+"\"field specifier\" types that allow a class definition to provide "
+"additional metadata about each field in the class. This metadata can "
+"describe, for example, default values, or indicate whether the field "
+"should be included in the synthesized ``__init__`` method."
+msgstr ""
+
+#: ../../pep-0681.rst:374
+msgid ""
+"Field specifiers can be omitted in cases where additional metadata is not"
+" required:"
+msgstr ""
+
+#: ../../pep-0681.rst:397
+msgid "Field specifier parameters"
+msgstr ""
+
+#: ../../pep-0681.rst:399
+msgid ""
+"Libraries that support dataclass-like semantics and support field "
+"specifier classes typically use common parameter names to construct these"
+" field specifiers. This specification formalizes the names and meanings "
+"of the parameters that must be understood for static type checkers. These"
+" standardized parameters must be keyword-only."
+msgstr ""
+
+#: ../../pep-0681.rst:405
+msgid ""
+"These parameters are a superset of those supported by "
+"``dataclasses.field``, excluding those that do not have an impact on type"
+" checking such as ``compare`` and ``hash``."
+msgstr ""
+
+#: ../../pep-0681.rst:409
+msgid ""
+"Field specifier classes are allowed to use other parameters in their "
+"constructors, and those parameters can be positional and may use other "
+"names."
+msgstr ""
+
+#: ../../pep-0681.rst:413
+msgid ""
+"``init`` is an optional bool parameter that indicates whether the field "
+"should be included in the synthesized ``__init__`` method. If "
+"unspecified, ``init`` defaults to True. Field specifier functions can use"
+" overloads that implicitly specify the value of ``init`` using a literal "
+"bool value type (``Literal[False]`` or ``Literal[True]``)."
+msgstr ""
+
+#: ../../pep-0681.rst:419
+msgid ""
+"``default`` is an optional parameter that provides the default value for "
+"the field."
+msgstr ""
+
+#: ../../pep-0681.rst:421
+msgid ""
+"``default_factory`` is an optional parameter that provides a runtime "
+"callback that returns the default value for the field. If neither "
+"``default`` nor ``default_factory`` are specified, the field is assumed "
+"to have no default value and must be provided a value when the class is "
+"instantiated."
+msgstr ""
+
+#: ../../pep-0681.rst:426
+msgid ""
+"``factory`` is an alias for ``default_factory``. Stdlib dataclasses use "
+"the name ``default_factory``, but attrs uses the name ``factory`` in many"
+" scenarios, so this alias is necessary for supporting attrs."
+msgstr ""
+
+#: ../../pep-0681.rst:429
+msgid ""
+"``kw_only`` is an optional bool parameter that indicates whether the "
+"field should be marked as keyword-only. If true, the field will be "
+"keyword-only. If false, it will not be keyword-only. If unspecified, the "
+"value of the ``kw_only`` parameter on the object decorated with "
+"``dataclass_transform`` will be used, or if that is unspecified, the "
+"value of ``kw_only_default`` on ``dataclass_transform`` will be used."
+msgstr ""
+
+#: ../../pep-0681.rst:435
+msgid ""
+"``alias`` is an optional str parameter that provides an alternative name "
+"for the field. This alternative name is used in the synthesized "
+"``__init__`` method."
+msgstr ""
+
+#: ../../pep-0681.rst:439
+msgid ""
+"It is an error to specify more than one of ``default``, "
+"``default_factory`` and ``factory``."
+msgstr ""
+
+#: ../../pep-0681.rst:442
+msgid "This example demonstrates the above:"
+msgstr ""
+
+#: ../../pep-0681.rst:481
+msgid "Runtime behavior"
+msgstr ""
+
+#: ../../pep-0681.rst:483
+msgid ""
+"At runtime, the ``dataclass_transform`` decorator's only effect is to set"
+" an attribute named ``__dataclass_transform__`` on the decorated function"
+" or class to support introspection. The value of the attribute should be "
+"a dict mapping the names of the ``dataclass_transform`` parameters to "
+"their values."
+msgstr ""
+
+#: ../../pep-0681.rst:489
+msgid "For example:"
+msgstr ""
+
+#: ../../pep-0681.rst:503
+msgid "Dataclass semantics"
+msgstr ""
+
+#: ../../pep-0681.rst:505
+msgid ""
+"Except where stated otherwise in this PEP, classes impacted by "
+"``dataclass_transform``, either by inheriting from a class that is "
+"decorated with ``dataclass_transform`` or by being decorated with a "
+"function decorated with ``dataclass_transform``, are assumed to behave "
+"like stdlib ``dataclass``."
+msgstr ""
+
+#: ../../pep-0681.rst:511
+msgid "This includes, but is not limited to, the following semantics:"
+msgstr ""
+
+#: ../../pep-0681.rst:513
+msgid ""
+"Frozen dataclasses cannot inherit from non-frozen dataclasses. A class "
+"that has been decorated with ``dataclass_transform`` is considered "
+"neither frozen nor non-frozen, thus allowing frozen classes to inherit "
+"from it. Similarly, a class that directly specifies a metaclass that is "
+"decorated with ``dataclass_transform`` is considered neither frozen nor "
+"non-frozen."
+msgstr ""
+
+#: ../../pep-0681.rst:520
+msgid "Consider these class examples:"
+msgstr ""
+
+#: ../../pep-0681.rst:539
+msgid "And these similar metaclass examples:"
+msgstr ""
+
+#: ../../pep-0681.rst:560
+msgid ""
+"Field ordering and inheritance is assumed to follow the rules specified "
+"in :pep:`557 <557#inheritance>`. This includes the effects of overrides "
+"(redefining a field in a child class that has already been defined in a "
+"parent class)."
+msgstr ""
+
+#: ../../pep-0681.rst:565
+msgid ""
+":pep:`PEP 557 indicates <557#post-init-parameters>` that all fields "
+"without default values must appear before fields with default values. "
+"Although not explicitly stated in PEP 557, this rule is ignored when "
+"``init=False``, and this specification likewise ignores this requirement "
+"in that situation. Likewise, there is no need to enforce this ordering "
+"when keyword-only parameters are used for ``__init__``, so the rule is "
+"not enforced if ``kw_only`` semantics are in effect."
+msgstr ""
+
+#: ../../pep-0681.rst:574
+msgid ""
+"As with ``dataclass``, method synthesis is skipped if it would overwrite "
+"a method that is explicitly declared within the class. Method "
+"declarations on base classes do not cause method synthesis to be skipped."
+msgstr ""
+
+#: ../../pep-0681.rst:579
+msgid ""
+"For example, if a class declares an ``__init__`` method explicitly, an "
+"``__init__`` method will not be synthesized for that class."
+msgstr ""
+
+#: ../../pep-0681.rst:582
+msgid ""
+"KW_ONLY sentinel values are supported as described in `the Python docs "
+"<#kw-only-docs_>`_ and `bpo-43532 <#kw-only-issue_>`_."
+msgstr ""
+
+#: ../../pep-0681.rst:585
+msgid ""
+"ClassVar attributes are not considered dataclass fields and are `ignored "
+"by dataclass mechanisms <#class-var_>`_."
+msgstr ""
+
+#: ../../pep-0681.rst:590
+msgid "Undefined behavior"
+msgstr ""
+
+#: ../../pep-0681.rst:592
+msgid ""
+"If multiple ``dataclass_transform`` decorators are found, either on a "
+"single function (including its overloads), a single class, or within a "
+"class hierarchy, the resulting behavior is undefined. Library authors "
+"should avoid these scenarios."
+msgstr ""
+
+#: ../../pep-0681.rst:599
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0681.rst:601
+msgid ""
+"`Pyright <#pyright_>`_ contains the reference implementation of type "
+"checker support for ``dataclass_transform``. Pyright's ``dataClasses.ts``"
+" `source file <#pyright-impl_>`_ would be a good starting point for "
+"understanding the implementation."
+msgstr ""
+
+#: ../../pep-0681.rst:606
+msgid ""
+"The `attrs <#attrs-usage_>`_ and `pydantic <#pydantic-usage_>`_ libraries"
+" are using ``dataclass_transform`` and serve as real-world examples of "
+"its usage."
+msgstr ""
+
+#: ../../pep-0681.rst:612
+msgid "Rejected Ideas"
+msgstr ""
+
+#: ../../pep-0681.rst:615
+msgid "``auto_attribs`` parameter"
+msgstr ""
+
+#: ../../pep-0681.rst:617
+msgid ""
+"The attrs library supports an ``auto_attribs`` parameter that indicates "
+"whether class members decorated with :pep:`526` variable annotations but "
+"with no assignment should be treated as data fields."
+msgstr ""
+
+#: ../../pep-0681.rst:621
+msgid ""
+"We considered supporting ``auto_attribs`` and a corresponding "
+"``auto_attribs_default`` parameter, but decided against this because it "
+"is specific to attrs."
+msgstr ""
+
+#: ../../pep-0681.rst:625
+msgid ""
+"Django does not support declaring fields using type annotations only, so "
+"Django users who leverage ``dataclass_transform`` should be aware that "
+"they should always supply assigned values."
+msgstr ""
+
+#: ../../pep-0681.rst:630
+msgid "``cmp`` parameter"
+msgstr ""
+
+#: ../../pep-0681.rst:632
+msgid ""
+"The attrs library supports a bool parameter ``cmp`` that is equivalent to"
+" setting both ``eq`` and ``order`` to True. We chose not to support a "
+"``cmp`` parameter, since it only applies to attrs. Users can emulate the "
+"``cmp`` behaviour by using the ``eq`` and ``order`` parameter names "
+"instead."
+msgstr ""
+
+#: ../../pep-0681.rst:639
+msgid "Automatic field name aliasing"
+msgstr ""
+
+#: ../../pep-0681.rst:641
+msgid ""
+"The attrs library performs `automatic aliasing <#attrs-aliasing_>`_ of "
+"field names that start with a single underscore, stripping the underscore"
+" from the name of the corresponding ``__init__`` parameter."
+msgstr ""
+
+#: ../../pep-0681.rst:645
+msgid ""
+"This proposal omits that behavior since it is specific to attrs. Users "
+"can manually alias these fields using the ``alias`` parameter."
+msgstr ""
+
+#: ../../pep-0681.rst:649
+msgid "Alternate field ordering algorithms"
+msgstr ""
+
+#: ../../pep-0681.rst:651
+msgid ""
+"The attrs library currently supports two approaches to ordering the "
+"fields within a class:"
+msgstr ""
+
+#: ../../pep-0681.rst:654
+msgid ""
+"Dataclass order: The same ordering used by dataclasses. This is the "
+"default behavior of the older APIs (e.g. ``attr.s``)."
+msgstr ""
+
+#: ../../pep-0681.rst:656
+msgid ""
+"Method Resolution Order (MRO): This is the default behavior of the newer "
+"APIs (e.g. define, mutable, frozen). Older APIs (e.g. ``attr.s``) can opt"
+" into this behavior by specifying ``collect_by_mro=True``."
+msgstr ""
+
+#: ../../pep-0681.rst:660
+msgid ""
+"The resulting field orderings can differ in certain diamond-shaped "
+"multiple inheritance scenarios."
+msgstr ""
+
+#: ../../pep-0681.rst:663
+msgid ""
+"For simplicity, this proposal does not support any field ordering other "
+"than that used by dataclasses."
+msgstr ""
+
+#: ../../pep-0681.rst:667
+msgid "Fields redeclared in subclasses"
+msgstr ""
+
+#: ../../pep-0681.rst:669
+msgid ""
+"The attrs library differs from stdlib dataclasses in how it handles "
+"inherited fields that are redeclared in subclasses. The dataclass "
+"specification preserves the original order, but attrs defines a new order"
+" based on subclasses."
+msgstr ""
+
+#: ../../pep-0681.rst:674
+msgid ""
+"For simplicity, we chose to only support the dataclass behavior. Users of"
+" attrs who rely on the attrs-specific ordering will not see the expected "
+"order of parameters in the synthesized ``__init__`` method."
+msgstr ""
+
+#: ../../pep-0681.rst:680
+msgid "Django primary and foreign keys"
+msgstr ""
+
+#: ../../pep-0681.rst:682
+msgid ""
+"Django applies `additional logic for primary and foreign keys <#django-"
+"ids_>`_. For example, it automatically adds an ``id`` field (and "
+"``__init__`` parameter) if there is no field designated as a primary key."
+msgstr ""
+
+#: ../../pep-0681.rst:687
+msgid ""
+"As this is not broadly applicable to dataclass libraries, this additional"
+" logic is not accommodated with this proposal, so users of Django would "
+"need to explicitly declare the ``id`` field."
+msgstr ""
+
+#: ../../pep-0681.rst:692
+msgid "Class-wide default values"
+msgstr ""
+
+#: ../../pep-0681.rst:694
+msgid ""
+"SQLAlchemy requested that we expose a way to specify that the default "
+"value of all fields in the transformed class is ``None``. It is typical "
+"that all SQLAlchemy fields are optional, and ``None`` indicates that the "
+"field is not set."
+msgstr ""
+
+#: ../../pep-0681.rst:699
+msgid ""
+"We chose not to support this feature, since it is specific to SQLAlchemy."
+" Users can manually set ``default=None`` on these fields instead."
+msgstr ""
+
+#: ../../pep-0681.rst:704
+msgid "Descriptor-typed field support"
+msgstr ""
+
+#: ../../pep-0681.rst:706
+msgid ""
+"We considered adding a boolean parameter on ``dataclass_transform`` to "
+"enable better support for fields with descriptor types, which is common "
+"in SQLAlchemy. When enabled, the type of each parameter on the "
+"synthesized ``__init__`` method corresponding to a descriptor-typed field"
+" would be the type of the value parameter to the descriptor's ``__set__``"
+" method rather than the descriptor type itself. Similarly, when setting "
+"the field, the ``__set__`` value type would be expected. And when getting"
+" the value of the field, its type would be expected to match the return "
+"type of ``__get__``."
+msgstr ""
+
+#: ../../pep-0681.rst:716
+msgid ""
+"This idea was based on the belief that ``dataclass`` did not properly "
+"support descriptor-typed fields. In fact it does, but type checkers (at "
+"least mypy and pyright) did not reflect the runtime behavior which led to"
+" our misunderstanding. For more details, see the `Pyright bug <#pyright-"
+"descriptor-bug_>`__."
+msgstr ""
+
+#: ../../pep-0681.rst:723
+msgid "``converter`` field specifier parameter"
+msgstr ""
+
+#: ../../pep-0681.rst:725
+msgid ""
+"The attrs library supports a ``converter`` field specifier parameter, "
+"which is a ``Callable`` that is called by the generated ``__init__`` "
+"method to convert the supplied value to some other desired value. This is"
+" tricky to support since the parameter type in the synthesized "
+"``__init__`` method needs to accept uncovered values, but the resulting "
+"field is typed according to the output of the converter."
+msgstr ""
+
+#: ../../pep-0681.rst:733
+msgid ""
+"Some aspects of this issue are detailed in a `Pyright discussion "
+"<#converters_>`_."
+msgstr ""
+
+#: ../../pep-0681.rst:736
+msgid ""
+"There may be no good way to support this because there's not enough "
+"information to derive the type of the input parameter. One possible "
+"solution would be to add support for a ``converter`` field specifier "
+"parameter but then use the ``Any`` type for the corresponding parameter "
+"in the ``__init__`` method."
+msgstr ""
+
+#: ../../pep-0681.rst:760
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0681.rst:762
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

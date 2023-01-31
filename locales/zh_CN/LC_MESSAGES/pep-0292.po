@@ -8,44 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0292.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0292.txt:1
-msgid "292"
-msgstr ""
-
-#: ../../pep-0292.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0292.txt:2
-msgid "Simpler String Substitutions"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0292.txt
 msgid "Author"
 msgstr ""
 
-#: ../../pep-0292.txt:5
-msgid "barry@python.org (Barry Warsaw)"
+#: ../../pep-0292.txt:3
+msgid "Barry Warsaw <barry@python.org>"
 msgstr ""
 
 #: ../../pep-0292.txt
 msgid "Status"
 msgstr ""
 
-#: ../../pep-0292.txt:6
+#: ../../pep-0292.txt:4
 msgid "Final"
 msgstr ""
 
@@ -53,7 +37,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: ../../pep-0292.txt:7
+#: ../../pep-0292.txt:5
 msgid "Standards Track"
 msgstr ""
 
@@ -61,7 +45,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0292.txt:9
+#: ../../pep-0292.txt:7
 msgid "18-Jun-2002"
 msgstr ""
 
@@ -69,7 +53,7 @@ msgstr ""
 msgid "Python-Version"
 msgstr ""
 
-#: ../../pep-0292.txt:10
+#: ../../pep-0292.txt:8
 msgid "2.4"
 msgstr ""
 
@@ -77,7 +61,7 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0292.txt:11
+#: ../../pep-0292.txt:9
 msgid "18-Jun-2002, 23-Mar-2004, 22-Aug-2004"
 msgstr ""
 
@@ -85,40 +69,40 @@ msgstr ""
 msgid "Replaces"
 msgstr ""
 
-#: ../../pep-0292.txt:12
+#: ../../pep-0292.txt:10
 msgid "215"
 msgstr ""
 
-#: ../../pep-0292.txt:16
+#: ../../pep-0292.txt:14
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0292.txt:18
+#: ../../pep-0292.txt:16
 msgid ""
 "This PEP describes a simpler string substitution feature, also known as "
 "string interpolation.  This PEP is \"simpler\" in two respects:"
 msgstr ""
 
-#: ../../pep-0292.txt:22
+#: ../../pep-0292.txt:20
 msgid ""
 "Python's current string substitution feature (i.e. ``%``-substitution) is"
 " complicated and error prone.  This PEP is simpler at the cost of some "
 "expressiveness."
 msgstr ""
 
-#: ../../pep-0292.txt:26
+#: ../../pep-0292.txt:24
 msgid ""
-"PEP 215 proposed an alternative string interpolation feature, introducing"
-" a new ``$`` string prefix.  PEP 292 is simpler than this because it "
-"involves no syntax changes and has much simpler rules for what "
-"substitutions can occur in the string."
+":pep:`215` proposed an alternative string interpolation feature, "
+"introducing a new ``$`` string prefix.  :pep:`292` is simpler than this "
+"because it involves no syntax changes and has much simpler rules for what"
+" substitutions can occur in the string."
 msgstr ""
 
-#: ../../pep-0292.txt:33
+#: ../../pep-0292.txt:31
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0292.txt:35
+#: ../../pep-0292.txt:33
 #, python-format
 msgid ""
 "Python currently supports a string substitution syntax based on C's "
@@ -128,7 +112,7 @@ msgid ""
 "character, e.g. the '``s``' in ``\"%(name)s\"``."
 msgstr ""
 
-#: ../../pep-0292.txt:41
+#: ../../pep-0292.txt:39
 #, python-format
 msgid ""
 "In addition, the rules for what can follow a ``%`` sign are fairly "
@@ -138,11 +122,11 @@ msgid ""
 "should be made simpler and less error prone."
 msgstr ""
 
-#: ../../pep-0292.txt:49
+#: ../../pep-0292.txt:47
 msgid "A Simpler Proposal"
 msgstr ""
 
-#: ../../pep-0292.txt:51
+#: ../../pep-0292.txt:49
 msgid ""
 "We propose the addition of a new class, called ``Template``, which will "
 "live in the string module.  The ``Template`` class supports new rules for"
@@ -150,11 +134,11 @@ msgid ""
 "the ``$`` character.  The following rules for ``$``-placeholders apply:"
 msgstr ""
 
-#: ../../pep-0292.txt:57
+#: ../../pep-0292.txt:55
 msgid "``$$`` is an escape; it is replaced with a single ``$``"
 msgstr ""
 
-#: ../../pep-0292.txt:59
+#: ../../pep-0292.txt:57
 msgid ""
 "``$identifier`` names a substitution placeholder matching a mapping key "
 "of \"identifier\".  By default, \"identifier\" must spell a Python "
@@ -162,14 +146,14 @@ msgid ""
 "the ``$`` character terminates this placeholder specification."
 msgstr ""
 
-#: ../../pep-0292.txt:65
+#: ../../pep-0292.txt:63
 msgid ""
 "``${identifier}`` is equivalent to ``$identifier``.  It is required when "
 "valid identifier characters follow the placeholder but are not part of "
 "the placeholder, e.g. ``\"${noun}ification\"``."
 msgstr ""
 
-#: ../../pep-0292.txt:69
+#: ../../pep-0292.txt:67
 msgid ""
 "If the ``$`` character appears at the end of the line, or is followed by "
 "any other character than those described above, a ``ValueError`` will be "
@@ -177,7 +161,7 @@ msgid ""
 "automatically to strings."
 msgstr ""
 
-#: ../../pep-0292.txt:74
+#: ../../pep-0292.txt:72
 msgid ""
 "No other characters have special meaning, however it is possible to "
 "derive from the ``Template`` class to define different substitution "
@@ -186,13 +170,13 @@ msgid ""
 "path lookup), or could define a delimiter character other than ``$``."
 msgstr ""
 
-#: ../../pep-0292.txt:81
+#: ../../pep-0292.txt:79
 msgid ""
 "Once the ``Template`` has been created, substitutions can be performed by"
 " calling one of two methods:"
 msgstr ""
 
-#: ../../pep-0292.txt:84
+#: ../../pep-0292.txt:82
 msgid ""
 "``substitute()``.  This method returns a new string which results when "
 "the values of a mapping are substituted for the placeholders in the "
@@ -200,7 +184,7 @@ msgid ""
 "mapping, a ``KeyError`` will be raised."
 msgstr ""
 
-#: ../../pep-0292.txt:89
+#: ../../pep-0292.txt:87
 msgid ""
 "``safe_substitute()``.  This is similar to the ``substitute()`` method, "
 "except that ``KeyErrors`` are never raised (due to placeholders missing "
@@ -208,11 +192,11 @@ msgid ""
 "placeholder will appear in the resulting string."
 msgstr ""
 
-#: ../../pep-0292.txt:94
+#: ../../pep-0292.txt:92
 msgid "Here are some examples::"
 msgstr ""
 
-#: ../../pep-0292.txt:108
+#: ../../pep-0292.txt:106
 msgid ""
 "The signature of ``substitute()`` and ``safe_substitute()`` allows for "
 "passing the mapping of placeholders to values, either as a single "
@@ -221,77 +205,78 @@ msgid ""
 "methods is reserved for the standard library documentation."
 msgstr ""
 
-#: ../../pep-0292.txt:117
+#: ../../pep-0292.txt:115
 msgid "Why ``$`` and Braces?"
 msgstr ""
 
-#: ../../pep-0292.txt:119
+#: ../../pep-0292.txt:117
 msgid ""
 "The BDFL said it best [4]_: \"The ``$`` means \"substitution\" in so many"
 " languages besides Perl that I wonder where you've been. [...] We're "
 "copying this from the shell.\""
 msgstr ""
 
-#: ../../pep-0292.txt:123
+#: ../../pep-0292.txt:121
 msgid ""
 "Thus the substitution rules are chosen because of the similarity with so "
 "many other languages.  This makes the substitution rules easier to teach,"
 " learn, and remember."
 msgstr ""
 
-#: ../../pep-0292.txt:129
+#: ../../pep-0292.txt:127
 msgid "Comparison to PEP 215"
 msgstr ""
 
-#: ../../pep-0292.txt:131
+#: ../../pep-0292.txt:129
 msgid ""
-"PEP 215 describes an alternate proposal for string interpolation. Unlike "
-"that PEP, this one does not propose any new syntax for Python.  All the "
-"proposed new features are embodied in a new library module.  PEP 215 "
-"proposes a new string prefix representation such as ``$\"\"`` which "
-"signal to Python that a new type of string is present.  ``$``-strings "
-"would have to interact with the existing r-prefixes and u-prefixes, "
-"essentially doubling the number of string prefix combinations."
+":pep:`215` describes an alternate proposal for string interpolation. "
+"Unlike that PEP, this one does not propose any new syntax for Python.  "
+"All the proposed new features are embodied in a new library module.  "
+":pep:`215` proposes a new string prefix representation such as ``$\"\"`` "
+"which signal to Python that a new type of string is present.  "
+"``$``-strings would have to interact with the existing r-prefixes and "
+"u-prefixes, essentially doubling the number of string prefix "
+"combinations."
 msgstr ""
 
-#: ../../pep-0292.txt:140
+#: ../../pep-0292.txt:138
 msgid ""
-"PEP 215 also allows for arbitrary Python expressions inside the "
+":pep:`215` also allows for arbitrary Python expressions inside the "
 "``$``-strings, so that you could do things like::"
 msgstr ""
 
-#: ../../pep-0292.txt:146
+#: ../../pep-0292.txt:144
 msgid "which would return::"
 msgstr ""
 
-#: ../../pep-0292.txt:150
+#: ../../pep-0292.txt:148
 msgid ""
-"It's generally accepted that the rules in PEP 215 are safe in the sense "
-"that they introduce no new security issues (see PEP 215, \"Security "
-"Issues\" for details).  However, the rules are still quite complex, and "
-"make it more difficult to see the substitution placeholder in the "
-"original ``$``-string."
+"It's generally accepted that the rules in :pep:`215` are safe in the "
+"sense that they introduce no new security issues (see :pep:`215`, "
+"\"Security Issues\" for details).  However, the rules are still quite "
+"complex, and make it more difficult to see the substitution placeholder "
+"in the original ``$``-string."
 msgstr ""
 
-#: ../../pep-0292.txt:156
+#: ../../pep-0292.txt:154
 msgid ""
 "The interesting thing is that the ``Template`` class defined in this PEP "
 "is designed for inheritance and, with a little extra work, it's possible "
-"to support PEP 215's functionality using existing Python syntax."
+"to support :pep:`215`'s functionality using existing Python syntax."
 msgstr ""
 
-#: ../../pep-0292.txt:161
+#: ../../pep-0292.txt:159
 msgid ""
 "For example, one could define subclasses of ``Template`` and dict that "
 "allowed for a more complex placeholder syntax and a mapping that "
 "evaluated those placeholders."
 msgstr ""
 
-#: ../../pep-0292.txt:167
+#: ../../pep-0292.txt:165
 msgid "Internationalization"
 msgstr ""
 
-#: ../../pep-0292.txt:169
+#: ../../pep-0292.txt:167
 msgid ""
 "The implementation supports internationalization by recording the "
 "original template string in the ``Template`` instance's ``template`` "
@@ -300,7 +285,7 @@ msgid ""
 "back into a ``Template`` for substitution."
 msgstr ""
 
-#: ../../pep-0292.txt:175
+#: ../../pep-0292.txt:173
 msgid ""
 "However, the ``Template`` class was designed to work more intuitively in "
 "an internationalized application, by supporting the mixing-in of "
@@ -313,52 +298,122 @@ msgid ""
 "``%``-operator substitution syntax."
 msgstr ""
 
-#: ../../pep-0292.txt:187
+#: ../../pep-0292.txt:185
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0292.txt:189
+#: ../../pep-0292.txt:187
 msgid "The implementation has been committed to the Python 2.4 source tree."
 msgstr ""
 
-#: ../../pep-0292.txt:193
+#: ../../pep-0292.txt:191
 msgid "References"
 msgstr ""
 
-#: ../../pep-0292.txt:195
+#: ../../pep-0292.txt:193
 msgid ""
 "String Formatting Operations http://docs.python.org/library/stdtypes.html"
 "#string-formatting-operations"
 msgstr ""
 
-#: ../../pep-0292.txt:198
+#: ../../pep-0292.txt:196
 msgid ""
 "Identifiers and Keywords "
 "http://docs.python.org/reference/lexical_analysis.html#identifiers-and-"
 "keywords"
 msgstr ""
 
-#: ../../pep-0292.txt:201
+#: ../../pep-0292.txt:199
 msgid ""
 "Guido's python-dev posting from 21-Jul-2002 "
 "https://mail.python.org/pipermail/python-dev/2002-July/026397.html"
 msgstr ""
 
-#: ../../pep-0292.txt:204
+#: ../../pep-0292.txt:202
 msgid "https://mail.python.org/pipermail/python-dev/2002-June/025652.html"
 msgstr ""
 
-#: ../../pep-0292.txt:206
+#: ../../pep-0292.txt:204
 msgid ""
 "Reference Implementation "
 "http://sourceforge.net/tracker/index.php?func=detail&aid=1014055&group_id=5470&atid=305470"
 msgstr ""
 
-#: ../../pep-0292.txt:210
+#: ../../pep-0292.txt:208
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0292.txt:212
+#: ../../pep-0292.txt:210
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "292"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Simpler String Substitutions"
+#~ msgstr ""
+
+#~ msgid "barry@python.org (Barry Warsaw)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 215 proposed an alternative string"
+#~ " interpolation feature, introducing a new"
+#~ " ``$`` string prefix.  PEP 292 is "
+#~ "simpler than this because it involves"
+#~ " no syntax changes and has much "
+#~ "simpler rules for what substitutions can"
+#~ " occur in the string."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 215 describes an alternate proposal"
+#~ " for string interpolation. Unlike that "
+#~ "PEP, this one does not propose any"
+#~ " new syntax for Python.  All the "
+#~ "proposed new features are embodied in"
+#~ " a new library module.  PEP 215 "
+#~ "proposes a new string prefix "
+#~ "representation such as ``$\"\"`` which "
+#~ "signal to Python that a new type"
+#~ " of string is present.  ``$``-strings "
+#~ "would have to interact with the "
+#~ "existing r-prefixes and u-prefixes, "
+#~ "essentially doubling the number of "
+#~ "string prefix combinations."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 215 also allows for arbitrary "
+#~ "Python expressions inside the ``$``-strings,"
+#~ " so that you could do things "
+#~ "like::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It's generally accepted that the rules"
+#~ " in PEP 215 are safe in the "
+#~ "sense that they introduce no new "
+#~ "security issues (see PEP 215, \"Security"
+#~ " Issues\" for details).  However, the "
+#~ "rules are still quite complex, and "
+#~ "make it more difficult to see the"
+#~ " substitution placeholder in the original"
+#~ " ``$``-string."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The interesting thing is that the "
+#~ "``Template`` class defined in this PEP"
+#~ " is designed for inheritance and, "
+#~ "with a little extra work, it's "
+#~ "possible to support PEP 215's "
+#~ "functionality using existing Python syntax."
+#~ msgstr ""
 

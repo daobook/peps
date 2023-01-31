@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0489.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0489.txt:1
-msgid "489"
-msgstr ""
-
-#: ../../pep-0489.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0489.txt:2
-msgid "Multi-phase extension module initialization"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0489.txt
 msgid "Author"
@@ -96,7 +80,7 @@ msgid "Post-History"
 msgstr ""
 
 #: ../../pep-0489.txt:15
-msgid "23-Aug-2013, 20-Feb-2015, 16-Apr-2015, 7-May-2015, 18-May-2015"
+msgid "23-Aug-2013, 20-Feb-2015, 16-Apr-2015, 07-May-2015, 18-May-2015"
 msgstr ""
 
 #: ../../pep-0489.txt
@@ -118,12 +102,12 @@ msgid ""
 "Python 3.0 in PEP 3121, but did not solve all problems at the time. The "
 "goal is to solve import-related problems by bringing extension modules "
 "closer to the way Python modules behave; specifically to hook into the "
-"ModuleSpec-based loading mechanism introduced in PEP 451."
+"ModuleSpec-based loading mechanism introduced in :pep:`451`."
 msgstr ""
 
 #: ../../pep-0489.txt:29
 msgid ""
-"This proposal draws inspiration from PyType_Spec of PEP 384 to allow "
+"This proposal draws inspiration from PyType_Spec of :pep:`384` to allow "
 "extension authors to only define features they need, and to allow future "
 "additions to extension module declarations."
 msgstr ""
@@ -149,7 +133,7 @@ msgstr ""
 
 #: ../../pep-0489.txt:44
 msgid ""
-"Not all problems tackled in PEP 3121 are solved in this proposal. In "
+"Not all problems tackled in :pep:`3121` are solved in this proposal. In "
 "particular, problems with run-time module lookup (PyState_FindModule) are"
 " left to a future PEP."
 msgstr ""
@@ -162,9 +146,9 @@ msgstr ""
 msgid ""
 "Python modules and extension modules are not being set up in the same "
 "way. For Python modules, the module object is created and set up first, "
-"then the module code is being executed (PEP 302). A ModuleSpec object "
-"(PEP 451) is used to hold information about the module, and passed to the"
-" relevant hooks."
+"then the module code is being executed (:pep:`302`). A ModuleSpec object "
+"(:pep:`451`) is used to hold information about the module, and passed to "
+"the relevant hooks."
 msgstr ""
 
 #: ../../pep-0489.txt:58
@@ -197,10 +181,10 @@ msgid ""
 "problems with sub-interpreter support and/or interpreter reloading, and, "
 "while it is possible with the current infrastructure to support these "
 "features, it is neither easy nor efficient. Addressing these issues was "
-"the goal of PEP 3121, but many extensions, including some in the standard"
-" library, took the least-effort approach to porting to Python 3, leaving "
-"these issues unresolved. This PEP keeps backwards compatibility, which "
-"should reduce pressure and give extension authors adequate time to "
+"the goal of :pep:`3121`, but many extensions, including some in the "
+"standard library, took the least-effort approach to porting to Python 3, "
+"leaving these issues unresolved. This PEP keeps backwards compatibility, "
+"which should reduce pressure and give extension authors adequate time to "
 "consider these issues when porting."
 msgstr ""
 
@@ -258,7 +242,7 @@ msgstr ""
 #: ../../pep-0489.txt:121
 msgid ""
 "The PyModuleDef structure will be changed to contain a list of slots, "
-"similarly to PEP 384's PyType_Spec for types. To keep binary "
+"similarly to :pep:`384`'s PyType_Spec for types. To keep binary "
 "compatibility, and avoid needing to introduce a new structure (which "
 "would introduce additional supporting functions and per-module storage), "
 "the currently unused m_reload pointer of PyModuleDef will be changed to "
@@ -337,8 +321,8 @@ msgstr ""
 
 #: ../../pep-0489.txt:191
 msgid ""
-"The framework that calls the importers is explained in PEP 451 "
-"[#pep-0451-loading]_."
+"The framework that calls the importers is explained in :pep:`451#how-"
+"loading-will-work`."
 msgstr ""
 
 #: ../../pep-0489.txt:194
@@ -383,15 +367,15 @@ msgstr ""
 
 #: ../../pep-0489.txt:350
 msgid ""
-"The function receives a ModuleSpec instance, as defined in PEP 451, and "
-"the PyModuleDef structure. It should return a new module object, or set "
-"an error and return NULL."
+"The function receives a ModuleSpec instance, as defined in :pep:`451`, "
+"and the PyModuleDef structure. It should return a new module object, or "
+"set an error and return NULL."
 msgstr ""
 
 #: ../../pep-0489.txt:355
 msgid ""
 "This function is not responsible for setting import-related attributes "
-"specified in PEP 451 [#pep-0451-attributes]_ (such as ``__name__`` or "
+"specified in :pep:`451#attributes` (such as ``__name__`` or "
 "``__loader__``) on the new module."
 msgstr ""
 
@@ -484,8 +468,8 @@ msgid ""
 "Execution slots may be specified multiple times, and are processed in the"
 " order they appear in the slots array. When using the default import "
 "machinery, they are processed after import-related attributes specified "
-"in PEP 451 [#pep-0451-attributes]_ (such as ``__name__`` or "
-"``__loader__``) are set and the module is added to sys.modules."
+"in :pep:`451#attributes` (such as ``__name__`` or ``__loader__``) are set"
+" and the module is added to sys.modules."
 msgstr ""
 
 #: ../../pep-0489.txt:421
@@ -706,7 +690,7 @@ msgstr ""
 msgid ""
 "For module names containing non-ASCII characters, the import hook is "
 "named PyInitU_<encodedname>, where the name is encoded using CPython's "
-"\"punycode\" encoding (Punycode [#rfc-3492]_ with a lowercase suffix), "
+"\"punycode\" encoding (:rfc:`Punycode <3492>` with a lowercase suffix), "
 "with hyphens (\"-\") replaced by underscores (\"_\")."
 msgstr ""
 
@@ -952,8 +936,8 @@ msgstr ""
 
 #: ../../pep-0489.txt:771
 msgid ""
-"The slots mechanism, inspired by PyType_Slot from PEP 384, allows later "
-"extensions."
+"The slots mechanism, inspired by PyType_Slot from :pep:`384`, allows "
+"later extensions."
 msgstr ""
 
 #: ../../pep-0489.txt:774
@@ -982,9 +966,9 @@ msgid ""
 "Another possibility is providing a \"main\" function that would be run "
 "when the module is given to Python's -m switch. For this to work, the "
 "runpy module will need to be modified to take advantage of ModuleSpec-"
-"based loading introduced in PEP 451. Also, it will be necessary to add a "
-"mechanism for setting up a module according to slots it wasn't originally"
-" defined with."
+"based loading introduced in :pep:`451`. Also, it will be necessary to add"
+" a mechanism for setting up a module according to slots it wasn't "
+"originally defined with."
 msgstr ""
 
 #: ../../pep-0489.txt:799
@@ -1006,16 +990,16 @@ msgid ""
 "Stefan Behnel's initial proto-PEP [#stefans_protopep]_ had a "
 "\"PyInit_modulename\" hook that would create a module class, whose "
 "``__init__`` would be then called to create the module. This proposal did"
-" not correspond to the (then nonexistent) PEP 451, where module creation "
-"and initialization is broken into distinct steps. It also did not support"
-" loading an extension into pre-existing module objects."
+" not correspond to the (then nonexistent) :pep:`451`, where module "
+"creation and initialization is broken into distinct steps. It also did "
+"not support loading an extension into pre-existing module objects."
 msgstr ""
 
 #: ../../pep-0489.txt:815
 msgid ""
 "Nick Coghlan proposed \"Create\" and \"Exec\" hooks, and wrote a "
-"prototype implementation [#nicks-prototype]_. At this time PEP 451 was "
-"still not implemented, so the prototype does not use ModuleSpec."
+"prototype implementation [#nicks-prototype]_. At this time :pep:`451` was"
+" still not implemented, so the prototype does not use ModuleSpec."
 msgstr ""
 
 #: ../../pep-0489.txt:820
@@ -1043,46 +1027,224 @@ msgid "References"
 msgstr ""
 
 #: ../../pep-0489.txt:838
-msgid "https://www.python.org/dev/peps/pep-0451/#attributes"
-msgstr ""
-
-#: ../../pep-0489.txt:841
 msgid "https://mail.python.org/pipermail/python-dev/2013-August/128087.html"
 msgstr ""
 
-#: ../../pep-0489.txt:844
+#: ../../pep-0489.txt:841
 msgid "https://mail.python.org/pipermail/python-dev/2013-August/128101.html"
 msgstr ""
 
-#: ../../pep-0489.txt:847
-msgid "http://tools.ietf.org/html/rfc3492"
-msgstr ""
-
-#: ../../pep-0489.txt:850
+#: ../../pep-0489.txt:844
 msgid "https://github.com/encukou/cpython/commits/pep489"
 msgstr ""
 
-#: ../../pep-0489.txt:853
+#: ../../pep-0489.txt:847
 msgid "https://github.com/encukou/cpython/compare/master...encukou:pep489.patch"
 msgstr ""
 
-#: ../../pep-0489.txt:856
+#: ../../pep-0489.txt:850
 msgid "https://mail.python.org/pipermail/import-sig/2015-April/000959.html"
 msgstr ""
 
-#: ../../pep-0489.txt:859
-msgid "https://www.python.org/dev/peps/pep-0451/#how-loading-will-work]"
-msgstr ""
-
-#: ../../pep-0489.txt:862
+#: ../../pep-0489.txt:853
 msgid "https://docs.python.org/3/c-api/init.html#sub-interpreter-support"
 msgstr ""
 
-#: ../../pep-0489.txt:866
+#: ../../pep-0489.txt:857
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0489.txt:868
+#: ../../pep-0489.txt:859
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "489"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Multi-phase extension module initialization"
+#~ msgstr ""
+
+#~ msgid "23-Aug-2013, 20-Feb-2015, 16-Apr-2015, 7-May-2015, 18-May-2015"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP proposes a redesign of "
+#~ "the way in which built-in and "
+#~ "extension modules interact with the "
+#~ "import machinery. This was last revised"
+#~ " for Python 3.0 in PEP 3121, "
+#~ "but did not solve all problems at"
+#~ " the time. The goal is to solve"
+#~ " import-related problems by bringing "
+#~ "extension modules closer to the way "
+#~ "Python modules behave; specifically to "
+#~ "hook into the ModuleSpec-based loading"
+#~ " mechanism introduced in PEP 451."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This proposal draws inspiration from "
+#~ "PyType_Spec of PEP 384 to allow "
+#~ "extension authors to only define "
+#~ "features they need, and to allow "
+#~ "future additions to extension module "
+#~ "declarations."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Not all problems tackled in PEP "
+#~ "3121 are solved in this proposal. "
+#~ "In particular, problems with run-time"
+#~ " module lookup (PyState_FindModule) are "
+#~ "left to a future PEP."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Python modules and extension modules are"
+#~ " not being set up in the same"
+#~ " way. For Python modules, the module"
+#~ " object is created and set up "
+#~ "first, then the module code is "
+#~ "being executed (PEP 302). A ModuleSpec"
+#~ " object (PEP 451) is used to "
+#~ "hold information about the module, and"
+#~ " passed to the relevant hooks."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Furthermore, the majority of currently "
+#~ "existing extension modules has problems "
+#~ "with sub-interpreter support and/or "
+#~ "interpreter reloading, and, while it is"
+#~ " possible with the current infrastructure"
+#~ " to support these features, it is "
+#~ "neither easy nor efficient. Addressing "
+#~ "these issues was the goal of PEP"
+#~ " 3121, but many extensions, including "
+#~ "some in the standard library, took "
+#~ "the least-effort approach to porting "
+#~ "to Python 3, leaving these issues "
+#~ "unresolved. This PEP keeps backwards "
+#~ "compatibility, which should reduce pressure"
+#~ " and give extension authors adequate "
+#~ "time to consider these issues when "
+#~ "porting."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The PyModuleDef structure will be "
+#~ "changed to contain a list of "
+#~ "slots, similarly to PEP 384's "
+#~ "PyType_Spec for types. To keep binary"
+#~ " compatibility, and avoid needing to "
+#~ "introduce a new structure (which would"
+#~ " introduce additional supporting functions "
+#~ "and per-module storage), the currently"
+#~ " unused m_reload pointer of PyModuleDef "
+#~ "will be changed to hold the slots."
+#~ " The structures are defined as::"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The framework that calls the importers"
+#~ " is explained in PEP 451 "
+#~ "[#pep-0451-loading]_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The function receives a ModuleSpec "
+#~ "instance, as defined in PEP 451, "
+#~ "and the PyModuleDef structure. It should"
+#~ " return a new module object, or "
+#~ "set an error and return NULL."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This function is not responsible for "
+#~ "setting import-related attributes specified"
+#~ " in PEP 451 [#pep-0451-attributes]_ (such"
+#~ " as ``__name__`` or ``__loader__``) on "
+#~ "the new module."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Execution slots may be specified "
+#~ "multiple times, and are processed in "
+#~ "the order they appear in the slots"
+#~ " array. When using the default import"
+#~ " machinery, they are processed after "
+#~ "import-related attributes specified in PEP"
+#~ " 451 [#pep-0451-attributes]_ (such as "
+#~ "``__name__`` or ``__loader__``) are set "
+#~ "and the module is added to "
+#~ "sys.modules."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For module names containing non-ASCII"
+#~ " characters, the import hook is named"
+#~ " PyInitU_<encodedname>, where the name is"
+#~ " encoded using CPython's \"punycode\" "
+#~ "encoding (Punycode [#rfc-3492]_ with a "
+#~ "lowercase suffix), with hyphens (\"-\") "
+#~ "replaced by underscores (\"_\")."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The slots mechanism, inspired by "
+#~ "PyType_Slot from PEP 384, allows later"
+#~ " extensions."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Another possibility is providing a "
+#~ "\"main\" function that would be run "
+#~ "when the module is given to "
+#~ "Python's -m switch. For this to "
+#~ "work, the runpy module will need "
+#~ "to be modified to take advantage "
+#~ "of ModuleSpec-based loading introduced "
+#~ "in PEP 451. Also, it will be "
+#~ "necessary to add a mechanism for "
+#~ "setting up a module according to "
+#~ "slots it wasn't originally defined with."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Stefan Behnel's initial proto-PEP "
+#~ "[#stefans_protopep]_ had a \"PyInit_modulename\" "
+#~ "hook that would create a module "
+#~ "class, whose ``__init__`` would be then"
+#~ " called to create the module. This"
+#~ " proposal did not correspond to the"
+#~ " (then nonexistent) PEP 451, where "
+#~ "module creation and initialization is "
+#~ "broken into distinct steps. It also "
+#~ "did not support loading an extension "
+#~ "into pre-existing module objects."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Nick Coghlan proposed \"Create\" and "
+#~ "\"Exec\" hooks, and wrote a prototype"
+#~ " implementation [#nicks-prototype]_. At "
+#~ "this time PEP 451 was still not"
+#~ " implemented, so the prototype does "
+#~ "not use ModuleSpec."
+#~ msgstr ""
+
+#~ msgid "https://www.python.org/dev/peps/pep-0451/#attributes"
+#~ msgstr ""
+
+#~ msgid "http://tools.ietf.org/html/rfc3492"
+#~ msgstr ""
+
+#~ msgid "https://www.python.org/dev/peps/pep-0451/#how-loading-will-work]"
+#~ msgstr ""
 

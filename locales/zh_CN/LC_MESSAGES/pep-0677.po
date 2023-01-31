@@ -1,0 +1,1510 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C)
+# This file is distributed under the same license as the PEPs package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PEPs \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: ../../pep-0677.rst
+msgid "Author"
+msgstr ""
+
+#: ../../pep-0677.rst:3
+msgid ""
+"Steven Troxler <steven.troxler@gmail.com>, Pradeep Kumar Srinivasan "
+"<gohanpra@gmail.com>"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Sponsor"
+msgstr ""
+
+#: ../../pep-0677.rst:5
+msgid "Guido van Rossum <guido at python.org>"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Discussions-To"
+msgstr ""
+
+#: ../../pep-0677.rst:6
+msgid "python-dev@python.org"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Status"
+msgstr ""
+
+#: ../../pep-0677.rst:7
+msgid "Rejected"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Type"
+msgstr ""
+
+#: ../../pep-0677.rst:8
+msgid "Standards Track"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0677.rst:9
+msgid "Typing"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Created"
+msgstr ""
+
+#: ../../pep-0677.rst:11
+msgid "13-Dec-2021"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Python-Version"
+msgstr ""
+
+#: ../../pep-0677.rst:12
+msgid "3.11"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Post-History"
+msgstr ""
+
+#: ../../pep-0677.rst:13
+msgid "16-Dec-2021"
+msgstr ""
+
+#: ../../pep-0677.rst
+msgid "Resolution"
+msgstr ""
+
+#: ../../pep-0677.rst:14
+msgid ""
+"https://mail.python.org/archives/list/python-"
+"dev@python.org/message/NHCLHCU2XCWTBGF732WESMN42YYVKOXB/"
+msgstr ""
+
+#: ../../pep-0677.rst:17
+msgid "Abstract"
+msgstr ""
+
+#: ../../pep-0677.rst:19
+msgid ""
+"This PEP introduces a concise and friendly syntax for callable types, "
+"supporting the same functionality as ``typing.Callable`` but with an "
+"arrow syntax inspired by the syntax for typed function signatures. This "
+"allows types like ``Callable[[int, str], bool]`` to be written as ``(int,"
+" str) -> bool``."
+msgstr ""
+
+#: ../../pep-0677.rst:25
+msgid ""
+"The proposed syntax supports all the functionality provided by "
+"``typing.Callable`` and ``typing.Concatenate``, and is intended to work "
+"as a drop-in replacement."
+msgstr ""
+
+#: ../../pep-0677.rst:31
+msgid "Motivation"
+msgstr ""
+
+#: ../../pep-0677.rst:33
+msgid ""
+"One way to make code safer and easier to analyze is by making sure that "
+"functions and classes are well-typed.  In Python we have type "
+"annotations, the framework for which is defined in :pep:`484`, to provide"
+" type hints that can find bugs as well as helping with editor tooling "
+"like tab completion, static analysis tooling, and code review."
+msgstr ""
+
+#: ../../pep-0677.rst:39
+msgid "Consider the following untyped code::"
+msgstr ""
+
+#: ../../pep-0677.rst:58
+msgid "We can add types to this example to detect the runtime error::"
+msgstr ""
+
+#: ../../pep-0677.rst:74
+msgid "There are a few usability challenges with ``Callable`` we can see here:"
+msgstr ""
+
+#: ../../pep-0677.rst:76
+msgid "It is verbose, particularly for more complex function signatures."
+msgstr ""
+
+#: ../../pep-0677.rst:77
+msgid ""
+"It relies on two levels of nested brackets, unlike any other generic "
+"type. This can be especially hard to read when some of the type "
+"parameters are themselves generic types."
+msgstr ""
+
+#: ../../pep-0677.rst:80
+msgid ""
+"The bracket structure is not visually similar to how function signatures "
+"are written."
+msgstr ""
+
+#: ../../pep-0677.rst:82
+msgid ""
+"It requires an explicit import, unlike many of the other most common "
+"types like ``list`` and ``dict``."
+msgstr ""
+
+#: ../../pep-0677.rst:85
+msgid ""
+"Possibly as a result, `programmers often fail to write complete Callable "
+"types <https://github.com/pradeep90/annotation_collector#typed-projects"
+"---callable-type>`_. Such untyped or partially-typed callable types do "
+"not check the parameter types or return types of the given callable and "
+"thus negate the benefits of static typing. For example, they might write "
+"this::"
+msgstr ""
+
+#: ../../pep-0677.rst:106
+msgid ""
+"There's some partial type information here - we at least know that "
+"``func`` needs to be callable. But we've dropped too much type "
+"information for type checkers to find the bug."
+msgstr ""
+
+#: ../../pep-0677.rst:110
+msgid "With our proposal, the example looks like this::"
+msgstr ""
+
+#: ../../pep-0677.rst:123
+msgid ""
+"The type ``(int) -> list[int]`` is more concise, uses an arrow similar to"
+" the one indicating a return type in a function header, avoids nested "
+"brackets, and does not require an import."
+msgstr ""
+
+#: ../../pep-0677.rst:129
+msgid "Rationale"
+msgstr ""
+
+#: ../../pep-0677.rst:131
+msgid ""
+"The ``Callable`` type is widely used. For example, `as of October 2021 it"
+" was <https://github.com/pradeep90/annotation_collector#overall-stats-in-"
+"typeshed>`_ the fifth most common complex type in typeshed, after "
+"``Optional``, ``Tuple``, ``Union``, and ``List``."
+msgstr ""
+
+#: ../../pep-0677.rst:137
+msgid ""
+"The others have had their syntax improved and the need for imports "
+"eliminated by either :pep:`604` or :pep:`585`:"
+msgstr ""
+
+#: ../../pep-0677.rst:140
+msgid "``typing.Optional[int]`` is written ``int | None``"
+msgstr ""
+
+#: ../../pep-0677.rst:141
+msgid "``typing.Union[int, str]`` is written ``int | str``"
+msgstr ""
+
+#: ../../pep-0677.rst:142
+msgid "``typing.List[int]`` is written ``list[int]``"
+msgstr ""
+
+#: ../../pep-0677.rst:143
+msgid "``typing.Tuple[int, str]`` is written ``tuple[int, str]``"
+msgstr ""
+
+#: ../../pep-0677.rst:145
+msgid ""
+"The ``typing.Callable`` type is used almost as often as these other "
+"types, is more complicated to read and write, and still requires an "
+"import and bracket-based syntax."
+msgstr ""
+
+#: ../../pep-0677.rst:149
+msgid ""
+"In this proposal, we chose to support all the existing semantics of "
+"``typing.Callable``, without adding support for new features. We made "
+"this decision after examining how frequently each feature might be used "
+"in existing typed and untyped open-source code. We determined that the "
+"vast majority of use cases are covered."
+msgstr ""
+
+#: ../../pep-0677.rst:155
+msgid ""
+"We considered adding support for named, optional, and variadic arguments."
+" However, we decided against including these features, as our analysis "
+"showed they are infrequently used. When they are really needed, it is "
+"possible to type these using `callback protocols "
+"<https://mypy.readthedocs.io/en/stable/protocols.html#callback-"
+"protocols>`_."
+msgstr ""
+
+#: ../../pep-0677.rst:162
+msgid "An Arrow Syntax for Callable Types"
+msgstr ""
+
+#: ../../pep-0677.rst:164
+msgid ""
+"We are proposing a succinct, easy-to-use syntax for ``typing.Callable`` "
+"that looks similar to function headers in Python. Our proposal closely "
+"follows syntax used by several popular languages such as `Typescript "
+"<https://basarat.gitbook.io/typescript/type-system/callable#arrow-"
+"syntax>`_, `Kotlin <https://kotlinlang.org/docs/lambdas.html>`_, and "
+"`Scala <https://docs.scala-lang.org/tour/higher-order-functions.html>`_."
+msgstr ""
+
+#: ../../pep-0677.rst:172
+msgid "Our goals are that:"
+msgstr ""
+
+#: ../../pep-0677.rst:174
+msgid ""
+"Callable types using this syntax will be easier to learn and use, "
+"particularly for developers with experience in other languages."
+msgstr ""
+
+#: ../../pep-0677.rst:176
+msgid ""
+"Library authors will be more likely to use expressive types for callables"
+" that enable type checkers to better understand code and find bugs, as in"
+" the ``decorator`` example above."
+msgstr ""
+
+#: ../../pep-0677.rst:180
+msgid ""
+"Consider this simplified real-world example from a web server, written "
+"using the existing ``typing.Callable``::"
+msgstr ""
+
+#: ../../pep-0677.rst:193
+msgid "With our proposal, this code can be abbreviated to::"
+msgstr ""
+
+#: ../../pep-0677.rst:203
+msgid ""
+"This is shorter and requires fewer imports. It also has far less nesting "
+"of square brackets - only one level, as opposed to three in the original "
+"code."
+msgstr ""
+
+#: ../../pep-0677.rst:208
+msgid "Compact Syntax for ``ParamSpec``"
+msgstr ""
+
+#: ../../pep-0677.rst:210
+msgid ""
+"A particularly common case where library authors leave off type "
+"information for callables is when defining decorators. Consider the "
+"following::"
+msgstr ""
+
+#: ../../pep-0677.rst:233
+msgid ""
+"In the code above, it is clear that the decorator should produce a "
+"function whose signature is like that of the argument ``f`` other than an"
+" additional ``retry_once`` argument. But the use of ``...`` prevents a "
+"type checker from seeing this and alerting a user that ``f(y=10)`` is "
+"invalid."
+msgstr ""
+
+#: ../../pep-0677.rst:240
+msgid ""
+"With :pep:`612` it is possible to type decorators like this correctly as "
+"follows::"
+msgstr ""
+
+#: ../../pep-0677.rst:258
+msgid ""
+"With our proposed syntax, the properly-typed decorator example becomes "
+"concise and the type representations are visually descriptive::"
+msgstr ""
+
+#: ../../pep-0677.rst:272
+msgid "Comparing to Other Languages"
+msgstr ""
+
+#: ../../pep-0677.rst:274
+msgid ""
+"Many popular programming languages use an arrow syntax similar to the one"
+" we are proposing here."
+msgstr ""
+
+#: ../../pep-0677.rst:278
+msgid "TypeScript"
+msgstr ""
+
+#: ../../pep-0677.rst:280
+msgid ""
+"In `TypeScript <https://basarat.gitbook.io/typescript/type-"
+"system/callable#arrow-syntax>`_, function types are expressed in a syntax"
+" almost the same as the one we are proposing, but the arrow token is "
+"``=>`` and arguments have names::"
+msgstr ""
+
+#: ../../pep-0677.rst:287
+msgid ""
+"The names of the arguments are not actually relevant to the type. So, for"
+" example, this is the same callable type::"
+msgstr ""
+
+#: ../../pep-0677.rst:293
+msgid "Kotlin"
+msgstr ""
+
+#: ../../pep-0677.rst:295
+msgid ""
+"Function types in `Kotlin <https://kotlinlang.org/docs/lambdas.html>`_ "
+"permit an identical syntax to the one we are proposing, for example::"
+msgstr ""
+
+#: ../../pep-0677.rst:300
+msgid "It also optionally allows adding names to the arguments, for example::"
+msgstr ""
+
+#: ../../pep-0677.rst:304
+msgid ""
+"As in TypeScript, the argument names (if provided) are just there for "
+"documentation and are not part of the type itself."
+msgstr ""
+
+#: ../../pep-0677.rst:308
+msgid "Scala"
+msgstr ""
+
+#: ../../pep-0677.rst:310
+msgid ""
+"`Scala <https://docs.scala-lang.org/tour/higher-order-functions.html>`_ "
+"uses the ``=>`` arrow for function types. Other than that, their syntax "
+"is the same as the one we are proposing, for example::"
+msgstr ""
+
+#: ../../pep-0677.rst:316
+msgid ""
+"Scala, like Python, has the ability to provide function arguments by "
+"name. Function types can optionally include names, for example::"
+msgstr ""
+
+#: ../../pep-0677.rst:321
+msgid ""
+"Unlike in TypeScript and Kotlin, these names are part of the type if "
+"provided - any function implementing the type must use the same names. "
+"This is similar to the extended syntax proposal we describe in our "
+"`Rejected Alternatives`_ section."
+msgstr ""
+
+#: ../../pep-0677.rst:327
+msgid "Function Definitions vs Callable Type Annotations"
+msgstr ""
+
+#: ../../pep-0677.rst:329
+msgid ""
+"In all of the languages listed above, type annotations for function "
+"definitions use a ``:`` rather than a ``->``. For example, in TypeScript "
+"a simple add function looks like this::"
+msgstr ""
+
+#: ../../pep-0677.rst:337
+msgid ""
+"Scala and Kotlin use essentially the same ``:`` syntax for return "
+"annotations.  The ``:`` makes sense in these languages because they all "
+"use ``:`` for type annotations of parameters and variables, and the use "
+"for function return types is similar."
+msgstr ""
+
+#: ../../pep-0677.rst:343
+msgid ""
+"In Python we use ``:`` to denote the start of a function body and ``->`` "
+"for return annotations. As a result, even though our proposal is "
+"superficially the same as these other languages the context is different."
+" There is potential for more confusion in Python when reading function "
+"definitions that include callable types."
+msgstr ""
+
+#: ../../pep-0677.rst:349
+msgid ""
+"This is a key concern for which we are seeking feedback with our draft "
+"PEP; one idea we have floated is to use ``=>`` instead to make it easier "
+"to differentiate."
+msgstr ""
+
+#: ../../pep-0677.rst:355
+msgid "The ML Language Family"
+msgstr ""
+
+#: ../../pep-0677.rst:357
+msgid ""
+"Languages in the ML family, including `F# <https://docs.microsoft.com/en-"
+"us/dotnet/fsharp/language-reference/fsharp-types#syntax-for-types>`_, "
+"`OCaml "
+"<https://www2.ocaml.org/learn/tutorials/basics.html#Defining-a-function>`_,"
+" and `Haskell <https://wiki.haskell.org/Type_signature>`_, all use ``->``"
+" to represent function types. All of them use a parentheses-free syntax "
+"with multiple arrows, for example in Haskell::"
+msgstr ""
+
+#: ../../pep-0677.rst:367
+msgid ""
+"The use of multiple arrows, which differs from our proposal, makes sense "
+"for languages in this family because they use automatic `currying "
+"<https://en.wikipedia.org/wiki/Currying>`_ of function arguments, which "
+"means that a multi-argument function behaves like a single-argument "
+"function returning a function."
+msgstr ""
+
+#: ../../pep-0677.rst:374
+msgid "Specification"
+msgstr ""
+
+#: ../../pep-0677.rst:377
+msgid "Typing Behavior"
+msgstr ""
+
+#: ../../pep-0677.rst:379
+msgid ""
+"Type checkers should treat the new syntax with exactly the same semantics"
+" as ``typing.Callable``."
+msgstr ""
+
+#: ../../pep-0677.rst:382
+msgid ""
+"As such, a type checker should treat the following pairs exactly the "
+"same::"
+msgstr ""
+
+#: ../../pep-0677.rst:416
+msgid "Grammar and AST"
+msgstr ""
+
+#: ../../pep-0677.rst:418
+msgid ""
+"The proposed new syntax can be described by these AST changes to "
+"`Parser/Python.asdl "
+"<https://github.com/python/cpython/blob/main/Parser/Python.asdl>`_::"
+msgstr ""
+
+#: ../../pep-0677.rst:430
+msgid ""
+"Here are our proposed changes to the `Python Grammar "
+"<https://docs.python.org/3/reference/grammar.htm>`::"
+msgstr ""
+
+#: ../../pep-0677.rst:458
+msgid ""
+"If :pep:`646` is accepted, we intend to include support for unpacked "
+"types in two ways. To support the \"star-for-unpack\" syntax proposed in "
+":pep:`646`, we will modify the grammar for "
+"``callable_type_positional_argument`` as follows::"
+msgstr ""
+
+#: ../../pep-0677.rst:469
+msgid ""
+"With this change, a type of the form ``(int, *Ts) -> bool`` should "
+"evaluate the AST form::"
+msgstr ""
+
+#: ../../pep-0677.rst:477
+msgid ""
+"and be treated by type checkers as equivalent to or ``Callable[[int, "
+"*Ts], bool]`` or ``Callable[[int, Unpack[Ts]], bool]``."
+msgstr ""
+
+#: ../../pep-0677.rst:482
+msgid "Implications of the Grammar"
+msgstr ""
+
+#: ../../pep-0677.rst:485
+msgid "Precedence of ->"
+msgstr ""
+
+#: ../../pep-0677.rst:488
+msgid ""
+"``->`` binds less tightly than other operators, both inside types and in "
+"function signatures, so the following two callable types are equivalent::"
+msgstr ""
+
+#: ../../pep-0677.rst:496
+msgid ""
+"``->`` associates to the right, both inside types and in function "
+"signatures. So the following pairs are equivalent::"
+msgstr ""
+
+#: ../../pep-0677.rst:509
+msgid ""
+"Because operators bind more tightly than ``->``, parentheses are required"
+" whenever an arrow type is intended to be inside an argument to an "
+"operator like ``|``::"
+msgstr ""
+
+#: ../../pep-0677.rst:517
+msgid "We discussed each of these behaviors and believe they are desirable:"
+msgstr ""
+
+#: ../../pep-0677.rst:519
+msgid ""
+"Union types (represented by ``A | B`` according to :pep:`604`) are valid "
+"in function signature returns, so we need to allow operators in the "
+"return position for consistency."
+msgstr ""
+
+#: ../../pep-0677.rst:522
+msgid ""
+"Given that operators bind more tightly than ``->`` it is correct that a "
+"type like ``bool | () -> bool`` must be a syntax error. We should be sure"
+" the error message is clear because this may be a common mistake."
+msgstr ""
+
+#: ../../pep-0677.rst:526
+msgid ""
+"Associating ``->`` to the right, rather than requiring explicit "
+"parentheses, is consistent with other languages like TypeScript and "
+"respects the principle that valid expressions should normally be "
+"substitutable when possible."
+msgstr ""
+
+#: ../../pep-0677.rst:532
+msgid "``async`` Keyword"
+msgstr ""
+
+#: ../../pep-0677.rst:534
+msgid "All of the binding rules still work for async callable types::"
+msgstr ""
+
+#: ../../pep-0677.rst:547
+msgid "Trailing Commas"
+msgstr ""
+
+#: ../../pep-0677.rst:549
+msgid ""
+"Following the precedent of function signatures, putting a comma in an "
+"empty arguments list is illegal: ``(,) -> bool`` is a syntax error."
+msgstr ""
+
+#: ../../pep-0677.rst:552
+msgid ""
+"Again following precedent, trailing commas are otherwise always "
+"permitted::"
+msgstr ""
+
+#: ../../pep-0677.rst:560
+msgid ""
+"Allowing trailing commas also gives autoformatters more flexibility when "
+"splitting callable types across lines, which is always legal following "
+"standard python whitespace rules."
+msgstr ""
+
+#: ../../pep-0677.rst:566
+msgid "Disallowing ``...`` as an Argument Type"
+msgstr ""
+
+#: ../../pep-0677.rst:568
+msgid ""
+"Under normal circumstances, any valid expression is permitted where we "
+"want a type annotation and ``...`` is a valid expression. This is never "
+"semantically valid and all type checkers would reject it, but the grammar"
+" would allow it if we did not explicitly prevent this."
+msgstr ""
+
+#: ../../pep-0677.rst:573
+msgid ""
+"Since ``...`` is meaningless as a type and there are usability concerns, "
+"our grammar rules it out and the following is a syntax error::"
+msgstr ""
+
+#: ../../pep-0677.rst:579
+msgid "We decided that there were compelling reasons to do this:"
+msgstr ""
+
+#: ../../pep-0677.rst:581
+msgid ""
+"The semantics of ``(...) -> bool`` are different from ``(T) -> bool`` for"
+" any valid type T: ``(...)`` is a special form indicating "
+"``AnyArguments`` whereas ``T`` is a type parameter in the arguments list."
+msgstr ""
+
+#: ../../pep-0677.rst:585
+msgid ""
+"``...`` is used as a placeholder default value to indicate an optional "
+"argument in stubs and callback protocols. Allowing it in the position of "
+"a type could easily lead to confusion and possibly bugs due to typos."
+msgstr ""
+
+#: ../../pep-0677.rst:589
+msgid ""
+"In the ``tuple`` generic type, we special-case ``...`` to mean \"more of "
+"the same\", e.g. a ``tuple[int, ...]`` means a tuple with one or more "
+"integers. We do not use ``...`` in a a similar way in callable types, so "
+"to prevent misunderstandings it makes sense to prevent this."
+msgstr ""
+
+#: ../../pep-0677.rst:598
+msgid "Incompatibility with other possible uses of ``*`` and ``**``"
+msgstr ""
+
+#: ../../pep-0677.rst:600
+msgid ""
+"The use of ``**P`` for supporting :pep:`612` ``ParamSpec`` rules out any "
+"future proposal using a bare ``**<some_type>`` to type ``kwargs``. This "
+"seems acceptable because:"
+msgstr ""
+
+#: ../../pep-0677.rst:604
+msgid ""
+"If we ever do want such a syntax, it would be clearer to require an "
+"argument name anyway. This would also make the type look more similar to "
+"a function signature. In other words, if we ever support typing "
+"``kwargs`` in callable types, we would prefer ``(int, **kwargs: str)`` "
+"rather than ``(int, **str)``."
+msgstr ""
+
+#: ../../pep-0677.rst:609
+msgid ""
+":pep:`646` unpacking syntax would rule out using ``*<some_type>`` for "
+"``args``. The ``kwargs`` case is similar enough that this rules out a "
+"bare ``**<some_type>`` anyway."
+msgstr ""
+
+#: ../../pep-0677.rst:616
+msgid "Compatibility with Arrow-Based Lambda Syntax"
+msgstr ""
+
+#: ../../pep-0677.rst:618
+msgid ""
+"To the best of our knowledge there is no active discussion of arrow-style"
+" lambda syntax that we are aware of, but it is nonetheless worth "
+"considering what possibilities would be ruled out by adopting this "
+"proposal."
+msgstr ""
+
+#: ../../pep-0677.rst:623
+msgid ""
+"It would be incompatible with this proposal to adopt the same a "
+"parenthesized ``->``-based arrow syntax for lambdas, e.g.  ``(x, y) -> x "
+"+ y`` for ``lambda x, y: x + y``."
+msgstr ""
+
+#: ../../pep-0677.rst:628
+msgid ""
+"Our view is that if we want arrow syntax for lambdas in the future, it "
+"would be a better choice to use ``=>``, e.g. ``(x, y) => x + y``. Many "
+"languages use the same arrow token for both lambdas and callable types, "
+"but Python is unique in that types are expressions and have to evaluate "
+"to runtime values. Our view is that this merits using separate tokens, "
+"and given the existing use of ``->`` for return types in function "
+"signatures it would be more coherent to use ``->`` for callable types and"
+" ``=>`` for lambdas."
+msgstr ""
+
+#: ../../pep-0677.rst:638
+msgid "Runtime Behavior"
+msgstr ""
+
+#: ../../pep-0677.rst:640
+msgid ""
+"The new AST nodes need to evaluate to runtime types, and we have two "
+"goals for the behavior of these runtime types:"
+msgstr ""
+
+#: ../../pep-0677.rst:643
+msgid ""
+"They should expose a structured API that is descriptive and powerful "
+"enough to be compatible with extending the type to include new features "
+"like named and variadic arguments."
+msgstr ""
+
+#: ../../pep-0677.rst:646
+msgid ""
+"They should also expose an API that is backward-compatible with "
+"``typing.Callable``."
+msgstr ""
+
+#: ../../pep-0677.rst:650
+msgid "Evaluation and Structured API"
+msgstr ""
+
+#: ../../pep-0677.rst:652
+msgid ""
+"We intend to create new builtin types to which the new AST nodes will "
+"evaluate, exposing them in the ``types`` module."
+msgstr ""
+
+#: ../../pep-0677.rst:655
+msgid ""
+"Our plan is to expose a structured API as if they were defined as "
+"follows::"
+msgstr ""
+
+#: ../../pep-0677.rst:672
+msgid "The evaluation rules are expressed in terms of the following pseudocode::"
+msgstr ""
+
+#: ../../pep-0677.rst:708
+msgid "Backward-Compatible API"
+msgstr ""
+
+#: ../../pep-0677.rst:710
+msgid ""
+"To get backward compatibility with the existing ``types.Callable`` API, "
+"which relies on fields ``__args__`` and ``__parameters__``, we can define"
+" them as if they were written in terms of the following::"
+msgstr ""
+
+#: ../../pep-0677.rst:744
+msgid "Additional Behaviors of ``types.CallableType``"
+msgstr ""
+
+#: ../../pep-0677.rst:746
+msgid "As with the ``A | B`` syntax for unions introduced in :pep:`604`:"
+msgstr ""
+
+#: ../../pep-0677.rst:748
+msgid ""
+"The ``__eq__`` method should treat equivalent ``typing.Callable`` values "
+"as equal to values constructed using the builtin syntax, and otherwise "
+"should behave like the ``__eq__`` of ``typing.Callable``."
+msgstr ""
+
+#: ../../pep-0677.rst:751
+msgid ""
+"The ``__repr__`` method should produce an arrow syntax representation "
+"that, when evaluated, gives us back an equal ``types.CallableType`` "
+"instance."
+msgstr ""
+
+#: ../../pep-0677.rst:756
+msgid "Rejected Alternatives"
+msgstr ""
+
+#: ../../pep-0677.rst:758
+msgid ""
+"Many of the alternatives we considered would have been more expressive "
+"than ``typing.Callable``, for example adding support for describing "
+"signatures that include named, optional, and variadic arguments."
+msgstr ""
+
+#: ../../pep-0677.rst:762
+msgid ""
+"To determine which features we most needed to support with a callable "
+"type syntax, we did an extensive analysis of existing projects:"
+msgstr ""
+
+#: ../../pep-0677.rst:765
+msgid ""
+"`stats on the use of the Callable type "
+"<https://github.com/pradeep90/annotation_collector#typed-projects"
+"---callable-type>`_;"
+msgstr ""
+
+#: ../../pep-0677.rst:766
+msgid ""
+"`stats on how untyped and partially-typed callbacks are actually used "
+"<https://github.com/pradeep90/annotation_collector#typed-projects"
+"---callback-usage>`_."
+msgstr ""
+
+#: ../../pep-0677.rst:768
+msgid ""
+"We decided on a simple proposal with improved syntax for the existing "
+"``Callable`` type because the vast majority of callbacks can be correctly"
+" described by the existing ``typing.Callable`` semantics:"
+msgstr ""
+
+#: ../../pep-0677.rst:772
+msgid ""
+"Positional parameters: By far the most important case to handle well is "
+"simple callable types with positional parameters, such as ``(int, str) ->"
+" bool``"
+msgstr ""
+
+#: ../../pep-0677.rst:775
+msgid ""
+"ParamSpec and Concatenate: The next most important feature is good "
+"support for :pep:`612` ``ParamSpec`` and ``Concatenate`` types like "
+"``(**P) -> bool`` and ``(int, **P) -> bool``. These are common primarily "
+"because of the heavy use of decorator patterns in python code."
+msgstr ""
+
+#: ../../pep-0677.rst:780
+msgid ""
+"TypeVarTuples: The next most important feature, assuming :pep:`646` is "
+"accepted, is for unpacked types which are common because of cases where a"
+" wrapper passes along ``*args`` to some other function."
+msgstr ""
+
+#: ../../pep-0677.rst:784
+#, python-format
+msgid ""
+"Features that other, more complicated proposals would support account for"
+" fewer than 2% of the use cases we found. These are already expressible "
+"using callback protocols, and since they are uncommon we decided that it "
+"made more sense to move forward with a simpler syntax."
+msgstr ""
+
+#: ../../pep-0677.rst:790
+msgid "Extended Syntax Supporting Named and Optional Arguments"
+msgstr ""
+
+#: ../../pep-0677.rst:792
+msgid ""
+"Another alternative was for a compatible but more complex syntax that "
+"could express everything in this PEP but also named, optional, and "
+"variadic arguments. In this “extended” syntax proposal the following "
+"types would have been equivalent::"
+msgstr ""
+
+#: ../../pep-0677.rst:803
+msgid ""
+"Advantages of this syntax include: - Most of the advantages of the "
+"proposal in this PEP (conciseness, :pep:`612` support, etc) - "
+"Furthermore, the ability to handle named, optional, and variadic "
+"arguments"
+msgstr ""
+
+#: ../../pep-0677.rst:808
+msgid "We decided against proposing it for the following reasons:"
+msgstr ""
+
+#: ../../pep-0677.rst:810
+#, python-format
+msgid ""
+"The implementation would have been more difficult, and usage stats "
+"demonstrate that fewer than 3% of use cases would benefit from any of the"
+" added features."
+msgstr ""
+
+#: ../../pep-0677.rst:813
+msgid ""
+"The group that debated these proposals was split down the middle about "
+"whether these changes are desirable:"
+msgstr ""
+
+#: ../../pep-0677.rst:816
+msgid ""
+"On the one hand, they make callable types more expressive. On the other "
+"hand, they could easily confuse users who have not read the full "
+"specification of callable type syntax."
+msgstr ""
+
+#: ../../pep-0677.rst:819
+msgid ""
+"We believe the simpler syntax proposed in this PEP, which introduces no "
+"new semantics and closely mimics syntax in other popular languages like "
+"Kotlin, Scala, and TypesScript, is much less likely to confuse users."
+msgstr ""
+
+#: ../../pep-0677.rst:824
+msgid ""
+"We intend to implement the current proposal in a way that is forward-"
+"compatible with the more complicated extended syntax. If the community "
+"decides after more experience and discussion that we want the additional "
+"features, it should be straightforward to propose them in the future."
+msgstr ""
+
+#: ../../pep-0677.rst:829
+msgid ""
+"Even a full extended syntax cannot replace the use of callback protocols "
+"for overloads. For example, no closed form of callable type could express"
+" a function that maps bools to bools and ints to floats, like this "
+"callback protocol.::"
+msgstr ""
+
+#: ../../pep-0677.rst:853
+msgid ""
+"We confirmed that the current proposal is forward-compatible with "
+"extended syntax by `implementing "
+"<https://github.com/stroxler/cpython/tree/callable-type-syntax--"
+"extended>`_ a grammar and AST for this extended syntax on top of our "
+"reference implementation of this PEP's grammar."
+msgstr ""
+
+#: ../../pep-0677.rst:861
+msgid "Syntax Closer to Function Signatures"
+msgstr ""
+
+#: ../../pep-0677.rst:863
+msgid ""
+"One alternative we had floated was a syntax much more similar to function"
+" signatures."
+msgstr ""
+
+#: ../../pep-0677.rst:866
+msgid "In this proposal, the following types would have been equivalent::"
+msgstr ""
+
+#: ../../pep-0677.rst:875
+msgid "The benefits of this proposal would have included:"
+msgstr ""
+
+#: ../../pep-0677.rst:877
+msgid "Perfect syntactic consistency between signatures and callable types."
+msgstr ""
+
+#: ../../pep-0677.rst:878
+msgid ""
+"Support for more features of function signatures (named, optional, "
+"variadic args) that this PEP does not support."
+msgstr ""
+
+#: ../../pep-0677.rst:881
+msgid "Key downsides that led us to reject the idea include the following:"
+msgstr ""
+
+#: ../../pep-0677.rst:883
+msgid ""
+"A large majority of use cases only use positional-only arguments.  This "
+"syntax would be more verbose for that use case, both because of requiring"
+" argument names and an explicit ``/``, for example ``(int, /) -> bool`` "
+"where our proposal allows ``(int) -> bool``"
+msgstr ""
+
+#: ../../pep-0677.rst:887
+msgid ""
+"The requirement for explicit ``/`` for positional-only arguments has a "
+"high risk of causing frequent bugs - which often would not be detected by"
+" unit tests - where library authors would accidentally use types with "
+"named arguments."
+msgstr ""
+
+#: ../../pep-0677.rst:891
+msgid ""
+"Our analysis suggests that support for ``ParamSpec`` is key, but the "
+"scoping rules laid out in :pep:`612` would have made this difficult."
+msgstr ""
+
+#: ../../pep-0677.rst:896
+msgid "Other Proposals Considered"
+msgstr ""
+
+#: ../../pep-0677.rst:899
+msgid "Functions-as-Types"
+msgstr ""
+
+#: ../../pep-0677.rst:901
+msgid ""
+"An idea we looked at very early on was to `allow using functions as types"
+" <https://docs.google.com/document/d/1rv6CCDnmLIeDrYlXe-"
+"QcyT0xNPSYAuO1EBYjU3imU5s/edit?usp=sharing>`_. The idea is allowing a "
+"function to stand in for its own call signature, with roughly the same "
+"semantics as the ``__call__`` method of callback protocols::"
+msgstr ""
+
+#: ../../pep-0677.rst:919
+msgid ""
+"This may be a good idea, but we do not consider it a viable replacement "
+"for callable types:"
+msgstr ""
+
+#: ../../pep-0677.rst:922
+msgid ""
+"It would be difficult to handle ``ParamSpec``, which we consider a "
+"critical feature to support."
+msgstr ""
+
+#: ../../pep-0677.rst:924
+msgid ""
+"When using functions as types, the callable types are not first-class "
+"values.  Instead, they require a separate, out-of-line function "
+"definition to define a type alias"
+msgstr ""
+
+#: ../../pep-0677.rst:927
+msgid ""
+"It would not support more features than callback protocols, and seems "
+"more like a shorter way to write them than a replacement for "
+"``Callable``."
+msgstr ""
+
+#: ../../pep-0677.rst:932
+msgid "Hybrid keyword-arrow Syntax"
+msgstr ""
+
+#: ../../pep-0677.rst:934
+msgid ""
+"In the Rust language, a keyword ``fn`` is used to indicate functions in "
+"much the same way as Python's ``def``, and callable types are indicated "
+"using a hybrid arrow syntax ``Fn(i64, String) -> bool``."
+msgstr ""
+
+#: ../../pep-0677.rst:938
+msgid ""
+"We could use the ``def`` keyword in callable types for Python, for "
+"example our two-parameter boolean function could be written as ``def(int,"
+" str) -> bool``. But we think this might confuse readers into thinking "
+"``def(A, B) -> C`` is a lambda, particularly because Javascript's "
+"``function`` keyword is used in both named and anonymous functions."
+msgstr ""
+
+#: ../../pep-0677.rst:946
+msgid "Parenthesis-Free Syntax"
+msgstr ""
+
+#: ../../pep-0677.rst:948
+msgid ""
+"We considered a parentheses-free syntax that would have been even more "
+"concise::"
+msgstr ""
+
+#: ../../pep-0677.rst:953
+msgid ""
+"We decided against it because this is not visually as similar to existing"
+" function header syntax. Moreover, it is visually similar to lambdas, "
+"which bind names with no parentheses: ``lambda x, y: x == y``."
+msgstr ""
+
+#: ../../pep-0677.rst:959
+msgid "Requiring Outer Parentheses"
+msgstr ""
+
+#: ../../pep-0677.rst:961
+msgid ""
+"A concern with the current proposal is readability, particularly when "
+"callable types are used in return type position which leads to multiple "
+"top-level ``->`` tokens, for example::"
+msgstr ""
+
+#: ../../pep-0677.rst:968
+msgid ""
+"We considered a few ideas to prevent this by changing rules about "
+"parentheses. One was to move the parentheses to the outside, so that a "
+"two-argument boolean function is written ``(int, str -> bool)``. With "
+"this change, the example above becomes::"
+msgstr ""
+
+#: ../../pep-0677.rst:976
+msgid ""
+"This makes the nesting of many examples that are difficult to follow "
+"clear, but we rejected it because"
+msgstr ""
+
+#: ../../pep-0677.rst:979
+msgid ""
+"Currently in Python commas bind very loosely, which means it might be "
+"common to misread ``(int, str -> bool)`` as a tuple whose first element "
+"is an int, rather than a two-parameter callable type."
+msgstr ""
+
+#: ../../pep-0677.rst:982
+msgid ""
+"It is not very similar to function header syntax, and one of our goals "
+"was familiar syntax inspired by function headers."
+msgstr ""
+
+#: ../../pep-0677.rst:984
+msgid ""
+"This syntax may be more readable for deaply nested callables like the one"
+" above, but deep nesting is not very common. Encouraging extra "
+"parentheses around callable types in return position via a style guide "
+"would have most of the readability benefit without the downsides."
+msgstr ""
+
+#: ../../pep-0677.rst:989
+msgid ""
+"We also considered requiring parentheses on both the parameter list and "
+"the outside, e.g. ``((int, str) -> bool)``. With this change, the example"
+" above becomes::"
+msgstr ""
+
+#: ../../pep-0677.rst:996
+msgid "We rejected this change because:"
+msgstr ""
+
+#: ../../pep-0677.rst:998
+msgid ""
+"The outer parentheses only help readability in some cases, mostly when a "
+"callable type is used in return position. In many other cases they hurt "
+"readability rather than helping."
+msgstr ""
+
+#: ../../pep-0677.rst:1001
+msgid ""
+"We agree that it might make sense to encourage outer parentheses in "
+"several cases, particularly callable types in function return "
+"annotations. But"
+msgstr ""
+
+#: ../../pep-0677.rst:1004
+msgid ""
+"We believe it is more appropriate to encourage this in style guides, "
+"linters, and autoformatters than to bake it into the parser and throw "
+"syntax errors."
+msgstr ""
+
+#: ../../pep-0677.rst:1007
+msgid ""
+"Moreover, if a type is complicated enough that readability is a concern "
+"we can always use type aliases, for example::"
+msgstr ""
+
+#: ../../pep-0677.rst:1017
+msgid "Making ``->`` bind tighter than ``|``"
+msgstr ""
+
+#: ../../pep-0677.rst:1019
+msgid ""
+"In order to allow both ``->`` and ``|`` tokens in type expressions we had"
+" to choose precedence. In the current proposal, this is a function "
+"returning an optional boolean::"
+msgstr ""
+
+#: ../../pep-0677.rst:1025
+msgid ""
+"We considered having ``->`` bind tighter so that instead the expression "
+"would parse as ``((int, str) -> bool) | None``. There are two advantages "
+"to this:"
+msgstr ""
+
+#: ../../pep-0677.rst:1029
+msgid ""
+"It means we no would longer have to treat ``None | (int, str) -> bool`` "
+"as a syntax error."
+msgstr ""
+
+#: ../../pep-0677.rst:1031
+msgid ""
+"Looking at typeshed today, optional callable arguments are very common "
+"because using ``None`` as a default value is a standard Python idiom. "
+"Having ``->`` bind tighter would make these easier to write."
+msgstr ""
+
+#: ../../pep-0677.rst:1035
+msgid "We decided against this for a few reasons:"
+msgstr ""
+
+#: ../../pep-0677.rst:1037
+msgid ""
+"The function header ``def f() -> int | None: ...`` is legal and indicates"
+" a function returning an optional int. To be consistent with function "
+"headers, callable types should do the same."
+msgstr ""
+
+#: ../../pep-0677.rst:1040
+msgid ""
+"TypeScript is the other popular language we know of that uses both ``->``"
+" and ``|`` tokens in type expressions, and they have ``|`` bind tighter. "
+"While we do not have to follow their lead, we prefer to do so."
+msgstr ""
+
+#: ../../pep-0677.rst:1044
+msgid ""
+"We do acknowledge that optional callable types are common and having "
+"``|`` bind tighter forces extra parentheses, which makes these types "
+"harder to write. But code is read more often than written, and we believe"
+" that requiring the outer parentheses for an optional callable type like "
+"``((int, str) -> bool) | None`` is preferable for readability."
+msgstr ""
+
+#: ../../pep-0677.rst:1052
+msgid "Introducing type-strings"
+msgstr ""
+
+#: ../../pep-0677.rst:1054
+msgid ""
+"Another idea was adding a new “special string” syntax and putting the "
+"type inside of it, for example ``t”(int, str) -> bool”``. We rejected "
+"this because it is not as readable, and seems out of step with `guidance "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/message/SZLWVYV2HPLU6AH7DOUD7DWFUGBJGQAY/>`_ from the "
+"Steering Council on ensuring that type expressions do not diverge from "
+"the rest of Python's syntax."
+msgstr ""
+
+#: ../../pep-0677.rst:1063
+msgid "Improving Usability of the Indexed Callable Type"
+msgstr ""
+
+#: ../../pep-0677.rst:1065
+msgid ""
+"If we do not want to add new syntax for callable types, we could look at "
+"how to make the existing type easier to read. One proposal would be to "
+"make the builtin ``callable`` function indexable so that it could be used"
+" as a type::"
+msgstr ""
+
+#: ../../pep-0677.rst:1072
+msgid ""
+"This change would be analogous to :pep:`585` that made built in "
+"collections like ``list`` and ``dict`` usable as types, and would make "
+"imports more convenient, but it wouldn't help readability of the types "
+"themselves much."
+msgstr ""
+
+#: ../../pep-0677.rst:1077
+msgid ""
+"In order to reduce the number of brackets needed in complex callable "
+"types, it would be possible to allow tuples for the argument list::"
+msgstr ""
+
+#: ../../pep-0677.rst:1082
+msgid ""
+"This actually is a significant readability improvement for multi-argument"
+" functions, but the problem is that it makes callables with one "
+"arguments, which are the most common arity, hard to write: because "
+"``(x)`` evaluates to ``x``, they would have to be written like "
+"``callable[(int,), bool]``. We find this awkward."
+msgstr ""
+
+#: ../../pep-0677.rst:1088
+msgid ""
+"Moreover, none of these ideas help as much with reducing verbosity as the"
+" current proposal, nor do they introduce as strong a visual cue as the "
+"``->`` between the parameter types and the return type."
+msgstr ""
+
+#: ../../pep-0677.rst:1093
+msgid "Alternative Runtime Behaviors"
+msgstr ""
+
+#: ../../pep-0677.rst:1095
+msgid "The hard requirements on our runtime API are that:"
+msgstr ""
+
+#: ../../pep-0677.rst:1097
+msgid ""
+"It must preserve backward compatibility with ``typing.Callable`` via "
+"``__args__`` and ``__params__``."
+msgstr ""
+
+#: ../../pep-0677.rst:1099
+msgid ""
+"It must provide a structured API, which should be extensible if in the "
+"future we try to support named and variadic arguments."
+msgstr ""
+
+#: ../../pep-0677.rst:1103
+msgid "Alternative APIs"
+msgstr ""
+
+#: ../../pep-0677.rst:1105
+msgid ""
+"We considered having the runtime data ``types.CallableType`` use a more "
+"structured API where there would be separate fields for ``posonlyargs`` "
+"and ``param_spec``. The current proposal was was inspired by the "
+"``inspect.Signature`` type."
+msgstr ""
+
+#: ../../pep-0677.rst:1110
+msgid ""
+"We use \"argument\" in our field and type names, unlike \"parameter\" as "
+"in ``inspect.Signature``, in order to avoid confusion with the "
+"``callable_type.__parameters__`` field from the legacy API that refers to"
+" type parameters rather than callable parameters."
+msgstr ""
+
+#: ../../pep-0677.rst:1116
+msgid "Using the plain return type in ``__args__`` for async types"
+msgstr ""
+
+#: ../../pep-0677.rst:1118
+msgid ""
+"It is debatable whether we are required to preserve backward compatiblity"
+" of ``__args__`` for async callable types like ``async (int) -> str``. "
+"The reason is that one could argue they are not expressible directly "
+"using ``typing.Callable``, and therefore it would be fine to set "
+"``__args__`` as ``(int, int)`` rather than ``(int, "
+"typing.Awaitable[int])``."
+msgstr ""
+
+#: ../../pep-0677.rst:1124
+msgid ""
+"But we believe this would be problematic. By preserving the appearance of"
+" a backward-compatible API while actually breaking its semantics on async"
+" types, we would cause runtime type libraries that attempt to interpret "
+"``Callable`` using ``__args__`` to fail silently."
+msgstr ""
+
+#: ../../pep-0677.rst:1129
+msgid ""
+"It is for this reason that we automatically wrap the return type in "
+"``Awaitable``."
+msgstr ""
+
+#: ../../pep-0677.rst:1133
+msgid "Backward Compatibility"
+msgstr ""
+
+#: ../../pep-0677.rst:1135
+msgid ""
+"This PEP proposes a major syntax improvement over ``typing.Callable``, "
+"but the static semantics are the same."
+msgstr ""
+
+#: ../../pep-0677.rst:1138
+msgid ""
+"As such, the only thing we need for backward compatibility is to ensure "
+"that types specified via the new syntax behave the same as equivalent "
+"``typing.Callable`` and ``typing.Concatenate`` values they intend to "
+"replace."
+msgstr ""
+
+#: ../../pep-0677.rst:1143
+msgid ""
+"There is no particular interaction between this proposal and ``from "
+"__future__ import annotations`` - just like any other type annotation it "
+"will be unparsed to a string at module import, and "
+"``typing.get_type_hints`` should correctly evaluate the resulting strings"
+" in cases where that is possible."
+msgstr ""
+
+#: ../../pep-0677.rst:1149
+msgid "This is discussed in more detail in the Runtime Behavior section."
+msgstr ""
+
+#: ../../pep-0677.rst:1153
+msgid "Reference Implementation"
+msgstr ""
+
+#: ../../pep-0677.rst:1155
+msgid ""
+"We have a working `implementation "
+"<https://github.com/stroxler/cpython/tree/callable-type-syntax--"
+"shorthand>`_ of the AST and Grammar with tests verifying that the grammar"
+" proposed here has the desired behaviors."
+msgstr ""
+
+#: ../../pep-0677.rst:1160
+msgid ""
+"The runtime behavior is not yet implemented. As discussed in the `Runtime"
+" Behavior`_ portion of the spec we have a detailed plan for both a "
+"backward-compatible API and a more structured API in `a separate doc "
+"<https://docs.google.com/document/d/15nmTDA_39Lo-"
+"EULQQwdwYx_Q1IYX4dD5WPnHbFG71Lk/edit>`_ where we are also open to "
+"discussion and alternative ideas."
+msgstr ""
+
+#: ../../pep-0677.rst:1169
+msgid "Open Issues"
+msgstr ""
+
+#: ../../pep-0677.rst:1172
+msgid "Details of the Runtime API"
+msgstr ""
+
+#: ../../pep-0677.rst:1174
+msgid ""
+"We have attempted to provide a complete behavior specification in the "
+"`Runtime Behavior`_ section of this PEP."
+msgstr ""
+
+#: ../../pep-0677.rst:1177
+msgid ""
+"But there are probably more details that we will not realize we need to "
+"define until we build a full reference implementation."
+msgstr ""
+
+#: ../../pep-0677.rst:1181
+msgid "Optimizing ``SyntaxError`` messages"
+msgstr ""
+
+#: ../../pep-0677.rst:1183
+msgid ""
+"The current reference implementation has a fully-functional parser and "
+"all edge cases presented here have been tested."
+msgstr ""
+
+#: ../../pep-0677.rst:1186
+msgid ""
+"But there are some known cases where the errors are not as informative as"
+" we would like. For example, because ``(int, ...) -> bool`` is illegal "
+"but ``(int, ...)`` is a valid tuple, we currently produce a syntax error "
+"flagging the ``->`` as the problem even though the real cause of the "
+"error is using ``...`` as an argument type."
+msgstr ""
+
+#: ../../pep-0677.rst:1192
+msgid ""
+"This is not part of the specification *per se* but is an important detail"
+" to address in our implementation. The solution will likely involve "
+"adding ``invalid_.*`` rules to ``python.gram`` and customizing error "
+"messages."
+msgstr ""
+
+#: ../../pep-0677.rst:1198
+msgid "Resources"
+msgstr ""
+
+#: ../../pep-0677.rst:1201
+msgid "Background and History"
+msgstr ""
+
+#: ../../pep-0677.rst:1203
+msgid ""
+":pep:`PEP 484 specifies <484#suggested-syntax-for-python-2-7-and-"
+"straddling-code>` a very similar syntax for function type hint *comments*"
+" for use in code that needs to work on Python 2.7. For example::"
+msgstr ""
+
+#: ../../pep-0677.rst:1212
+msgid ""
+"At that time we used indexing operations to specify generic types like "
+"``typing.Callable`` because we decided not to add syntax for types. "
+"However, we have since begun to do so, e.g. with :pep:`604`."
+msgstr ""
+
+#: ../../pep-0677.rst:1216
+msgid ""
+"**Maggie** proposed better callable type syntax as part of a larger "
+"`presentation on typing simplifications "
+"<https://drive.google.com/file/d/1XhqTKoO6RHtz7zXqW5Wgq9nzaEz9TXjI/view>`_"
+" at the PyCon Typing Summit 2021."
+msgstr ""
+
+#: ../../pep-0677.rst:1221
+msgid ""
+"**Steven** `brought up this proposal on typing-sig "
+"<https://mail.python.org/archives/list/typing-"
+"sig@python.org/thread/3JNXLYH5VFPBNIVKT6FFBVVFCZO4GFR2>`_. We had several"
+" meetings to discuss alternatives, and `this presentation "
+"<https://www.dropbox.com/s/sshgtr4p30cs0vc/Python%20Callable%20Syntax%20Proposals.pdf?dl=0>`_"
+" led us to the current proposal."
+msgstr ""
+
+#: ../../pep-0677.rst:1227
+msgid ""
+"**Pradeep** `brought this proposal to python-dev "
+"<https://mail.python.org/archives/list/python-"
+"dev@python.org/thread/VBHJOS3LOXGVU6I4FABM6DKHH65GGCUB>`_ for feedback."
+msgstr ""
+
+#: ../../pep-0677.rst:1232
+msgid "Acknowledgments"
+msgstr ""
+
+#: ../../pep-0677.rst:1234
+msgid ""
+"Thanks to the following people for their feedback on the PEP and help "
+"planning the reference implementation:"
+msgstr ""
+
+#: ../../pep-0677.rst:1237
+msgid ""
+"Alex Waygood, Eric Traut, Guido van Rossum, James Hilton-Balfe, Jelle "
+"Zijlstra, Maggie Moss, Tuomas Suutari, Shannon Zhu."
+msgstr ""
+
+#: ../../pep-0677.rst:1241
+msgid "Copyright"
+msgstr ""
+
+#: ../../pep-0677.rst:1243
+msgid ""
+"This document is placed in the public domain or under the "
+"CC0-1.0-Universal license, whichever is more permissive."
+msgstr ""
+

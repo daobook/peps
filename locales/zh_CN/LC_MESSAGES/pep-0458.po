@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0458.txt
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0458.txt:1
-msgid "458"
-msgstr ""
-
-#: ../../pep-0458.txt
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0458.txt:2
-msgid "Secure PyPI downloads with signed repository metadata"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0458.txt
 msgid "Author"
@@ -88,10 +72,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0458.txt
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0458.txt:17
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0458.txt
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0458.txt:18
+#: ../../pep-0458.txt:19
 msgid "27-Sep-2013"
 msgstr ""
 
@@ -99,7 +91,7 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0458.txt:19
+#: ../../pep-0458.txt:20
 msgid "06-Jan-2019, 13-Nov-2019"
 msgstr ""
 
@@ -107,17 +99,17 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0458.txt:20
+#: ../../pep-0458.txt:21
 msgid ""
 "https://discuss.python.org/t/pep-458-secure-pypi-downloads-with-package-"
 "signing/2648/115"
 msgstr ""
 
-#: ../../pep-0458.txt:24
+#: ../../pep-0458.txt:25
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0458.txt:26
+#: ../../pep-0458.txt:27
 msgid ""
 "This PEP describes changes to the PyPI infrastructure that are needed to "
 "ensure that users get valid packages from PyPI. These changes should have"
@@ -128,7 +120,7 @@ msgid ""
 "for these packages."
 msgstr ""
 
-#: ../../pep-0458.txt:33
+#: ../../pep-0458.txt:34
 msgid ""
 "In order for the security mechanism to be effective, additional work will"
 " need to be done by PyPI consumers (like pip) to verify the signatures "
@@ -140,11 +132,11 @@ msgid ""
 "timelines and priorities of individual projects."
 msgstr ""
 
-#: ../../pep-0458.txt:45
+#: ../../pep-0458.txt:46
 msgid "Proposed TUF Integration"
 msgstr ""
 
-#: ../../pep-0458.txt:47
+#: ../../pep-0458.txt:48
 msgid ""
 "This PEP proposes how The Update Framework [2]_ (TUF__) should be "
 "integrated with the Python Package Index (PyPI [1]_). TUF was designed to"
@@ -160,7 +152,7 @@ msgid ""
 "compromised."
 msgstr ""
 
-#: ../../pep-0458.txt:62
+#: ../../pep-0458.txt:63
 msgid ""
 "The initial integration proposed in this PEP will allow modern package "
 "managers, such as pip [3]_, to be more secure against attacks on PyPI "
@@ -176,11 +168,11 @@ msgid ""
 "automating much of the signing process."
 msgstr ""
 
-#: ../../pep-0458.txt:74
+#: ../../pep-0458.txt:75
 msgid ""
 "There is no discussion in *this* PEP of support for project distributions"
 " that are signed by developers (maximum security model). This possible "
-"future extension is covered in detail in PEP 480 [21]_.  The maximum "
+"future extension is covered in detail in :pep:`480`.  The maximum "
 "security model requires more PyPI administrative work (though no added "
 "work for clients), and also proposes an easy-to-use key management "
 "solution for developers/publishers, ideas on how to interface with a "
@@ -188,7 +180,7 @@ msgid ""
 "of end-to-end signing."
 msgstr ""
 
-#: ../../pep-0458.txt:82
+#: ../../pep-0458.txt:83
 msgid ""
 "While it does provide implementation recommendations, this PEP does not "
 "prescribe exactly how package managers, such as pip, should be adapted to"
@@ -206,8 +198,8 @@ msgid ""
 "This PEP does not eliminate any existing features from PyPI. In "
 "particular, it does not replace existing support for OpenPGP signatures. "
 "Developers can continue to upload detached OpenPGP signatures along with "
-"distributions. In the future, PEP 480 may allow developers to directly "
-"sign TUF metadata using their OpenPGP keys."
+"distributions. In the future, :pep:`480` may allow developers to directly"
+" sign TUF metadata using their OpenPGP keys."
 msgstr ""
 
 #: ../../pep-0458.txt:101
@@ -244,7 +236,7 @@ msgstr ""
 
 #: ../../pep-0458.txt:126
 msgid ""
-"This PEP, together with the follow-up proposal in PEP 480, aims to "
+"This PEP, together with the follow-up proposal in :pep:`480`, aims to "
 "protect users of PyPI from compromises of the integrity, consistency, and"
 " freshness properties of PyPI packages, and enhances compromise "
 "resilience by mitigating key risk and providing mechanisms to recover "
@@ -286,18 +278,18 @@ msgid ""
 " public mirror is trusted to honestly mirror PyPI, but some mirrors may "
 "misbehave, whether by accident or through malicious intervention. Package"
 " managers such as pip are supposed to use signatures from PyPI to verify "
-"distribution files downloaded from a public mirror [9]_, but none are "
-"known to actually do so [10]_.  Therefore, it would be wise to add more "
-"security measures to detect attacks from public mirrors or content "
+"distribution files downloaded from a :pep:`public mirror <381>`, but none"
+" are known to actually do so [10]_.  Therefore, it would be wise to add "
+"more security measures to detect attacks from public mirrors or content "
 "delivery networks [11]_ (CDNs)."
 msgstr ""
 
 #: ../../pep-0458.txt:165
 msgid ""
-"Even though official mirrors have been deprecated on PyPI [12]_, a wide "
-"variety of other attack vectors on package managers remain [13]_.  These "
-"attacks can crash client systems, cause obsolete distributions to be "
-"installed, or even allow an attacker to execute arbitrary code.  In "
+"Even though official mirrors have been :pep:`deprecated on PyPI <449>`, a"
+" wide variety of other attack vectors on package managers remain [13]_.  "
+"These attacks can crash client systems, cause obsolete distributions to "
+"be installed, or even allow an attacker to execute arbitrary code.  In "
 "`September 2013`__, a post was made to the Distutils mailing list showing"
 " that the latest version of pip (at the time) was susceptible to such "
 "attacks, and how TUF could protect users against them [14]_.  "
@@ -325,7 +317,7 @@ msgid ""
 "The scope of *this* PEP is protecting users from compromises of PyPI "
 "mirrors, and PyPI's own TLS termination and content distribution "
 "infrastructure. Protection from compromises of PyPI itself is discussed "
-"in PEP 480."
+"in :pep:`480`."
 msgstr ""
 
 #: ../../pep-0458.txt:196
@@ -360,7 +352,7 @@ msgstr ""
 #: ../../pep-0458.txt:211
 msgid ""
 "This threat model describes the minimum security model. The maximum "
-"security model described in PEP 480 also assumes that attackers can "
+"security model described in :pep:`480` also assumes that attackers can "
 "compromise PyPI's online keys."
 msgstr ""
 
@@ -372,28 +364,28 @@ msgstr ""
 msgid ""
 "The keywords \"MUST\", \"MUST NOT\", \"REQUIRED\", \"SHALL\", \"SHALL "
 "NOT\", \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"MAY\", and "
-"\"OPTIONAL\" in this document are to be interpreted as described in RFC "
-"2119__."
+"\"OPTIONAL\" in this document are to be interpreted as described in "
+":rfc:`2119`."
 msgstr ""
 
-#: ../../pep-0458.txt:225
+#: ../../pep-0458.txt:223
 msgid ""
 "This PEP focuses only on integrating TUF into PyPI. However, the reader "
 "is encouraged to review TUF design principles [2]_ and SHOULD be familiar"
 " with the TUF specification [16]_."
 msgstr ""
 
-#: ../../pep-0458.txt:229
+#: ../../pep-0458.txt:227
 msgid ""
 "The following terms used in this PEP are defined in the Python Packaging "
 "Glossary [17]_: *project*, *release*, *distribution*."
 msgstr ""
 
-#: ../../pep-0458.txt:232
+#: ../../pep-0458.txt:230
 msgid "Additional terms used in this PEP are defined as follows:"
 msgstr ""
 
-#: ../../pep-0458.txt:234
+#: ../../pep-0458.txt:232
 msgid ""
 "Role: TUF specifies one *root* role and multiple other roles to which the"
 " *root* role delegates responsibilities, directly or indirectly. The term"
@@ -403,7 +395,7 @@ msgid ""
 "provide."
 msgstr ""
 
-#: ../../pep-0458.txt:240
+#: ../../pep-0458.txt:238
 msgid ""
 "Distribution file: A versioned archive file that contains Python "
 "packages, modules, and other resource files that are used to distribute a"
@@ -412,46 +404,46 @@ msgid ""
 "PEP."
 msgstr ""
 
-#: ../../pep-0458.txt:245
+#: ../../pep-0458.txt:243
 msgid ""
 "Simple index: The HTML page that contains internal links to distribution "
 "files."
 msgstr ""
 
-#: ../../pep-0458.txt:248
+#: ../../pep-0458.txt:246
 msgid ""
 "Target files: As a rule of thumb, target files are all files on PyPI "
 "whose integrity should be guaranteed with TUF. Typically, this includes "
 "distribution files and PyPI metadata, such as simple indices."
 msgstr ""
 
-#: ../../pep-0458.txt:252
+#: ../../pep-0458.txt:250
 msgid ""
 "Metadata: Metadata are signed files that describe roles, other metadata, "
 "and target files. If not specified otherwise metadata means TUF-specific "
 "metadata."
 msgstr ""
 
-#: ../../pep-0458.txt:256
+#: ../../pep-0458.txt:254
 msgid ""
 "Repository: A repository is a source for named metadata and target files."
 "  Clients request metadata and target files stored on a repository."
 msgstr ""
 
-#: ../../pep-0458.txt:259
+#: ../../pep-0458.txt:257
 msgid ""
 "Consistent snapshot: A set of TUF metadata and target files that capture "
 "the complete state of all projects on PyPI as they existed at some fixed "
 "point in time."
 msgstr ""
 
-#: ../../pep-0458.txt:263
+#: ../../pep-0458.txt:261
 msgid ""
 "Developer: Either the owner or maintainer of a project who is allowed to "
 "update the TUF metadata, as well as target files for a project."
 msgstr ""
 
-#: ../../pep-0458.txt:266
+#: ../../pep-0458.txt:264
 msgid ""
 "Online key: A private cryptographic key that MUST be stored on the PyPI "
 "server infrastructure.  This is usually to allow automated signing with "
@@ -459,7 +451,7 @@ msgid ""
 "will be able to read these keys."
 msgstr ""
 
-#: ../../pep-0458.txt:271
+#: ../../pep-0458.txt:269
 msgid ""
 "Offline key: A private cryptographic key that MUST be stored independent "
 "of the PyPI server infrastructure.  This prevents automated signing with "
@@ -467,7 +459,7 @@ msgid ""
 " able to immediately read these keys."
 msgstr ""
 
-#: ../../pep-0458.txt:276
+#: ../../pep-0458.txt:274
 msgid ""
 "Threshold signature scheme: A role can increase its resilience to key "
 "compromises by specifying that at least t out of n keys are REQUIRED to "
@@ -476,33 +468,33 @@ msgid ""
 "denotes the threshold signature property."
 msgstr ""
 
-#: ../../pep-0458.txt:284
+#: ../../pep-0458.txt:282
 msgid "Overview of TUF"
 msgstr ""
 
-#: ../../pep-0458.txt:286
+#: ../../pep-0458.txt:284
 msgid ""
 "At its highest level, TUF provides applications with a secure method for "
 "knowing about and obtaining new versions of files. On the surface, this "
 "all sounds simple. The basic steps for updating applications are:"
 msgstr ""
 
-#: ../../pep-0458.txt:290
+#: ../../pep-0458.txt:288
 msgid "Knowing an update exists."
 msgstr ""
 
-#: ../../pep-0458.txt:292
+#: ../../pep-0458.txt:290
 msgid "Downloading a correct copy of the latest version of the updated file."
 msgstr ""
 
-#: ../../pep-0458.txt:294
+#: ../../pep-0458.txt:292
 msgid ""
 "The problem is that updating applications is only simple when there are "
 "no malicious activities in the picture. If an attacker is trying to "
 "interfere with these seemingly simple steps, there is plenty they can do."
 msgstr ""
 
-#: ../../pep-0458.txt:298
+#: ../../pep-0458.txt:296
 msgid ""
 "Assume a software updater takes the approach of most systems (at least "
 "the ones that try to be secure). It downloads both the file it wants and "
@@ -512,33 +504,33 @@ msgid ""
 "updater is still at risk in many ways, including the following scenarios:"
 msgstr ""
 
-#: ../../pep-0458.txt:305
+#: ../../pep-0458.txt:303
 msgid ""
 "An attacker keeps giving the software updater the same update file, so it"
 " never realizes there is an update."
 msgstr ""
 
-#: ../../pep-0458.txt:308
+#: ../../pep-0458.txt:306
 msgid ""
 "An attacker gives the software updater an older, insecure version of a "
 "file that it already has, so it downloads that one and blindly uses it "
 "thinking it is newer."
 msgstr ""
 
-#: ../../pep-0458.txt:312
+#: ../../pep-0458.txt:310
 msgid ""
 "An attacker gives the software updater a newer version of a file, but not"
 " the newest one.  The file is newer to the software updater, but it may "
 "be insecure and exploitable by the attacker."
 msgstr ""
 
-#: ../../pep-0458.txt:316
+#: ../../pep-0458.txt:314
 msgid ""
 "An attacker compromises the key used to sign these files and now the "
 "software updater downloads a malicious file that is properly signed."
 msgstr ""
 
-#: ../../pep-0458.txt:319
+#: ../../pep-0458.txt:317
 msgid ""
 "TUF is designed to address these attacks, and others, by adding signed "
 "metadata (text files that describe the repository's files) to the "
@@ -552,14 +544,22 @@ msgid ""
 "addressed by TUF, see Appendix A."
 msgstr ""
 
-#: ../../pep-0458.txt:331
+#: ../../pep-0458.txt:329
 msgid "Integrating PyPI with TUF"
 msgstr ""
 
-#: ../../pep-0458.txt:333
+#: ../../pep-0458.txt:331
 msgid ""
 "A software update system must complete two main tasks to integrate with "
-"TUF. First, it must add the framework to the client side of the update "
+"TUF. First, the repository on the server side MUST be modified to provide"
+" signed TUF metadata. This PEP is concerned with the first part of the "
+"integration, and the changes on PyPI required to support software updates"
+" with TUF."
+msgstr ""
+
+#: ../../pep-0458.txt:336
+msgid ""
+"Second, it must add the framework to the client side of the update "
 "system. For example, TUF MAY be integrated with the pip package manager. "
 "Thus, new versions of pip going forward SHOULD use TUF by default to "
 "download and verify distributions from PyPI before installing them. "
@@ -572,21 +572,18 @@ msgid ""
 "generally recommended."
 msgstr ""
 
-#: ../../pep-0458.txt:345
+#: ../../pep-0458.txt:347
 msgid ""
-"Second, the repository on the server side MUST be modified to provide "
-"signed TUF metadata. This PEP is concerned with the second part of the "
-"integration, and the changes on PyPI required to support software updates"
-" with TUF. We assume that pip would use TUF to verify distributions "
-"downloaded only from PyPI. pip MAY support TAP 4__ in order use TUF to "
-"also verify distributions downloaded from elsewhere__."
+"We assume that pip would use TUF to verify distributions downloaded only "
+"from PyPI. pip MAY support TAP 4__ in order use TUF to also verify "
+"distributions downloaded from :pep:`elsewhere <470>`."
 msgstr ""
 
-#: ../../pep-0458.txt:358
+#: ../../pep-0458.txt:356
 msgid "What Additional Repository Files are Required on PyPI?"
 msgstr ""
 
-#: ../../pep-0458.txt:360
+#: ../../pep-0458.txt:358
 msgid ""
 "In order for package managers like pip to download and verify "
 "distributions with TUF, a few extra files MUST be added to PyPI. These "
@@ -596,7 +593,7 @@ msgid ""
 "the metadata should be considered expired."
 msgstr ""
 
-#: ../../pep-0458.txt:368
+#: ../../pep-0458.txt:366
 msgid ""
 "When a package manager wants to check for updates, it asks TUF to do the "
 "work. That is, a package manager never has to deal with this additional "
@@ -608,14 +605,15 @@ msgid ""
 "the package manager."
 msgstr ""
 
-#: ../../pep-0458.txt:376
+#: ../../pep-0458.txt:374
 msgid ""
-"The `Metadata`__ document provides information about each type of "
-"required metadata and its expected content.  The next section covers the "
-"different kinds of metadata RECOMMENDED for PyPI."
+"The `Document formats`__ section of the TUF specification provides "
+"information about each type of required metadata and its expected "
+"content.  The next section covers the different kinds of metadata "
+"RECOMMENDED for PyPI."
 msgstr ""
 
-#: ../../pep-0458.txt:382
+#: ../../pep-0458.txt:380
 msgid ""
 "In addition, all target files SHOULD be available on disk at least two "
 "times. Once under their original filename, to provide backwards "
@@ -623,18 +621,18 @@ msgid ""
 "filename. This is required to produce `Consistent Snapshots`_."
 msgstr ""
 
-#: ../../pep-0458.txt:387
+#: ../../pep-0458.txt:385
 msgid ""
 "Depending on the used file system different data deduplication mechanisms"
 " MAY be employed to avoid storage increase from hard copies of target "
 "files."
 msgstr ""
 
-#: ../../pep-0458.txt:392
+#: ../../pep-0458.txt:390
 msgid "PyPI and TUF Metadata"
 msgstr ""
 
-#: ../../pep-0458.txt:394
+#: ../../pep-0458.txt:392
 msgid ""
 "TUF metadata provides information that clients can use to make update "
 "decisions.  For example, a *targets* metadata lists the available target "
@@ -646,7 +644,7 @@ msgid ""
 "impact of any one compromised role."
 msgstr ""
 
-#: ../../pep-0458.txt:402
+#: ../../pep-0458.txt:400
 msgid ""
 "TUF requires four top-level roles.  These are *root*, *timestamp*, "
 "*snapshot*, and *targets*.  The *root* role specifies the public "
@@ -662,15 +660,15 @@ msgid ""
 "exception.  Table 1 provides an overview of the roles used in TUF."
 msgstr ""
 
-#: ../../pep-0458.txt:416
+#: ../../pep-0458.txt:414
 msgid "Roles and Responsibilities"
 msgstr ""
 
-#: ../../pep-0458.txt:418 ../../pep-0458.txt:1112
+#: ../../pep-0458.txt:416 ../../pep-0458.txt:1112
 msgid "root"
 msgstr ""
 
-#: ../../pep-0458.txt:418
+#: ../../pep-0458.txt:416
 msgid ""
 "The root role is the locus of trust for the entire repository. The root "
 "role signs the root.json metadata file. This file indicates which keys "
@@ -679,11 +677,11 @@ msgid ""
 "\"targets\" must be specified and each has a list of public keys."
 msgstr ""
 
-#: ../../pep-0458.txt:426
+#: ../../pep-0458.txt:424
 msgid "targets"
 msgstr ""
 
-#: ../../pep-0458.txt:426
+#: ../../pep-0458.txt:424
 msgid ""
 "The targets role is responsible for indicating which target files are "
 "available from the repository. More precisely, it shares the "
@@ -692,11 +690,11 @@ msgid ""
 "repository files to other roles (delegated roles)."
 msgstr ""
 
-#: ../../pep-0458.txt:433
+#: ../../pep-0458.txt:431
 msgid "delegated roles"
 msgstr ""
 
-#: ../../pep-0458.txt:433
+#: ../../pep-0458.txt:431
 msgid ""
 "If the top-level targets role performs delegation, the resulting "
 "delegated roles can then provide their own metadata files. The format of "
@@ -706,11 +704,11 @@ msgid ""
 " role's metadata."
 msgstr ""
 
-#: ../../pep-0458.txt:441
+#: ../../pep-0458.txt:439
 msgid "snapshot"
 msgstr ""
 
-#: ../../pep-0458.txt:441
+#: ../../pep-0458.txt:439
 msgid ""
 "The snapshot role is responsible for ensuring that clients see a "
 "consistent repository state. It provides repository state information by "
@@ -722,11 +720,11 @@ msgid ""
 "level roles."
 msgstr ""
 
-#: ../../pep-0458.txt:452
+#: ../../pep-0458.txt:450
 msgid "timestamp"
 msgstr ""
 
-#: ../../pep-0458.txt:452
+#: ../../pep-0458.txt:450
 msgid ""
 "The timestamp role is responsible for providing information about the "
 "timeliness of available updates. Timeliness information is made available"
@@ -734,11 +732,11 @@ msgid ""
 "expiration time. This file indicates the latest version of snapshot.json."
 msgstr ""
 
-#: ../../pep-0458.txt:460
+#: ../../pep-0458.txt:458
 msgid "Table 1: An overview of the TUF roles."
 msgstr ""
 
-#: ../../pep-0458.txt:462
+#: ../../pep-0458.txt:460
 msgid ""
 "Unless otherwise specified, this PEP RECOMMENDS that every metadata or "
 "target file be hashed using the SHA2-512 function of the `SHA-2`__ "
@@ -752,11 +750,11 @@ msgid ""
 "for `Python 2`__."
 msgstr ""
 
-#: ../../pep-0458.txt:480
+#: ../../pep-0458.txt:478
 msgid "Signing Metadata and Repository Management"
 msgstr ""
 
-#: ../../pep-0458.txt:482
+#: ../../pep-0458.txt:480
 msgid ""
 "The top-level *root* role signs for the keys of the top-level "
 "*timestamp*, *snapshot*, *targets*, and *root* roles.  The *timestamp* "
@@ -767,7 +765,7 @@ msgid ""
 "PyPI projects."
 msgstr ""
 
-#: ../../pep-0458.txt:489
+#: ../../pep-0458.txt:487
 msgid ""
 "Figure 1 provides an overview of the roles available within PyPI, which "
 "includes the top-level roles and the roles delegated to by *targets*. The"
@@ -777,11 +775,11 @@ msgid ""
 "of keys used for each role."
 msgstr ""
 
-#: ../../pep-0458.txt:497
+#: ../../pep-0458.txt:496
 msgid "Figure 1: An overview of the role metadata available on PyPI."
 msgstr ""
 
-#: ../../pep-0458.txt:499
+#: ../../pep-0458.txt:498
 msgid ""
 "The roles that change most frequently are *timestamp*, *snapshot* and "
 "roles delegated to by *bins* (i.e., *bin-n*).  The *timestamp* and "
@@ -798,13 +796,12 @@ msgid ""
 "snapshots [18]_."
 msgstr ""
 
-#: ../../pep-0458.txt:511
+#: ../../pep-0458.txt:510
 msgid ""
 "Every year, PyPI administrators SHOULD sign for *root* and *targets* role"
 " keys. Automation will continuously sign for a timestamped snapshot of "
-"all projects. A `repository management`__ tool is available that can sign"
-" metadata files, generate cryptographic keys, and manage a TUF "
-"repository."
+"all projects. A repository `Metadata API`__ is available that can be used"
+" to `manage a TUF repository`__."
 msgstr ""
 
 #: ../../pep-0458.txt:518
@@ -868,10 +865,10 @@ msgid ""
 "supports verification of PyPI distributions signed with private "
 "cryptographic keys stored on PyPI.  Distributions uploaded by developers "
 "are signed by PyPI and immediately available for download.  A possible "
-"future extension to this PEP, discussed in PEP 480 [21]_, proposes the "
-"maximum security model and allows a developer to sign for his/her "
-"project.  Developer keys are not stored online: therefore, projects are "
-"safe from PyPI compromises."
+"future extension to this PEP, discussed in :pep:`480`, proposes the "
+"maximum security model and allows a developer to sign for their project."
+"  Developer keys are not stored online: therefore, projects are safe from"
+" PyPI compromises."
 msgstr ""
 
 #: ../../pep-0458.txt:569
@@ -906,7 +903,7 @@ msgid ""
 "Note, the reason why *targets* does not directly delegate to *bin-n*, but"
 " instead uses the intermediary *bins* role, is so that other delegations "
 "can easily be added or removed, without affecting the *bins*-to-*bin-n* "
-"mapping. This is crucial for the implementation of PEP 480 [21]_."
+"mapping. This is crucial for the implementation of :pep:`480`."
 msgstr ""
 
 #: ../../pep-0458.txt:595
@@ -939,13 +936,13 @@ msgid ""
 "*bins* role.  In August 2013, it was found that the size of the *bins* "
 "metadata was about 42MB if the *bins* role itself signed for about 220K "
 "PyPI targets (which are simple indices and distributions).  This PEP does"
-" not delve into the details, but TUF features a so-called \"`lazy bin "
-"walk`__\" scheme that splits a large targets metadata file into many "
-"small ones.  This allows a TUF client updater to intelligently download "
-"only a small number of TUF metadata files in order to update any project "
-"signed for by the *bins* role.  For example, applying this scheme to the "
-"previous repository resulted in pip downloading between 1.3KB and 111KB "
-"to install or upgrade a PyPI project via TUF."
+" not delve into the details, but TUF features a so-called `\"hashed bin "
+"delegation\"`__ scheme that splits a large targets metadata file into "
+"many small ones.  This allows a TUF client updater to intelligently "
+"download only a small number of TUF metadata files in order to update any"
+" project signed for by the *bins* role.  For example, applying this "
+"scheme to the previous repository resulted in pip downloading between "
+"1.3KB and 111KB to install or upgrade a PyPI project via TUF."
 msgstr ""
 
 #: ../../pep-0458.txt:623
@@ -1106,8 +1103,8 @@ msgid ""
 "C8 was computed by querying the number of release files. C9 was derived "
 "by taking the average between a rough estimate of the average size of "
 "release files *downloaded* over the past 31 days (1,628,321 bytes), and "
-"the average size of releases files on disk (2,740,465 bytes). Ee W. "
-"Durbin III helped to provide these numbers on November 7, 2019."
+"the average size of releases files on disk (2,740,465 bytes). Ee Durbin "
+"helped to provide these numbers on November 7, 2019."
 msgstr ""
 
 #: ../../pep-0458.txt:671
@@ -1946,7 +1943,7 @@ msgid ""
 " the timestamp, snapshot, and bin-n roles are stored in the same online "
 "location, a compromise of one means they will all be compromised. "
 "Therefore, the table considers these roles together. A version of this "
-"table that considers these roles separately is included in PEP 480 [21]_."
+"table that considers these roles separately is included in :pep:`480`."
 msgstr ""
 
 #: ../../pep-0458.txt:1100
@@ -2017,7 +2014,7 @@ msgid ""
 "The maximum security model shows how TUF mitigates online key compromises"
 " by introducing additional roles for end-to-signing. Details about how to"
 " generate developer keys and sign upload distributions are provided in "
-"PEP 480 [21]_."
+":pep:`480`."
 msgstr ""
 
 #: ../../pep-0458.txt:1144
@@ -2383,76 +2380,60 @@ msgid "https://mail.python.org/pipermail/distutils-sig/2013-July/022008.html"
 msgstr ""
 
 #: ../../pep-0458.txt:1362
-msgid ""
-"PEP 381, Mirroring infrastructure for PyPI, Ziadé, Löwis "
-"http://www.python.org/dev/peps/pep-0381/"
-msgstr ""
-
-#: ../../pep-0458.txt:1364
 msgid "https://mail.python.org/pipermail/distutils-sig/2013-September/022773.html"
 msgstr ""
 
-#: ../../pep-0458.txt:1365
+#: ../../pep-0458.txt:1363
 msgid "https://mail.python.org/pipermail/distutils-sig/2013-May/020848.html"
 msgstr ""
 
-#: ../../pep-0458.txt:1366
-msgid ""
-"PEP 449, Removal of the PyPI Mirror Auto Discovery and Naming Scheme, "
-"Stufft http://www.python.org/dev/peps/pep-0449/"
-msgstr ""
-
-#: ../../pep-0458.txt:1368
+#: ../../pep-0458.txt:1364
 msgid ""
 "https://theupdateframework.github.io/papers/attacks-on-package-managers-"
 "ccs2008.pdf"
 msgstr ""
 
-#: ../../pep-0458.txt:1369
+#: ../../pep-0458.txt:1365
 msgid "https://mail.python.org/pipermail/distutils-sig/2013-September/022755.html"
 msgstr ""
 
-#: ../../pep-0458.txt:1370
+#: ../../pep-0458.txt:1366
 msgid "http://ed25519.cr.yp.to/"
 msgstr ""
 
-#: ../../pep-0458.txt:1371
+#: ../../pep-0458.txt:1367
 msgid ""
 "https://github.com/theupdateframework/specification/blob/master/tuf-"
 "spec.md"
 msgstr ""
 
-#: ../../pep-0458.txt:1372
+#: ../../pep-0458.txt:1368
 msgid "https://packaging.python.org/glossary"
 msgstr ""
 
-#: ../../pep-0458.txt:1373
+#: ../../pep-0458.txt:1369
 msgid "https://en.wikipedia.org/wiki/Continuous_delivery"
 msgstr ""
 
-#: ../../pep-0458.txt:1374
+#: ../../pep-0458.txt:1370
 msgid "https://mail.python.org/pipermail/distutils-sig/2013-August/022154.html"
 msgstr ""
 
-#: ../../pep-0458.txt:1375
+#: ../../pep-0458.txt:1371
 msgid "https://en.wikipedia.org/wiki/Key-recovery_attack"
 msgstr ""
 
-#: ../../pep-0458.txt:1376
-msgid "https://www.python.org/dev/peps/pep-0480/"
-msgstr ""
-
-#: ../../pep-0458.txt:1377
+#: ../../pep-0458.txt:1372
 msgid ""
 "https://pyfound.blogspot.com/2019/09/pypi-security-q4-2019-request-"
 "for.html"
 msgstr ""
 
-#: ../../pep-0458.txt:1380
+#: ../../pep-0458.txt:1375
 msgid "Acknowledgements"
 msgstr ""
 
-#: ../../pep-0458.txt:1382
+#: ../../pep-0458.txt:1377
 msgid ""
 "This material is based upon work supported by the National Science "
 "Foundation under Grants No. CNS-1345049 and CNS-0959138. Any opinions, "
@@ -2461,42 +2442,355 @@ msgid ""
 "the National Science Foundation."
 msgstr ""
 
-#: ../../pep-0458.txt:1388
+#: ../../pep-0458.txt:1383
 msgid ""
 "We thank Nick Coghlan, Daniel Holth, Donald Stufft, and the distutils-sig"
 " community in general for helping us to think about how to usably and "
 "efficiently integrate TUF with PyPI."
 msgstr ""
 
-#: ../../pep-0458.txt:1392
+#: ../../pep-0458.txt:1387
 msgid ""
 "Roger Dingledine, Sebastian Hahn, Nick Mathewson, Martin Peck and Justin "
 "Samuel helped us to design TUF from its predecessor, Thandy of the Tor "
 "project."
 msgstr ""
 
-#: ../../pep-0458.txt:1395
+#: ../../pep-0458.txt:1390
 msgid ""
 "We appreciate the efforts of Konstantin Andrianov, Geremy Condra, Zane "
 "Fisher, Justin Samuel, Tian Tian, Santiago Torres, John Ward, and Yuyu "
 "Zheng in developing TUF."
 msgstr ""
 
-#: ../../pep-0458.txt:1399
+#: ../../pep-0458.txt:1394
 msgid ""
 "Vladimir Diaz, Monzur Muhammad, Sai Teja Peddinti, Sumana Harihareswara, "
-"Ee W. Durbin III and Dustin Ingram helped us to review this PEP."
+"Ee Durbin and Dustin Ingram helped us to review this PEP."
 msgstr ""
 
-#: ../../pep-0458.txt:1402
+#: ../../pep-0458.txt:1397
 msgid "Zane Fisher helped us to review and transcribe this PEP."
 msgstr ""
 
-#: ../../pep-0458.txt:1405
+#: ../../pep-0458.txt:1400
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0458.txt:1407
+#: ../../pep-0458.txt:1402
 msgid "This document has been placed in the public domain."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "458"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Secure PyPI downloads with signed repository metadata"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There is no discussion in *this* "
+#~ "PEP of support for project distributions"
+#~ " that are signed by developers "
+#~ "(maximum security model). This possible "
+#~ "future extension is covered in detail"
+#~ " in PEP 480 [21]_.  The maximum "
+#~ "security model requires more PyPI "
+#~ "administrative work (though no added "
+#~ "work for clients), and also proposes "
+#~ "an easy-to-use key management "
+#~ "solution for developers/publishers, ideas on"
+#~ " how to interface with a potential"
+#~ " future build farm on PyPI "
+#~ "infrastructure, and the feasibility of "
+#~ "end-to-end signing."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP does not eliminate any "
+#~ "existing features from PyPI. In "
+#~ "particular, it does not replace existing"
+#~ " support for OpenPGP signatures. Developers"
+#~ " can continue to upload detached "
+#~ "OpenPGP signatures along with distributions."
+#~ " In the future, PEP 480 may "
+#~ "allow developers to directly sign TUF"
+#~ " metadata using their OpenPGP keys."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This PEP, together with the follow-"
+#~ "up proposal in PEP 480, aims to"
+#~ " protect users of PyPI from "
+#~ "compromises of the integrity, consistency, "
+#~ "and freshness properties of PyPI "
+#~ "packages, and enhances compromise resilience"
+#~ " by mitigating key risk and providing"
+#~ " mechanisms to recover from a "
+#~ "compromise of PyPI or its signing "
+#~ "keys."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Though necessary, these steps are "
+#~ "insufficient to protect distributions because"
+#~ " attacks are still possible through "
+#~ "other avenues.  For example, a public"
+#~ " mirror is trusted to honestly mirror"
+#~ " PyPI, but some mirrors may "
+#~ "misbehave, whether by accident or "
+#~ "through malicious intervention. Package "
+#~ "managers such as pip are supposed "
+#~ "to use signatures from PyPI to "
+#~ "verify distribution files downloaded from "
+#~ "a public mirror [9]_, but none are"
+#~ " known to actually do so [10]_.  "
+#~ "Therefore, it would be wise to add"
+#~ " more security measures to detect "
+#~ "attacks from public mirrors or content"
+#~ " delivery networks [11]_ (CDNs)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Even though official mirrors have been"
+#~ " deprecated on PyPI [12]_, a wide "
+#~ "variety of other attack vectors on "
+#~ "package managers remain [13]_.  These "
+#~ "attacks can crash client systems, cause"
+#~ " obsolete distributions to be installed,"
+#~ " or even allow an attacker to "
+#~ "execute arbitrary code.  In `September "
+#~ "2013`__, a post was made to the"
+#~ " Distutils mailing list showing that "
+#~ "the latest version of pip (at the"
+#~ " time) was susceptible to such "
+#~ "attacks, and how TUF could protect "
+#~ "users against them [14]_.  Specifically, "
+#~ "testing was done to see how pip"
+#~ " would respond to these attacks with"
+#~ " and without TUF.  Attacks tested "
+#~ "included replay and freeze, arbitrary "
+#~ "installation, slow retrieval, and endless "
+#~ "data.  The post also included a "
+#~ "demonstration of how pip would respond"
+#~ " if PyPI were compromised."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The scope of *this* PEP is "
+#~ "protecting users from compromises of "
+#~ "PyPI mirrors, and PyPI's own TLS "
+#~ "termination and content distribution "
+#~ "infrastructure. Protection from compromises of"
+#~ " PyPI itself is discussed in PEP "
+#~ "480."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This threat model describes the minimum"
+#~ " security model. The maximum security "
+#~ "model described in PEP 480 also "
+#~ "assumes that attackers can compromise "
+#~ "PyPI's online keys."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The keywords \"MUST\", \"MUST NOT\", "
+#~ "\"REQUIRED\", \"SHALL\", \"SHALL NOT\", "
+#~ "\"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", "
+#~ "\"MAY\", and \"OPTIONAL\" in this "
+#~ "document are to be interpreted as "
+#~ "described in RFC 2119__."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A software update system must complete"
+#~ " two main tasks to integrate with "
+#~ "TUF. First, it must add the "
+#~ "framework to the client side of "
+#~ "the update system. For example, TUF "
+#~ "MAY be integrated with the pip "
+#~ "package manager. Thus, new versions of"
+#~ " pip going forward SHOULD use TUF "
+#~ "by default to download and verify "
+#~ "distributions from PyPI before installing "
+#~ "them. However, there may be unforeseen"
+#~ " issues that might prevent users from"
+#~ " installing or updating distributions, "
+#~ "including pip itself, via TUF. "
+#~ "Therefore, pip SHOULD provide an option"
+#~ " e.g., `--unsafely-disable-package-"
+#~ "verification`, in order to work around"
+#~ " such issues until they are resolved."
+#~ " Note, the proposed option name is"
+#~ " purposefully long, because a user "
+#~ "must be helped to understand that "
+#~ "the action is unsafe and not "
+#~ "generally recommended."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Second, the repository on the server "
+#~ "side MUST be modified to provide "
+#~ "signed TUF metadata. This PEP is "
+#~ "concerned with the second part of "
+#~ "the integration, and the changes on "
+#~ "PyPI required to support software "
+#~ "updates with TUF. We assume that "
+#~ "pip would use TUF to verify "
+#~ "distributions downloaded only from PyPI. "
+#~ "pip MAY support TAP 4__ in order"
+#~ " use TUF to also verify distributions"
+#~ " downloaded from elsewhere__."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The `Metadata`__ document provides information"
+#~ " about each type of required metadata"
+#~ " and its expected content.  The next"
+#~ " section covers the different kinds "
+#~ "of metadata RECOMMENDED for PyPI."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Every year, PyPI administrators SHOULD "
+#~ "sign for *root* and *targets* role "
+#~ "keys. Automation will continuously sign "
+#~ "for a timestamped snapshot of all "
+#~ "projects. A `repository management`__ tool "
+#~ "is available that can sign metadata "
+#~ "files, generate cryptographic keys, and "
+#~ "manage a TUF repository."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There are two security models to "
+#~ "consider when integrating TUF into PyPI."
+#~ "  The one proposed in this PEP "
+#~ "is the minimum security model, which "
+#~ "supports verification of PyPI distributions"
+#~ " signed with private cryptographic keys "
+#~ "stored on PyPI.  Distributions uploaded "
+#~ "by developers are signed by PyPI "
+#~ "and immediately available for download.  "
+#~ "A possible future extension to this "
+#~ "PEP, discussed in PEP 480 [21]_, "
+#~ "proposes the maximum security model and"
+#~ " allows a developer to sign for "
+#~ "his/her project.  Developer keys are not"
+#~ " stored online: therefore, projects are "
+#~ "safe from PyPI compromises."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note, the reason why *targets* does "
+#~ "not directly delegate to *bin-n*, but"
+#~ " instead uses the intermediary *bins* "
+#~ "role, is so that other delegations "
+#~ "can easily be added or removed, "
+#~ "without affecting the *bins*-to-*bin-n* "
+#~ "mapping. This is crucial for the "
+#~ "implementation of PEP 480 [21]_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "As the number of projects and "
+#~ "distributions on a repository grows, TUF"
+#~ " metadata will need to grow "
+#~ "correspondingly.  For example, consider the"
+#~ " *bins* role.  In August 2013, it "
+#~ "was found that the size of the "
+#~ "*bins* metadata was about 42MB if "
+#~ "the *bins* role itself signed for "
+#~ "about 220K PyPI targets (which are "
+#~ "simple indices and distributions).  This "
+#~ "PEP does not delve into the "
+#~ "details, but TUF features a so-"
+#~ "called \"`lazy bin walk`__\" scheme that"
+#~ " splits a large targets metadata file"
+#~ " into many small ones.  This allows"
+#~ " a TUF client updater to "
+#~ "intelligently download only a small "
+#~ "number of TUF metadata files in "
+#~ "order to update any project signed "
+#~ "for by the *bins* role.  For "
+#~ "example, applying this scheme to the "
+#~ "previous repository resulted in pip "
+#~ "downloading between 1.3KB and 111KB to"
+#~ " install or upgrade a PyPI project"
+#~ " via TUF."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "C8 was computed by querying the "
+#~ "number of release files. C9 was "
+#~ "derived by taking the average between"
+#~ " a rough estimate of the average "
+#~ "size of release files *downloaded* over"
+#~ " the past 31 days (1,628,321 bytes),"
+#~ " and the average size of releases "
+#~ "files on disk (2,740,465 bytes). Ee "
+#~ "W. Durbin III helped to provide "
+#~ "these numbers on November 7, 2019."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Table 4 summarizes a few of the"
+#~ " attacks possible when a threshold "
+#~ "number of private cryptographic keys "
+#~ "(belonging to any of the PyPI "
+#~ "roles) are compromised.  The leftmost "
+#~ "column lists the roles (or a "
+#~ "combination of roles) that have been "
+#~ "compromised, and the columns to its "
+#~ "right show whether the compromised roles"
+#~ " leave clients susceptible to malicious "
+#~ "updates, a freeze attack, or metadata"
+#~ " inconsistency attacks. Note that if "
+#~ "the timestamp, snapshot, and bin-n roles"
+#~ " are stored in the same online "
+#~ "location, a compromise of one means "
+#~ "they will all be compromised. Therefore,"
+#~ " the table considers these roles "
+#~ "together. A version of this table "
+#~ "that considers these roles separately is"
+#~ " included in PEP 480 [21]_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The maximum security model shows how "
+#~ "TUF mitigates online key compromises by"
+#~ " introducing additional roles for end-"
+#~ "to-signing. Details about how to "
+#~ "generate developer keys and sign upload"
+#~ " distributions are provided in PEP "
+#~ "480 [21]_."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 381, Mirroring infrastructure for "
+#~ "PyPI, Ziadé, Löwis "
+#~ "http://www.python.org/dev/peps/pep-0381/"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PEP 449, Removal of the PyPI "
+#~ "Mirror Auto Discovery and Naming Scheme,"
+#~ " Stufft http://www.python.org/dev/peps/pep-0449/"
+#~ msgstr ""
+
+#~ msgid "https://www.python.org/dev/peps/pep-0480/"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Vladimir Diaz, Monzur Muhammad, Sai Teja"
+#~ " Peddinti, Sumana Harihareswara, Ee W. "
+#~ "Durbin III and Dustin Ingram helped "
+#~ "us to review this PEP."
+#~ msgstr ""
 

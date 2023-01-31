@@ -8,30 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PEPs \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 17:38+0800\n"
+"POT-Creation-Date: 2023-01-31 09:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
-
-#: ../../pep-0621.rst
-msgid "PEP"
-msgstr ""
-
-#: ../../pep-0621.rst:1
-msgid "621"
-msgstr ""
-
-#: ../../pep-0621.rst
-msgid "Title"
-msgstr ""
-
-#: ../../pep-0621.rst:2
-msgid "Storing project metadata in pyproject.toml"
-msgstr ""
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../pep-0621.rst
 msgid "Author"
@@ -70,10 +54,18 @@ msgid "Standards Track"
 msgstr ""
 
 #: ../../pep-0621.rst
+msgid "Topic"
+msgstr ""
+
+#: ../../pep-0621.rst:13
+msgid "Packaging"
+msgstr ""
+
+#: ../../pep-0621.rst
 msgid "Created"
 msgstr ""
 
-#: ../../pep-0621.rst:14
+#: ../../pep-0621.rst:15
 msgid "22-Jun-2020"
 msgstr ""
 
@@ -81,7 +73,7 @@ msgstr ""
 msgid "Post-History"
 msgstr ""
 
-#: ../../pep-0621.rst:15
+#: ../../pep-0621.rst:16
 msgid "22-Jun-2020, 18-Oct-2020, 24-Oct-2020, 31-Oct-2020"
 msgstr ""
 
@@ -89,48 +81,48 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: ../../pep-0621.rst:19
+#: ../../pep-0621.rst:20
 msgid "https://discuss.python.org/t/pep-621-round-3/5472/109"
 msgstr ""
 
-#: ../../pep-0621.rst:24
+#: ../../pep-0621.rst:27
 msgid "Abstract"
 msgstr ""
 
-#: ../../pep-0621.rst:26
+#: ../../pep-0621.rst:29
 msgid ""
 "This PEP specifies how to write a project's `core metadata`_ in a "
 "``pyproject.toml`` file for packaging-related tools to consume."
 msgstr ""
 
-#: ../../pep-0621.rst:31
+#: ../../pep-0621.rst:34
 msgid "Motivation"
 msgstr ""
 
-#: ../../pep-0621.rst:33
+#: ../../pep-0621.rst:36
 msgid "The key motivators of this PEP are:"
 msgstr ""
 
-#: ../../pep-0621.rst:35
+#: ../../pep-0621.rst:38
 msgid ""
 "Encourage users to specify core metadata statically for speed, ease of "
 "specification, unambiguity, and deterministic consumption by build back-"
 "ends"
 msgstr ""
 
-#: ../../pep-0621.rst:38
+#: ../../pep-0621.rst:41
 msgid ""
 "Provide a tool-agnostic way of specifying metadata for ease of learning "
 "and transitioning between build back-ends"
 msgstr ""
 
-#: ../../pep-0621.rst:40
+#: ../../pep-0621.rst:43
 msgid ""
 "Allow for more code sharing between build back-ends for the \"boring "
 "parts\" of a project's metadata"
 msgstr ""
 
-#: ../../pep-0621.rst:43
+#: ../../pep-0621.rst:46
 msgid ""
 "To speak specifically to the motivation for static metadata, that has "
 "been an overall goal of the packaging ecosystem for some time. As such, "
@@ -139,7 +131,7 @@ msgid ""
 "as users should skew towards wanting to provide static metadata."
 msgstr ""
 
-#: ../../pep-0621.rst:50
+#: ../../pep-0621.rst:53
 msgid ""
 "Requiring the distinction between static and dynamic metadata also helps "
 "with disambiguation for when metadata isn't specified. When any metadata "
@@ -149,7 +141,7 @@ msgid ""
 "goes unspecified."
 msgstr ""
 
-#: ../../pep-0621.rst:57
+#: ../../pep-0621.rst:60
 msgid ""
 "This PEP does **not** attempt to standardize all possible metadata "
 "required by a build back-end, only the metadata covered by the `core "
@@ -162,88 +154,88 @@ msgid ""
 "PEP entirely, which is also possible)."
 msgstr ""
 
-#: ../../pep-0621.rst:67
+#: ../../pep-0621.rst:70
 msgid ""
 "This PEP is also not trying to change the underlying `core metadata`_ in "
 "any way. Such considerations should be done in a separate PEP which may "
 "lead to changes or additions to what this PEP specifies."
 msgstr ""
 
-#: ../../pep-0621.rst:73
+#: ../../pep-0621.rst:76
 msgid "Rationale"
 msgstr ""
 
-#: ../../pep-0621.rst:75
+#: ../../pep-0621.rst:78
 msgid "The design guidelines the authors of this PEP followed were:"
 msgstr ""
 
-#: ../../pep-0621.rst:77
+#: ../../pep-0621.rst:80
 msgid ""
 "Define a representation of as much of the `core metadata`_ in "
 "``pyproject.toml`` as is reasonable"
 msgstr ""
 
-#: ../../pep-0621.rst:79
+#: ../../pep-0621.rst:82
 msgid ""
 "Define the metadata statically with an escape hatch for those who want to"
 " define it dynamically later via a build back-end"
 msgstr ""
 
-#: ../../pep-0621.rst:81
+#: ../../pep-0621.rst:84
 msgid ""
 "Use familiar names where it makes sense, but be willing to use more "
 "modern terminology"
 msgstr ""
 
-#: ../../pep-0621.rst:83
+#: ../../pep-0621.rst:86
 msgid ""
 "Try to be ergonomic within a TOML file instead of mirroring how build "
 "back-ends specify metadata at a low-level when it makes sense"
 msgstr ""
 
-#: ../../pep-0621.rst:85
+#: ../../pep-0621.rst:88
 msgid ""
 "Learn from other build back-ends in the packaging ecosystem which have "
 "used TOML for their metadata"
 msgstr ""
 
-#: ../../pep-0621.rst:87
+#: ../../pep-0621.rst:90
 msgid ""
 "Don't try to standardize things which lack a pre-existing standard at a "
 "lower-level"
 msgstr ""
 
-#: ../../pep-0621.rst:89
+#: ../../pep-0621.rst:92
 msgid "*When* metadata is specified using this PEP, it is considered canonical"
 msgstr ""
 
-#: ../../pep-0621.rst:94
+#: ../../pep-0621.rst:97
 msgid "Specification"
 msgstr ""
 
-#: ../../pep-0621.rst:96
+#: ../../pep-0621.rst:99
 msgid ""
 "When specifying project metadata, tools MUST adhere and honour the "
 "metadata as specified in this PEP. If metadata is improperly specified "
 "then tools MUST raise an error to notify the user about their mistake."
 msgstr ""
 
-#: ../../pep-0621.rst:100
+#: ../../pep-0621.rst:103
 msgid ""
 "Data specified using this PEP is considered canonical. Tools CANNOT "
 "remove, add or change data that has been statically specified. Only when "
 "a field is marked as ``dynamic`` may a tool provide a \"new\" value."
 msgstr ""
 
-#: ../../pep-0621.rst:106
+#: ../../pep-0621.rst:109
 msgid "Details"
 msgstr ""
 
-#: ../../pep-0621.rst:109
+#: ../../pep-0621.rst:112
 msgid "Table name"
 msgstr ""
 
-#: ../../pep-0621.rst:111
+#: ../../pep-0621.rst:114
 msgid ""
 "Tools MUST specify fields defined by this PEP in a table named "
 "``[project]``. No tools may add fields to this table which are not "
@@ -253,166 +245,166 @@ msgid ""
 " the build back-end will dynamically provide all fields."
 msgstr ""
 
-#: ../../pep-0621.rst:120
+#: ../../pep-0621.rst:123
 msgid "``name``"
 msgstr ""
 
-#: ../../pep-0621.rst:121 ../../pep-0621.rst:142 ../../pep-0621.rst:160
-#: ../../pep-0621.rst:218
+#: ../../pep-0621.rst:124 ../../pep-0621.rst:145 ../../pep-0621.rst:163
+#: ../../pep-0621.rst:221
 msgid "Format: string"
 msgstr ""
 
-#: ../../pep-0621.rst:122
+#: ../../pep-0621.rst:125
 msgid ""
 "`Core metadata`_: ``Name`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#name>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:124 ../../pep-0621.rst:145 ../../pep-0621.rst:163
-#: ../../pep-0621.rst:178 ../../pep-0621.rst:221 ../../pep-0621.rst:238
-#: ../../pep-0621.rst:265 ../../pep-0621.rst:305 ../../pep-0621.rst:321
-#: ../../pep-0621.rst:337 ../../pep-0621.rst:355 ../../pep-0621.rst:394
+#: ../../pep-0621.rst:127 ../../pep-0621.rst:148 ../../pep-0621.rst:166
+#: ../../pep-0621.rst:181 ../../pep-0621.rst:224 ../../pep-0621.rst:241
+#: ../../pep-0621.rst:268 ../../pep-0621.rst:308 ../../pep-0621.rst:324
+#: ../../pep-0621.rst:340 ../../pep-0621.rst:358 ../../pep-0621.rst:397
 msgid "Synonyms"
 msgstr ""
 
-#: ../../pep-0621.rst:126
+#: ../../pep-0621.rst:129
 msgid ""
 "Flit_: ``module``/``dist-name`` (`link "
 "<https://flit.readthedocs.io/en/latest/pyproject_toml.html#metadata-"
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:128
+#: ../../pep-0621.rst:131
 msgid ""
 "Poetry_: ``name`` (`link <https://python-"
 "poetry.org/docs/pyproject/#name>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:130
+#: ../../pep-0621.rst:133
 msgid ""
 "Setuptools_: ``name`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:133
+#: ../../pep-0621.rst:136
 msgid "The name of the project."
 msgstr ""
 
-#: ../../pep-0621.rst:135
+#: ../../pep-0621.rst:138
 msgid "Tools MUST require users to statically define this field."
 msgstr ""
 
-#: ../../pep-0621.rst:137
+#: ../../pep-0621.rst:140
 msgid ""
 "Tools SHOULD normalize this name, as specified by :pep:`503`, as soon as "
 "it is read for internal consistency."
 msgstr ""
 
-#: ../../pep-0621.rst:141
+#: ../../pep-0621.rst:144
 msgid "``version``"
 msgstr ""
 
-#: ../../pep-0621.rst:143
+#: ../../pep-0621.rst:146
 msgid ""
 "`Core metadata`_: ``Version`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#version>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:147
+#: ../../pep-0621.rst:150
 msgid ""
 "Flit_: N/A (read from a ``__version__`` attribute) (`link "
 "<https://flit.readthedocs.io/en/latest/index.html#usage>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:149
+#: ../../pep-0621.rst:152
 msgid ""
 "Poetry_: ``version`` (`link <https://python-"
 "poetry.org/docs/pyproject/#version>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:151
+#: ../../pep-0621.rst:154
 msgid ""
 "Setuptools_: ``version`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:154
+#: ../../pep-0621.rst:157
 msgid "The version of the project as supported by :pep:`440`."
 msgstr ""
 
-#: ../../pep-0621.rst:156
+#: ../../pep-0621.rst:159
 msgid "Users SHOULD prefer to specify already-normalized versions."
 msgstr ""
 
-#: ../../pep-0621.rst:159
+#: ../../pep-0621.rst:162
 msgid "``description``"
 msgstr ""
 
-#: ../../pep-0621.rst:161
+#: ../../pep-0621.rst:164
 msgid ""
 "`Core metadata`_: ``Summary`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#summary>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:165
+#: ../../pep-0621.rst:168
 msgid "Flit_: N/A"
 msgstr ""
 
-#: ../../pep-0621.rst:166
+#: ../../pep-0621.rst:169
 msgid ""
 "Poetry_: ``description`` (`link <https://python-"
 "poetry.org/docs/pyproject/#description>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:168
+#: ../../pep-0621.rst:171
 msgid ""
 "Setuptools_: ``description`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:171
+#: ../../pep-0621.rst:174
 msgid "The summary description of the project."
 msgstr ""
 
-#: ../../pep-0621.rst:174
+#: ../../pep-0621.rst:177
 msgid "``readme``"
 msgstr ""
 
-#: ../../pep-0621.rst:175
+#: ../../pep-0621.rst:178
 msgid "Format: String or table"
 msgstr ""
 
-#: ../../pep-0621.rst:176
+#: ../../pep-0621.rst:179
 msgid ""
 "`Core metadata`_: ``Description`` (`link "
 "<https://packaging.python.org/specifications/core-"
 "metadata/#description>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:180
+#: ../../pep-0621.rst:183
 msgid ""
 "Flit_: ``description-file`` (`link "
 "<https://flit.readthedocs.io/en/latest/pyproject_toml.html#metadata-"
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:182
+#: ../../pep-0621.rst:185
 msgid ""
 "Poetry_: ``readme`` (`link <https://python-"
 "poetry.org/docs/pyproject/#readme>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:184
+#: ../../pep-0621.rst:187
 msgid ""
 "Setuptools_: ``long_description`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:187
+#: ../../pep-0621.rst:190
 msgid "The full description of the project (i.e. the README)."
 msgstr ""
 
-#: ../../pep-0621.rst:189
+#: ../../pep-0621.rst:192
 msgid ""
 "The field accepts either a string or a table. If it is a string then it "
 "is the relative path to a text file containing the full description. "
@@ -426,7 +418,7 @@ msgid ""
 "MUST raise an error."
 msgstr ""
 
-#: ../../pep-0621.rst:200
+#: ../../pep-0621.rst:203
 msgid ""
 "The ``readme`` field may also take a table. The ``file`` key has a string"
 " value representing a relative path to a file containing the full "
@@ -435,7 +427,7 @@ msgid ""
 "error if the metadata specifies both keys."
 msgstr ""
 
-#: ../../pep-0621.rst:206
+#: ../../pep-0621.rst:209
 msgid ""
 "A table specified in the ``readme`` field also has a ``content-type`` "
 "field which takes a string specifying the content-type of the full "
@@ -448,74 +440,74 @@ msgid ""
 "types."
 msgstr ""
 
-#: ../../pep-0621.rst:217
+#: ../../pep-0621.rst:220
 msgid "``requires-python``"
 msgstr ""
 
-#: ../../pep-0621.rst:219
+#: ../../pep-0621.rst:222
 msgid ""
 "`Core metadata`_: ``Requires-Python`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#summary>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:223
+#: ../../pep-0621.rst:226
 msgid ""
 "Flit_: ``requires-python`` (`link "
 "<https://flit.readthedocs.io/en/latest/pyproject_toml.html#metadata-"
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:225
+#: ../../pep-0621.rst:228
 msgid ""
 "Poetry_: As a ``python`` dependency in the ``[tool.poetry.dependencies]``"
 " table (`link <https://python-poetry.org/docs/pyproject/#dependencies-"
 "and-dev-dependencies>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:228
+#: ../../pep-0621.rst:231
 msgid ""
 "Setuptools_: ``python_requires`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:231
+#: ../../pep-0621.rst:234
 msgid "The Python version requirements of the project."
 msgstr ""
 
-#: ../../pep-0621.rst:234
+#: ../../pep-0621.rst:237
 msgid "``license``"
 msgstr ""
 
-#: ../../pep-0621.rst:235
+#: ../../pep-0621.rst:238
 msgid "Format: Table"
 msgstr ""
 
-#: ../../pep-0621.rst:236
+#: ../../pep-0621.rst:239
 msgid ""
 "`Core metadata`_: ``License`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#license>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:240
+#: ../../pep-0621.rst:243
 msgid ""
 "Flit_: ``license`` (`link "
 "<https://flit.readthedocs.io/en/latest/pyproject_toml.html#metadata-"
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:242
+#: ../../pep-0621.rst:245
 msgid ""
 "Poetry_: ``license`` (`link <https://python-"
 "poetry.org/docs/pyproject/#license>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:244
+#: ../../pep-0621.rst:247
 msgid ""
 "Setuptools_: ``license``, ``license_file``, ``license_files`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:247
+#: ../../pep-0621.rst:250
 msgid ""
 "The table may have one of two keys. The ``file`` key has a string value "
 "that is a relative file path to the file which contains the license for "
@@ -526,7 +518,7 @@ msgid ""
 "specifies both keys."
 msgstr ""
 
-#: ../../pep-0621.rst:255
+#: ../../pep-0621.rst:258
 msgid ""
 "A practical string value for the ``license`` key has been purposefully "
 "left out to allow for a future PEP to specify support for SPDX_ "
@@ -534,42 +526,42 @@ msgid ""
 "specifying what license the ``file`` or ``text`` represents)."
 msgstr ""
 
-#: ../../pep-0621.rst:261
+#: ../../pep-0621.rst:264
 msgid "``authors``/``maintainers``"
 msgstr ""
 
-#: ../../pep-0621.rst:262
+#: ../../pep-0621.rst:265
 msgid "Format: Array of inline tables with string keys and values"
 msgstr ""
 
-#: ../../pep-0621.rst:263
+#: ../../pep-0621.rst:266
 msgid ""
 "`Core metadata`_: ``Author``/``Author-email``/``Maintainer"
 "``/``Maintainer-email`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#author>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:267
+#: ../../pep-0621.rst:270
 msgid ""
 "Flit_: ``author``/``author-email``/``maintainer``/``maintainer-email`` "
 "(`link <https://flit.readthedocs.io/en/latest/pyproject_toml.html"
 "#metadata-section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:269
+#: ../../pep-0621.rst:272
 msgid ""
 "Poetry_: ``authors``/``maintainers`` (`link <https://python-"
 "poetry.org/docs/pyproject/#authors>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:271
+#: ../../pep-0621.rst:274
 msgid ""
 "Setuptools_: "
 "``author``/``author_email``/``maintainer``/``maintainer_email`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:274
+#: ../../pep-0621.rst:277
 msgid ""
 "The people or organizations considered to be the \"authors\" of the "
 "project. The exact meaning is open to interpretation — it may list the "
@@ -577,38 +569,38 @@ msgid ""
 "package."
 msgstr ""
 
-#: ../../pep-0621.rst:279
+#: ../../pep-0621.rst:282
 msgid ""
 "The \"maintainers\" field is similar to \"authors\" in that its exact "
 "meaning is open to interpretation."
 msgstr ""
 
-#: ../../pep-0621.rst:282
+#: ../../pep-0621.rst:285
 msgid ""
 "These fields accept an array of tables with 2 keys: ``name`` and "
 "``email``. Both values must be strings. The ``name`` value MUST be a "
 "valid email name (i.e. whatever can be put as a name, before an email, in"
-" `RFC #822`_) and not contain commas. The ``email`` value MUST be a valid"
-" email address. Both keys are optional."
+" :rfc:`822`) and not contain commas. The ``email`` value MUST be a valid "
+"email address. Both keys are optional."
 msgstr ""
 
-#: ../../pep-0621.rst:288
+#: ../../pep-0621.rst:291
 msgid "Using the data to fill in `core metadata`_ is as follows:"
 msgstr ""
 
-#: ../../pep-0621.rst:290
+#: ../../pep-0621.rst:293
 msgid ""
 "If only ``name`` is provided, the value goes in ``Author``/``Maintainer``"
 " as appropriate."
 msgstr ""
 
-#: ../../pep-0621.rst:292
+#: ../../pep-0621.rst:295
 msgid ""
 "If only ``email`` is provided, the value goes in ``Author-email"
 "``/``Maintainer-email`` as appropriate."
 msgstr ""
 
-#: ../../pep-0621.rst:294
+#: ../../pep-0621.rst:297
 msgid ""
 "If both ``email`` and ``name`` are provided, the value goes in ``Author-"
 "email``/``Maintainer-email`` as appropriate, with the format ``{name} "
@@ -616,136 +608,136 @@ msgid ""
 "``email.headerregistry.Address``)."
 msgstr ""
 
-#: ../../pep-0621.rst:298
+#: ../../pep-0621.rst:301
 msgid "Multiple values should be separated by commas."
 msgstr ""
 
-#: ../../pep-0621.rst:301
+#: ../../pep-0621.rst:304
 msgid "``keywords``"
 msgstr ""
 
-#: ../../pep-0621.rst:302 ../../pep-0621.rst:318
+#: ../../pep-0621.rst:305 ../../pep-0621.rst:321
 msgid "Format: array of strings"
 msgstr ""
 
-#: ../../pep-0621.rst:303
+#: ../../pep-0621.rst:306
 msgid ""
 "`Core metadata`_: ``Keywords`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#keywords>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:307
+#: ../../pep-0621.rst:310
 msgid ""
 "Flit_: ``keywords`` (`link "
 "<https://flit.readthedocs.io/en/latest/pyproject_toml.html#metadata-"
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:309
+#: ../../pep-0621.rst:312
 msgid ""
 "Poetry_: ``keywords`` (`link <https://python-"
 "poetry.org/docs/pyproject/#keywords>`_)"
 msgstr ""
 
-#: ../../pep-0621.rst:311
+#: ../../pep-0621.rst:314
 msgid ""
 "Setuptools_: ``keywords`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:314
+#: ../../pep-0621.rst:317
 msgid "The keywords for the project."
 msgstr ""
 
-#: ../../pep-0621.rst:317
+#: ../../pep-0621.rst:320
 msgid "``classifiers``"
 msgstr ""
 
-#: ../../pep-0621.rst:319
+#: ../../pep-0621.rst:322
 msgid ""
 "`Core metadata`_: ``Classifier`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#classifier-"
 "multiple-use>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:323
+#: ../../pep-0621.rst:326
 msgid ""
 "Flit_: ``classifiers`` (`link "
 "<https://flit.readthedocs.io/en/latest/pyproject_toml.html#metadata-"
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:325
+#: ../../pep-0621.rst:328
 msgid ""
 "Poetry_: ``classifiers`` (`link <https://python-"
 "poetry.org/docs/pyproject/#classifiers>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:327
+#: ../../pep-0621.rst:330
 msgid ""
 "Setuptools_: ``classifiers`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:330
+#: ../../pep-0621.rst:333
 msgid "`Trove classifiers`_ which apply to the project."
 msgstr ""
 
-#: ../../pep-0621.rst:333
+#: ../../pep-0621.rst:336
 msgid "``urls``"
 msgstr ""
 
-#: ../../pep-0621.rst:334
+#: ../../pep-0621.rst:337
 msgid "Format: Table, with keys and values of strings"
 msgstr ""
 
-#: ../../pep-0621.rst:335
+#: ../../pep-0621.rst:338
 msgid ""
 "`Core metadata`_: ``Project-URL`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#project-url-"
 "multiple-use>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:339
+#: ../../pep-0621.rst:342
 msgid ""
 "Flit_: ``[tool.flit.metadata.urls]`` table (`link "
 "<https://flit.readthedocs.io/en/latest/pyproject_toml.html#metadata-"
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:341
+#: ../../pep-0621.rst:344
 msgid ""
 "Poetry_: ``[tool.poetry.urls]`` table (`link <https://python-"
 "poetry.org/docs/pyproject/#urls>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:343
+#: ../../pep-0621.rst:346
 msgid ""
 "Setuptools_: ``project_urls`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:346
+#: ../../pep-0621.rst:349
 msgid ""
 "A table of URLs where the key is the URL label and the value is the URL "
 "itself."
 msgstr ""
 
-#: ../../pep-0621.rst:350
+#: ../../pep-0621.rst:353
 msgid "Entry points"
 msgstr ""
 
-#: ../../pep-0621.rst:351
+#: ../../pep-0621.rst:354
 msgid ""
 "Format: Table (``[project.scripts]``, ``[project.gui-scripts]``, and "
 "``[project.entry-points]``)"
 msgstr ""
 
-#: ../../pep-0621.rst:353
+#: ../../pep-0621.rst:356
 msgid "`Core metadata`_: N/A; `Entry points specification`_"
 msgstr ""
 
-#: ../../pep-0621.rst:357
+#: ../../pep-0621.rst:360
 msgid ""
 "Flit_: ``[tool.flit.scripts]`` table for console scripts, "
 "``[tool.flit.entrypoints]`` for the rest (`link "
@@ -753,19 +745,19 @@ msgid ""
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:360
+#: ../../pep-0621.rst:363
 msgid ""
 "Poetry_: ``[tool.poetry.scripts]`` table for console scripts (`link "
 "<https://python-poetry.org/docs/pyproject/#scripts>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:362
+#: ../../pep-0621.rst:365
 msgid ""
 "Setuptools_: ``entry_points`` (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:365
+#: ../../pep-0621.rst:368
 msgid ""
 "There are three tables related to entry points. The ``[project.scripts]``"
 " table corresponds to the ``console_scripts`` group in the `entry points "
@@ -773,14 +765,14 @@ msgid ""
 "the value is the object reference."
 msgstr ""
 
-#: ../../pep-0621.rst:370
+#: ../../pep-0621.rst:373
 msgid ""
 "The ``[project.gui-scripts]`` table corresponds to the ``gui_scripts`` "
 "group in the `entry points specification`_. Its format is the same as "
 "``[project.scripts]``."
 msgstr ""
 
-#: ../../pep-0621.rst:374
+#: ../../pep-0621.rst:377
 msgid ""
 "The ``[project.entry-points]`` table is a collection of tables. Each sub-"
 "table's name is an entry point group. The key and value semantics are the"
@@ -788,7 +780,7 @@ msgid ""
 "but instead keep the entry point groups to only one level deep."
 msgstr ""
 
-#: ../../pep-0621.rst:380
+#: ../../pep-0621.rst:383
 msgid ""
 "Build back-ends MUST raise an error if the metadata defines a ``[project"
 ".entry-points.console_scripts]`` or ``[project.entry-"
@@ -796,17 +788,17 @@ msgid ""
 "``[project.scripts]`` and ``[project.gui-scripts]``, respectively."
 msgstr ""
 
-#: ../../pep-0621.rst:387
+#: ../../pep-0621.rst:390
 msgid "``dependencies``/``optional-dependencies``"
 msgstr ""
 
-#: ../../pep-0621.rst:388
+#: ../../pep-0621.rst:391
 msgid ""
 "Format: Array of :pep:`508` strings (``dependencies``) and a table with "
 "values of arrays of :pep:`508` strings (``optional-dependencies``)"
 msgstr ""
 
-#: ../../pep-0621.rst:391
+#: ../../pep-0621.rst:394
 msgid ""
 "`Core metadata`_: ``Requires-Dist`` and ``Provides-Extra`` (`link "
 "<https://packaging.python.org/specifications/core-metadata/#requires-"
@@ -814,7 +806,7 @@ msgid ""
 "/core-metadata/#provides-extra-multiple-use>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:396
+#: ../../pep-0621.rst:399
 msgid ""
 "Flit_: ``requires`` for required dependencies, ``requires-extra`` for "
 "optional dependencies (`link "
@@ -822,7 +814,7 @@ msgid ""
 "section>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:399
+#: ../../pep-0621.rst:402
 msgid ""
 "Poetry_: ``[tool.poetry.dependencies]`` for dependencies (both required "
 "and for development), ``[tool.poetry.extras]`` for optional dependencies "
@@ -830,18 +822,18 @@ msgid ""
 "dependencies>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:403
+#: ../../pep-0621.rst:406
 msgid ""
 "Setuptools_: ``install_requires`` for required dependencies, "
 "``extras_require`` for optional dependencies (`link "
 "<https://setuptools.readthedocs.io/en/latest/setuptools.html#metadata>`__)"
 msgstr ""
 
-#: ../../pep-0621.rst:407
+#: ../../pep-0621.rst:410
 msgid "The (optional) dependencies of the project."
 msgstr ""
 
-#: ../../pep-0621.rst:409
+#: ../../pep-0621.rst:412
 msgid ""
 "For ``dependencies``, it is a key whose value is an array of strings. "
 "Each string represents a dependency of the project and MUST be formatted "
@@ -849,7 +841,7 @@ msgid ""
 "Dist`` entry in the `core metadata`_."
 msgstr ""
 
-#: ../../pep-0621.rst:414
+#: ../../pep-0621.rst:417
 msgid ""
 "For ``optional-dependencies``, it is a table where each key specifies an "
 "extra and whose value is an array of strings. The strings of the arrays "
@@ -859,23 +851,23 @@ msgid ""
 "Extra`` metadata."
 msgstr ""
 
-#: ../../pep-0621.rst:422
+#: ../../pep-0621.rst:425
 msgid "``dynamic``"
 msgstr ""
 
-#: ../../pep-0621.rst:423
+#: ../../pep-0621.rst:426
 msgid "Format: Array of strings"
 msgstr ""
 
-#: ../../pep-0621.rst:424
+#: ../../pep-0621.rst:427
 msgid "`Core metadata`_: N/A"
 msgstr ""
 
-#: ../../pep-0621.rst:425
+#: ../../pep-0621.rst:428
 msgid "No synonyms"
 msgstr ""
 
-#: ../../pep-0621.rst:427
+#: ../../pep-0621.rst:430
 msgid ""
 "Specifies which fields listed by this PEP were intentionally unspecified "
 "so another tool can/will provide such metadata dynamically. This clearly "
@@ -883,19 +875,19 @@ msgid ""
 "stay unspecified compared to being provided via tooling later on."
 msgstr ""
 
-#: ../../pep-0621.rst:433
+#: ../../pep-0621.rst:436
 msgid ""
 "A build back-end MUST honour statically-specified metadata (which means "
 "the metadata did not list the field in ``dynamic``)."
 msgstr ""
 
-#: ../../pep-0621.rst:435
+#: ../../pep-0621.rst:438
 msgid ""
 "A build back-end MUST raise an error if the metadata specifies the "
 "``name`` in ``dynamic``."
 msgstr ""
 
-#: ../../pep-0621.rst:437
+#: ../../pep-0621.rst:440
 msgid ""
 "If the `core metadata`_ specification lists a field as \"Required\", then"
 " the metadata MUST specify the field statically or list it in ``dynamic``"
@@ -904,20 +896,20 @@ msgid ""
 "``[project]`` table)."
 msgstr ""
 
-#: ../../pep-0621.rst:442
+#: ../../pep-0621.rst:445
 msgid ""
 "If the `core metadata`_ specification lists a field as \"Optional\", the "
 "metadata MAY list it in ``dynamic`` if the expectation is a build back-"
 "end will provide the data for the field later."
 msgstr ""
 
-#: ../../pep-0621.rst:445
+#: ../../pep-0621.rst:448
 msgid ""
 "Build back-ends MUST raise an error if the metadata specifies a field "
 "statically as well as being listed in ``dynamic``."
 msgstr ""
 
-#: ../../pep-0621.rst:447
+#: ../../pep-0621.rst:450
 msgid ""
 "If the metadata does not list a field in ``dynamic``, then a build back-"
 "end CANNOT fill in the requisite metadata on behalf of the user (i.e. "
@@ -925,91 +917,91 @@ msgid ""
 "user must opt into the filling in)."
 msgstr ""
 
-#: ../../pep-0621.rst:451
+#: ../../pep-0621.rst:454
 msgid ""
 "Build back-ends MUST raise an error if the metadata specifies a field in "
 "dynamic but the build back-end was unable to provide the data for it."
 msgstr ""
 
-#: ../../pep-0621.rst:456
+#: ../../pep-0621.rst:459
 msgid "Example"
 msgstr ""
 
-#: ../../pep-0621.rst:509
+#: ../../pep-0621.rst:512
 msgid "Backwards Compatibility"
 msgstr ""
 
-#: ../../pep-0621.rst:511
+#: ../../pep-0621.rst:514
 msgid ""
 "As this provides a new way to specify a project's `core metadata`_ and is"
 " using a new table name which falls under the reserved namespace as "
 "outlined in :pep:`518`, there are no backwards-compatibility concerns."
 msgstr ""
 
-#: ../../pep-0621.rst:517
+#: ../../pep-0621.rst:520
 msgid "Security Implications"
 msgstr ""
 
-#: ../../pep-0621.rst:519
+#: ../../pep-0621.rst:522
 msgid ""
 "There are no direct security concerns as this PEP covers how to "
 "statically define project metadata. Any security issues would stem from "
 "how tools consume the metadata and choose to act upon it."
 msgstr ""
 
-#: ../../pep-0621.rst:525
+#: ../../pep-0621.rst:528
 msgid "Reference Implementation"
 msgstr ""
 
-#: ../../pep-0621.rst:527
+#: ../../pep-0621.rst:530
 msgid ""
 "There are currently no proofs-of-concept from any build back-end "
 "implementing this PEP."
 msgstr ""
 
-#: ../../pep-0621.rst:532
+#: ../../pep-0621.rst:535
 msgid "Rejected Ideas"
 msgstr ""
 
-#: ../../pep-0621.rst:535
+#: ../../pep-0621.rst:538
 msgid "Other table names"
 msgstr ""
 
-#: ../../pep-0621.rst:538
+#: ../../pep-0621.rst:541
 msgid "Anything under ``[build-system]``"
 msgstr ""
 
-#: ../../pep-0621.rst:539
+#: ../../pep-0621.rst:542
 msgid ""
 "There was worry that using this table name would exacerbate confusion "
 "between build metadata and project metadata, e.g. by using ``[build-"
 "system.metadata]`` as a table."
 msgstr ""
 
-#: ../../pep-0621.rst:544
+#: ../../pep-0621.rst:547
 msgid "``[package]``"
 msgstr ""
 
-#: ../../pep-0621.rst:545
+#: ../../pep-0621.rst:548
 msgid "Garnered no strong support."
 msgstr ""
 
-#: ../../pep-0621.rst:548
+#: ../../pep-0621.rst:551
 msgid "``[metadata]``"
 msgstr ""
 
-#: ../../pep-0621.rst:549
+#: ../../pep-0621.rst:552
 msgid ""
 "The strongest contender after ``[project]``, but in the end it was agreed"
 " that ``[project]`` read better for certain sub-tables, e.g. "
 "``[project.urls]``."
 msgstr ""
 
-#: ../../pep-0621.rst:554
+#: ../../pep-0621.rst:557
 msgid "Support for a metadata provider"
 msgstr ""
 
-#: ../../pep-0621.rst:555
+#: ../../pep-0621.rst:558
 msgid ""
 "Initially there was a proposal to add a middle layer between the static "
 "metadata specified by this PEP and ``prepare_metadata_for_build_wheel()``"
@@ -1018,29 +1010,29 @@ msgid ""
 "hook to do so."
 msgstr ""
 
-#: ../../pep-0621.rst:561
+#: ../../pep-0621.rst:564
 msgid ""
 "In the end the authors considered this idea unnecessarily complicated and"
 " would move the PEP away from its design goal to push people to define "
 "core metadata statically as much as possible."
 msgstr ""
 
-#: ../../pep-0621.rst:566
+#: ../../pep-0621.rst:569
 msgid "Require a normalized project name"
 msgstr ""
 
-#: ../../pep-0621.rst:567
+#: ../../pep-0621.rst:570
 msgid ""
 "While it would make things easier for tools to only work with the "
 "normalized name as specified in :pep:`503`, the idea was ultimately "
 "rejected as it would hurt projects transitioning to using this PEP."
 msgstr ""
 
-#: ../../pep-0621.rst:572
+#: ../../pep-0621.rst:575
 msgid "Specify files to include when building"
 msgstr ""
 
-#: ../../pep-0621.rst:573
+#: ../../pep-0621.rst:576
 msgid ""
 "The authors decided fairly quickly during design discussions that this "
 "PEP should focus exclusively on project metadata and not build metadata. "
@@ -1048,11 +1040,11 @@ msgid ""
 "wheel file is out of scope for this PEP."
 msgstr ""
 
-#: ../../pep-0621.rst:579
+#: ../../pep-0621.rst:582
 msgid "Name the ``[project.urls]`` table ``[project.project-urls]``"
 msgstr ""
 
-#: ../../pep-0621.rst:580
+#: ../../pep-0621.rst:583
 msgid ""
 "This suggestion came thanks to the corresponding `core metadata`_ being "
 "``Project-Url``. But once the overall table name of ``[project]`` was "
@@ -1060,24 +1052,24 @@ msgid ""
 "shorter name was a better fit."
 msgstr ""
 
-#: ../../pep-0621.rst:586
+#: ../../pep-0621.rst:589
 msgid "Have a separate ``url``/``home-page`` field"
 msgstr ""
 
-#: ../../pep-0621.rst:587
+#: ../../pep-0621.rst:590
 msgid ""
 "While the `core metadata`_ supports it, having a single field for a "
 "project's URL while also supporting a full table seemed redundant and "
 "confusing."
 msgstr ""
 
-#: ../../pep-0621.rst:592
+#: ../../pep-0621.rst:595
 msgid ""
 "Recommend that tools put development-related dependencies into a \"dev\" "
 "extra"
 msgstr ""
 
-#: ../../pep-0621.rst:593
+#: ../../pep-0621.rst:596
 msgid ""
 "As various tools have grown the concept of required dependencies versus "
 "development dependencies, the idea of suggesting to tools that they put "
@@ -1086,11 +1078,11 @@ msgid ""
 "suggest such a workflow."
 msgstr ""
 
-#: ../../pep-0621.rst:600
+#: ../../pep-0621.rst:603
 msgid "Have the ``dynamic`` field only require specifying missing required fields"
 msgstr ""
 
-#: ../../pep-0621.rst:601
+#: ../../pep-0621.rst:604
 msgid ""
 "The authors considered the idea that the ``dynamic`` field would only "
 "require the listing of missing required fields and make listing optional "
@@ -1098,11 +1090,11 @@ msgid ""
 " promoting specifying as much information statically as possible."
 msgstr ""
 
-#: ../../pep-0621.rst:608
+#: ../../pep-0621.rst:611
 msgid "Different structures for the ``readme`` field"
 msgstr ""
 
-#: ../../pep-0621.rst:609
+#: ../../pep-0621.rst:612
 msgid ""
 "The ``readme`` field had a proposed ``readme_content_type`` field, but "
 "the authors considered the string/table hybrid more practical for the "
@@ -1111,18 +1103,18 @@ msgid ""
 "``long_description_content_type`` field."
 msgstr ""
 
-#: ../../pep-0621.rst:615
+#: ../../pep-0621.rst:618
 msgid ""
 "The ``file`` key in the table format was originally proposed as ``path``,"
 " but ``file`` corresponds to setuptools' ``file`` key and there is no "
 "strong reason otherwise to choose one over the other."
 msgstr ""
 
-#: ../../pep-0621.rst:620
+#: ../../pep-0621.rst:623
 msgid "Allowing the ``readme`` field to imply ``text/plain``"
 msgstr ""
 
-#: ../../pep-0621.rst:621
+#: ../../pep-0621.rst:624
 msgid ""
 "The authors considered allowing for unspecified content-types which would"
 " default to ``text/plain``, but decided that it would be best to be "
@@ -1130,40 +1122,40 @@ msgid ""
 "and to force users to be clear in their intent."
 msgstr ""
 
-#: ../../pep-0621.rst:627
+#: ../../pep-0621.rst:630
 msgid "Other names for ``dependencies``/``optional-dependencies``"
 msgstr ""
 
-#: ../../pep-0621.rst:628
+#: ../../pep-0621.rst:631
 msgid ""
 "The authors originally proposed ``requires``/``extra-requires`` as names,"
 " but decided to go with the current names after a survey of other "
 "packaging ecosystems showed Python was an outlier:"
 msgstr ""
 
-#: ../../pep-0621.rst:632
+#: ../../pep-0621.rst:635
 msgid "`npm <https://docs.npmjs.com/files/package.json#optionaldependencies>`__"
 msgstr ""
 
-#: ../../pep-0621.rst:633
+#: ../../pep-0621.rst:636
 msgid "`Rust <https://doc.rust-lang.org/cargo/guide/dependencies.html>`__"
 msgstr ""
 
-#: ../../pep-0621.rst:634
+#: ../../pep-0621.rst:637
 msgid "`Dart <https://dart.dev/guides/packages>`__"
 msgstr ""
 
-#: ../../pep-0621.rst:635
+#: ../../pep-0621.rst:638
 msgid "`Swift <https://swift.org/package-manager/>`__"
 msgstr ""
 
-#: ../../pep-0621.rst:636
+#: ../../pep-0621.rst:639
 msgid ""
 "`Ruby <https://guides.rubygems.org/specification-"
 "reference/#add_runtime_dependency>`__"
 msgstr ""
 
-#: ../../pep-0621.rst:638
+#: ../../pep-0621.rst:641
 msgid ""
 "Normalizing on the current names helps minimize confusion for people "
 "coming from other ecosystems without using terminology that is "
@@ -1172,11 +1164,11 @@ msgid ""
 "in :pep:`518`."
 msgstr ""
 
-#: ../../pep-0621.rst:644
+#: ../../pep-0621.rst:647
 msgid "Drop ``maintainers`` to unify with ``authors``"
 msgstr ""
 
-#: ../../pep-0621.rst:645
+#: ../../pep-0621.rst:648
 msgid ""
 "As the difference between ``Authors`` and ``Maintainers`` fields in the "
 "`core metadata`_ is unspecified and ambiguous, this PEP originally "
@@ -1186,7 +1178,7 @@ msgid ""
 "people maintaining a project."
 msgstr ""
 
-#: ../../pep-0621.rst:652
+#: ../../pep-0621.rst:655
 msgid ""
 "In the end, though, the decision to adhere to the core metadata was "
 "deemed more important to help with the acceptance of this PEP, rather "
@@ -1194,11 +1186,11 @@ msgid ""
 "metadata."
 msgstr ""
 
-#: ../../pep-0621.rst:658
+#: ../../pep-0621.rst:661
 msgid "Support an arbitrary depth of tables for ``project.entry-points``"
 msgstr ""
 
-#: ../../pep-0621.rst:659
+#: ../../pep-0621.rst:662
 msgid ""
 "There was a worry that keeping ``project.entry-points`` to a depth of 1 "
 "for sub-tables would cause confusion to users if they use a dotted name "
@@ -1211,11 +1203,11 @@ msgid ""
 "appropriate on value types."
 msgstr ""
 
-#: ../../pep-0621.rst:669
+#: ../../pep-0621.rst:672
 msgid "Using structured TOML dictionaries to specify dependencies"
 msgstr ""
 
-#: ../../pep-0621.rst:670
+#: ../../pep-0621.rst:673
 msgid ""
 "The format for specifying the dependencies of a project was the most "
 "hotly contested topic in terms of data format. It led to the creation of "
@@ -1225,20 +1217,20 @@ msgid ""
 "dependencies-pep-508-strings-or-a-table-in-toml/5243/38."
 msgstr ""
 
-#: ../../pep-0621.rst:677
+#: ../../pep-0621.rst:680
 msgid ""
 "The authors briefly considered supporting both formats, but decided that "
 "it would lead to confusion as people would need to be familiar with two "
 "formats instead of just one."
 msgstr ""
 
-#: ../../pep-0621.rst:682
+#: ../../pep-0621.rst:685
 msgid ""
 "Require build back-ends to update ``pyproject.toml`` when generating an "
 "sdist"
 msgstr ""
 
-#: ../../pep-0621.rst:683
+#: ../../pep-0621.rst:686
 msgid ""
 "When this PEP was written, sdists did not require having static, "
 "canonical metadata like this PEP does. The idea was then considered to "
@@ -1248,11 +1240,11 @@ msgid ""
 "standardizing metadata in sdists."
 msgstr ""
 
-#: ../../pep-0621.rst:691
+#: ../../pep-0621.rst:694
 msgid "Allow tools to add/extend data"
 msgstr ""
 
-#: ../../pep-0621.rst:692
+#: ../../pep-0621.rst:695
 msgid ""
 "In an earlier version of this PEP, tools were allowed to extend data for "
 "fields. For instance, build back-ends could take the version number and "
@@ -1261,28 +1253,53 @@ msgid ""
 "versions."
 msgstr ""
 
-#: ../../pep-0621.rst:698
+#: ../../pep-0621.rst:701
 msgid ""
 "In the end, though, it was thought better to start out stricter and "
 "contemplate loosening how static the data could be considered based on "
 "real-world usage."
 msgstr ""
 
-#: ../../pep-0621.rst:704
+#: ../../pep-0621.rst:707
 msgid "Open Issues"
 msgstr ""
 
-#: ../../pep-0621.rst:705
+#: ../../pep-0621.rst:708
 msgid "None at the moment."
 msgstr ""
 
-#: ../../pep-0621.rst:708
+#: ../../pep-0621.rst:711
 msgid "Copyright"
 msgstr ""
 
-#: ../../pep-0621.rst:710
+#: ../../pep-0621.rst:713
 msgid ""
 "This document is placed in the public domain or under the "
 "CC0-1.0-Universal license, whichever is more permissive."
 msgstr ""
+
+#~ msgid "PEP"
+#~ msgstr ""
+
+#~ msgid "621"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "Storing project metadata in pyproject.toml"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "These fields accept an array of "
+#~ "tables with 2 keys: ``name`` and "
+#~ "``email``. Both values must be strings."
+#~ " The ``name`` value MUST be a "
+#~ "valid email name (i.e. whatever can "
+#~ "be put as a name, before an "
+#~ "email, in `RFC #822`_) and not "
+#~ "contain commas. The ``email`` value MUST"
+#~ " be a valid email address. Both "
+#~ "keys are optional."
+#~ msgstr ""
 
