@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>PEP 518 – Specifying Minimum Build System Requirements for Python Projects | peps.python.org</title>
+    <link rel="shortcut icon" href="../_static/py.png">
+    <link rel="canonical" href="https://peps.python.org/pep-0518/">
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/mq.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" media="(prefers-color-scheme: light)" id="pyg-light">
+    <link rel="stylesheet" href="../_static/pygments_dark.css" type="text/css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+    <link rel="alternate" type="application/rss+xml" title="Latest PEPs" href="https://peps.python.org/peps.rss">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <meta name="description" content="Python Enhancement Proposals (PEPs)">
+</head>
+<body>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-sun-half" viewBox="0 0 24 24" pointer-events="all">
+    <title>Following system colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 3v18m0-12l4.65-4.65M12 14.3l7.37-7.37M12 19.6l8.85-8.85"></path>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24" pointer-events="all">
+    <title>Selected dark colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24" pointer-events="all">
+    <title>Selected light colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+</svg>
+    <script>
+
+        document.documentElement.dataset.colour_scheme = localStorage.getItem("colour_scheme") || "auto"
+    </script>
+    <section id="pep-page-section">
+        <header>
+            <h1>Python Enhancement Proposals</h1>
+            <ul class="breadcrumbs">
+                <li><a href="https://www.python.org/" title="The Python Programming Language">Python</a> &raquo; </li>
+                <li><a href="../pep-0000/">PEP Index</a> &raquo; </li>
+                <li>PEP 518</li>
+            </ul>
+            <button id="colour-scheme-cycler" onClick="setColourScheme(nextColourScheme())">
+                <svg aria-hidden="true" class="colour-scheme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+                <svg aria-hidden="true" class="colour-scheme-icon-when-dark"><use href="#svg-moon"></use></svg>
+                <svg aria-hidden="true" class="colour-scheme-icon-when-light"><use href="#svg-sun"></use></svg>
+                <span class="visually-hidden">Toggle light / dark / auto colour theme</span>
+            </button>
+        </header>
+        <article>
+            <section id="pep-content">
+<h1 class="page-title">PEP 518 – Specifying Minimum Build System Requirements for Python Projects</h1>
+<dl class="rfc2822 field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd">Brett Cannon &lt;brett&#32;&#97;t&#32;python.org&gt;,
+Nathaniel Smith &lt;njs&#32;&#97;t&#32;pobox.com&gt;,
+Donald Stufft &lt;donald&#32;&#97;t&#32;stufft.io&gt;</dd>
+<dt class="field-even">BDFL-Delegate<span class="colon">:</span></dt>
+<dd class="field-even">Nick Coghlan</dd>
+<dt class="field-odd">Discussions-To<span class="colon">:</span></dt>
+<dd class="field-odd"><a class="reference external" href="https://mail.python.org/archives/list/distutils-sig&#64;python.org/">Distutils-SIG list</a></dd>
+<dt class="field-even">Status<span class="colon">:</span></dt>
+<dd class="field-even"><abbr title="Accepted and implementation complete, or no longer active">Final</abbr></dd>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><abbr title="Normative PEP with a new feature for Python, implementation change for CPython or interoperability standard for the ecosystem">Standards Track</abbr></dd>
+<dt class="field-even">Topic<span class="colon">:</span></dt>
+<dd class="field-even"><a class="reference external" href="../topic/packaging/">Packaging</a></dd>
+<dt class="field-odd">Created<span class="colon">:</span></dt>
+<dd class="field-odd">10-May-2016</dd>
+<dt class="field-even">Post-History<span class="colon">:</span></dt>
+<dd class="field-even">10-May-2016,
+11-May-2016,
+13-May-2016</dd>
+<dt class="field-odd">Resolution<span class="colon">:</span></dt>
+<dd class="field-odd"><a class="reference external" href="https://mail.python.org/pipermail/distutils-sig/2016-May/028969.html">Distutils-SIG message</a></dd>
+</dl>
+<hr class="docutils" />
+<section id="contents">
+<details><summary>Table of Contents</summary><ul class="simple">
+<li><a class="reference internal" href="#abstract">摘要</a></li>
+<li><a class="reference internal" href="#rationale">基本原理</a></li>
+<li><a class="reference internal" href="#specification">规范</a><ul>
+<li><a class="reference internal" href="#file-format">文件格式</a></li>
+<li><a class="reference internal" href="#build-system-table">build-system 表</a></li>
+<li><a class="reference internal" href="#tool-table">tool 表</a></li>
+<li><a class="reference internal" href="#json-schema">JSON 模式</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rejected-ideas">拒绝的想法</a><ul>
+<li><a class="reference internal" href="#a-semantic-version-key">语义版本键</a></li>
+<li><a class="reference internal" href="#a-more-nested-namespace">嵌套更多的命名空间</a></li>
+<li><a class="reference internal" href="#other-table-names">其他表名称</a></li>
+<li><a class="reference internal" href="#other-file-formats">其他文件格式</a><ul>
+<li><a class="reference internal" href="#overview-of-file-formats-considered">Overview of file formats considered</a></li>
+<li><a class="reference internal" href="#json">JSON</a></li>
+<li><a class="reference internal" href="#yaml">YAML</a></li>
+<li><a class="reference internal" href="#configparser">configparser</a></li>
+<li><a class="reference internal" href="#python-literals">Python literals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sticking-with-setup-cfg">Sticking with <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code></a></li>
+<li><a class="reference internal" href="#other-file-names">Other file names</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#copyright">Copyright</a></li>
+</ul>
+</details></section>
+<section id="abstract">
+<h2><a class="toc-backref" href="#abstract" role="doc-backlink">摘要</a></h2>
+<p>这个 PEP 指定了 Python 软件包应该如何指定它们所拥有的构建依赖关系，以便执行所选择的构建系统。作为该规范的一部分，为软件包引入了新的配置文件，用于指定它们的构建依赖关系（预期相同的配置文件将用于未来的配置细节）。</p>
+</section>
+<section id="rationale">
+<h2><a class="toc-backref" href="#rationale" role="doc-backlink">基本原理</a></h2>
+<p>当 Python 第一次开发用于构建项目软件发行版的工具时，distutils <a class="footnote-reference brackets" href="#distutils" id="id1">[1]</a> 是被选择的解决方案。随着时间的推移，setuptools <a class="footnote-reference brackets" href="#setuptools" id="id2">[2]</a> 越来越受欢迎，它在 distutils 之上添加了一些功能。两者都使用了 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 文件的概念，项目维护者执行该文件来构建其软件的发行版（以及用户安装该发行版）。</p>
+<p>使用可执行文件在 distutils 下指定构建需求不是问题，因为 distutils 是 Python 标准库的一部分。将构建工具作为 Python 的一部分意味着 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 没有项目维护者在构建项目发行版时需要担心的外部依赖项。没有必要指定任何依赖项信息，因为唯一的依赖项就是 Python。</p>
+<p>但是当项目选择使用 setuptools 时，像 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 这样的可执行文件的使用就成了问题。你不能在不知道它的依赖关系的情况下执行 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 文件，但目前没有标准的方法来自动地知道这些依赖关系是什么，而不执行存储信息的 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 文件。这是进退两难的局面，文件如果不知道它自己的内容就不能运行，除非你运行文件，否则无法通过编程知道它的内容。</p>
+<p>Setuptools 试图用 <code class="docutils literal notranslate"><span class="pre">setup_requires</span></code> 参数来解决这个问题，它的 <code class="docutils literal notranslate"><span class="pre">setup()</span></code> 函数 <a class="footnote-reference brackets" href="#setup-args" id="id3">[3]</a>。这个解决方案有很多问题，比如：</p>
+<ul class="simple">
+<li>没有任何工具（除了 setuptools 本身）可以在不执行 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 的情况下访问这些信息，但是如果没有安装这些项，<code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 就不能执行。</li>
+<li>虽然 setuptools 本身将安装中列出这样的东西，他们不会被安装到执行期间 <code class="docutils literal notranslate"><span class="pre">setup()</span></code> 的函数，这意味着实际使用任何添加的唯一途径是通过日益复杂的机制，推迟 import 和使用这些模块，直到后来的执行 <code class="docutils literal notranslate"><span class="pre">setup()</span></code> 函数。</li>
+<li>这不能包括 <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> 本身，也不能包括 <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> 的替代品，这意味着 <code class="docutils literal notranslate"><span class="pre">numpy.distutils</span></code> 等项目，在很大程度上无法利用它，项目不能利用更新的 <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> 功能，直到他们的用户自然地将 <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> 版本升级到更新的版本。</li>
+<li>当您执行 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 时，<code class="docutils literal notranslate"><span class="pre">setup_requires</span></code> 中列出的项目将隐式安装，但是执行 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 的常见方式之一是通过另一个工具，例如 <code class="docutils literal notranslate"><span class="pre">pip</span></code>，它已经在管理依赖项。这意味着像 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">spam</span></code> 这样的命令可能最终会让 <code class="docutils literal notranslate"><span class="pre">pip</span></code> 和 <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> 同时下载和安装包，最终用户需要配置这两个工具（对于 <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> 来说，不需要控制调用）来更改设置，比如从哪个存储库安装。这还意味着用户需要了解这两种工具的发现规则，因为工具可能支持不同的包格式，或者以不同的方式确定最新版本。</li>
+</ul>
+<p>这种情况导致很少使用 <code class="docutils literal notranslate"><span class="pre">setup_requires</span></code>，项目倾向于简单地在 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 文件之间复制和粘贴代码片段，或者在试图构建或安装他们的项目之前简单地在其他地方记录他们希望用户手动安装的内容。</p>
+<p>所有这些导致pip <a class="footnote-reference brackets" href="#pip" id="id4">[4]</a> 简单地假设在执行 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 文件时 setuptools 是必要的。但问题是，如果另一个项目开始像 setuptools 一样在社区中获得吸引力，它就无法扩展。当 pip 无法推断除了 setuptools 之外还需要其他工具时，它还可以防止其他项目获得关注，因为在项目中使用它所需的摩擦。</p>
+<p>这个 PEP 试图通过指定一种方法在特定文件中以声明的方式列出项目构建系统的最小依赖项来纠正这种情况。这允许项目列出从源代码签出到轮的构建依赖关系，而不会陷入 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 所具有的 catch-22 陷阱，即工具无法推断项目需要自己构建什么。实现这个 PEP 将允许项目预先指定它们依赖的构建系统，这样像 <code class="docutils literal notranslate"><span class="pre">pip</span></code> 这样的工具就可以确保它们被安装，以便运行构建系统来构建项目。</p>
+<p>为了为这个 PEP 提供更多的上下文和动机，请考虑为项目生成构建工件所需的(粗略的)步骤：</p>
+<ol class="arabic simple">
+<li>项目的源代码检出</li>
+<li>构建系统的安装。</li>
+<li>执行构建系统。</li>
+</ol>
+<p>这个 PEP 涵盖了第 2 步。<a class="pep reference internal" href="../pep-0517" title="PEP 517 – A build-system independent format for source trees">PEP 517</a> 涵盖了第 3 步，包括如何让构建系统动态地指定构建系统执行其工作所需的更多依赖项。不过，这个 PEP 的目的是指定构建系统开始执行所需的最小需求集。</p>
+</section>
+<section id="specification">
+<h2><a class="toc-backref" href="#specification" role="doc-backlink">规范</a></h2>
+<section id="file-format">
+<h3><a class="toc-backref" href="#file-format" role="doc-backlink">文件格式</a></h3>
+<p>构建系统依赖项将存储在以 TOML 格式 <a class="footnote-reference brackets" href="#toml" id="id5">[6]</a> 编写名为 <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> 的文件中。</p>
+<p>选择这种格式是因为它是人类可用的(不像JSON <a class="footnote-reference brackets" href="#id20" id="id6">[7]</a>)，它足够灵活(不像 configparser <a class="footnote-reference brackets" href="#id22" id="id7">[9]</a>)，源于一个标准(也不像 configparser <a class="footnote-reference brackets" href="#id22" id="id8">[9]</a>)，并且它不是太复杂(不像 YAML <a class="footnote-reference brackets" href="#id21" id="id9">[8]</a>)。TOML 格式已经被 Rust 社区作为 Cargo 包管理器 <a class="footnote-reference brackets" href="#cargo" id="id10">[14]</a> 的一部分使用，并且在私人邮件中表示他们对选择 TOML 非常满意。关于为什么没有选择各种替代方案的更彻底的讨论可以在 <a class="reference internal" href="#other-file-formats">Other file formats</a>  一节中阅读。不过，作者确实意识到，配置文件格式的选择最终是主观的，必须做出选择，对于这种情况，作者更倾向于 TOML。</p>
+<p>下面我们列出了工具应该认可/尊重的表格。本 PEP 中未指定的表将保留给其他 PEP 将来使用。</p>
+</section>
+<section id="build-system-table">
+<h3><a class="toc-backref" href="#build-system-table" role="doc-backlink">build-system 表</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">[build-system]</span></code> 表用于存储与构建相关的数据。最初，表中只有一个键是有效的，并且对于表来说是强制性的：<code class="docutils literal notranslate"><span class="pre">requires</span></code>。该键必须具有字符串列表的值，该字符串列表表示执行构建系统所需的 <a class="pep reference internal" href="../pep-0508" title="PEP 508 – Dependency specification for Python Software Packages">PEP 508</a> 依赖项（目前这意味着执行 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 文件所需的依赖项）。</p>
+<p>对于绝大多数依赖于 setuptools 的 Python 项目来说，<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> 将是:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">build</span><span class="o">-</span><span class="n">system</span><span class="p">]</span>
+<span class="c1"># Minimum requirements for the build system to execute.</span>
+<span class="n">requires</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;setuptools&quot;</span><span class="p">,</span> <span class="s2">&quot;wheel&quot;</span><span class="p">]</span>  <span class="c1"># PEP 508 specifications.</span>
+</pre></div>
+</div>
+<p>因为目前 setuptools 和 wheel 的使用在社区中非常广泛，当 <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> 文件不存在时，构建工具将使用上面的示例配置文件作为默认语义。</p>
+<p>工具不应该要求存在 <code class="docutils literal notranslate"><span class="pre">[build-system]</span></code> 表。<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> 文件可能用于存储与构建相关的数据以外的配置细节，因此合法地缺少 <code class="docutils literal notranslate"><span class="pre">[build-system]</span></code> 表。如果文件存在，但是缺少 <code class="docutils literal notranslate"><span class="pre">[build-system]</span></code> 表，那么应该使用上面指定的默认值。如果指定了表，但缺少必需的字段，那么工具应该认为这是一个错误。</p>
+</section>
+<section id="tool-table">
+<h3><a class="toc-backref" href="#tool-table" role="doc-backlink">tool 表</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">[tool]</span></code> 表是任何与你的 Python 项目相关的工具（不仅仅是构建工具）都可以让用户指定配置数据的地方，只要他们使用 <code class="docutils literal notranslate"><span class="pre">[tool]</span></code> 中的子表，例如 <a class="reference external" href="https://pypi.python.org/pypi/flit">flit</a> 工具会将其配置存储在 <code class="docutils literal notranslate"><span class="pre">[tool.flit]</span></code> 中。</p>
+<p>需要一些机制来在 <code class="docutils literal notranslate"><span class="pre">tool.*</span></code> 命名空间中分配名称，以确保不同的项目不会试图使用相同的子表而发生冲突。我们的规则是项目可以使用子表工具。当且仅当他们拥有 Cheeseshop/PyPI 中 <code class="docutils literal notranslate"><span class="pre">$NAME</span></code> 的条目时。</p>
+</section>
+<section id="json-schema">
+<h3><a class="toc-backref" href="#json-schema" role="doc-backlink">JSON 模式</a></h3>
+<p>为了从 TOML 文件中提供特定类型的结果数据表示，仅用于说明目的，以下 JSON 模式 <a class="footnote-reference brackets" href="#jsonschema" id="id11">[15]</a> 将匹配数据格式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;http://json-schema.org/schema#&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;build-system&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;requires&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requires&quot;</span><span class="p">]</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;tool&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rejected-ideas">
+<h2><a class="toc-backref" href="#rejected-ideas" role="doc-backlink">拒绝的想法</a></h2>
+<section id="a-semantic-version-key">
+<h3><a class="toc-backref" href="#a-semantic-version-key" role="doc-backlink">语义版本键</a></h3>
+<p>为了保证配置文件的结构不受未来影响，最初提出了 <code class="docutils literal notranslate"><span class="pre">semantics-version</span></code> 键。默认为 <code class="docutils literal notranslate"><span class="pre">1</span></code>，其想法是，如果之前定义的键或表发生了任何语义更改，而这些更改不向后兼容，那么 <code class="docutils literal notranslate"><span class="pre">semantics-version</span></code> 将被增加为新数字。</p>
+<p>但最终，我们认为这是不成熟的优化。我们期望对配置文件中预定义语义的更改相当保守。在可能发生向后不兼容更改的情况下，可以使用不同的名称来表示新的语义，以避免破坏旧的工具。</p>
+</section>
+<section id="a-more-nested-namespace">
+<h3><a class="toc-backref" href="#a-more-nested-namespace" role="doc-backlink">嵌套更多的命名空间</a></h3>
+<p>这个 PEP 的早期草案有一个顶级的 <code class="docutils literal notranslate"><span class="pre">[package]</span></code> 表。这个想法是为语义版本控制方案强加一些作用域(参见 <a class="reference internal" href="#a-semantic-version-key">A semantic version key</a> 了解为什么这个想法被拒绝)。随着范围需求的消除，拥有顶级表的意义变得多余。</p>
+</section>
+<section id="other-table-names">
+<h3><a class="toc-backref" href="#other-table-names" role="doc-backlink">其他表名称</a></h3>
+<p>为 <code class="docutils literal notranslate"><span class="pre">[build-system]</span></code> 表提议的另一个名称是 <code class="docutils literal notranslate"><span class="pre">[build]</span></code>。替代名称更短，但不能传达表中存储哪些信息的意图。在对 distutils-sig 邮件列表进行投票后，当前的名称胜出。</p>
+</section>
+<section id="other-file-formats">
+<h3><a class="toc-backref" href="#other-file-formats" role="doc-backlink">其他文件格式</a></h3>
+<p>曾提出其他几种文件格式供考虑，但均因各种原因被拒绝。关键的要求是格式可以由人编辑，并且有一个可以由项目轻松提供的实现。这完全排除了 XML 等对人类不友好的格式，而且从未认真讨论过。</p>
+<section id="overview-of-file-formats-considered">
+<h4><a class="toc-backref" href="#overview-of-file-formats-considered" role="doc-backlink">Overview of file formats considered</a></h4>
+<p>The key reasons for rejecting the other alternatives considered are
+summarised in the following sections, while the full review (including
+positive arguments in favour of TOML) can be found at <a class="footnote-reference brackets" href="#file-formats" id="id12">[16]</a>.</p>
+<p>TOML was ultimately selected as it provided all the features we
+were interested in, while avoiding the downsides introduced by
+the alternatives.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head">Feature</th>
+<th class="head">TOML</th>
+<th class="head">YAML</th>
+<th class="head">JSON</th>
+<th class="head">CFG/INI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td>Well-defined</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td>Real data types</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr class="row-even"><td>Reliable Unicode</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td>Reliable comments</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td>Easy for humans to edit</td>
+<td>yes</td>
+<td>??</td>
+<td></td>
+<td>??</td>
+</tr>
+<tr class="row-odd"><td>Easy for tools to edit</td>
+<td>yes</td>
+<td>??</td>
+<td>yes</td>
+<td>??</td>
+</tr>
+<tr class="row-even"><td>In standard library</td>
+<td></td>
+<td></td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="row-odd"><td>Easy for pip to vendor</td>
+<td>yes</td>
+<td></td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>(“??” in the table indicates items where most folks would be
+inclined to answer “yes”, but there turn out to be a lot of
+quirks and edge cases that arise in practice due to either
+the lack of a clear specification, or else the underlying
+file format specification being surprisingly complicated)</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pytoml</span></code> TOML parser is ~300 lines of pure Python code,
+so being outside the standard library didn’t count heavily
+against it.</p>
+<p>Python literals were also discussed as a potential format, but
+weren’t considered in the file format review (since they’re not
+a common pre-existing file format).</p>
+</section>
+<section id="json">
+<h4><a class="toc-backref" href="#json" role="doc-backlink">JSON</a></h4>
+<p>The JSON format <a class="footnote-reference brackets" href="#id20" id="id13">[7]</a> was initially considered but quickly
+rejected. While great as a human-readable, string-based data exchange
+format, the syntax does not lend itself to easy editing by a human
+being (e.g. the syntax is more verbose than necessary while not
+allowing for comments).</p>
+<p>An example JSON file for the proposed data would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;build&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;requires&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;setuptools&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wheel&gt;=0.27&quot;</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="yaml">
+<h4><a class="toc-backref" href="#yaml" role="doc-backlink">YAML</a></h4>
+<p>The YAML format <a class="footnote-reference brackets" href="#id21" id="id14">[8]</a> was designed to be a superset of JSON
+<a class="footnote-reference brackets" href="#id20" id="id15">[7]</a> while being easier to work with by hand. There are three main
+issues with YAML.</p>
+<p>One is that the specification is large: 86 pages if printed on
+letter-sized paper. That leaves the possibility that someone may use a
+feature of YAML that works with one parser but not another. It has
+been suggested to standardize on a subset, but that basically means
+creating a new standard specific to this file which is not tractable
+long-term.</p>
+<p>Two is that YAML itself is not safe by default. The specification
+allows for the arbitrary execution of code which is best avoided when
+dealing with configuration data.  It is of course possible to avoid
+this behavior – for example, PyYAML provides a <code class="docutils literal notranslate"><span class="pre">safe_load</span></code> operation
+– but if any tool carelessly uses <code class="docutils literal notranslate"><span class="pre">load</span></code> instead then they open
+themselves up to arbitrary code execution. While this PEP is focused on
+the building of projects which inherently involves code execution,
+other configuration data such as project name and version number may
+end up in the same file someday where arbitrary code execution is not
+desired.</p>
+<p>And finally, the most popular Python implementation of YAML is
+PyYAML <a class="footnote-reference brackets" href="#pyyaml" id="id16">[10]</a> which is a large project of a few thousand lines of
+code and an optional C extension module. While in and of itself this
+isn’t necessarily an issue, this becomes more of a problem for
+projects like pip where they would most likely need to vendor PyYAML
+as a dependency so as to be fully self-contained (otherwise you end
+up with your install tool needing an install tool to work). A
+proof-of-concept re-working of PyYAML has been done to see how easy
+it would be to potentially vendor a simpler version of the library
+which shows it is a possibility.</p>
+<p>An example YAML file is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="p">:</span>
+    <span class="n">requires</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">setuptools</span>
+        <span class="o">-</span> <span class="n">wheel</span><span class="o">&gt;=</span><span class="mf">0.27</span>
+</pre></div>
+</div>
+</section>
+<section id="configparser">
+<h4><a class="toc-backref" href="#configparser" role="doc-backlink">configparser</a></h4>
+<p>An INI-style configuration file based on what
+configparser <a class="footnote-reference brackets" href="#id22" id="id17">[9]</a> accepts was considered. Unfortunately
+there is no specification of what configparser accepts, leading to
+support skew between versions. For instance, what ConfigParser in
+Python 2.7 accepts is not the same as what configparser in Python 3
+accepts. While one could standardize on what Python 3 accepts and
+simply vendor the backport of the configparser module, that does mean
+this PEP would have to codify that the backport of configparser must
+be used by all project wishes to consume the metadata specified by
+this PEP. This is overly restrictive and could lead to confusion if
+someone is not aware of that a specific version of configparser is
+expected.</p>
+<p>An example INI file is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">build</span><span class="p">]</span>
+<span class="n">requires</span> <span class="o">=</span>
+    <span class="n">setuptools</span>
+    <span class="n">wheel</span><span class="o">&gt;=</span><span class="mf">0.27</span>
+</pre></div>
+</div>
+</section>
+<section id="python-literals">
+<h4><a class="toc-backref" href="#python-literals" role="doc-backlink">Python literals</a></h4>
+<p>Someone proposed using Python literals as the configuration format.
+The file would contain one dict at the top level, with the data all
+inside that dict, with sections defined by the keys. All Python
+programmers would be used to the format, there would implicitly be no
+third-party dependency to read the configuration data, and it can be
+safe if parsed by <code class="docutils literal notranslate"><span class="pre">ast.literal_eval()</span></code> <a class="footnote-reference brackets" href="#ast-literal-eval" id="id18">[13]</a>.
+Python literals can be identical to JSON, with the added benefit of
+supporting trailing commas and comments. In addition, Python’s richer
+data model may be useful for some future configuration needs (e.g. non-string
+dict keys, floating point vs. integer values).</p>
+<p>On the other hand, python literals are a Python-specific format, and
+it is anticipated that these data may need to be read by packaging
+tools, etc. that are not written in Python.</p>
+<p>An example Python literal file for the proposed data would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># The build configuration</span>
+<span class="p">{</span><span class="s2">&quot;build&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;requires&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;setuptools&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;wheel&gt;=0.27&quot;</span><span class="p">,</span> <span class="c1"># note the trailing comma</span>
+                        <span class="c1"># &quot;numpy&gt;=1.10&quot; # a commented out data line</span>
+                        <span class="p">]</span>
+<span class="c1"># and here is an arbitrary comment.</span>
+           <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sticking-with-setup-cfg">
+<h3><a class="toc-backref" href="#sticking-with-setup-cfg" role="doc-backlink">Sticking with <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code></a></h3>
+<p>There are two issues with <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> used by setuptools as a general
+format. One is that they are <code class="docutils literal notranslate"><span class="pre">.ini</span></code> files which have issues as mentioned
+in the <a class="reference internal" href="#id22">configparser</a> discussion above. The other is that the schema for
+that file has never been rigorously defined and thus it’s unknown which
+format would be safe to use going forward without potentially confusing
+setuptools installations.</p>
+</section>
+<section id="other-file-names">
+<h3><a class="toc-backref" href="#other-file-names" role="doc-backlink">Other file names</a></h3>
+<p>Several other file names were considered and rejected (although this
+is very much a bikeshedding topic, and so the decision comes down to
+mostly taste).</p>
+<dl class="simple">
+<dt>pysettings.toml</dt><dd>Most reasonable alternative.</dd>
+<dt>pypa.toml</dt><dd>While it makes sense to reference the PyPA <a class="footnote-reference brackets" href="#pypa" id="id19">[11]</a>, it is a
+somewhat niche term. It’s better to have the file name make sense
+without having domain-specific knowledge.</dd>
+<dt>pybuild.toml</dt><dd>From the restrictive perspective of this PEP this filename makes
+sense, but if any non-build metadata ever gets added to the file
+then the name ceases to make sense.</dd>
+<dt>pip.toml</dt><dd>Too tool-specific.</dd>
+<dt>meta.toml</dt><dd>Too generic; project may want to have its own metadata file.</dd>
+<dt>setup.toml</dt><dd>While keeping with traditional thanks to <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>, it does not
+necessarily match what the file may contain in the future (e.g. is
+knowing the name of a project inherently part of its setup?).</dd>
+<dt>pymeta.toml</dt><dd>Not obvious to newcomers to programming and/or Python.</dd>
+<dt>pypackage.toml &amp; pypackaging.toml</dt><dd>Name conflation of what a “package” is (project versus namespace).</dd>
+<dt>pydevelop.toml</dt><dd>The file may contain details not specific to development.</dd>
+<dt>pysource.toml</dt><dd>Not directly related to source code.</dd>
+<dt>pytools.toml</dt><dd>Misleading as the file is (currently) aimed at project management.</dd>
+<dt>dstufft.toml</dt><dd>Too person-specific. ;)</dd>
+</dl>
+</section>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#references" role="doc-backlink">References</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="distutils" role="note">
+<dt class="label" id="distutils">[<a href="#id1">1</a>]</dt>
+<dd>distutils
+(<a class="reference external" href="https://docs.python.org/3/library/distutils.html#module-distutils">https://docs.python.org/3/library/distutils.html#module-distutils</a>)</aside>
+<aside class="footnote brackets" id="setuptools" role="note">
+<dt class="label" id="setuptools">[<a href="#id2">2</a>]</dt>
+<dd>setuptools
+(<a class="reference external" href="https://pypi.python.org/pypi/setuptools">https://pypi.python.org/pypi/setuptools</a>)</aside>
+<aside class="footnote brackets" id="setup-args" role="note">
+<dt class="label" id="setup-args">[<a href="#id3">3</a>]</dt>
+<dd>setuptools: New and Changed setup() Keywords
+(<a class="reference external" href="http://pythonhosted.org/setuptools/setuptools.html#new-and-changed-setup-keywords">http://pythonhosted.org/setuptools/setuptools.html#new-and-changed-setup-keywords</a>)</aside>
+<aside class="footnote brackets" id="pip" role="note">
+<dt class="label" id="pip">[<a href="#id4">4</a>]</dt>
+<dd>pip
+(<a class="reference external" href="https://pypi.python.org/pypi/pip">https://pypi.python.org/pypi/pip</a>)</aside>
+<aside class="footnote brackets" id="wheel" role="note">
+<dt class="label" id="wheel">[5]</dt>
+<dd>wheel
+(<a class="reference external" href="https://pypi.python.org/pypi/wheel">https://pypi.python.org/pypi/wheel</a>)</aside>
+<aside class="footnote brackets" id="toml" role="note">
+<dt class="label" id="toml">[<a href="#id5">6</a>]</dt>
+<dd>TOML
+(<a class="reference external" href="https://github.com/toml-lang/toml">https://github.com/toml-lang/toml</a>)</aside>
+<aside class="footnote brackets" id="id20" role="note">
+<dt class="label" id="id20">[7]<em> (<a href='#id6'>1</a>, <a href='#id13'>2</a>, <a href='#id15'>3</a>) </em></dt>
+<dd>JSON
+(<a class="reference external" href="http://json.org/">http://json.org/</a>)</aside>
+<aside class="footnote brackets" id="id21" role="note">
+<dt class="label" id="id21">[8]<em> (<a href='#id9'>1</a>, <a href='#id14'>2</a>) </em></dt>
+<dd>YAML
+(<a class="reference external" href="http://yaml.org/">http://yaml.org/</a>)</aside>
+<aside class="footnote brackets" id="id22" role="note">
+<dt class="label" id="id22">[9]<em> (<a href='#id7'>1</a>, <a href='#id8'>2</a>, <a href='#id17'>3</a>) </em></dt>
+<dd>configparser
+(<a class="reference external" href="https://docs.python.org/3/library/configparser.html#module-configparser">https://docs.python.org/3/library/configparser.html#module-configparser</a>)</aside>
+<aside class="footnote brackets" id="pyyaml" role="note">
+<dt class="label" id="pyyaml">[<a href="#id16">10</a>]</dt>
+<dd>PyYAML
+(<a class="reference external" href="https://pypi.python.org/pypi/PyYAML">https://pypi.python.org/pypi/PyYAML</a>)</aside>
+<aside class="footnote brackets" id="pypa" role="note">
+<dt class="label" id="pypa">[<a href="#id19">11</a>]</dt>
+<dd>PyPA
+(<a class="reference external" href="https://www.pypa.io">https://www.pypa.io</a>)</aside>
+<aside class="footnote brackets" id="bazel" role="note">
+<dt class="label" id="bazel">[12]</dt>
+<dd>Bazel
+(<a class="reference external" href="http://bazel.io/">http://bazel.io/</a>)</aside>
+<aside class="footnote brackets" id="ast-literal-eval" role="note">
+<dt class="label" id="ast-literal-eval">[<a href="#id18">13</a>]</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">ast.literal_eval()</span></code>
+(<a class="reference external" href="https://docs.python.org/3/library/ast.html#ast.literal_eval">https://docs.python.org/3/library/ast.html#ast.literal_eval</a>)</aside>
+<aside class="footnote brackets" id="cargo" role="note">
+<dt class="label" id="cargo">[<a href="#id10">14</a>]</dt>
+<dd>Cargo, Rust’s package manager
+(<a class="reference external" href="http://doc.crates.io/">http://doc.crates.io/</a>)</aside>
+<aside class="footnote brackets" id="jsonschema" role="note">
+<dt class="label" id="jsonschema">[<a href="#id11">15</a>]</dt>
+<dd>JSON Schema
+(<a class="reference external" href="http://json-schema.org/">http://json-schema.org/</a>)</aside>
+<aside class="footnote brackets" id="file-formats" role="note">
+<dt class="label" id="file-formats">[<a href="#id12">16</a>]</dt>
+<dd>Nathaniel J. Smith’s file format review
+(<a class="reference external" href="https://gist.github.com/njsmith/78f68204c5d969f8c8bc645ef77d4a8f">https://gist.github.com/njsmith/78f68204c5d969f8c8bc645ef77d4a8f</a>)</aside>
+</aside>
+</section>
+<section id="copyright">
+<h2><a class="toc-backref" href="#copyright" role="doc-backlink">Copyright</a></h2>
+<p>This document has been placed in the public domain.</p>
+</section>
+</section>
+<hr class="docutils" />
+<p>Source: <a class="reference external" href="https://github.com/python/peps/blob/main/pep-0518.txt">https://github.com/python/peps/blob/main/pep-0518.txt</a></p>
+<p>Last modified: <a class="reference external" href="https://github.com/python/peps/commits/main/pep-0518.txt">2022-09-14 15:48:22 GMT</a></p>
+
+        </article>
+        <nav id="pep-sidebar">
+            <h2>Contents</h2>
+            <ul>
+<li><a class="reference internal" href="#abstract">摘要</a></li>
+<li><a class="reference internal" href="#rationale">基本原理</a></li>
+<li><a class="reference internal" href="#specification">规范</a><ul>
+<li><a class="reference internal" href="#file-format">文件格式</a></li>
+<li><a class="reference internal" href="#build-system-table">build-system 表</a></li>
+<li><a class="reference internal" href="#tool-table">tool 表</a></li>
+<li><a class="reference internal" href="#json-schema">JSON 模式</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rejected-ideas">拒绝的想法</a><ul>
+<li><a class="reference internal" href="#a-semantic-version-key">语义版本键</a></li>
+<li><a class="reference internal" href="#a-more-nested-namespace">嵌套更多的命名空间</a></li>
+<li><a class="reference internal" href="#other-table-names">其他表名称</a></li>
+<li><a class="reference internal" href="#other-file-formats">其他文件格式</a><ul>
+<li><a class="reference internal" href="#overview-of-file-formats-considered">Overview of file formats considered</a></li>
+<li><a class="reference internal" href="#json">JSON</a></li>
+<li><a class="reference internal" href="#yaml">YAML</a></li>
+<li><a class="reference internal" href="#configparser">configparser</a></li>
+<li><a class="reference internal" href="#python-literals">Python literals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sticking-with-setup-cfg">Sticking with <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code></a></li>
+<li><a class="reference internal" href="#other-file-names">Other file names</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#copyright">Copyright</a></li>
+</ul>
+
+            <br>
+            <a id="source" href="https://github.com/python/peps/blob/main/pep-0518.txt">Page Source (GitHub)</a>
+        </nav>
+    </section>
+    <script src="../_static/colour_scheme.js"></script>
+    <script src="../_static/wrap_tables.js"></script>
+</body>
+</html>

@@ -1,0 +1,1143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>PEP 8 – Style Guide for Python Code | peps.python.org</title>
+    <link rel="shortcut icon" href="../_static/py.png">
+    <link rel="canonical" href="https://peps.python.org/pep-0008/">
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/mq.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" media="(prefers-color-scheme: light)" id="pyg-light">
+    <link rel="stylesheet" href="../_static/pygments_dark.css" type="text/css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+    <link rel="alternate" type="application/rss+xml" title="Latest PEPs" href="https://peps.python.org/peps.rss">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <meta name="description" content="Python Enhancement Proposals (PEPs)">
+</head>
+<body>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-sun-half" viewBox="0 0 24 24" pointer-events="all">
+    <title>Following system colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 3v18m0-12l4.65-4.65M12 14.3l7.37-7.37M12 19.6l8.85-8.85"></path>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24" pointer-events="all">
+    <title>Selected dark colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24" pointer-events="all">
+    <title>Selected light colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+</svg>
+    <script>
+
+        document.documentElement.dataset.colour_scheme = localStorage.getItem("colour_scheme") || "auto"
+    </script>
+    <section id="pep-page-section">
+        <header>
+            <h1>Python Enhancement Proposals</h1>
+            <ul class="breadcrumbs">
+                <li><a href="https://www.python.org/" title="The Python Programming Language">Python</a> &raquo; </li>
+                <li><a href="../pep-0000/">PEP Index</a> &raquo; </li>
+                <li>PEP 8</li>
+            </ul>
+            <button id="colour-scheme-cycler" onClick="setColourScheme(nextColourScheme())">
+                <svg aria-hidden="true" class="colour-scheme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+                <svg aria-hidden="true" class="colour-scheme-icon-when-dark"><use href="#svg-moon"></use></svg>
+                <svg aria-hidden="true" class="colour-scheme-icon-when-light"><use href="#svg-sun"></use></svg>
+                <span class="visually-hidden">Toggle light / dark / auto colour theme</span>
+            </button>
+        </header>
+        <article>
+            <section id="pep-content">
+<h1 class="page-title">PEP 8 – Style Guide for Python Code</h1>
+<dl class="rfc2822 field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd">Guido van Rossum &lt;guido&#32;&#97;t&#32;python.org&gt;,
+Barry Warsaw &lt;barry&#32;&#97;t&#32;python.org&gt;,
+Nick Coghlan &lt;ncoghlan&#32;&#97;t&#32;gmail.com&gt;</dd>
+<dt class="field-even">Status<span class="colon">:</span></dt>
+<dd class="field-even"><abbr title="Currently valid informational guidance, or an in-use process">Active</abbr></dd>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><abbr title="Normative PEP describing or proposing a change to a Python community process, workflow or governance">Process</abbr></dd>
+<dt class="field-even">Created<span class="colon">:</span></dt>
+<dd class="field-even">05-Jul-2001</dd>
+<dt class="field-odd">Post-History<span class="colon">:</span></dt>
+<dd class="field-odd">05-Jul-2001, 01-Aug-2013</dd>
+</dl>
+<hr class="docutils" />
+<section id="contents">
+<details><summary>Table of Contents</summary><ul class="simple">
+<li><a class="reference internal" href="#introduction">介绍</a></li>
+<li><a class="reference internal" href="#a-foolish-consistency-is-the-hobgoblin-of-little-minds">愚蠢的一致性是小脑袋里的恶棍</a></li>
+<li><a class="reference internal" href="#code-lay-out">代码布局</a><ul>
+<li><a class="reference internal" href="#indentation">缩进</a></li>
+<li><a class="reference internal" href="#tabs-or-spaces">制表符或者空格键</a></li>
+<li><a class="reference internal" href="#maximum-line-length">行的最大列数</a></li>
+<li><a class="reference internal" href="#should-a-line-break-before-or-after-a-binary-operator">二元运算符之前或之后应该断行吗？</a></li>
+<li><a class="reference internal" href="#blank-lines">空白行</a></li>
+<li><a class="reference internal" href="#source-file-encoding">源文件编码</a></li>
+<li><a class="reference internal" href="#imports">Imports</a></li>
+<li><a class="reference internal" href="#module-level-dunder-names">模块级的 Dunder 名称</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#string-quotes">字符串引号</a></li>
+<li><a class="reference internal" href="#whitespace-in-expressions-and-statements">表达式和语句中的空格</a><ul>
+<li><a class="reference internal" href="#pet-peeves">Pet Peeves</a></li>
+<li><a class="reference internal" href="#other-recommendations">其他建议</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#when-to-use-trailing-commas">何时使用尾部逗号</a></li>
+<li><a class="reference internal" href="#comments">注释</a><ul>
+<li><a class="reference internal" href="#block-comments">块注释</a></li>
+<li><a class="reference internal" href="#inline-comments">内联注释</a></li>
+<li><a class="reference internal" href="#documentation-strings">文档字符串</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#naming-conventions">命名公约</a><ul>
+<li><a class="reference internal" href="#overriding-principle">覆盖原则</a></li>
+<li><a class="reference internal" href="#descriptive-naming-styles">描述性的：命名方式</a></li>
+<li><a class="reference internal" href="#prescriptive-naming-conventions">规范性的：命名规则</a><ul>
+<li><a class="reference internal" href="#names-to-avoid">应避免的名称</a></li>
+<li><a class="reference internal" href="#ascii-compatibility">ASCII 兼容性</a></li>
+<li><a class="reference internal" href="#package-and-module-names">包和模块名称</a></li>
+<li><a class="reference internal" href="#class-names">类名称</a></li>
+<li><a class="reference internal" href="#type-variable-names">类型变量名称</a></li>
+<li><a class="reference internal" href="#exception-names">异常名称</a></li>
+<li><a class="reference internal" href="#global-variable-names">全局变量名称</a></li>
+<li><a class="reference internal" href="#function-and-variable-names">函数和变量名称</a></li>
+<li><a class="reference internal" href="#function-and-method-arguments">函数和方法的参数</a></li>
+<li><a class="reference internal" href="#method-names-and-instance-variables">方法名称和实例变量</a></li>
+<li><a class="reference internal" href="#constants">常量</a></li>
+<li><a class="reference internal" href="#designing-for-inheritance">继承设计</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#public-and-internal-interfaces">公共和内部接口</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#programming-recommendations">编程推荐</a><ul>
+<li><a class="reference internal" href="#function-annotations">函数注解</a></li>
+<li><a class="reference internal" href="#variable-annotations">变量注解</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">参考</a></li>
+<li><a class="reference internal" href="#copyright">版权声明</a></li>
+</ul>
+</details></section>
+<section id="introduction">
+<h2><a class="toc-backref" href="#introduction" role="doc-backlink">介绍</a></h2>
+<p>This document gives coding conventions for the Python code comprising
+the standard library in the main Python distribution.  Please see the
+companion informational PEP describing <a class="pep reference internal" href="../pep-0007" title="PEP 7 – Style Guide for C Code">style guidelines for the C code
+in the C implementation of Python</a>.</p>
+<p>This document and <a class="pep reference internal" href="../pep-0257" title="PEP 257 – Docstring Conventions">PEP 257</a> (Docstring Conventions) were adapted from
+Guido’s original Python Style Guide essay, with some additions from
+Barry’s style guide <a class="footnote-reference brackets" href="#id6" id="id1">[2]</a>.</p>
+<p>本风格指南随着时间的推移而发展，因为更多的惯例被确定，而过去的惯例因语言本身的变化而变得过时。</p>
+<p>许多项目都有自己的编码风格指南。在有任何冲突的情况下，这种项目特有的指南对该项目来说是优先的。</p>
+</section>
+<section id="a-foolish-consistency-is-the-hobgoblin-of-little-minds">
+<h2><a class="toc-backref" href="#a-foolish-consistency-is-the-hobgoblin-of-little-minds" role="doc-backlink">愚蠢的一致性是小脑袋里的恶棍</a></h2>
+<p>One of Guido’s key insights is that code is read much more often than
+it is written.  The guidelines provided here are intended to improve
+the readability of code and make it consistent across the wide
+spectrum of Python code.  As <a class="pep reference internal" href="../pep-0020" title="PEP 20 – The Zen of Python">PEP 20</a> says, “Readability counts”.</p>
+<p>风格指南是关于一致性的。与本风格指南保持一致是很重要的。一个项目中的一致性更为重要。一个模块或函数内的一致性是最重要的。</p>
+<p>然而，要知道什么时候应该不一致 – 有时风格指南的建议就是不适用。当有疑问时，使用你的最佳判断。看看其他的例子，决定什么看起来最好。而且不要犹豫，要问！</p>
+<p>特别是：不要为了遵守这个 PEP 而破坏向后的兼容性！</p>
+<p>其他一些忽略某项准则的好理由：</p>
+<ol class="arabic simple">
+<li>当应用该准则时，会使代码的可读性降低，甚至对于习惯于阅读遵循该 PEP 的代码的人来说也是如此。</li>
+<li>要与周围的代码保持一致，这些代码也会破坏它（也许是出于历史原因）– 尽管这也是一个清理别人的烂摊子的机会（真正的 XP 风格）。</li>
+<li>因为所涉及的代码是在准则出台之前的，没有其他理由要修改该代码。</li>
+<li>当代码需要与不支持风格指南推荐的特性的旧版本的 Python 保持兼容时。</li>
+</ol>
+</section>
+<section id="code-lay-out">
+<h2><a class="toc-backref" href="#code-lay-out" role="doc-backlink">代码布局</a></h2>
+<section id="indentation">
+<h3><a class="toc-backref" href="#indentation" role="doc-backlink">缩进</a></h3>
+<p>每个缩进级别使用 4 个空格。</p>
+<p>续行应该使用 Python 的小括号、大括号和圆括号内的隐式连线，或者使用 <em>悬空缩进</em> <a class="footnote-reference brackets" href="#fn-hi" id="id2">[1]</a>，将包裹的元素垂直对齐。当使用悬空缩进时，应该考虑以下情况；第一行不应该有参数，应该使用进一步的缩进来明确区分自己是一个延续行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+
+<span class="c1"># Aligned with opening delimiter.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+                         <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+
+<span class="c1"># Add 4 spaces (an extra level of indentation) to distinguish arguments from the rest.</span>
+<span class="k">def</span> <span class="nf">long_function_name</span><span class="p">(</span>
+        <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
+        <span class="n">var_four</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
+
+<span class="c1"># Hanging indents should add a level.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
+    <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+    <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+
+<span class="c1"># Arguments on first line forbidden when not using vertical alignment.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+    <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+
+<span class="c1"># Further indentation required as indentation is not distinguishable.</span>
+<span class="k">def</span> <span class="nf">long_function_name</span><span class="p">(</span>
+    <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
+    <span class="n">var_four</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>4-空格规则对续行来说是可选的。</p>
+<p>可选</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hanging indents *may* be indented to other than 4 spaces.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
+  <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+  <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+</pre></div>
+</div>
+<p id="multiline-if-statements">当 <code class="docutils literal notranslate"><span class="pre">if</span></code> 语句的条件部分长到需要跨行书写时，值得注意的是，两个字符的关键字（即 <code class="docutils literal notranslate"><span class="pre">if</span></code> ），加上一个空格，再加上一个开头的小括号，为多行条件的后续行创造了一个自然的 4 空格缩进。这可能会与嵌套在 <code class="docutils literal notranslate"><span class="pre">if</span></code> 语句中的缩进代码产生视觉冲突，这些代码也会自然缩进到 4 个空格。对于如何（或是否）进一步从视觉上区分这些条件行和 <code class="docutils literal notranslate"><span class="pre">if</span></code> 语句内的嵌套代码，本 PEP 没有采取明确的立场。这种情况下可接受的选项包括，但不限于</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># No extra indentation.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span> <span class="ow">and</span>
+    <span class="n">that_is_another_thing</span><span class="p">):</span>
+    <span class="n">do_something</span><span class="p">()</span>
+
+<span class="c1"># Add a comment, which will provide some distinction in editors</span>
+<span class="c1"># supporting syntax highlighting.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span> <span class="ow">and</span>
+    <span class="n">that_is_another_thing</span><span class="p">):</span>
+    <span class="c1"># Since both conditions are true, we can frobnicate.</span>
+    <span class="n">do_something</span><span class="p">()</span>
+
+<span class="c1"># Add some extra indentation on the conditional continuation line.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span>
+        <span class="ow">and</span> <span class="n">that_is_another_thing</span><span class="p">):</span>
+    <span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>（也可参见下文关于在二进制运算符之前或之后断开的讨论）。</p>
+<p>多行结构的结尾大括号/方括号/圆括号可以排在最后一行列表的第一个非空格字符下，如</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">some_function_that_takes_arguments</span><span class="p">(</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>或者它可以排在开始多行结构的一行的第一个字符下面，如</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">some_function_that_takes_arguments</span><span class="p">(</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tabs-or-spaces">
+<h3><a class="toc-backref" href="#tabs-or-spaces" role="doc-backlink">制表符或者空格键</a></h3>
+<p>空格是首选的缩进方法。</p>
+<p>制表符的使用应该仅仅是为了与已经用制表符缩进的代码保持一致。</p>
+<p>Python 不允许将制表符和空格混合在一起进行缩进。</p>
+</section>
+<section id="maximum-line-length">
+<h3><a class="toc-backref" href="#maximum-line-length" role="doc-backlink">行的最大列数</a></h3>
+<p>将所有行数的列数限制在最多 79 个字符。</p>
+<p>对于结构限制较少的流动的长文本块（文档串或注释），行的列长应限制在 72 个字符。</p>
+<p>限制所需的编辑器窗口宽度，使得几个文件并排打开成为可能，在使用将两个版本呈现在相邻列的代码审查工具时，效果很好。</p>
+<p>大多数工具中的默认包装破坏了代码的视觉结构，使其更加难以理解。选择这些限制是为了避免在窗口宽度设置为 80 的编辑器中出现包装，即使工具在包装行时在最后一列放置一个标记字形。一些基于网络的工具可能根本就不提供动态换行。</p>
+<p>有些团队强烈希望有一个较长的行。对于完全或主要由一个团队维护的代码，如果能在这个问题上达成一致，可以将行长限制增加到 99 个字符，但注释和文档字符串仍以 72 个字符包裹。</p>
+<p>Python 标准库很保守，要求将行数限制在 79 个字符以内（文档串/注释为 72 个）。</p>
+<p>包裹长行的首选方法是在小括号、大括号和大括号内使用 Python 的隐含续行功能。长行可以通过在小括号中包裹表达式而在多行中断开。应该优先使用这些小括号，而不是使用反斜杠进行续行。</p>
+<p>Backslashes may still be appropriate at times.  For example, long,
+multiple <code class="docutils literal notranslate"><span class="pre">with</span></code>-statements could not use implicit continuation
+before Python 3.10, so backslashes were acceptable for that case:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/some/file/you/want/to/read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_1</span><span class="p">,</span> \
+     <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/some/file/being/written&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_2</span><span class="p">:</span>
+    <span class="n">file_2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_1</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>（见前面关于 <a class="reference internal" href="#multiline-if-statements">多行 if 语句</a> 的讨论，以进一步了解这种多行 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语句的缩进情况）”</p>
+<p>另一种情况是 <code class="docutils literal notranslate"><span class="pre">assert</span></code> 语句。</p>
+<p>请确保适当缩进续行。</p>
+</section>
+<section id="should-a-line-break-before-or-after-a-binary-operator">
+<h3><a class="toc-backref" href="#should-a-line-break-before-or-after-a-binary-operator" role="doc-backlink">二元运算符之前或之后应该断行吗？</a></h3>
+<p>几十年来，推荐的风格是在二进制运算符之后断开。但这在两个方面会损害可读性：运算符往往会分散在屏幕的不同列中，而且每个运算符都会远离其操作数而被移到前一行。在这里，眼睛不得不做额外的工作来分辨哪些项目是加法，哪些是减法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="c1"># operators sit far away from their operands</span>
+<span class="n">income</span> <span class="o">=</span> <span class="p">(</span><span class="n">gross_wages</span> <span class="o">+</span>
+          <span class="n">taxable_interest</span> <span class="o">+</span>
+          <span class="p">(</span><span class="n">dividends</span> <span class="o">-</span> <span class="n">qualified_dividends</span><span class="p">)</span> <span class="o">-</span>
+          <span class="n">ira_deduction</span> <span class="o">-</span>
+          <span class="n">student_loan_interest</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>为了解决这个可读性问题，数学家和他们的出版商遵循相反的惯例。Donald Knuth 在他的 <em>计算机和排版</em> 系列中解释了这一传统规则：“虽然一段内的公式总是在二进制运算和关系之后断开，但显示的公式总是在二进制运算之前断开” <a class="footnote-reference brackets" href="#id7" id="id3">[3]</a>。</p>
+<p>遵循数学的传统，通常会产生更可读的代码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="c1"># easy to match operators with operands</span>
+<span class="n">income</span> <span class="o">=</span> <span class="p">(</span><span class="n">gross_wages</span>
+          <span class="o">+</span> <span class="n">taxable_interest</span>
+          <span class="o">+</span> <span class="p">(</span><span class="n">dividends</span> <span class="o">-</span> <span class="n">qualified_dividends</span><span class="p">)</span>
+          <span class="o">-</span> <span class="n">ira_deduction</span>
+          <span class="o">-</span> <span class="n">student_loan_interest</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在 Python 代码中，允许在二进制运算符之前或之后断开，只要该约定在本地是一致的。对于新的代码，建议采用 Knuth 的风格。</p>
+</section>
+<section id="blank-lines">
+<h3><a class="toc-backref" href="#blank-lines" role="doc-backlink">空白行</a></h3>
+<p>用两行空行包围顶级函数和类的定义。</p>
+<p>类内的方法定义被一个空行所包围。</p>
+<p>可以使用额外的空行（少用）来分隔相关功能组。在一堆相关的单行字之间可以省略空行（例如，一组 dummy 的实现）。</p>
+<p>在函数中少用空行，以表示逻辑部分。</p>
+<p>Python accepts the control-L (i.e. ^L) form feed character as
+whitespace; many tools treat these characters as page separators, so
+you may use them to separate pages of related sections of your file.
+Note, some editors and web-based code viewers may not recognize
+control-L as a form feed and will show another glyph in its place.</p>
+</section>
+<section id="source-file-encoding">
+<h3><a class="toc-backref" href="#source-file-encoding" role="doc-backlink">源文件编码</a></h3>
+<p>核心 Python 发行版中的代码应该始终使用 UTF-8，并且不应该有编码声明。</p>
+<p>在标准库中，非 UTF-8 编码应该只用于测试目的。少用非 ASCII 字符，最好只用来表示地方和人名。如果使用非 ASCII 字符作为数据，应避免像  z̯̯͡a̧͎̺l̡͓̫g̹̲o̡̼̘  和字节顺序标记这样的噪音 Unicode 字符。</p>
+<p>Python 标准库中的所有标识符必须使用纯 ASCII 的标识符，并且在可行的情况下应该使用英文单词（在很多情况下，使用的缩写和技术术语都不是英文）。</p>
+<p>鼓励拥有全球受众的开源项目采取类似的政策。</p>
+</section>
+<section id="imports">
+<h3><a class="toc-backref" href="#imports" role="doc-backlink">Imports</a></h3>
+<ul>
+<li>进口通常应在单独的行中进行<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+</pre></div>
+</div>
+<p>虽然这样说也没关系</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+</pre></div>
+</div>
+</li>
+<li>import 总是放在文件的顶部，就在任何模块的注释和文档字符串说明之后，在模块全局和常量之前。<p>import 应按以下顺序分组：</p>
+<ol class="arabic simple">
+<li>标准库导入。</li>
+<li>相关的第三方导入。</li>
+<li>本地应用程序/库的特定导入。</li>
+</ol>
+<p>你应该在每组 import 之间放一个空行。</p>
+</li>
+<li>推荐使用绝对导入，因为它们通常更具可读性，而且如果导入系统配置不正确（例如当包内的目录最终出现在 <code class="docutils literal notranslate"><span class="pre">sys.path</span></code> 上时），往往表现得更好（或至少给出更好的错误信息）<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mypkg.sibling</span>
+<span class="kn">from</span> <span class="nn">mypkg</span> <span class="kn">import</span> <span class="n">sibling</span>
+<span class="kn">from</span> <span class="nn">mypkg.sibling</span> <span class="kn">import</span> <span class="n">example</span>
+</pre></div>
+</div>
+<p>然而，明确的相对导入是绝对导入的一个可接受的替代方法，特别是在处理复杂的包布局时，使用绝对导入会造成不必要的啰嗦</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sibling</span>
+<span class="kn">from</span> <span class="nn">.sibling</span> <span class="kn">import</span> <span class="n">example</span>
+</pre></div>
+</div>
+<p>标准库代码应避免复杂的包布局，并始终使用绝对导入。</p>
+</li>
+<li>当从一个含类模块中导入一个类时，通常可以这样拼<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myclass</span> <span class="kn">import</span> <span class="n">MyClass</span>
+<span class="kn">from</span> <span class="nn">foo.bar.yourclass</span> <span class="kn">import</span> <span class="n">YourClass</span>
+</pre></div>
+</div>
+<p>如果这种拼写方式导致本地名称冲突，那么就显式地拼写它们</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">myclass</span>
+<span class="kn">import</span> <span class="nn">foo.bar.yourclass</span>
+</pre></div>
+</div>
+<p>并使用 “myclass.MyClass” 和 “foo.bar.yourclass.YourClass”。</p>
+</li>
+<li>应该避免使用通配符导入（<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">&lt;module&gt;</span> <span class="pre">import</span> <span class="pre">*</span></code>），因为它们使人不清楚哪些名字存在于名字空间中，使读者和许多自动工具都感到困惑。通配符导入有一个合理的用例，那就是重新发布一个内部接口作为公共 API 的一部分（例如，用一个可选的加速器模块的定义覆盖一个纯 Python 接口的实现，究竟哪些定义会被覆盖并不事先知道）。<p>当以这种方式重新发布名称时，下面关于公共和内部接口的准则仍然适用。</p>
+</li>
+</ul>
+</section>
+<section id="module-level-dunder-names">
+<h3><a class="toc-backref" href="#module-level-dunder-names" role="doc-backlink">模块级的 Dunder 名称</a></h3>
+<p>模块级 的 “dunders”（即有两个前导和两个尾部下划线的名称），如 <code class="docutils literal notranslate"><span class="pre">__all__</span></code>，<code class="docutils literal notranslate"><span class="pre">__author__</span></code>，<code class="docutils literal notranslate"><span class="pre">__version__</span></code>，等等。应该放在模块文档串之后，但在任何导入语句之前，<em>除了</em>  <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span></code> 导入。Python 规定，future 的导入必须出现在模块中的任何其他代码之前，除了文档字符串</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This is the example module.</span>
+
+<span class="sd">This module does stuff.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">barry_as_FLUFL</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.1&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Cardinal Biggles&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="string-quotes">
+<h2><a class="toc-backref" href="#string-quotes" role="doc-backlink">字符串引号</a></h2>
+<p>在Python 中，单引号字符串和双引号字符串是一样的。本 PEP 并没有对此提出建议。选择一个规则并坚持下去。然而，当一个字符串包含单引号或双引号字符时，使用另一个，以避免字符串中的反斜线。它可以提高可读性。</p>
+<p>For triple-quoted strings, always use double quote characters to be
+consistent with the docstring convention in <a class="pep reference internal" href="../pep-0257" title="PEP 257 – Docstring Conventions">PEP 257</a>.</p>
+</section>
+<section id="whitespace-in-expressions-and-statements">
+<h2><a class="toc-backref" href="#whitespace-in-expressions-and-statements" role="doc-backlink">表达式和语句中的空格</a></h2>
+<section id="pet-peeves">
+<h3><a class="toc-backref" href="#pet-peeves" role="doc-backlink">Pet Peeves</a></h3>
+<p>在以下情况下要避免不相干的空白：</p>
+<ul>
+<li>紧挨着小括号、大括号或圆括号的地方<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">spam</span><span class="p">(</span><span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span><span class="n">eggs</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">spam</span><span class="p">(</span> <span class="n">ham</span><span class="p">[</span> <span class="mi">1</span> <span class="p">],</span> <span class="p">{</span> <span class="n">eggs</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li>在尾部的逗号和后面的闭合小括号之间<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li>紧接在逗号、分号或冒号之前<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">;</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="p">,</span> <span class="n">x</span>
+</pre></div>
+</div>
+</li>
+<li>然而，在一个切片中，冒号的作用就像一个二元运算符，两边的数量应该相等（把它当作优先级最低的运算符）。在一个扩展的切片中，两个冒号都必须应用相同数量的间距。例外：当一个切片参数被省略时，空格被省略<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[:</span><span class="mi">9</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">:]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">:</span><span class="n">upper</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">:</span><span class="n">upper</span><span class="p">:],</span> <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">::</span><span class="n">step</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="o">+</span><span class="n">offset</span> <span class="p">:</span> <span class="n">upper</span><span class="o">+</span><span class="n">offset</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[:</span> <span class="n">upper_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">:</span> <span class="n">step_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">ham</span><span class="p">[::</span> <span class="n">step_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span> <span class="o">+</span> <span class="n">offset</span> <span class="p">:</span> <span class="n">upper</span> <span class="o">+</span> <span class="n">offset</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span> <span class="o">+</span> <span class="n">offset</span><span class="p">:</span><span class="n">upper</span> <span class="o">+</span> <span class="n">offset</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span> <span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span> <span class="p">:</span> <span class="p">:</span> <span class="n">upper</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span> <span class="p">:</span> <span class="n">upper</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li>紧挨着开始函数调用的参数列表的开放括号之前<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">spam</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">spam</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li>紧接着开始索引或切片的开放括号之前<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">dct</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">dct</span> <span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span> <span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li>在一个赋值（或其他）运算符周围有一个以上的空格，以使其与另一个运算符对齐<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">long_variable</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">x</span>             <span class="o">=</span> <span class="mi">1</span>
+<span class="n">y</span>             <span class="o">=</span> <span class="mi">2</span>
+<span class="n">long_variable</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="other-recommendations">
+<h3><a class="toc-backref" href="#other-recommendations" role="doc-backlink">其他建议</a></h3>
+<ul>
+<li>在任何地方都要避免尾部的空白。因为它通常是不可见的，它可能会引起混淆：例如，一个反斜杠后面有一个空格和一个换行符，并不算作一个续行标记。一些编辑器不保留它，许多项目（如 CPython 本身）有预提交钩子，拒绝它。</li>
+<li>总是在这些二元运算符的两边用一个空格环绕：赋值（<code class="docutils literal notranslate"><span class="pre">=</span></code>），增强赋值（<code class="docutils literal notranslate"><span class="pre">+=</span></code>，<code class="docutils literal notranslate"><span class="pre">-=``等），比较（``=`，``&lt;</span></code>，<code class="docutils literal notranslate"><span class="pre">&gt;</span></code>，<code class="docutils literal notranslate"><span class="pre">！=</span></code>，<code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code>，<code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>，<code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>，<code class="docutils literal notranslate"><span class="pre">in</span></code>，<code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">in</span></code>，<code class="docutils literal notranslate"><span class="pre">is</span></code>，<code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span></code>），布尔运算（<code class="docutils literal notranslate"><span class="pre">and</span></code>，<code class="docutils literal notranslate"><span class="pre">or`，``not</span></code>）。</li>
+<li>如果使用了不同优先级的运算符，考虑在优先级最低的运算符周围添加空白。使用你自己的判断；然而，永远不要使用一个以上的空格，并且在二元运算符的两边总是有相同数量的空格<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">submitted</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">hypot2</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">submitted</span> <span class="o">+=</span><span class="mi">1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">hypot2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li>函数注释应该使用正常的冒号规则，如果存在 <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> 箭头，则始终在其周围有空格。（关于函数注释的更多信息，请参见下面的 <a class="reference internal" href="#function-annotations">函数注解</a> ）<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">PosInt</span><span class="p">:</span> <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span><span class="n">AnyStr</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">PosInt</span><span class="p">:</span> <span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li>当用于表示一个关键字参数时，或用于表示一个 <em>未注解的</em> 函数参数的默认值时，不要在 <code class="docutils literal notranslate"><span class="pre">=</span></code> 符号周围使用空格<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">magic</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">real</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">imag</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">magic</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="n">real</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">imag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>但是，当把参数注解与默认值结合起来时，请在 <code class="docutils literal notranslate"><span class="pre">=</span></code> 符号周围使用空格</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span> <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span> <span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li>一般不鼓励使用复合语句（同一行的多个语句）<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span>
+    <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="n">do_one</span><span class="p">()</span>
+<span class="n">do_two</span><span class="p">()</span>
+<span class="n">do_three</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>宁可不做</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="n">do_one</span><span class="p">();</span> <span class="n">do_two</span><span class="p">();</span> <span class="n">do_three</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li>虽然有时把 if/for/while 和小的主体放在同一行是可以的，但对于多条款的语句，千万不要这样做。也要避免折叠这样的长行！<p>宁可不做</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span> <span class="n">total</span> <span class="o">+=</span> <span class="n">x</span>
+<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">delay</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>绝对不行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span> <span class="n">do_non_blah_thing</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span> <span class="n">something</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span> <span class="n">cleanup</span><span class="p">()</span>
+
+<span class="n">do_one</span><span class="p">();</span> <span class="n">do_two</span><span class="p">();</span> <span class="n">do_three</span><span class="p">(</span><span class="n">long</span><span class="p">,</span> <span class="n">argument</span><span class="p">,</span>
+                             <span class="nb">list</span><span class="p">,</span> <span class="n">like</span><span class="p">,</span> <span class="n">this</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">one</span><span class="p">();</span> <span class="n">two</span><span class="p">();</span> <span class="n">three</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="when-to-use-trailing-commas">
+<h2><a class="toc-backref" href="#when-to-use-trailing-commas" role="doc-backlink">何时使用尾部逗号</a></h2>
+<p>尾部逗号通常是可选的，但在制作一个元素的元组时是必须的。为了清楚起见，建议用（技术上多余的）小括号包围后者</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;setup.cfg&#39;</span><span class="p">,)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="s1">&#39;setup.cfg&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>当尾部逗号是多余的，当使用版本控制系统时，当一个值、参数或导入项的列表预计会随着时间的推移而扩展时，尾部逗号往往是有帮助的。其模式是将每个值（等）单独放在一行，总是添加一个尾部逗号，并在下一行添加封闭的小括号/括弧/括号。然而，将尾部逗号与闭合分隔符放在同一行中是没有意义的（除了上述单子图元的情况）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;setup.cfg&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tox.ini&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span>
+           <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+           <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;setup.cfg&#39;</span><span class="p">,</span> <span class="s1">&#39;tox.ini&#39;</span><span class="p">,]</span>
+<span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">,)</span>
+</pre></div>
+</div>
+</section>
+<section id="comments">
+<h2><a class="toc-backref" href="#comments" role="doc-backlink">注释</a></h2>
+<p>与代码相抵触的注释比没有注释更糟糕。当代码发生变化时，一定要优先保持注释的更新！</p>
+<p>注释应该是完整的句子。第一个词应该大写，除非它是一个以小写字母开头的标识符（永远不要改变标识符的大小写！）。</p>
+<p>块注释一般由一个或多个完整的句子组成的段落组成，每个句子以句号结束。</p>
+<p>在多句注释中，你应该在句子结束的句号后使用两个空格，但最后一句话后除外。</p>
+<p>确保你的注释清晰明了，容易被其他使用你所写语言的人理解。</p>
+<p>来自非英语国家的 Python 编码员：请用英语写注释，除非你有 120% 的把握，代码永远不会被不讲你的语言的人阅读。</p>
+<section id="block-comments">
+<h3><a class="toc-backref" href="#block-comments" role="doc-backlink">块注释</a></h3>
+<p>块注释通常适用于它们后面的一些（或所有）代码，并与该代码缩进到同一水平。块注释的每一行都以 <code class="docutils literal notranslate"><span class="pre">#</span></code> 和一个空格开始（除非它是注释内的缩进文本）。</p>
+<p>块注释内的段落由包含单个 <code class="docutils literal notranslate"><span class="pre">#</span></code> 的行来分隔。</p>
+</section>
+<section id="inline-comments">
+<h3><a class="toc-backref" href="#inline-comments" role="doc-backlink">内联注释</a></h3>
+<p>尽量少使用内联注释。</p>
+<p>内联注释是指与语句在同一行的注释。内联注释应与语句至少隔开两个空格。 它们应该以 # 和一个空格开始。</p>
+<p>内联注释是不必要的，事实上，如果它们说明了明显的问题，就会分散注意力。不要这样做</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Increment x</span>
+</pre></div>
+</div>
+<p>但有时，这是很有用的</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Compensate for border</span>
+</pre></div>
+</div>
+</section>
+<section id="documentation-strings">
+<h3><a class="toc-backref" href="#documentation-strings" role="doc-backlink">文档字符串</a></h3>
+<p>Conventions for writing good documentation strings
+(a.k.a. “docstrings”) are immortalized in <a class="pep reference internal" href="../pep-0257" title="PEP 257 – Docstring Conventions">PEP 257</a>.</p>
+<ul>
+<li>为所有公共模块、函数、类和方法编写文档字符串。对于非公开的方法，不需要文档字符串，但你应该有一个注释来描述该方法的作用。这个注释应该出现在 <code class="docutils literal notranslate"><span class="pre">def</span></code> 行之后。</li>
+<li><a class="pep reference internal" href="../pep-0257" title="PEP 257 – Docstring Conventions">PEP 257</a> describes good docstring conventions.  Note that most
+importantly, the <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> that ends a multiline docstring should be
+on a line by itself:<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Return a foobang</span>
+
+<span class="sd">Optional plotz says to frobnicate the bizbaz first.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li>对于单行的文件串，请将结尾的 <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> 放在同一行<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Return an ex-parrot.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="naming-conventions">
+<h2><a class="toc-backref" href="#naming-conventions" role="doc-backlink">命名公约</a></h2>
+<p>Python 库的命名规则有点乱，所以我们永远不会让它完全一致 – 尽管如此，这里是目前推荐的命名标准。新的模块和包（包括第三方框架）应该按照这些标准来编写，但如果现有的库有不同的风格，内部一致性是首选。</p>
+<section id="overriding-principle">
+<h3><a class="toc-backref" href="#overriding-principle" role="doc-backlink">覆盖原则</a></h3>
+<p>作为 API 的公共部分，对用户可见的名称应该遵循 reflect 用法而不是实现的惯例。</p>
+</section>
+<section id="descriptive-naming-styles">
+<h3><a class="toc-backref" href="#descriptive-naming-styles" role="doc-backlink">描述性的：命名方式</a></h3>
+<p>有很多不同的命名方式。能够认识到使用的是什么命名方式，与它们的用途无关，这很有帮助。</p>
+<p>常用的命名方式有以下几种：</p>
+<ul>
+<li><code class="docutils literal notranslate"><span class="pre">b</span></code> （单个小写字母）</li>
+<li><code class="docutils literal notranslate"><span class="pre">B</span></code> （单个大写字母）</li>
+<li><code class="docutils literal notranslate"><span class="pre">lowercase</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">lower_case_with_underscores</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">UPPERCASE</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">UPPER_CASE_WITH_UNDERSCORES</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">CapitalizedWords</span></code> (或 CapWords，或 CamelCase – 因其字母 <a class="footnote-reference brackets" href="#id8" id="id4">[4]</a> 的凹凸外观而得名）。这有时也被称为 StudlyCaps。<p>注意：在 CapWords 中使用缩略语时，要将缩略语的所有字母大写。因此，HTTPServerError 比 HttpServerError 好。</p>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">mixedCase</span></code> （与 CapitalizedWords 不同的是首字母小写的字符！）</li>
+<li><code class="docutils literal notranslate"><span class="pre">Capitalized_Words_With_Underscores</span></code> （丑陋!）</li>
+</ul>
+<p>还有一种风格是使用简短的唯一前缀将相关的名字组合在一起。这在 Python 中用得不多，但为了完整起见，还是要提到。例如，<code class="docutils literal notranslate"><span class="pre">os.stat()</span></code> 函数返回一个元组，其项目传统上有 <code class="docutils literal notranslate"><span class="pre">st_mode</span></code>、<code class="docutils literal notranslate"><span class="pre">st_size</span></code>、<code class="docutils literal notranslate"><span class="pre">st_mtime</span></code> 等名称。（这样做是为了强调与 POSIX 系统调用结构的字段的对应关系，这有助于熟悉该结构的程序员。）</p>
+<p>X11 库在其所有的公共函数中使用前导 X。在 Python 中，这种风格通常被认为是不必要的，因为属性和方法名的前缀是一个对象，而函数名的前缀是一个模块名。</p>
+<p>此外，还承认以下使用前导或尾部下划线的特殊形式（这些通常可以与任何大小写惯例相结合）：</p>
+<ul>
+<li><code class="docutils literal notranslate"><span class="pre">_single_leading_underscore</span></code>：weak “内部使用” 指标。例如，<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">M</span> <span class="pre">import</span> <span class="pre">*</span></code> 不会导入名称以下划线开头的对象。</li>
+<li><code class="docutils literal notranslate"><span class="pre">single_trailing_underscore_</span></code>：按惯例使用，以避免与 Python 关键字冲突，例如<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tkinter</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;ClassName&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">__double_leading_underscore</span></code>：当命名一个类的属性时，会调用名称混用（在类 FooBar 中，<code class="docutils literal notranslate"><span class="pre">__boo</span></code> 变成 <code class="docutils literal notranslate"><span class="pre">_FooBar__boo</span></code>；见下文）。</li>
+<li><code class="docutils literal notranslate"><span class="pre">__double_leading_and_trailing_underscore__</span></code>：实时在用户控制的命名空间中的 “magic” 对象或属性。例如：<code class="docutils literal notranslate"><span class="pre">__init__</span></code>，<code class="docutils literal notranslate"><span class="pre">__import__</span></code> 或 <code class="docutils literal notranslate"><span class="pre">__file__</span></code>。不要发明这样的名字；只使用文件规定的名字。</li>
+</ul>
+</section>
+<section id="prescriptive-naming-conventions">
+<h3><a class="toc-backref" href="#prescriptive-naming-conventions" role="doc-backlink">规范性的：命名规则</a></h3>
+<section id="names-to-avoid">
+<h4><a class="toc-backref" href="#names-to-avoid" role="doc-backlink">应避免的名称</a></h4>
+<p>永远不要使用字符 ‘l’（小写字母 el）、’O’（大写字母 oh）或 ‘I’（大写字母 eye）作为单字符变量名。</p>
+<p>在某些字体中，这些字符与数字 1 和 0 无法区分。当想使用 ‘l’ 时，请使用 ‘L’ 代替。</p>
+</section>
+<section id="ascii-compatibility">
+<h4><a class="toc-backref" href="#ascii-compatibility" role="doc-backlink">ASCII 兼容性</a></h4>
+<p>Identifiers used in the standard library must be ASCII compatible
+as described in the
+<a class="pep reference internal" href="../pep-3131#policy-specification" title="PEP 3131 – Supporting Non-ASCII Identifiers § Policy Specification">policy section</a>
+of <a class="pep reference internal" href="../pep-3131" title="PEP 3131 – Supporting Non-ASCII Identifiers">PEP 3131</a>.</p>
+</section>
+<section id="package-and-module-names">
+<h4><a class="toc-backref" href="#package-and-module-names" role="doc-backlink">包和模块名称</a></h4>
+<p>模块应该有短的、全小写的名字。如果能提高可读性，可以在模块名称中使用下划线。Python 包也应该有短的、全小写的名字，尽管不鼓励使用下划线。</p>
+<p>当一个用 C 或 C++ 编写的扩展模块有一个附带的 Python 模块，提供了一个更高级别的（例如，更面向对象的）接口时，C/C++ 模块有一个前导下划线（例如 <code class="docutils literal notranslate"><span class="pre">_socket</span></code>）。</p>
+</section>
+<section id="class-names">
+<h4><a class="toc-backref" href="#class-names" role="doc-backlink">类名称</a></h4>
+<p>类名通常应使用 CapWords 惯例。</p>
+<p>在接口被记录下来并主要作为可调用的情况下，可以用函数的命名惯例来代替。</p>
+<p>请注意，对于内建程序的名称有一个单独的约定：大多数内建程序的名称是单字（或两个字并列），CapWords 约定只用于异常名称和内建程序常量。</p>
+</section>
+<section id="type-variable-names">
+<h4><a class="toc-backref" href="#type-variable-names" role="doc-backlink">类型变量名称</a></h4>
+<p>Names of type variables introduced in <a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a> should normally use CapWords
+preferring short names: <code class="docutils literal notranslate"><span class="pre">T</span></code>, <code class="docutils literal notranslate"><span class="pre">AnyStr</span></code>, <code class="docutils literal notranslate"><span class="pre">Num</span></code>. It is recommended to add
+suffixes <code class="docutils literal notranslate"><span class="pre">_co</span></code> or <code class="docutils literal notranslate"><span class="pre">_contra</span></code> to the variables used to declare covariant
+or contravariant behavior correspondingly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+
+<span class="n">VT_co</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;VT_co&#39;</span><span class="p">,</span> <span class="n">covariant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">KT_contra</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;KT_contra&#39;</span><span class="p">,</span> <span class="n">contravariant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="exception-names">
+<h4><a class="toc-backref" href="#exception-names" role="doc-backlink">异常名称</a></h4>
+<p>因为异常应该是类，所以类的命名惯例在此适用。然而，你应该在你的异常名称上使用后缀 “Error”（如果异常实际上是一个错误）。</p>
+</section>
+<section id="global-variable-names">
+<h4><a class="toc-backref" href="#global-variable-names" role="doc-backlink">全局变量名称</a></h4>
+<p>（让我们希望这些变量只在一个模块内使用。）惯例与函数的惯例大致相同。</p>
+<p>为通过 <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">M</span> <span class="pre">import</span> <span class="pre">*</span></code> 使用而设计的模块应该使用 <code class="docutils literal notranslate"><span class="pre">__all__</span></code> 机制来防止导出 globals，或者使用较早的惯例，在这种 globals 前加一个下划线（你可能想这样做，以表明这些 globals 是 <code class="docutils literal notranslate"><span class="pre">模块非公共</span></code>）。</p>
+</section>
+<section id="function-and-variable-names">
+<h4><a class="toc-backref" href="#function-and-variable-names" role="doc-backlink">函数和变量名称</a></h4>
+<p>函数名称应采用小写，必要时用下划线隔开，以提高可读性。</p>
+<p>变量名称遵循与函数名称相同的惯例。</p>
+<p>只允许在已经是主流风格的情况下使用 mixedCase（例如 threading.py），以保持向后兼容。</p>
+</section>
+<section id="function-and-method-arguments">
+<h4><a class="toc-backref" href="#function-and-method-arguments" role="doc-backlink">函数和方法的参数</a></h4>
+<p>总是使用 <code class="docutils literal notranslate"><span class="pre">self</span></code> 作为实例方法的第一个参数。</p>
+<p>总是使用 <code class="docutils literal notranslate"><span class="pre">cls</span></code> 作为类方法的第一个参数。</p>
+<p>如果一个函数参数的名字与一个保留的关键字冲突，一般来说，最好在后面附加一个下划线，而不是使用缩写或拼写错误。因此 <code class="docutils literal notranslate"><span class="pre">class_</span></code> 比 <code class="docutils literal notranslate"><span class="pre">clss</span></code> 好。（也许更好的是通过使用同义词来避免这种冲突。）</p>
+</section>
+<section id="method-names-and-instance-variables">
+<h4><a class="toc-backref" href="#method-names-and-instance-variables" role="doc-backlink">方法名称和实例变量</a></h4>
+<p>使用函数命名规则：小写字母，必要时用下划线隔开单词，以提高可读性。</p>
+<p>只对非公开方法和实例变量使用一个前导下划线。</p>
+<p>为了避免与子类的名称冲突，使用两个前导下划线来调用 Python 的名称处理规则。</p>
+<p>Python 将这些名字与类的名字混为一谈：如果类 Foo 有一个名为 <code class="docutils literal notranslate"><span class="pre">__a</span></code> 的属性，它就不能被 <code class="docutils literal notranslate"><span class="pre">Foo.__a</span></code> 访问。（一个执着的用户仍然可以通过调用 <code class="docutils literal notranslate"><span class="pre">Foo._Foo__a</span></code> 获得访问权。）一般来说，双引号应该只用来避免与设计为子类的类中的属性发生名称冲突。</p>
+<p>注意：关于 <code class="docutils literal notranslate"><span class="pre">__names</span></code> 的使用有一些争议（见下文）。</p>
+</section>
+<section id="constants">
+<h4><a class="toc-backref" href="#constants" role="doc-backlink">常量</a></h4>
+<p>常量通常定义在模块层面，用大写字母书写，用下划线分隔单词。例如 <code class="docutils literal notranslate"><span class="pre">MAX_OVERFLOW</span></code> 和 <code class="docutils literal notranslate"><span class="pre">TOTAL</span></code>。</p>
+</section>
+<section id="designing-for-inheritance">
+<h4><a class="toc-backref" href="#designing-for-inheritance" role="doc-backlink">继承设计</a></h4>
+<p>一定要决定一个类的方法和实例变量（统称：”属性”（attributes））应该是公共的还是非公共的。如果有疑问，请选择非公共的；以后把它变成公共的比把公共属性变成非公共的更容易。</p>
+<p>公共属性是那些你期望你的类的无关客户使用的属性，你的承诺是避免向后不兼容的变化。非公共属性是那些不打算被第三方使用的属性；你不保证非公共属性不会改变，甚至被删除。</p>
+<p>我们在这里不使用术语 “private”，因为在 Python 中没有任何属性是真正私有的（没有一般不必要的工作）。</p>
+<p>另一类属性是那些属于 “子类 API” 的属性（在其他语言中通常称为 “protected”）。有些类被设计成可以被继承，以扩展或修改该类行为的各个方面。在设计这样的类时，要注意明确决定哪些属性是公共的，哪些是子类 API 的一部分，哪些是真正只能由基类使用的。</p>
+<p>考虑到这一点，下面是 Pythonic 的准则：</p>
+<ul>
+<li>公共属性不应该有前导下划线。</li>
+<li>如果你的公共属性名称与一个保留的关键字相冲突，请在你的属性名称后面加上一个下划线。这比缩写或破坏性的拼写更可取。（然而，尽管有这个规则，’cls’ 是任何已知为类的变量或参数的首选拼写，特别是类方法的第一个参数。）<p>注 1：见上面关于类方法的参数名称建议。</p>
+</li>
+<li>对于简单的公共数据属性，最好是只公开属性名称，而不使用复杂的访问器/混合器方法。请记住，如果你发现一个简单的数据属性需要增加功能行为，Python 提供了一个简单的路径来实现未来的增强。在这种情况下，使用属性将功能实现隐藏在简单的数据属性访问语法后面。<p>注意1：尽量保持功能行为不受副作用影响，尽管缓存等副作用一般来说是可以的。</p>
+<p>注意2：避免使用属性来进行计算上昂贵的操作；属性符号使调用者相信访问是（相对）便宜的。</p>
+</li>
+<li>如果你的类打算被子类化，并且你有不想让子类使用的属性，考虑用双前导下划线和无尾部下划线来命名它们。这将调用 Python 的名称混合算法，类的名称将被混合成属性名称。这有助于在子类无意中包含相同名称的属性时，避免属性名称的冲突”<p>注意1：注意只有简单的类名被用于混杂的名称中，所以如果一个子类同时选择相同的类名和属性名，你仍然可以得到名称碰撞。</p>
+<p>注意2：名字的拼写会使某些使用，如调试和 <code class="docutils literal notranslate"><span class="pre">__getattr__()</span></code>，变得不那么方便。然而，名称混合算法有很好的文件记录，并且很容易手动执行。</p>
+<p>注3：不是每个人都喜欢名字的拼写。尽量在避免意外的姓名冲突与高级调用者的潜在使用之间取得平衡。</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="public-and-internal-interfaces">
+<h3><a class="toc-backref" href="#public-and-internal-interfaces" role="doc-backlink">公共和内部接口</a></h3>
+<p>任何向后兼容的保证只适用于公共接口。因此，重要的是，用户要能够明确区分公共接口和内部接口。</p>
+<p>文档化的接口被认为是公开的，除非文档明确声明它们是临时的或内部的接口，免于通常的向后兼容性保证。所有没有记录的接口应该被认为是内部的。</p>
+<p>为了更好地支持自省，模块应该在它们的公共 API 中使用 <code class="docutils literal notranslate"><span class="pre">__all__</span></code> 属性明确地声明名称。将 <code class="docutils literal notranslate"><span class="pre">__all__</span></code> 设置为一个空列表，表示该模块没有公共 API。</p>
+<p>即使适当地设置了 <code class="docutils literal notranslate"><span class="pre">__all__</span></code>，内部接口（包、模块、类、函数、属性或其他名称）仍应在前缀中加入一个单引号。</p>
+<p>如果任何包含命名空间（包、模块或类）的接口也被认为是内部的。</p>
+<p>导入的名称应始终被视为一个实现细节。其他模块不能依赖对这些导入名称的间接访问，除非它们是包含模块的 API 中明确记录的一部分，例如 <code class="docutils literal notranslate"><span class="pre">os.path</span></code> 或包的 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 模块，它暴露了子模块的功能。</p>
+</section>
+</section>
+<section id="programming-recommendations">
+<h2><a class="toc-backref" href="#programming-recommendations" role="doc-backlink">编程推荐</a></h2>
+<ul>
+<li>代码的编写方式不应不利于 Python 的其他实现（PyPy、Jython、IronPython、Cython、Psyco，等等）。<p>例如，不要依赖 CPython 对 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+=</span> <span class="pre">b</span></code> 或 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code> 形式的语句进行原地字符串连接的有效实现。这种优化即使在 CPython 中也是脆弱的（它只对某些类型有效），而且在不使用 refcounting 的实现中根本不存在。在库的性能敏感部分，应该使用 <code class="docutils literal notranslate"><span class="pre">''.join()</span></code> 形式来代替。这将确保连接在不同的实现中以线性时间发生。</p>
+</li>
+<li>对 None 这样的单子（singletons）的比较应该总是用 <code class="docutils literal notranslate"><span class="pre">is</span></code>  或 <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span></code> 来进行，而不是用等号运算符。<p>另外，当你真正的意思是 “如果 x 不是 None” 时，要小心写 “if x” – 例如，当测试一个默认为 None 的变量或参数是否被设置为其他值时。其他的值可能有一个类型（如容器），在布尔环境中可能是 false！</p>
+</li>
+<li>使用 <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span></code> 运算符，而不是 <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">...</span> <span class="pre">is</span></code>。虽然这两个表达式在功能上是相同的，但前者更具可读性，是首选<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">foo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+<li>当用丰富的比较实现排序操作时，最好是实现所有的六种操作（<code class="docutils literal notranslate"><span class="pre">__eq__</span></code>、<code class="docutils literal notranslate"><span class="pre">__ne__</span></code>、<code class="docutils literal notranslate"><span class="pre">__lt__</span></code>、<code class="docutils literal notranslate"><span class="pre">__le__</span></code>、<code class="docutils literal notranslate"><span class="pre">__gt__</span></code>、<code class="docutils literal notranslate"><span class="pre">__ge__</span></code>），而不是依靠其他代码只行使一个特定的比较。<p>为了最大限度地减少所涉及的工作，<code class="docutils literal notranslate"><span class="pre">functools.total_ordering()</span></code> 装饰器提供了一个工具来生成缺少的比较方法。</p>
+<p><a class="pep reference internal" href="../pep-0207" title="PEP 207 – Rich Comparisons">PEP 207</a> indicates that reflexivity rules <em>are</em> assumed by Python.
+Thus, the interpreter may swap <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&gt;</span> <span class="pre">x</span></code> with <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&gt;=</span> <span class="pre">x</span></code>
+with <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">y</span></code>, and may swap the arguments of <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">!=</span>
+<span class="pre">y</span></code>.  The <code class="docutils literal notranslate"><span class="pre">sort()</span></code> and <code class="docutils literal notranslate"><span class="pre">min()</span></code> operations are guaranteed to use
+the <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> operator and the <code class="docutils literal notranslate"><span class="pre">max()</span></code> function uses the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>
+operator.  However, it is best to implement all six operations so
+that confusion doesn’t arise in other contexts.</p>
+</li>
+<li>总是使用 def 语句，而不是直接将 lambda 表达式与标识符绑定的赋值语句<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</pre></div>
+</div>
+<p>第一种形式意味着产生的函数对象的名称是具体的 ‘f’，而不是通用的 ‘&lt;lambda&gt;’。这对回溯和一般的字符串表示法更有用。使用赋值语句消除了 lambda 表达式比显式 def 语句所能提供的唯一好处（即它可以被嵌入到一个更大的表达式中）</p>
+</li>
+<li>从 <code class="docutils literal notranslate"><span class="pre">Exception</span></code> 派生异常，而不是 <code class="docutils literal notranslate"><span class="pre">BaseException</span></code>。直接继承自 <code class="docutils literal notranslate"><span class="pre">BaseException</span></code> 是为那些捕获异常几乎都是错误的事情而保留的。<p>Design exception hierarchies based on the distinctions that code
+<em>catching</em> the exceptions is likely to need, rather than the locations
+where the exceptions are raised. Aim to answer the question
+“What went wrong?” programmatically, rather than only stating that
+“A problem occurred” (see <a class="pep reference internal" href="../pep-3151" title="PEP 3151 – Reworking the OS and IO exception hierarchy">PEP 3151</a> for an example of this lesson being
+learned for the builtin exception hierarchy)</p>
+<p>类的命名惯例适用于此，尽管如果异常是一个错误，你应该给你的异常类添加后缀 “Error”。用于非本地流控制或其他形式的信号的非错误异常不需要特殊的后缀。</p>
+</li>
+<li>适当地使用异常链。 <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">X</span> <span class="pre">from</span> <span class="pre">Y</span></code> 应该被用来表示显式替换，而不丢失原始回溯。<p>当故意替换一个内部异常时（使用 <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">X</span> <span class="pre">from</span> <span class="pre">None</span></code>），确保相关的细节被转移到新的异常中（比如在将 KeyError 转换为 AttributeError 时保留属性名称，或者在新的异常消息中嵌入原始异常的文本）。</p>
+</li>
+<li>在捕获异常时，尽可能提到具体的异常，而不是使用赤裸裸的 <code class="docutils literal notranslate"><span class="pre">except:</span></code> 子句<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">platform_specific_module</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">platform_specific_module</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>裸漏的 <code class="docutils literal notranslate"><span class="pre">except:</span></code> 子句会捕捉 SystemExit 和 KeyboardInterrupt 异常，使得用 Control-C 中断程序更加困难，并且可以掩盖其他问题。如果你想捕捉所有提示程序错误的异常，请使用 <code class="docutils literal notranslate"><span class="pre">except</span> <span class="pre">Exception:``（裸</span> <span class="pre">except</span> <span class="pre">相当于</span> <span class="pre">``except</span> <span class="pre">BaseException:</span></code>）。</p>
+<p>一个好的经验法则是，将裸露的 ‘except’ 子句的使用限制在两种情况下：</p>
+<ol class="arabic simple">
+<li>如果异常处理程序将打印出来或记录回溯；至少用户会意识到发生了错误。</li>
+<li>如果代码需要做一些清理工作，但又让异常通过 <code class="docutils literal notranslate"><span class="pre">raise</span></code> 向上传播。<code class="docutils literal notranslate"><span class="pre">try...finally</span></code> 可以是处理这种情况的更好方法。</li>
+</ol>
+</li>
+<li>当捕捉操作系统错误时，更喜欢 Python 3.3 中引入的显式异常层次，而不是对 <code class="docutils literal notranslate"><span class="pre">errno</span></code> 值的自省。</li>
+<li>此外，对于所有的 try/except 子句，将 <code class="docutils literal notranslate"><span class="pre">try</span></code> 子句限制在必要的绝对最小的代码量。同样，这也避免了掩盖错误 ::”<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">key_not_found</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">handle_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Too broad!</span>
+    <span class="k">return</span> <span class="n">handle_value</span><span class="p">(</span><span class="n">collection</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="c1"># Will also catch KeyError raised by handle_value()</span>
+    <span class="k">return</span> <span class="n">key_not_found</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li>当一个资源是某段代码的局部时，使用 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语句来确保它在使用后被及时可靠地清理掉。try/finally 语句也是可以接受的。</li>
+<li>上下文管理程序除了获取和释放资源外，还应该通过单独的函数或方法来调用<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">begin_transaction</span><span class="p">():</span>
+    <span class="n">do_stuff_in_transaction</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">do_stuff_in_transaction</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>后一个例子没有提供任何信息来表明 <code class="docutils literal notranslate"><span class="pre">__enter__</span></code> 和 <code class="docutils literal notranslate"><span class="pre">__exit__</span></code> 方法除了在连接后关闭连接外，还在做其他事情。在这种情况下，明确说明是很重要的。</p>
+</li>
+<li>在返回语句中要保持一致。在一个函数中，要么所有的返回语句都应该返回一个表达式，要么都不应该。如果任何返回语句都返回一个表达式，任何没有返回值的返回语句都应该明确说明为 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">None</span></code>，并且在函数的末尾应该有一个明确的返回语句（如果可以达到）<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li>使用 <code class="docutils literal notranslate"><span class="pre">''.startswith()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">''.endswith()</span></code> 代替字符串切分来检查前缀或后缀。<p>startswith() 和 endswith() 更干净，更不容易出错</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">foo</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">):</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;bar&#39;</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+<li>对象类型比较应该总是使用 isinstance()，而不是直接比较类型<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+</pre></div>
+</div>
+</li>
+<li>对于序列，（字符串、列表、元组），使用空序列为 false 的事实<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">seq</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">seq</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+</pre></div>
+</div>
+</li>
+<li>不要写依赖大量尾部空白的字符串字面。这样的尾部空白在视觉上是无法区分的，一些编辑器（或最近的 reindent.py）会修剪它们。</li>
+<li>不要用 <code class="docutils literal notranslate"><span class="pre">==</span></code> 来比较布尔值是真还是假<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">greeting</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">greeting</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>更糟糕的是</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">greeting</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+<li>不鼓励在 <code class="docutils literal notranslate"><span class="pre">try...finally</span></code> 的 finally 套件中使用流程控制语句 <code class="docutils literal notranslate"><span class="pre">return</span></code>/<code class="docutils literal notranslate"><span class="pre">break</span></code>/<code class="docutils literal notranslate"><span class="pre">continue</span></code>，因为流程控制语句会跳出 finally 套件。这是因为这样的语句将隐含地取消任何正在通过 finally 套件传播的活动异常<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">42</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<section id="function-annotations">
+<h3><a class="toc-backref" href="#function-annotations" role="doc-backlink">函数注解</a></h3>
+<p>With the acceptance of <a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a>, the style rules for function
+annotations have changed.</p>
+<ul>
+<li>Function annotations should use <a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a> syntax (there are some
+formatting recommendations for annotations in the previous section).</li>
+<li>不再鼓励以前在本 PEP 中推荐的注解样式的实验。</li>
+<li>However, outside the stdlib, experiments within the rules of <a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a>
+are now encouraged.  For example, marking up a large third party
+library or application with <a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a> style type annotations,
+reviewing how easy it was to add those annotations, and observing
+whether their presence increases code understandability.</li>
+<li>Python 标准库在采用这种注解时应该是保守的，但对于新的代码和大的重构来说，允许使用它们。</li>
+<li>对于想要对函数注解进行不同使用的代码，建议放一个形式为<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># type: ignore</span>
+</pre></div>
+</div>
+<p>near the top of the file; this tells type checkers to ignore all
+annotations.  (More fine-grained ways of disabling complaints from
+type checkers can be found in <a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a>.)</p>
+</li>
+<li>就像 linter 一样，类型检查器是可选的、独立的工具。默认情况下，Python 解释器不应该因为类型检查而发出任何消息，也不应该根据注解来改变它们的行为。</li>
+<li>Users who don’t want to use type checkers are free to ignore them.
+However, it is expected that users of third party library packages
+may want to run type checkers over those packages.  For this purpose
+<a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a> recommends the use of stub files: .pyi files that are read
+by the type checker in preference of the corresponding .py files.
+Stub files can be distributed with a library, or separately (with
+the library author’s permission) through the typeshed repo <a class="footnote-reference brackets" href="#id9" id="id5">[5]</a>.</li>
+</ul>
+</section>
+<section id="variable-annotations">
+<h3><a class="toc-backref" href="#variable-annotations" role="doc-backlink">变量注解</a></h3>
+<p><a class="pep reference internal" href="../pep-0526" title="PEP 526 – Syntax for Variable Annotations">PEP 526</a> introduced variable annotations. The style recommendations for them are
+similar to those on function annotations described above:</p>
+<ul>
+<li>模块级变量、类和实例变量以及局部变量的注释应该在冒号后面有一个空格。</li>
+<li>冒号前不应该有空格。</li>
+<li>如果一个赋值有一个右侧，那么等号符号两边应该正好有一个空格<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+
+<span class="n">code</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="n">coords</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&lt;unknown&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+
+<span class="n">code</span><span class="p">:</span><span class="nb">int</span>  <span class="c1"># No space after colon</span>
+<span class="n">code</span> <span class="p">:</span> <span class="nb">int</span>  <span class="c1"># Space before colon</span>
+
+<span class="k">class</span> <span class="nc">Test</span><span class="p">:</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span>  <span class="c1"># No spaces around equality sign</span>
+</pre></div>
+</div>
+</li>
+<li>Although the <a class="pep reference internal" href="../pep-0526" title="PEP 526 – Syntax for Variable Annotations">PEP 526</a> is accepted for Python 3.6, the variable annotation
+syntax is the preferred syntax for stub files on all versions of Python
+(see <a class="pep reference internal" href="../pep-0484" title="PEP 484 – Type Hints">PEP 484</a> for details).</li>
+</ul>
+<p class="rubric">脚注</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fn-hi" role="note">
+<dt class="label" id="fn-hi">[<a href="#id2">1</a>]</dt>
+<dd><em>悬挂式缩进</em> 是一种类型设置风格，在一个段落中，除了第一行之外，所有的行都是缩进的。在 Python 的上下文中，该术语用于描述这样一种风格：括号内语句的开头括号是该行的最后一个非空白字符，随后的几行一直缩进到结束括号。</aside>
+</aside>
+</section>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#references" role="doc-backlink">参考</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id6" role="note">
+<dt class="label" id="id6">[<a href="#id1">2</a>]</dt>
+<dd>Barry’s GNU Mailman style guide
+<a class="reference external" href="http://barry.warsaw.us/software/STYLEGUIDE.txt">http://barry.warsaw.us/software/STYLEGUIDE.txt</a></aside>
+<aside class="footnote brackets" id="id7" role="note">
+<dt class="label" id="id7">[<a href="#id3">3</a>]</dt>
+<dd>Donald Knuth’s <em>The TeXBook</em>, pages 195 and 196.</aside>
+<aside class="footnote brackets" id="id8" role="note">
+<dt class="label" id="id8">[<a href="#id4">4</a>]</dt>
+<dd><a class="reference external" href="http://www.wikipedia.com/wiki/CamelCase">http://www.wikipedia.com/wiki/CamelCase</a></aside>
+<aside class="footnote brackets" id="id9" role="note">
+<dt class="label" id="id9">[<a href="#id5">5</a>]</dt>
+<dd>typeshed 仓库 <a class="reference external" href="https://github.com/python/typeshed">https://github.com/python/typeshed</a></aside>
+</aside>
+</section>
+<section id="copyright">
+<h2><a class="toc-backref" href="#copyright" role="doc-backlink">版权声明</a></h2>
+<p>本文档已被置于公共领域。</p>
+</section>
+</section>
+<hr class="docutils" />
+<p>Source: <a class="reference external" href="https://github.com/python/peps/blob/main/pep-0008.txt">https://github.com/python/peps/blob/main/pep-0008.txt</a></p>
+<p>Last modified: <a class="reference external" href="https://github.com/python/peps/commits/main/pep-0008.txt">2022-05-11 17:45:05 GMT</a></p>
+
+        </article>
+        <nav id="pep-sidebar">
+            <h2>Contents</h2>
+            <ul>
+<li><a class="reference internal" href="#introduction">介绍</a></li>
+<li><a class="reference internal" href="#a-foolish-consistency-is-the-hobgoblin-of-little-minds">愚蠢的一致性是小脑袋里的恶棍</a></li>
+<li><a class="reference internal" href="#code-lay-out">代码布局</a><ul>
+<li><a class="reference internal" href="#indentation">缩进</a></li>
+<li><a class="reference internal" href="#tabs-or-spaces">制表符或者空格键</a></li>
+<li><a class="reference internal" href="#maximum-line-length">行的最大列数</a></li>
+<li><a class="reference internal" href="#should-a-line-break-before-or-after-a-binary-operator">二元运算符之前或之后应该断行吗？</a></li>
+<li><a class="reference internal" href="#blank-lines">空白行</a></li>
+<li><a class="reference internal" href="#source-file-encoding">源文件编码</a></li>
+<li><a class="reference internal" href="#imports">Imports</a></li>
+<li><a class="reference internal" href="#module-level-dunder-names">模块级的 Dunder 名称</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#string-quotes">字符串引号</a></li>
+<li><a class="reference internal" href="#whitespace-in-expressions-and-statements">表达式和语句中的空格</a><ul>
+<li><a class="reference internal" href="#pet-peeves">Pet Peeves</a></li>
+<li><a class="reference internal" href="#other-recommendations">其他建议</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#when-to-use-trailing-commas">何时使用尾部逗号</a></li>
+<li><a class="reference internal" href="#comments">注释</a><ul>
+<li><a class="reference internal" href="#block-comments">块注释</a></li>
+<li><a class="reference internal" href="#inline-comments">内联注释</a></li>
+<li><a class="reference internal" href="#documentation-strings">文档字符串</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#naming-conventions">命名公约</a><ul>
+<li><a class="reference internal" href="#overriding-principle">覆盖原则</a></li>
+<li><a class="reference internal" href="#descriptive-naming-styles">描述性的：命名方式</a></li>
+<li><a class="reference internal" href="#prescriptive-naming-conventions">规范性的：命名规则</a><ul>
+<li><a class="reference internal" href="#names-to-avoid">应避免的名称</a></li>
+<li><a class="reference internal" href="#ascii-compatibility">ASCII 兼容性</a></li>
+<li><a class="reference internal" href="#package-and-module-names">包和模块名称</a></li>
+<li><a class="reference internal" href="#class-names">类名称</a></li>
+<li><a class="reference internal" href="#type-variable-names">类型变量名称</a></li>
+<li><a class="reference internal" href="#exception-names">异常名称</a></li>
+<li><a class="reference internal" href="#global-variable-names">全局变量名称</a></li>
+<li><a class="reference internal" href="#function-and-variable-names">函数和变量名称</a></li>
+<li><a class="reference internal" href="#function-and-method-arguments">函数和方法的参数</a></li>
+<li><a class="reference internal" href="#method-names-and-instance-variables">方法名称和实例变量</a></li>
+<li><a class="reference internal" href="#constants">常量</a></li>
+<li><a class="reference internal" href="#designing-for-inheritance">继承设计</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#public-and-internal-interfaces">公共和内部接口</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#programming-recommendations">编程推荐</a><ul>
+<li><a class="reference internal" href="#function-annotations">函数注解</a></li>
+<li><a class="reference internal" href="#variable-annotations">变量注解</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">参考</a></li>
+<li><a class="reference internal" href="#copyright">版权声明</a></li>
+</ul>
+
+            <br>
+            <a id="source" href="https://github.com/python/peps/blob/main/pep-0008.txt">Page Source (GitHub)</a>
+        </nav>
+    </section>
+    <script src="../_static/colour_scheme.js"></script>
+    <script src="../_static/wrap_tables.js"></script>
+</body>
+</html>

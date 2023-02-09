@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>PEP 508 – Dependency specification for Python Software Packages | peps.python.org</title>
+    <link rel="shortcut icon" href="../_static/py.png">
+    <link rel="canonical" href="https://peps.python.org/pep-0508/">
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/mq.css" type="text/css">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" media="(prefers-color-scheme: light)" id="pyg-light">
+    <link rel="stylesheet" href="../_static/pygments_dark.css" type="text/css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+    <link rel="alternate" type="application/rss+xml" title="Latest PEPs" href="https://peps.python.org/peps.rss">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <meta name="description" content="Python Enhancement Proposals (PEPs)">
+</head>
+<body>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-sun-half" viewBox="0 0 24 24" pointer-events="all">
+    <title>Following system colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 3v18m0-12l4.65-4.65M12 14.3l7.37-7.37M12 19.6l8.85-8.85"></path>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24" pointer-events="all">
+    <title>Selected dark colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24" pointer-events="all">
+    <title>Selected light colour scheme</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+</svg>
+    <script>
+
+        document.documentElement.dataset.colour_scheme = localStorage.getItem("colour_scheme") || "auto"
+    </script>
+    <section id="pep-page-section">
+        <header>
+            <h1>Python Enhancement Proposals</h1>
+            <ul class="breadcrumbs">
+                <li><a href="https://www.python.org/" title="The Python Programming Language">Python</a> &raquo; </li>
+                <li><a href="../pep-0000/">PEP Index</a> &raquo; </li>
+                <li>PEP 508</li>
+            </ul>
+            <button id="colour-scheme-cycler" onClick="setColourScheme(nextColourScheme())">
+                <svg aria-hidden="true" class="colour-scheme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+                <svg aria-hidden="true" class="colour-scheme-icon-when-dark"><use href="#svg-moon"></use></svg>
+                <svg aria-hidden="true" class="colour-scheme-icon-when-light"><use href="#svg-sun"></use></svg>
+                <span class="visually-hidden">Toggle light / dark / auto colour theme</span>
+            </button>
+        </header>
+        <article>
+            <section id="pep-content">
+<h1 class="page-title">PEP 508 – Dependency specification for Python Software Packages</h1>
+<dl class="rfc2822 field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd">Robert Collins &lt;rbtcollins&#32;&#97;t&#32;hp.com&gt;</dd>
+<dt class="field-even">BDFL-Delegate<span class="colon">:</span></dt>
+<dd class="field-even">Donald Stufft &lt;donald&#32;&#97;t&#32;stufft.io&gt;</dd>
+<dt class="field-odd">Discussions-To<span class="colon">:</span></dt>
+<dd class="field-odd"><a class="reference external" href="https://mail.python.org/archives/list/distutils-sig&#64;python.org/">Distutils-SIG list</a></dd>
+<dt class="field-even">Status<span class="colon">:</span></dt>
+<dd class="field-even"><abbr title="Accepted and implementation complete, or no longer active">Final</abbr></dd>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><abbr title="Normative PEP with a new feature for Python, implementation change for CPython or interoperability standard for the ecosystem">Standards Track</abbr></dd>
+<dt class="field-even">Topic<span class="colon">:</span></dt>
+<dd class="field-even"><a class="reference external" href="../topic/packaging/">Packaging</a></dd>
+<dt class="field-odd">Created<span class="colon">:</span></dt>
+<dd class="field-odd">11-Nov-2015</dd>
+<dt class="field-even">Post-History<span class="colon">:</span></dt>
+<dd class="field-even">05-Nov-2015, 16-Nov-2015</dd>
+<dt class="field-odd">Resolution<span class="colon">:</span></dt>
+<dd class="field-odd"><a class="reference external" href="https://mail.python.org/pipermail/distutils-sig/2015-November/027868.html">Distutils-SIG message</a></dd>
+</dl>
+<hr class="docutils" />
+<section id="contents">
+<details><summary>Table of Contents</summary><ul class="simple">
+<li><a class="reference internal" href="#abstract">摘要</a></li>
+<li><a class="reference internal" href="#motivation">动机</a></li>
+<li><a class="reference internal" href="#specification">规范</a><ul>
+<li><a class="reference internal" href="#examples">示例</a></li>
+<li><a class="reference internal" href="#concepts">概念</a></li>
+<li><a class="reference internal" href="#grammar">语法</a></li>
+<li><a class="reference internal" href="#whitespace">空格</a></li>
+<li><a class="reference internal" href="#names">名称</a></li>
+<li><a class="reference internal" href="#extras">额外组件</a></li>
+<li><a class="reference internal" href="#versions">版本</a></li>
+<li><a class="reference internal" href="#environment-markers">环境标记</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#backwards-compatibility">向后兼容</a></li>
+<li><a class="reference internal" href="#rationale">基本原理</a></li>
+<li><a class="reference internal" href="#complete-grammar">完整语法</a></li>
+<li><a class="reference internal" href="#summary-of-changes-to-pep-508">对 PEP 508 的变更摘要</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#copyright">Copyright</a></li>
+</ul>
+</details></section>
+<section id="abstract">
+<h2><a class="toc-backref" href="#abstract" role="doc-backlink">摘要</a></h2>
+<p>这个 PEP 指定用于描述包的依赖关系的语言。它在描述单个依赖项的边缘描绘了边界——不同种类的依赖项以及何时应该安装它们是更高层次的问题。其目的是为更高层次的规范提供构建模块。</p>
+<p>依赖项的作用是使像pip <a class="footnote-reference brackets" href="#pip" id="id1">[1]</a> 这样的工具能够找到要安装的正确软件包。有时这是非常松散的——只指定名称，有时是非常具体的——引用要安装的特定文件。有时候依赖关系只适用于一个平台，或者只有某些版本是可接受的，所以语言允许描述所有这些情况。</p>
+<p>所定义的语言是一种紧凑的基于行的格式，它已经在 pip 需求文件中广泛使用，尽管我们没有指定这些文件允许的命令行选项处理。有一点需要注意 —— <a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a> 中指定的 URL 引用表单实际上并没有在 pip 中实现，但是由于 <a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a> 是被接受的，所以我们使用该格式而不是 pip 当前的原生格式。</p>
+</section>
+<section id="motivation">
+<h2><a class="toc-backref" href="#motivation" role="doc-backlink">动机</a></h2>
+<p>Python 打包生态系统中任何需要使用依赖项列表的规范都需要构建在已批准的 PEP 之上，但是 <a class="pep reference internal" href="../pep-0426" title="PEP 426 – Metadata for Python Software Packages 2.0">PEP 426</a> 主要是一种期望——而且我们可以采用已有的依赖项规范实现。现有的实现是经过实战验证的，用户友好，所以采用它们比批准一种理想的、未被使用的格式要好得多。</p>
+</section>
+<section id="specification">
+<h2><a class="toc-backref" href="#specification" role="doc-backlink">规范</a></h2>
+<section id="examples">
+<h3><a class="toc-backref" href="#examples" role="doc-backlink">示例</a></h3>
+<p>该语言的所有功能都通过基于名称的查找来显示:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span> <span class="p">[</span><span class="n">security</span><span class="p">,</span><span class="n">tests</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">2.8.1</span><span class="p">,</span> <span class="o">==</span> <span class="mf">2.8</span><span class="o">.*</span> <span class="p">;</span> <span class="n">python_version</span> <span class="o">&lt;</span> <span class="s2">&quot;2.7&quot;</span>
+</pre></div>
+</div>
+<p>最小的基于 URL 的查找:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="o">@</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pypa</span><span class="o">/</span><span class="n">pip</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="mf">1.3.1</span><span class="o">.</span><span class="n">zip</span><span class="c1">#sha1=da9234ee9982d4bbb3c72346a6de940a148ea686</span>
+</pre></div>
+</div>
+</section>
+<section id="concepts">
+<h3><a class="toc-backref" href="#concepts" role="doc-backlink">概念</a></h3>
+<p>依赖项规范总是指定发行版名称。它可能包括额外的内容，这些内容扩展了命名发行版的依赖关系，以启用可选特性。安装的版本可以使用版本限制来控制，或者将 URL 提供给要安装的特定工件。最后，通过使用环境标记，这种依赖关系可以变成有条件的。</p>
+</section>
+<section id="grammar">
+<h3><a class="toc-backref" href="#grammar" role="doc-backlink">语法</a></h3>
+<p>首先简要介绍语法，然后再深入研究每个部分的语义。</p>
+<p>分发规范是用 ASCII 文本编写的。使用 parsley <a class="footnote-reference brackets" href="#parsley" id="id2">[2]</a> 语法来提供精确的语法。预计该规范将被嵌入到更大的系统中，该系统提供框架(如注解)、通过延续的多行支持或其他类似特性。</p>
+<p>PEP 的末尾包含了完整的语法，包括用于构建有用的解析树的注解。</p>
+<p>版本可以根据 <a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a> 规则指定。(注：URI 定义在 <span class="target" id="index-2"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc3986.html"><strong>std-66</strong></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version_cmp</span>   <span class="o">=</span> <span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;&lt;&#39;</span> <span class="o">|</span> <span class="s1">&#39;&lt;=&#39;</span> <span class="o">|</span> <span class="s1">&#39;!=&#39;</span> <span class="o">|</span> <span class="s1">&#39;==&#39;</span> <span class="o">|</span> <span class="s1">&#39;&gt;=&#39;</span> <span class="o">|</span> <span class="s1">&#39;&gt;&#39;</span> <span class="o">|</span> <span class="s1">&#39;~=&#39;</span> <span class="o">|</span> <span class="s1">&#39;===&#39;</span>
+<span class="n">version</span>       <span class="o">=</span> <span class="n">wsp</span><span class="o">*</span> <span class="p">(</span> <span class="n">letterOrDigit</span> <span class="o">|</span> <span class="s1">&#39;-&#39;</span> <span class="o">|</span> <span class="s1">&#39;_&#39;</span> <span class="o">|</span> <span class="s1">&#39;.&#39;</span> <span class="o">|</span> <span class="s1">&#39;*&#39;</span> <span class="o">|</span> <span class="s1">&#39;+&#39;</span> <span class="o">|</span> <span class="s1">&#39;!&#39;</span> <span class="p">)</span><span class="o">+</span>
+<span class="n">version_one</span>   <span class="o">=</span> <span class="n">version_cmp</span> <span class="n">version</span> <span class="n">wsp</span><span class="o">*</span>
+<span class="n">version_many</span>  <span class="o">=</span> <span class="n">version_one</span> <span class="p">(</span><span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;,&#39;</span> <span class="n">version_one</span><span class="p">)</span><span class="o">*</span>
+<span class="n">versionspec</span>   <span class="o">=</span> <span class="p">(</span> <span class="s1">&#39;(&#39;</span> <span class="n">version_many</span> <span class="s1">&#39;)&#39;</span> <span class="p">)</span> <span class="o">|</span> <span class="n">version_many</span>
+<span class="n">urlspec</span>       <span class="o">=</span> <span class="s1">&#39;@&#39;</span> <span class="n">wsp</span><span class="o">*</span> <span class="o">&lt;</span><span class="n">URI_reference</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>环境标记允许使规范只在某些环境中生效:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marker_op</span>     <span class="o">=</span> <span class="n">version_cmp</span> <span class="o">|</span> <span class="p">(</span><span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;in&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;not&#39;</span> <span class="n">wsp</span><span class="o">+</span> <span class="s1">&#39;in&#39;</span><span class="p">)</span>
+<span class="n">python_str_c</span>  <span class="o">=</span> <span class="p">(</span><span class="n">wsp</span> <span class="o">|</span> <span class="n">letter</span> <span class="o">|</span> <span class="n">digit</span> <span class="o">|</span> <span class="s1">&#39;(&#39;</span> <span class="o">|</span> <span class="s1">&#39;)&#39;</span> <span class="o">|</span> <span class="s1">&#39;.&#39;</span> <span class="o">|</span> <span class="s1">&#39;{&#39;</span> <span class="o">|</span> <span class="s1">&#39;}&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;-&#39;</span> <span class="o">|</span> <span class="s1">&#39;_&#39;</span> <span class="o">|</span> <span class="s1">&#39;*&#39;</span> <span class="o">|</span> <span class="s1">&#39;#&#39;</span> <span class="o">|</span> <span class="s1">&#39;:&#39;</span> <span class="o">|</span> <span class="s1">&#39;;&#39;</span> <span class="o">|</span> <span class="s1">&#39;,&#39;</span> <span class="o">|</span> <span class="s1">&#39;/&#39;</span> <span class="o">|</span> <span class="s1">&#39;?&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;[&#39;</span> <span class="o">|</span> <span class="s1">&#39;]&#39;</span> <span class="o">|</span> <span class="s1">&#39;!&#39;</span> <span class="o">|</span> <span class="s1">&#39;~&#39;</span> <span class="o">|</span> <span class="s1">&#39;`&#39;</span> <span class="o">|</span> <span class="s1">&#39;@&#39;</span> <span class="o">|</span> <span class="s1">&#39;$&#39;</span> <span class="o">|</span> <span class="s1">&#39;%&#39;</span> <span class="o">|</span> <span class="s1">&#39;^&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;&amp;&#39;</span> <span class="o">|</span> <span class="s1">&#39;=&#39;</span> <span class="o">|</span> <span class="s1">&#39;+&#39;</span> <span class="o">|</span> <span class="s1">&#39;|&#39;</span> <span class="o">|</span> <span class="s1">&#39;&lt;&#39;</span> <span class="o">|</span> <span class="s1">&#39;&gt;&#39;</span> <span class="p">)</span>
+<span class="n">dquote</span>        <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span>
+<span class="n">squote</span>        <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;&#39;</span>
+<span class="n">python_str</span>    <span class="o">=</span> <span class="p">(</span><span class="n">squote</span> <span class="p">(</span><span class="n">python_str_c</span> <span class="o">|</span> <span class="n">dquote</span><span class="p">)</span><span class="o">*</span> <span class="n">squote</span> <span class="o">|</span>
+                 <span class="n">dquote</span> <span class="p">(</span><span class="n">python_str_c</span> <span class="o">|</span> <span class="n">squote</span><span class="p">)</span><span class="o">*</span> <span class="n">dquote</span><span class="p">)</span>
+<span class="n">env_var</span>       <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;python_version&#39;</span> <span class="o">|</span> <span class="s1">&#39;python_full_version&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;os_name&#39;</span> <span class="o">|</span> <span class="s1">&#39;sys_platform&#39;</span> <span class="o">|</span> <span class="s1">&#39;platform_release&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;platform_system&#39;</span> <span class="o">|</span> <span class="s1">&#39;platform_version&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;platform_machine&#39;</span> <span class="o">|</span> <span class="s1">&#39;platform_python_implementation&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;implementation_name&#39;</span> <span class="o">|</span> <span class="s1">&#39;implementation_version&#39;</span> <span class="o">|</span>
+                 <span class="s1">&#39;extra&#39;</span> <span class="c1"># ONLY when defined by a containing layer</span>
+                 <span class="p">)</span>
+<span class="n">marker_var</span>    <span class="o">=</span> <span class="n">wsp</span><span class="o">*</span> <span class="p">(</span><span class="n">env_var</span> <span class="o">|</span> <span class="n">python_str</span><span class="p">)</span>
+<span class="n">marker_expr</span>   <span class="o">=</span> <span class="n">marker_var</span> <span class="n">marker_op</span> <span class="n">marker_var</span>
+              <span class="o">|</span> <span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;(&#39;</span> <span class="n">marker</span> <span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;)&#39;</span>
+<span class="n">marker_and</span>    <span class="o">=</span> <span class="n">marker_expr</span> <span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;and&#39;</span> <span class="n">marker_expr</span>
+              <span class="o">|</span> <span class="n">marker_expr</span>
+<span class="n">marker_or</span>     <span class="o">=</span> <span class="n">marker_and</span> <span class="n">wsp</span><span class="o">*</span> <span class="s1">&#39;or&#39;</span> <span class="n">marker_and</span>
+                  <span class="o">|</span> <span class="n">marker_and</span>
+<span class="n">marker</span>        <span class="o">=</span> <span class="n">marker_or</span>
+<span class="n">quoted_marker</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span> <span class="n">wsp</span><span class="o">*</span> <span class="n">marker</span>
+</pre></div>
+</div>
+<p>可以使用 extras 字段指定发行版的可选组件:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>identifier_end = letterOrDigit | ((&#39;-&#39; | &#39;_&#39; | &#39;.&#39; )* letterOrDigit)
+identifier    = letterOrDigit identifier_end*
+name          = identifier
+extras_list   = identifier (wsp* &#39;,&#39; wsp* identifier)*
+extras        = &#39;[&#39; wsp* extras_list? wsp* &#39;]&#39;
+</pre></div>
+</div>
+<p>给我们一个基于名称的需求规则:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>name_req      = name wsp* extras? wsp* versionspec? wsp* quoted_marker?
+</pre></div>
+</div>
+<p>以及直接引用规范的规则:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>url_req       = name wsp* extras? wsp* urlspec wsp+ quoted_marker?
+</pre></div>
+</div>
+<p>导致可以指定依赖项的统一规则。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">specification</span> <span class="o">=</span> <span class="n">wsp</span><span class="o">*</span> <span class="p">(</span> <span class="n">url_req</span> <span class="o">|</span> <span class="n">name_req</span> <span class="p">)</span> <span class="n">wsp</span><span class="o">*</span>
+</pre></div>
+</div>
+</section>
+<section id="whitespace">
+<h3><a class="toc-backref" href="#whitespace" role="doc-backlink">空格</a></h3>
+<p>非换行空格大多是可选的，没有语义意义。唯一的例外是检测 URL 需求的结尾。</p>
+</section>
+<section id="names">
+<h3><a class="toc-backref" href="#names" role="doc-backlink">名称</a></h3>
+<p>Python 发行版名称目前定义在 <a class="pep reference internal" href="../pep-0345" title="PEP 345 – Metadata for Python Software Packages 1.2">PEP 345</a> 中。名称充当发行版的主要标识符。它们存在于所有依赖项规范中，并且足以作为规范。但是，PyPI 对名称进行了严格的限制——它们必须匹配大小写不敏感的正则表达式，否则它们将不被接受。因此，在这个 PEP 中，我们将标识符的可接受值限制为该正则表达式。在将来的元数据 PEP 中可能会对 name 进行完全的重新定义。regex(使用 re.IGNORECASE 运行)是:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>^([A-Z0-9]|[A-Z0-9][A-Z0-9._-]*[A-Z0-9])$
+</pre></div>
+</div>
+</section>
+<section id="extras">
+<h3><a class="toc-backref" href="#extras" role="doc-backlink">额外组件</a></h3>
+<p>额外内容是发行版的可选部分。发行版可以指定任意多的附加项，当在依赖项规范中使用附加项时，每个附加项都会导致声明该发行版的附加依赖项。例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="p">[</span><span class="n">security</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>额外组件在它们定义的依赖项中与它们所连接的发行版的依赖项相结合。上面的例子将导致请求被安装，并且请求拥有自己的依赖项，以及在请求的 “security” 附加项中列出的任何依赖项。</p>
+<p>如果列出了多个附加项，则将所有依赖项联合在一起。</p>
+</section>
+<section id="versions">
+<h3><a class="toc-backref" href="#versions" role="doc-backlink">版本</a></h3>
+<p>有关版本号和版本比较的更多详细信息，请参阅 <a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a>。版本规范限制了可以使用的发行版的版本。它们只适用于通过名称查找的发行版，而不是通过 URL 查找的发行版。版本比较也用于标记功能。版本周围的可选括号是为了与 <a class="pep reference internal" href="../pep-0345" title="PEP 345 – Metadata for Python Software Packages 1.2">PEP 345</a> 兼容而存在的，但不应该生成，只接受。</p>
+</section>
+<section id="environment-markers">
+<h3><a class="toc-backref" href="#environment-markers" role="doc-backlink">环境标记</a></h3>
+<p>环境标记允许依赖项规范提供描述何时应该使用依赖项的规则。例如，考虑需要 argparse 的包。在 Python 2.7 中，argparse 始终存在。在较旧的 Python 版本中，它必须作为依赖项安装。这可以表达为:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">argparse</span><span class="p">;</span><span class="n">python_version</span><span class="o">&lt;</span><span class="s2">&quot;2.7&quot;</span>
+</pre></div>
+</div>
+<p>标记表达式的计算结果为 True 或 False。当它的计算结果为 False 时，依赖项规范应该被忽略。</p>
+<p>标记语言的灵感来自 Python 本身，选择它是为了能够安全地计算它，而不会运行可能成为安全漏洞的任意代码。标记第一次标准化是在 <a class="pep reference internal" href="../pep-0345" title="PEP 345 – Metadata for Python Software Packages 1.2">PEP 345</a>。这个 PEP 修复了在 <a class="pep reference internal" href="../pep-0426" title="PEP 426 – Metadata for Python Software Packages 2.0">PEP 426</a> 中描述的设计中观察到的一些问题。</p>
+<p>标记表达式中的比较是由比较运算符输入的。&lt;marker_op&gt; 算子不在 &lt;version_cmp&gt; 执行与 Python 中处理字符串相同的操作。&lt;version_cmp&gt; 当定义了 <a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a> 版本比较规则时（即两端都有有效的版本说明符时），算子使用 <a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a> 版本比较规则。如果没有定义的 <a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a> 行为，并且该操作符存在于 Python 中，则该算子将退回到 Python 行为。否则将引发错误。例如，以下将导致错误:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;dog&quot;</span> <span class="o">~=</span> <span class="s2">&quot;fred&quot;</span>
+<span class="n">python_version</span> <span class="o">~=</span> <span class="s2">&quot;surprise&quot;</span>
+</pre></div>
+</div>
+<p>用户提供的常量总是被编码为带有 <code class="docutils literal notranslate"><span class="pre">'</span></code> 或 <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> 引号的字符串。注意，反斜杠转义没有定义，但是现有的实现支持它们。它们没有包括在本规范中，因为它们增加了复杂性，而且目前还没有明显的需求。类似地，我们没有定义非 ASCII 字符支持：我们引用的所有运行时变量都希望是仅 ASCII 的。</p>
+<p>标记语法中的变量，如 “os_name”，解析为在 Python 运行时中查找的值。除了 “extra” 之外，所有的值都在现在所有的 Python 版本上定义了——如果值没有定义，这是标记实现中的错误。</p>
+<p>未知变量必须引发错误，而不是导致比较结果为 True 或 False。</p>
+<p>在给定的 Python 实现中不能计算值的变量对于某些版本应该计算为 <code class="docutils literal notranslate"><span class="pre">0</span></code>，对于所有其他变量应该计算为空字符串。</p>
+<p>“extra” 变量是特殊的。轮子使用它来指示 wheel <code class="docutils literal notranslate"><span class="pre">METADATA</span></code> 文件中哪些规范适用于给定的额外元素，但由于 <code class="docutils literal notranslate"><span class="pre">METADATA</span></code> 文件基于 <a class="pep reference internal" href="../pep-0426" title="PEP 426 – Metadata for Python Software Packages 2.0">PEP 426</a> 的草案版本，因此目前没有对此的规范。无论如何，在发生这种特殊处理的上下文之外，”extra” 变量应该像所有其他未知变量一样导致错误。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head">标记</th>
+<th class="head">Python等效</th>
+<th class="head">样例值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">os_name</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">os.name</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">posix</span></code>, <code class="docutils literal notranslate"><span class="pre">java</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">sys_platform</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">sys.platform</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">linux</span></code>, <code class="docutils literal notranslate"><span class="pre">linux2</span></code>, <code class="docutils literal notranslate"><span class="pre">darwin</span></code>, <code class="docutils literal notranslate"><span class="pre">java1.8.0_51</span></code> (note that “linux”
+is from Python3 and “linux2” from Python2)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">platform_machine</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">platform.machine()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">x86_64</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">platform_python_implementation</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">platform.python_implementation()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">CPython</span></code>, <code class="docutils literal notranslate"><span class="pre">Jython</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">platform_release</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">platform.release()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">3.14.1-x86_64-linode39</span></code>, <code class="docutils literal notranslate"><span class="pre">14.5.0</span></code>, <code class="docutils literal notranslate"><span class="pre">1.8.0_51</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">platform_system</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">platform.system()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">Linux</span></code>, <code class="docutils literal notranslate"><span class="pre">Windows</span></code>, <code class="docutils literal notranslate"><span class="pre">Java</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">platform_version</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">platform.version()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">#1</span> <span class="pre">SMP</span> <span class="pre">Fri</span> <span class="pre">Apr</span> <span class="pre">25</span> <span class="pre">13:07:35</span> <span class="pre">EDT</span> <span class="pre">2014</span></code>
+<code class="docutils literal notranslate"><span class="pre">Java</span> <span class="pre">HotSpot(TM)</span> <span class="pre">64-Bit</span> <span class="pre">Server</span> <span class="pre">VM,</span> <span class="pre">25.51-b03,</span> <span class="pre">Oracle</span> <span class="pre">Corporation</span></code>
+<code class="docutils literal notranslate"><span class="pre">Darwin</span> <span class="pre">Kernel</span> <span class="pre">Version</span> <span class="pre">14.5.0:</span> <span class="pre">Wed</span> <span class="pre">Jul</span> <span class="pre">29</span> <span class="pre">02:18:53</span> <span class="pre">PDT</span> <span class="pre">2015;</span> <span class="pre">root:xnu-2782.40.9~2/RELEASE_X86_64</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">python_version</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">'.'.join(platform.python_version_tuple()[:2])</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">3.4</span></code>, <code class="docutils literal notranslate"><span class="pre">2.7</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">python_full_version</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">platform.python_version()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">3.4.0</span></code>, <code class="docutils literal notranslate"><span class="pre">3.5.0b1</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">implementation_name</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">sys.implementation.name</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">cpython</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">implementation_version</span></code></td>
+<td>see definition below</td>
+<td><code class="docutils literal notranslate"><span class="pre">3.4.0</span></code>, <code class="docutils literal notranslate"><span class="pre">3.5.0b1</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">extra</span></code></td>
+<td>An error except when defined by the context interpreting the
+specification.</td>
+<td><code class="docutils literal notranslate"><span class="pre">test</span></code></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">implementation_version</span></code> 标记来源于 <code class="docutils literal notranslate"><span class="pre">sys.implementation.version</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">format_full_version</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0.major}</span><span class="s1">.</span><span class="si">{0.minor}</span><span class="s1">.</span><span class="si">{0.micro}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">releaselevel</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">!=</span> <span class="s1">&#39;final&#39;</span><span class="p">:</span>
+        <span class="n">version</span> <span class="o">+=</span> <span class="n">kind</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">version</span>
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;implementation&#39;</span><span class="p">):</span>
+    <span class="n">implementation_version</span> <span class="o">=</span> <span class="n">format_full_version</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">implementation</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">implementation_version</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="backwards-compatibility">
+<h2><a class="toc-backref" href="#backwards-compatibility" role="doc-backlink">向后兼容</a></h2>
+<p>这个 PEP 的大部分已经被广泛部署，因此不存在兼容性问题。</p>
+<p>然而，PEP 与部署的 base 有一些不同之处。</p>
+<p>首先，<a class="pep reference internal" href="../pep-0440" title="PEP 440 – Version Identification and Dependency Specification">PEP 440</a> 直接引用实际上还没有正式部署，但它们被设计为可兼容添加的，并且将它们添加到 pip 或其他使用发行版中现有依赖项元数据的工具中并没有已知的障碍——特别是因为它们无论如何都不允许出现在 PyPI 上传的发行版中。</p>
+<p>其次，<a class="pep reference internal" href="../pep-0426" title="PEP 426 – Metadata for Python Software Packages 2.0">PEP 426</a> 标记已经进行了一些合理的部署，特别是在 wheels 和 pip 中，它将以不同的方式处理与 <code class="docutils literal notranslate"><span class="pre">python_full_version</span></code> “2.7.10” 的版本比较。特别是在 426 中，”2.7.10” 小于 “2.7.9”。这种向后不兼容是故意的。还定义了新的算子—— “~=” 和 “===”，以及新的变量—— <code class="docutils literal notranslate"><span class="pre">platform_release</span></code>， <code class="docutils literal notranslate"><span class="pre">platform_system</span></code>， <code class="docutils literal notranslate"><span class="pre">implementation_name</span></code> 和 <code class="docutils literal notranslate"><span class="pre">implementation_version</span></code>，这些在旧的标记实现中是不存在的。变量将在这些实现上出错。这两个特性的用户都需要做出判断，当支持在生态系统中足够广泛时，使用它们不会引起兼容性问题。</p>
+<p>第三，<a class="pep reference internal" href="../pep-0345" title="PEP 345 – Metadata for Python Software Packages 1.2">PEP 345</a> 要求在版本说明符周围加括号。为了接受 <a class="pep reference internal" href="../pep-0345" title="PEP 345 – Metadata for Python Software Packages 1.2">PEP 345</a> 依赖规范，括号是接受的，但不应该生成它们。</p>
+</section>
+<section id="rationale">
+<h2><a class="toc-backref" href="#rationale" role="doc-backlink">基本原理</a></h2>
+<p>为了推进任何依赖于环境标记的新 pep，需要以现代形式包含它们的规范。这个 PEP 将所有当前未指定的组件组合成指定的形式。</p>
+<p>需求说明符是从 setuptools pkg_resources 文档中的 EBNF 中采用的，因为希望避免依赖于事实上的标准，而不是 PEP 指定的标准。</p>
+</section>
+<section id="complete-grammar">
+<h2><a class="toc-backref" href="#complete-grammar" role="doc-backlink">完整语法</a></h2>
+<p>完整的 parsley 语法:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wsp           = &#39; &#39; | &#39;\t&#39;
+version_cmp   = wsp* &lt;&#39;&lt;=&#39; | &#39;&lt;&#39; | &#39;!=&#39; | &#39;==&#39; | &#39;&gt;=&#39; | &#39;&gt;&#39; | &#39;~=&#39; | &#39;===&#39;&gt;
+version       = wsp* &lt;( letterOrDigit | &#39;-&#39; | &#39;_&#39; | &#39;.&#39; | &#39;*&#39; | &#39;+&#39; | &#39;!&#39; )+&gt;
+version_one   = version_cmp:op version:v wsp* -&gt; (op, v)
+version_many  = version_one:v1 (wsp* &#39;,&#39; version_one)*:v2 -&gt; [v1] + v2
+versionspec   = (&#39;(&#39; version_many:v &#39;)&#39; -&gt;v) | version_many
+urlspec       = &#39;@&#39; wsp* &lt;URI_reference&gt;
+marker_op     = version_cmp | (wsp* &#39;in&#39;) | (wsp* &#39;not&#39; wsp+ &#39;in&#39;)
+python_str_c  = (wsp | letter | digit | &#39;(&#39; | &#39;)&#39; | &#39;.&#39; | &#39;{&#39; | &#39;}&#39; |
+                 &#39;-&#39; | &#39;_&#39; | &#39;*&#39; | &#39;#&#39; | &#39;:&#39; | &#39;;&#39; | &#39;,&#39; | &#39;/&#39; | &#39;?&#39; |
+                 &#39;[&#39; | &#39;]&#39; | &#39;!&#39; | &#39;~&#39; | &#39;`&#39; | &#39;@&#39; | &#39;$&#39; | &#39;%&#39; | &#39;^&#39; |
+                 &#39;&amp;&#39; | &#39;=&#39; | &#39;+&#39; | &#39;|&#39; | &#39;&lt;&#39; | &#39;&gt;&#39; )
+dquote        = &#39;&quot;&#39;
+squote        = &#39;\\&#39;&#39;
+python_str    = (squote &lt;(python_str_c | dquote)*&gt;:s squote |
+                 dquote &lt;(python_str_c | squote)*&gt;:s dquote) -&gt; s
+env_var       = (&#39;python_version&#39; | &#39;python_full_version&#39; |
+                 &#39;os_name&#39; | &#39;sys_platform&#39; | &#39;platform_release&#39; |
+                 &#39;platform_system&#39; | &#39;platform_version&#39; |
+                 &#39;platform_machine&#39; | &#39;platform_python_implementation&#39; |
+                 &#39;implementation_name&#39; | &#39;implementation_version&#39; |
+                 &#39;extra&#39; # ONLY when defined by a containing layer
+                 ):varname -&gt; lookup(varname)
+marker_var    = wsp* (env_var | python_str)
+marker_expr   = marker_var:l marker_op:o marker_var:r -&gt; (o, l, r)
+              | wsp* &#39;(&#39; marker:m wsp* &#39;)&#39; -&gt; m
+marker_and    = marker_expr:l wsp* &#39;and&#39; marker_expr:r -&gt; (&#39;and&#39;, l, r)
+              | marker_expr:m -&gt; m
+marker_or     = marker_and:l wsp* &#39;or&#39; marker_and:r -&gt; (&#39;or&#39;, l, r)
+                  | marker_and:m -&gt; m
+marker        = marker_or
+quoted_marker = &#39;;&#39; wsp* marker
+identifier_end = letterOrDigit | ((&#39;-&#39; | &#39;_&#39; | &#39;.&#39; )* letterOrDigit)
+identifier    = &lt; letterOrDigit identifier_end* &gt;
+name          = identifier
+extras_list   = identifier:i (wsp* &#39;,&#39; wsp* identifier)*:ids -&gt; [i] + ids
+extras        = &#39;[&#39; wsp* extras_list?:e wsp* &#39;]&#39; -&gt; e
+name_req      = (name:n wsp* extras?:e wsp* versionspec?:v wsp* quoted_marker?:m
+                 -&gt; (n, e or [], v or [], m))
+url_req       = (name:n wsp* extras?:e wsp* urlspec:v (wsp+ | end) quoted_marker?:m
+                 -&gt; (n, e or [], v, m))
+specification = wsp* ( url_req | name_req ):s wsp* -&gt; s
+# The result is a tuple - name, list-of-extras,
+# list-of-version-constraints-or-a-url, marker-ast or None
+
+
+URI_reference = &lt;URI | relative_ref&gt;
+URI           = scheme &#39;:&#39; hier_part (&#39;?&#39; query )? ( &#39;#&#39; fragment)?
+hier_part     = (&#39;//&#39; authority path_abempty) | path_absolute | path_rootless | path_empty
+absolute_URI  = scheme &#39;:&#39; hier_part ( &#39;?&#39; query )?
+relative_ref  = relative_part ( &#39;?&#39; query )? ( &#39;#&#39; fragment )?
+relative_part = &#39;//&#39; authority path_abempty | path_absolute | path_noscheme | path_empty
+scheme        = letter ( letter | digit | &#39;+&#39; | &#39;-&#39; | &#39;.&#39;)*
+authority     = ( userinfo &#39;@&#39; )? host ( &#39;:&#39; port )?
+userinfo      = ( unreserved | pct_encoded | sub_delims | &#39;:&#39;)*
+host          = IP_literal | IPv4address | reg_name
+port          = digit*
+IP_literal    = &#39;[&#39; ( IPv6address | IPvFuture) &#39;]&#39;
+IPvFuture     = &#39;v&#39; hexdig+ &#39;.&#39; ( unreserved | sub_delims | &#39;:&#39;)+
+IPv6address   = (
+                  ( h16 &#39;:&#39;){6} ls32
+                  | &#39;::&#39; ( h16 &#39;:&#39;){5} ls32
+                  | ( h16 )?  &#39;::&#39; ( h16 &#39;:&#39;){4} ls32
+                  | ( ( h16 &#39;:&#39;)? h16 )? &#39;::&#39; ( h16 &#39;:&#39;){3} ls32
+                  | ( ( h16 &#39;:&#39;){0,2} h16 )? &#39;::&#39; ( h16 &#39;:&#39;){2} ls32
+                  | ( ( h16 &#39;:&#39;){0,3} h16 )? &#39;::&#39; h16 &#39;:&#39; ls32
+                  | ( ( h16 &#39;:&#39;){0,4} h16 )? &#39;::&#39; ls32
+                  | ( ( h16 &#39;:&#39;){0,5} h16 )? &#39;::&#39; h16
+                  | ( ( h16 &#39;:&#39;){0,6} h16 )? &#39;::&#39; )
+h16           = hexdig{1,4}
+ls32          = ( h16 &#39;:&#39; h16) | IPv4address
+IPv4address   = dec_octet &#39;.&#39; dec_octet &#39;.&#39; dec_octet &#39;.&#39; dec_octet
+nz            = ~&#39;0&#39; digit
+dec_octet     = (
+                  digit # 0-9
+                  | nz digit # 10-99
+                  | &#39;1&#39; digit{2} # 100-199
+                  | &#39;2&#39; (&#39;0&#39; | &#39;1&#39; | &#39;2&#39; | &#39;3&#39; | &#39;4&#39;) digit # 200-249
+                  | &#39;25&#39; (&#39;0&#39; | &#39;1&#39; | &#39;2&#39; | &#39;3&#39; | &#39;4&#39; | &#39;5&#39;) )# %250-255
+reg_name = ( unreserved | pct_encoded | sub_delims)*
+path = (
+        path_abempty # begins with &#39;/&#39; or is empty
+        | path_absolute # begins with &#39;/&#39; but not &#39;//&#39;
+        | path_noscheme # begins with a non-colon segment
+        | path_rootless # begins with a segment
+        | path_empty ) # zero characters
+path_abempty  = ( &#39;/&#39; segment)*
+path_absolute = &#39;/&#39; ( segment_nz ( &#39;/&#39; segment)* )?
+path_noscheme = segment_nz_nc ( &#39;/&#39; segment)*
+path_rootless = segment_nz ( &#39;/&#39; segment)*
+path_empty    = pchar{0}
+segment       = pchar*
+segment_nz    = pchar+
+segment_nz_nc = ( unreserved | pct_encoded | sub_delims | &#39;@&#39;)+
+                # non-zero-length segment without any colon &#39;:&#39;
+pchar         = unreserved | pct_encoded | sub_delims | &#39;:&#39; | &#39;@&#39;
+query         = ( pchar | &#39;/&#39; | &#39;?&#39;)*
+fragment      = ( pchar | &#39;/&#39; | &#39;?&#39;)*
+pct_encoded   = &#39;%&#39; hexdig
+unreserved    = letter | digit | &#39;-&#39; | &#39;.&#39; | &#39;_&#39; | &#39;~&#39;
+reserved      = gen_delims | sub_delims
+gen_delims    = &#39;:&#39; | &#39;/&#39; | &#39;?&#39; | &#39;#&#39; | &#39;(&#39; | &#39;)?&#39; | &#39;@&#39;
+sub_delims    = &#39;!&#39; | &#39;$&#39; | &#39;&amp;&#39; | &#39;\\&#39;&#39; | &#39;(&#39; | &#39;)&#39; | &#39;*&#39; | &#39;+&#39; | &#39;,&#39; | &#39;;&#39; | &#39;=&#39;
+hexdig        = digit | &#39;a&#39; | &#39;A&#39; | &#39;b&#39; | &#39;B&#39; | &#39;c&#39; | &#39;C&#39; | &#39;d&#39; | &#39;D&#39; | &#39;e&#39; | &#39;E&#39; | &#39;f&#39; | &#39;F&#39;
+</pre></div>
+</div>
+<p>测试程序——如果语法是在字符串 <code class="docutils literal notranslate"><span class="pre">grammar</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="kn">from</span> <span class="nn">parsley</span> <span class="kn">import</span> <span class="n">makeGrammar</span>
+
+<span class="n">grammar</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    wsp ...</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+<span class="n">tests</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;A.B-C_D&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;aa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&lt;=1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&gt;=3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&gt;=3,&lt;2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name@http://foo.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name [fred,bar] @ http://foo.com ; python_version==&#39;2.7&#39;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name[quux, strange];python_version&lt;&#39;2.7&#39; and platform_version==&#39;2&#39;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name; os_name==&#39;a&#39; or os_name==&#39;b&#39;&quot;</span><span class="p">,</span>
+    <span class="c1"># Should parse as (a and b) or c</span>
+    <span class="s2">&quot;name; os_name==&#39;a&#39; and os_name==&#39;b&#39; or os_name==&#39;c&#39;&quot;</span><span class="p">,</span>
+    <span class="c1"># Overriding precedence -&gt; a and (b or c)</span>
+    <span class="s2">&quot;name; os_name==&#39;a&#39; and (os_name==&#39;b&#39; or os_name==&#39;c&#39;)&quot;</span><span class="p">,</span>
+    <span class="c1"># should parse as a or (b and c)</span>
+    <span class="s2">&quot;name; os_name==&#39;a&#39; or os_name==&#39;b&#39; and os_name==&#39;c&#39;&quot;</span><span class="p">,</span>
+    <span class="c1"># Overriding precedence -&gt; (a or b) and c</span>
+    <span class="s2">&quot;name; (os_name==&#39;a&#39; or os_name==&#39;b&#39;) and os_name==&#39;c&#39;&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">format_full_version</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0.major}</span><span class="s1">.</span><span class="si">{0.minor}</span><span class="s1">.</span><span class="si">{0.micro}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">releaselevel</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">!=</span> <span class="s1">&#39;final&#39;</span><span class="p">:</span>
+        <span class="n">version</span> <span class="o">+=</span> <span class="n">kind</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">version</span>
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;implementation&#39;</span><span class="p">):</span>
+    <span class="n">implementation_version</span> <span class="o">=</span> <span class="n">format_full_version</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">implementation</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">implementation_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">implementation</span><span class="o">.</span><span class="n">name</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">implementation_version</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
+    <span class="n">implementation_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;implementation_name&#39;</span><span class="p">:</span> <span class="n">implementation_name</span><span class="p">,</span>
+    <span class="s1">&#39;implementation_version&#39;</span><span class="p">:</span> <span class="n">implementation_version</span><span class="p">,</span>
+    <span class="s1">&#39;os_name&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+    <span class="s1">&#39;platform_machine&#39;</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">machine</span><span class="p">(),</span>
+    <span class="s1">&#39;platform_python_implementation&#39;</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_implementation</span><span class="p">(),</span>
+    <span class="s1">&#39;platform_release&#39;</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">(),</span>
+    <span class="s1">&#39;platform_system&#39;</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">(),</span>
+    <span class="s1">&#39;platform_version&#39;</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">version</span><span class="p">(),</span>
+    <span class="s1">&#39;python_full_version&#39;</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">(),</span>
+    <span class="s1">&#39;python_version&#39;</span><span class="p">:</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">python_version_tuple</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]),</span>
+    <span class="s1">&#39;sys_platform&#39;</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">compiled</span> <span class="o">=</span> <span class="n">makeGrammar</span><span class="p">(</span><span class="n">grammar</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;lookup&#39;</span><span class="p">:</span> <span class="n">bindings</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">})</span>
+<span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">tests</span><span class="p">:</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">compiled</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">specification</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">parsed</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="summary-of-changes-to-pep-508">
+<h2><a class="toc-backref" href="#summary-of-changes-to-pep-508" role="doc-backlink">对 PEP 508 的变更摘要</a></h2>
+<p>根据最初实施后的反馈，对 PEP 进行了以下更改:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">python_version</span></code> 的定义从 <code class="docutils literal notranslate"><span class="pre">platform.python_version()[:3]</span></code> 更改为 <code class="docutils literal notranslate"><span class="pre">'.'.join(platform.python_version_tuple()[:2])</span></code>，以适应具有两位主版本和副版本的 Python 的潜在未来版本(例如 3.10)。 <a class="footnote-reference brackets" href="#future-versions" id="id3">[3]</a></li>
+</ul>
+</section>
+<section id="references">
+<h2><a class="toc-backref" href="#references" role="doc-backlink">References</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="pip" role="note">
+<dt class="label" id="pip">[<a href="#id1">1</a>]</dt>
+<dd>pip, the recommended installer for Python packages
+(<a class="reference external" href="http://pip.readthedocs.org/en/stable/">http://pip.readthedocs.org/en/stable/</a>)</aside>
+<aside class="footnote brackets" id="parsley" role="note">
+<dt class="label" id="parsley">[<a href="#id2">2</a>]</dt>
+<dd>The parsley PEG library.
+(<a class="reference external" href="https://pypi.python.org/pypi/parsley/">https://pypi.python.org/pypi/parsley/</a>)</aside>
+<aside class="footnote brackets" id="future-versions" role="note">
+<dt class="label" id="future-versions">[<a href="#id3">3</a>]</dt>
+<dd>Future Python versions might be problematic with the
+definition of Environment Marker Variable <code class="docutils literal notranslate"><span class="pre">python_version</span></code>
+(<a class="reference external" href="https://github.com/python/peps/issues/560">https://github.com/python/peps/issues/560</a>)</aside>
+</aside>
+</section>
+<section id="copyright">
+<h2><a class="toc-backref" href="#copyright" role="doc-backlink">Copyright</a></h2>
+<p>This document has been placed in the public domain.</p>
+</section>
+</section>
+<hr class="docutils" />
+<p>Source: <a class="reference external" href="https://github.com/python/peps/blob/main/pep-0508.txt">https://github.com/python/peps/blob/main/pep-0508.txt</a></p>
+<p>Last modified: <a class="reference external" href="https://github.com/python/peps/commits/main/pep-0508.txt">2022-06-21 21:47:58 GMT</a></p>
+
+        </article>
+        <nav id="pep-sidebar">
+            <h2>Contents</h2>
+            <ul>
+<li><a class="reference internal" href="#abstract">摘要</a></li>
+<li><a class="reference internal" href="#motivation">动机</a></li>
+<li><a class="reference internal" href="#specification">规范</a><ul>
+<li><a class="reference internal" href="#examples">示例</a></li>
+<li><a class="reference internal" href="#concepts">概念</a></li>
+<li><a class="reference internal" href="#grammar">语法</a></li>
+<li><a class="reference internal" href="#whitespace">空格</a></li>
+<li><a class="reference internal" href="#names">名称</a></li>
+<li><a class="reference internal" href="#extras">额外组件</a></li>
+<li><a class="reference internal" href="#versions">版本</a></li>
+<li><a class="reference internal" href="#environment-markers">环境标记</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#backwards-compatibility">向后兼容</a></li>
+<li><a class="reference internal" href="#rationale">基本原理</a></li>
+<li><a class="reference internal" href="#complete-grammar">完整语法</a></li>
+<li><a class="reference internal" href="#summary-of-changes-to-pep-508">对 PEP 508 的变更摘要</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#copyright">Copyright</a></li>
+</ul>
+
+            <br>
+            <a id="source" href="https://github.com/python/peps/blob/main/pep-0508.txt">Page Source (GitHub)</a>
+        </nav>
+    </section>
+    <script src="../_static/colour_scheme.js"></script>
+    <script src="../_static/wrap_tables.js"></script>
+</body>
+</html>
