@@ -252,24 +252,28 @@ msgid ""
 "instance, if the string is ``\"flit.api:main\"`` as in the example above,"
 " this object would be looked up by executing the equivalent of::"
 msgstr ""
+"``build-backend`` 是命名 Python 对象的字符串，该对象将用于执行构建(详细信息见下文)。"
+"它的格式遵循相同的 ``module:object`` 语法，作为 ``setuptools`` 入口点。"
+"例如，如果字符串是 ``\"flit.api:main\"`` 就像上面的例子一样，这个对象将通过执行等价的命令来查找："
 
 #: ../../pep-0517.txt:125
 msgid "It's also legal to leave out the ``:object`` part, e.g. ::"
-msgstr ""
+msgstr "省略 ``:object`` 部分也是合法的，例如::"
 
 #: ../../pep-0517.txt:129
 msgid "which acts like::"
-msgstr ""
+msgstr "它的作用如下::"
 
 #: ../../pep-0517.txt:134
 msgid "Formally, the string should satisfy this grammar::"
-msgstr ""
+msgstr "形式上，字符串应该满足此语法::"
 
 #: ../../pep-0517.txt:141
 msgid ""
 "And we import ``module_path`` and then lookup ``module_path.object_path``"
 " (or just ``module_path`` if ``object_path`` is missing)."
 msgstr ""
+"我们导入 ``module_path``，然后查找 ``module_path.object_path`` (如果缺少 ``object_path``，则只需 ``module_path``)。"
 
 #: ../../pep-0517.txt:145
 msgid ""
@@ -279,6 +283,8 @@ msgid ""
 "automatically adds the working directory to ``sys.path`` in some "
 "situations, code to resolve the backend should not be affected by this."
 msgstr ""
+"当导入模块路径时，我们 *不会* 查看包含源树的目录，除非该目录位于 ``sys.path`` (例如，因为它是在 PYTHONPATH 中指定的)。"
+"尽管 Python 会自动将工作目录添加到 ``sys.path``，在某些情况下，解析后端代码不应受此影响。"
 
 #: ../../pep-0517.txt:151
 msgid ""
@@ -288,6 +294,8 @@ msgid ""
 "directly, or by implicitly invoking the "
 "``setuptools.build_meta:__legacy__`` backend)."
 msgstr ""
+"如果 ``pyproject.toml`` 文件缺失，或者 ``build-backend`` 键缺失，则源树没有使用此规范，"
+"并且工具应该恢复到运行 ``setup.py`` 的遗留行为(直接或隐式调用 ``setuptools.build_meta:__legacy__`` 后端)。"
 
 #: ../../pep-0517.txt:157
 msgid ""
@@ -297,6 +305,9 @@ msgid ""
 "Projects may still wish to include a ``setup.py`` for compatibility with "
 "tools that do not use this spec."
 msgstr ""
+"如果存在 ``build-backend`` 键，则该键优先，"
+"并且源树遵循指定后端的格式和约定(因此，除非后端需要，否则不需要 ``setup.py``)。"
+"项目可能仍然希望包含 ``setup.py``，以便与不使用此规范的工具兼容。"
 
 #: ../../pep-0517.txt:161
 msgid ""
@@ -304,10 +315,12 @@ msgid ""
 "``pyproject.toml``, see the \"In-Tree Build Backends\" section below. "
 "This key would be used as follows::"
 msgstr ""
+"这个 PEP 还定义了 ``backend-path`` 键，用于 ``pyproject.toml``，请参阅下面的 \"树内构建后端\" 部分。"
+"这个键的使用方式如下::"
 
 #: ../../pep-0517.txt:173
 msgid "Build requirements"
-msgstr ""
+msgstr "构建需求"
 
 #: ../../pep-0517.txt:175
 msgid ""
@@ -316,6 +329,8 @@ msgid ""
 "ensure that projects do not create impossible to satisfy conditions with "
 "their build requirements."
 msgstr ""
+"这个 PEP 在 ``pyproject.toml`` 的“构建需求”部分放置了许多额外的需求。"
+"这些旨在确保项目不会创造不可能满足其建造要求的条件。"
 
 #: ../../pep-0517.txt:179
 msgid ""
@@ -324,6 +339,8 @@ msgid ""
 "contain cycles.  If (due to lack of co-ordination between projects, for "
 "example) a cycle is present, front ends MAY refuse to build the project."
 msgstr ""
+"项目构建需求将定义有向的需求图（项目 A 需要 B 来构建，B 需要 C 和 D，等等）这个图一定不能包含循环。"
+"如果（例如，由于项目之间缺乏协调）存在周期，前端可能会拒绝构建项目。"
 
 #: ../../pep-0517.txt:183
 msgid ""
@@ -333,12 +350,15 @@ msgid ""
 "requirements, and so projects MUST NOT assume that publishing wheels is "
 "sufficient to break a requirement cycle."
 msgstr ""
+"当构建需求作为轮子可用时，前端应该在实际的地方使用它们，以避免深度嵌套的构建。"
+"然而，前端可能有一种模式，在定位构建需求时不考虑轮子，因此项目一定不要认为发布轮子就足以打破需求循环。"
 
 #: ../../pep-0517.txt:188
 msgid ""
 "Front ends SHOULD check explicitly for requirement cycles, and terminate "
 "the build with an informative message if one is found."
 msgstr ""
+"前端应该明确地检查需求周期，如果发现需求周期，就用有信息的消息终止构建。"
 
 #: ../../pep-0517.txt:191
 msgid ""
@@ -349,10 +369,12 @@ msgid ""
 "in-tree backend, and avoiding external build dependencies (usually by "
 "vendoring them)."
 msgstr ""
+"特别要注意的是，没有需求循环的要求意味着希望自托管的后端（即，为后端构建轮子使用该后端进行构建）需要做出特殊的规定，以避免造成循环。"
+"通常，这将涉及将自己指定为树内后端，并避免外部构建依赖(通常通过提供它们)。"
 
 #: ../../pep-0517.txt:200
 msgid "Build backend interface"
-msgstr ""
+msgstr "构建后端接口"
 
 #: ../../pep-0517.txt:202
 msgid ""
@@ -360,10 +382,11 @@ msgid ""
 "some or all of the following hooks. The common ``config_settings`` "
 "argument is described after the individual hooks."
 msgstr ""
+"构建后端对象期望具有提供以下部分或全部钩子的属性。常见的 ``config_settings`` 参数在各个钩子之后描述。"
 
 #: ../../pep-0517.txt:207
 msgid "Mandatory hooks"
-msgstr ""
+msgstr "强制性的钩子"
 
 #: ../../pep-0517.txt:210
 msgid "build_wheel"
@@ -375,6 +398,8 @@ msgid ""
 "``wheel_directory``. It must return the basename (not the full path) of "
 "the ``.whl`` file it creates, as a unicode string."
 msgstr ""
+"必须构建 .whl 文件，并将其放在指定的 ``wheel_directory`` 中。"
+"它必须返回 ``.whl``  的基名(而不是完整路径)，作为 unicode 字符串。"
 
 #: ../../pep-0517.txt:221
 msgid ""
@@ -1260,128 +1285,3 @@ msgstr ""
 #: ../../pep-0517.txt:1021
 msgid "This document has been placed in the public domain."
 msgstr ""
-
-#~ msgid "PEP"
-#~ msgstr ""
-
-#~ msgid "517"
-#~ msgstr ""
-
-#~ msgid "Title"
-#~ msgstr ""
-
-#~ msgid "A build-system independent format for source trees"
-#~ msgstr ""
-
-#~ msgid "<distutils-sig@python.org>"
-#~ msgstr ""
-
-#~ msgid "1 Oct 2015, 25 Oct 2015, 19 May 2017, 11 Sep 2017"
-#~ msgstr ""
-
-#~ msgid "Provisional acceptance"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "In accordance with the PyPA's "
-#~ "specification process, this PEP has been"
-#~ " `provisionally accepted "
-#~ "<https://www.pypa.io/en/latest/specifications/#provisional-"
-#~ "acceptance>`_ for initial implementation in"
-#~ " ``pip`` and other PyPA tools."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "During this time, the specification is"
-#~ " still subject to revision based on"
-#~ " real world experience with those "
-#~ "initial implementations."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Here we define a new style of "
-#~ "source tree based around the "
-#~ "``pyproject.toml`` file defined in PEP "
-#~ "518, extending the ``[build-system]`` "
-#~ "table in that file with one "
-#~ "additional key, ``build-backend``. Here's "
-#~ "an example of how it would look::"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "A .tar.gz source distribution (sdist) "
-#~ "contains a single top-level directory"
-#~ " called ``{name}-{version}`` (e.g. ``foo-1.0``),"
-#~ " containing the source files of the"
-#~ " package. This directory must also "
-#~ "contain the ``pyproject.toml`` from the "
-#~ "build directory, and a PKG-INFO "
-#~ "file containing metadata in the format"
-#~ " described in `PEP 345 "
-#~ "<https://www.python.org/dev/peps/pep-0345/>`_. Although "
-#~ "historically zip files have also been"
-#~ " used as sdists, this hook should "
-#~ "produce a gzipped tarball. This is "
-#~ "already the more common format for "
-#~ "sdists, and having a consistent format"
-#~ " makes for simpler tooling."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This hook MUST return an additional "
-#~ "list of strings containing PEP 508 "
-#~ "dependency specifications, above and beyond"
-#~ " those specified in the ``pyproject.toml``"
-#~ " file, to be installed when calling"
-#~ " the ``build_wheel`` or "
-#~ "``prepare_metadata_for_build_wheel`` hooks."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This hook MUST return an additional "
-#~ "list of strings containing PEP 508 "
-#~ "dependency specifications, above and beyond"
-#~ " those specified in the ``pyproject.toml``"
-#~ " file. These dependencies will be "
-#~ "installed when calling the ``build_sdist`` "
-#~ "hook."
-#~ msgstr ""
-
-#~ msgid "The new restrictions for sdists built by PEP 517 backends are:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Clarified that the "
-#~ "``setuptools.build_meta:__legacy__`` PEP 517 backend"
-#~ " is an acceptable alternative to "
-#~ "directly invoking ``setup.py`` for source "
-#~ "trees that don't specify ``build-"
-#~ "backend`` explicitly."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This appendix documents the arguments "
-#~ "advanced for this PEP over PEP "
-#~ "516."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "In the alternative where the public "
-#~ "interface boundary is placed at the "
-#~ "subprocess call, this is not possible"
-#~ " -- either we need to spawn an"
-#~ " extra process just to query what "
-#~ "interfaces are supported (as was "
-#~ "included in an earlier draft of "
-#~ "PEP 516, an alternative to this), "
-#~ "or else we give up on "
-#~ "autonegotiation entirely (as in the "
-#~ "current version of that PEP), meaning"
-#~ " that any changes in the interface"
-#~ " will require N individual packages "
-#~ "to update their ``pyproject.toml`` files "
-#~ "before any change can go live, and"
-#~ " that any changes will necessarily be"
-#~ " restricted to new releases."
-#~ msgstr ""
-
